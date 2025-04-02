@@ -13,4 +13,4 @@ more easily convert pytorch code into tinygrad code.
 The primary focus as of now is to make this layer more comprehensive enough that it
 can be a drop-in replacement pytorch, at least for all the functionality used in diffusers and transformers.
 
-Further on it may be a priority to convert all the stuff to pytorch code, but this initial approach will be much easier to create and validate!
+Further on it may be a priority to convert all the stuff to tinygrad code, but this initial approach will be much easier to create and validate!
