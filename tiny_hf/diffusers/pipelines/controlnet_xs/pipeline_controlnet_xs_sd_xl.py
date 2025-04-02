@@ -22,7 +22,7 @@ import tg_adapter as torch
 #import torch.nn.functional as F
 from tg_adapter import F
 #from transformers import (
-from ttf import (
+from ....transformers import (
     CLIPImageProcessor,
     CLIPTextModel,
     CLIPTextModelWithProjection,

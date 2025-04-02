@@ -1,6 +1,7 @@
 import torch
 import diffusers
-import thf
+import tiny_hf
+import tiny_hf as thf
 import numpy as np
 import os
 import tinygrad
@@ -9,17 +10,6 @@ import safetensors
 from safetensors.torch import save_file
 
 from tg_adapter import F
-import ttf
-
-def device_env_check(approved_devices = ["CPU", "WEBGPU", "GPU"]):
-	return
-	# this function is crappy, change it later
-	found = False
-	for dev in approved_devices:
-		if not found:
-			assert dev in os.environ
-			assert int(os.environ[dev]) == 1
-			found = True
 
 def compare_state_dicts(torch_module, tga_module, error_threshold = 1.0e-3):
 	torch_sd = torch_module.state_dict()
@@ -194,7 +184,7 @@ def test_autoencoderkl():
 	
 	# from single file is broken atm
 	hf_module = diffusers.AutoencoderKL()#.from_single_file("https://huggingface.co/stabilityai/sd-vae-ft-mse-original/blob/main/vae-ft-mse-840000-ema-pruned.safetensors" )
-	my_module = thf.models.autoencoders.AutoencoderKL()
+	my_module = thf.diffusers.models.autoencoders.AutoencoderKL()
 	
 	copy_state_dict(hf_module, my_module)
 	test_hf_reimplementation(inp, {}, hf_module, "__call__", my_module, "__call__")
@@ -207,7 +197,7 @@ def test_autoencoderkl_from_single_file():
 	hf_module = diffusers.AutoencoderKL.from_single_file("https://huggingface.co/stabilityai/sd-vae-ft-mse-original/blob/main/vae-ft-mse-840000-ema-pruned.safetensors" )
 	hf_module.enable_tiling()
 	
-	my_module = thf.models.autoencoders.AutoencoderKL.from_single_file("https://huggingface.co/stabilityai/sd-vae-ft-mse-original/blob/main/vae-ft-mse-840000-ema-pruned.safetensors" )
+	my_module = thf.diffusers.models.autoencoders.AutoencoderKL.from_single_file("https://huggingface.co/stabilityai/sd-vae-ft-mse-original/blob/main/vae-ft-mse-840000-ema-pruned.safetensors" )
 	my_module.enable_tiling()
 	
 	compare_state_dicts(hf_module, my_module)
@@ -217,7 +207,7 @@ def test_autoencoderkl_from_single_file():
 	
 	
 def test_downsample2d():
-	from thf.models.downsampling import Downsample2D as thf_Downsample2D
+	from tiny_hf.diffusers.models.downsampling import Downsample2D as thf_Downsample2D
 	from diffusers.models.resnet import Downsample2D as hf_Downsample2D
 	
 	a = make_test_data(2, 3, 32, 32)
@@ -231,7 +221,7 @@ def test_downsample2d():
 
 def test_resnet_block2d():
 	from diffusers.models.resnet import ResnetBlock2D as hf_ResnetBlock2D
-	from thf.models.resnet import ResnetBlock2D as thf_ResnetBlock2D
+	from tiny_hf.diffusers.models.resnet import ResnetBlock2D as thf_ResnetBlock2D
 	
 	a = make_test_data(2, 3, 32, 32)
 	
@@ -245,7 +235,7 @@ def test_resnet_block2d():
 
 def test_vae_encoder():
 	from diffusers.models.autoencoders.vae import Encoder as hf_Encoder
-	from thf.models.autoencoders.vae import Encoder as thf_Encoder
+	from tiny_hf.diffusers.models.autoencoders.vae import Encoder as thf_Encoder
 	
 	a = make_test_data(1, 3, 8, 8)
 	
@@ -260,7 +250,7 @@ def test_vae_encoder():
 
 def test_down_encoder_block_2d():
 	from diffusers.models.unets.unet_2d_blocks import DownEncoderBlock2D as hf_DownEncoderBlock2D
-	from thf.models.unet.blocks import DownEncoderBlock2D as thf_DownEncoderBlock2D
+	from tiny_hf.diffusers.models.unet.blocks import DownEncoderBlock2D as thf_DownEncoderBlock2D
 	
 	a = make_test_data(2, 3, 32, 32)
 	
@@ -274,7 +264,7 @@ def test_down_encoder_block_2d():
 
 def test_upsampling_2d():
 	# I really need to reduce the silly code required for this...or do I?
-	from thf.models.upsampling import Upsample2D as thf_Upsample2D
+	from tiny_hf.diffusers.models.upsampling import Upsample2D as thf_Upsample2D
 	from diffusers.models.upsampling import Upsample2D as hf_Upsample2D
 	
 	a = make_test_data(2, 4, 32, 32)
@@ -289,7 +279,7 @@ def test_upsampling_2d():
 
 def test_vae_decoder():
 	from diffusers.models.autoencoders.vae import Decoder as hf_Decoder
-	from thf.models.autoencoders.vae import Decoder as thf_Decoder
+	from tiny_hf.diffusers.models.autoencoders.vae import Decoder as thf_Decoder
 	
 	a = make_test_data(2, 4, 16, 16)
 	
@@ -303,7 +293,7 @@ def test_vae_decoder():
 
 def test_UNetMidBlock2D():
 	from diffusers.models.unets.unet_2d_blocks import UNetMidBlock2D as hf_UNetMidBlock2D
-	from thf.models.unet.blocks import UNetMidBlock2D as thf_UNetMidBlock2D
+	from tiny_hf.diffusers.models.unet.blocks import UNetMidBlock2D as thf_UNetMidBlock2D
 	
 	a = make_test_data(2, 64, 16, 16)
 	
@@ -330,7 +320,7 @@ def test_unet_2d_condition():
 
 def test_unet_2d():
 	from diffusers.models.unets.unet_2d import UNet2DModel as hf_class
-	from thf.models.unets.unet_2d import UNet2DModel as thf_class
+	from tiny_hf.diffusers.models.unets.unet_2d import UNet2DModel as thf_class
 	
 	a = make_test_data(2, 3, 32, 32)
 	
@@ -343,14 +333,14 @@ def test_unet_2d():
 
 def test_named_modules():
 	hf_module = diffusers.AutoencoderKL()
-	my_module = thf.models.autoencoders.AutoencoderKL()
+	my_module = thf.diffusers.models.autoencoders.AutoencoderKL()
 	
 	for name, module in hf_module.named_modules():
 		print(name, module)
 
 def test_named_parameters():
 	hf_module = diffusers.AutoencoderKL()
-	my_module = thf.models.autoencoders.AutoencoderKL()
+	my_module = thf.diffusers.models.autoencoders.AutoencoderKL()
 	
 	for (name, module), (my_name, my_module) in zip(hf_module.named_parameters(), my_module.named_parameters()):
 		assert name == my_name
@@ -363,7 +353,7 @@ def test_functional_linear():
 	test_function(inp, weight, torchF.linear, tinyF.linear)
 
 def test_clip_tokenizer():
-	from ttf import CLIPTokenizer as tg_module
+	from tiny_hf.transformers import CLIPTokenizer as tg_module
 	from transformers import CLIPTokenizer as hf_module
 	tg = tg_module.from_pretrained("openai/clip-vit-base-patch32")
 	hf = hf_module.from_pretrained("openai/clip-vit-base-patch32")
@@ -379,7 +369,7 @@ def _convert_tokenizer_output(out):
 	return new_out
 	
 def test_clip_text_model():
-	from ttf import CLIPTextModel as tg_class
+	from tiny_hf.transformers import CLIPTextModel as tg_class
 	from transformers import CLIPTextModel as hf_class
 	
 	hf_module = hf_class.from_pretrained("openai/clip-vit-large-patch14", use_safetensors = True)
