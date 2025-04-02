@@ -1,5 +1,7 @@
 import tinygrad
 
+from .backend_environment_config import get_backend_override
+
 class AdapterTensor(tinygrad.Tensor):
 	def __init__(self, data, dtype = None, device = None,
 			requires_grad = False, pin_memory = False):
@@ -23,12 +25,14 @@ class AdapterTensor(tinygrad.Tensor):
 		if "device" in kwargs.keys():
 			device = kwargs["device"]
 		
+		device = get_backend_override(device)
+		
 		if dtype is None and (not device is None):
-			new_tensor = self.to(device)
+			new_tensor = super().to(device)
 		elif (not dtype is None) and device is None:
 			new_tensor = self.cast(dtype)
 		elif not (dtype is None or device is None):
-			new_tensor
+			return super().to(device).cast(dtype)
 			
 		return _convert_base(new_tensor)
 	"""

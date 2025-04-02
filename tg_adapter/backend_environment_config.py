@@ -3,7 +3,7 @@
 import os
 
 _ENVIRON = {
-	"TGA_ALL_ACCELERATOR_OVERRIDE" = None,
+	"TGA_ALL_ACCELERATOR_OVERRIDE" : None,
 	"TGA_CUDA_OVERRIDE" : "CUDA",
 	"TGA_CPU_OVERRIDE" : "CPU",
 	"TGA_MPS_OVERRIDE" : "METAL"
@@ -29,6 +29,8 @@ def _get_true_backend(backend):
 	return _ENVIRON[_ENV_TABLE[backend] ]
 
 def get_backend_override(backend):
+	if backend is None:
+		return backend
 	backend = backend.upper()
 	index = 0
 	if ":" in backend:
