@@ -16,8 +16,10 @@ from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.nn.functional as F
+#import torch
+import tg_adapter as torch
+#import torch.nn.functional as F
+from tg_adapter import F
 
 from ..configuration_utils import ConfigMixin, register_to_config
 from ..utils import BaseOutput

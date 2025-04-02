@@ -17,7 +17,9 @@ from .tensor import _convert_base as _cb
 # aliases to twist shit into working at least somewhat
 FloatTensor = Tensor
 LongTensor = Tensor
+IntTensor = Tensor
 BoolTensor = Tensor
+
 
 # reimplementation of torch.cat,
 # since it is more convenient than tinygrad's cat method

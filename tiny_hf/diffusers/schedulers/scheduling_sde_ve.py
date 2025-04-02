@@ -18,7 +18,8 @@ import math
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
+#import torch
+import tg_adapter as torch
 
 from ..configuration_utils import ConfigMixin, register_to_config
 from ..utils import BaseOutput

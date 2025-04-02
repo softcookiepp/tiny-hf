@@ -16,7 +16,8 @@ import math
 from typing import List, Optional, Tuple, Union
 
 import numpy as np
-import torch
+#import torch
+import tg_adapter as torch
 
 from ..configuration_utils import ConfigMixin, register_to_config
 from .scheduling_utils import SchedulerMixin, SchedulerOutput

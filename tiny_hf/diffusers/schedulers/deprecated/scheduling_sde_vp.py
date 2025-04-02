@@ -17,7 +17,10 @@
 import math
 from typing import Union
 
-import torch
+#import torch
+import tg_adapter as torch
+#import torch.nn.functional as F
+from tg_adapter import F
 
 from ...configuration_utils import ConfigMixin, register_to_config
 from ...utils.torch_utils import randn_tensor

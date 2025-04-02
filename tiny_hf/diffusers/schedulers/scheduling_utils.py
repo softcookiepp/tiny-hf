@@ -17,7 +17,8 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Optional, Union
 
-import torch
+#import torch
+import tg_adapter as torch
 from huggingface_hub.utils import validate_hf_hub_args
 
 from ..utils import BaseOutput, PushToHubMixin
