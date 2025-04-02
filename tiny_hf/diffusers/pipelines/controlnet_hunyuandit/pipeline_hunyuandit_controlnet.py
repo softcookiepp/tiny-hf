@@ -16,10 +16,12 @@ import inspect
 from typing import Callable, Dict, List, Optional, Tuple, Union
 
 import numpy as np
-import torch
+#import torch
+import tg_adapter as torch
 from transformers import BertModel, BertTokenizer, CLIPImageProcessor, MT5Tokenizer, T5EncoderModel
 
-from diffusers.pipelines.stable_diffusion import StableDiffusionPipelineOutput
+#from diffusers.pipelines.stable_diffusion import StableDiffusionPipelineOutput
+from ....diffusers.pipelines.stable_diffusion import StableDiffusionPipelineOutput
 
 from ...callbacks import MultiPipelineCallbacks, PipelineCallback
 from ...image_processor import PipelineImageInput, VaeImageProcessor

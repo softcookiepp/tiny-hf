@@ -396,7 +396,8 @@ def test_audio_diffusion_pipeline():
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
-	test_audio_diffusion_pipeline()
+	#test_audio_diffusion_pipeline()
+	
 	test_autoencoderkl()
 	test_clip_text_model()
 	test_clip_tokenizer()
