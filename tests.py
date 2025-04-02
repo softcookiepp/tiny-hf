@@ -380,12 +380,23 @@ def test_clip_text_model():
 	tokenizer = CLIPTokenizer.from_pretrained("openai/clip-vit-large-patch14", use_safetensors = True)
 	tokenizer_output = _convert_tokenizer_output( tokenizer(["the quick brown fox jumped over the lazy dog"], padding = True) )
 	test_hf_reimplementation([], tokenizer_output, hf_module, "__call__", tg_module, "__call__")
+
+
+def test_audio_diffusion_pipeline():
+	from tiny_hf.diffusers.pipelines import AudioDiffusionPipeline as tg_class
+	from diffusers.pipelines import AudioDiffusionPipeline as hf_class
+	
+	hf_module = hf_class.from_pretrained("teticio/audio-diffusion-256", use_safetensors = False)
+	tg_module = tg_class.from_pretrained("teticio/audio-diffusion-256", use_safetensors = False)
+	
+	test_hf_reimplementation([], {}, hf_module, "__call__", tg_module, "__call__")
 	
 
 @tinygrad.Tensor.test()
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
+	test_audio_diffusion_pipeline()
 	test_autoencoderkl()
 	test_clip_text_model()
 	test_clip_tokenizer()

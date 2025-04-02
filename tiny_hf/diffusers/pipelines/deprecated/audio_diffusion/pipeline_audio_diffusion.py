@@ -17,7 +17,8 @@ from math import acos, sin
 from typing import List, Tuple, Union
 
 import numpy as np
-import torch
+#import torch
+import tg_adapter as torch
 from PIL import Image
 
 from ....models import AutoencoderKL, UNet2DConditionModel

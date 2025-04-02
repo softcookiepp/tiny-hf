@@ -8,6 +8,13 @@ class AdapterTensor(tinygrad.Tensor):
 		# pin memory is unused, but kept for compatibility
 		super().__init__(data, device, dtype, requires_grad)
 	
+	def cuda(device = None, non_blocking = False, memory_format = "torch.preserve_format"):
+		if not device is None:
+			raise NotImplementedError
+		return self.to("cuda")
+	
+	def cpu(memory_format = "torch.preserve_format"):
+		return self.to("cpu")
 	
 	def to(self, *args, **kwargs):
 		assert len(args) > 0 or len(kwargs) > 0

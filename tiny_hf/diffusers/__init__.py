@@ -4,6 +4,8 @@ from . import models
 from .models.autoencoders import *
 from .models import *
 
+from . import pipelines
+
 from .utils import (
 	DIFFUSERS_SLOW_IMPORT,
 	OptionalDependencyNotAvailable,
