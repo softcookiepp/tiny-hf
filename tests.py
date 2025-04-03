@@ -395,6 +395,15 @@ def test_audio_diffusion_pipeline():
 	
 	test_hf_reimplementation([], {}, hf_module, "__call__", tg_module, "__call__")
 	
+def test_stable_diffusion_pipeline():
+	from tiny_hf.diffusers.pipelines import StableDiffusionPipeline as tg_class
+	from diffusers.pipelines import StableDiffusionPipeline as hf_class
+	
+	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True)
+	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True)
+	
+	test_hf_reimplementation([], {}, hf_module, "__call__", tg_module, "__call__")
+	
 
 @tinygrad.Tensor.test()
 @tinygrad.Tensor.train(mode = False)
