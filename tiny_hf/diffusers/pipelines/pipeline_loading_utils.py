@@ -306,8 +306,9 @@ def maybe_raise_or_warn(
 	library_name, library, class_name, importable_classes, passed_class_obj, name, is_pipeline_module
 ):
 	"""Simple helper method to raise or warn in case incorrect module has been passed"""
-	print("this is the library:", library_name, library)
-	input()
+	# getting rid of dumb garbage
+	if library_name.split(".")[0] == "diffusers":
+		library_name = "tiny_hf." + library_name
 	if not is_pipeline_module:
 		library = importlib.import_module(library_name)
 		class_obj = getattr(library, class_name)
