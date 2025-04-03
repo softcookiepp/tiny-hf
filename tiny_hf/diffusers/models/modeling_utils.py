@@ -1606,7 +1606,7 @@ class ModelMixin(tga.nn.Module, PushToHubMixin):
 		Note `set_default_dtype` currently only works with floating-point types and asserts if for example,
 		`tga.int64` is passed. So if a non-float `dtype` is passed this functions will throw an exception.
 		"""
-		if not dtype.is_floating_point:
+		if False and not dtype.is_floating_point:
 			raise ValueError(
 				f"Can't instantiate {cls.__name__} model under dtype={dtype} since it is not a floating point dtype"
 			)

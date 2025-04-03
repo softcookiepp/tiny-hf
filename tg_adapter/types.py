@@ -46,3 +46,11 @@ def finfo(t):
 
 # defining "int" later because it is already a reserved word
 int = tinygrad.dtypes.int
+
+
+class AdapterDType:
+	def __init__(*args, **kwargs):
+		# This will be a silly little wrapper around the existing tinygrad dtypes
+		# to make them more torch-compatible
+		raise NotImplementedError
+		
