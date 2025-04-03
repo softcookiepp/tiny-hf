@@ -20,11 +20,13 @@ from typing import List, Optional, Tuple, Union
 from . import logging
 from .import_utils import is_torch_available, is_torch_version
 
+# no need for this
 """
 if is_torch_available():
 	import torch
 	from torch.fft import fftn, fftshift, ifftn, ifftshift
 """
+import tg_adapter as torch
 
 logger = logging.get_logger(__name__)  # pylint: disable=invalid-name
 
