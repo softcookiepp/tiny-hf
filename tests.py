@@ -297,7 +297,7 @@ def test_vae_decoder():
 
 def test_UNetMidBlock2D():
 	from diffusers.models.unets.unet_2d_blocks import UNetMidBlock2D as hf_UNetMidBlock2D
-	from tiny_hf.diffusers.models.unet.blocks import UNetMidBlock2D as thf_UNetMidBlock2D
+	from tiny_hf.diffusers.models.unets.unet_2d_blockss import UNetMidBlock2D as thf_UNetMidBlock2D
 	
 	a = make_test_data(2, 64, 16, 16)
 	
