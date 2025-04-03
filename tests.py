@@ -254,7 +254,7 @@ def test_vae_encoder():
 
 def test_down_encoder_block_2d():
 	from diffusers.models.unets.unet_2d_blocks import DownEncoderBlock2D as hf_DownEncoderBlock2D
-	from tiny_hf.diffusers.models.unet.blocks import DownEncoderBlock2D as thf_DownEncoderBlock2D
+	from tiny_hf.diffusers.models.unets.unet_2d_blocks import DownEncoderBlock2D as thf_DownEncoderBlock2D
 	
 	a = make_test_data(2, 3, 32, 32)
 	
