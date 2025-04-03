@@ -36,3 +36,8 @@ def tensor(data, dtype = None, device = None,
 			requires_grad = False, pin_memory = False):
 	return AdapterTensor(data, dtype, device,
 			requires_grad, pin_memory)
+
+def linspace(start, end, steps, *, out=None, dtype=None,
+		layout="torch.strided", device=None, requires_grad=False):
+	t = tinygrad.Tensor.linspace(start, end, steps, dtype = dtype, device = device)
+	return _cb(t)
