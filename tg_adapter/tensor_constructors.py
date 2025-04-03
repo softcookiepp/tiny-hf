@@ -2,6 +2,7 @@ import tinygrad
 from .types import get_default_dtype
 from .tensor import _convert_base as _cb
 from .tensor import AdapterTensor
+import numpy as np
 
 def _convert_size(size):
 	if len(size) == 0:
@@ -31,7 +32,15 @@ def empty(size = None, out=None, dtype=None, layout="torch.strided", device=None
 
 def full(size, fill_value, out=None, dtype=None, layout="torch.strided", device=None, requires_grad=False):
 	return _cb(tinygrad.Tensor.full(size, fill_value, device = device) )
-	
+	  File "/home/me/external/miniconda3/envs/tinygrad/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/external/development/tiny-hf/tests.py", line 418, in main
+    test_stable_diffusion_pipeline()
+  File "/external/development/tiny-hf/tests.py", line 406, in test_stable_diffusion_pipeline
+    tg_scheduler = tg_scheduler_class()
+                   ^^^^^^^^^^^^^^^^^^^^
+
 def tensor(data, dtype = None, device = None,
 			requires_grad = False, pin_memory = False):
 	return AdapterTensor(data, dtype, device,
@@ -42,4 +51,5 @@ def linspace(start, end, steps, *, out=None, dtype=None,
 	t = tinygrad.Tensor.linspace(start, end, steps, dtype = dtype, device = device)
 	return _cb(t)
 	
-
+def from_numpy(a: np.ndarray):
+	return _cb(tinygrad.Tensor(a) )
