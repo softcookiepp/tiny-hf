@@ -706,7 +706,8 @@ def load_sub_model(
 	load_method = _get_load_method(class_obj, load_method_name, is_dduf=dduf_entries is not None)
 
 	# add kwargs to loading method
-	diffusers_module = importlib.import_module(__name__.split(".")[0])
+	#diffusers_module = importlib.import_module(__name__.split(".")[0])
+	diffusers_module = importlib.import_module(".".join(__name__.split(".")[0:2]) )
 	loading_kwargs = {}
 	if issubclass(class_obj, torch.nn.Module):
 		loading_kwargs["torch_dtype"] = torch_dtype
