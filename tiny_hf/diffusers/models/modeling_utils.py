@@ -31,6 +31,7 @@ from typing import Any, Callable, ContextManager, Dict, List, Optional, Tuple, T
 import safetensors
 #import torch
 #import torch.utils.checkpoint
+import tg_adapter as torch
 from huggingface_hub import DDUFEntry, create_repo, split_torch_state_dict_into_shards
 from huggingface_hub.utils import validate_hf_hub_args
 #from torch import Tensor, nn
