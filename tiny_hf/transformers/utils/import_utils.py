@@ -1999,7 +1999,7 @@ def direct_transformers_import(path: str, file="__init__.py") -> ModuleType:
 		`ModuleType`: The resulting imported module
 	"""
 	#name = "transformers"
-	name = "tff"
+	name = "tiny_hf.transformers"
 	location = os.path.join(path, file)
 	spec = importlib.util.spec_from_file_location(name, location, submodule_search_locations=[path])
 	module = importlib.util.module_from_spec(spec)
