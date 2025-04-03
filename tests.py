@@ -57,7 +57,7 @@ def test_function(*inp_args, torch_function, tinygrad_function, error_threshold 
 	print(tiny_out.shape, torch_out.shape )
 	error = mse(tiny_out.numpy(), torch_out.numpy())
 	print(f"MSE for {torch_function.__name__} and {tinygrad_function.__name__}:",  error)
-	if error < error_threshold:
+	if error > error_threshold:
 		input()
 
 def test_interpolate():
