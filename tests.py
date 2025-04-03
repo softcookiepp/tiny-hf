@@ -45,8 +45,12 @@ def test_function(*inp_args, torch_function, tinygrad_function, error_threshold 
 	torch_inp = []
 	tiny_inp = []
 	for inp in inp_args:
-		torch_inp.append(torch.tensor(inp) )
-		tiny_inp = tinygrad.Tensor(inp)
+		if isinstance(inp, np.array):
+			torch_inp.append(torch.tensor(inp) )
+			iny_inp.append(tinygrad.Tensor(inp) )
+		else:
+			torch_inp.append(inp)
+			tiny_inp.append(inp)
 	torch_out = torch_function(*tuple(torch_inp) )
 	tiny_out = tinygrad_function(*tuple(tiny_inp) )
 	
