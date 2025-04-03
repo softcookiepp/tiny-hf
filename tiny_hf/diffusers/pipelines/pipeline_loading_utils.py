@@ -809,7 +809,8 @@ def _get_load_method(class_obj: object, load_method_name: str, is_dduf: bool) ->
 
 def _fetch_class_library_tuple(module):
 	# import it here to avoid circular import
-	diffusers_module = importlib.import_module(__name__.split(".")[0])
+	#diffusers_module = importlib.import_module(__name__.split(".")[0])
+	diffusers_module = importlib.import_module(".".join(__name__.split(".")[0:2]) )
 	pipelines = getattr(diffusers_module, "pipelines")
 
 	# register the config from the original module, not the dynamo compiled one
