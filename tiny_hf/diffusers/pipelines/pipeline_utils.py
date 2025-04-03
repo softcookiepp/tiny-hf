@@ -940,7 +940,6 @@ class DiffusionPipeline(ConfigMixin, PushToHubMixin):
 		# 7. Load each module in the pipeline
 		current_device_map = None
 		for name, (library_name, class_name) in logging.tqdm(init_dict.items(), desc="Loading pipeline components..."):
-			print(library_name)
 			# 7.1 device_map shenanigans
 			if final_device_map is not None and len(final_device_map) > 0:
 				component_device = final_device_map.get(name, None)
