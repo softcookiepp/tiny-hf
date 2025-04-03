@@ -223,3 +223,4 @@ from .pipelines import (
 )
 """
 
+from .pipelines import OnnxRuntimeModel
