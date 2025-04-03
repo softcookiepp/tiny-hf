@@ -47,7 +47,7 @@ def test_function(*inp_args, torch_function, tinygrad_function, error_threshold 
 	for inp in inp_args:
 		if isinstance(inp, np.ndarray):
 			torch_inp.append(torch.tensor(inp) )
-			iny_inp.append(tinygrad.Tensor(inp) )
+			tiny_inp.append(tinygrad.Tensor(inp) )
 		else:
 			torch_inp.append(inp)
 			tiny_inp.append(inp)
