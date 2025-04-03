@@ -884,7 +884,6 @@ class DiffusionPipeline(ConfigMixin, PushToHubMixin):
 			return True
 
 		init_dict = {k: v for k, v in init_dict.items() if load_module(k, v)}
-		input(init_dict)
 
 		# Special case: safety_checker must be loaded separately when using `from_flax`
 		if from_flax and "safety_checker" in init_dict and "safety_checker" not in passed_class_obj:
