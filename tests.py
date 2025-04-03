@@ -60,7 +60,7 @@ def test_interpolate():
 	shape = (2, 3, 6, 6)
 	a = np.arange(np.prod(shape)).reshape(shape).astype(np.float32)
 	args = (a, None, 2.0)
-	test_function(*args, torch.nn.functional.interpolate, F.interpolate)
+	test_function(*args, torch_function = torch.nn.functional.interpolate, tinygrad_function = F.interpolate)
 
 def _print_dict_types(d):
 	for k, v in d.items():
