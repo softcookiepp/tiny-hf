@@ -39,9 +39,12 @@ def clamp(inp, min = None, max = None):
 
 dtype = tinygrad.dtype.DType
 
-def device(dev):
-	dev = dev.upper()
-	return dev
+#def device(dev):
+#	dev = dev.upper()
+#	return dev
+
+# TODO: make an actual device class, then rejigger the state dict loader to do some other stuff
+device = str
 
 # @torch.no_grad()
 # may also have to call @Tensor.train(mode = False)
