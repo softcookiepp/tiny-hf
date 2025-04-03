@@ -137,6 +137,19 @@ class AudioPipelineOutput(BaseOutput):
 
 	audios: np.ndarray
 
+def _reconfigure_init_dict(init_dict):
+	"""
+	Reconfigures the init_dict for DiffusionPipeline instances,
+	since diffusers and transformers should be changed to tiny_hf.diffusers
+	and tiny_hf.transformers, respectively
+	"""
+	for k, module_list in init_dict.keys():
+		assert isinstance(module_list, list)
+		library_name = module_list[0]
+		if library_name in ["diffusers", "transformers"]:
+			library_name = "tiny_hf." + library_name
+			init_dict[k][0] = library_name
+	return init_dict
 
 class DiffusionPipeline(ConfigMixin, PushToHubMixin):
 	r"""
@@ -884,7 +897,9 @@ class DiffusionPipeline(ConfigMixin, PushToHubMixin):
 			return True
 
 		init_dict = {k: v for k, v in init_dict.items() if load_module(k, v)}
-		input(init_dict)
+		
+		# overwrite old module names
+		init_dict = _reconfigure_init_dict(init_dict)
 
 		# Special case: safety_checker must be loaded separately when using `from_flax`
 		if from_flax and "safety_checker" in init_dict and "safety_checker" not in passed_class_obj:
