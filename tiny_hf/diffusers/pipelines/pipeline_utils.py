@@ -26,7 +26,8 @@ from typing import Any, Callable, Dict, List, Optional, Union, get_args, get_ori
 import numpy as np
 import PIL.Image
 import requests
-import torch
+#import torch
+import tg_adapter as torch
 from huggingface_hub import (
 	DDUFEntry,
 	ModelCard,
@@ -883,6 +884,7 @@ class DiffusionPipeline(ConfigMixin, PushToHubMixin):
 			return True
 
 		init_dict = {k: v for k, v in init_dict.items() if load_module(k, v)}
+		input(init_dict)
 
 		# Special case: safety_checker must be loaded separately when using `from_flax`
 		if from_flax and "safety_checker" in init_dict and "safety_checker" not in passed_class_obj:
