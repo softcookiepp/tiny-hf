@@ -143,7 +143,7 @@ def _reconfigure_init_dict(init_dict):
 	since diffusers and transformers should be changed to tiny_hf.diffusers
 	and tiny_hf.transformers, respectively
 	"""
-	for k, module_list in init_dict.keys():
+	for k, module_list in init_dict.items():
 		assert isinstance(module_list, list)
 		library_name = module_list[0]
 		if library_name in ["diffusers", "transformers"]:
