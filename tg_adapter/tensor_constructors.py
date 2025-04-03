@@ -32,14 +32,6 @@ def empty(size = None, out=None, dtype=None, layout="torch.strided", device=None
 
 def full(size, fill_value, out=None, dtype=None, layout="torch.strided", device=None, requires_grad=False):
 	return _cb(tinygrad.Tensor.full(size, fill_value, device = device) )
-	  File "/home/me/external/miniconda3/envs/tinygrad/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/external/development/tiny-hf/tests.py", line 418, in main
-    test_stable_diffusion_pipeline()
-  File "/external/development/tiny-hf/tests.py", line 406, in test_stable_diffusion_pipeline
-    tg_scheduler = tg_scheduler_class()
-                   ^^^^^^^^^^^^^^^^^^^^
 
 def tensor(data, dtype = None, device = None,
 			requires_grad = False, pin_memory = False):
