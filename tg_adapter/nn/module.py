@@ -24,12 +24,16 @@ class Module:
 	def bfloat16(self):
 		raise NotImplementedError
 
-	def children(self):
-		# Return an iterator over immediate children modules.
+	def named_children(self):
 		for k, v in self.__dict__.items():
 			if isinstance(v, Module):
-				yield v
-	
+				yield k, v
+
+	def children(self):
+		# Return an iterator over immediate children modules.
+		for _, v in self.named_children():
+			yield v
+	 
 	def parameters(self, recurse = True):
 		if not recurse:
 			raise NotImplementedError
