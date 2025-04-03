@@ -402,7 +402,7 @@ def test_stable_diffusion_pipeline():
 	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True)
 	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True)
 	
-	test_hf_reimplementation([], {}, hf_module, "__call__", tg_module, "__call__")
+	test_hf_reimplementation([], {"prompt": "a fluffy bunny"}, hf_module, "__call__", tg_module, "__call__")
 	
 
 @tinygrad.Tensor.test()
