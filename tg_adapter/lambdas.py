@@ -6,3 +6,6 @@ cos = lambda x: x.cos()
 tan = lambda x: x.tan()
 
 from .F import sigmoid
+
+
+from .F import cumprod

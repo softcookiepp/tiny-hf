@@ -41,3 +41,5 @@ def linspace(start, end, steps, *, out=None, dtype=None,
 		layout="torch.strided", device=None, requires_grad=False):
 	t = tinygrad.Tensor.linspace(start, end, steps, dtype = dtype, device = device)
 	return _cb(t)
+	
+

@@ -71,3 +71,20 @@ def embedding(inp, weight, padding_idx=None, max_norm=None, norm_type=2.0, scale
 gelu = lambda x: _cb(x.gelu() )
 mish = lambda x: _cb(x.mish() )
 sigmoid = lambda x: _cb(x.sigmoid() )
+
+
+def cumprod(inp, dim, dtype=None, out=None):
+	out = None
+	
+	# first, get the slices used in the __getitem__ call for each element
+	slices = []
+	for i in len(inp.shape):
+		slices.append(slice(None, None, None) )
+	
+	for i in range(inp.shape[dim] ):
+		slices[dim] = i
+		if out is None:
+			out = inp[slices]
+		else:
+			out = out*inp[slices]
+	return _cb(out)
