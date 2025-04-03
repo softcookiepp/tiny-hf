@@ -8,6 +8,7 @@ from .tensor_constructors import *
 from . import distributed
 from . import version
 from . import compiler
+from . import cuda
 
 from .io import *
 
