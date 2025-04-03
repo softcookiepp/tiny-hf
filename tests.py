@@ -59,8 +59,8 @@ def test_function(*inp_args, torch_function, tinygrad_function, error_threshold 
 def test_interpolate():
 	shape = (2, 3, 6, 6)
 	a = np.arange(np.prod(shape)).reshape(shape).astype(np.float32)
-	args = (None, 2.0)
-	test_function(a, args, torch.nn.functional.interpolate, F.interpolate)
+	args = (a, None, 2.0)
+	test_function(*args, torch.nn.functional.interpolate, F.interpolate)
 
 def _print_dict_types(d):
 	for k, v in d.items():
