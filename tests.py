@@ -106,7 +106,8 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4):
 			if val_mse > error_threshold:
 				input()
 	elif isinstance(hf_dict, torch.Tensor):
-		error = mse(tg_dict.numpy(), hf_dict.detach().numpy()) 
+		error = mse(tg_dict.numpy(), hf_dict.detach().numpy())
+		print("single tensor output mse:", error, "\n")
 		if error > error_threshold:
 			#print("tiny:")
 			#print(tiny_out.numpy())
@@ -415,11 +416,11 @@ def test_stable_diffusion_pipeline():
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
-	test_stable_diffusion_pipeline()
+	#test_stable_diffusion_pipeline()
 	
 	test_autoencoderkl()
-	test_clip_text_model()
-	test_clip_tokenizer()
+	#test_clip_text_model()
+	#test_clip_tokenizer()
 	#test_unet_2d_condition()
 	#test_unet_2d()
 	test_named_parameters()

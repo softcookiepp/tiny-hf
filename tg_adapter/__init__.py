@@ -44,7 +44,7 @@ dtype = tinygrad.dtype.DType
 #	return dev
 
 # TODO: make an actual device class, then rejigger the state dict loader to do some other stuff
-device = str
+from .device import device
 
 # @torch.no_grad()
 # may also have to call @Tensor.train(mode = False)

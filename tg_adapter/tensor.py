@@ -42,10 +42,11 @@ class AdapterTensor(tinygrad.Tensor):
 			return super().to(device).cast(dtype)
 			
 		return _convert_base(new_tensor)
-	"""
-	def cast(self, *args, **kwargs):
-		raise NotImplementedError
-	"""
+	
+	@property
+	def device(self):
+		return super().device
+	
 def _convert_base(inp):
 	if isinstance(inp, AdapterTensor):
 		# do nothing
