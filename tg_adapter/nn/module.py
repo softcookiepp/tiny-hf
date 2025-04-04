@@ -21,6 +21,15 @@ class Module:
 		for _, module in self.named_modules():
 			fn(module)
 	
+	def buffers(self):
+		for k, v in self.__dict__.items():
+			if isinstance(v, Module):
+				for b in v.buffers():
+					yield b
+			elif isinstance(v, tinygrad.Tensor):
+				# generally no idea what criteria is supposed to be used for this :c
+				pass
+	
 	def bfloat16(self):
 		raise NotImplementedError
 
