@@ -7,4 +7,10 @@ class device:
 			self._name, self._idx = tuple(name.split(":"))
 			self._idx = int(self._idx)
 	
+	@property
+	def type(self):
+		# pretty sure this is how it is done
+		return self._name
 	
+	def to_tinygrad(self):
+		raise NotImplementedError
