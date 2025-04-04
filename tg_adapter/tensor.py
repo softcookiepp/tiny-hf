@@ -2,6 +2,8 @@ import tinygrad
 
 from .backend_environment_config import get_backend_override
 
+import inspect
+
 class AdapterTensor(tinygrad.Tensor):
 	def __init__(self, data, dtype = None, device = None,
 			requires_grad = False, pin_memory = False):
@@ -57,6 +59,35 @@ def _convert_base(inp):
 		t.lazydata = inp.lazydata
 		assert isinstance(t, AdapterTensor)
 		return t
+	elif isinstance(inp, list) or isinstance(inp, tuple):
+		new = []
+		for item in inp:
+			new.append(_convert_base(item) )
+		if isinstance(inp, tuple):
+			new = tuple(new)
+		return new
+	elif isinstance(inp, dict):
+		for k, v in inp.items():
+			inp[k] = _convert_base(v)
+		return inp
+	else:
+		if hasattr(inp, "__dict__"):
+			# treat as dictionary hehe
+			new_dict = _convert_base(inp.__dict__)
+			inp.__dict__.update(new_dict)
+			return inp
+		else:
+			# inp is a primitive type
+			return inp
+
+def _disinherit(t):
+	if isinstance(inp, AdapterTensor):
+		t = tinygrad.Tensor(None)
+		t.lazydata = inp.lazydata
+		return t
+	if isinstance(inp, tinygrad.Tensor):
+		# do nothing
+		return inp
 	elif isinstance(inp, list) or isinstance(inp, tuple):
 		new = []
 		for item in inp:
