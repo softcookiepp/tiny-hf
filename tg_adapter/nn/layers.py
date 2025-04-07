@@ -82,3 +82,5 @@ class Upsample(Module):
 	
 	def forward(self, *args, **kwargs):
 		raise NotImplementedError
+		
+class Conv1d
