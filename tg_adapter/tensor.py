@@ -98,6 +98,9 @@ class AdapterTensor(tinygrad.Tensor):
 	
 	def __rtruediv__(self, other):
 		return self._tg_override(other)
+		
+	def numpy(self):
+		return _disinherit(self).numpy()
 	
 	
 	
