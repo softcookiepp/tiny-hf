@@ -29,6 +29,7 @@ def _get_true_backend(backend):
 	return _ENVIRON[_ENV_TABLE[backend] ]
 
 def get_backend_override(backend):
+	old_backend = backend
 	if backend is None:
 		return backend
 	backend = backend.upper()
@@ -37,6 +38,8 @@ def get_backend_override(backend):
 		backend, index = tuple(backend.split(":") )
 		index = int(index)
 	backend = _get_true_backend(backend)
+	print("backend change:", old_backend, backend)
+	input()
 	if index > 0:
 		return f"{backend}:{index}"
 	return backend

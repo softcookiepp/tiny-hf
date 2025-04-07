@@ -8,6 +8,10 @@ class AdapterTensor(tinygrad.Tensor):
 	def __init__(self, data, dtype = None, device = None,
 			requires_grad = False, pin_memory = False):
 		# pin memory is unused, but kept for compatibility
+		# convert device, duh
+		if isinstance(device, Device):
+			raise NotImplementedError
+		device = get_backend_override(device)
 		super().__init__(data, device, dtype, requires_grad)
 		self._adapter_device = None
 	
