@@ -1,7 +1,7 @@
 import tinygrad
 
 from .backend_environment_config import get_backend_override, tinygrad_device_to_torch_device
-
+from .device import device as Device
 import inspect
 
 class AdapterTensor(tinygrad.Tensor):
@@ -53,7 +53,7 @@ class AdapterTensor(tinygrad.Tensor):
 		# TODO: convert tinygrad device to torch device
 		if self._adapter_device is None:
 			dev = tinygrad_device_to_torch_device(super().device)
-			self._adapter_device = device(dev)
+			self._adapter_device = Device(dev)
 		return self._adapter_device
 	
 	def _tg_override(self, *args, **kwargs):
