@@ -1,5 +1,6 @@
 from .module import Module
 from ..tensor import _convert_base as _cb
+from ..tensor import _disinherit
 
 class ActivationLambda(Module):
 	def __init__(self, act_fn, inplace = False):
@@ -8,7 +9,7 @@ class ActivationLambda(Module):
 		self._act_fn = act_fn
 	
 	def forward(self, x):
-		return _cb( self._act_fn(x) )
+		return _cb( self._act_fn(_disinherit(x) ) )
 
 def SiLU(inplace = False):
 	return ActivationLambda(lambda x: x.silu(), inplace)

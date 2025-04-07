@@ -1,5 +1,7 @@
 from .module import Module
 from tinygrad import Tensor
+from ..tensor import _convert_base as _cb
+from ..tensor import _disinherit
 
 class AvgPool2d(Module):
 	def __init__(self, kernel_size, stride=None, padding=0,
@@ -14,8 +16,10 @@ class AvgPool2d(Module):
 		self._count_include_pad = count_include_pad
 	
 	def forward(self, inp):
-		return inp.avg_pool2d(self._kernel_size, self._stride,
+		inp = _disinherit(inp)
+		out = inp.avg_pool2d(self._kernel_size, self._stride,
 			1, self._padding, self._ceil_mode, self._count_include_pad)
+		return _cb(out)
 
 class SequentialIterator:
 	def __init__(self, module):
@@ -57,7 +61,7 @@ class Dropout(Module):
 		self._p = p
 	
 	def forward(self, inp):
-		return inp.dropout(self._p)
+		return _cb(_disinherit(inp).dropout(self._p) )
 
 class AdaGroupNorm(Module):
 	def __init__(self, *args, **kwargs):

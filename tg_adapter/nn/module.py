@@ -2,6 +2,7 @@ import tinygrad
 from tinygrad.nn.state import safe_save, safe_load, get_state_dict, load_state_dict, torch_load
 from typing import Iterable
 from ..tensor import _convert_base as _cb
+from ..tensor import _disinherit
 import inspect
 from ..device import device
 
@@ -100,6 +101,9 @@ class Module:
 		# then invoke realize() if that is the case
 		parent_function = inspect.stack()[1].function
 		
+		# actually disinheriting is not a good idea here
+		#args = _disinherit(args)
+		#kwargs = _disinherit(kwargs)
 		out = self.forward(*args, **kwargs)
 		if (not parent_function in ["__call__", "forward"]) and isinstance(out, tinygrad.Tensor):
 			out = out.realize()
