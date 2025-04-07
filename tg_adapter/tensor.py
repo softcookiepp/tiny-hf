@@ -56,6 +56,24 @@ class AdapterTensor(tinygrad.Tensor):
 			self._adapter_device = device(dev)
 		return self._adapter_device
 	
+	def __add__(self, other):
+		raise NotImplementedError
+		
+	def __sub__(self, other):
+		raise NotImplementedError
+	
+	def __mul__(self, other):
+		raise NotImplementedError
+	
+	def __truediv__(self, other):
+		raise NotImplementedError:
+	
+	def __rtruediv__(self, other):
+		raise NotImplementedError
+	
+	
+	
+	
 def _convert_base(inp):
 	if isinstance(inp, AdapterTensor):
 		# do nothing
