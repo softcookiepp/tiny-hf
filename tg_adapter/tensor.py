@@ -160,7 +160,9 @@ def _disinherit(inp):
 
 def wrap_tinygrad(func):
 	def wrapper(*args, **kwargs):
-		args, kwargs = _disinherit( (args, kwargs) )
-		input(args, kwargs)
+		args = _disinherit(args)
+		kwargs = _disinherit(kwargs)
+		print(args, kwargs)
+		input()
 		return _convert_base(func(*args, **kwargs) )
 	return wrapper
