@@ -71,28 +71,29 @@ class AdapterTensor(tinygrad.Tensor):
 		if len(tg_kwargs) == 0:
 			# fix for methods that don't support **kwargs
 			print("NO KWARGS")
+			print(tg_args)
 			output = tg_self.__getattribute__(tg_attr)(*tg_args)
 		else:
 			output = tg_self.__getattribute__(tg_attr)(*tg_args, **tg_kwargs)
 		return _convert_base(output)
 	
 	def __add__(self, other):
-		return self._tg_override(self, other)
+		return self._tg_override(other)
 		
 	def __sub__(self, other):
-		return self._tg_override(self, other)
+		return self._tg_override(other)
 		
 	def __rsub__(self, other):
-		return self._tg_override(self, other)
+		return self._tg_override(other)
 	
 	def __mul__(self, other):
-		return self._tg_override(self, other)
+		return self._tg_override(other)
 	
 	def __truediv__(self, other):
-		return self._tg_override(self, other)
+		return self._tg_override(other)
 	
 	def __rtruediv__(self, other):
-		return self._tg_override(self, other)
+		return self._tg_override(other)
 	
 	
 	
