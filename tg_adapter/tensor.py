@@ -115,13 +115,14 @@ class AdapterTensor(tinygrad.Tensor):
 		return _disinherit(self).numpy()
 	
 	
-	
+
 	
 def _convert_base(inp):
 	if isinstance(inp, AdapterTensor):
 		# do nothing
 		return inp
 	if isinstance(inp, tinygrad.Tensor):
+		assert not "CUDA" in inp.device
 		t = AdapterTensor(None)
 		# oh god this is hacky
 		t.lazydata = inp.lazydata
