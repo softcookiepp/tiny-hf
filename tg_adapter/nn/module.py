@@ -30,6 +30,9 @@ class Module:
 			elif isinstance(v, tinygrad.Tensor):
 				# generally no idea what criteria is supposed to be used for this :c
 				pass
+	@property
+	def device(self):
+		raise NotImplementedError
 	
 	def bfloat16(self):
 		raise NotImplementedError
