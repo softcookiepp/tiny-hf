@@ -57,8 +57,11 @@ class AdapterTensor(tinygrad.Tensor):
 		return self._adapter_device
 	
 	def _tg_override(self, *args):
-		for frame_info in inspect.stack():
-			print(frame_info)
+		# Method for automatically wrapping stuff coded in tinygrad so
+		# stuff works correctly
+		# 
+		tg_attr = in inspect.stack()[1].function
+		print(tg_attr)
 		raise NotImplementedError
 	
 	def __add__(self, other):
