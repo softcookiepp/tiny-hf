@@ -30,12 +30,7 @@ def cat(tensors, dim = 0):
 	trest = tuple(tensors[1:])
 	return _cb(tbase.cat(*trest, dim = dim) )
 
-# easier than rearranging huggingface code lol
-def chunk(inp, chunks: int, dim: int = 0):
-	return _cb(inp.chunk(chunks, dim) )
-	
-def clamp(inp, min = None, max = None):
-	return _cb(inp.clamp(min, max) )
+
 
 dtype = tinygrad.dtype.DType
 
@@ -60,3 +55,5 @@ def is_tensor(a):
 Size = tuple
 
 __version__ = "2.6.0"
+
+from .F import chunk, clamp

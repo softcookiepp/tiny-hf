@@ -92,3 +92,12 @@ def cumprod(inp, dim, dtype=None, out=None):
 		else:
 			out = out*inp[slices]
 	return _cb(out)
+	
+# easier than rearranging huggingface code lol
+def chunk(inp, chunks: int, dim: int = 0):
+	inp = _disinherit(inp)
+	return _cb(inp.chunk(chunks, dim) )
+	
+def clamp(inp, min = None, max = None):
+	inp = _disinherit(inp)
+	return _cb(inp.clamp(min, max) )
