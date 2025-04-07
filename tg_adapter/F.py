@@ -76,7 +76,7 @@ gelu = lambda x: _cb(x.gelu() )
 mish = lambda x: _cb(x.mish() )
 sigmoid = lambda x: _cb(x.sigmoid() )
 
-@wrap_tinygrad
+@wrap_tinygrad()
 def cumprod(inp, dim, dtype=None, out=None):
 	# first, get the slices used in the __getitem__ call for each element
 	slices = []
