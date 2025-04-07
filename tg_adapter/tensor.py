@@ -12,6 +12,7 @@ class AdapterTensor(tinygrad.Tensor):
 		if isinstance(device, Device):
 			raise NotImplementedError
 		device = get_backend_override(device)
+		
 		print("chosen device:", device)
 		input()
 		super().__init__(data, device, dtype, requires_grad)
