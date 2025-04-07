@@ -68,7 +68,11 @@ class AdapterTensor(tinygrad.Tensor):
 		tg_args = _disinherit(args)
 		tg_kwargs = _disinherit(kwargs)
 		
-		output = tg_self.__getattribute__(tg_attr)(*tg_args, **tg_kwargs)
+		if len(tg_kwargs) == 0:
+			# fix for methods that don't support **kwargs
+			output = tg_self.__getattribute__(tg_attr)(*tg_args)
+		else:
+			output = tg_self.__getattribute__(tg_attr)(*tg_args, **tg_kwargs)
 		return _convert_base(output)
 	
 	def __add__(self, other):
