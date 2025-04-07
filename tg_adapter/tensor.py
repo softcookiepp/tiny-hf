@@ -56,32 +56,38 @@ class AdapterTensor(tinygrad.Tensor):
 			self._adapter_device = device(dev)
 		return self._adapter_device
 	
-	def _tg_override(self, *args):
+	def _tg_override(self, *args, **kwargs):
 		# Method for automatically wrapping stuff coded in tinygrad so
 		# stuff works correctly
-		# 
+		
+		# this will be the function that gets wrapped
 		tg_attr = inspect.stack()[1].function
-		print(tg_attr)
-		raise NotImplementedError
+		
+		# convert everything back to tinygrad.Tensor temporarily
+		tg_self = _disinherit(self)
+		tg_args = _disinherit(args)
+		tg_kwargs = _disinherit(kwargs)
+		
+		output = tg_self.__getattribute__(tg_attr)(*tg_args, **tg_kwargs)
+		return _convert_base(output)
 	
 	def __add__(self, other):
-		raise NotImplementedError
+		return self._tg_override(self, other)
 		
 	def __sub__(self, other):
-		raise NotImplementedError
+		return self._tg_override(self, other)
 		
 	def __rsub__(self, other):
-		self._tg_override(self, other)
-		raise NotImplementedError
+		return self._tg_override(self, other)
 	
 	def __mul__(self, other):
-		raise NotImplementedError
+		return self._tg_override(self, other)
 	
 	def __truediv__(self, other):
-		raise NotImplementedError
+		return self._tg_override(self, other)
 	
 	def __rtruediv__(self, other):
-		raise NotImplementedError
+		return self._tg_override(self, other)
 	
 	
 	
