@@ -123,7 +123,7 @@ def _convert_base(inp):
 			# inp is a primitive type
 			return inp
 
-def _disinherit(t):
+def _disinherit(inp):
 	if isinstance(inp, AdapterTensor):
 		t = tinygrad.Tensor(None)
 		t.lazydata = inp.lazydata
