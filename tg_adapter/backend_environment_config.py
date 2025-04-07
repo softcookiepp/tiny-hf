@@ -5,7 +5,7 @@ import os
 _ENVIRON = {
 	"TGA_ALL_ACCELERATOR_OVERRIDE" : "GPU", # just for now hehe
 	
-	"TGA_CUDA_OVERRIDE" : "CUDA",
+	"TGA_CUDA_OVERRIDE" : "GPU",
 	"TGA_CPU_OVERRIDE" : "CPU",
 	"TGA_MPS_OVERRIDE" : "METAL"
 }
