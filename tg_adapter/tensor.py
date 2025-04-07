@@ -158,11 +158,3 @@ def _disinherit(inp):
 			# inp is a primitive type
 			return inp
 
-def wrap_tinygrad(func):
-	def wrapper(*args, **kwargs):
-		args = _disinherit(args)
-		kwargs = _disinherit(kwargs)
-		print(args, kwargs)
-		input()
-		return _convert_base(func(*args, **kwargs) )
-	return wrapper

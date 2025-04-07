@@ -2,7 +2,6 @@ import tinygrad
 import numpy as np
 from .tensor import _convert_base as _cb
 from .tensor import _disinherit
-from .tensor import wrap_tinygrad
 
 def interpolate(inp,
 		size=None,
@@ -39,9 +38,12 @@ def interpolate(inp,
 	
 def group_norm(x, num_groups, weight = None, bias = None, eps = 1.0e-5):
 	# derived from the tinygrad source code c:
+	x = _disinherit(x)
 	x = x.reshape(x.shape[0], num_groups, -1).layernorm(eps=eps).reshape(x.shape)
 
 	if weight is None or bias is None: return x
+	weight = _disinherit(weight)
+	bias = _disinherit(bias)
 	# elementwise_affine on channels
 	return _cb(x * weight.reshape(1, -1, *[1] * (x.ndim-2)) + bias.reshape(1, -1, *[1] * (x.ndim-2)) )
 	
@@ -72,13 +74,13 @@ def pad(inp, pad, mode='constant', value=None):
 def embedding(inp, weight, padding_idx=None, max_norm=None, norm_type=2.0, scale_grad_by_freq=False, sparse=False):
 	raise NotImplementedError
 
-gelu = lambda x: _cb(x.gelu() )
-mish = lambda x: _cb(x.mish() )
-sigmoid = lambda x: _cb(x.sigmoid() )
+gelu = lambda x: _cb(_disinherit(x).gelu() )
+mish = lambda x: _cb(_disinherit(x).mish() )
+sigmoid = lambda x: _cb(_disinherit(x).sigmoid() )
 
-@wrap_tinygrad()
 def cumprod(inp, dim, dtype=None, out=None):
 	# first, get the slices used in the __getitem__ call for each element
+	inp = _disinherit(inp)
 	slices = []
 	for i in range(len(inp.shape)):
 		slices.append(slice(None, None, None) )
@@ -89,4 +91,4 @@ def cumprod(inp, dim, dtype=None, out=None):
 			out = inp[slices]
 		else:
 			out = out*inp[slices]
-	return out
+	return _cb(out)
