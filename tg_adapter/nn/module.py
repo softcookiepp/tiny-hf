@@ -90,6 +90,8 @@ class Module:
 	def cuda(self, device = None):
 		raise NotImplementedError
 		
+		
+		
 	def train(self, train = True):
 		self._train = train
 		
