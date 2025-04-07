@@ -56,8 +56,6 @@ def tinygrad_device_to_torch_device(device):
 					name = etk.lower()
 					if not idx is None:
 						name = f"{name}:{idx}"
-					print(device, name, idx)
-					input()
 					return name
 	
 	raise ValueError
