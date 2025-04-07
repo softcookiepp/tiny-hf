@@ -141,7 +141,8 @@ def _disinherit(inp):
 			new.append(_convert_base(item) )
 		if isinstance(inp, tuple):
 			new = tuple(new)
-		print(new)
+		for elem in new:
+			assert not isinstance(elem, AdapterTensor)
 		return new
 	elif isinstance(inp, dict):
 		for k, v in inp.items():
