@@ -1,6 +1,6 @@
 import tinygrad
 
-from .backend_environment_config import get_backend_override
+from .backend_environment_config import get_backend_override, tinygrad_device_to_torch_device
 
 import inspect
 
@@ -9,6 +9,7 @@ class AdapterTensor(tinygrad.Tensor):
 			requires_grad = False, pin_memory = False):
 		# pin memory is unused, but kept for compatibility
 		super().__init__(data, device, dtype, requires_grad)
+		self._adapter_device = None
 	
 	def cuda(device = None, non_blocking = False, memory_format = "torch.preserve_format"):
 		if not device is None:
@@ -47,7 +48,11 @@ class AdapterTensor(tinygrad.Tensor):
 	
 	@property
 	def device(self):
-		return super().device
+		# TODO: convert tinygrad device to torch device
+		if self._adapter_device is None:
+			dev = tinygrad_device_to_torch_device(super().device)
+			self._adapter_device = device(dev)
+		return self._adapter_device
 	
 def _convert_base(inp):
 	if isinstance(inp, AdapterTensor):

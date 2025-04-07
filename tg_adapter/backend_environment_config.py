@@ -41,3 +41,19 @@ def get_backend_override(backend):
 		return f"{backend}:{index}"
 	return backend
 		
+def tinygrad_device_to_torch_device(device):
+	idx = None
+	name = device
+	if ":" in device:
+		name, idx = tuple(device.split(":"))
+		idx = int(idx)
+	for ek, ev in _ENVIRON.items():
+		if ev == device:
+			for etk, etv in _ENV_TABLE.items():
+				if ek == etv:
+					name = etk.lower()
+					if not idx is None:
+						name = f"{name}:{idx}"
+					return name
+	print(device, name, idx)
+	raise ValueError

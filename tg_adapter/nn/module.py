@@ -3,6 +3,7 @@ from tinygrad.nn.state import safe_save, safe_load, get_state_dict, load_state_d
 from typing import Iterable
 from ..tensor import _convert_base as _cb
 import inspect
+from ..device import device
 
 # adapter for https://pytorch.org/docs/stable/generated/torch.nn.Module.html
 class Module:
