@@ -61,6 +61,9 @@ class AdapterTensor(tinygrad.Tensor):
 		
 	def __sub__(self, other):
 		raise NotImplementedError
+		
+	def __rsub__(self, other):
+		raise NotImplementedError
 	
 	def __mul__(self, other):
 		raise NotImplementedError
