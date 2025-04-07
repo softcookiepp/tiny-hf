@@ -24,6 +24,7 @@ class AdapterTensor(tinygrad.Tensor):
 		input()
 		assert len(args) > 0 or len(kwargs) > 0
 		
+		
 		dtype = None
 		device = None
 		
