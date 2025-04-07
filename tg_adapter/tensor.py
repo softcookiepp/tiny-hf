@@ -77,6 +77,9 @@ class AdapterTensor(tinygrad.Tensor):
 	
 	def __add__(self, other):
 		return self._tg_override(other)
+	
+	def __radd__(self, other):
+		return self._tg_override(other)
 		
 	def __sub__(self, other):
 		return self._tg_override(other)
@@ -85,6 +88,9 @@ class AdapterTensor(tinygrad.Tensor):
 		return self._tg_override(other)
 	
 	def __mul__(self, other):
+		return self._tg_override(other)
+	
+	def __rmul__(self, other):
 		return self._tg_override(other)
 	
 	def __truediv__(self, other):
