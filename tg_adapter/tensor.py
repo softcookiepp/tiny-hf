@@ -20,6 +20,8 @@ class AdapterTensor(tinygrad.Tensor):
 		return self.to("cpu")
 	
 	def to(self, *args, **kwargs):
+		print("to args:", args)
+		input()
 		assert len(args) > 0 or len(kwargs) > 0
 		
 		dtype = None
