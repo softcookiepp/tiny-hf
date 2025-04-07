@@ -2,6 +2,7 @@ import tinygrad
 import numpy as np
 from .tensor import _convert_base as _cb
 from .tensor import _disinherit
+from .tensor import wrap_tinygrad
 
 def interpolate(inp,
 		size=None,
@@ -75,10 +76,8 @@ gelu = lambda x: _cb(x.gelu() )
 mish = lambda x: _cb(x.mish() )
 sigmoid = lambda x: _cb(x.sigmoid() )
 
-
+@wrap_tinygrad
 def cumprod(inp, dim, dtype=None, out=None):
-	inp = _disinherit(inp)
-	
 	# first, get the slices used in the __getitem__ call for each element
 	slices = []
 	for i in range(len(inp.shape)):
@@ -90,4 +89,4 @@ def cumprod(inp, dim, dtype=None, out=None):
 			out = inp[slices]
 		else:
 			out = out*inp[slices]
-	return _cb(out)
+	return out
