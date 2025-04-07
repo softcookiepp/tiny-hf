@@ -70,8 +70,6 @@ class AdapterTensor(tinygrad.Tensor):
 		
 		if len(tg_kwargs) == 0:
 			# fix for methods that don't support **kwargs
-			print("NO KWARGS")
-			print(tg_args)
 			output = tg_self.__getattribute__(tg_attr)(*tg_args)
 		else:
 			output = tg_self.__getattribute__(tg_attr)(*tg_args, **tg_kwargs)
@@ -143,6 +141,7 @@ def _disinherit(inp):
 			new.append(_convert_base(item) )
 		if isinstance(inp, tuple):
 			new = tuple(new)
+		print(new)
 		return new
 	elif isinstance(inp, dict):
 		for k, v in inp.items():
