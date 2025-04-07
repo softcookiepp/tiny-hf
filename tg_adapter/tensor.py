@@ -48,6 +48,7 @@ class AdapterTensor(tinygrad.Tensor):
 	
 	@property
 	def device(self):
+		input(inspect.stack()[0])
 		# TODO: convert tinygrad device to torch device
 		if self._adapter_device is None:
 			dev = tinygrad_device_to_torch_device(super().device)
