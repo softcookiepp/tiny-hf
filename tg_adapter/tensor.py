@@ -12,9 +12,10 @@ class AdapterTensor(tinygrad.Tensor):
 		if isinstance(device, Device):
 			raise NotImplementedError
 		device = get_backend_override(device)
-		if "CUDA" in device:
+		if (not device is None) and "CUDA" in device:
 			input("UH OH WE HAVE A COODA")
 		super().__init__(data, device, dtype, requires_grad)
+		assert not "CUDA" in super().device
 		self._adapter_device = None
 	
 	def cuda(device = None, non_blocking = False, memory_format = "torch.preserve_format"):
