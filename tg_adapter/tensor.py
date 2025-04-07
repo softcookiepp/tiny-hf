@@ -139,7 +139,7 @@ def _disinherit(inp):
 	elif isinstance(inp, list) or isinstance(inp, tuple):
 		new = []
 		for item in inp:
-			new.append(_convert_base(item) )
+			new.append(_disinherit(item) )
 		if isinstance(inp, tuple):
 			new = tuple(new)
 		for elem in new:
@@ -148,12 +148,12 @@ def _disinherit(inp):
 		return new
 	elif isinstance(inp, dict):
 		for k, v in inp.items():
-			inp[k] = _convert_base(v)
+			inp[k] = _disinherit(v)
 		return inp
 	else:
 		if hasattr(inp, "__dict__"):
 			# treat as dictionary hehe
-			new_dict = _convert_base(inp.__dict__)
+			new_dict = _disinherit(inp.__dict__)
 			inp.__dict__.update(new_dict)
 			return inp
 		else:
