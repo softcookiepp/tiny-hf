@@ -1,9 +1,12 @@
-exp = lambda x: x.exp()
-pow = lambda x, y: x.pow(y)
-sum = lambda x, axis: x.sum(axis)
-sin = lambda x: x.sin()
-cos = lambda x: x.cos()
-tan = lambda x: x.tan()
+from .tensor import _convert_base as _cb
+from .tensor import _disinherit
+
+exp = lambda x: _cb( _disinherit(x).exp() )
+pow = lambda x, y: _cb( _disinherit(x).pow(_disinherit(x)) )
+sum = lambda x, axis: _cb( _disinherit(x).sum(axis) )
+sin = lambda x: _cb( _disinherit(x).sin() )
+cos = lambda x: _cb( _disinherit(x).cos() )
+tan = lambda x: _cb( _disinherit(x).tan() )
 
 from .F import sigmoid
 
