@@ -60,7 +60,7 @@ class AdapterTensor(tinygrad.Tensor):
 		# Method for automatically wrapping stuff coded in tinygrad so
 		# stuff works correctly
 		# 
-		tg_attr = in inspect.stack()[1].function
+		tg_attr = inspect.stack()[1].function
 		print(tg_attr)
 		raise NotImplementedError
 	
