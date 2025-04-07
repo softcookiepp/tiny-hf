@@ -41,6 +41,7 @@ def constant_(tensor, val):
 	tensor = _disinherit(tensor)
 	full = tensor.full_like(val)
 	return _cb(tensor.assign(full) )
+	
 
 def xavier_uniform_(tensor, *args, **kwargs):
 	raise NotImplementedError
