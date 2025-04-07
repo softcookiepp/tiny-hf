@@ -12,7 +12,7 @@ class AdapterTensor(tinygrad.Tensor):
 		if isinstance(device, Device):
 			raise NotImplementedError
 		device = get_backend_override(device)
-		if (not device is None)
+		if not device is None:
 			if "CUDA" in device:
 				input("UH OH WE HAVE A COODA")
 		super().__init__(data, device, dtype, requires_grad)
