@@ -70,6 +70,7 @@ class AdapterTensor(tinygrad.Tensor):
 		
 		if len(tg_kwargs) == 0:
 			# fix for methods that don't support **kwargs
+			print("NO KWARGS")
 			output = tg_self.__getattribute__(tg_attr)(*tg_args)
 		else:
 			output = tg_self.__getattribute__(tg_attr)(*tg_args, **tg_kwargs)
