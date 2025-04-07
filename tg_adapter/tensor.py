@@ -56,6 +56,10 @@ class AdapterTensor(tinygrad.Tensor):
 			self._adapter_device = device(dev)
 		return self._adapter_device
 	
+	def _tg_override(self, *args):
+		for frame_info in inspect.stack():
+			print(frame_info)
+		raise NotImplementedError
 	
 	def __add__(self, other):
 		raise NotImplementedError
@@ -64,8 +68,7 @@ class AdapterTensor(tinygrad.Tensor):
 		raise NotImplementedError
 		
 	def __rsub__(self, other):
-		for frame_info in inspect.stack():
-			print(frame_info)
+		self._tg_override(self, other)
 		raise NotImplementedError
 	
 	def __mul__(self, other):
