@@ -66,7 +66,7 @@ class AdapterTensor(tinygrad.Tensor):
 		raise NotImplementedError
 	
 	def __truediv__(self, other):
-		raise NotImplementedError:
+		raise NotImplementedError
 	
 	def __rtruediv__(self, other):
 		raise NotImplementedError
