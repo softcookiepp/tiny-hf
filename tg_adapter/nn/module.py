@@ -30,9 +30,6 @@ class Module:
 			elif isinstance(v, tinygrad.Tensor):
 				# generally no idea what criteria is supposed to be used for this :c
 				pass
-	@property
-	def device(self):
-		raise NotImplementedError
 	
 	def bfloat16(self):
 		raise NotImplementedError
@@ -113,6 +110,7 @@ class Module:
 		
 	def load_state_dict(self, state_dict, strict = True, assign = False):
 		tinygrad.nn.state.load_state_dict(self, state_dict, strict = strict, verbose = True)
+		_cb(self)
 		# expected and missing keys are not implemented yet
 		return [], []
 	
