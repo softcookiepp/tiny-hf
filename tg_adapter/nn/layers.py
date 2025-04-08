@@ -154,3 +154,9 @@ class LayerNorm(Module):
 class Linear(Module):
 	def __init__(self, *args, **kwargs):
 		raise NotImplementedError
+		
+class Embedding(Module):
+	def __init__(self, *args, **kwargs):
+		raise NotImplementedError
+		
+
