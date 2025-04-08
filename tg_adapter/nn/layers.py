@@ -119,7 +119,7 @@ class ConvNd(Module):
 		
 		self.bias = None
 		if bias:
-			self.bias = _cb(tinygrad.Tensor.uniform(Tensor.uniform(out_channels, low=-scale, high=scale) )
+			self.bias = _cb(tinygrad.Tensor.uniform(out_channels, low=-scale, high=scale) )
 	
 	def forward(self, x):
 		return x.conv2d(self.weight, self.bias, self.groups, self.stride, self.dilation, self.padding)
