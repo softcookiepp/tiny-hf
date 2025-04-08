@@ -103,12 +103,9 @@ class Module:
 		# then invoke realize() if that is the case
 		parent_function = inspect.stack()[1].function
 		
-		# actually disinheriting is not a good idea here
-		#args = _disinherit(args)
-		#kwargs = _disinherit(kwargs)
 		print("SELF TYPE:", type(self) )
 		out = self.forward(*args, **kwargs)
-		if (not parent_function in ["__call__", "forward"]) and isinstance(out, tinygrad.Tensor):
+		if True or ( (not parent_function in ["__call__", "forward"]) and isinstance(out, tinygrad.Tensor) ):
 			out = out.realize()
 		return _cb(out)
 		
