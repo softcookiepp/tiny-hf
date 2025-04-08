@@ -126,20 +126,27 @@ class ConvNd(Module):
 
 # ugh, I forgot that torch is going to expect this crap as a type :c
 
-def Conv1d(in_channels, out_channels, kernel_size, stride=1,
+class Conv1d(ConvNd):
+	def __init__(self, in_channels, out_channels, kernel_size, stride=1,
 			padding=0, dilation=1, groups=1, bias=True,
 			padding_mode='zeros', device=None, dtype=None, dim = None):
-	return ConvNd(in_channels, out_channels, kernel_size, stride,
+		super().__init__(in_channels, out_channels, kernel_size, stride,
 			padding, dilation, groups, bias, padding_mode, device, dtype, dim = 1)
 	
-def Conv2d(in_channels, out_channels, kernel_size, stride=1,
+class Conv2d(ConvNd):
+	def __init__(self, in_channels, out_channels, kernel_size, stride=1,
 			padding=0, dilation=1, groups=1, bias=True,
 			padding_mode='zeros', device=None, dtype=None, dim = None):
-	return ConvNd(in_channels, out_channels, kernel_size, stride,
+		super().__init__(in_channels, out_channels, kernel_size, stride,
 			padding, dilation, groups, bias, padding_mode, device, dtype, dim = 2)
 
-def Conv3d(in_channels, out_channels, kernel_size, stride=1,
+class Conv3d(ConvNd):
+	def __init__(self, in_channels, out_channels, kernel_size, stride=1,
 			padding=0, dilation=1, groups=1, bias=True,
 			padding_mode='zeros', device=None, dtype=None, dim = None):
-	return ConvNd(in_channels, out_channels, kernel_size, stride,
+		super().__init__(in_channels, out_channels, kernel_size, stride,
 			padding, dilation, groups, bias, padding_mode, device, dtype, dim = 3)
+			
+class LayerNorm(Module):
+	def __init__(self, *args, **kwargs):
+		raise NotImplementedError
