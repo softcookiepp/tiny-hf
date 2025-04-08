@@ -61,6 +61,7 @@ class AdapterTensor(tinygrad.Tensor):
 		for frame_info in inspect.stack():
 			pass#input(frame_info)
 		# TODO: convert tinygrad device to torch device
+		assert not "CUDA" in super().device
 		if self._adapter_device is None:
 			dev = tinygrad_device_to_torch_device(super().device)
 			self._adapter_device = Device(dev)
