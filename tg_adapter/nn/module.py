@@ -5,6 +5,7 @@ from ..tensor import _convert_base as _cb
 from ..tensor import _disinherit
 import inspect
 from ..device import device
+from ..utils import recursive_realize
 
 # adapter for https://pytorch.org/docs/stable/generated/torch.nn.Module.html
 class Module:
@@ -106,7 +107,7 @@ class Module:
 		print("SELF TYPE:", type(self) )
 		out = self.forward(*args, **kwargs)
 		if True or ( (not parent_function in ["__call__", "forward"]) and isinstance(out, tinygrad.Tensor) ):
-			out = out.realize()
+			out = recursive_realize(out)
 		return _cb(out)
 		
 	def forward(self, *args, **kwargs):
