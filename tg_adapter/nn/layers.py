@@ -99,14 +99,16 @@ class ConvNd(Module):
 		self.stride, self.dilation, self.groups, self.padding = stride, dilation, groups, padding
 		scale = 1 / math.sqrt(in_channels * prod(self.kernel_size))
 		
-		self.weight = _cb(Tensor.uniform(out_channels, in_channels//groups, *self.kernel_size, low=-scale, high=scale) )
+		self.weight = Tensor.uniform(out_channels, in_channels//groups, *self.kernel_size, low=-scale, high=scale)
 		
 		self.bias = None
 		if bias:
-			self.bias = _cb(tinygrad.Tensor.uniform(out_channels, low=-scale, high=scale) )
+			self.bias = tinygrad.Tensor.uniform(out_channels, low=-scale, high=scale)
 	
 	def forward(self, x):
-		return x.conv2d(self.weight, self.bias, self.groups, self.stride, self.dilation, self.padding)
+		x, weight, bias = _disinherit(x, self.weight, self.bias)
+		x = x.conv2d(weight, bias, self.groups, self.stride, self.dilation, self.padding)
+		return _cb(x)
 
 # ugh, I forgot that torch is going to expect this crap as a type :c
 
