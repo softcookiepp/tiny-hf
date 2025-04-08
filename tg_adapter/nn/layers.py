@@ -1,5 +1,6 @@
 from .module import Module
 from tinygrad import Tensor
+import tinygrad
 from tinygrad.helpers import make_tuple, prod
 from ..tensor import _convert_base as _cb
 from ..tensor import _disinherit
