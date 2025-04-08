@@ -111,6 +111,7 @@ class AdapterTensor(tinygrad.Tensor):
 		return self._tg_override(other)
 		
 	def numpy(self):
+		input(super().device)
 		return _disinherit(self).numpy()
 	
 	
