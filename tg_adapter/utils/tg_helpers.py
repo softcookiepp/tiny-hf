@@ -20,6 +20,7 @@ def recursive_realize(self, *args):
 		else:
 			# just append as is
 			new_args.append(arg)
+	assert len(new_args) == len(args)
 	if len(new_args) > 1:
 		return tuple(new_args)
 	return new_args[0]
