@@ -136,8 +136,15 @@ class LayerNorm(Module):
 		raise NotImplementedError
 		
 class Linear(Module):
-	def __init__(self, *args, **kwargs):
-		raise NotImplementedError
+	def __init__(self, in_features, out_features, bias=True, device=None, dtype=None):
+		bound = 1 / math.sqrt(in_features)
+		self.weight = tinygrad.Tensor.uniform(out_features, in_features, low=-bound, high=bound)
+		self.bias = tinygrad.Tensor.uniform(out_features, low=-bound, high=bound) if bias else None
+	
+	def forward(self, x):
+		x = _disinherit(x)
+		x = x.linear(self.weight.transpose(), self.bias)
+		return _cb(x)
 		
 class Embedding(Module):
 	def __init__(self, *args, **kwargs):
