@@ -30,6 +30,7 @@ def copy_state_dict(torch_module, tga_module):
 	fn = os.path.join(d, "tmp.safetensors")
 	save_file(torch_module.state_dict(), fn)
 	state_dict = safe_load(fn)
+	input(state_dict.items()[0][1].device)
 	load_state_dict(tga_module, state_dict)
 	os.remove(fn)
 	
