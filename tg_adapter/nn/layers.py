@@ -161,3 +161,7 @@ class Embedding(Module):
 		raise NotImplementedError
 		
 
+class GroupNorm(Module):
+	def __init__(self, *args, **kwargs):
+		raise NotImplementedError
+
