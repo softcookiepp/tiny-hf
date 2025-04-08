@@ -159,7 +159,7 @@ class GroupNorm(Module):
 		self.weight: Tensor|None = Tensor.ones(num_channels) if affine else None
 		self.bias: Tensor|None = Tensor.zeros(num_channels) if affine else None
 	
-	def forward(x):
+	def forward(self, x):
 		# disinherit stuff
 		x, weight, bias = _disinherit(x, self.weight, self.bias)
 		x = x.reshape(x.shape[0], self.num_groups, -1).layernorm(eps=self.eps).reshape(x.shape)
