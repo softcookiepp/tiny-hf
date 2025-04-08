@@ -142,8 +142,9 @@ class Linear(Module):
 		self.bias = tinygrad.Tensor.uniform(out_features, low=-bound, high=bound) if bias else None
 	
 	def forward(self, x):
-		x = _disinherit(x)
-		x = x.linear(self.weight.transpose(), self.bias)
+		# disinherit stuff
+		x, weight, bias = _disinherit(x, self.weight, self.bias)
+		x = x.linear(weight.transpose(), bias)
 		return _cb(x)
 		
 class Embedding(Module):
@@ -159,10 +160,13 @@ class GroupNorm(Module):
 		self.bias: Tensor|None = Tensor.zeros(num_channels) if affine else None
 	
 	def forward(x):
-		x = _disinherit(x)
+		# disinherit stuff
+		x, weight, bias = _disinherit(x, self.weight, self.bias)
 		x = x.reshape(x.shape[0], self.num_groups, -1).layernorm(eps=self.eps).reshape(x.shape)
-
-		if self.weight is None or self.bias is None: return _cb(x)
-		out = x * self.weight.reshape(1, -1, *[1] * (x.ndim-2)) + self.bias.reshape(1, -1, *[1] * (x.ndim-2))
-		return _cb(x)
+		
+		
+		
+		if weight is None or bias is None: return _cb(x)
+		out = x * weight.reshape(1, -1, *[1] * (x.ndim-2)) + bias.reshape(1, -1, *[1] * (x.ndim-2))
+		return _cb(out)
 

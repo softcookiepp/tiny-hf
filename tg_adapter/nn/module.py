@@ -116,8 +116,7 @@ class Module:
 		raise NotImplementedError
 		
 	def load_state_dict(self, state_dict, strict = True, assign = False):
-		for param in self.parameters():
-			print(param.device)
+		_disinherit(self)
 		tinygrad.nn.state.load_state_dict(self, state_dict, strict = strict, verbose = True)
 		_cb(self)
 		# expected and missing keys are not implemented yet
