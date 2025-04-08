@@ -86,23 +86,6 @@ class Upsample(Module):
 	def forward(self, *args, **kwargs):
 		raise NotImplementedError
 
-class Conv2d:
-
-  def __init__(self, in_channels:int, out_channels:int, kernel_size:int|tuple[int, ...], stride=1, padding:int|tuple[int, ...]|str=0,
-               dilation=1, groups=1, bias=True):
-    self.kernel_size = make_tuple(kernel_size, 2)
-    if isinstance(padding, str):
-      if padding.lower() != 'same': raise ValueError(f"Invalid padding string {padding!r}, only 'same' is supported")
-      if stride != 1: raise ValueError("padding='same' is not supported for strided convolutions")
-      pad = [(d*(k-1)//2, d*(k-1) - d*(k-1)//2) for d,k in zip(make_tuple(dilation, len(self.kernel_size)), self.kernel_size[::-1])]
-      padding = tuple(flatten(pad))
-    self.stride, self.dilation, self.groups, self.padding = stride, dilation, groups, padding
-    scale = 1 / math.sqrt(in_channels * prod(self.kernel_size))
-    self.weight = Tensor.uniform(out_channels, in_channels//groups, *self.kernel_size, low=-scale, high=scale)
-    self.bias: Tensor|None = Tensor.uniform(out_channels, low=-scale, high=scale) if bias else None
-
-  def __call__(self, x:Tensor) -> Tensor: return x.conv2d(self.weight, self.bias, self.groups, self.stride, self.dilation, self.padding)
-		
 class ConvNd(Module):
 	def __init__(self, in_channels, out_channels, kernel_size, stride=1,
 			padding=0, dilation=1, groups=1, bias=True,
@@ -162,6 +145,17 @@ class Embedding(Module):
 		
 
 class GroupNorm(Module):
-	def __init__(self, *args, **kwargs):
-		raise NotImplementedError
+	def __init__(self, num_groups, num_channels, eps=1e-05, affine=True,
+			device=None, dtype=None):
+		self.num_groups, self.num_channels, self.eps = num_groups, num_channels, eps
+		self.weight: Tensor|None = Tensor.ones(num_channels) if affine else None
+		self.bias: Tensor|None = Tensor.zeros(num_channels) if affine else None
+	
+	def forward(x):
+		x = _disinherit(x)
+		x = x.reshape(x.shape[0], self.num_groups, -1).layernorm(eps=self.eps).reshape(x.shape)
+
+		if self.weight is None or self.bias is None: return _cb(x)
+		out = x * self.weight.reshape(1, -1, *[1] * (x.ndim-2)) + self.bias.reshape(1, -1, *[1] * (x.ndim-2))
+		return _cb(x)
 
