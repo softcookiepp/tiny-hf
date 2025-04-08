@@ -115,7 +115,7 @@ class ConvNd(Module):
 		self.stride, self.dilation, self.groups, self.padding = stride, dilation, groups, padding
 		scale = 1 / math.sqrt(in_channels * prod(self.kernel_size))
 		
-		self.weight = _cb(self.weight = Tensor.uniform(out_channels, in_channels//groups, *self.kernel_size, low=-scale, high=scale) )
+		self.weight = _cb(Tensor.uniform(out_channels, in_channels//groups, *self.kernel_size, low=-scale, high=scale) )
 		
 		self.bias = None
 		if bias:
