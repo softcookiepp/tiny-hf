@@ -153,6 +153,7 @@ def _disinherit(*inp):
 	if isinstance(inp, AdapterTensor):
 		t = tinygrad.Tensor(None)
 		t.lazydata = inp.lazydata
+		assert not "CUDA" in t.device
 		return t
 	if isinstance(inp, tinygrad.Tensor):
 		# do nothing
