@@ -132,8 +132,19 @@ class Conv3d(ConvNd):
 			padding, dilation, groups, bias, padding_mode, device, dtype, dim = 3)
 			
 class LayerNorm(Module):
-	def __init__(self, *args, **kwargs):
-		raise NotImplementedError
+	def __init__(self, normalized_shape, eps=1e-05, elementwise_affine=True,
+			bias=True, device=None, dtype=None):
+		self.normalized_shape: tuple[int, ...] = make_tuple(normalized_shape, 1)
+		self.axis, self.eps, self.elementwise_affine = tuple(-1-i for i in range(len(self.normalized_shape))), eps, elementwise_affine
+		self.weight: Tensor|None = Tensor.ones(*self.normalized_shape) if elementwise_affine else None
+		self.bias: Tensor|None = Tensor.zeros(*self.normalized_shape) if bias and elementwise_affine else None
+	
+	def forward(self, x):
+		x, weight, bias = _disinherit(x, self.weight, self.bias)
+		assert self.normalized_shape == x.shape[-len(self.normalized_shape):], f"last dimensions of {x.shape} must match {self.normalized_shape}"
+		x = x.layernorm(eps=self.eps, axis=self.axis)
+		if not self.elementwise_affine: return _cb(x)
+		return _cb(x * weight + bias)
 		
 class Linear(Module):
 	def __init__(self, in_features, out_features, bias=True, device=None, dtype=None):
