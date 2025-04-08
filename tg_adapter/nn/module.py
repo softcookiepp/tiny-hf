@@ -106,7 +106,7 @@ class Module:
 		
 		print("SELF TYPE:", type(self) )
 		out = self.forward(*args, **kwargs)
-		if True or ( (not parent_function in ["__call__", "forward"]) and isinstance(out, tinygrad.Tensor) ):
+		if False or ( (not parent_function in ["__call__", "forward"]) and isinstance(out, tinygrad.Tensor) ):
 			out = recursive_realize(out)
 		return _cb(out)
 		
