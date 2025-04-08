@@ -150,3 +150,7 @@ class Conv3d(ConvNd):
 class LayerNorm(Module):
 	def __init__(self, *args, **kwargs):
 		raise NotImplementedError
+		
+class Linear(Module):
+	def __init__(self, *args, **kwargs):
+		raise NotImplementedError
