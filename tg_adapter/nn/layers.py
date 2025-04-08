@@ -148,8 +148,15 @@ class Linear(Module):
 		return _cb(x)
 		
 class Embedding(Module):
-	def __init__(self, *args, **kwargs):
-		raise NotImplementedError
+	def __init__(self, vocab_size:int, embed_size:int):
+		self.vocab_sz, self.embed_sz, self.weight = vocab_size, embed_size, Tensor.glorot_uniform(vocab_size, embed_size)
+	
+	def forward(self, idx):
+		vocab_sz, embed_sz, weight = _disinherit(self.vocab_sz, self.embed_sz, self.weight)
+		if not hasattr(self, 'arange'): self.arange = Tensor.arange(vocab_sz, requires_grad=False, device=weight.device).unsqueeze(-1)
+		big_shp = idx.shape+(vocab_sz, embed_sz)
+		arange, idx, vals = self.arange.expand(big_shp), idx.reshape(idx.shape+(1, 1)).expand(big_shp), weight.expand(big_shp)
+		return _cb( (arange == idx).mul(vals).sum(-2, acc_dtype=vals.dtype) )
 		
 
 class GroupNorm(Module):
