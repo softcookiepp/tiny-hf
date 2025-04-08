@@ -157,6 +157,7 @@ def _disinherit(*inp):
 		return t
 	if isinstance(inp, tinygrad.Tensor):
 		# do nothing
+		assert not "CUDA" in inp.device
 		return inp
 	elif isinstance(inp, list) or isinstance(inp, tuple):
 		new = []
