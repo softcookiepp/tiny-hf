@@ -209,6 +209,8 @@ def get_parameter_dtype(parameter: tga.nn.Module) -> tga.dtype:
 
 
 def check_support_param_buffer_assignment(model_to_load, state_dict, start_prefix=""):
+	# this crap shouldn't matter for tinygrad
+	return True
 	"""
 	Checks if `model_to_load` supports param buffer assignment (such as when loading in empty weights) by first
 	checking if the model explicitly disables it, then by ensuring that the state dict keys are a subset of the model's
