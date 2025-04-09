@@ -72,7 +72,7 @@ from .utils.import_utils import PROTOBUF_IMPORT_ERROR
 if TYPE_CHECKING:
 	if False:
 		if is_torch_available():
-			import torch
+			import tg_adapter as torch
 		if is_tf_available():
 			import tensorflow as tf
 		if is_flax_available():
@@ -732,7 +732,7 @@ class BatchEncoding(UserDict):
 		elif tensor_type == TensorType.PYTORCH:
 			if not is_torch_available():
 				raise ImportError("Unable to convert output to PyTorch tensors format, PyTorch is not installed.")
-			import torch
+			import tg_adapter as torch
 
 			is_tensor = torch.is_tensor
 
@@ -814,7 +814,7 @@ class BatchEncoding(UserDict):
 			[`BatchEncoding`]: The same instance after modification.
 		"""
 		requires_backends(self, ["torch"])
-		import torch
+		import tg_adapter as torch
 
 		# This check catches things like APEX blindly calling "to" on all inputs to a module
 		# Otherwise it passes the casts down and casts the LongTensor containing the token idxs
