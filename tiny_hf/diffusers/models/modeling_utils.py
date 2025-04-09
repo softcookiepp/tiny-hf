@@ -220,9 +220,10 @@ def check_support_param_buffer_assignment(model_to_load, state_dict, start_prefi
 	if model_to_load.device.type == "meta":
 		return False
 	"""
+	"""
 	if model_to_load.device == "DISK":
 		return False
-
+	"""
 	if len([key for key in state_dict if key.startswith(start_prefix)]) == 0:
 		return False
 
