@@ -287,9 +287,9 @@ def restore_default_torch_dtype(func):
 
 def get_parameter_device(parameter: Union[nn.Module, "ModuleUtilsMixin"]):
 	try:
-		print(parameter.parameters() )
-		return next(parameter.parameters()).device
-	except StopIteration:
+		return parameter.parameters()[0].device
+		#return next(parameter.parameters()).device
+	except StopIteration, IndexError:
 		# For nn.DataParallel compatibility in PyTorch 1.5
 
 		def find_tensor_attributes(module: nn.Module) -> List[Tuple[str, Tensor]]:
