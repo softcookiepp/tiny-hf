@@ -1,5 +1,10 @@
 from .module import Module
-from tinygrad import Tensor
+#from tinygrad import Tensor
+import tinygrad
+from tinygrad.helpers import make_tuple, prod
+from ..tensor import _convert_base as _cb
+from ..tensor import _disinherit
+import math
 
 class AvgPool2d(Module):
 	def __init__(self, kernel_size, stride=None, padding=0,
