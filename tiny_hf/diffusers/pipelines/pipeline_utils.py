@@ -1051,7 +1051,6 @@ class DiffusionPipeline(ConfigMixin, PushToHubMixin):
 
 	@property
 	def _execution_device(self):
-		raise NotImplementedError
 		r"""
 		Returns the device on which the pipeline's models will be executed. After calling
 		[`~DiffusionPipeline.enable_sequential_cpu_offload`] the execution device can only be inferred from
@@ -1066,7 +1065,9 @@ class DiffusionPipeline(ConfigMixin, PushToHubMixin):
 			if not isinstance(model, torch.nn.Module):
 				continue
 			try:
-				return _get_group_onload_device(model)
+				dev = _get_group_onload_device(model)
+				print("group onload device:", dev)
+				return dev
 			except ValueError:
 				pass
 
@@ -1075,6 +1076,7 @@ class DiffusionPipeline(ConfigMixin, PushToHubMixin):
 				continue
 
 			if not hasattr(model, "_hf_hook"):
+				print("self.device:", self.device)
 				return self.device
 			for module in model.modules():
 				if (
@@ -1082,7 +1084,9 @@ class DiffusionPipeline(ConfigMixin, PushToHubMixin):
 					and hasattr(module._hf_hook, "execution_device")
 					and module._hf_hook.execution_device is not None
 				):
+					print("module._hf_hook.execution_device:", module._hf_hook.execution_device)
 					return torch.device(module._hf_hook.execution_device)
+		print("self.device:", self.device)
 		return self.device
 
 	def remove_all_hooks(self):
