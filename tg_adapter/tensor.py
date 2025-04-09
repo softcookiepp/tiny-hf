@@ -42,10 +42,11 @@ class AdapterTensor(tinygrad.Tensor):
 			return super().to(device).cast(dtype)
 			
 		return _convert_base(new_tensor)
-	"""
-	def cast(self, *args, **kwargs):
+	
+	def __bool__(self):
 		raise NotImplementedError
-	"""
+	
+	
 def _convert_base(inp):
 	if isinstance(inp, AdapterTensor):
 		# do nothing
@@ -76,6 +77,7 @@ def _convert_base(inp):
 		else:
 			# inp is a primitive type
 			return inp
+	
 
 def _disinherit(*inp):
 	if len(inp) == 1:
