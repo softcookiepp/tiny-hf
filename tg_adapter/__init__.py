@@ -10,6 +10,8 @@ from . import version
 from . import compiler
 from . import cuda
 
+from .layouts import *
+
 from .io import *
 
 import tinygrad
