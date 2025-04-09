@@ -989,6 +989,7 @@ class CLIPTextTransformer(nn.Module):
             ]
             """
             print(type(input_ids) )
+            print(type(last_hidden_state) )
             input(last_hidden_state.device)
             
             pooled_output = last_hidden_state[
