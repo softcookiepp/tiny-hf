@@ -176,8 +176,8 @@ class Module:
 	
 	@property
 	def dtype(self):
-		raise NotImplementedError
-		
+		for k, v in self.state_dict.items():
+			return v.dtype
 		
 	@property
 	def training(self):
