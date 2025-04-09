@@ -106,7 +106,8 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4):
 			if val_mse > error_threshold:
 				input()
 	elif isinstance(hf_dict, torch.Tensor):
-		error = mse(tg_dict.numpy(), hf_dict.detach().numpy()) 
+		error = mse(tg_dict.numpy(), hf_dict.detach().numpy())
+		print("single output mse:", error, "\n")
 		if error > error_threshold:
 			#print("tiny:")
 			#print(tiny_out.numpy())
