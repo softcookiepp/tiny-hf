@@ -22,6 +22,7 @@ from typing import List, Optional, Tuple, Union
 import numpy as np
 #import torch
 import tg_adapter as torch
+import tinygrad
 
 from ..configuration_utils import ConfigMixin, register_to_config
 from ..utils import BaseOutput
@@ -404,7 +405,7 @@ class DDIMScheduler(SchedulerMixin, ConfigMixin):
 
 		# 2. compute alphas, betas
 		alpha_prod_t = self.alphas_cumprod[timestep]
-		alpha_prod_t_prev = self.alphas_cumprod[prev_timestep] if prev_timestep.numpy() >= 0 else self.final_alpha_cumprod
+		alpha_prod_t_prev = self.alphas_cumprod[prev_timestep] if prev_timestep.cast(tinygrad.dtypes.int).numpy() >= 0 else self.final_alpha_cumprod
 
 		beta_prod_t = 1 - alpha_prod_t
 
