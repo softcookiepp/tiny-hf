@@ -289,7 +289,7 @@ def get_parameter_device(parameter: Union[nn.Module, "ModuleUtilsMixin"]):
 	try:
 		return parameter.parameters()[0].device
 		#return next(parameter.parameters()).device
-	except StopIteration, IndexError:
+	except (StopIteration, IndexError):
 		# For nn.DataParallel compatibility in PyTorch 1.5
 
 		def find_tensor_attributes(module: nn.Module) -> List[Tuple[str, Tensor]]:
