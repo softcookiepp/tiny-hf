@@ -1537,7 +1537,6 @@ class ModuleUtilsMixin:
 		`torch.device`: The device on which the module is (assuming that all the module parameters are on the same
 		device).
 		"""
-		input("WHAT ON EARTH IS THIS")
 		return get_parameter_device(self)
 
 	@property

@@ -29,7 +29,8 @@ def _get_true_backend(backend):
 	return _ENVIRON[_ENV_TABLE[backend] ]
 
 def get_backend_override(backend):
-	if backend is None:
+	if backend is None or backend == backend.upper():
+		# may also be a tinygrad backend too hehe
 		return backend
 	backend = backend.upper()
 	index = 0
