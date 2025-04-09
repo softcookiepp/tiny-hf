@@ -108,9 +108,12 @@ class GEGLU(nn.Module):
         self.proj = nn.Linear(dim_in, dim_out * 2, bias=bias)
 
     def gelu(self, gate: torch.Tensor) -> torch.Tensor:
+		# goodness gracious...
+		"""
         if gate.device.type == "mps" and is_torch_version("<", "2.0.0"):
             # fp16 gelu not supported on mps before torch 2.0
             return F.gelu(gate.to(dtype=torch.float32)).to(dtype=gate.dtype)
+		"""
         return F.gelu(gate)
 
     def forward(self, hidden_states, *args, **kwargs):
