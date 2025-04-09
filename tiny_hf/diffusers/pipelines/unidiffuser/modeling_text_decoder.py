@@ -3,8 +3,8 @@ from typing import Optional
 import numpy as np
 import torch
 from torch import nn
-from transformers import GPT2Config, GPT2LMHeadModel
-from transformers.modeling_utils import ModuleUtilsMixin
+from ....transformers import GPT2Config, GPT2LMHeadModel
+from ....transformers.modeling_utils import ModuleUtilsMixin
 
 from ...configuration_utils import ConfigMixin, register_to_config
 from ...models import ModelMixin

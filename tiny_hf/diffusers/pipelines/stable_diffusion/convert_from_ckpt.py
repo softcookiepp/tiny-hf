@@ -22,7 +22,7 @@ from typing import Dict, Optional, Union
 import requests
 import torch
 import yaml
-from transformers import (
+from ....transformers import (
     AutoFeatureExtractor,
     BertTokenizerFast,
     CLIPImageProcessor,

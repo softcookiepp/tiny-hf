@@ -47,10 +47,10 @@ from .transformers_loading_utils import _load_tokenizer_from_dduf, _load_transfo
 
 if is_transformers_available():
 	import transformers
-	from transformers import PreTrainedModel, PreTrainedTokenizerBase
-	from transformers.utils import FLAX_WEIGHTS_NAME as TRANSFORMERS_FLAX_WEIGHTS_NAME
-	from transformers.utils import SAFE_WEIGHTS_NAME as TRANSFORMERS_SAFE_WEIGHTS_NAME
-	from transformers.utils import WEIGHTS_NAME as TRANSFORMERS_WEIGHTS_NAME
+	from ...transformers import PreTrainedModel, PreTrainedTokenizerBase
+	from ...transformers.utils import FLAX_WEIGHTS_NAME as TRANSFORMERS_FLAX_WEIGHTS_NAME
+	from ...transformers.utils import SAFE_WEIGHTS_NAME as TRANSFORMERS_SAFE_WEIGHTS_NAME
+	from ...transformers.utils import WEIGHTS_NAME as TRANSFORMERS_WEIGHTS_NAME
 
 if is_accelerate_available():
 	import accelerate

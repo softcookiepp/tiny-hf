@@ -1,5 +1,5 @@
 import torch
-from transformers import PreTrainedModel, XLMRobertaConfig, XLMRobertaModel
+from ....transformers import PreTrainedModel, XLMRobertaConfig, XLMRobertaModel
 
 
 class MCLIPConfig(XLMRobertaConfig):

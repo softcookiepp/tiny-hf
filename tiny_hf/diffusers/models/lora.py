@@ -34,7 +34,7 @@ from ..utils.import_utils import is_transformers_available
 
 
 if is_transformers_available():
-	from transformers import CLIPTextModel, CLIPTextModelWithProjection
+	from ...transformers import CLIPTextModel, CLIPTextModelWithProjection
 
 
 logger = logging.get_logger(__name__)  # pylint: disable=invalid-name
