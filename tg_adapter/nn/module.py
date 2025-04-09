@@ -142,10 +142,15 @@ class Module:
 		assert not name in self.__dict__.keys()
 		self.__dict__[name] = tensor
 	
-	def _load_from_state_dict(self, *args, **kwargs):
-		for arg in args:
-			print(type(arg) )
-		print(kwargs)
+	def _load_from_state_dict(self,
+			state_dict,
+			prefix,
+			local_metadata,
+			strict,
+			missing_keys,
+			unexpected_keys,
+			error_msgs):
+		print(prefix)
 		raise NotImplementedError
 	
 	@property
