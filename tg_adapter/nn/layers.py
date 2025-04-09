@@ -131,6 +131,44 @@ class Conv3d(ConvNd):
 		super().__init__(in_channels, out_channels, kernel_size, stride,
 			padding, dilation, groups, bias, padding_mode, device, dtype, dim = 3)
 			
+			
+class ConvTransposeNd(ConvNd):
+	def __init__(self, in_channels, out_channels, kernel_size, stride=1,
+			padding=0, output_padding=0, groups=1, bias=True, dilation=1,
+			padding_mode='zeros', device=None, dtype=None, dim = None):
+		assert not dim is None
+		super().__init__(self, in_channels, out_channels, kernel_size, stride,
+			padding, dilation, groups, bias, padding_mode, device, dtype, dim)
+		scale = 1 / math.sqrt(in_channels * prod(self.kernel_size))
+		self.weight = tinygrad.Tensor.uniform(in_channels, out_channels//groups, *self.kernel_size, low=-scale, high=scale)
+		self.output_padding = output_padding
+	
+	def forward(self, x):
+		x, weight, bias, = _disinherit(x, weight, bias)
+		x = x.conv_transpose2d(self.weight, self.bias, self.groups, self.stride, self.dilation, self.padding, self.output_padding)
+		return _cb(x)
+
+class ConvTranspose1d(ConvTransposeNd):
+	def __init__(self, in_channels, out_channels, kernel_size, stride=1,
+			padding=0, dilation=1, groups=1, bias=True,
+			padding_mode='zeros', device=None, dtype=None, dim = None):
+		super().__init__(in_channels, out_channels, kernel_size, stride,
+			padding, dilation, groups, bias, padding_mode, device, dtype, dim = 1)
+	
+class ConvTranspose2d(ConvTransposeNd):
+	def __init__(self, in_channels, out_channels, kernel_size, stride=1,
+			padding=0, dilation=1, groups=1, bias=True,
+			padding_mode='zeros', device=None, dtype=None, dim = None):
+		super().__init__(in_channels, out_channels, kernel_size, stride,
+			padding, dilation, groups, bias, padding_mode, device, dtype, dim = 2)
+
+class ConvTranspose3d(ConvTransposeNd):
+	def __init__(self, in_channels, out_channels, kernel_size, stride=1,
+			padding=0, dilation=1, groups=1, bias=True,
+			padding_mode='zeros', device=None, dtype=None, dim = None):
+		super().__init__(in_channels, out_channels, kernel_size, stride,
+			padding, dilation, groups, bias, padding_mode, device, dtype, dim = 3)
+			
 class LayerNorm(Module):
 	def __init__(self, normalized_shape, eps=1e-05, elementwise_affine=True,
 			bias=True, device=None, dtype=None):
