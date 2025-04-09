@@ -20,13 +20,10 @@ from typing import List, Optional, Tuple, Union
 from . import logging
 from .import_utils import is_torch_available, is_torch_version
 
-# no need for this
-"""
+
 if is_torch_available():
-	import torch
+	import tg_adapter as torch
 	from torch.fft import fftn, fftshift, ifftn, ifftshift
-"""
-import tg_adapter as torch
 
 logger = logging.get_logger(__name__)  # pylint: disable=invalid-name
 
@@ -40,14 +37,11 @@ except (ImportError, ModuleNotFoundError):
 
 def randn_tensor(
 	shape: Union[Tuple, List],
-	generator = None,#: Optional[Union[List["torch.Generator"], "torch.Generator"]] = None,
-	device = None,#: Optional["torch.device"] = None,
-	dtype = None,#: Optional["torch.dtype"] = None,
-	layout = None,#: Optional["torch.layout"] = None,
+	generator: Optional[Union[List["torch.Generator"], "torch.Generator"]] = None,
+	device: Optional["torch.device"] = None,
+	dtype: Optional["torch.dtype"] = None,
+	layout: Optional["torch.layout"] = None,
 ):
-	# lets just make it easy for now c:
-	latents = tinygrad.Tensor.randn(*shape, device=rand_device, dtype=dtype)
-	
 	"""A helper function to create random tensors on the desired `device` with the desired `dtype`. When
 	passing a list of generators, you can seed each batch size individually. If CPU generators are passed, the tensor
 	is always created on the CPU.
