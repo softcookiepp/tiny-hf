@@ -1051,6 +1051,7 @@ class DiffusionPipeline(ConfigMixin, PushToHubMixin):
 
 	@property
 	def _execution_device(self):
+		raise NotImplementedError
 		r"""
 		Returns the device on which the pipeline's models will be executed. After calling
 		[`~DiffusionPipeline.enable_sequential_cpu_offload`] the execution device can only be inferred from
