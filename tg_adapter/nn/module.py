@@ -145,7 +145,7 @@ class Module:
 		for k, v in self.__dict__.items():
 			if isinstance(v, Module):
 				modules.append(v)
-			elif "tinygrad" in v.__class__:
+			elif "tinygrad" in str(v.__class__):
 				input(v.__class__)
 		return modules
 	
