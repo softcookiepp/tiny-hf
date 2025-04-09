@@ -1,5 +1,4 @@
 from .module import Module
-from tinygrad import Tensor
 import tinygrad
 from tinygrad.helpers import make_tuple, prod
 from ..tensor import _convert_base as _cb
@@ -99,7 +98,7 @@ class ConvNd(Module):
 		self.stride, self.dilation, self.groups, self.padding = stride, dilation, groups, padding
 		scale = 1 / math.sqrt(in_channels * prod(self.kernel_size))
 		
-		self.weight = Tensor.uniform(out_channels, in_channels//groups, *self.kernel_size, low=-scale, high=scale)
+		self.weight = tinygrad.Tensor.uniform(out_channels, in_channels//groups, *self.kernel_size, low=-scale, high=scale)
 		
 		self.bias = None
 		if bias:
@@ -138,8 +137,8 @@ class LayerNorm(Module):
 			bias=True, device=None, dtype=None):
 		self.normalized_shape: tuple[int, ...] = make_tuple(normalized_shape, 1)
 		self.axis, self.eps, self.elementwise_affine = tuple(-1-i for i in range(len(self.normalized_shape))), eps, elementwise_affine
-		self.weight: Tensor|None = Tensor.ones(*self.normalized_shape) if elementwise_affine else None
-		self.bias: Tensor|None = Tensor.zeros(*self.normalized_shape) if bias and elementwise_affine else None
+		self.weight: tinygrad.Tensor|None = tinygrad.Tensor.ones(*self.normalized_shape) if elementwise_affine else None
+		self.bias: tinygrad.Tensor|None = tinygrad.Tensor.zeros(*self.normalized_shape) if bias and elementwise_affine else None
 	
 	def forward(self, x):
 		x, weight, bias = _disinherit(x, self.weight, self.bias)
@@ -162,11 +161,11 @@ class Linear(Module):
 		
 class Embedding(Module):
 	def __init__(self, vocab_size:int, embed_size:int):
-		self.vocab_sz, self.embed_sz, self.weight = vocab_size, embed_size, Tensor.glorot_uniform(vocab_size, embed_size)
+		self.vocab_sz, self.embed_sz, self.weight = vocab_size, embed_size, tinygrad.Tensor.glorot_uniform(vocab_size, embed_size)
 	
 	def forward(self, idx):
 		vocab_sz, embed_sz, weight = _disinherit(self.vocab_sz, self.embed_sz, self.weight)
-		if not hasattr(self, 'arange'): self.arange = Tensor.arange(vocab_sz, requires_grad=False, device=weight.device).unsqueeze(-1)
+		if not hasattr(self, 'arange'): self.arange = tinygrad.Tensor.arange(vocab_sz, requires_grad=False, device=weight.device).unsqueeze(-1)
 		big_shp = idx.shape+(vocab_sz, embed_sz)
 		arange, idx, vals = self.arange.expand(big_shp), idx.reshape(idx.shape+(1, 1)).expand(big_shp), weight.expand(big_shp)
 		return _cb( (arange == idx).mul(vals).sum(-2, acc_dtype=vals.dtype) )
@@ -176,8 +175,8 @@ class GroupNorm(Module):
 	def __init__(self, num_groups, num_channels, eps=1e-05, affine=True,
 			device=None, dtype=None):
 		self.num_groups, self.num_channels, self.eps = num_groups, num_channels, eps
-		self.weight: Tensor|None = Tensor.ones(num_channels) if affine else None
-		self.bias: Tensor|None = Tensor.zeros(num_channels) if affine else None
+		self.weight: tinygrad.Tensor|None = Tensor.ones(num_channels) if affine else None
+		self.bias: tinygrad.Tensor|None = Tensor.zeros(num_channels) if affine else None
 	
 	def forward(self, x):
 		# disinherit stuff

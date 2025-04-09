@@ -13,14 +13,15 @@ from . import cuda
 from .io import *
 
 import tinygrad
-from tinygrad import Tensor
+from .tensor import AdapterTensor
 from .tensor import _convert_base as _cb
 
 # aliases to twist shit into working at least somewhat
-FloatTensor = Tensor
-LongTensor = Tensor
-IntTensor = Tensor
-BoolTensor = Tensor
+FloatTensor = AdapterTensor
+LongTensor = AdapterTensor
+IntTensor = AdapterTensor
+BoolTensor = AdapterTensor
+Tensor = AdapterTensor
 
 
 # reimplementation of torch.cat,
@@ -47,10 +48,10 @@ no_grad = Tensor.test
 
 def is_grad_enabled():
 	# pretty sure this will work
-	return not Tensor.no_grad
+	return not AdapterTensor.no_grad
 
 def is_tensor(a):
-	return isinstance(a, Tensor)
+	return isinstance(a, AdapterTensor)
 
 Size = tuple
 
