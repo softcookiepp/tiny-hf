@@ -138,6 +138,17 @@ class Module:
 		for k, v in self.named_modules(remove_duplicate = remove_duplicate):
 			yield v
 	
+	@property
+	def _modules(self):
+		modules = []
+		# immediate modules
+		for k, v in self.__dict__.items():
+			if isinstance(v, Module):
+				modules.append(v)
+			elif "tinygrad" in v.__class__:
+				input(v.__class__)
+		return modules
+	
 	def register_buffer(self, name, tensor, persistent = True):
 		assert not name in self.__dict__.keys()
 		self.__dict__[name] = tensor
