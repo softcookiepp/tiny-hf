@@ -105,6 +105,10 @@ class Module:
 		parent_function = inspect.stack()[1].function
 		
 		print("SELF TYPE:", type(self) )
+		
+		# gotta do this first hehe
+		args, kwargs = _cb( (args, kwargs) )
+		
 		out = self.forward(*args, **kwargs)
 		#input(_disinherit(out) )
 		"""
