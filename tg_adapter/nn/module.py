@@ -176,8 +176,9 @@ class Module:
 	
 	@property
 	def dtype(self):
-		for k, v in self.state_dict.items():
+		for k, v in self.state_dict().items():
 			return v.dtype
+		return tinygrad.dtypes.float
 		
 	@property
 	def training(self):
