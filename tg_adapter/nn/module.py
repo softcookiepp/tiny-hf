@@ -149,11 +149,11 @@ class Module:
 	
 	@property
 	def _modules(self):
-		modules = []
+		modules = {}
 		# immediate modules
 		for k, v in self.__dict__.items():
 			if is_module(v):
-				modules.append(v)
+				modules[k] = v
 		return modules
 	
 	def register_buffer(self, name, tensor, persistent = True):
