@@ -3,6 +3,7 @@ from .types import get_default_dtype
 from .tensor import _convert_base as _cb
 from .tensor import AdapterTensor
 import numpy as np
+from .layout import strided
 
 def _convert_size(size):
 	if len(size) == 0:
@@ -45,3 +46,10 @@ def linspace(start, end, steps, *, out=None, dtype=None,
 	
 def from_numpy(a: np.ndarray):
 	return _cb(tinygrad.Tensor(a) )
+	
+	
+def randn(*size, *, generator=None, out=None, dtype=None, layout=strided,
+		device=None, requires_grad=False, pin_memory=False):
+	t = tinygrad.Tensor.randn(*size, dtype, requires_grad = requires_grad, device = device)
+	return _cb(t)
+	
