@@ -115,12 +115,20 @@ class AdapterTensor(tinygrad.Tensor):
 		input(super().device)
 		return _disinherit(self).numpy()
 	
+	def _reimplement_exact(self, function, *args, **kwargs):
+		newself, args, kwargs = _disinherit(self, args, kwargs)
+		print(newself, args, kwargs)
+		print(type(newself) )
+		input(newself.device)
+		return _convert_base(newself.__getattribute__(function)(*args, **kwargs) )
+	
 	def masked_fill(self, *args, **kwargs):
 		args, kwargs = _disinherit(args, kwargs)
 		return _convert_base(_disinherit(self).masked_fill(*args, **kwargs) )
 
 	def argmax(self, *args, **kwargs):
-		raise NotImplementedError
+		print(args, kwargs)
+		return self._reimplement_exact("argmax", *args, **kwargs)
 	
 def _convert_base(inp):
 	if isinstance(inp, AdapterTensor):
