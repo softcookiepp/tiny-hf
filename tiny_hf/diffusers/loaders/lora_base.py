@@ -52,7 +52,7 @@ from ..utils import (
 
 
 if is_transformers_available():
-	from transformers import PreTrainedModel
+	from ...transformers import PreTrainedModel
 
 	from ..models.lora import text_encoder_attn_modules, text_encoder_mlp_modules
 

@@ -35,7 +35,7 @@ from .unet_loader_utils import _maybe_expand_lora_scales
 
 
 if is_transformers_available():
-	from transformers import CLIPImageProcessor, CLIPVisionModelWithProjection, SiglipImageProcessor, SiglipVisionModel
+	from ...transformers import CLIPImageProcessor, CLIPVisionModelWithProjection, SiglipImageProcessor, SiglipVisionModel
 
 from ..models.attention_processor import (
 	AttnProcessor,

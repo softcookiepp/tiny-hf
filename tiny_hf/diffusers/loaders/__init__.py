@@ -36,7 +36,7 @@ if is_transformers_available():
             "0.27.0",
             "`text_encoder_lora_state_dict` is deprecated and will be removed in 0.27.0. Make sure to retrieve the weights using `get_peft_model`. See https://huggingface.co/docs/peft/v0.6.2/en/quicktour#peftmodel for more information.",
         )
-        from transformers import CLIPTextModel, CLIPTextModelWithProjection
+        from ...transformers import CLIPTextModel, CLIPTextModelWithProjection
 
         attn_modules = []
 

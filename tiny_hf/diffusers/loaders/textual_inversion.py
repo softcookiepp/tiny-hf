@@ -23,7 +23,7 @@ from ..utils import _get_model_file, is_accelerate_available, is_transformers_av
 
 
 if is_transformers_available():
-    from transformers import PreTrainedModel, PreTrainedTokenizer
+    from ...transformers import PreTrainedModel, PreTrainedTokenizer
 
 if is_accelerate_available():
     from accelerate.hooks import AlignDevicesHook, CpuOffload, remove_hook_from_module

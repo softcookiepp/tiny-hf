@@ -45,8 +45,8 @@ logger = logging.get_logger(__name__)
 SINGLE_FILE_OPTIONAL_COMPONENTS = ["safety_checker"]
 
 if is_transformers_available():
-	import transformers
-	from transformers import PreTrainedModel, PreTrainedTokenizer
+	from ... import transformers
+	from ...transformers import PreTrainedModel, PreTrainedTokenizer
 
 
 def load_single_file_sub_model(
