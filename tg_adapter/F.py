@@ -49,7 +49,7 @@ def group_norm(x, num_groups, weight = None, bias = None, eps = 1.0e-5):
 	
 def scaled_dot_product_attention(query, key, value, attn_mask=None,
 		dropout_p=0.0, is_causal=False, scale=None, enable_gqa=False) -> tinygrad.Tensor:
-	query, key, value = _disinherit( (query, key, value) )
+	query, key, value, attn_mask = _disinherit( (query, key, value, attn_mask) )
 	if enable_gqa:
 		# not ever sure what this is
 		raise NotImplementedError

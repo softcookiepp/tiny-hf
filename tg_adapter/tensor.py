@@ -119,6 +119,8 @@ class AdapterTensor(tinygrad.Tensor):
 		args, kwargs = _disinherit(args, kwargs)
 		return _convert_base(_disinherit(self).masked_fill(*args, **kwargs) )
 
+	def argmax(self, *args, **kwargs):
+		raise NotImplementedError
 	
 def _convert_base(inp):
 	if isinstance(inp, AdapterTensor):
