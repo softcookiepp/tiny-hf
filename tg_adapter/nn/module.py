@@ -4,6 +4,15 @@ from typing import Iterable
 from ..tensor import _convert_base as _cb
 import inspect
 
+
+def is_module(v):
+	if isinstance(v, Module):
+		return True
+	elif "tinygrad.nn." in str(v.__class__):
+		# some tinygrad modules count as well
+		return True
+	return False
+
 # adapter for https://pytorch.org/docs/stable/generated/torch.nn.Module.html
 class Module:
 	def __init__(self, *args, **kwargs):
@@ -127,7 +136,7 @@ class Module:
 		#raise NotImplementedError
 		# prefix indicates this method is called recursively
 		for k, v in self.__dict__.items():
-			if isinstance(v, Module):
+			if is_module(v):
 				k = prefix + k
 				yield k, v
 				for subk, subv in v.named_modules(prefix = f"{k}."):
@@ -143,10 +152,8 @@ class Module:
 		modules = []
 		# immediate modules
 		for k, v in self.__dict__.items():
-			if isinstance(v, Module):
+			if is_module(v):
 				modules.append(v)
-			elif "tinygrad" in str(v.__class__):
-				input(v.__class__)
 		return modules
 	
 	def register_buffer(self, name, tensor, persistent = True):
