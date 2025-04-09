@@ -13,7 +13,7 @@ class AdapterTensor(tinygrad.Tensor):
 			raise NotImplementedError
 		device = get_backend_override(device)
 		if not device is None:
-			if "CUDA" in device:
+			if "CUDA" in device.upper():
 				input("UH OH WE HAVE A COODA")
 		super().__init__(data, device, dtype, requires_grad)
 		if not device is None:
@@ -23,6 +23,7 @@ class AdapterTensor(tinygrad.Tensor):
 	def cuda(device = None, non_blocking = False, memory_format = "torch.preserve_format"):
 		if not device is None:
 			raise NotImplementedError
+		raise NotImplementedError
 		return self.to("cuda")
 	
 	def cpu(memory_format = "torch.preserve_format"):
@@ -46,7 +47,7 @@ class AdapterTensor(tinygrad.Tensor):
 			device = kwargs["device"]
 		
 		device = get_backend_override(device)
-		
+		assert device is None or (not "CUDA" in device)
 		if dtype is None and (not device is None):
 			new_tensor = super().to(device)
 		elif (not dtype is None) and device is None:
@@ -114,7 +115,9 @@ class AdapterTensor(tinygrad.Tensor):
 		input(super().device)
 		return _disinherit(self).numpy()
 	
-	
+	def masked_fill(self, *args, **kwargs):
+		args, kwargs = _disinherit(args, kwargs)
+		return _convert_base(_disinherit(self).masked_fill(*args, **kwargs) )
 
 	
 def _convert_base(inp):

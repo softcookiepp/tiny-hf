@@ -20,7 +20,11 @@ def compare_state_dicts(torch_module, tga_module, error_threshold = 1.0e-3):
 		torch_value = torch_sd[key].detach().numpy()
 		tga_value = tga_sd[key].numpy()
 		assert mse(torch_value, tga_value) < error_threshold
-	
+
+def inspect_state_dict_devices(module):
+	for k, v in module.state_dict().items():
+		print(k, v.device)
+	input("meep")
 
 def copy_state_dict(torch_module, tga_module):
 	# this should work
@@ -163,6 +167,7 @@ def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_m
 	
 	tiny_out = my_module.__getattribute__(my_method)(*my_args, **my_kwargs)
 	
+	inspect_state_dict_devices(my_module)
 	print(f"MSE for {hf_module} and {my_module}:")
 	_test_key_errors(torch_out, tiny_out)
 	"""

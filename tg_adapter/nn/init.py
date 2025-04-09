@@ -4,6 +4,7 @@ from ..tensor import _disinherit
 
 def uniform_(tensor, a = 0.0, b = 1.0, generator = None):
 	tensor = _disinherit(tensor)
+	input(tensor.device)
 	if not generator is None:
 		raise NotImplementedError
 	uni = tinygrad.Tensor.uniform(*tensor.shape, low = a, high = b,
@@ -16,6 +17,7 @@ uniform = uniform_
 # hopefully this works
 def normal_(tensor, mean = 0.0, std = 1.0, generator = None):
 	tensor = _disinherit(tensor)
+	input(tensor.device)
 	if not generator is None:
 		raise NotImplementedError
 	norm = tinygrad.Tensor.normal(*tensor.shape, mean, std,
@@ -28,6 +30,7 @@ normal = normal_
 
 def trunc_normal_(tensor, mean = 0.0, std = 1.0, a = -2.0, b = 2.0, generator = None):
 	tensor = _disinherit(tensor)
+	input(tensor.device)
 	if not generator is None:
 		raise NotImplementedError
 	norm = tinygrad.Tensor.normal(*tensor.shape, mean, std,

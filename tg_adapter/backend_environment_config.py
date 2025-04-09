@@ -49,7 +49,7 @@ def tinygrad_device_to_torch_device(device):
 		name, idx = tuple(device.split(":"))
 		idx = int(idx)
 	for ek, ev in _ENVIRON.items():
-		print(f"ek: {ek}, ev: {ev}, device: {device}")
+		#print(f"ek: {ek}, ev: {ev}, device: {device}")
 		if ev == device:
 			for etk, etv in _ENV_TABLE.items():
 				if ek == etv:

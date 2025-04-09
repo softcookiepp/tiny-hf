@@ -175,8 +175,8 @@ class GroupNorm(Module):
 	def __init__(self, num_groups, num_channels, eps=1e-05, affine=True,
 			device=None, dtype=None):
 		self.num_groups, self.num_channels, self.eps = num_groups, num_channels, eps
-		self.weight: tinygrad.Tensor|None = Tensor.ones(num_channels) if affine else None
-		self.bias: tinygrad.Tensor|None = Tensor.zeros(num_channels) if affine else None
+		self.weight: tinygrad.Tensor|None = tinygrad.Tensor.ones(num_channels) if affine else None
+		self.bias: tinygrad.Tensor|None = tinygrad.Tensor.zeros(num_channels) if affine else None
 	
 	def forward(self, x):
 		# disinherit stuff

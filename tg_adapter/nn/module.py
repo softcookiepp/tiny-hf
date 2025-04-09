@@ -106,6 +106,7 @@ class Module:
 		
 		print("SELF TYPE:", type(self) )
 		out = self.forward(*args, **kwargs)
+		#input(_disinherit(out) )
 		"""
 		if False or ( (not parent_function in ["__call__", "forward"]) and isinstance(out, tinygrad.Tensor) ):
 			out = recursive_realize(out)
@@ -123,7 +124,7 @@ class Module:
 		return [], []
 	
 	def state_dict(self):
-		return tinygrad.nn.state.get_state_dict(self)
+		return _disinherit(tinygrad.nn.state.get_state_dict(self) )
 	
 	def __repr__(self):
 		return f"{self.__class__}"
