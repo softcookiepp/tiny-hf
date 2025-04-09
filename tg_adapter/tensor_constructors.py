@@ -48,7 +48,7 @@ def from_numpy(a: np.ndarray):
 	return _cb(tinygrad.Tensor(a) )
 	
 	
-def randn(*size, *, generator=None, out=None, dtype=None, layout=strided,
+def randn(*size, generator=None, out=None, dtype=None, layout=strided,
 		device=None, requires_grad=False, pin_memory=False):
 	t = tinygrad.Tensor.randn(*size, dtype, requires_grad = requires_grad, device = device)
 	return _cb(t)
