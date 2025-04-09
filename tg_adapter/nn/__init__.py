@@ -5,7 +5,6 @@ from .losses import *
 from .module_list import ModuleList
 
 # lets see if this runs lmao
-from tinygrad.nn import *
 from .activations import *
 from . import utils
 
