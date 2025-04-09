@@ -143,7 +143,8 @@ class Module:
 		self.__dict__[name] = tensor
 	
 	def _load_from_state_dict(self, *args, **kwargs):
-		print(args)
+		for arg in args:
+			print(type(arg) )
 		print(kwargs)
 		raise NotImplementedError
 	
