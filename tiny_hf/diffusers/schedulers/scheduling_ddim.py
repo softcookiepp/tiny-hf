@@ -404,8 +404,7 @@ class DDIMScheduler(SchedulerMixin, ConfigMixin):
 
 		# 2. compute alphas, betas
 		alpha_prod_t = self.alphas_cumprod[timestep]
-		print(prev_timestep.shape)
-		alpha_prod_t_prev = self.alphas_cumprod[prev_timestep] if prev_timestep >= 0 else self.final_alpha_cumprod
+		alpha_prod_t_prev = self.alphas_cumprod[prev_timestep] if prev_timestep.numpy() >= 0 else self.final_alpha_cumprod
 
 		beta_prod_t = 1 - alpha_prod_t
 

@@ -43,9 +43,6 @@ class AdapterTensor(tinygrad.Tensor):
 			
 		return _convert_base(new_tensor)
 	
-	def __bool__(self):
-		raise NotImplementedError
-	
 	
 def _convert_base(inp):
 	if isinstance(inp, AdapterTensor):
