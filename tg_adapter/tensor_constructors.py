@@ -50,6 +50,8 @@ def from_numpy(a: np.ndarray):
 	
 def randn(*size, generator=None, out=None, dtype=None, layout=strided,
 		device=None, requires_grad=False, pin_memory=False):
+	if isinstance(size[0], tuple):
+		size = size[0]
 	t = tinygrad.Tensor.randn(*size, dtype, requires_grad = requires_grad, device = device)
 	return _cb(t)
 	
