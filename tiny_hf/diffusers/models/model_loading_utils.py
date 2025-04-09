@@ -177,7 +177,7 @@ def load_state_dict(
 				# will this work?
 				return tinygrad.nn.state.safe_load(open(checkpoint_file, "rb").read() )
 			else:
-				print("map_location", map_location)
+				#print("map_location", map_location)
 				# Ok, so we need to figure out how to do this...
 				# tinygrad has the safe_load
 				#c = safetensors.torch.load_file(checkpoint_file, device=map_location)
