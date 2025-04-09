@@ -3,7 +3,7 @@ from .types import get_default_dtype
 from .tensor import _convert_base as _cb
 from .tensor import AdapterTensor
 import numpy as np
-from .layout import strided
+from .layouts import strided
 
 def _convert_size(size):
 	if len(size) == 0:
