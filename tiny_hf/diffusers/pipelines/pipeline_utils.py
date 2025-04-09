@@ -521,8 +521,6 @@ class DiffusionPipeline(ConfigMixin, PushToHubMixin):
 		modules = [m for m in modules if isinstance(m, torch.nn.Module)]
 
 		for module in modules:
-			print("module type:", type(module) )
-			input(module.device)
 			return module.device
 
 		return torch.device("cpu")

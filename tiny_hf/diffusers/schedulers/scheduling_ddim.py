@@ -401,11 +401,12 @@ class DDIMScheduler(SchedulerMixin, ConfigMixin):
 		# - pred_prev_sample -> "x_t-1"
 
 		# 1. get previous step value (=t-1)
-		prev_timestep = timestep - self.config.num_train_timesteps // self.num_inference_steps
+		timestep.realize()
+		prev_timestep = timestep.cast(tinygrad.dtypes.float) - self.config.num_train_timesteps // self.num_inference_steps
 
 		# 2. compute alphas, betas
 		alpha_prod_t = self.alphas_cumprod[timestep]
-		alpha_prod_t_prev = self.alphas_cumprod[prev_timestep] if prev_timestep.cast(tinygrad.dtypes.int).numpy() >= 0 else self.final_alpha_cumprod
+		alpha_prod_t_prev = self.alphas_cumprod[prev_timestep] if prev_timestep.numpy() >= 0 else self.final_alpha_cumprod
 
 		beta_prod_t = 1 - alpha_prod_t
 
