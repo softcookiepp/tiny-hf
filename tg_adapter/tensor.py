@@ -91,7 +91,7 @@ class AdapterTensor(tinygrad.Tensor):
 		return _disinherit(self).numpy()
 		
 	def clamp(self, *args, **kwargs):
-		raise NotImplementedError
+		return self._tg_override(*args, **kwargs)
 	
 	
 def _convert_base(inp):
