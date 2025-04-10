@@ -111,6 +111,8 @@ class Module:
 		out = self.forward(*args, **kwargs)
 		if (not parent_function in ["__call__", "forward"]) and isinstance(out, tinygrad.Tensor):
 			pass#out = out.realize()
+		if isinstance(out, tinygrad.Tensor):
+			out = out.realize()
 		return _cb(out)
 		
 	def forward(self, *args, **kwargs):
