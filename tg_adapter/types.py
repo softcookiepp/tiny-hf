@@ -13,10 +13,12 @@ uint8 = tinygrad.dtypes.uint8
 int8 = tinygrad.dtypes.int8
 int16 = tinygrad.dtypes.int16
 int32 = tinygrad.dtypes.int32
-int64 = tinygrad.dtypes.int64
+#int64 = tinygrad.dtypes.int64
+int64 = tinygrad.dtypes.int32 # some backends do not support it :c
 uint16 = tinygrad.dtypes.uint16
 uint32 = tinygrad.dtypes.uint32
-uint64 = tinygrad.dtypes.uint64
+#uint64 = tinygrad.dtypes.uint64
+uint64 = tinygrad.dtypes.uint32 # some backends don't support this data type
 
 # No support for this yet
 float8_e4m3fn = int8
