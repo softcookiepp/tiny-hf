@@ -197,5 +197,4 @@ def _disinherit(*inp):
 			# inp is a primitive type
 			return inp
 
-	def _getitem(self, key):
-		raise NotImplementedError
+	
