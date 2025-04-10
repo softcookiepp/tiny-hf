@@ -149,7 +149,11 @@ class Module:
 		"""
 	
 	def state_dict(self):
-		return _disinherit(tinygrad.nn.state.get_state_dict(self) )
+		raise NotImplementedError
+		#return _disinherit(tinygrad.nn.state.get_state_dict(self) )
+		# Can no longer do that, as AdapterTensor objects are no longer
+		# a subclass of tinygrad.Tensor.
+		# we will have to make a dedicated method...
 	
 	def __repr__(self):
 		return f"{self.__class__}"

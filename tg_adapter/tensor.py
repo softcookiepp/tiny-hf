@@ -154,7 +154,7 @@ class AdapterTensor:
 	
 	def cast(self, dtype):
 		# is this even a torch function? I don't know :c
-		return self.to(dtype)
+		return AdapterTensor(self.tg.cast(dtype) )
 	
 	
 	
