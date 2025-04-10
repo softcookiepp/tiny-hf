@@ -5,6 +5,7 @@ import inspect
 from ..device import device
 from ..utils import recursive_realize
 from ..tensor import AdapterTensor as AT
+from ..tensor import convert_to_torch
 
 # adapter for https://pytorch.org/docs/stable/generated/torch.nn.Module.html
 class Module:
@@ -103,29 +104,49 @@ class Module:
 		# then invoke realize() if that is the case
 		parent_function = inspect.stack()[1].function
 		
-		print("SELF TYPE:", type(self) )
+		args, kwargs = convert_to_torch(args, kwargs)
 		
 		# gotta do this first hehe
-		args, kwargs = _cb( (args, kwargs) )
-		
 		out = self.forward(*args, **kwargs)
 		#input(_disinherit(out) )
 		"""
 		if False or ( (not parent_function in ["__call__", "forward"]) and isinstance(out, tinygrad.Tensor) ):
 			out = recursive_realize(out)
 		"""
-		return _cb(out)
+		return out
 		
 	def forward(self, *args, **kwargs):
 		raise NotImplementedError
+	
+	def _load_elem_state_dict_recursive(self, k, v, state_dict, prefix):
+		if isinstance(v, Module):
+			v._load_state_dict_recursive(state_dict, prefix = f"{k}.")
+		elif isinstance(v, AT):
+			new_key = prefix + k
+			if new_key in state_dict.keys():
+				v.tg.replace(state_dict[new_key].to(v.tg.device) ).realize()
+	
+	def _load_state_dict_recursive(self, state_dict, prefix = ""):
+		for k, v in self.__dict__.items():
+			if isinstance(v, list):
+				for i in range(len(v) ):
+					new_prefix = f"{prefix}.{i}."
+			else:
+				self._load_elem_state_dict_recursive(k, v, state_dict, prefix)
+					
 		
 	def load_state_dict(self, state_dict, strict = True, assign = False):
+		self._load_state_dict_recursive(state_dict)
+		return [], []
+		
+		"""
 		raise NotImplementedError
 		_disinherit(self)
 		tinygrad.nn.state.load_state_dict(self, state_dict, strict = strict, verbose = True)
 		_cb(self)
 		# expected and missing keys are not implemented yet
 		return [], []
+		"""
 	
 	def state_dict(self):
 		return _disinherit(tinygrad.nn.state.get_state_dict(self) )

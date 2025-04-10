@@ -3,6 +3,7 @@ import tinygrad
 from tinygrad.helpers import make_tuple, prod
 import math
 from ..tensor import AdapterTensor as AT
+from ..tensor import convert_to_torch, convert_to_tg
 
 class AvgPool2d(Module):
 	def __init__(self, kernel_size, stride=None, padding=0,
@@ -98,16 +99,16 @@ class ConvNd(Module):
 		scale = 1 / math.sqrt(in_channels * prod(self.kernel_size))
 		
 		#self.weight = tinygrad.Tensor.uniform(out_channels, in_channels//groups, *self.kernel_size, low=-scale, high=scale)
-		self.weight = tinygrad.Tensor.uniform(out_channels, in_channels//groups, *self.kernel_size, low=-scale, high=scale)
+		self.weight = AT(tinygrad.Tensor.uniform(out_channels, in_channels//groups, *self.kernel_size, low=-scale, high=scale) )
 		
 		self.bias = None
 		if bias:
-			self.bias = tinygrad.Tensor.uniform(out_channels, low=-scale, high=scale)
+			self.bias = AT( tinygrad.Tensor.uniform(out_channels, low=-scale, high=scale) )
 	
 	def forward(self, x):
-		x, weight, bias = _disinherit(x, self.weight, self.bias)
+		x, weight, bias = x.tg, self.weight.tg, self.bias.tg
 		x = x.conv2d(weight, bias, self.groups, self.stride, self.dilation, self.padding)
-		return _cb(x)
+		return AT(x)
 
 # ugh, I forgot that torch is going to expect this crap as a type :c
 
@@ -155,9 +156,9 @@ class Linear(Module):
 	
 	def forward(self, x):
 		# disinherit stuff
-		x, weight, bias = _disinherit(x, self.weight, self.bias)
+		x, weight, bias = convert_to_tg(x, self.weight, self.bias)
 		x = x.linear(weight.transpose(), bias)
-		return _cb(x)
+		return convert_to_torch(x)
 		
 class Embedding(Module):
 	def __init__(self, vocab_size:int, embed_size:int):
@@ -180,12 +181,12 @@ class GroupNorm(Module):
 	
 	def forward(self, x):
 		# disinherit stuff
-		x, weight, bias = _disinherit(x, self.weight, self.bias)
+		x, weight, bias = convert_to_tg(x, self.weight, self.bias)
 		x = x.reshape(x.shape[0], self.num_groups, -1).layernorm(eps=self.eps).reshape(x.shape)
 		
 		
 		
 		if weight is None or bias is None: return _cb(x)
 		out = x * weight.reshape(1, -1, *[1] * (x.ndim-2)) + bias.reshape(1, -1, *[1] * (x.ndim-2))
-		return _cb(out)
+		return AT(out)
 

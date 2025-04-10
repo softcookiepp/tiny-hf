@@ -23,6 +23,14 @@ class AdapterTensor:
 	@property
 	def tg(self):
 		return self._tg
+		
+	@property
+	def shape(self):
+		return self.tg.shape
+		
+	@property
+	def ndim(self):
+		return len(self.shape)
 	
 	def cuda(device = None, non_blocking = False, memory_format = "torch.preserve_format"):
 		if not device is None:
@@ -34,7 +42,6 @@ class AdapterTensor:
 	
 	def to(self, *args, **kwargs):
 		assert len(args) > 0 or len(kwargs) > 0
-		
 		
 		dtype = None
 		device = None
@@ -52,7 +59,7 @@ class AdapterTensor:
 		device = get_backend_override(device)
 		assert device is None or (not "CUDA" in device)
 		if dtype is None and (not device is None):
-			new_tensor = super().to(device)
+			new_tensor = self.tg.to(device)
 		elif (not dtype is None) and device is None:
 			new_tensor = self.cast(dtype)
 		elif not (dtype is None or device is None):
@@ -65,11 +72,9 @@ class AdapterTensor:
 		for frame_info in inspect.stack():
 			pass#input(frame_info)
 		# TODO: convert tinygrad device to torch device
-		assert not "CUDA" in super().device
-		if self._adapter_device is None:
-			dev = tinygrad_device_to_torch_device(super().device)
-			self._adapter_device = Device(dev)
-		return self._adapter_device
+		
+		dev = tinygrad_device_to_torch_device(self.tg.device)
+		return Device(dev)
 	
 	def _tg_override(self, *args, **kwargs):
 		# Method for automatically wrapping stuff coded in tinygrad so
@@ -80,15 +85,17 @@ class AdapterTensor:
 		
 		# convert everything back to tinygrad.Tensor temporarily
 		tg_self = self.tg
-		tg_args = _disinherit(args)
-		tg_kwargs = _disinherit(kwargs)
+		tg_args = convert_to_tg(args)
+		tg_kwargs = convert_to_tg(kwargs)
 		
 		if len(tg_kwargs) == 0:
 			# fix for methods that don't support **kwargs
 			output = tg_self.__getattribute__(tg_attr)(*tg_args)
 		else:
 			output = tg_self.__getattribute__(tg_attr)(*tg_args, **tg_kwargs)
-		return _convert_base(output)
+		return convert_to_torch(output)
+		
+	
 	
 	def __add__(self, other):
 		return self._tg_override(other)
@@ -119,25 +126,30 @@ class AdapterTensor:
 		return _disinherit(self).numpy()
 	
 	def _reimplement_exact(self, function, *args, **kwargs):
-		newself, args, kwargs = _disinherit(self, args, kwargs)
+		newself, args, kwargs = convert_to_tg(self, args, kwargs)
 		print(newself, args, kwargs)
 		print(type(newself) )
 		input(newself.device)
-		return _convert_base(newself.__getattribute__(function)(*args, **kwargs) )
+		return convert_to_torch(newself.__getattribute__(function)(*args, **kwargs) )
 	
 	def masked_fill(self, *args, **kwargs):
 		args, kwargs = _disinherit(args, kwargs)
-		return _convert_base(_disinherit(self).masked_fill(*args, **kwargs) )
+		return convert_to_tg(_disinherit(self).masked_fill(*args, **kwargs) )
 
 	def argmax(self, *args, **kwargs):
 		print(args, kwargs)
 		return self._reimplement_exact("argmax", *args, **kwargs)
+	
+	def view(self, *shape):
+		return self._reimplement_exact("view", *shape)
+	
+	def transpose(self, *args, **kwargs):
+		return self._reimplement_exact("transpose", *args, **kwargs)
 
 def convert_to_torch(*inp):
-	if len(inp) == 0:
+	if len(inp) == 1:
 		inp = inp[0]
 	if isinstance(inp, AdapterTensor):
-		# do nothing
 		return inp
 	if isinstance(inp, tinygrad.Tensor):
 		return AdapterTensor(inp)

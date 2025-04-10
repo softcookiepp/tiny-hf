@@ -34,7 +34,7 @@ from .device import device
 
 def is_grad_enabled():
 	# pretty sure this will work
-	return not AdapterTensor.no_grad
+	return not tinygrad.Tensor.no_grad
 
 def is_tensor(a):
 	return isinstance(a, AdapterTensor)
