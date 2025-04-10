@@ -233,7 +233,8 @@ class DDIMScheduler(SchedulerMixin, ConfigMixin):
 
 		# setable values
 		self.num_inference_steps = None
-		self.timesteps = torch.from_numpy(np.arange(0, num_train_timesteps)[::-1].copy().astype(np.int64))
+		#self.timesteps = torch.from_numpy(np.arange(0, num_train_timesteps)[::-1].copy().astype(np.int64))
+		self.timesteps = torch.from_numpy(np.arange(0, num_train_timesteps)[::-1].copy().astype(np.int32))
 
 	def scale_model_input(self, sample: torch.Tensor, timestep: Optional[int] = None) -> torch.Tensor:
 		"""
