@@ -89,6 +89,9 @@ class AdapterTensor(tinygrad.Tensor):
 	def numpy(self):
 		input(super().device)
 		return _disinherit(self).numpy()
+		
+	def clamp(self, *args, **kwargs):
+		raise NotImplementedError
 	
 	
 def _convert_base(inp):
