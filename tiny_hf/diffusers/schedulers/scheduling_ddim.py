@@ -484,6 +484,7 @@ class DDIMScheduler(SchedulerMixin, ConfigMixin):
 		noise: torch.Tensor,
 		timesteps: torch.IntTensor,
 	) -> torch.Tensor:
+		print("timesteps:", timesteps)
 		input(timesteps.dtype)
 		# Make sure alphas_cumprod and timestep have same device and dtype as original_samples
 		# Move the self.alphas_cumprod to device to avoid redundant CPU to GPU data movement
