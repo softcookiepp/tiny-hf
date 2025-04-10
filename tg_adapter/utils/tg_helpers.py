@@ -25,3 +25,13 @@ def recursive_realize(self, *args):
 	if len(new_args) > 1:
 		return tuple(new_args)
 	return new_args[0]
+	
+
+
+class TinygradFunction:
+	def __init__(self, function):
+		self._function = function
+	
+	def __call__(*args, **kwargs):
+		for arg in args:
+			pass

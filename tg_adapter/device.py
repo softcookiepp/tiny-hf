@@ -1,6 +1,6 @@
 from .backend_environment_config import get_backend_override, tinygrad_device_to_torch_device
 
-class device(str):
+class device:
 	def __init__(self, name):
 		self._name = name
 		self._idx = 0

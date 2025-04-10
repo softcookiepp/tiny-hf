@@ -3,6 +3,7 @@ import tinygrad
 from .backend_environment_config import get_backend_override, tinygrad_device_to_torch_device
 from .device import device as Device
 import inspect
+import numpy as np
 
 class AdapterTensor:
 	def __init__(self, data, dtype = None, device = None,
@@ -14,7 +15,10 @@ class AdapterTensor:
 		
 		if isinstance(data, tinygrad.Tensor):
 			self._tg = data
-		self._tg = tinygrad.Tensor(data)
+		elif isinstance(data, np.ndarray):
+			self._tg = tinygrad.Tensor(data)
+		else:
+			raise Exception(f"Tensor creationw with {type(data)} not yet implemented.")
 	
 	@property
 	def tg(self):

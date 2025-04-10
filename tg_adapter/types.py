@@ -53,4 +53,8 @@ class AdapterDType:
 		# This will be a silly little wrapper around the existing tinygrad dtypes
 		# to make them more torch-compatible
 		raise NotImplementedError
-		
+
+class dtype:
+	def __init__(self):
+		raise NotImplementedError
+	

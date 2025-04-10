@@ -32,9 +32,6 @@ dtype = tinygrad.dtype.DType
 # TODO: make an actual device class, then rejigger the state dict loader to do some other stuff
 from .device import device
 
-# @torch.no_grad()
-# may also have to call @Tensor.train(mode = False)
-no_grad = Tensor.test
 
 def is_grad_enabled():
 	# pretty sure this will work
@@ -48,3 +45,5 @@ Size = tuple
 __version__ = "2.6.0"
 
 from .F import chunk, clamp, cat
+
+from .utils import no_grad
