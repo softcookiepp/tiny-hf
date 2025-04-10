@@ -313,8 +313,6 @@ class Decoder(nn.Module):
 			sample = self.conv_norm_out(sample, latent_embeds)
 		sample = self.conv_act(sample)
 		sample = self.conv_out(sample)
-		print(self.conv_out)
-		input(sample)
 		return sample
 
 
