@@ -9,6 +9,7 @@ from tinygrad.nn.state import torch_load, safe_load, load_state_dict, get_state_
 import safetensors
 from safetensors.torch import save_file
 
+import tg_adapter
 from tg_adapter import F
 
 def compare_state_dicts(torch_module, tga_module, error_threshold = 1.0e-3):
@@ -410,13 +411,24 @@ def test_stable_diffusion_pipeline():
 	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = tg_scheduler)
 	
 	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 2}, hf_module, "__call__", tg_module, "__call__")
+
+def test_scheduler():
+	from tiny_hf.diffusers.schedulers import DDIMScheduler as tg_class
+	from diffusers.schedulers import DDIMScheduler as hf_class
+	
+	hf_module = hf_class()
+	tg_module = tg_class()
+	
+	assert isinstance(tg_module, tg_adapter.nn.Module)
+	input("did it work?")
 	
 
 @tinygrad.Tensor.test()
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
-	test_stable_diffusion_pipeline()
+	test_scheduler()
+	#test_stable_diffusion_pipeline()
 	
 	test_autoencoderkl()
 	test_clip_text_model()
