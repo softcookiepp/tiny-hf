@@ -79,7 +79,7 @@ class AdapterTensor:
 		tg_attr = inspect.stack()[1].function
 		
 		# convert everything back to tinygrad.Tensor temporarily
-		tg_self = _disinherit(self)
+		tg_self = self.tg
 		tg_args = _disinherit(args)
 		tg_kwargs = _disinherit(kwargs)
 		
@@ -132,73 +132,6 @@ class AdapterTensor:
 	def argmax(self, *args, **kwargs):
 		print(args, kwargs)
 		return self._reimplement_exact("argmax", *args, **kwargs)
-	
-def _convert_base(inp):
-	if isinstance(inp, AdapterTensor):
-		# do nothing
-		return inp
-	if isinstance(inp, tinygrad.Tensor):
-		assert not "CUDA" in inp.device
-		t = AdapterTensor(None)
-		# oh god this is hacky
-		t.lazydata = inp.lazydata
-		assert isinstance(t, AdapterTensor)
-		return t
-	elif isinstance(inp, list) or isinstance(inp, tuple):
-		new = []
-		for item in inp:
-			new.append(_convert_base(item) )
-		if isinstance(inp, tuple):
-			new = tuple(new)
-		return new
-	elif isinstance(inp, dict):
-		for k, v in inp.items():
-			inp[k] = _convert_base(v)
-		return inp
-	else:
-		if hasattr(inp, "__dict__"):
-			# treat as dictionary hehe
-			new_dict = _convert_base(inp.__dict__)
-			inp.__dict__.update(new_dict)
-			return inp
-		else:
-			# inp is a primitive type
-			return inp
 
-def _disinherit(*inp):
-	if len(inp) == 1:
-		inp = inp[0]
-	if isinstance(inp, AdapterTensor):
-		t = tinygrad.Tensor(None)
-		t.lazydata = inp.lazydata
-		assert not "CUDA" in t.device
-		return t
-	if isinstance(inp, tinygrad.Tensor):
-		# do nothing
-		assert not "CUDA" in inp.device
-		return inp
-	elif isinstance(inp, list) or isinstance(inp, tuple):
-		new = []
-		for item in inp:
-			new.append(_disinherit(item) )
-		if isinstance(inp, tuple):
-			new = tuple(new)
-		for elem in new:
-			assert not isinstance(elem, AdapterTensor)
-			
-		return new
-	elif isinstance(inp, dict):
-		for k, v in inp.items():
-			inp[k] = _disinherit(v)
-		return inp
-	else:
-		if hasattr(inp, "__dict__"):
-			# treat as dictionary hehe
-			new_dict = _disinherit(inp.__dict__)
-			inp.__dict__.update(new_dict)
-			return inp
-		else:
-			# inp is a primitive type
-			return inp
-
+def convert_to_tg(*args):
 	

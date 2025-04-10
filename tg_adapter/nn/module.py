@@ -1,11 +1,10 @@
 import tinygrad
 from tinygrad.nn.state import safe_save, safe_load, get_state_dict, load_state_dict, torch_load
 from typing import Iterable
-from ..tensor import _convert_base as _cb
-from ..tensor import _disinherit
 import inspect
 from ..device import device
 from ..utils import recursive_realize
+from ..tensor import AdapterTensor as AT
 
 # adapter for https://pytorch.org/docs/stable/generated/torch.nn.Module.html
 class Module:
@@ -121,6 +120,7 @@ class Module:
 		raise NotImplementedError
 		
 	def load_state_dict(self, state_dict, strict = True, assign = False):
+		raise NotImplementedError
 		_disinherit(self)
 		tinygrad.nn.state.load_state_dict(self, state_dict, strict = strict, verbose = True)
 		_cb(self)

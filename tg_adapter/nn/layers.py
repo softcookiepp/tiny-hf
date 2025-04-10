@@ -1,9 +1,8 @@
 from .module import Module
 import tinygrad
 from tinygrad.helpers import make_tuple, prod
-from ..tensor import _convert_base as _cb
-from ..tensor import _disinherit
 import math
+from ..tensor import AdapterTensor as AT
 
 class AvgPool2d(Module):
 	def __init__(self, kernel_size, stride=None, padding=0,
@@ -21,7 +20,7 @@ class AvgPool2d(Module):
 		inp = _disinherit(inp)
 		out = inp.avg_pool2d(self._kernel_size, self._stride,
 			1, self._padding, self._ceil_mode, self._count_include_pad)
-		return _cb(out)
+		return AT(out)
 
 class SequentialIterator:
 	def __init__(self, module):
@@ -63,7 +62,7 @@ class Dropout(Module):
 		self._p = p
 	
 	def forward(self, inp):
-		return _cb(_disinherit(inp).dropout(self._p) )
+		return AT(inp.tg.dropout(self._p) )
 
 class AdaGroupNorm(Module):
 	def __init__(self, *args, **kwargs):
@@ -98,6 +97,7 @@ class ConvNd(Module):
 		self.stride, self.dilation, self.groups, self.padding = stride, dilation, groups, padding
 		scale = 1 / math.sqrt(in_channels * prod(self.kernel_size))
 		
+		#self.weight = tinygrad.Tensor.uniform(out_channels, in_channels//groups, *self.kernel_size, low=-scale, high=scale)
 		self.weight = tinygrad.Tensor.uniform(out_channels, in_channels//groups, *self.kernel_size, low=-scale, high=scale)
 		
 		self.bias = None

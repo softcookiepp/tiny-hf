@@ -1,16 +1,14 @@
 import tinygrad
-from ..tensor import _convert_base as _cb
-from ..tensor import _disinherit
+from ..tensor import AdapterTensor as AT
 
 def uniform_(tensor, a = 0.0, b = 1.0, generator = None):
-	tensor = _disinherit(tensor)
-	input(tensor.device)
+	tensor = tensor.tg
 	if not generator is None:
 		raise NotImplementedError
 	uni = tinygrad.Tensor.uniform(*tensor.shape, low = a, high = b,
 		dtype = tensor.dtype, requires_grad = tensor.requires_grad,
 		device = tensor.device)
-	return _cb(tensor.assign(uni) )
+	return AT(tensor.tg.assign(uni) )
 
 uniform = uniform_
 
@@ -24,12 +22,12 @@ def normal_(tensor, mean = 0.0, std = 1.0, generator = None):
 		tensor.requires_grad,
 		dtype = tensor.dtype,
 		device = tensor.device)
-	return _cb(tensor.assign(norm) )
+	return AT(tensor.assign(norm) )
 
 normal = normal_
 
 def trunc_normal_(tensor, mean = 0.0, std = 1.0, a = -2.0, b = 2.0, generator = None):
-	tensor = _disinherit(tensor)
+	tensor = tensor.tg
 	input(tensor.device)
 	if not generator is None:
 		raise NotImplementedError
@@ -38,12 +36,12 @@ def trunc_normal_(tensor, mean = 0.0, std = 1.0, a = -2.0, b = 2.0, generator = 
 		dtype = tensor.dtype,
 		device = tensor.device)
 	norm = norm.clamp(a, b)
-	return _cb(tensor.assign(norm) )
+	return AT(tensor.assign(norm) )
 
 def constant_(tensor, val):
-	tensor = _disinherit(tensor)
+	tensor = tensor.tg
 	full = tensor.full_like(val)
-	return _cb(tensor.assign(full) )
+	return AT(tensor.assign(full) )
 	
 
 def xavier_uniform_(tensor, *args, **kwargs):

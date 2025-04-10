@@ -14,7 +14,6 @@ from .io import *
 
 import tinygrad
 from .tensor import AdapterTensor
-from .tensor import _convert_base as _cb
 
 # aliases to twist shit into working at least somewhat
 FloatTensor = AdapterTensor
