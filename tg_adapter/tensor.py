@@ -12,11 +12,13 @@ class AdapterTensor:
 		if isinstance(device, Device):
 			raise NotImplementedError
 		
+		if isinstance(data, tinygrad.Tensor):
+			self._tg = data
 		self._tg = tinygrad.Tensor(data)
 	
 	@property
 	def tg(self):
-		return self.tg
+		return self._tg
 	
 	def cuda(device = None, non_blocking = False, memory_format = "torch.preserve_format"):
 		if not device is None:
