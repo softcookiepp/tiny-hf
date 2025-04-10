@@ -58,3 +58,6 @@ class dtype:
 	def __init__(self):
 		raise NotImplementedError
 	
+def get_torch_dtype(t):
+	raise NotImplementedError
+	

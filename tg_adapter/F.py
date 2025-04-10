@@ -1,5 +1,6 @@
 import tinygrad
 import numpy as np
+from .tensor import convert_to_tg, convert_to_torch
 
 
 def interpolate(inp,
@@ -33,22 +34,22 @@ def interpolate(inp,
 		size = tuple(size)
 	else:
 		assert isinstance(size, tuple)
-	return _cb( inp.interpolate(size, mode, align_corners) )
+	return convert_to_torch( inp.interpolate(size, mode, align_corners) )
 	
 def group_norm(x, num_groups, weight = None, bias = None, eps = 1.0e-5):
 	# derived from the tinygrad source code c:
-	x = _disinherit(x)
+	x = convert_to_tg(x)
 	x = x.reshape(x.shape[0], num_groups, -1).layernorm(eps=eps).reshape(x.shape)
 
 	if weight is None or bias is None: return x
-	weight = _disinherit(weight)
-	bias = _disinherit(bias)
+	weight = convert_to_tg(weight)
+	bias = convert_to_tg(bias)
 	# elementwise_affine on channels
-	return _cb(x * weight.reshape(1, -1, *[1] * (x.ndim-2)) + bias.reshape(1, -1, *[1] * (x.ndim-2)) )
+	return convert_to_torch(x * weight.reshape(1, -1, *[1] * (x.ndim-2)) + bias.reshape(1, -1, *[1] * (x.ndim-2)) )
 	
 def scaled_dot_product_attention(query, key, value, attn_mask=None,
 		dropout_p=0.0, is_causal=False, scale=None, enable_gqa=False) -> tinygrad.Tensor:
-	query, key, value, attn_mask = _disinherit( (query, key, value, attn_mask) )
+	query, key, value, attn_mask = convert_to_tg( (query, key, value, attn_mask) )
 	if enable_gqa:
 		# not ever sure what this is
 		raise NotImplementedError
@@ -59,7 +60,7 @@ def scaled_dot_product_attention(query, key, value, attn_mask=None,
 		
 		# then multiply the query by it
 		query = query * scale_factor
-	return _cb( query.scaled_dot_product_attention(key, value, attn_mask,
+	return convert_to_torch( query.scaled_dot_product_attention(key, value, attn_mask,
 		dropout_p, is_causal) )
 
 def pad(inp, pad, mode='constant', value=None):
@@ -67,19 +68,19 @@ def pad(inp, pad, mode='constant', value=None):
 		value = 0.0
 	if mode != "constant":
 		raise NotImplementedError
-	inp = _disinherit(inp)
-	return _cb(inp.pad(pad, mode, value) )
+	inp = convert_to_tg(inp)
+	return convert_to_torch(inp.pad(pad, mode, value) )
 	
 def embedding(inp, weight, padding_idx=None, max_norm=None, norm_type=2.0, scale_grad_by_freq=False, sparse=False):
 	raise NotImplementedError
 
-gelu = lambda x: _cb(_disinherit(x).gelu() )
-mish = lambda x: _cb(_disinherit(x).mish() )
-sigmoid = lambda x: _cb(_disinherit(x).sigmoid() )
+gelu = lambda x: convert_to_torch(convert_to_tg(x).gelu() )
+mish = lambda x: convert_to_torch(convert_to_tg(x).mish() )
+sigmoid = lambda x: convert_to_torch(convert_to_tg(x).sigmoid() )
 
 def cumprod(inp, dim, dtype=None, out=None):
 	# first, get the slices used in the __getitem__ call for each element
-	inp = _disinherit(inp)
+	inp = convert_to_tg(inp)
 	slices = []
 	for i in range(len(inp.shape)):
 		slices.append(slice(None, None, None) )
@@ -90,18 +91,18 @@ def cumprod(inp, dim, dtype=None, out=None):
 			out = inp[slices]
 		else:
 			out = out*inp[slices]
-	return _cb(out)
+	return convert_to_torch(out)
 	
 # easier than rearranging huggingface code lol
 def chunk(inp, chunks: int, dim: int = 0):
-	inp = _disinherit(inp)
-	return _cb(inp.chunk(chunks, dim) )
+	inp = convert_to_tg(inp)
+	return convert_to_torch(inp.chunk(chunks, dim) )
 	
 def clamp(inp, min = None, max = None):
-	inp = _disinherit(inp)
-	return _cb(inp.clamp(min, max) )
+	inp = convert_to_tg(inp)
+	return convert_to_torch(inp.clamp(min, max) )
 	
 def cat(tensors, dim = 0):
 	tbase = tensors[0].tg
 	trest = tuple(tensors[1:])
-	return _cb(tbase.cat(*trest, dim = dim) )
+	return convert_to_torch(tbase.cat(*trest, dim = dim) )

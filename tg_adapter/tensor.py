@@ -4,6 +4,7 @@ from .backend_environment_config import get_backend_override, tinygrad_device_to
 from .device import device as Device
 import inspect
 import numpy as np
+from .types import get_torch_dtype
 
 class AdapterTensor:
 	def __init__(self, data, dtype = None, device = None,
@@ -31,6 +32,12 @@ class AdapterTensor:
 	@property
 	def ndim(self):
 		return len(self.shape)
+	
+	@property
+	def dtype(self):
+		# feeling pretty damn lazy, will make a dedicated dtype class later maybe.
+		# just maybe.
+		return self.tg.dtype
 	
 	def cuda(device = None, non_blocking = False, memory_format = "torch.preserve_format"):
 		if not device is None:
@@ -122,14 +129,10 @@ class AdapterTensor:
 		return self._tg_override(other)
 		
 	def numpy(self):
-		input(super().device)
 		return _disinherit(self).numpy()
 	
 	def _reimplement_exact(self, function, *args, **kwargs):
 		newself, args, kwargs = convert_to_tg(self, args, kwargs)
-		print(newself, args, kwargs)
-		print(type(newself) )
-		input(newself.device)
 		return convert_to_torch(newself.__getattribute__(function)(*args, **kwargs) )
 	
 	def masked_fill(self, *args, **kwargs):
@@ -145,7 +148,16 @@ class AdapterTensor:
 	
 	def transpose(self, *args, **kwargs):
 		return self._reimplement_exact("transpose", *args, **kwargs)
-
+	
+	def reshape(self, *args, **kwargs):
+		return self._reimplement_exact("reshape", *args, **kwargs)
+	
+	def cast(self, dtype):
+		# is this even a torch function? I don't know :c
+		return self.to(dtype)
+	
+	
+	
 def convert_to_torch(*inp):
 	if len(inp) == 1:
 		inp = inp[0]
