@@ -23,16 +23,6 @@ IntTensor = AdapterTensor
 BoolTensor = AdapterTensor
 Tensor = AdapterTensor
 
-
-# reimplementation of torch.cat,
-# since it is more convenient than tinygrad's cat method
-def cat(tensors, dim = 0):
-	tbase = tensors[0]
-	trest = tuple(tensors[1:])
-	return _cb(tbase.cat(*trest, dim = dim) )
-
-
-
 dtype = tinygrad.dtype.DType
 
 #def device(dev):
@@ -57,4 +47,4 @@ Size = tuple
 
 __version__ = "2.6.0"
 
-from .F import chunk, clamp
+from .F import chunk, clamp, cat

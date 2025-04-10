@@ -4,26 +4,23 @@ from .backend_environment_config import get_backend_override, tinygrad_device_to
 from .device import device as Device
 import inspect
 
-class AdapterTensor(tinygrad.Tensor):
+class AdapterTensor:
 	def __init__(self, data, dtype = None, device = None,
 			requires_grad = False, pin_memory = False):
 		# pin memory is unused, but kept for compatibility
 		# convert device, duh
 		if isinstance(device, Device):
 			raise NotImplementedError
-		device = get_backend_override(device)
-		if not device is None:
-			if "CUDA" in device.upper():
-				input("UH OH WE HAVE A COODA")
-		super().__init__(data, device, dtype, requires_grad)
-		if not device is None:
-			assert not "CUDA" in super().device
-		self._adapter_device = None
+		
+		self._tg = tinygrad.Tensor(data)
+	
+	@property
+	def tg(self):
+		return self.tg
 	
 	def cuda(device = None, non_blocking = False, memory_format = "torch.preserve_format"):
 		if not device is None:
 			raise NotImplementedError
-		raise NotImplementedError
 		return self.to("cuda")
 	
 	def cpu(memory_format = "torch.preserve_format"):

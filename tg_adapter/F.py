@@ -1,7 +1,6 @@
 import tinygrad
 import numpy as np
-from .tensor import _convert_base as _cb
-from .tensor import _disinherit
+
 
 def interpolate(inp,
 		size=None,
@@ -101,3 +100,8 @@ def chunk(inp, chunks: int, dim: int = 0):
 def clamp(inp, min = None, max = None):
 	inp = _disinherit(inp)
 	return _cb(inp.clamp(min, max) )
+	
+def cat(tensors, dim = 0):
+	tbase = tensors[0].tg
+	trest = tuple(tensors[1:])
+	return _cb(tbase.cat(*trest, dim = dim) )
