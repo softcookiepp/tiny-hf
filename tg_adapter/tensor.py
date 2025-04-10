@@ -133,5 +133,63 @@ class AdapterTensor:
 		print(args, kwargs)
 		return self._reimplement_exact("argmax", *args, **kwargs)
 
-def convert_to_tg(*args):
+def convert_to_torch(*inp):
+	if len(inp) == 0:
+		inp = inp[0]
+	if isinstance(inp, AdapterTensor):
+		# do nothing
+		return inp
+	if isinstance(inp, tinygrad.Tensor):
+		return AdapterTensor(inp)
+	elif isinstance(inp, list) or isinstance(inp, tuple):
+		new = []
+		for item in inp:
+			new.append(convert_to_torch(item) )
+		if isinstance(inp, tuple):
+			new = tuple(new)
+		return new
+	elif isinstance(inp, dict):
+		for k, v in inp.items():
+			inp[k] = convert_to_torch(v)
+		return inp
+	else:
+		if hasattr(inp, "__dict__"):
+			# treat as dictionary hehe
+			new_dict = convert_to_torch(inp.__dict__)
+			inp.__dict__.update(new_dict)
+			return inp
+		else:
+			# inp is a primitive type
+			return inp
 	
+def convert_to_tg(*inp):
+	if len(inp) == 1:
+		inp = inp[0]
+	if isinstance(inp, AdapterTensor):
+		return inp.tg
+	if isinstance(inp, tinygrad.Tensor):
+		# do nothing
+		return inp
+	elif isinstance(inp, list) or isinstance(inp, tuple):
+		new = []
+		for item in inp:
+			new.append(convert_to_tg(item) )
+		if isinstance(inp, tuple):
+			new = tuple(new)
+		for elem in new:
+			assert not isinstance(elem, AdapterTensor)
+			
+		return new
+	elif isinstance(inp, dict):
+		for k, v in inp.items():
+			inp[k] = convert_to_tg(v)
+		return inp
+	else:
+		if hasattr(inp, "__dict__"):
+			# treat as dictionary hehe
+			new_dict = convert_to_tg(inp.__dict__)
+			inp.__dict__.update(new_dict)
+			return inp
+		else:
+			# inp is a primitive type
+			return inp
