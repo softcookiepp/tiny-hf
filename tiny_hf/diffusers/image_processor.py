@@ -773,9 +773,10 @@ class VaeImageProcessor(ConfigMixin):
 
         if output_type == "latent":
             return image
-
+		print(type(image) )
         image = self._denormalize_conditionally(image, do_denormalize)
-
+		print(type(image) )
+		input()
         if output_type == "pt":
             return image
 
