@@ -13,7 +13,7 @@ class AdapterTensor(tinygrad.Tensor):
 			raise NotImplementedError
 		return self.to("cuda")
 	
-	def cpu(memory_format = "torch.preserve_format"):
+	def cpu(self, memory_format = "torch.preserve_format"):
 		return self.to("cpu")
 	
 	def to(self, *args, **kwargs):
