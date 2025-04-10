@@ -43,6 +43,53 @@ class AdapterTensor(tinygrad.Tensor):
 			
 		return _convert_base(new_tensor)
 	
+	def _tg_override(self, *args, **kwargs):
+		# Method for automatically wrapping stuff coded in tinygrad so
+		# stuff works correctly
+		
+		# this will be the function that gets wrapped
+		tg_attr = inspect.stack()[1].function
+		
+		# convert everything back to tinygrad.Tensor temporarily
+		tg_self = _disinherit(self)
+		tg_args = _disinherit(args)
+		tg_kwargs = _disinherit(kwargs)
+		
+		if len(tg_kwargs) == 0:
+			# fix for methods that don't support **kwargs
+			output = tg_self.__getattribute__(tg_attr)(*tg_args)
+		else:
+			output = tg_self.__getattribute__(tg_attr)(*tg_args, **tg_kwargs)
+		return _convert_base(output)
+	
+	def __add__(self, other):
+		return self._tg_override(other)
+	
+	def __radd__(self, other):
+		return self._tg_override(other)
+		
+	def __sub__(self, other):
+		return self._tg_override(other)
+		
+	def __rsub__(self, other):
+		return self._tg_override(other)
+	
+	def __mul__(self, other):
+		return self._tg_override(other)
+	
+	def __rmul__(self, other):
+		return self._tg_override(other)
+	
+	def __truediv__(self, other):
+		return self._tg_override(other)
+	
+	def __rtruediv__(self, other):
+		return self._tg_override(other)
+		
+	def numpy(self):
+		input(super().device)
+		return _disinherit(self).numpy()
+	
 	
 def _convert_base(inp):
 	if isinstance(inp, AdapterTensor):
