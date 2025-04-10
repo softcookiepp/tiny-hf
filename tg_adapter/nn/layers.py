@@ -106,10 +106,7 @@ class ConvNd(Module):
 	def forward(self, x):
 		x, weight, bias = _disinherit(x, self.weight, self.bias)
 		x = x.conv2d(weight, bias, self.groups, self.stride, self.dilation, self.padding)
-		print(type(x))
 		x = _cb(x)
-		print(type(x))
-		input("converted?")
 		return x
 
 # ugh, I forgot that torch is going to expect this crap as a type :c
