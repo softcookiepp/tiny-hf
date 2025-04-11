@@ -29,13 +29,12 @@ def arange(start, end = None, step=1, out=None, dtype=None, layout="torch.stride
 def empty(size = None, out=None, dtype=None, layout="torch.strided", device=None,
 		requires_grad=False, pin_memory=False, memory_format="torch.contiguous_format"):
 	assert not size is None
-	#device = get_backend_override(device)
+	device = torch_dev_to_tiny(device)
 	size = _convert_size(size)
 	#input(device)
 	return AT(tinygrad.Tensor.empty(*size) )
 
 def full(size, fill_value, out=None, dtype=None, layout="torch.strided", device=None, requires_grad=False):
-	#device = get_backend_override(device)
 	device = torch_dev_to_tiny(device)
 	return AT(tinygrad.Tensor.full(size, fill_value, device = device) )
 
@@ -47,7 +46,7 @@ def tensor(data, dtype = None, device = None,
 
 def linspace(start, end, steps, *, out=None, dtype=None,
 		layout="torch.strided", device=None, requires_grad=False):
-	device = get_backend_override(device)
+	device = torch_dev_to_tiny(device)
 	#input(device)
 	t = tinygrad.Tensor.linspace(start, end, steps, dtype = dtype, device = device)
 	return AT(t)
