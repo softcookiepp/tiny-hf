@@ -17,10 +17,7 @@
 from dataclasses import dataclass
 from typing import Any, Optional, Tuple, Union
 
-#import torch
 import tg_adapter as torch
-#import torch.utils.checkpoint
-#from torch import nn
 from tg_adapter import nn
 #from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 #from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
