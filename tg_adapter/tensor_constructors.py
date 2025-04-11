@@ -3,6 +3,7 @@ from .types import get_default_dtype
 from .tensor import AdapterTensor as AT
 import numpy as np
 from .backend_environment_config import torch_dev_to_tiny
+from typing import Iterable
 
 def _convert_size(size):
 	if len(size) == 0:
@@ -51,3 +52,11 @@ def linspace(start, end, steps, *, out=None, dtype=None,
 	
 def from_numpy(a: np.ndarray):
 	return AT(a)
+	
+
+def randn(*size, generator=None, out=None, dtype=None, layout="torch.strided", device=None, requires_grad=False, pin_memory=False):
+	if isinstance(size[0], Iterable):
+		size = size[0]
+	device = torch_dev_to_tiny(device)
+	t = tinygrad.Tensor.randn(*size, dtype, requires_grad, device = device)
+	return AT()

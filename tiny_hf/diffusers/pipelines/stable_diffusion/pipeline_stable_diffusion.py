@@ -392,7 +392,6 @@ class StableDiffusionPipeline(
 			# textual inversion: process multi-vector tokens if necessary
 			if isinstance(self, TextualInversionLoaderMixin):
 				prompt = self.maybe_convert_prompt(prompt, self.tokenizer)
-			input(type(self.tokenizer) )
 			text_inputs = self.tokenizer(
 				prompt,
 				padding="max_length",
