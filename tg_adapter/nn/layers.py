@@ -142,7 +142,7 @@ class LayerNorm(Module):
 		self.bias = AT(tinygrad.Tensor.zeros(*self.normalized_shape) ) if bias and elementwise_affine else None
 	
 	def forward(self, x):
-		x, weight, bias = _disinherit(x, self.weight, self.bias)
+		x, weight, bias = convert_to_tg(x, self.weight, self.bias)
 		assert self.normalized_shape == x.shape[-len(self.normalized_shape):], f"last dimensions of {x.shape} must match {self.normalized_shape}"
 		x = x.layernorm(eps=self.eps, axis=self.axis)
 		if not self.elementwise_affine: return AT(x)

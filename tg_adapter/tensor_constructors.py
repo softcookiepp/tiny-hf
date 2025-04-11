@@ -2,7 +2,7 @@ import tinygrad
 from .types import get_default_dtype
 from .tensor import AdapterTensor as AT
 import numpy as np
-from .backend_environment_config import get_backend_override
+from .backend_environment_config import torch_dev_to_tiny
 
 def _convert_size(size):
 	if len(size) == 0:
@@ -12,13 +12,13 @@ def _convert_size(size):
 	return size
 
 def ones(*size, out=None, dtype=None, layout = None, device=None, requires_grad=False): #layout=torch.strided,
-	device = get_backend_override(device)
+	#device = get_backend_override(device)
 	size = _convert_size(size)
 	return AT(tinygrad.Tensor.ones(*size, device = device, dtype = dtype) )
 
 
 def arange(start, end = None, step=1, out=None, dtype=None, layout="torch.strided", device=None, requires_grad=False):
-	device = get_backend_override(device)
+	device = torch_dev_to_tiny(device)
 	if end is None:
 		end = start
 		start = 0
@@ -29,13 +29,14 @@ def arange(start, end = None, step=1, out=None, dtype=None, layout="torch.stride
 def empty(size = None, out=None, dtype=None, layout="torch.strided", device=None,
 		requires_grad=False, pin_memory=False, memory_format="torch.contiguous_format"):
 	assert not size is None
-	device = get_backend_override(device)
+	#device = get_backend_override(device)
 	size = _convert_size(size)
-	input(device)
+	#input(device)
 	return AT(tinygrad.Tensor.empty(*size) )
 
 def full(size, fill_value, out=None, dtype=None, layout="torch.strided", device=None, requires_grad=False):
-	device = get_backend_override(device)
+	#device = get_backend_override(device)
+	device = torch_dev_to_tiny(device)
 	return AT(tinygrad.Tensor.full(size, fill_value, device = device) )
 
 def tensor(data, dtype = None, device = None,

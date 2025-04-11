@@ -1,10 +1,10 @@
 import tinygrad
 
-from .backend_environment_config import get_backend_override, tinygrad_device_to_torch_device
 from .device import device as Device
 import inspect
 import numpy as np
 from .types import get_torch_dtype
+from .backend_environment_config import *
 
 class AdapterTensor:
 	def __init__(self, data, dtype = None, device = None,
@@ -29,8 +29,11 @@ class AdapterTensor:
 	def shape(self):
 		return self.tg.shape
 	
-	def size(self):
-		return self.shape
+	def size(self, idx = None):
+		if idx is None:
+			return self.shape
+		else:
+			return self.shape[idx]
 		
 	@property
 	def ndim(self):
@@ -60,20 +63,22 @@ class AdapterTensor:
 			if isinstance(arg, tinygrad.dtype.DType):
 				dtype = arg
 			elif isinstance(arg, str):
+				device = Device(arg)
+			elif isinstance(arg, Device):
 				device = arg
 		if "dtype" in kwargs.keys():
 			dtype = kwargs["dtype"]
 		if "device" in kwargs.keys():
 			device = kwargs["device"]
+			if isinstance(device, str):
+				device = Device(device)
 		
-		device = get_backend_override(device)
-		assert device is None or (not "CUDA" in device)
 		if dtype is None and (not device is None):
-			new_tensor = self.tg.to(device)
+			new_tensor = self.tg.to(device.tg)
 		elif (not dtype is None) and device is None:
 			new_tensor = self.cast(dtype)
 		elif not (dtype is None or device is None):
-			return super().to(device).cast(dtype)
+			return convert_to_torch(self.tg.to(device.tg).cast(dtype) )
 			
 		return convert_to_torch(new_tensor)
 	
@@ -83,7 +88,7 @@ class AdapterTensor:
 			pass#input(frame_info)
 		# TODO: convert tinygrad device to torch device
 		
-		dev = tinygrad_device_to_torch_device(self.tg.device)
+		dev = tiny_dev_to_torch(self.tg.device)
 		return Device(dev)
 	
 	def _tg_override(self, *args, **kwargs):
@@ -139,8 +144,8 @@ class AdapterTensor:
 		return convert_to_torch(newself.__getattribute__(function)(*args, **kwargs) )
 	
 	def masked_fill(self, *args, **kwargs):
-		args, kwargs = _disinherit(args, kwargs)
-		return convert_to_tg(_disinherit(self).masked_fill(*args, **kwargs) )
+		args, kwargs = convert_to_tg(args, kwargs)
+		return convert_to_torch(convert_to_tg(self).masked_fill(*args, **kwargs) )
 
 	def argmax(self, *args, **kwargs):
 		print(args, kwargs)
@@ -164,6 +169,12 @@ class AdapterTensor:
 		
 	def __getitem__(self, *args, **kwargs):
 		return self._reimplement_exact("__getitem__", *args, **kwargs)
+
+	def __gt__(self, *args, **kwargs):
+		return self._reimplement_exact("__gt__", *args, **kwargs)
+		
+	def __lt__(self, *args, **kwargs):
+		return self._reimplement_exact("__lt__", *args, **kwargs)
 	
 def convert_to_torch(*inp):
 	if len(inp) == 1:
