@@ -118,6 +118,15 @@ class Module:
 	def forward(self, *args, **kwargs):
 		raise NotImplementedError
 		
+	@property
+	def _modules(self):
+		modules = {}
+		# immediate modules
+		for k, v in self.__dict__.items():
+			if is_module(v):
+				modules[k] = v
+		return modules
+	
 	def _load_from_state_dict(self,
 			state_dict,
 			prefix,
@@ -151,7 +160,7 @@ class Module:
 					self._load_elem_state_dict_recursive(str(i), vi, state_dict, prefix = f"{prefix}.{k}.{i}")
 			else:
 				self._load_elem_state_dict_recursive(k, v, state_dict, f"{prefix}.{k}")
-					
+	
 		
 	def load_state_dict(self, state_dict, strict = True, assign = False, prefix = ""):
 		for k, v in self.__dict__.items():
