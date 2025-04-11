@@ -988,9 +988,9 @@ class CLIPTextTransformer(nn.Module):
                 input_ids.to(dtype=torch.int, device=last_hidden_state.device).argmax(dim=-1),
             ]
             """
-            print(type(input_ids) )
-            print(type(last_hidden_state) )
-            input(last_hidden_state.device)
+            #print(type(input_ids) )
+            #print(type(last_hidden_state) )
+            #input(last_hidden_state.device)
             
             pooled_output = last_hidden_state[
                 torch.arange(last_hidden_state.shape[0], device=last_hidden_state.device).cast(torch.int),

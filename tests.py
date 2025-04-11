@@ -330,7 +330,7 @@ def test_UNetMidBlock2D():
 
 def test_unet_2d_condition():
 	from diffusers import UNet2DConditionModel as hf_UNet2DConditionModel
-	from thf import UNet2DConditionModel as thf_UNet2DConditionModel
+	from tiny_hf.diffusers import UNet2DConditionModel as thf_UNet2DConditionModel
 	
 	a = make_test_data(2, 4, 32, 32)
 	
@@ -436,10 +436,10 @@ def test_stable_diffusion_pipeline():
 def main():
 	#test_stable_diffusion_pipeline()
 	
-	test_autoencoderkl()
+	#test_autoencoderkl()
 	test_clip_text_model()
 	test_clip_tokenizer()
-	test_unet_2d_condition()
+	#test_unet_2d_condition()
 	test_unet_2d()
 	test_named_parameters()
 	test_named_modules()

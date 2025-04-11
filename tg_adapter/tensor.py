@@ -11,15 +11,20 @@ class AdapterTensor:
 			requires_grad = False, pin_memory = False):
 		# pin memory is unused, but kept for compatibility
 		# convert device, duh
+		tg_device = None
 		if isinstance(device, Device):
-			raise NotImplementedError
+			tg_device = device.tg
+		elif isinstance(device, str):
+			device = Device(device)
+			tg_device = device.tg
 		
 		if isinstance(data, tinygrad.Tensor):
 			self._tg = data
 		elif isinstance(data, np.ndarray):
-			self._tg = tinygrad.Tensor(data)
+			self._tg = tinygrad.Tensor(data, device = tg_device)
 		else:
-			raise Exception(f"Tensor creationw with {type(data)} not yet implemented.")
+			self._tg = tinygrad.Tensor(data, device = tg_device)
+			#raise Exception(f"Tensor creationw with {type(data)} not yet implemented.")
 	
 	@property
 	def tg(self):

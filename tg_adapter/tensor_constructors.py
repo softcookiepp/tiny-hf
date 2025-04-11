@@ -12,7 +12,7 @@ def _convert_size(size):
 	return size
 
 def ones(*size, out=None, dtype=None, layout = None, device=None, requires_grad=False): #layout=torch.strided,
-	#device = get_backend_override(device)
+	device = torch_dev_to_tiny(device)
 	size = _convert_size(size)
 	return AT(tinygrad.Tensor.ones(*size, device = device, dtype = dtype) )
 
@@ -48,7 +48,7 @@ def tensor(data, dtype = None, device = None,
 def linspace(start, end, steps, *, out=None, dtype=None,
 		layout="torch.strided", device=None, requires_grad=False):
 	device = get_backend_override(device)
-	input(device)
+	#input(device)
 	t = tinygrad.Tensor.linspace(start, end, steps, dtype = dtype, device = device)
 	return AT(t)
 	
