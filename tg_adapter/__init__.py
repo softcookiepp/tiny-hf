@@ -5,6 +5,7 @@ from .generator import *
 from .lambdas import *
 from .types import *
 from .tensor_constructors import *
+from .layouts import *
 from . import distributed
 from . import version
 from . import compiler
