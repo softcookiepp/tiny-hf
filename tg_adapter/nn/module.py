@@ -120,7 +120,7 @@ class Module:
 	
 	def _load_elem_state_dict_recursive(self, k, v, state_dict, prefix):
 		if isinstance(v, Module):
-			v._load_state_dict_recursive(state_dict, prefix = f"{k}.")
+			v._load_state_dict_recursive(state_dict, prefix = prefix + f"{k}.")
 		elif isinstance(v, AT):
 			new_key = prefix + k
 			if new_key in state_dict.keys():
@@ -130,7 +130,8 @@ class Module:
 		for k, v in self.__dict__.items():
 			if isinstance(v, list):
 				for i in range(len(v) ):
-					new_prefix = f"{prefix}.{i}."
+					vi = v[i]
+					self._load_elem_state_dict_recursive(str(i), vi, prefix = prefix)
 			else:
 				self._load_elem_state_dict_recursive(k, v, state_dict, prefix)
 					
@@ -148,12 +149,17 @@ class Module:
 		return [], []
 		"""
 	
-	def state_dict(self):
+	def state_dict(self, prefix = ""):
 		raise NotImplementedError
 		#return _disinherit(tinygrad.nn.state.get_state_dict(self) )
 		# Can no longer do that, as AdapterTensor objects are no longer
 		# a subclass of tinygrad.Tensor.
 		# we will have to make a dedicated method...
+		state_dict = {}
+		for k, v in self.__dict__.items():
+			if isinstance(v, list):
+				for i in range(len(v) ):
+					l_prefix = prefix + f"{i}"
 	
 	def __repr__(self):
 		return f"{self.__class__}"
