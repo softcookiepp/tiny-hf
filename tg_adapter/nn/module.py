@@ -118,8 +118,19 @@ class Module:
 	def forward(self, *args, **kwargs):
 		raise NotImplementedError
 		
-	def _load_from_state_dict(self):
-		raise NotImplementedError
+	def _load_from_state_dict(self,
+			state_dict,
+			prefix,
+			local_metadata,
+			strict,
+			missing_keys,
+			unexpected_keys,
+			error_msgs):
+		# just because huggingface doesn't seem to understand that you REALLY SHOULD NOT BE USING PRIVATE METHODS
+		# goodness gracious
+		for k, v in self.__dict__.items():
+			if k in state_dict.keys():
+				v.tg.replace(state_dict[k].to(v.tg.device) ).realize()
 	
 	def _load_elem_state_dict_recursive(self, k, v, state_dict, prefix):
 		if isinstance(v, Module):
