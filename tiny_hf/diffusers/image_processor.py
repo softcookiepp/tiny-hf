@@ -18,9 +18,8 @@ from typing import List, Optional, Tuple, Union
 
 import numpy as np
 import PIL.Image
-#import torch
+
 import tg_adapter as torch
-#import torch.nn.functional as F
 from tg_adapter import F
 from PIL import Image, ImageFilter, ImageOps
 

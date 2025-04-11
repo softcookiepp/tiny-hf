@@ -17,7 +17,6 @@ from typing import List, Optional, Union
 
 import numpy as np
 import PIL
-#import torch
 import tg_adapter as torch
 
 from .image_processor import VaeImageProcessor, is_valid_image, is_valid_image_imagelist

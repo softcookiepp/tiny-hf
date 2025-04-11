@@ -6,7 +6,7 @@ import random
 from typing import Any, Dict, Iterable, List, Optional, Tuple, Union
 
 import numpy as np
-#import torch
+
 import tg_adapter as torch
 
 from .models import UNet2DConditionModel

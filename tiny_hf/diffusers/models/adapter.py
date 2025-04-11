@@ -14,8 +14,6 @@
 import os
 from typing import Callable, List, Optional, Union
 
-#import torch
-#import torch.nn as nn
 import tg_adapter as torch
 from tg_adapter import nn
 

@@ -13,9 +13,7 @@
 # limitations under the License.
 from typing import Dict, Optional, Tuple, Union
 
-#import torch
 import tg_adapter as torch
-#import torch.nn as nn
 from tg_adapter import nn
 
 from ...configuration_utils import ConfigMixin, register_to_config

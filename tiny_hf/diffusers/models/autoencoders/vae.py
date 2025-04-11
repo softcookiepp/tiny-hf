@@ -15,9 +15,7 @@ from dataclasses import dataclass
 from typing import Optional, Tuple
 
 import numpy as np
-#import torch
 import tg_adapter as torch
-#import torch.nn as nn
 from tg_adapter import nn
 
 from ...utils import BaseOutput

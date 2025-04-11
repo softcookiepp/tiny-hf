@@ -29,14 +29,12 @@ from pathlib import Path
 from typing import Any, Callable, ContextManager, Dict, List, Optional, Tuple, Type, Union
 
 import safetensors
-#import torch
-#import torch.utils.checkpoint
+
 import tg_adapter as torch
 from huggingface_hub import DDUFEntry, create_repo, split_torch_state_dict_into_shards
 from huggingface_hub.utils import validate_hf_hub_args
-#from torch import Tensor, nn
-from tinygrad import Tensor
-from tg_adapter import nn
+
+from tg_adapter import nn, Tensor
 import tg_adapter as tga
 from typing_extensions import Self
 

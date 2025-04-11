@@ -23,9 +23,8 @@
 
 from typing import Optional, Tuple, Union
 
-#import torch
+
 import tg_adapter as torch
-#import torch.nn.functional as F
 from tg_adapter import F
 from tg_adapter import nn
 

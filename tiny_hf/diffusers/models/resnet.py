@@ -16,9 +16,6 @@
 from functools import partial
 from typing import Optional, Tuple, Union
 
-#import torch
-#import torch.nn as nn
-#import torch.nn.functional as F
 import tg_adapter as torch
 from tg_adapter import nn, F
 

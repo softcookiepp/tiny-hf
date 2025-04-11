@@ -15,11 +15,8 @@ import math
 from typing import List, Optional, Tuple, Union
 
 import numpy as np
-#import torch
 import tg_adapter as torch
-#import torch.nn.functional as F
 from tg_adapter import nn, F
-#from torch import nn
 
 from ..utils import deprecate
 from .activations import FP32SiLU, get_activation

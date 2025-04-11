@@ -13,9 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#import torch
-#import torch.nn as nn
-#import torch.nn.functional as F
 import tg_adapter as torch
 from tg_adapter import nn, F
 
