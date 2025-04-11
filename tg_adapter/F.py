@@ -104,5 +104,5 @@ def clamp(inp, min = None, max = None):
 	
 def cat(tensors, dim = 0):
 	tbase = tensors[0].tg
-	trest = tuple(tensors[1:])
+	trest = convert_to_tg( tuple(tensors[1:]) )
 	return convert_to_torch(tbase.cat(*trest, dim = dim) )

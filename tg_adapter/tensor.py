@@ -180,6 +180,18 @@ class AdapterTensor:
 		
 	def __lt__(self, *args, **kwargs):
 		return self._reimplement_exact("__lt__", *args, **kwargs)
+		
+	def pad(self, *args, **kwargs):
+		return self._reimplement_exact("pad", *args, **kwargs)
+		
+	def float(self):
+		return self.to(tinygrad.dtypes.float)
+		
+	def is_floating_point(self):
+		return self.tg.dtype in [tinygrad.dtypes.float16, tinygrad.dtypes.float32, tinygrad.dtypes.float64]
+		
+	def contiguous(self, *args, **kwargs):
+		return self._reimplement_exact("contiguous", *args, **kwargs)
 	
 def convert_to_torch(*inp):
 	if len(inp) == 1:
