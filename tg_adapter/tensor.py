@@ -28,6 +28,9 @@ class AdapterTensor:
 	@property
 	def shape(self):
 		return self.tg.shape
+	
+	def size(self):
+		return self.shape
 		
 	@property
 	def ndim(self):
@@ -156,7 +159,11 @@ class AdapterTensor:
 		# is this even a torch function? I don't know :c
 		return AdapterTensor(self.tg.cast(dtype) )
 	
-	
+	def expand(self, *args, **kwargs):
+		return self._reimplement_exact("expand", *args, **kwargs)
+		
+	def __getitem__(self, *args, **kwargs):
+		return self._reimplement_exact("__getitem__", *args, **kwargs)
 	
 def convert_to_torch(*inp):
 	if len(inp) == 1:

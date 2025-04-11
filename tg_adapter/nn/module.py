@@ -142,8 +142,8 @@ class Module:
 	def load_state_dict(self, state_dict, strict = True, assign = False, prefix = ""):
 		for k, v in self.__dict__.items():
 			if isinstance(v, list):
-				for i in len(v):
-					new_prefix = ".".join( [prefix, k, i] )
+				for i in range(len(v) ):
+					new_prefix = ".".join( [prefix, k, str(i)] )
 					
 		self._load_state_dict_recursive(state_dict)
 		return [], []
@@ -167,7 +167,8 @@ class Module:
 			if isinstance(v, list):
 				for i in range(len(v) ):
 					l_prefix = ".".join([prefix, f"{k}.{i}"])
-					state_dict.update(v[i].state_dict(l_prefix) )
+					if isinstance(v[i], Module):
+						state_dict.update(v[i].state_dict(l_prefix) )
 					
 			elif isinstance(v, Module):
 				new_prefix = prefix + f".{k}"

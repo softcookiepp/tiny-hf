@@ -19,7 +19,7 @@ def compare_state_dicts(torch_module, tga_module, error_threshold = 1.0e-3):
 	except AttributeError:
 		tga_sd = get_state_dict(tga_module)
 	for torch_key, tga_key in zip(sorted(torch_sd.keys() ), sorted(tga_sd.keys() ) ):
-		print(torch_key, tga_key)
+		#print(torch_key, tga_key)
 		assert torch_key == tga_key.replace("._tg", "")
 		key = torch_key
 		torch_value = torch_sd[key].detach().numpy()
@@ -175,7 +175,7 @@ def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_m
 	
 	tiny_out = my_module.__getattribute__(my_method)(*my_args, **my_kwargs)
 	
-	inspect_state_dict_devices(my_module)
+	#inspect_state_dict_devices(my_module)
 	print(f"MSE for {hf_module} and {my_module}:")
 	_test_key_errors(torch_out, tiny_out)
 	"""
