@@ -192,6 +192,9 @@ class AdapterTensor:
 		
 	def contiguous(self, *args, **kwargs):
 		return self._reimplement_exact("contiguous", *args, **kwargs)
+		
+	def numel(self):
+		return np.prod(self.shape)
 	
 def convert_to_torch(*inp):
 	if len(inp) == 1:
