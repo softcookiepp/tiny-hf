@@ -59,4 +59,4 @@ def randn(*size, generator=None, out=None, dtype=None, layout="torch.strided", d
 		size = size[0]
 	device = torch_dev_to_tiny(device)
 	t = tinygrad.Tensor.randn(*size, dtype = dtype, requires_grad = requires_grad, device = device)
-	return AT()
+	return AT(t)

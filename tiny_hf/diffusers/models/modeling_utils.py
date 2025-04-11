@@ -1442,7 +1442,7 @@ class ModelMixin(tga.nn.Module, PushToHubMixin):
 			resolved_model_file = logging.tqdm(resolved_model_file, desc="Loading checkpoint shards")
 
 		for shard_file in resolved_model_file:
-			print("shard_file", shard_file)
+			#print("shard_file", shard_file)
 			state_dict = load_state_dict(shard_file, dduf_entries=dduf_entries)
 
 			def _find_mismatched_keys(
