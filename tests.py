@@ -434,9 +434,9 @@ def test_stable_diffusion_pipeline():
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
-	#test_stable_diffusion_pipeline()
+	test_stable_diffusion_pipeline()
 	
-	#test_autoencoderkl()
+	test_autoencoderkl()
 	test_clip_text_model()
 	test_clip_tokenizer()
 	#test_unet_2d_condition()
