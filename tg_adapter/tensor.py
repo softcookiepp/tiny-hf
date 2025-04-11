@@ -197,6 +197,9 @@ class AdapterTensor:
 	def numel(self):
 		return np.prod(self.shape)
 	
+	def __len__(self):
+		return self.shape[0]
+	
 def convert_to_torch(*inp):
 	if len(inp) == 1:
 		inp = inp[0]
