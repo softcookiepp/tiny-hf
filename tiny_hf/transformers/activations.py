@@ -15,10 +15,8 @@
 import math
 from collections import OrderedDict
 
-#import torch
 import tg_adapter as torch
 from packaging import version
-#from torch import Tensor, nn
 from tg_adapter import Tensor, nn
 
 from .utils import logging

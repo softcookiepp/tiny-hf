@@ -17,9 +17,9 @@ import inspect
 from functools import lru_cache, wraps
 from typing import Callable
 
-import torch
+import tg_adapter as torch
 from safetensors.torch import storage_ptr, storage_size
-from torch import nn
+from tg_adapter import nn
 
 from .utils import is_torch_greater_or_equal, is_torch_xla_available, is_torchdynamo_compiling, logging
 

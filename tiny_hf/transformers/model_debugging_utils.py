@@ -27,9 +27,8 @@ from .utils import is_torch_available
 
 
 if is_torch_available():
-    import torch
-    import torch.distributed.tensor
-    from torch import nn
+    import tg_adapter as torch
+    from tg_adapter import nn
 
     from .modeling_utils import PreTrainedModel
 

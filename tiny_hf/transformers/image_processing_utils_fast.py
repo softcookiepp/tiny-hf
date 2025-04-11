@@ -59,7 +59,7 @@ if is_vision_available():
     from .image_utils import PILImageResampling
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 if is_torchvision_available():
     from .image_utils import pil_torch_interpolation_mapping
