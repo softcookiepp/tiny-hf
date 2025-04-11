@@ -123,7 +123,7 @@ class Module:
 		modules = {}
 		# immediate modules
 		for k, v in self.__dict__.items():
-			if is_module(v):
+			if isinstance(v, Module):
 				modules[k] = v
 		return modules
 	
