@@ -117,6 +117,9 @@ class Module:
 		
 	def forward(self, *args, **kwargs):
 		raise NotImplementedError
+		
+	def _load_from_state_dict(self):
+		raise NotImplementedError
 	
 	def _load_elem_state_dict_recursive(self, k, v, state_dict, prefix):
 		if isinstance(v, Module):
