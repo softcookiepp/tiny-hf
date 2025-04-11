@@ -69,7 +69,7 @@ def test_function(*inp_args, torch_function, tinygrad_function, error_threshold 
 	torch_out = torch_function(*tuple(torch_inp) )
 	tiny_out = tinygrad_function(*tuple(tiny_inp) )
 	
-	print(tiny_out.shape, torch_out.shape )
+	#print(tiny_out.shape, torch_out.shape )
 	error = mse(tiny_out.numpy(), torch_out.numpy())
 	print(f"MSE for {torch_function.__name__} and {tinygrad_function.__name__}:",  error)
 	if error > error_threshold:

@@ -1,7 +1,6 @@
 import tinygrad
 
 def recursive_realize(self, *args):
-	#input(args)
 	new_args = []
 	for arg in args:
 		if isinstance(arg, tinygrad.Tensor):

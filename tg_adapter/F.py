@@ -29,7 +29,6 @@ def interpolate(inp,
 				size[i+2] = int(size[i+2]*scale_factor)
 		else:
 			for i in range(len_size - 2):
-				print(size[i+2]*scale_factor)
 				size[i+2] = int(size[i+2] * scale_factor)
 		size = tuple(size)
 	else:

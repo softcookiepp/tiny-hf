@@ -215,9 +215,6 @@ def check_support_param_buffer_assignment(model_to_load, state_dict, start_prefi
 	parameters.
 
 	"""
-	print(isinstance(model_to_load, torch.nn.Module) )
-	print(model_to_load.device)
-	input(type(model_to_load) )
 	if model_to_load.device.type == "meta":
 		return False
 

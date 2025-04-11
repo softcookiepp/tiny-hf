@@ -31,7 +31,6 @@ def empty(size = None, out=None, dtype=None, layout="torch.strided", device=None
 	assert not size is None
 	device = torch_dev_to_tiny(device)
 	size = _convert_size(size)
-	#input(device)
 	return AT(tinygrad.Tensor.empty(*size) )
 
 def full(size, fill_value, out=None, dtype=None, layout="torch.strided", device=None, requires_grad=False):
@@ -47,7 +46,6 @@ def tensor(data, dtype = None, device = None,
 def linspace(start, end, steps, *, out=None, dtype=None,
 		layout="torch.strided", device=None, requires_grad=False):
 	device = torch_dev_to_tiny(device)
-	#input(device)
 	t = tinygrad.Tensor.linspace(start, end, steps, dtype = dtype, device = device)
 	return AT(t)
 	

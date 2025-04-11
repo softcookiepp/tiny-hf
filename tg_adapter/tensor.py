@@ -89,10 +89,6 @@ class AdapterTensor:
 	
 	@property
 	def device(self):
-		for frame_info in inspect.stack():
-			pass#input(frame_info)
-		# TODO: convert tinygrad device to torch device
-		
 		dev = tiny_dev_to_torch(self.tg.device)
 		return Device(dev)
 	
@@ -153,7 +149,6 @@ class AdapterTensor:
 		return convert_to_torch(convert_to_tg(self).masked_fill(*args, **kwargs) )
 
 	def argmax(self, *args, **kwargs):
-		print(args, kwargs)
 		return self._reimplement_exact("argmax", *args, **kwargs)
 	
 	def view(self, *shape):

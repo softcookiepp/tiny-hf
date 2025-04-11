@@ -49,14 +49,16 @@ class Module:
 	def parameters(self, recurse = True):
 		if not recurse:
 			raise NotImplementedError
-		params = []
+		#params = []
 		for k, v in self.named_parameters():
-			params.append(v)
+			#params.append(v)
+			yield v
 		if isinstance(self, Iterable):
 			for i, elem in enumerate(self):
 				for k, mod in elem.named_parameters():
-					params.append(mod)
-		return params
+					#params.append(mod)
+					yield mod
+		#return params
 		"""
 		params = []
 		for k, v in enumerate(self):
@@ -108,7 +110,6 @@ class Module:
 		
 		# gotta do this first hehe
 		out = self.forward(*args, **kwargs)
-		#input(_disinherit(out) )
 		"""
 		if False or ( (not parent_function in ["__call__", "forward"]) and isinstance(out, tinygrad.Tensor) ):
 			out = recursive_realize(out)
