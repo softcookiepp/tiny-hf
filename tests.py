@@ -149,7 +149,7 @@ def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_m
 		if isinstance(arg, np.ndarray):
 			# convert to tensor
 			hf_args.append(torch.tensor(arg) )
-			my_args.append(tinygrad.Tensor(arg) )
+			my_args.append(tg_adapter.tensor(arg) )
 		else:
 			# append as is
 			hf_args.append(arg )
