@@ -120,20 +120,22 @@ class Module:
 	
 	def _load_elem_state_dict_recursive(self, k, v, state_dict, prefix):
 		if isinstance(v, Module):
-			v._load_state_dict_recursive(state_dict, prefix = prefix + f"{k}.")
+			v._load_state_dict_recursive(state_dict, prefix = prefix)
 		elif isinstance(v, AT):
-			new_key = prefix + k
+			new_key = prefix.strip(".")
 			if new_key in state_dict.keys():
 				v.tg.replace(state_dict[new_key].to(v.tg.device) ).realize()
+			else:
+				# TODO: warn user or something, i forget
 	
 	def _load_state_dict_recursive(self, state_dict, prefix = ""):
 		for k, v in self.__dict__.items():
 			if isinstance(v, list):
 				for i in range(len(v) ):
 					vi = v[i]
-					self._load_elem_state_dict_recursive(str(i), vi, prefix = prefix)
+					self._load_elem_state_dict_recursive(str(i), vi, state_dict, prefix = f"{prefix}.{k}.{i}")
 			else:
-				self._load_elem_state_dict_recursive(k, v, state_dict, prefix)
+				self._load_elem_state_dict_recursive(k, v, state_dict, f"{prefix}.{k}")
 					
 		
 	def load_state_dict(self, state_dict, strict = True, assign = False):
