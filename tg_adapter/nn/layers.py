@@ -18,7 +18,7 @@ class AvgPool2d(Module):
 		self._count_include_pad = count_include_pad
 	
 	def forward(self, inp):
-		inp = _disinherit(inp)
+		inp = convert_to_tg(inp)
 		out = inp.avg_pool2d(self._kernel_size, self._stride,
 			1, self._padding, self._ceil_mode, self._count_include_pad)
 		return AT(out)
