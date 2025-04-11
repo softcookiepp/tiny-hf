@@ -127,6 +127,7 @@ class Module:
 				v.tg.replace(state_dict[new_key].to(v.tg.device) ).realize()
 			else:
 				# TODO: warn user or something, i forget
+				pass
 	
 	def _load_state_dict_recursive(self, state_dict, prefix = ""):
 		for k, v in self.__dict__.items():
@@ -138,7 +139,12 @@ class Module:
 				self._load_elem_state_dict_recursive(k, v, state_dict, f"{prefix}.{k}")
 					
 		
-	def load_state_dict(self, state_dict, strict = True, assign = False):
+	def load_state_dict(self, state_dict, strict = True, assign = False, prefix = ""):
+		for k, v in self.__dict__.items():
+			if isinstance(v, list):
+				for i in len(v):
+					new_prefix = ".".join( [prefix, k, i] )
+					
 		self._load_state_dict_recursive(state_dict)
 		return [], []
 		
@@ -152,7 +158,6 @@ class Module:
 		"""
 	
 	def state_dict(self, prefix = ""):
-		raise NotImplementedError
 		#return _disinherit(tinygrad.nn.state.get_state_dict(self) )
 		# Can no longer do that, as AdapterTensor objects are no longer
 		# a subclass of tinygrad.Tensor.
@@ -161,7 +166,17 @@ class Module:
 		for k, v in self.__dict__.items():
 			if isinstance(v, list):
 				for i in range(len(v) ):
-					l_prefix = prefix + f"{i}"
+					l_prefix = ".".join([prefix, f"{k}.{i}"])
+					state_dict.update(v[i].state_dict(l_prefix) )
+					
+			elif isinstance(v, Module):
+				new_prefix = prefix + f".{k}"
+				state_dict.update(v.state_dict(new_prefix) )
+			elif isinstance(v, AT):
+				sd_key = ".".join([prefix, k]).strip(".")
+				state_dict[sd_key] = v
+		return state_dict
+				
 	
 	def __repr__(self):
 		return f"{self.__class__}"

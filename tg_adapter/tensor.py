@@ -72,7 +72,7 @@ class AdapterTensor:
 		elif not (dtype is None or device is None):
 			return super().to(device).cast(dtype)
 			
-		return _convert_base(new_tensor)
+		return convert_to_torch(new_tensor)
 	
 	@property
 	def device(self):
@@ -129,7 +129,7 @@ class AdapterTensor:
 		return self._tg_override(other)
 		
 	def numpy(self):
-		return _disinherit(self).numpy()
+		return self.tg.numpy()
 	
 	def _reimplement_exact(self, function, *args, **kwargs):
 		newself, args, kwargs = convert_to_tg(self, args, kwargs)

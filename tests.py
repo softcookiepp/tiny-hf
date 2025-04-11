@@ -10,16 +10,23 @@ import safetensors
 from safetensors.torch import save_file
 
 from tg_adapter import F
+import tg_adapter
 
 def compare_state_dicts(torch_module, tga_module, error_threshold = 1.0e-3):
 	torch_sd = torch_module.state_dict()
-	tga_sd = get_state_dict(tga_module)
-	for torch_key, tga_key in zip(torch_sd.keys(), tga_sd.keys() ):
-		assert torch_key == tga_key
-		key = tga_key
+	try:
+		tga_sd = tga_module.state_dict()
+	except AttributeError:
+		tga_sd = get_state_dict(tga_module)
+	for torch_key, tga_key in zip(sorted(torch_sd.keys() ), sorted(tga_sd.keys() ) ):
+		print(torch_key, tga_key)
+		assert torch_key == tga_key.replace("._tg", "")
+		key = torch_key
 		torch_value = torch_sd[key].detach().numpy()
-		tga_value = tga_sd[key].numpy()
+		tga_value = tga_sd[tga_key].numpy()
 		assert mse(torch_value, tga_value) < error_threshold
+
+
 
 def inspect_state_dict_devices(module):
 	for k, v in module.state_dict().items():
@@ -38,6 +45,7 @@ def copy_state_dict(torch_module, tga_module):
 	#input(list(state_dict.items())[0][1].device)
 	tga_module.load_state_dict(state_dict)
 	#load_state_dict(tga_module, state_dict)
+	compare_state_dicts(torch_module, tga_module)
 	os.remove(fn)
 	
 
@@ -103,7 +111,7 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4):
 				
 			if isinstance(tg_item, list):
 				tg_item = np.array(tg_item).astype(np.float32)
-			elif isinstance(tg_item, tinygrad.Tensor):
+			elif isinstance(tg_item, tinygrad.Tensor) or isinstance(tg_item, tg_adapter.Tensor):
 				tg_item = tg_item.numpy()
 			else:
 				raise ValueError
@@ -202,6 +210,8 @@ def test_autoencoderkl():
 	copy_state_dict(hf_module, my_module)
 	test_hf_reimplementation(inp, {}, hf_module, "__call__", my_module, "__call__")
 
+def test_state_dict():
+	raise NotImplementedError
 
 def test_autoencoderkl_from_single_file():
 	inp = np.random.randn(2*3*128*128).reshape(2, 3, 128, 128).astype(np.float32)
