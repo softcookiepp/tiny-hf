@@ -3,7 +3,8 @@ import tinygrad
 from .device import device as Device
 import inspect
 import numpy as np
-from .types import dtype, get_type_from_tg, get_tgt
+from .types import get_type_from_tg, get_tgt
+from .types import dtype as dtype_class
 from .backend_environment_config import *
 from .debugging import maybe_realize
 
@@ -80,9 +81,9 @@ class AdapterTensor:
 		
 		dtype = None
 		device = None
-		raise NotImplementedError
+		
 		for arg in args:
-			if isinstance(arg, tinygrad.dtype.DType):
+			if isinstance(arg, dtype_class):
 				dtype = arg
 			elif isinstance(arg, str):
 				device = Device(arg)
@@ -95,13 +96,16 @@ class AdapterTensor:
 			if isinstance(device, str):
 				device = Device(device)
 		
+		new_tensor = None
+		#print(dtype, device)
+		#input()
 		if dtype is None and (not device is None):
 			new_tensor = maybe_realize(self.tg.to(device.tg) )
 		elif (not dtype is None) and device is None:
-			new_tensor = maybe_realize(self.tg.cast(dtype) )
+			new_tensor = maybe_realize(self.tg.cast(dtype.tgt(self.device.tg) ) )
 		elif not (dtype is None or device is None):
-			return convert_to_torch(self.tg.to(device.tg).cast(dtype) )
-			
+			return convert_to_torch(self.tg.to(device.tg).cast(dtype.tgt(device.tg)) )
+		assert not new_tensor is None
 		return convert_to_torch(new_tensor)
 	
 	@property
@@ -179,7 +183,7 @@ class AdapterTensor:
 	
 	def cast(self, dtype):
 		# is this even a torch function? I don't know :c
-		return AdapterTensor(self.tg.cast(dtype) )
+		return AdapterTensor(self.tg.cast(dtype.tgt(self.tg.device) ) )
 	
 	def expand(self, *args, **kwargs):
 		return self._reimplement_exact("expand", *args, **kwargs)
