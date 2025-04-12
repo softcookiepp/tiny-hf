@@ -5,7 +5,7 @@ import inspect
 import numpy as np
 from .types import get_torch_dtype
 from .backend_environment_config import *
-
+from .debugging import maybe_realize
 
 
 class AdapterTensor:
@@ -27,10 +27,11 @@ class AdapterTensor:
 		else:
 			self._tg = tinygrad.Tensor(data, device = tg_device)
 			#raise Exception(f"Tensor creationw with {type(data)} not yet implemented.")
+		maybe_realize(self._tg)
 	
 	@property
 	def tg(self):
-		return self._tg
+		return maybe_realize(self._tg)
 		
 	@property
 	def shape(self):
@@ -45,8 +46,8 @@ class AdapterTensor:
 	def _make_tensor(self, inp):
 		# Create other tensor capable of operating with this one
 		if not isinstance(inp, AdapterTensor):
-			return AdapterTensor(inp, device = self.device)
-		return inp
+			inp = AdapterTensor(inp, device = self.device)
+		return maybe_realize(inp)
 		
 	@property
 	def ndim(self):
@@ -56,14 +57,14 @@ class AdapterTensor:
 	def dtype(self):
 		# feeling pretty damn lazy, will make a dedicated dtype class later maybe.
 		# just maybe.
-		return self.tg.dtype
+		return maybe_realize(self.tg).dtype
 	
 	def cuda(device = None, non_blocking = False, memory_format = "torch.preserve_format"):
 		if not device is None:
 			raise NotImplementedError
 		return self.to("cuda")
 	
-	def cpu(memory_format = "torch.preserve_format"):
+	def cpu(self, memory_format = "torch.preserve_format"):
 		return self.to("cpu")
 	
 	def to(self, *args, **kwargs):
@@ -87,9 +88,9 @@ class AdapterTensor:
 				device = Device(device)
 		
 		if dtype is None and (not device is None):
-			new_tensor = self.tg.to(device.tg)
+			new_tensor = maybe_realize(self.tg.to(device.tg) )
 		elif (not dtype is None) and device is None:
-			new_tensor = self.cast(dtype)
+			new_tensor = maybe_realize(self.tg.cast(dtype) )
 		elif not (dtype is None or device is None):
 			return convert_to_torch(self.tg.to(device.tg).cast(dtype) )
 			
@@ -219,6 +220,9 @@ class AdapterTensor:
 	def chunk(self, *args, **kwargs):
 		return self._tg_override(*args, **kwargs)
 	
+	def clamp(self, *args, **kwargs):
+		return self._tg_override(*args, **kwargs)
+	
 	def interpolate(self, *args, **kwargs):
 		return self._reimplement_exact("interpolate", *args, **kwargs)
 		
@@ -234,6 +238,7 @@ def convert_to_torch(*inp):
 	if len(inp) == 1:
 		inp = inp[0]
 	if isinstance(inp, AdapterTensor):
+		maybe_realize(inp.tg)
 		return inp
 	if isinstance(inp, tinygrad.Tensor):
 		return AdapterTensor(inp)
@@ -262,10 +267,10 @@ def convert_to_tg(*inp):
 	if len(inp) == 1:
 		inp = inp[0]
 	if isinstance(inp, AdapterTensor):
-		return inp.tg
+		return maybe_realize(inp.tg)
 	if isinstance(inp, tinygrad.Tensor):
 		# do nothing
-		return inp
+		return maybe_realize(inp)
 	elif isinstance(inp, list) or isinstance(inp, tuple):
 		new = []
 		for item in inp:

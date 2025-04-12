@@ -87,7 +87,7 @@ def cumprod(inp, dim, dtype=None, out=None):
 	for i in range(inp.shape[dim] ):
 		slices[dim] = i
 		if out is None:
-			out = inp[slices]
+			out = tinygrad.Tensor.ones(inp[slices].shape, device = inp.device, dtype = inp.dtype)
 		else:
 			out = out*inp[slices]
 	return convert_to_torch(out)
