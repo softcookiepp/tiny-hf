@@ -190,6 +190,9 @@ class AdapterTensor:
 	
 	def repeat(self, *args, **kwargs):
 		return self._tg_override(*args, **kwargs)
+		
+	def permute(self, *args, **kwargs):
+		return self._tg_override(*args, **kwargs)
 	
 	def interpolate(self, *args, **kwargs):
 		return self._reimplement_exact("interpolate", *args, **kwargs)
