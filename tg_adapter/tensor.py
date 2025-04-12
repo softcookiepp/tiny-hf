@@ -185,6 +185,18 @@ class AdapterTensor:
 	def __lt__(self, other):
 		other = self._make_tensor(other)
 		return self._reimplement_exact("__lt__", other)
+	
+	def __ge__(self, other):
+		other = self._make_tensor(other)
+		return self._reimplement_exact("__ge__", other)
+		
+	def __le__(self, other):
+		other = self._make_tensor(other)
+		return self._reimplement_exact("__le__", other)
+		
+	def __pow__(self, other):
+		other = self._make_tensor(other)
+		return self._tg_override(other)
 		
 	def pad(self, *args, **kwargs):
 		return self._reimplement_exact("pad", *args, **kwargs)
@@ -214,6 +226,8 @@ class AdapterTensor:
 		return np.prod(self.shape)
 	
 	def __len__(self):
+		if len(self.shape) == 0:
+			return 1
 		return self.shape[0]
 	
 def convert_to_torch(*inp):
