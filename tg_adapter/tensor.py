@@ -6,6 +6,8 @@ import numpy as np
 from .types import get_torch_dtype
 from .backend_environment_config import *
 
+
+
 class AdapterTensor:
 	def __init__(self, data, dtype = None, device = None,
 			requires_grad = False, pin_memory = False):
@@ -39,6 +41,12 @@ class AdapterTensor:
 			return self.shape
 		else:
 			return self.shape[idx]
+			
+	def _make_tensor(inp):
+		# Create other tensor capable of operating with this one
+		if not isinstance(inp, AdapterTensor):
+			return AdapterTensor(inp, device = self.device)
+		return inp
 		
 	@property
 	def ndim(self):
@@ -170,11 +178,13 @@ class AdapterTensor:
 	def __getitem__(self, *args, **kwargs):
 		return self._reimplement_exact("__getitem__", *args, **kwargs)
 
-	def __gt__(self, *args, **kwargs):
-		return self._reimplement_exact("__gt__", *args, **kwargs)
+	def __gt__(self, other):
+		other = self._make_tensor(other)
+		return self._reimplement_exact("__gt__", other)
 		
-	def __lt__(self, *args, **kwargs):
-		return self._reimplement_exact("__lt__", *args, **kwargs)
+	def __lt__(self, other):
+		other = self._make_tensor(other)
+		return self._reimplement_exact("__lt__", *args)
 		
 	def pad(self, *args, **kwargs):
 		return self._reimplement_exact("pad", *args, **kwargs)
