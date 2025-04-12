@@ -184,7 +184,7 @@ class AdapterTensor:
 		
 	def __lt__(self, other):
 		other = self._make_tensor(other)
-		return self._reimplement_exact("__lt__", *args)
+		return self._reimplement_exact("__lt__")
 		
 	def pad(self, *args, **kwargs):
 		return self._reimplement_exact("pad", *args, **kwargs)
