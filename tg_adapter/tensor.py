@@ -193,6 +193,9 @@ class AdapterTensor:
 		
 	def permute(self, *args, **kwargs):
 		return self._tg_override(*args, **kwargs)
+		
+	def chunk(self, *args, **kwargs):
+		return self._tg_override(*args, **kwargs)
 	
 	def interpolate(self, *args, **kwargs):
 		return self._reimplement_exact("interpolate", *args, **kwargs)
