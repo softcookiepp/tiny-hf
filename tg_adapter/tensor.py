@@ -42,7 +42,7 @@ class AdapterTensor:
 		else:
 			return self.shape[idx]
 			
-	def _make_tensor(inp):
+	def _make_tensor(self, inp):
 		# Create other tensor capable of operating with this one
 		if not isinstance(inp, AdapterTensor):
 			return AdapterTensor(inp, device = self.device)
