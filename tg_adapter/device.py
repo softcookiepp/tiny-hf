@@ -1,6 +1,9 @@
 from .backend_environment_config import torch_dev_to_tiny, tiny_dev_to_torch
 
-
+def backend_from_device(dev_str):
+	if dev_str is None:
+		return None
+	return dev_str.split(":")[0]
 
 class device:
 	def __init__(self, name):

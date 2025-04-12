@@ -1,6 +1,7 @@
 import tinygrad
 import numpy as np
 from .tensor import convert_to_tg, convert_to_torch
+from .debugging import maybe_realize
 
 
 def interpolate(inp,
@@ -90,6 +91,7 @@ def cumprod(inp, dim, dtype=None, out=None):
 			out = tinygrad.Tensor.ones(inp[slices].shape, device = inp.device, dtype = inp.dtype)
 		else:
 			out = out*inp[slices]
+		out = maybe_realize(out)
 	return convert_to_torch(out)
 	
 # easier than rearranging huggingface code lol

@@ -229,12 +229,6 @@ class Module:
 	def register_buffer(self, name, tensor, persistent = True):
 		assert not name in self.__dict__.keys()
 		self.__dict__[name] = tensor
-	
-	"""
-	@property
-	def dtype(self):
-		raise NotImplementedError
-	"""
 		
 	@property
 	def training(self):

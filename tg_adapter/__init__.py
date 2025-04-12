@@ -3,7 +3,7 @@ from .backend_environment_config import *
 from . import nn, F
 from .generator import *
 from .lambdas import *
-from .types import *
+from .types import _get_type, dtype
 from .tensor_constructors import *
 from .layouts import *
 from . import distributed
@@ -23,7 +23,6 @@ IntTensor = AdapterTensor
 BoolTensor = AdapterTensor
 Tensor = AdapterTensor
 
-dtype = tinygrad.dtype.DType
 
 #def device(dev):
 #	dev = dev.upper()
@@ -47,3 +46,9 @@ __version__ = "2.6.0"
 from .F import chunk, clamp, cat
 
 from .utils import no_grad
+
+def __getattr__(attr):
+	val = _get_type(attr)
+	if not val is None:
+		return val
+	raise AttributeError

@@ -14,7 +14,7 @@ uniform = uniform_
 
 # hopefully this works
 def normal_(tensor, mean = 0.0, std = 1.0, generator = None):
-	tensor = _disinherit(tensor)
+	tensor = convert_to_tg(tensor)
 	if not generator is None:
 		raise NotImplementedError
 	norm = tinygrad.Tensor.normal(*tensor.shape, mean, std,

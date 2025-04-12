@@ -3,7 +3,7 @@ import tinygrad
 from .device import device as Device
 import inspect
 import numpy as np
-from .types import get_torch_dtype
+from .types import dtype, get_type_from_tg, get_tgt
 from .backend_environment_config import *
 from .debugging import maybe_realize
 
@@ -20,18 +20,24 @@ class AdapterTensor:
 			device = Device(device)
 			tg_device = device.tg
 		
+		tgt = get_tgt(dtype, tg_device)
 		if isinstance(data, tinygrad.Tensor):
 			self._tg = data
 		elif isinstance(data, np.ndarray):
-			self._tg = tinygrad.Tensor(data, device = tg_device)
+			tgt = get_tgt(dtype, tg_device)
+			self._tg = tinygrad.Tensor(data, device = tg_device, dtype = tgt)
 		else:
-			self._tg = tinygrad.Tensor(data, device = tg_device)
+			self._tg = tinygrad.Tensor(data, device = tg_device, dtype = tgt)
 			#raise Exception(f"Tensor creationw with {type(data)} not yet implemented.")
-		maybe_realize(self._tg)
+		self._dtype = get_type_from_tg(self._tg.dtype, self.tg.device.split(":")[0], dtype)
 	
 	@property
 	def tg(self):
 		return maybe_realize(self._tg)
+	
+	@property
+	def tgt(self):
+		return self._dtype.tgt(self.tg.device.split(":")[0] )
 		
 	@property
 	def shape(self):
@@ -55,9 +61,11 @@ class AdapterTensor:
 	
 	@property
 	def dtype(self):
-		# feeling pretty damn lazy, will make a dedicated dtype class later maybe.
-		# just maybe.
-		return maybe_realize(self.tg).dtype
+		return self._dtype
+		
+	@property
+	def tdtype(self):
+		return self.tgt
 	
 	def cuda(device = None, non_blocking = False, memory_format = "torch.preserve_format"):
 		if not device is None:
@@ -72,7 +80,7 @@ class AdapterTensor:
 		
 		dtype = None
 		device = None
-		
+		raise NotImplementedError
 		for arg in args:
 			if isinstance(arg, tinygrad.dtype.DType):
 				dtype = arg
