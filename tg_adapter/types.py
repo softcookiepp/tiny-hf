@@ -1,6 +1,7 @@
 import tinygrad
 from dataclasses import dataclass
 from .device import backend_from_device
+import numpy as np
 
 TYPE_KEYS = ["float32", "float64", "complex64", "complex128", "float16",
 	"uint8", "int8", "int16", "int32", "int64", "bool", "bfloat16",
@@ -36,6 +37,38 @@ TG_BACKEND_TYPE_MAP = {
 		"float64": tinygrad.dtypes.float32
 	}
 }
+
+NP_TG_TYPE_MAP = {
+	tinygrad.dtypes.float: np.dtype("float32"),
+	tinygrad.dtypes.double: np.dtype("float64"),
+	tinygrad.dtypes.float16: np.dtype("float16"),
+	tinygrad.dtypes.uchar: np.dtype("uint8"),
+	tinygrad.dtypes.int8: np.dtype("int8"),
+	tinygrad.dtypes.int16: np.dtype("int16"),
+	tinygrad.dtypes.int32: np.dtype("int32"),
+	tinygrad.dtypes.int64: np.dtype("int64"),
+	tinygrad.dtypes.uint16: np.dtype("uint16"),
+	tinygrad.dtypes.uint32: np.dtype("uint32"),
+	tinygrad.dtypes.uint64: np.dtype("uint64"),
+	tinygrad.dtypes.bool: np.dtype("bool"),
+	tinygrad.dtypes.bfloat16: np.dtype("float16") # no numpy equivalent :c
+}
+
+def get_np_type_from_tg(tgt):
+	return NP_TG_TYPE_MAP[tgt]
+
+def get_tg_type_from_np(npt):
+	for k, v in NP_TG_TYPE_MAP.items():
+		if v == npt:
+			return k
+	raise KeyError
+
+def convert_np_type_correctly(array, backend):
+	tgt = get_tg_type_from_np(array.dtype)
+	dt = get_type_from_tg(tgt, backend)
+	tgt = dt.tgt(backend)
+	npt = get_np_type_from_tg(tgt)
+	return array.astype(npt)
 
 _type_aliases = {
 	"float": "float32",

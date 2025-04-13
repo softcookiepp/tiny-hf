@@ -3,7 +3,7 @@ import tinygrad
 from .device import device as Device
 import inspect
 import numpy as np
-from .types import get_type_from_tg, get_tgt
+from .types import get_type_from_tg, get_tgt, convert_np_type_correctly, _get_type
 from .types import dtype as dtype_class
 from .backend_environment_config import *
 from .debugging import maybe_realize
@@ -25,12 +25,17 @@ class AdapterTensor:
 		if isinstance(data, tinygrad.Tensor):
 			self._tg = data
 		elif isinstance(data, np.ndarray):
-			tgt = get_tgt(dtype, tg_device)
-			self._tg = tinygrad.Tensor(data, device = tg_device, dtype = tgt)
+			print(data.dtype)
+			data = convert_np_type_correctly(data, tg_device)
+			print(data.dtype)
+			input("JOOOOO")
+			self._tg = tinygrad.Tensor(data, device = tg_device)
 		else:
+			data = convert_np_type_correctly(np.array(data) )
 			self._tg = tinygrad.Tensor(data, device = tg_device, dtype = tgt)
 			#raise Exception(f"Tensor creationw with {type(data)} not yet implemented.")
 		self._dtype = get_type_from_tg(self._tg.dtype, self.tg.device.split(":")[0], dtype)
+		assert not self._dtype == _get_type("int64")
 	
 	@property
 	def tg(self):

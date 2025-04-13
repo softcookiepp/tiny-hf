@@ -4,6 +4,7 @@ from tinygrad.helpers import make_tuple, prod
 import math
 from ..tensor import AdapterTensor as AT
 from ..tensor import convert_to_torch, convert_to_tg
+from .. import tensor_constructors as tc
 
 class AvgPool2d(Module):
 	def __init__(self, kernel_size, stride=None, padding=0,
@@ -203,10 +204,15 @@ class Embedding(Module):
 		self.vocab_sz, self.embed_sz, self.weight = vocab_size, embed_size, convert_to_torch(tinygrad.Tensor.glorot_uniform(vocab_size, embed_size) )
 	
 	def forward(self, idx):
+		input(idx.dtype.tgt() )
 		vocab_sz, embed_sz, weight, idx = convert_to_tg(self.vocab_sz, self.embed_sz, self.weight, idx)
 		if not hasattr(self, 'arange'): self.arange = tinygrad.Tensor.arange(vocab_sz, requires_grad=False, device=weight.device).unsqueeze(-1)
 		big_shp = idx.shape+(vocab_sz, embed_sz)
 		arange, idx, vals = self.arange.expand(big_shp), idx.reshape(idx.shape+(1, 1)).expand(big_shp), weight.expand(big_shp)
+		print(arange, arange.dtype)
+		print(idx, idx.dtype)
+		print(vals, vals.dtype)
+		input()
 		return AT( (arange == idx).mul(vals).sum(-2, acc_dtype=vals.dtype) )
 		
 

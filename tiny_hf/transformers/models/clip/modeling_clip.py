@@ -22,6 +22,7 @@ from tg_adapter import nn
 #from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 #from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
+
 from ...activations import ACT2FN
 from ...modeling_attn_mask_utils import _create_4d_causal_attention_mask, _prepare_4d_attention_mask
 from ...modeling_outputs import BaseModelOutput, BaseModelOutputWithPooling, ImageClassifierOutput
@@ -933,8 +934,8 @@ class CLIPTextTransformer(nn.Module):
         Returns:
 
         """
-        #print(type(input_ids) )
-        #input("PEEPEEPOOPOO")
+        print(input_ids, input_ids.tg.dtype )
+        input("PEEPEEPOOPOO")
         output_attentions = output_attentions if output_attentions is not None else self.config.output_attentions
         output_hidden_states = (
             output_hidden_states if output_hidden_states is not None else self.config.output_hidden_states

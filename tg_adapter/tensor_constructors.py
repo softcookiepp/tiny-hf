@@ -20,13 +20,15 @@ def ones(*size, out=None, dtype=None, layout = None, device=None, requires_grad=
 
 
 def arange(start, end = None, step=1, out=None, dtype=None, layout="torch.strided", device=None, requires_grad=False):
+	if dtype is None:
+		dtype = get_default_dtype()
+	
 	device = torch_dev_to_tiny(device)
 	dtype = get_tgt(dtype, device)
 	if end is None:
 		end = start
 		start = 0
-	if dtype is None:
-		dtype = get_default_dtype()
+	
 	return AT(tinygrad.Tensor.arange(start, end, step, dtype = dtype, device = device) )
 
 def empty(size = None, out=None, dtype=None, layout="torch.strided", device=None,
