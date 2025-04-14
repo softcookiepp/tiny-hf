@@ -174,4 +174,6 @@ for dtk in TYPE_KEYS:
 	FINFO_MAP[dtk] = FInfo(tinygrad.dtypes.min(dt.tgt() ), tinygrad.dtypes.max(dt.tgt() ) )
 	
 def finfo(t):
+	if isinstance(t, dtype):
+		t = t.key
 	return FINFO_MAP[t]

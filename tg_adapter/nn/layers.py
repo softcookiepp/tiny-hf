@@ -101,12 +101,14 @@ class ConvNd(Module):
 		scale = 1 / math.sqrt(in_channels * prod(self.kernel_size))
 		
 		#self.weight = tinygrad.Tensor.uniform(out_channels, in_channels//groups, *self.kernel_size, low=-scale, high=scale)
-		self.weight = internal_init.uniform_(tc.empty(  (out_channels, in_channels//groups, *self.kernel_size)  ), a = -scale, b = scale)
+		self.weight = tc.empty(  (out_channels, in_channels//groups, *self.kernel_size)  )
+		internal_init.uniform_(self.weight, a = -scale, b = scale)
 		#self.weight = AT(tinygrad.Tensor.uniform(out_channels, in_channels//groups, *self.kernel_size, low=-scale, high=scale) )
 		
 		self.bias = None
 		if bias:
-			self.bias = internal_init.uniform_(tc.empty(  (out_channels,)  ), a = -scale, high = scale)
+			self.bias = tc.empty(  (out_channels,)  )
+			internal_init.uniform_(self.bias, a = -scale, b = scale)
 			#self.bias = AT( tinygrad.Tensor.uniform(out_channels, low=-scale, high=scale) )
 	
 	def forward(self, x):
@@ -146,7 +148,8 @@ class ConvTransposeNd(ConvNd):
 		super().__init__(self, in_channels, out_channels, kernel_size, stride,
 			padding, dilation, groups, bias, padding_mode, device, dtype, dim)
 		scale = 1 / math.sqrt(in_channels * prod(self.kernel_size))
-		self.weight = internal_init.uniform_(tc.empty(  (in_channels, out_channels//groups, *self.kernel_size)  ), a = -scale, b = scale)
+		self.weight = tc.empty(  (in_channels, out_channels//groups, *self.kernel_size)  )
+		internal_init.uniform_(self.weight, a = -scale, b = scale)
 		#self.weight = AT(tinygrad.Tensor.uniform(in_channels, out_channels//groups, *self.kernel_size, low=-scale, high=scale) )
 		self.output_padding = output_padding
 	
@@ -197,9 +200,11 @@ class Linear(Module):
 	def __init__(self, in_features, out_features, bias=True, device=None, dtype=None):
 		bound = 1 / math.sqrt(in_features)
 		#self.weight = AT(tinygrad.Tensor.uniform(out_features, in_features, low=-bound, high=bound) )
-		self.weight = internal_init.uniform_(tc.empty(  (out_features, in_features)  ), a = -bound, b = bound)
+		self.weight = tc.empty(  (out_features, in_features)  )
+		internal_init.uniform_(self.weight, a = -bound, b = bound)
 		#self.bias = AT( tinygrad.Tensor.uniform(out_features, low=-bound, high=bound) ) if bias else None
-		self.bias = internal_init.uniform_(tc.empty(  (out_features,)  ), a = -bound, b = bound)
+		self.bias = tc.empty(  (out_features,)  )
+		internal_init.uniform_(self.bias, a = -bound, b = bound)
 	
 	def forward(self, x):
 		# disinherit stuff
@@ -211,20 +216,15 @@ class Embedding(Module):
 	def __init__(self, vocab_size:int, embed_size:int):
 		self.vocab_sz, self.embed_sz = vocab_size, embed_size
 		#self.weight = convert_to_torch(tinygrad.Tensor.glorot_uniform(vocab_size, embed_size) )
-		self.weight = internal_init.xavier_uniform_(tc.empty( (vocab_size, embed_size) ) )
-		input(internal_init.xavier_uniform_)
+		self.weight = tc.empty( (vocab_size, embed_size) )
+		internal_init.xavier_uniform_(self.weight )
 		assert not self.weight is None
 	
 	def forward(self, idx):
-		input(idx.dtype.tgt() )
 		vocab_sz, embed_sz, weight, idx = convert_to_tg(self.vocab_sz, self.embed_sz, self.weight, idx)
 		if not hasattr(self, 'arange'): self.arange = tinygrad.Tensor.arange(vocab_sz, requires_grad=False, device=weight.device).unsqueeze(-1)
 		big_shp = idx.shape+(vocab_sz, embed_sz)
 		arange, idx, vals = self.arange.expand(big_shp), idx.reshape(idx.shape+(1, 1)).expand(big_shp), weight.expand(big_shp)
-		print(arange, arange.dtype)
-		print(idx, idx.dtype)
-		print(vals, vals.dtype)
-		input()
 		return AT( (arange == idx).mul(vals).sum(-2, acc_dtype=vals.dtype) )
 		
 

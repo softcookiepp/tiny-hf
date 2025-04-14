@@ -102,8 +102,6 @@ class AdapterTensor:
 				device = Device(device)
 		
 		new_tensor = None
-		#print(dtype, device)
-		#input()
 		if dtype is None and (not device is None):
 			new_tensor = maybe_realize(self.tg.to(device.tg) )
 		elif (not dtype is None) and device is None:

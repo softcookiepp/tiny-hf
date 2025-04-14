@@ -3,7 +3,7 @@ from .backend_environment_config import *
 from . import nn, F
 from .generator import *
 from .lambdas import *
-from .types import _get_type, dtype, get_default_dtype, set_default_dtype
+from .types import _get_type, dtype, get_default_dtype, set_default_dtype, finfo
 from .tensor_constructors import *
 from .layouts import *
 from . import distributed
