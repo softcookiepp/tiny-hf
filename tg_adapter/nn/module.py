@@ -148,6 +148,13 @@ class Module:
 		elif isinstance(v, AT):
 			new_key = prefix.strip(".")
 			if new_key in state_dict.keys():
+				tg_tensor = state_dict[new_key]
+				if tg_tensor.dtype == tinygrad.dtypes.long:
+					print(tg_tensor)
+					print(new_key)
+					print(v.tg.dtype, v.tg.device)
+					print(tg_tensor.dtype, tg_tensor.device)
+					input("looksie up there!")
 				v.tg.replace(state_dict[new_key].to(v.tg.device) ).realize()
 			else:
 				# TODO: warn user or something, i forget
@@ -164,11 +171,12 @@ class Module:
 	
 		
 	def load_state_dict(self, state_dict, strict = True, assign = False, prefix = ""):
+		"""
 		for k, v in self.__dict__.items():
 			if isinstance(v, list):
 				for i in range(len(v) ):
 					new_prefix = ".".join( [prefix, k, str(i)] )
-					
+		"""
 		self._load_state_dict_recursive(state_dict)
 		return [], []
 		

@@ -5,6 +5,7 @@ import math
 from ..tensor import AdapterTensor as AT
 from ..tensor import convert_to_torch, convert_to_tg
 from .. import tensor_constructors as tc
+from . import init as internal_init
 
 class AvgPool2d(Module):
 	def __init__(self, kernel_size, stride=None, padding=0,
@@ -100,11 +101,13 @@ class ConvNd(Module):
 		scale = 1 / math.sqrt(in_channels * prod(self.kernel_size))
 		
 		#self.weight = tinygrad.Tensor.uniform(out_channels, in_channels//groups, *self.kernel_size, low=-scale, high=scale)
-		self.weight = AT(tinygrad.Tensor.uniform(out_channels, in_channels//groups, *self.kernel_size, low=-scale, high=scale) )
+		self.weight = internal_init.uniform_(tc.empty(  (out_channels, in_channels//groups, *self.kernel_size)  ), a = -scale, b = scale)
+		#self.weight = AT(tinygrad.Tensor.uniform(out_channels, in_channels//groups, *self.kernel_size, low=-scale, high=scale) )
 		
 		self.bias = None
 		if bias:
-			self.bias = AT( tinygrad.Tensor.uniform(out_channels, low=-scale, high=scale) )
+			self.bias = internal_init.uniform_(tc.empty(  (out_channels,)  ), a = -scale, high = scale)
+			#self.bias = AT( tinygrad.Tensor.uniform(out_channels, low=-scale, high=scale) )
 	
 	def forward(self, x):
 		x, weight, bias = x.tg, self.weight.tg, self.bias.tg
@@ -143,7 +146,8 @@ class ConvTransposeNd(ConvNd):
 		super().__init__(self, in_channels, out_channels, kernel_size, stride,
 			padding, dilation, groups, bias, padding_mode, device, dtype, dim)
 		scale = 1 / math.sqrt(in_channels * prod(self.kernel_size))
-		self.weight = AT(tinygrad.Tensor.uniform(in_channels, out_channels//groups, *self.kernel_size, low=-scale, high=scale) )
+		self.weight = internal_init.uniform_(tc.empty(  (in_channels, out_channels//groups, *self.kernel_size)  ), a = -scale, b = scale)
+		#self.weight = AT(tinygrad.Tensor.uniform(in_channels, out_channels//groups, *self.kernel_size, low=-scale, high=scale) )
 		self.output_padding = output_padding
 	
 	def forward(self, x):
@@ -177,8 +181,10 @@ class LayerNorm(Module):
 			bias=True, device=None, dtype=None):
 		self.normalized_shape: tuple[int, ...] = make_tuple(normalized_shape, 1)
 		self.axis, self.eps, self.elementwise_affine = tuple(-1-i for i in range(len(self.normalized_shape))), eps, elementwise_affine
-		self.weight = AT(tinygrad.Tensor.ones(*self.normalized_shape) ) if elementwise_affine else None
-		self.bias = AT(tinygrad.Tensor.zeros(*self.normalized_shape) ) if bias and elementwise_affine else None
+		#self.weight = AT(tinygrad.Tensor.ones(*self.normalized_shape) ) if elementwise_affine else None
+		#self.bias = AT(tinygrad.Tensor.zeros(*self.normalized_shape) ) if bias and elementwise_affine else None
+		self.weight = tc.ones(*self.normalized_shape) if elementwise_affine else None
+		self.bias = tc.zeros(*self.normalized_shape) if bias and elementwise_affine else None
 	
 	def forward(self, x):
 		x, weight, bias = convert_to_tg(x, self.weight, self.bias)
@@ -190,8 +196,10 @@ class LayerNorm(Module):
 class Linear(Module):
 	def __init__(self, in_features, out_features, bias=True, device=None, dtype=None):
 		bound = 1 / math.sqrt(in_features)
-		self.weight = AT(tinygrad.Tensor.uniform(out_features, in_features, low=-bound, high=bound) )
-		self.bias = AT( tinygrad.Tensor.uniform(out_features, low=-bound, high=bound) ) if bias else None
+		#self.weight = AT(tinygrad.Tensor.uniform(out_features, in_features, low=-bound, high=bound) )
+		self.weight = internal_init.uniform_(tc.empty(  (out_features, in_features)  ), a = -bound, b = bound)
+		#self.bias = AT( tinygrad.Tensor.uniform(out_features, low=-bound, high=bound) ) if bias else None
+		self.bias = internal_init.uniform_(tc.empty(  (out_features,)  ), a = -bound, b = bound)
 	
 	def forward(self, x):
 		# disinherit stuff
@@ -201,7 +209,11 @@ class Linear(Module):
 		
 class Embedding(Module):
 	def __init__(self, vocab_size:int, embed_size:int):
-		self.vocab_sz, self.embed_sz, self.weight = vocab_size, embed_size, convert_to_torch(tinygrad.Tensor.glorot_uniform(vocab_size, embed_size) )
+		self.vocab_sz, self.embed_sz = vocab_size, embed_size
+		#self.weight = convert_to_torch(tinygrad.Tensor.glorot_uniform(vocab_size, embed_size) )
+		self.weight = internal_init.xavier_uniform_(tc.empty( (vocab_size, embed_size) ) )
+		input(internal_init.xavier_uniform_)
+		assert not self.weight is None
 	
 	def forward(self, idx):
 		input(idx.dtype.tgt() )
@@ -220,8 +232,10 @@ class GroupNorm(Module):
 	def __init__(self, num_groups, num_channels, eps=1e-05, affine=True,
 			device=None, dtype=None):
 		self.num_groups, self.num_channels, self.eps = num_groups, num_channels, eps
-		self.weight = AT(tinygrad.Tensor.ones(num_channels) ) if affine else None
-		self.bias = AT( tinygrad.Tensor.zeros(num_channels) ) if affine else None
+		self.weight = tc.ones(num_channels) if affine else None
+		self.bias = tc.zeros(num_channels) if affine else None
+		#self.weight = AT(tinygrad.Tensor.ones(num_channels) ) if affine else None
+		#self.bias = AT( tinygrad.Tensor.zeros(num_channels) ) if affine else None
 	
 	def forward(self, x):
 		# disinherit stuff

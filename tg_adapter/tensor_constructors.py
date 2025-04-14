@@ -1,9 +1,10 @@
 import tinygrad
-from .types import get_default_dtype, get_tgt
+from .types import get_default_dtype, get_tgt, _get_type
 from .tensor import AdapterTensor as AT
 import numpy as np
 from .backend_environment_config import torch_dev_to_tiny
 from typing import Iterable
+from .device import parse_device
 
 def _convert_size(size):
 	if len(size) == 0:
@@ -13,17 +14,23 @@ def _convert_size(size):
 	return size
 
 def ones(*size, out=None, dtype=None, layout = None, device=None, requires_grad=False): #layout=torch.strided,
-	device = torch_dev_to_tiny(device)
+	device = parse_device(device).tg
 	dtype = get_tgt(dtype, device)
 	size = _convert_size(size)
 	return AT(tinygrad.Tensor.ones(*size, device = device, dtype = dtype) )
 
+def zeros(*size, out=None, dtype=None, layout = None, device=None, requires_grad=False): #layout=torch.strided,
+	device = parse_device(device).tg
+	dtype = get_tgt(dtype, device)
+	size = _convert_size(size)
+	return AT(tinygrad.Tensor.zeros(*size, device = device, dtype = dtype) )
+
 
 def arange(start, end = None, step=1, out=None, dtype=None, layout="torch.strided", device=None, requires_grad=False):
 	if dtype is None:
-		dtype = get_default_dtype()
+		dtype = _get_type("int64")
 	
-	device = torch_dev_to_tiny(device)
+	device = parse_device(device).tg
 	dtype = get_tgt(dtype, device)
 	if end is None:
 		end = start
@@ -34,13 +41,13 @@ def arange(start, end = None, step=1, out=None, dtype=None, layout="torch.stride
 def empty(size = None, out=None, dtype=None, layout="torch.strided", device=None,
 		requires_grad=False, pin_memory=False, memory_format="torch.contiguous_format"):
 	assert not size is None
-	device = torch_dev_to_tiny(device)
+	device = parse_device(device).tg
 	dtype = get_tgt(dtype, device)
 	size = _convert_size(size)
 	return AT(tinygrad.Tensor.empty(*size, device = device, dtype = dtype) )
 
 def full(size, fill_value, out=None, dtype=None, layout="torch.strided", device=None, requires_grad=False):
-	device = torch_dev_to_tiny(device)
+	device = parse_device(device).tg
 	dtype = get_tgt(dtype, device)
 	return AT(tinygrad.Tensor.full(size, fill_value, device = device, dtype = dtype) )
 
@@ -52,7 +59,7 @@ def tensor(data, dtype = None, device = None,
 
 def linspace(start, end, steps, *, out=None, dtype=None,
 		layout="torch.strided", device=None, requires_grad=False):
-	device = torch_dev_to_tiny(device)
+	device = parse_device(device).tg
 	dtype = get_tgt(dtype, device)
 	t = tinygrad.Tensor.linspace(start, end, steps, dtype = dtype, device = device)
 	return AT(t)
@@ -64,7 +71,7 @@ def from_numpy(a: np.ndarray):
 def randn(*size, generator=None, out=None, dtype=None, layout="torch.strided", device=None, requires_grad=False, pin_memory=False):
 	if isinstance(size[0], Iterable):
 		size = size[0]
-	device = torch_dev_to_tiny(device)
+	device = parse_device(device).tg
 	dtype = get_tgt(dtype, device)
 	t = tinygrad.Tensor.randn(*size, dtype = dtype, requires_grad = requires_grad, device = device)
 	return AT(t)

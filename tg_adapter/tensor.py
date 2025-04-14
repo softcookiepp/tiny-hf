@@ -15,6 +15,10 @@ class AdapterTensor:
 		# pin memory is unused, but kept for compatibility
 		# convert device, duh
 		tg_device = None
+		if device is None:
+			# default to CPU, just like torch does
+			device = "cpu"
+			
 		if isinstance(device, Device):
 			tg_device = device.tg
 		elif isinstance(device, str):
@@ -25,17 +29,13 @@ class AdapterTensor:
 		if isinstance(data, tinygrad.Tensor):
 			self._tg = data
 		elif isinstance(data, np.ndarray):
-			print(data.dtype)
 			data = convert_np_type_correctly(data, tg_device)
-			print(data.dtype)
-			input("JOOOOO")
 			self._tg = tinygrad.Tensor(data, device = tg_device)
 		else:
 			data = convert_np_type_correctly(np.array(data) )
 			self._tg = tinygrad.Tensor(data, device = tg_device, dtype = tgt)
 			#raise Exception(f"Tensor creationw with {type(data)} not yet implemented.")
 		self._dtype = get_type_from_tg(self._tg.dtype, self.tg.device.split(":")[0], dtype)
-		assert not self._dtype == _get_type("int64")
 	
 	@property
 	def tg(self):

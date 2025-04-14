@@ -29,7 +29,7 @@ Tensor = AdapterTensor
 #	return dev
 
 # TODO: make an actual device class, then rejigger the state dict loader to do some other stuff
-from .device import device
+from .device import device, set_default_device, get_default_device
 
 
 def is_grad_enabled():

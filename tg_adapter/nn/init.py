@@ -1,5 +1,6 @@
 import tinygrad
 from ..tensor import AdapterTensor as AT
+from ..device import parse_device, get_default_device
 
 def uniform_(tensor, a = 0.0, b = 1.0, generator = None):
 	tensor = tensor.tg
@@ -43,7 +44,11 @@ def constant_(tensor, val):
 	
 
 def xavier_uniform_(tensor, *args, **kwargs):
-	raise NotImplementedError
+	tensor = tensor.tg
+	new = tinygrad.Tensor.glorot_uniform(tensor.shape, device = tensor.device, dtype = tensor.dtype, requires_grad = tensor.requires_grad)
+	print("WEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
+	input(new)
+	return AT(tensor.assign(new) )
 
 xavier_uniform = xavier_uniform_
 

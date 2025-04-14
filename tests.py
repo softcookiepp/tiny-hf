@@ -135,7 +135,7 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4):
 def _process_arg(arg):
 	if isinstance(arg, np.ndarray):
 		# convert to tensor
-		return torch.tensor(arg), tinygrad.Tensor(arg)
+		return torch.tensor(arg), tg_adapter.tensor(arg)
 	else:
 		# append as is
 		return arg, arg
@@ -401,7 +401,10 @@ def test_clip_text_model():
 	# import the tokenizer first in order to do stuff correctly
 	from transformers import CLIPTokenizer
 	tokenizer = CLIPTokenizer.from_pretrained("openai/clip-vit-large-patch14", use_safetensors = True)
-	tokenizer_output = _convert_tokenizer_output( tokenizer(["the quick brown fox jumped over the lazy dog"], padding = True) )
+	tokenizer_output = tokenizer(["the quick brown fox jumped over the lazy dog"], padding = True)
+	#print(tokenizer_output)
+	#input(type(tokenizer_output["input_ids"]) )
+	tokenizer_output = _convert_tokenizer_output( tokenizer_output )
 	test_hf_reimplementation([], tokenizer_output, hf_module, "__call__", tg_module, "__call__")
 
 
@@ -428,7 +431,9 @@ def test_stable_diffusion_pipeline():
 	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = tg_scheduler)
 	
 	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 2}, hf_module, "__call__", tg_module, "__call__")
-	
+
+def test_ddim_scheduler():
+	raise NotImplementedError
 
 @tinygrad.Tensor.test()
 @tinygrad.Tensor.train(mode = False)
@@ -436,7 +441,7 @@ def test_stable_diffusion_pipeline():
 def main():
 	#test_stable_diffusion_pipeline()
 	
-	test_autoencoderkl()
+	#test_autoencoderkl()
 	test_clip_text_model()
 	test_clip_tokenizer()
 	#test_unet_2d_condition()
