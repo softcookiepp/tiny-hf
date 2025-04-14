@@ -3,11 +3,32 @@ import tinygrad
 from .device import device as Device
 import inspect
 import numpy as np
-from .types import get_type_from_tg, get_tgt, convert_np_type_correctly, _get_type
+from .types import get_type_from_tg, get_tgt, convert_np_type_correctly, _get_type, is_floating_point
 from .types import dtype as dtype_class
 from .backend_environment_config import *
 from .debugging import maybe_realize
 
+def _parse_to_arguments(*args, **kwargs):
+	assert len(args) > 0 or len(kwargs) > 0
+	dtype = None
+	device = None
+	
+	for arg in args:
+		if isinstance(arg, dtype_class):
+			dtype = arg
+		elif isinstance(arg, str):
+			device = Device(arg)
+		elif isinstance(arg, Device):
+			device = arg
+	if "dtype" in kwargs.keys():
+		dtype = kwargs["dtype"]
+	if "device" in kwargs.keys():
+		device = kwargs["device"]
+		if isinstance(device, str):
+			device = Device(device)
+	if not isinstance(device, Device):
+		raise ValueError
+	return dtype, device
 
 class AdapterTensor:
 	def __init__(self, data, dtype = None, device = None,
@@ -84,22 +105,7 @@ class AdapterTensor:
 	def to(self, *args, **kwargs):
 		assert len(args) > 0 or len(kwargs) > 0
 		
-		dtype = None
-		device = None
-		
-		for arg in args:
-			if isinstance(arg, dtype_class):
-				dtype = arg
-			elif isinstance(arg, str):
-				device = Device(arg)
-			elif isinstance(arg, Device):
-				device = arg
-		if "dtype" in kwargs.keys():
-			dtype = kwargs["dtype"]
-		if "device" in kwargs.keys():
-			device = kwargs["device"]
-			if isinstance(device, str):
-				device = Device(device)
+		dtype, device = _parse_to_arguments(*args, **kwargs)
 		
 		new_tensor = None
 		if dtype is None and (not device is None):
@@ -221,7 +227,7 @@ class AdapterTensor:
 		return self.to(tinygrad.dtypes.float)
 		
 	def is_floating_point(self):
-		return self.tg.dtype in [tinygrad.dtypes.float16, tinygrad.dtypes.float32, tinygrad.dtypes.float64]
+		return is_floating_point(self)
 		
 	def contiguous(self, *args, **kwargs):
 		return self._reimplement_exact("contiguous", *args, **kwargs)

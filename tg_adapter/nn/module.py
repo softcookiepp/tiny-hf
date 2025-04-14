@@ -5,7 +5,7 @@ import inspect
 from ..device import device
 from ..utils import recursive_realize
 from ..tensor import AdapterTensor as AT
-from ..tensor import convert_to_torch
+from ..tensor import convert_to_torch, _parse_to_arguments
 
 # adapter for https://pytorch.org/docs/stable/generated/torch.nn.Module.html
 class Module:
@@ -87,8 +87,17 @@ class Module:
 		# tinygrad has no compile equivalent lol
 		pass
 		
-	def to(self, device):
-		raise NotImplementedError
+	def to(self, *args, **kwargs):
+		# convert any floating point parameters to dtype
+		# move parameters to device, convert unsupported types to supported types if required
+		# how do we do this?
+		
+		dtype, device = _parse_to_arguments(*args, **kwargs)
+		for k, v in self.state_dict().items():
+			if isinstance(v, AT) and v.is_floating_point():
+				# typecast it
+				raise NotImplementedError
+				# its too hot in here :c
 		
 	def cuda(self, device = None):
 		raise NotImplementedError

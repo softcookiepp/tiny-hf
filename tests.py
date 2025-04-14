@@ -396,7 +396,7 @@ def test_clip_text_model():
 	from transformers import CLIPTextModel as hf_class
 	
 	hf_module = hf_class.from_pretrained("openai/clip-vit-large-patch14", use_safetensors = True)
-	tg_module = tg_class.from_pretrained("openai/clip-vit-large-patch14", use_safetensors = True)
+	tg_module = tg_class.from_pretrained("openai/clip-vit-large-patch14", use_safetensors = True).to("cuda:0")
 	
 	# import the tokenizer first in order to do stuff correctly
 	from transformers import CLIPTokenizer

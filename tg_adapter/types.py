@@ -6,6 +6,8 @@ import numpy as np
 TYPE_KEYS = ["float32", "float64", "complex64", "complex128", "float16",
 	"uint8", "int8", "int16", "int32", "int64", "bool", "bfloat16",
 	"uint16", "uint32", "uint64", "float8_e4m3fn", "float8_e5m2"]
+	
+FLOAT_KEYS = ["float32", "float64", "float16", "bfloat16", "float8_e4m3fn", "float8_e5m2"]
 
 # Not all tinygrad backends support all data types.
 # So we need to create a map that overrides the types somehow...
@@ -140,6 +142,11 @@ class dtype:
 			raise ValueError
 		return dt
 	
+	def __eq__(self, other):
+		if hasattr(other, "tgt"):
+			other = other.tgt()
+		return other == self.tgt()
+	
 def get_tgt(t, tg_backend):
 	if t is None:
 		return None
@@ -177,3 +184,6 @@ def finfo(t):
 	if isinstance(t, dtype):
 		t = t.key
 	return FINFO_MAP[t]
+
+def is_floating_point(data):
+	return data.dtype.key in FLOAT_KEYS
