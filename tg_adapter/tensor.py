@@ -116,6 +116,24 @@ class AdapterTensor:
 			return convert_to_torch(self.tg.to(device.tg).cast(dtype.tgt(device.tg)) )
 		assert not new_tensor is None
 		return convert_to_torch(new_tensor)
+		
+	def _tg_cast_(self, dtype):
+		new_tensor = self.tg.cast(dtype.tgt(self.device.tg) )
+		self.tg.replace(new_tensor)
+		
+	def to_(self, *args, **kwargs):
+		# inplace equivalent of to()
+		# torch has no equivalent, but it is still necessary for
+		# the Module class to() method, since everything is done inplace there
+		
+		assert len(args) > 0 or len(kwargs) > 0
+		
+		dtype, device = _parse_to_arguments(*args, **kwargs)
+		if not dtype is None:
+			self._tg_cast_(dtype)
+		if not device is None:
+			self.tg.to_(device.tg)
+		maybe_realize(self.tg)
 	
 	@property
 	def device(self):

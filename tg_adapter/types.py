@@ -121,6 +121,7 @@ class dtype:
 		self._is_complex = False
 		if "complex" in key:
 			self._is_complex = True
+		self._is_fp = self._key in FLOAT_KEYS
 	
 	@property
 	def is_complex(self):
@@ -129,6 +130,10 @@ class dtype:
 	@property
 	def key(self):
 		return self._key
+	
+	@property
+	def is_floating_point(self):
+		return self._is_fp
 	
 	def tgt(self, tg_backend = None):
 		dt = None
@@ -186,4 +191,4 @@ def finfo(t):
 	return FINFO_MAP[t]
 
 def is_floating_point(data):
-	return data.dtype.key in FLOAT_KEYS
+	return data.dtype.is_floating_point

@@ -93,11 +93,15 @@ class Module:
 		# how do we do this?
 		
 		dtype, device = _parse_to_arguments(*args, **kwargs)
+		if dtype is None and device is None:
+			raise ValueError
+		assert dtype == None or dtype.is_floating_point
 		for k, v in self.state_dict().items():
 			if isinstance(v, AT) and v.is_floating_point():
 				# typecast it
 				raise NotImplementedError
-				# its too hot in here :c
+				v.to_(dtype, device)
+		return self
 		
 	def cuda(self, device = None):
 		raise NotImplementedError
