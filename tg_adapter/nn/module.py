@@ -99,8 +99,9 @@ class Module:
 		for k, v in self.state_dict().items():
 			if isinstance(v, AT) and v.is_floating_point():
 				# typecast it
-				raise NotImplementedError
 				v.to_(dtype, device)
+			elif isinstance(v, AT) and not device is None:
+				v.to_(device)
 		return self
 		
 	def cuda(self, device = None):

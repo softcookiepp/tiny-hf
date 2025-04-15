@@ -443,6 +443,7 @@ def main():
 	
 	#test_autoencoderkl()
 	test_clip_text_model()
+	input("heres where we run out of memory")
 	test_clip_tokenizer()
 	#test_unet_2d_condition()
 	test_unet_2d()

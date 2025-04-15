@@ -56,7 +56,11 @@ class AdapterTensor:
 			data = convert_np_type_correctly(np.array(data) )
 			self._tg = tinygrad.Tensor(data, device = tg_device, dtype = tgt)
 			#raise Exception(f"Tensor creationw with {type(data)} not yet implemented.")
-		self._dtype = get_type_from_tg(self._tg.dtype, self.tg.device.split(":")[0], dtype)
+		self._dtype = dtype
+		self._rebuild_dtype()
+	
+	def _rebuild_dtype(self):
+		self._dtype = get_type_from_tg(self._tg.dtype, self.tg.device.split(":")[0], self._dtype)
 	
 	@property
 	def tg(self):
@@ -116,7 +120,10 @@ class AdapterTensor:
 			return convert_to_torch(self.tg.to(device.tg).cast(dtype.tgt(device.tg)) )
 		assert not new_tensor is None
 		return convert_to_torch(new_tensor)
-		
+	
+	def _convert_to_supported_dtype(self):
+		raise NotImplementedError
+	
 	def _tg_cast_(self, dtype):
 		new_tensor = self.tg.cast(dtype.tgt(self.device.tg) )
 		self.tg.replace(new_tensor)
@@ -134,7 +141,10 @@ class AdapterTensor:
 		if not device is None:
 			self.tg.to_(device.tg)
 		maybe_realize(self.tg)
-	
+		
+		# forgot, have to set the data type to the correct one afterwards...
+		self._rebuild_dtype()
+		
 	@property
 	def device(self):
 		dev = tiny_dev_to_torch(self.tg.device)
