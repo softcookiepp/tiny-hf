@@ -60,7 +60,7 @@ class AdapterTensor:
 		self._rebuild_dtype()
 	
 	def _rebuild_dtype(self):
-		self._dtype = get_type_from_tg(self._tg.dtype, self.tg.device.split(":")[0], self._dtype)
+		self._dtype = get_type_from_tg(self._tg.dtype, self._tg.device.split(":")[0], self._dtype)
 	
 	@property
 	def tg(self):
@@ -121,12 +121,15 @@ class AdapterTensor:
 		assert not new_tensor is None
 		return convert_to_torch(new_tensor)
 	
-	def _convert_to_supported_dtype(self):
-		raise NotImplementedError
-	
 	def _tg_cast_(self, dtype):
 		new_tensor = self.tg.cast(dtype.tgt(self.device.tg) )
 		self.tg.replace(new_tensor)
+		
+	def _recast_to_supported_type(self, dev) -> tinygrad.Tensor:
+		# recasts inplace to supported dtype
+		supported_type = self.dtype.tgt(dev.tg)
+		return self._tg.cast(supported_type)
+		
 		
 	def to_(self, *args, **kwargs):
 		# inplace equivalent of to()
@@ -139,7 +142,11 @@ class AdapterTensor:
 		if not dtype is None:
 			self._tg_cast_(dtype)
 		if not device is None:
-			self.tg.to_(device.tg)
+			new_t = self._recast_to_supported_type(device)
+			self._tg.replace(new_t)
+			if self._tg.dtype == tinygrad.dtypes.int64:
+				input("uh-oh, this is bad mkay")
+			self._tg.to_(device.tg)
 		maybe_realize(self.tg)
 		
 		# forgot, have to set the data type to the correct one afterwards...
