@@ -49,13 +49,19 @@ class AdapterTensor:
 		tgt = get_tgt(dtype, tg_device)
 		if isinstance(data, tinygrad.Tensor):
 			self._tg = data
+			if self._tg.dtype == tinygrad.dtypes.long:
+				input("WHY IS IT STILL DOING THIS")
 		elif isinstance(data, np.ndarray):
 			data = convert_np_type_correctly(data, tg_device)
 			self._tg = tinygrad.Tensor(data, device = tg_device)
+			if self._tg.dtype == tinygrad.dtypes.long:
+				input("REEEEEEEEEEEEEEEE")
 		else:
 			data = convert_np_type_correctly(np.array(data) )
 			self._tg = tinygrad.Tensor(data, device = tg_device, dtype = tgt)
 			#raise Exception(f"Tensor creationw with {type(data)} not yet implemented.")
+			if self._tg.dtype == tinygrad.dtypes.long:
+				input("EEEEEEEEEEEEEEEE")
 		self._dtype = dtype
 		self._rebuild_dtype()
 	
@@ -111,7 +117,22 @@ class AdapterTensor:
 		
 		dtype, device = _parse_to_arguments(*args, **kwargs)
 		
-		new_tensor = None
+		new_tensor = self._tg
+		old_type = self._tg.dtype
+		# gonna rewrite a little here c:
+		if not dtype is None:
+			old_dtype = dtype.tgt(device.tg)
+			new_tensor = self._tg.cast(old_dtype)
+		if not device is None:
+			# first ensure that the dtype is compatible with the device
+			if dtype is None:
+				dtype = self.dtype
+			supported_type = dtype.tgt(device.tg)
+			new_tensor = new_tensor.cast(supported_type)
+			# then move it to the new device
+			new_tensor = new_tensor.to(device.tg)
+		return convert_to_torch(new_tensor)
+		
 		if dtype is None and (not device is None):
 			new_tensor = maybe_realize(self.tg.to(device.tg) )
 		elif (not dtype is None) and device is None:
@@ -144,8 +165,6 @@ class AdapterTensor:
 		if not device is None:
 			new_t = self._recast_to_supported_type(device)
 			self._tg.replace(new_t)
-			if self._tg.dtype == tinygrad.dtypes.int64:
-				input("uh-oh, this is bad mkay")
 			self._tg.to_(device.tg)
 		maybe_realize(self.tg)
 		

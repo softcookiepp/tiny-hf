@@ -28,7 +28,7 @@ def zeros(*size, out=None, dtype=None, layout = None, device=None, requires_grad
 
 def arange(start, end = None, step=1, out=None, dtype=None, layout="torch.strided", device=None, requires_grad=False):
 	if dtype is None:
-		dtype = _get_type("int64")
+		dtype = _get_type("int32")
 	
 	device = parse_device(device).tg
 	dtype = get_tgt(dtype, device)

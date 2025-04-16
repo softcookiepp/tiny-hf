@@ -132,24 +132,28 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4):
 			#print(tiny_out.numpy() - torch_out.detach().numpy())
 			input()
 		
-def _process_arg(arg):
+def _process_arg(arg, device):
 	if isinstance(arg, np.ndarray):
 		# convert to tensor
-		return torch.tensor(arg), tg_adapter.tensor(arg)
+		tgt = tg_adapter.tensor(arg).to(device)
+		tgt.tg.realize()
+		return torch.tensor(arg), tgt
 	else:
 		# append as is
 		return arg, arg
 
-def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_method, error_threshold = 1.0e-4):
+def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_method, error_threshold = 1.0e-4, device = "cuda:0"):
 	if not (isinstance(args, tuple) or isinstance(args, list) ):
 		args = (args,)
-	
+	if hasattr(my_module, "to"):
+		my_module = my_module.to(device)
 	hf_args, my_args = [], []
 	for arg in args:
 		if isinstance(arg, np.ndarray):
 			# convert to tensor
-			hf_args.append(torch.tensor(arg) )
-			my_args.append(tg_adapter.tensor(arg) )
+			torch_v, tg_v = _process_arg(v, device)
+			hf_args.append(torch_v)
+			my_args.append(tg_v )
 		else:
 			# append as is
 			hf_args.append(arg )
@@ -161,7 +165,7 @@ def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_m
 	hf_kwargs = {}
 	my_kwargs = {}
 	for k, v in kwargs.items():
-		torch_v, tg_v = _process_arg(v)
+		torch_v, tg_v = _process_arg(v, device)
 		hf_kwargs[k] = torch_v
 		my_kwargs[k] = tg_v
 	
@@ -396,7 +400,7 @@ def test_clip_text_model():
 	from transformers import CLIPTextModel as hf_class
 	
 	hf_module = hf_class.from_pretrained("openai/clip-vit-large-patch14", use_safetensors = True)
-	tg_module = tg_class.from_pretrained("openai/clip-vit-large-patch14", use_safetensors = True).to("cuda:0")
+	tg_module = tg_class.from_pretrained("openai/clip-vit-large-patch14", use_safetensors = True)
 	
 	# import the tokenizer first in order to do stuff correctly
 	from transformers import CLIPTokenizer

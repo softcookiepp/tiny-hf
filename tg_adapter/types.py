@@ -70,6 +70,8 @@ def convert_np_type_correctly(array, backend):
 	dt = get_type_from_tg(tgt, backend)
 	tgt = dt.tgt(backend)
 	npt = get_np_type_from_tg(tgt)
+	if npt == np.dtype("int64"):
+		return array.astype(np.int32)
 	return array.astype(npt)
 
 _type_aliases = {
