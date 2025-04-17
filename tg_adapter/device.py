@@ -10,11 +10,15 @@ class device:
 	default_device = None
 	
 	def __init__(self, name):
-		self._name = name
-		self._idx = None
-		if ":" in name:
-			self._name, self._idx = tuple(name.split(":"))
-			self._idx = int(self._idx)
+		if isinstance(name, device):
+			# just update __dict__
+			self.__dict__.update(name.__dict__)
+		else:
+			self._name = name
+			self._idx = None
+			if ":" in name:
+				self._name, self._idx = tuple(name.split(":"))
+				self._idx = int(self._idx)
 	
 	@property
 	def type(self):
