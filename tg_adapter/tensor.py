@@ -26,8 +26,7 @@ def _parse_to_arguments(*args, **kwargs):
 		device = kwargs["device"]
 		if isinstance(device, str):
 			device = Device(device)
-	if not isinstance(device, Device):
-		raise ValueError
+	assert device is None or isinstance(device, Device)
 	return dtype, device
 
 class AdapterTensor:
@@ -118,6 +117,8 @@ class AdapterTensor:
 		dtype, device = _parse_to_arguments(*args, **kwargs)
 		
 		new_tensor = self._tg
+		if device is None:
+			device = self.device
 		old_type = self._tg.dtype
 		# gonna rewrite a little here c:
 		if not dtype is None:
