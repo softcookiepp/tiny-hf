@@ -57,7 +57,7 @@ class AdapterTensor:
 			if self._tg.dtype == tinygrad.dtypes.long:
 				input("REEEEEEEEEEEEEEEE")
 		else:
-			data = convert_np_type_correctly(np.array(data) )
+			data = convert_np_type_correctly(np.array(data), tg_device )
 			self._tg = tinygrad.Tensor(data, device = tg_device, dtype = tgt)
 			#raise Exception(f"Tensor creationw with {type(data)} not yet implemented.")
 			if self._tg.dtype == tinygrad.dtypes.long:

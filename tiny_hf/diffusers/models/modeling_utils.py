@@ -40,11 +40,11 @@ from typing_extensions import Self
 
 from .. import __version__
 # disabling for now because not implemented
-"""
+
 from ..hooks import apply_group_offloading, apply_layerwise_casting
 from ..quantizers import DiffusersAutoQuantizer, DiffusersQuantizer
 from ..quantizers.quantization_config import QuantizationMethod
-"""
+
 from ..utils import (
 	CONFIG_NAME,
 	FLAX_WEIGHTS_NAME,
@@ -1304,7 +1304,6 @@ class ModelMixin(tga.nn.Module, PushToHubMixin):
 	# Adapted from `transformers`.
 	@wraps(tga.nn.Module.to)
 	def to(self, *args, **kwargs):
-		raise NotImplementedError
 		from ..hooks.group_offloading import _is_group_offload_enabled
 
 		device_arg_or_kwarg_present = any(isinstance(arg, tga.device) for arg in args) or "device" in kwargs

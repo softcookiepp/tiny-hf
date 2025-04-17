@@ -151,7 +151,7 @@ def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_m
 	for arg in args:
 		if isinstance(arg, np.ndarray):
 			# convert to tensor
-			torch_v, tg_v = _process_arg(v, device)
+			torch_v, tg_v = _process_arg(arg, device)
 			hf_args.append(torch_v)
 			my_args.append(tg_v )
 		else:
@@ -182,25 +182,11 @@ def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_m
 	#inspect_state_dict_devices(my_module)
 	print(f"MSE for {hf_module} and {my_module}:")
 	_test_key_errors(torch_out, tiny_out)
-	"""
-	if isinstance(tiny_out, tuple):
-		tiny_out = tiny_out[0]
-	elif not isinstance(tiny_out, tinygrad.Tensor):
-		tiny_out = _get_output(tiny_out)
-	"""
 	
-	"""
-	error = mse(tiny_out.numpy(), torch_out.detach().numpy()) 
-	print(f"MSE for {hf_module} and {my_module}:", error)
-	if error > error_threshold:
-		print("tiny:")
-		print(tiny_out.numpy())
-		print("torch")
-		print(torch_out.detach().numpy() )
-		print("difference:")
-		print(tiny_out.numpy() - torch_out.detach().numpy())
-		input()
-	"""
+	del torch_out
+	del tiny_out
+	del hf_module
+	del my_module
 	
 
 def test_autoencoderkl():
@@ -447,7 +433,6 @@ def main():
 	
 	#test_autoencoderkl()
 	test_clip_text_model()
-	input("heres where we run out of memory")
 	test_clip_tokenizer()
 	#test_unet_2d_condition()
 	test_unet_2d()
