@@ -17,7 +17,7 @@ def _device_supports_type(tg_device: str, dt: tinygrad.dtype.DType):
 		if "bfloat" in str(dt):
 			return False
 	try:
-		t = tinygrad.Tensor.randn(1, device = tg_device, dtype = dt).realize().numpy()
+		t = tinygrad.Tensor.randn(4, device = tg_device, dtype = dt).realize().numpy()
 		return True
 	except tinygrad.device.CompileError:
 		return False

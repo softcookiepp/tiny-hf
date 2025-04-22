@@ -189,6 +189,8 @@ class AdapterTensor:
 		tg_args = convert_to_tg(args)
 		tg_kwargs = convert_to_tg(kwargs)
 		
+		assert_same_device(self.tg.device, tg_args, tg_kwargs)
+		
 		if len(tg_kwargs) == 0:
 			# fix for methods that don't support **kwargs
 			output = tg_self.__getattribute__(tg_attr)(*tg_args)
@@ -227,65 +229,65 @@ class AdapterTensor:
 	
 	def _reimplement_exact(self, function, *args, **kwargs):
 		newself, args, kwargs = convert_to_tg(self, args, kwargs)
+		assert_same_device(newself.device, args, kwargs)
 		return convert_to_torch(newself.__getattribute__(function)(*args, **kwargs) )
 	
 	def masked_fill(self, *args, **kwargs):
-		args, kwargs = convert_to_tg(args, kwargs)
-		return convert_to_torch(convert_to_tg(self).masked_fill(*args, **kwargs) )
+		if False:
+			args, kwargs = convert_to_tg(args, kwargs)
+			return convert_to_torch(convert_to_tg(self).masked_fill(*args, **kwargs) )
+		else:
+			return self._tg_override(*args, **kwargs)
 
 	def argmax(self, *args, **kwargs):
-		return self._reimplement_exact("argmax", *args, **kwargs)
+		return self._tg_override(*args, **kwargs)
 	
 	def view(self, *shape):
-		return self._reimplement_exact("view", *shape)
+		return self._tg_override(*shape)
 	
 	def transpose(self, *args, **kwargs):
-		return self._reimplement_exact("transpose", *args, **kwargs)
+		return self._tg_override(*args, **kwargs)
 	
 	def reshape(self, *args, **kwargs):
-		return self._reimplement_exact("reshape", *args, **kwargs)
+		return self._tg_override(*args, **kwargs)
 	
 	def cast(self, dtype):
 		# is this even a torch function? I don't know :c
 		return AdapterTensor(self.tg.cast(dtype.tgt(self.tg.device) ) )
 	
 	def expand(self, *args, **kwargs):
-		return self._reimplement_exact("expand", *args, **kwargs)
+		return self._tg_override(*args, **kwargs)
 		
 	def __getitem__(self, *args, **kwargs):
-		return self._reimplement_exact("__getitem__", *args, **kwargs)
+		return self._tg_override(*args, **kwargs)
 
 	def __gt__(self, other):
-		other = self._make_tensor(other)
-		return self._reimplement_exact("__gt__", other)
+		return self._tg_override(other)
+		
 		
 	def __lt__(self, other):
-		other = self._make_tensor(other)
-		return self._reimplement_exact("__lt__", other)
+		return self._tg_override(other)
 	
 	def __ge__(self, other):
-		other = self._make_tensor(other)
-		return self._reimplement_exact("__ge__", other)
+		return self._tg_override(other)
 		
 	def __le__(self, other):
-		other = self._make_tensor(other)
-		return self._reimplement_exact("__le__", other)
+		return self._tg_override(other)
 		
 	def __pow__(self, other):
-		other = self._make_tensor(other)
 		return self._tg_override(other)
 		
 	def pad(self, *args, **kwargs):
-		return self._reimplement_exact("pad", *args, **kwargs)
+		return self._tg_override(*args, **kwargs)
 		
 	def float(self):
-		return self.to(tinygrad.dtypes.float)
+		return self.to("float32")
 		
 	def is_floating_point(self):
 		return is_floating_point(self)
 		
 	def contiguous(self, *args, **kwargs):
-		return self._reimplement_exact("contiguous", *args, **kwargs)
+		return self._tg_override(*args, **kwargs)
 	
 	def repeat(self, *args, **kwargs):
 		return self._tg_override(*args, **kwargs)
@@ -300,7 +302,7 @@ class AdapterTensor:
 		return self._tg_override(*args, **kwargs)
 	
 	def interpolate(self, *args, **kwargs):
-		return self._reimplement_exact("interpolate", *args, **kwargs)
+		return self._tg_override(*args, **kwargs)
 		
 	def numel(self):
 		return np.prod(self.shape)
@@ -309,6 +311,26 @@ class AdapterTensor:
 		if len(self.shape) == 0:
 			return 1
 		return self.shape[0]
+
+def assert_same_device(dev, *inp):
+	dev = tinygrad.Device.canonicalize(dev)
+	if len(inp) == 1:
+		inp = inp[0]
+	if isinstance(inp, AdapterTensor):
+		assert dev == inp.tg.device
+	if isinstance(inp, tinygrad.Tensor):
+		assert dev == inp.device
+	elif isinstance(inp, list) or isinstance(inp, tuple):
+		for item in inp:
+			assert_same_device(dev, item)
+	elif isinstance(inp, dict):
+		for k, v in inp.items():
+			assert_same_device(dev, v)
+		return inp
+	else:
+		if hasattr(inp, "__dict__"):
+			# treat as dictionary hehe
+			assert_same_device(dev, inp.__dict__)
 	
 def convert_to_torch(*inp):
 	if len(inp) == 1:
