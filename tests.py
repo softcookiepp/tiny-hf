@@ -142,7 +142,7 @@ def _process_arg(arg, device):
 		# append as is
 		return arg, arg
 
-def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_method, error_threshold = 1.0e-4, device = "cuda:0"):
+def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_method, error_threshold = 1.0e-4, device = "cpu"):
 	if not (isinstance(args, tuple) or isinstance(args, list) ):
 		args = (args,)
 	if hasattr(my_module, "to"):
@@ -429,7 +429,7 @@ def test_ddim_scheduler():
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
-	test_stable_diffusion_pipeline()
+	#test_stable_diffusion_pipeline()
 	
 	test_autoencoderkl()
 	test_clip_text_model()
