@@ -48,8 +48,6 @@ class AdapterTensor:
 		tgt = get_tgt(dtype, tg_device)
 		if isinstance(data, tinygrad.Tensor):
 			self._tg = data
-			if self._tg.dtype == tinygrad.dtypes.long:
-				input("WHY IS IT STILL DOING THIS")
 		elif isinstance(data, np.ndarray):
 			data = convert_np_type_correctly(data, tg_device)
 			self._tg = tinygrad.Tensor(data, device = tg_device)

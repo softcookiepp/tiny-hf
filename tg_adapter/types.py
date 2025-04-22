@@ -166,6 +166,9 @@ class dtype:
 			self._is_complex = True
 		self._is_fp = self._key in FLOAT_KEYS
 	
+	def __repr__(self):
+		return self.key
+	
 	@property
 	def is_complex(self):
 		return self._is_complex
