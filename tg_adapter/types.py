@@ -13,6 +13,9 @@ TYPE_KEYS = ["float32", "float64", "complex64", "complex128", "float16",
 FLOAT_KEYS = ["float32", "float64", "float16", "bfloat16", "float8_e4m3fn", "float8_e5m2"]
 
 def _device_supports_type(tg_device: str, dt: tinygrad.dtype.DType):
+	if "CPU" in tg_device:
+		if "bfloat" in str(dt):
+			return False
 	try:
 		t = tinygrad.Tensor.randn(1, device = tg_device, dtype = dt).realize().numpy()
 		return True
