@@ -3,9 +3,12 @@ from dataclasses import dataclass
 from .device import backend_from_device
 import numpy as np
 
+# just for error handling of certain tinygrad backends
+import subprocess
+
 TYPE_KEYS = ["float32", "float64", "complex64", "complex128", "float16",
 	"uint8", "int8", "int16", "int32", "int64", "bool", "bfloat16",
-	"uint16", "uint32", "uint64", "float8_e4m3fn", "float8_e5m2"]
+	"uint16", "uint32", "uint64", "float8_e4m3fn", "float8_e5m2", "void"]
 	
 FLOAT_KEYS = ["float32", "float64", "float16", "bfloat16", "float8_e4m3fn", "float8_e5m2"]
 
@@ -21,6 +24,9 @@ def _device_supports_type(tg_device: str, dt: tinygrad.dtype.DType):
 		return False
 	except KeyError:
 		return False
+	except subprocess.CalledProcessError:
+		# error returned by clang backend
+		return False
 		
 def iter_tg_dtypes():
 	already_done = []
@@ -34,6 +40,10 @@ def probe_tg_dtypes(tg_device: str):
 	supported_dtypes = []
 	unsupported_dtypes = []
 	for dt in iter_tg_dtypes():
+		if dt == tinygrad.dtypes.void:
+			# torch has no void, and almost no backends support handling it directly
+			continue
+		
 		# this is where we probe
 		if _device_supports_type(tg_device, dt):
 			supported_dtypes.append(dt)
@@ -45,6 +55,7 @@ def probe_tg_dtypes(tg_device: str):
 # So we need to create a map that overrides the types somehow...
 TG_BACKEND_TYPE_MAP = {
 	"DEFAULT" : {
+		"void" : tinygrad.dtypes.void,
 		"float32": tinygrad.dtypes.float,
 		"float64": tinygrad.dtypes.double,
 		"complex64": tinygrad.dtypes.float, # not implemented in tinygrad, will be a pain in the ass :c
@@ -62,15 +73,10 @@ TG_BACKEND_TYPE_MAP = {
 		"bfloat16" : tinygrad.dtypes.bfloat16,
 		"float8_e4m3fn": tinygrad.dtypes.int8, # no idea how this garbage will work
 		"float8_e5m2": tinygrad.dtypes.int8 # no idea how this garbage will work
-	},
-	
-	# only the types to be overridden must be present c:
-	"WEBGPU" : {
-		"int64": tinygrad.dtypes.int32,
-		"float16": tinygrad.dtypes.float32,
-		"float64": tinygrad.dtypes.float32
 	}
 }
+
+
 
 NP_TG_TYPE_MAP = {
 	tinygrad.dtypes.float: np.dtype("float32"),
@@ -191,8 +197,31 @@ def get_tgt(t, tg_backend):
 		return None
 	return t.tgt(tg_backend)
 
+# create types map
 for k in TYPE_KEYS:
 	_types_map[k] = dtype(k)
+	
+# generate tg backend type map
+for dev in tinygrad.Device.get_available_devices():
+	TG_BACKEND_TYPE_MAP[dev] = {}
+	supported, unsupported = probe_tg_dtypes(dev)
+	
+	for dt in unsupported:
+		ts = get_type_from_tg(dt, dev).key
+		
+		# complex numbers will be handled differently from floating point numbers
+		# eventually, the tensor will just have separate members for each
+		ts_sub = ts.replace("complex128", "float64").replace("complex64", "float32")
+		
+		# generally, some higher and lower-precision types are not supported
+		ts_sub = ts_sub.replace("bfloat", "float").replace("64", "32").replace("16", "32").replace("8", "32").replace("void", "uint8").replace("bool", "uint8").split("_")[0]
+		
+		# ensure it was actually replaced; if not, more attention is needed
+		assert not ts_sub == ts, f"type not replaced: {ts_sub}"
+		
+		# substitute type should be good, assign it!
+		TG_BACKEND_TYPE_MAP[dev][ts] = TG_BACKEND_TYPE_MAP["DEFAULT"][ts_sub]
+
 
 def _get_type(attr):
 	attr = parse_alias(attr)
