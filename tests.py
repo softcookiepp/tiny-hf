@@ -429,7 +429,7 @@ def test_ddim_scheduler():
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
-	#test_stable_diffusion_pipeline()
+	test_stable_diffusion_pipeline()
 	
 	test_autoencoderkl()
 	test_clip_text_model()
