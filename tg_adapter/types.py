@@ -12,24 +12,33 @@ TYPE_KEYS = ["float32", "float64", "complex64", "complex128", "float16",
 	
 FLOAT_KEYS = ["float32", "float64", "float16", "bfloat16", "float8_e4m3fn", "float8_e5m2"]
 
+# making another one of these might be necessary...
+_DEVICE_TYPE_SUPPORT_REGISTRY = {
+	
+}
+
 def _device_supports_type(tg_device: str, dt: tinygrad.dtype.DType):
-	if "CPU" in tg_device:
-		if "bfloat" in str(dt):
-			return False
-	try:
-		t = tinygrad.Tensor.randn(4, device = tg_device, dtype = dt).realize().numpy()
-		return True
-	except tinygrad.device.CompileError:
-		return False
-	except ZeroDivisionError:
-		# WebGPU requires itemsize to not be zero somewhere in its code,
-		# and dtypes.void has an itemsize of 0
-		return False
-	except KeyError:
-		return False
-	except subprocess.CalledProcessError:
-		# error returned by clang backend
-		return False
+	# individual devices are going to be a pain in the bum
+	tg_device = tg_device.split(":")[0]
+	if not (tg_device, dt) in _DEVICE_TYPE_SUPPORT_REGISTRY.keys():
+		if "CPU" in tg_device:
+			if "bfloat" in str(dt):
+				_DEVICE_TYPE_SUPPORT_REGISTRY[(tg_device, dt)] = False
+		try:
+			t = tinygrad.Tensor.randn(4, device = tg_device, dtype = dt).realize().numpy()
+			_DEVICE_TYPE_SUPPORT_REGISTRY[(tg_device, dt)] = True
+		except tinygrad.device.CompileError:
+			_DEVICE_TYPE_SUPPORT_REGISTRY[(tg_device, dt)] = False
+		except ZeroDivisionError:
+			# WebGPU requires itemsize to not be zero somewhere in its code,
+			# and dtypes.void has an itemsize of 0
+			_DEVICE_TYPE_SUPPORT_REGISTRY[(tg_device, dt)] = False
+		except KeyError:
+			_DEVICE_TYPE_SUPPORT_REGISTRY[(tg_device, dt)] = False
+		except subprocess.CalledProcessError:
+			# error returned by clang backend
+			_DEVICE_TYPE_SUPPORT_REGISTRY[(tg_device, dt)] = False
+	return _DEVICE_TYPE_SUPPORT_REGISTRY[(tg_device, dt)]
 		
 def iter_tg_dtypes():
 	already_done = []

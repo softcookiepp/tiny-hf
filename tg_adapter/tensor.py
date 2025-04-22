@@ -4,7 +4,7 @@ from .device import device as Device
 import inspect
 import numpy as np
 from .types import get_type_from_tg, get_tgt, convert_np_type_correctly, _get_type, is_floating_point
-from .types import dtype as dtype_class
+from .types import dtype as dtype_class, _device_supports_type
 from .backend_environment_config import *
 from .debugging import maybe_realize
 
@@ -123,13 +123,45 @@ class AdapterTensor:
 			old_dtype = dtype.tgt(device.tg)
 			new_tensor = self._tg.cast(old_dtype)
 		if not device is None:
-			# first ensure that the dtype is compatible with the device
-			if dtype is None:
-				dtype = self.dtype
-			supported_type = dtype.tgt(device.tg)
-			new_tensor = new_tensor.cast(supported_type)
-			# then move it to the new device
-			new_tensor = new_tensor.to(device.tg)
+			if True:
+				# So it needs to be able to determine which type to convert to first before casting.
+				# How do we do that??
+				if dtype is None:
+					dtype = self.dtype
+				old_supported_type = self.dtype.tgt(self.device.tg)
+				new_supported_type = dtype.tgt(device.tg)
+				# the question that must be answered is, does the old device support the new type?
+				# or does it not?
+				
+				# if new device supports new type and new device supports old type
+				if _device_supports_type(device.tg, new_supported_type) \
+						and _device_supports_type(device.tg, new_supported_type):
+					# move first, then cast
+					new_tensor = new_tensor.to(device.tg).cast(old_supported_type)
+				# new device should support new type, dtype.tgt takes care of that
+				# if new device doesn't support old type
+				elif (not _device_supports_type(device.tg, old_supported_type) ) and _device_supports_type(self.device.tg, new_supported_type):
+					# cast first, then move
+					new_tensor = new_tensor.cast(new_supported_type).to(device.tg)
+				else:
+					# can't cast to type that neither supports!
+					raise ValueError
+				
+					
+			else:
+				# first ensure that the dtype is compatible with the device
+				if dtype is None:
+					dtype = self.dtype
+				supported_type_old_device = self.dtype.tgt(self.device.tg)
+				supported_type_new_device = dtype.tgt(device.tg)
+				print(device.tg, dtype.tgt(self.device.tg), supported_type_old_device, supported_type_new_device)
+				input()
+				# ok, so the problem is that it works one way, but not the other :c
+				
+				new_tensor = new_tensor.cast(supported_type_old_device).realize()
+				print(new_tensor.dtype)
+				# then move it to the new device
+				new_tensor = new_tensor.to(device.tg).cast(supported_type_new_device).realize()
 		return convert_to_torch(new_tensor)
 		
 		if dtype is None and (not device is None):
