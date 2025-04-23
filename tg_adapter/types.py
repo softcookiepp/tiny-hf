@@ -21,6 +21,12 @@ def iter_tg_dtypes():
 			already_done.append(maybe_dtype)
 			yield maybe_dtype
 
+def highest_precision_int(dev: str):
+	for dt in [tinygrad.dtypes.int64, tinygrad.dtypes.int32, tinygrad.dtypes.int16, tinygrad.dtypes.int8]:
+		if is_dtype_supported(dt, dev):
+			return dt
+	raise ValueError
+
 def probe_tg_dtypes(tg_device: str):
 	supported_dtypes = []
 	unsupported_dtypes = []

@@ -3,9 +3,10 @@ import tinygrad
 from tinygrad.helpers import make_tuple, prod
 import math
 from ..tensor import AdapterTensor as AT
-from ..tensor import convert_to_torch, convert_to_tg
+from ..tensor import convert_to_torch, convert_to_tg, assert_same_device
 from .. import tensor_constructors as tc
 from . import init as internal_init
+from ..types import highest_precision_int
 
 class AvgPool2d(Module):
 	def __init__(self, kernel_size, stride=None, padding=0,
@@ -222,7 +223,14 @@ class Embedding(Module):
 	
 	def forward(self, idx):
 		vocab_sz, embed_sz, weight, idx = convert_to_tg(self.vocab_sz, self.embed_sz, self.weight, idx)
-		if not hasattr(self, 'arange'): self.arange = tinygrad.Tensor.arange(vocab_sz, requires_grad=False, device=weight.device).unsqueeze(-1)
+		
+		# this might be where the problems begin.
+		# if the arange tensor is initialized after the module is moved, it is entirely possible it will be
+		# initialized on a device with an unsupported dtype.
+		# this is bad mkay
+		# fortunately I just thought of a way to correct it lol
+		if not hasattr(self, 'arange'): self.arange = tinygrad.Tensor.arange(vocab_sz,
+			requires_grad=False, device=weight.device, dtype = highest_precision_int(weight.device) ).unsqueeze(-1)
 		big_shp = idx.shape+(vocab_sz, embed_sz)
 		arange, idx, vals = self.arange.expand(big_shp), idx.reshape(idx.shape+(1, 1)).expand(big_shp), weight.expand(big_shp)
 		try:
