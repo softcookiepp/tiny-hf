@@ -62,6 +62,7 @@ class AdapterTensor:
 				input("EEEEEEEEEEEEEEEE")
 		self._dtype = dtype
 		self._rebuild_dtype()
+		assert is_dtype_supported(self._tg.dtype, self._tg.device)
 	
 	def _rebuild_dtype(self):
 		self._dtype = get_type_from_tg(self._tg.dtype, self._tg.device.split(":")[0], self._dtype)
