@@ -22,6 +22,7 @@ def iter_tg_dtypes():
 			yield maybe_dtype
 
 def highest_precision_int(dev: str):
+	dev = dev.split(":")[0]
 	for dt in [tinygrad.dtypes.int64, tinygrad.dtypes.int32, tinygrad.dtypes.int16, tinygrad.dtypes.int8]:
 		if is_dtype_supported(dt, dev):
 			return dt

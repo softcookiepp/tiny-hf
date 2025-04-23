@@ -52,17 +52,14 @@ class AdapterTensor:
 		elif isinstance(data, np.ndarray):
 			data = convert_np_type_correctly(data, tg_device)
 			self._tg = tinygrad.Tensor(data, device = tg_device)
-			if self._tg.dtype == tinygrad.dtypes.long:
-				input("REEEEEEEEEEEEEEEE")
 		else:
 			data = convert_np_type_correctly(np.array(data), tg_device )
 			self._tg = tinygrad.Tensor(data, device = tg_device, dtype = tgt)
 			#raise Exception(f"Tensor creationw with {type(data)} not yet implemented.")
-			if self._tg.dtype == tinygrad.dtypes.long:
-				input("EEEEEEEEEEEEEEEE")
 		self._dtype = dtype
 		self._rebuild_dtype()
 		assert is_dtype_supported(self._tg.dtype, self._tg.device)
+		maybe_realize(self._tg)
 	
 	def _rebuild_dtype(self):
 		self._dtype = get_type_from_tg(self._tg.dtype, self._tg.device.split(":")[0], self._dtype)

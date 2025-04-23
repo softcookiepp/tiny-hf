@@ -142,7 +142,7 @@ def _process_arg(arg, device):
 		# append as is
 		return arg, arg
 
-def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_method, error_threshold = 1.0e-4, device = "cuda:2"):
+def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_method, error_threshold = 1.0e-4, device = "cpu"):
 	if not (isinstance(args, tuple) or isinstance(args, list) ):
 		args = (args,)
 	if hasattr(my_module, "to"):
@@ -427,7 +427,7 @@ def test_ddim_scheduler():
 
 def test_dtype_override():
 	a = tg_adapter.arange(4, device = "cpu", dtype = tg_adapter.int64)
-	b = a.to("cuda:1")
+	b = a.to("cuda:0")
 	print(b.dtype, b.tg.dtype)
 	c = b.to("cpu")
 	print(c.numpy() )

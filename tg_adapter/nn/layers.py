@@ -235,7 +235,7 @@ class Embedding(Module):
 		arange, idx, vals = self.arange.expand(big_shp), idx.reshape(idx.shape+(1, 1)).expand(big_shp), weight.expand(big_shp)
 		try:
 			return AT( (arange == idx).mul(vals).sum(-2) )
-		except:
+		except AttributeError:
 			return AT( (arange == idx).mul(vals).sum(-2, acc_dtype=vals.dtype) )
 		
 
