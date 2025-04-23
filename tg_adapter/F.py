@@ -1,6 +1,6 @@
 import tinygrad
 import numpy as np
-from .tensor import convert_to_tg, convert_to_torch
+from .tensor import convert_to_tg, convert_to_torch, assert_same_device
 from .debugging import maybe_realize
 
 
@@ -38,18 +38,18 @@ def interpolate(inp,
 	
 def group_norm(x, num_groups, weight = None, bias = None, eps = 1.0e-5):
 	# derived from the tinygrad source code c:
-	x = convert_to_tg(x)
+	x, weight, bias = convert_to_tg(x, weight, bias)
+	assert_same_device(x.device, weight, bias)
 	x = x.reshape(x.shape[0], num_groups, -1).layernorm(eps=eps).reshape(x.shape)
 
 	if weight is None or bias is None: return x
-	weight = convert_to_tg(weight)
-	bias = convert_to_tg(bias)
 	# elementwise_affine on channels
 	return convert_to_torch(x * weight.reshape(1, -1, *[1] * (x.ndim-2)) + bias.reshape(1, -1, *[1] * (x.ndim-2)) )
 	
 def scaled_dot_product_attention(query, key, value, attn_mask=None,
 		dropout_p=0.0, is_causal=False, scale=None, enable_gqa=False) -> tinygrad.Tensor:
 	query, key, value, attn_mask = convert_to_tg( (query, key, value, attn_mask) )
+	assert_same_device(query.device, key, value, attn_mask)
 	if enable_gqa:
 		# not ever sure what this is
 		raise NotImplementedError
@@ -106,4 +106,5 @@ def clamp(inp, min = None, max = None):
 def cat(tensors, dim = 0):
 	tbase = tensors[0].tg
 	trest = convert_to_tg( tuple(tensors[1:]) )
+	assert_same_device(tbase.device, trest)
 	return convert_to_torch(tbase.cat(*trest, dim = dim) )
