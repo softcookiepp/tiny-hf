@@ -225,7 +225,10 @@ class Embedding(Module):
 		if not hasattr(self, 'arange'): self.arange = tinygrad.Tensor.arange(vocab_sz, requires_grad=False, device=weight.device).unsqueeze(-1)
 		big_shp = idx.shape+(vocab_sz, embed_sz)
 		arange, idx, vals = self.arange.expand(big_shp), idx.reshape(idx.shape+(1, 1)).expand(big_shp), weight.expand(big_shp)
-		return AT( (arange == idx).mul(vals).sum(-2, acc_dtype=vals.dtype) )
+		try:
+			return AT( (arange == idx).mul(vals).sum(-2) )
+		except:
+			return AT( (arange == idx).mul(vals).sum(-2, acc_dtype=vals.dtype) )
 		
 
 class GroupNorm(Module):

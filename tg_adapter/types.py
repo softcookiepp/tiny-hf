@@ -38,6 +38,8 @@ def _device_supports_type(tg_device: str, dt: tinygrad.dtype.DType):
 		except subprocess.CalledProcessError:
 			# error returned by clang backend
 			_DEVICE_TYPE_SUPPORT_REGISTRY[(tg_device, dt)] = False
+		except RuntimeError:
+			_DEVICE_TYPE_SUPPORT_REGISTRY[(tg_device, dt)] = False
 	return _DEVICE_TYPE_SUPPORT_REGISTRY[(tg_device, dt)]
 		
 def iter_tg_dtypes():
@@ -83,8 +85,8 @@ TG_BACKEND_TYPE_MAP = {
 		"uint64": tinygrad.dtypes.uint64,
 		"bool": tinygrad.dtypes.bool,
 		"bfloat16" : tinygrad.dtypes.bfloat16,
-		"float8_e4m3fn": tinygrad.dtypes.int8, # no idea how this garbage will work
-		"float8_e5m2": tinygrad.dtypes.int8 # no idea how this garbage will work
+		"float8_e4m3fn": tinygrad.dtypes.fp8e4m3, # no idea how this garbage will work
+		"float8_e5m2": tinygrad.dtypes.fp8e5m2 # no idea how this garbage will work
 	}
 }
 

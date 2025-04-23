@@ -181,8 +181,10 @@ class AdapterTensor:
 		# recasts inplace to supported dtype
 		supported_type = self.dtype.tgt(dev.tg)
 		return self._tg.cast(supported_type)
-		
-		
+	
+	#def sum(self, *args, **kwargs):
+	#	raise NotImplementedError	
+	
 	def to_(self, *args, **kwargs):
 		# inplace equivalent of to()
 		# torch has no equivalent, but it is still necessary for
