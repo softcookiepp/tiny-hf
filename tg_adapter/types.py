@@ -85,10 +85,19 @@ TG_BACKEND_TYPE_MAP = {
 		"uint64": tinygrad.dtypes.uint64,
 		"bool": tinygrad.dtypes.bool,
 		"bfloat16" : tinygrad.dtypes.bfloat16,
-		"float8_e4m3fn": tinygrad.dtypes.fp8e4m3, # no idea how this garbage will work
-		"float8_e5m2": tinygrad.dtypes.fp8e5m2 # no idea how this garbage will work
+		
+		
 	}
 }
+
+try:
+	# older tinygrad versions lack this
+	TG_BACKEND_TYPE_MAP["DEFAULT"]["float8_e4m3fn"] = tinygrad.dtypes.fp8e4m3
+	TG_BACKEND_TYPE_MAP["DEFAULT"]["float8_e5m2"] = tinygrad.dtypes.fp8e5m2
+except AttributeError:
+	# just for compatibility's sake i guess lol
+	TG_BACKEND_TYPE_MAP["DEFAULT"]["float8_e4m3fn"] = tinygrad.dtypes.uint8
+	TG_BACKEND_TYPE_MAP["DEFAULT"]["float8_e5m2"] = tinygrad.dtypes.uint8
 
 
 
