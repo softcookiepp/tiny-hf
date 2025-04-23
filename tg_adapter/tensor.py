@@ -5,7 +5,7 @@ from .device import device as Device
 import inspect
 import numpy as np
 from .types import get_type_from_tg, get_tgt, convert_np_type_correctly, _get_type, is_floating_point
-from .types import dtype as dtype_class, _device_supports_type
+from .types import dtype as dtype_class
 from .backend_environment_config import *
 from .debugging import maybe_realize
 
@@ -135,32 +135,18 @@ class AdapterTensor:
 				# or does it not?
 				
 				# if new device supports new type and new device supports old type
-				if False:
-					if _device_supports_type(device.tg, new_supported_type) \
-							and _device_supports_type(device.tg, new_supported_type):
-						# move first, then cast
-						new_tensor = new_tensor.to(device.tg).cast(old_supported_type)
-					# new device should support new type, dtype.tgt takes care of that
-					# if new device doesn't support old type
-					elif (not _device_supports_type(device.tg, old_supported_type) ) and _device_supports_type(self.device.tg, new_supported_type):
-						# cast first, then move
-						new_tensor = new_tensor.cast(new_supported_type).to(device.tg)
-					else:
-						# can't cast to type that neither supports!
-						raise ValueError
+				if is_dtype_supported(new_supported_type, device.tg) \
+						and is_dtype_supported(old_supported_type, device.tg):
+					# move first, then cast
+					new_tensor = new_tensor.to(device.tg).cast(old_supported_type)
+				# new device should support new type, dtype.tgt takes care of that
+				# if new device doesn't support old type
+				elif (not is_dtype_supported(old_supported_type, device.tg) ) and is_dtype_supported(new_supported_type, self.device.tg):
+					# cast first, then move
+					new_tensor = new_tensor.cast(new_supported_type).to(device.tg)
 				else:
-					if is_dtype_supported(new_supported_type, device.tg) \
-							and is_dtype_supported(old_supported_type, device.tg):
-						# move first, then cast
-						new_tensor = new_tensor.to(device.tg).cast(old_supported_type)
-					# new device should support new type, dtype.tgt takes care of that
-					# if new device doesn't support old type
-					elif (not is_dtype_supported(old_supported_type, device.tg) ) and is_dtype_supported(new_supported_type, self.device.tg):
-						# cast first, then move
-						new_tensor = new_tensor.cast(new_supported_type).to(device.tg)
-					else:
-						# can't cast to type that neither supports!
-						raise ValueError
+					# can't cast to type that neither supports!
+					raise ValueError
 				
 					
 			else:
