@@ -951,10 +951,9 @@ class CLIPTextTransformer(nn.Module):
         # CLIP's text model uses causal mask, prepare it here.
         # https://github.com/openai/CLIP/blob/cfcffb90e69f37bf2ff1e988237a0fbe41f33c04/clip/model.py#L324
         causal_attention_mask = _create_4d_causal_attention_mask(
-            input_shape, hidden_states.dtype, device=hidden_states.device
-        )
-        input(causal_attention_mask.numpy() )
-        input("now this makes a lot more sense")
+            input_shape, hidden_states.dtype, device="cpu"#hidden_states.device
+        ).to(hidden_states.device)
+        # so that was the problem all along...interesting. Wonder why!
 
         # expand attention_mask
         if attention_mask is not None and not self._use_flash_attention_2:
