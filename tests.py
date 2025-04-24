@@ -438,11 +438,10 @@ def test_dtype_override():
 @torch.no_grad()
 def main():
 	#test_dtype_override()
-	#test_stable_diffusion_pipeline()
+	test_stable_diffusion_pipeline()
 	
 	#test_autoencoderkl()
 	test_clip_text_model()
-	input("poop")
 	test_clip_tokenizer()
 	test_unet_2d_condition()
 	test_unet_2d()
