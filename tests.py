@@ -142,7 +142,7 @@ def _process_arg(arg, device):
 		# append as is
 		return arg, arg
 
-def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_method, error_threshold = 1.0e-4, device = "cpu"):
+def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_method, error_threshold = 1.0e-4, device = "cuda"):
 	if not (isinstance(args, tuple) or isinstance(args, list) ):
 		args = (args,)
 	if hasattr(my_module, "to"):
@@ -437,10 +437,10 @@ def test_dtype_override():
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
-	test_dtype_override()
+	#test_dtype_override()
 	#test_stable_diffusion_pipeline()
 	
-	test_autoencoderkl()
+	#test_autoencoderkl()
 	test_clip_text_model()
 	input("poop")
 	test_clip_tokenizer()

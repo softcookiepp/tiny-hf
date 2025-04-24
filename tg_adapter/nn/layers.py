@@ -216,27 +216,19 @@ class Linear(Module):
 class Embedding(Module):
 	def __init__(self, vocab_size:int, embed_size:int):
 		self.vocab_sz, self.embed_sz = vocab_size, embed_size
-		#self.weight = convert_to_torch(tinygrad.Tensor.glorot_uniform(vocab_size, embed_size) )
 		self.weight = tc.empty( (vocab_size, embed_size) )
 		internal_init.xavier_uniform_(self.weight )
-		assert not self.weight is None
 	
 	def forward(self, idx):
 		vocab_sz, embed_sz, weight, idx = convert_to_tg(self.vocab_sz, self.embed_sz, self.weight, idx)
 		
-		# this might be where the problems begin.
-		# if the arange tensor is initialized after the module is moved, it is entirely possible it will be
-		# initialized on a device with an unsupported dtype.
-		# this is bad mkay
-		# fortunately I just thought of a way to correct it lol
 		if not hasattr(self, 'arange'): self.arange = tinygrad.Tensor.arange(vocab_sz,
 			requires_grad=False, device=weight.device, dtype = highest_precision_int(weight.device) ).unsqueeze(-1)
 		big_shp = idx.shape+(vocab_sz, embed_sz)
 		arange, idx, vals = self.arange.expand(big_shp), idx.reshape(idx.shape+(1, 1)).expand(big_shp), weight.expand(big_shp)
-		try:
-			return AT( (arange == idx).mul(vals).sum(-2) )
-		except AttributeError:
-			return AT( (arange == idx).mul(vals).sum(-2, acc_dtype=vals.dtype) )
+		
+		out = (arange == idx).mul(vals).sum(-2)
+		return AT(out)
 		
 
 class GroupNorm(Module):
