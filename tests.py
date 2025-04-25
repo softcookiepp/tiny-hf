@@ -103,7 +103,13 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4):
 			tg_item = tg_dict[k]
 			
 			if isinstance(hf_item, list):
-				hf_item = np.array(hf_item).astype(np.float32)
+				try:
+					hf_item = np.array(hf_item).astype(np.float32)
+				except TypeError:
+					# list of other sort, non-numerical
+					for hf_item2, tg_item2 in zip(hf_item, tg_item):
+						_test_key_errors(hf_item2, tg_item2, error_threshold)
+					continue
 			elif isinstance(hf_item, torch.Tensor):
 				hf_item = hf_item.detach().numpy()
 			elif hasattr(hf_item, "__dict__"):
@@ -115,15 +121,14 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4):
 			elif hf_item is None and tg_item is None:
 				continue
 			else:
-				print(hf_item)
-				raise ValueError
+				#print(hf_item)
+				hf_item, tg_item = float(hf_item), float(tg_item)
+				#raise ValueError
 				
 			if isinstance(tg_item, list):
 				tg_item = np.array(tg_item).astype(np.float32)
 			elif isinstance(tg_item, tinygrad.Tensor) or isinstance(tg_item, tg_adapter.Tensor):
 				tg_item = tg_item.numpy()
-			else:
-				raise ValueError
 			
 			val_mse = mse(tg_item, hf_item)
 			print("key:", k, "\nvalue mse:", val_mse, "\n")
@@ -384,6 +389,14 @@ def test_clip_tokenizer():
 	args = ["the quick brown fox jumped over the lazy dog"]
 	test_hf_reimplementation(args, {}, hf, "__call__", tg, "__call__")
 
+def test_clip_tokenizer_fast():
+	from tiny_hf.transformers import CLIPTokenizerFast as tg_module
+	from transformers import CLIPTokenizerFast as hf_module
+	tg = tg_module.from_pretrained("openai/clip-vit-base-patch32")
+	hf = hf_module.from_pretrained("openai/clip-vit-base-patch32")
+	args = ["the quick brown fox jumped over the lazy dog"]
+	test_hf_reimplementation(args, {}, hf, "__call__", tg, "__call__")
+
 def _convert_tokenizer_output(out):
 	new_out = {}
 	for k, v in out.items():
@@ -451,9 +464,11 @@ def main():
 	#test_dtype_override()
 	#test_stable_diffusion_pipeline()
 	
+	test_clip_tokenizer_fast()
 	test_clip_tokenizer()
 	test_clip_text_model()
 	test_autoencoderkl()
+	input("anything beyond here will make me run out of memory :c")
 	test_unet_2d_condition()
 	test_unet_2d()
 	test_named_parameters()
