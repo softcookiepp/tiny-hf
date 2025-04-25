@@ -106,7 +106,16 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4):
 				hf_item = np.array(hf_item).astype(np.float32)
 			elif isinstance(hf_item, torch.Tensor):
 				hf_item = hf_item.detach().numpy()
+			elif hasattr(hf_item, "__dict__"):
+				_test_key_errors(hf_item.__dict__, tg_item.__dict__, error_threshold)
+				continue
+			elif isinstance(hf_item, dict):
+				_test_key_errors(hf_item, tg_item, error_threshold)
+				continue
+			elif hf_item is None and tg_item is None:
+				continue
 			else:
+				print(hf_item)
 				raise ValueError
 				
 			if isinstance(tg_item, list):
@@ -131,6 +140,8 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4):
 			#print("difference:")
 			#print(tiny_out.numpy() - torch_out.detach().numpy())
 			input()
+	elif isinstance(hf_dict, object) and hasattr(hf_dict, "__dict__"):
+		_test_key_errors(hf_dict.__dict__, tg_dict.__dict__, error_threshold)
 		
 def _process_arg(arg, device):
 	if isinstance(arg, np.ndarray):
@@ -438,11 +449,11 @@ def test_dtype_override():
 @torch.no_grad()
 def main():
 	#test_dtype_override()
-	test_stable_diffusion_pipeline()
+	#test_stable_diffusion_pipeline()
 	
-	#test_autoencoderkl()
-	test_clip_text_model()
 	test_clip_tokenizer()
+	test_clip_text_model()
+	test_autoencoderkl()
 	test_unet_2d_condition()
 	test_unet_2d()
 	test_named_parameters()
