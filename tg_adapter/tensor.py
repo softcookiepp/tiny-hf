@@ -312,7 +312,7 @@ class AdapterTensor:
 		return self._tg_override(*args, **kwargs)
 		
 	def float(self):
-		return self.to("float32")
+		return self.to(dtype_class.float32)
 		
 	def is_floating_point(self):
 		return is_floating_point(self)
