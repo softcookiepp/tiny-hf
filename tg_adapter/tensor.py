@@ -243,7 +243,7 @@ class AdapterTensor:
 		return self._tg_override(other)
 	
 	def __mul__(self, other):
-		#other = self._move_to_same_device(other)
+		other = self._move_to_same_device(other)
 		return self._tg_override(other)
 	
 	def __rmul__(self, other):
