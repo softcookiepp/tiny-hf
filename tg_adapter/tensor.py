@@ -298,6 +298,8 @@ class AdapterTensor:
 				if len(arg.keys() ) > 0:
 					raise NotImplementedError
 				new_args.append(arg)
+			elif isinstance(arg, tuple):
+				new_args.append(self._move_to_same_device(*arg) )
 			else:
 				raise NotImplementedError(f"Movement not implemented for {type(arg)}")
 		return tuple(new_args)
