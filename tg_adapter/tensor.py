@@ -288,8 +288,22 @@ class AdapterTensor:
 	
 	def expand(self, *args, **kwargs):
 		return self._tg_override(*args, **kwargs)
-		
+	
+	def _move_to_same_device(self, *args):
+		new_args = []
+		for arg in args:
+			if isinstance(arg, Tensor):
+				new_args.append(arg.to(self.device) )
+			elif isinstance(arg, dict):
+				if len(arg.keys() ) > 0:
+					raise NotImplementedError
+				new_args.append(arg)
+			else:
+				raise NotImplementedError(f"Movement not implemented for {type(arg)}")
+		return tuple(new_args)
+	
 	def __getitem__(self, *args, **kwargs):
+		args, kwargs = self._move_to_same_device(args, kwargs)
 		return self._tg_override(*args, **kwargs)
 
 	def __gt__(self, other):
