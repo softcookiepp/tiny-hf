@@ -292,7 +292,7 @@ class AdapterTensor:
 	def _move_to_same_device(self, *args):
 		new_args = []
 		for arg in args:
-			if isinstance(arg, Tensor):
+			if isinstance(arg, AdapterTensor):
 				new_args.append(arg.to(self.device) )
 			elif isinstance(arg, dict):
 				if len(arg.keys() ) > 0:
