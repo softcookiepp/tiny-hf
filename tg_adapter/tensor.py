@@ -304,6 +304,8 @@ class AdapterTensor:
 				print(self.device, inp.device)
 				input()
 			dev = _decide_device(self, inp)
+			# gotta do the inplace to
+			self.to_(dev)
 			return inp.to(dev)
 		if isinstance(inp, tinygrad.Tensor):
 			raise NotImplementedError
