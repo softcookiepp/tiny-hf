@@ -154,7 +154,7 @@ def is_numpy_array(x):
 
 
 def _is_torch(x):
-    import torch
+    import tg_adapter as torch
 
     return isinstance(x, torch.Tensor)
 
@@ -167,7 +167,7 @@ def is_torch_tensor(x):
 
 
 def _is_torch_device(x):
-    import torch
+    import tg_adapter as torch
 
     return isinstance(x, torch.device)
 
@@ -180,7 +180,7 @@ def is_torch_device(x):
 
 
 def _is_torch_dtype(x):
-    import torch
+    import tg_adapter as torch
 
     if isinstance(x, str):
         if hasattr(torch, x):
@@ -762,7 +762,7 @@ def torch_int(x):
     if not is_torch_available():
         return int(x)
 
-    import torch
+    import tg_adapter as torch
 
     return x.to(torch.int64) if torch.jit.is_tracing() and isinstance(x, torch.Tensor) else int(x)
 
@@ -774,7 +774,7 @@ def torch_float(x):
     if not is_torch_available():
         return int(x)
 
-    import torch
+    import tg_adapter as torch
 
     return x.to(torch.float32) if torch.jit.is_tracing() and isinstance(x, torch.Tensor) else int(x)
 

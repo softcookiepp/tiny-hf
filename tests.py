@@ -158,7 +158,7 @@ def _process_arg(arg, device):
 		# append as is
 		return arg, arg
 
-def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_method, error_threshold = 1.0e-4, device = "cpu"):
+def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_method, error_threshold = 1.0e-4, device = "cuda:1"):
 	if not (isinstance(args, tuple) or isinstance(args, list) ):
 		args = (args,)
 	if hasattr(my_module, "to"):
