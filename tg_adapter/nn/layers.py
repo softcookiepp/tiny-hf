@@ -246,7 +246,10 @@ class Embedding(Module):
 		idx.realize()
 		vals.realize()
 		
+		# (-1, 77, 49408, -1)
 		inter = (arange == idx).realize()
+		
+		# (-1, 77, 49408, -1)
 		inter2 = inter.mul(vals).realize()
 		out = inter2.sum(-2).realize()
 		return AT(out)
