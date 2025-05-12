@@ -348,8 +348,10 @@ def assert_same_device(dev, *inp):
 	if len(inp) == 1:
 		inp = inp[0]
 	if isinstance(inp, AdapterTensor):
+		print(dev, inp.tg.device)
 		assert dev == inp.tg.device
 	if isinstance(inp, tinygrad.Tensor):
+		print(dev, inp.device)
 		assert dev == inp.device
 	elif isinstance(inp, list) or isinstance(inp, tuple):
 		for item in inp:
