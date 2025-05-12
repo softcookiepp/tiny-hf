@@ -167,8 +167,7 @@ def is_torch_tensor(x):
 
 
 def _is_torch_device(x):
-    #import torch
-    import tg_adapter as torch
+    import torch
 
     return isinstance(x, torch.device)
 

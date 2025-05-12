@@ -50,8 +50,7 @@ from .utils import (
 
 if TYPE_CHECKING:
     if is_torch_available():
-        #import torch  # noqa
-        import tg_adapter as torch  # noqa
+        import torch  # noqa
 
 
 logger = logging.get_logger(__name__)
@@ -134,8 +133,7 @@ class BatchFeature(UserDict):
         elif tensor_type == TensorType.PYTORCH:
             if not is_torch_available():
                 raise ImportError("Unable to convert output to PyTorch tensors format, PyTorch is not installed.")
-            #import torch  # noqa
-            import tg_adapter as torch  # noqa
+            import torch  # noqa
 
             def as_tensor(value):
                 if isinstance(value, (list, tuple)) and len(value) > 0:
@@ -220,8 +218,7 @@ class BatchFeature(UserDict):
             [`BatchFeature`]: The same instance after modification.
         """
         requires_backends(self, ["torch"])
-        #import torch  # noqa
-        import tg_adapter as torch  # noqa
+        import torch  # noqa
 
         new_data = {}
         device = kwargs.get("device")

@@ -37,8 +37,7 @@ if is_vision_available():
     from PIL.Image import Image
 
 if is_torch_available():
-    #from torch import Tensor
-    from tg_adapter import Tensor
+    from torch import Tensor
 
 
 BASIC_TYPES = (int, float, str, bool, Any, type(None), ...)

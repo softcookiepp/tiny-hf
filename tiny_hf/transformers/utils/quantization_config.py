@@ -41,8 +41,7 @@ from .import_utils import is_auto_gptq_available
 
 
 if is_torch_available():
-    #import torch
-    import tg_adapter as torch
+    import torch
 
 logger = logging.get_logger(__name__)
 
