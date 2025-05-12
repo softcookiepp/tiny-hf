@@ -227,6 +227,7 @@ class Embedding(Module):
 		big_shp = idx.shape+(vocab_sz, embed_sz)
 		input(highest_precision_int(weight.device) )
 		arange, idx, vals = self.arange.expand(big_shp), idx.reshape(idx.shape+(1, 1)).expand(big_shp), weight.expand(big_shp)
+		input(arange.dtype)
 		arange.realize()
 		idx.realize()
 		vals.realize()
