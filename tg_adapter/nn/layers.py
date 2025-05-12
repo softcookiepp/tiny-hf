@@ -227,6 +227,8 @@ class Embedding(Module):
 		big_shp = idx.shape+(vocab_sz, embed_sz)
 		
 		# Ok, so it seems that the big_shp might be too big
+		# We may have to partition it into smaller tensors, it seems.
+		# Somehow
 		print(big_shp)
 		#input(highest_precision_int(weight.device) )
 		arange, idx, vals = self.arange.expand(big_shp), idx.reshape(idx.shape+(1, 1)).expand(big_shp), weight.expand(big_shp)

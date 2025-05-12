@@ -13,9 +13,9 @@
 # limitations under the License.
 
 import numpy as np
-import torch
-import torch.nn as nn
-from transformers import CLIPConfig, CLIPVisionModel, PreTrainedModel
+import tg_adapter as torch
+from tg_adapter import nn
+from ....transformers import CLIPConfig, CLIPVisionModel, PreTrainedModel
 
 from ...utils import logging
 
