@@ -244,6 +244,7 @@ class AdapterTensor:
 		return self._tg_override(other)
 	
 	def __mul__(self, other):
+		input(other._tg.device)
 		return self._tg_override(other)
 	
 	def __rmul__(self, other):
