@@ -244,7 +244,7 @@ class AdapterTensor:
 		return self._tg_override(other)
 	
 	def __mul__(self, other):
-		input(other._tg.device)
+		#other = self._move_to_same_device(other)
 		return self._tg_override(other)
 	
 	def __rmul__(self, other):
@@ -294,10 +294,12 @@ class AdapterTensor:
 		if len(inp) == 1:
 			inp = inp[0]
 		if isinstance(inp, AdapterTensor):
+			print(self.device, inp.device)
+			input()
 			return inp.to(self.device)
 		if isinstance(inp, tinygrad.Tensor):
-			# do nothing
-			return AdapterTensor(inp, device = self)
+			raise NotImplementedError
+			#return AdapterTensor(inp, device = self)
 		elif isinstance(inp, list) or isinstance(inp, tuple):
 			new = []
 			for item in inp:
