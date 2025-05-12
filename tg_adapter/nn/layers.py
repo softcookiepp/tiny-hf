@@ -229,12 +229,18 @@ class Embedding(Module):
 		# Ok, so it seems that the big_shp might be too big
 		# We may have to partition it into smaller tensors, it seems.
 		# Somehow
-		print(big_shp)
-		#input(highest_precision_int(weight.device) )
-		print(self.arange.shape, idx.reshape(idx.shape+(1, 1)).shape, weight.shape)	
+		
+		"""
+		# big_shp: (1, 77, 49408, 768)
+		# shapes before expand: (49408, 1) (1, 77, 1, 1) (49408, 768)
+		# shapes after expand: (1, 77, 49408, 768) (1, 77, 49408, 768) (1, 77, 49408, 768)
+		
+		# could we do something like...
+		# (1, 1, 49408, 1) (1, 77, 1, 1) (1, 1, 49408, 768)
+		# we need to figure out how to not require such a large expansion.
+		"""
+		
 		arange, idx, vals = self.arange.expand(big_shp), idx.reshape(idx.shape+(1, 1)).expand(big_shp), weight.expand(big_shp)
-		print(arange.shape, idx.shape, vals.shape)
-		input()
 		#input(arange.dtype)
 		arange.realize()
 		idx.realize()
