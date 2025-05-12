@@ -289,7 +289,7 @@ class AdapterTensor:
 	def expand(self, *args, **kwargs):
 		return self._tg_override(*args, **kwargs)
 	
-	def _move_to_same_device(self, *args):
+	def __move_to_same_device(self, *args):
 		new_args = []
 		for arg in args:
 			if isinstance(arg, AdapterTensor):
@@ -305,6 +305,38 @@ class AdapterTensor:
 			else:
 				raise NotImplementedError(f"Movement not implemented for {type(arg)}")
 		return tuple(new_args)
+	
+	def _move_to_same_device(self, *inp):
+		if len(inp) == 1:
+			inp = inp[0]
+		if isinstance(inp, AdapterTensor):
+			return inp.to(self.device)
+		if isinstance(inp, tinygrad.Tensor):
+			# do nothing
+			return AdapterTensor(inp, device = self)
+		elif isinstance(inp, list) or isinstance(inp, tuple):
+			new = []
+			for item in inp:
+				new.append(convert_to_tg(item) )
+			if isinstance(inp, tuple):
+				new = tuple(new)
+			for elem in new:
+				assert not isinstance(elem, AdapterTensor)
+				
+			return new
+		elif isinstance(inp, dict):
+			for k, v in inp.items():
+				inp[k] = convert_to_tg(v)
+			return inp
+		else:
+			if hasattr(inp, "__dict__"):
+				# treat as dictionary hehe
+				new_dict = convert_to_tg(inp.__dict__)
+				inp.__dict__.update(new_dict)
+				return inp
+			else:
+				# inp is a primitive type
+				return inp
 	
 	def __getitem__(self, *args, **kwargs):
 		args, kwargs = self._move_to_same_device(args, kwargs)
