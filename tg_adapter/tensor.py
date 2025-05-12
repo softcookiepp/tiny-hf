@@ -303,7 +303,7 @@ class AdapterTensor:
 				print(self.shape, inp.shape)
 				print(self.device, inp.device)
 				input()
-			dev = _decide_device(self.device, inp.device)
+			dev = _decide_device(self, inp)
 			return inp.to(dev)
 		if isinstance(inp, tinygrad.Tensor):
 			raise NotImplementedError
