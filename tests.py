@@ -185,6 +185,9 @@ def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_m
 		hf_kwargs[k] = torch_v
 		my_kwargs[k] = tg_v
 	
+	# compute tiny out first so we don't have to wait for torch
+	tiny_out = my_module.__getattribute__(my_method)(*my_args, **my_kwargs)
+	
 	torch_out = hf_module.__getattribute__(hf_method)(*hf_args, **hf_kwargs)
 	"""
 	if isinstance(torch_out, tuple):
@@ -193,7 +196,7 @@ def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_m
 		torch_out = _get_output(torch_out)
 	"""
 	
-	tiny_out = my_module.__getattribute__(my_method)(*my_args, **my_kwargs)
+	
 	
 	#inspect_state_dict_devices(my_module)
 	print(f"MSE for {hf_module} and {my_module}:")
