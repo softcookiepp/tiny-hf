@@ -232,6 +232,8 @@ class Embedding(Module):
 		print(big_shp)
 		#input(highest_precision_int(weight.device) )
 		arange, idx, vals = self.arange.expand(big_shp), idx.reshape(idx.shape+(1, 1)).expand(big_shp), weight.expand(big_shp)
+		print(arange.shape, idx.shape, vals.shape)
+		input()
 		#input(arange.dtype)
 		arange.realize()
 		idx.realize()
