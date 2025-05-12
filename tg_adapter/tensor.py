@@ -153,8 +153,7 @@ class AdapterTensor:
 					dtype = self.dtype
 				supported_type_old_device = self.dtype.tgt(self.device.tg)
 				supported_type_new_device = dtype.tgt(device.tg)
-				print(device.tg, dtype.tgt(self.device.tg), supported_type_old_device, supported_type_new_device)
-				input()
+				#print(device.tg, dtype.tgt(self.device.tg), supported_type_old_device, supported_type_new_device)
 				# ok, so the problem is that it works one way, but not the other :c
 				
 				new_tensor = new_tensor.cast(supported_type_old_device).realize()
