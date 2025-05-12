@@ -9,6 +9,8 @@ from .types import dtype as dtype_class
 from .backend_environment_config import *
 from .debugging import maybe_realize
 
+
+
 def _parse_to_arguments(*args, **kwargs):
 	assert len(args) > 0 or len(kwargs) > 0
 	dtype = None
@@ -231,15 +233,19 @@ class AdapterTensor:
 	
 	
 	def __add__(self, other):
+		other = self._move_to_same_device(other)
 		return self._tg_override(other)
 	
 	def __radd__(self, other):
+		other = self._move_to_same_device(other)
 		return self._tg_override(other)
 		
 	def __sub__(self, other):
+		other = self._move_to_same_device(other)
 		return self._tg_override(other)
 		
 	def __rsub__(self, other):
+		other = self._move_to_same_device(other)
 		return self._tg_override(other)
 	
 	def __mul__(self, other):
@@ -297,7 +303,8 @@ class AdapterTensor:
 				print(self.shape, inp.shape)
 				print(self.device, inp.device)
 				input()
-			return inp.to(self.device)
+			dev = _decide_device(self.device, inp.device)
+			return inp.to(dev)
 		if isinstance(inp, tinygrad.Tensor):
 			raise NotImplementedError
 			#return AdapterTensor(inp, device = self)
@@ -377,6 +384,15 @@ class AdapterTensor:
 		if len(self.shape) == 0:
 			return 1
 		return self.shape[0]
+
+def _decide_device(a: AdapterTensor, b: AdapterTensor) -> Device:
+	if a.numel() > b.numel():
+		return a.device
+	elif b.numel() > a.numel():
+		return b.device
+	elif a.device == Device("cpu"):
+		return b.device
+	return a.device
 
 def assert_same_device(dev, *inp):
 	dev = tinygrad.Device.canonicalize(dev)
