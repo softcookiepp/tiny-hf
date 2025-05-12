@@ -1,4 +1,4 @@
-REALIZE_ASAP = False
+REALIZE_ASAP = True
 
 def maybe_realize(t):
 	if REALIZE_ASAP:
