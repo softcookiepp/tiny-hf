@@ -47,7 +47,7 @@ class device:
 	def __eq__(self, other):
 		if not isinstance(other, device):
 			return False
-		return other.name == self.name && other.idx == self.idx
+		return other.name == self.name and other.idx == self.idx
 
 # have to make the constructor outside the class itself :c
 if device.default_device is None:
