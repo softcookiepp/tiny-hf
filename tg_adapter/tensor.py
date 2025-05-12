@@ -300,6 +300,8 @@ class AdapterTensor:
 				new_args.append(arg)
 			elif isinstance(arg, tuple):
 				new_args.append(self._move_to_same_device(*arg) )
+			elif type(arg) in [slice]:
+				new_args.append(arg)
 			else:
 				raise NotImplementedError(f"Movement not implemented for {type(arg)}")
 		return tuple(new_args)
