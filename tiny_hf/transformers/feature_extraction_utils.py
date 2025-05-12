@@ -234,6 +234,8 @@ class BatchFeature(UserDict):
                 device = arg
             else:
                 # it's something else
+                print(args)
+                print(kwargs)
                 raise ValueError(f"Attempting to cast a BatchFeature to type {str(arg)}. This is not supported.")
         # We cast only floating point tensors to avoid issues with tokenizers casting `LongTensor` to `FloatTensor`
         for k, v in self.items():
