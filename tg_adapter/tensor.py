@@ -289,23 +289,6 @@ class AdapterTensor:
 	def expand(self, *args, **kwargs):
 		return self._tg_override(*args, **kwargs)
 	
-	def __move_to_same_device(self, *args):
-		new_args = []
-		for arg in args:
-			if isinstance(arg, AdapterTensor):
-				new_args.append(arg.to(self.device) )
-			elif isinstance(arg, dict):
-				if len(arg.keys() ) > 0:
-					raise NotImplementedError
-				new_args.append(arg)
-			elif isinstance(arg, tuple):
-				new_args.append(self._move_to_same_device(*arg) )
-			elif type(arg) in [slice]:
-				new_args.append(arg)
-			else:
-				raise NotImplementedError(f"Movement not implemented for {type(arg)}")
-		return tuple(new_args)
-	
 	def _move_to_same_device(self, *inp):
 		if len(inp) == 1:
 			inp = inp[0]
