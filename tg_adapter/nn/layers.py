@@ -225,6 +225,7 @@ class Embedding(Module):
 		if not hasattr(self, 'arange'): self.arange = tinygrad.Tensor.arange(vocab_sz,
 			requires_grad=False, device=weight.device, dtype = highest_precision_int(weight.device) ).unsqueeze(-1)
 		big_shp = idx.shape+(vocab_sz, embed_sz)
+		print(big_shp)
 		input(highest_precision_int(weight.device) )
 		arange, idx, vals = self.arange.expand(big_shp), idx.reshape(idx.shape+(1, 1)).expand(big_shp), weight.expand(big_shp)
 		input(arange.dtype)
