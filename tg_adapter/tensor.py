@@ -293,9 +293,10 @@ class AdapterTensor:
 		if len(inp) == 1:
 			inp = inp[0]
 		if isinstance(inp, AdapterTensor):
-			print(self.shape, inp.shape)
-			print(self.device, inp.device)
-			input()
+			if inp.device != self.device:
+				print(self.shape, inp.shape)
+				print(self.device, inp.device)
+				input()
 			return inp.to(self.device)
 		if isinstance(inp, tinygrad.Tensor):
 			raise NotImplementedError
