@@ -210,6 +210,11 @@ class StableDiffusionPipeline(
 		requires_safety_checker: bool = True,
 	):
 		super().__init__()
+		
+		if not requires_safety_checker:
+			# this is the stupidest shit I have ever seen in my life
+			del safety_checker
+			safety_checker = None
 
 		if scheduler is not None and getattr(scheduler.config, "steps_offset", 1) != 1:
 			deprecation_message = (
@@ -296,7 +301,6 @@ class StableDiffusionPipeline(
 		self.vae_scale_factor = 2 ** (len(self.vae.config.block_out_channels) - 1) if getattr(self, "vae", None) else 8
 		self.image_processor = VaeImageProcessor(vae_scale_factor=self.vae_scale_factor)
 		self.register_to_config(requires_safety_checker=requires_safety_checker)
-		input(requires_safety_checker)
 
 	def _encode_prompt(
 		self,
