@@ -159,11 +159,9 @@ class AdapterTensor:
 				# ok, so the problem is that it works one way, but not the other :c
 				
 				new_tensor = new_tensor.cast(supported_type_old_device).realize()
-				print(new_tensor.dtype)
 				# then move it to the new device
 				new_tensor = new_tensor.to(device.tg).cast(supported_type_new_device).realize()
-		if new_tensor._tg.dtype == _get_type("bfloat16"):
-			input("ouch!")
+		print(new_tensor.dtype)
 		return convert_to_torch(new_tensor)
 		
 		if dtype is None and (not device is None):
