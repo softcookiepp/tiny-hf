@@ -292,6 +292,9 @@ class CLIPTextEmbeddings(nn.Module):
 
         if inputs_embeds is None:
             inputs_embeds = self.token_embedding(input_ids)
+
+        position_ids = position_ids.to(torch.float)
+        inputs_embeds = inputs_embeds.to(torch.float)
         print(position_ids.dtype, inputs_embeds.dtype)
         input("ugh whyyy")
 
