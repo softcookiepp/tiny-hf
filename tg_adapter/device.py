@@ -82,6 +82,10 @@ def tg_device_supports_longlong(dev):
 	# If it succeeds, we return true
 	big_shp = (1, 77, 49408, 768)
 	a = tinygrad.Tensor.randn(big_shp)
-	a.realize()
+	try:
+		a.realize()
+	except tinygrad.device.CompileError:
+		del a
+		return False
 	del a
 	return True
