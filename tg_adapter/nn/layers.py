@@ -237,7 +237,7 @@ def _chunked_embedding(vocab_sz, embed_sz, weight, idx, arange):
 	# now iter!
 	out = None
 	for c_arange, c_weight in zip(arange_chunks, weight_chunks):
-		c_arange, c_idx, c_vals = c_arange.expand(big_chunk_shape), idx.reshape(idx.shape+(1, 1)).expand(big_chunk_shape), weight.expand(big_chunk_shape)
+		c_arange, c_idx, c_vals = c_arange.expand(big_chunk_shape), idx.reshape(idx.shape+(1, 1)).expand(big_chunk_shape), c_weight.expand(big_chunk_shape)
 		equivalent = (c_arange == c_idx)
 		c_emb = equivalent.mul(c_vals)
 		c_out = c_emb.sum(-2)
