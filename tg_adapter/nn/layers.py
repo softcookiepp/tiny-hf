@@ -285,6 +285,9 @@ class Embedding(Module):
 		out = inter2.sum(-2).realize()
 		
 		out = out.to(original_device)
+		out.realize()
+		print(out.device)
+		input("we got through it!")
 		return AT(out)
 		
 
