@@ -283,10 +283,10 @@ class Embedding(Module):
 		"""
 		arange = self.arange
 		if force_cpu:
-			input("forcing CPU")
 			arange = arange.to("CPU")
 			idx = idx.to("CPU")
 			weight = weight.to("CPU")
+		print(arange.device, idx.device, weight.device)
 			
 		arange, idx, vals = arange.expand(big_shp), idx.reshape(idx.shape+(1, 1)).expand(big_shp), weight.expand(big_shp)
 		#input(arange.dtype)
