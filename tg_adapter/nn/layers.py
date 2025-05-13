@@ -283,6 +283,7 @@ class Embedding(Module):
 		"""
 		arange = self.arange
 		if force_cpu:
+			input("forcing CPU")
 			arange = arange.to("CPU")
 			idx = idx.to("CPU")
 			weight = weight.to("CPU")
