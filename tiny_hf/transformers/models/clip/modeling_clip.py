@@ -1066,7 +1066,11 @@ class CLIPTextModel(CLIPPreTrainedModel):
         >>> pooled_output = outputs.pooler_output  # pooled (EOS token) states
         ```"""
         return_dict = return_dict if return_dict is not None else self.config.use_return_dict
-        print(input_ids.dtype, attention_mask.dtype, position_ids.dtype)
+        for thing in (input_ids, attention_mask, position_ids):
+			if hasattr(thing, "dtype"):
+				print(thing.dtype)
+			else:
+				print(None)
 
         return self.text_model(
             input_ids=input_ids,
