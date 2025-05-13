@@ -162,6 +162,7 @@ class AttentionMaskConverter:
 		mask = mask.masked_fill(mask_cond < (mask_cond + 1).view(mask.size(-1), 1), 0)
 
 		#mask = mask.to(dtype)
+		print(mask.device)
 		input(dtype)
 		mask = mask.cast(dtype)
 
