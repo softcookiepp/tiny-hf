@@ -213,42 +213,6 @@ class Linear(Module):
 		x, weight, bias = convert_to_tg(x, self.weight, self.bias)
 		x = x.linear(weight.transpose(), bias)
 		return convert_to_torch(x)
-
-def _chunked_embedding(vocab_sz, embed_sz, weight, idx, arange):
-	big_shp = idx.shape+(vocab_sz, embed_sz)
-	
-	# should be batch, idx, word, emb
-	assert len(big_shp) == 4
-	
-	# first, we need to get the number of chunks.
-	num_chunks = 1
-	for i in range(2, 33):
-		if vocab_sz % i == 0:
-			num_chunks = i
-	
-	# chunk the arange and weight
-	arange_chunks = arange.chunk(num_chunks, 0)
-	weight_chunks = weight.chunk(num_chunks, 0)
-	
-	# make the expanded chunk shape
-	big_chunk_shape = list(big_shp)
-	big_chunk_shape[-2] = vocab_sz // num_chunks
-	
-	# now iter!
-	out = None
-	for c_arange, c_weight in zip(arange_chunks, weight_chunks):
-		c_arange, c_idx, c_vals = c_arange.expand(big_chunk_shape), idx.reshape(idx.shape+(1, 1)).expand(big_chunk_shape), c_weight.expand(big_chunk_shape)
-		
-		# well looks like we may just have the same problem, since the arange and weight are fundamentally represented by the same tensors?
-		
-		equivalent = (c_arange == c_idx)
-		c_emb = equivalent.mul(c_vals)
-		c_out = c_emb.sum(-2)
-		if out is None:
-			out = c_emb
-		else:
-			out = out + c_emb
-	return out.realize()
 		
 class Embedding(Module):
 	def __init__(self, vocab_size:int, embed_size:int):
@@ -285,9 +249,6 @@ class Embedding(Module):
 		out = inter2.sum(-2).realize()
 		
 		out = out.to(original_device)
-		out.realize()
-		print(out.device)
-		input("we got through it!")
 		return AT(out)
 		
 
