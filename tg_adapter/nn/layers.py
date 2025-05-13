@@ -227,8 +227,10 @@ class Embedding(Module):
 			requires_grad=False, device=weight.device, dtype = highest_precision_int(weight.device) ).unsqueeze(-1)
 		big_shp = idx.shape+(vocab_sz, embed_sz)
 		
-		support = tg_device_supports_longlong(weight.device)
-		input(support)
+		if tg_device_supports_longlong(weight.device):
+			pass
+		else:
+			raise NotImplementedError
 		# Ok, so it seems that the big_shp might be too big
 		# We may have to partition it into smaller tensors, it seems.
 		# Somehow

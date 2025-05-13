@@ -76,7 +76,7 @@ def parse_device(dev):
 # Odd little backend-specific quirks that tinygrad doesn't account for
 _tg_device_quirk_table = {}
 
-def tg_device_supports_longlong(dev):
+def tg_device_supports_longlong(dev: str) -> bool:
 	# The test will make a big enough tensor that requires long long to index
 	# If a compile error is thrown, then we return false.
 	# If it succeeds, we return true
