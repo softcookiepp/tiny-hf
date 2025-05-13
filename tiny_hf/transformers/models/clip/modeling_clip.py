@@ -950,6 +950,7 @@ class CLIPTextTransformer(nn.Module):
 
         # CLIP's text model uses causal mask, prepare it here.
         # https://github.com/openai/CLIP/blob/cfcffb90e69f37bf2ff1e988237a0fbe41f33c04/clip/model.py#L324
+        print(input_ids)
         print(hidden_states.dtype)
         input("peepeepoopoo")
         causal_attention_mask = _create_4d_causal_attention_mask(
