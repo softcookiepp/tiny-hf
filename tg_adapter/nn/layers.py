@@ -224,7 +224,7 @@ def _chunked_embedding(vocab_sz, embed_sz, weight, idx, arange):
 	
 	num_chunks = 1
 	for i in range(2, 33):
-		if i % vocab_sz == 0:
+		if vocab_sz % i == 0:
 			num_chunks = i
 	input(num_chunks)
 	
