@@ -292,6 +292,8 @@ class CLIPTextEmbeddings(nn.Module):
 
         if inputs_embeds is None:
             inputs_embeds = self.token_embedding(input_ids)
+        print(position_ids.dtype, inputs_embeds.dtype)
+        input("ugh whyyy")
 
         position_embeddings = self.position_embedding(position_ids)
         embeddings = inputs_embeds + position_embeddings
