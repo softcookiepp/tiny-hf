@@ -219,33 +219,33 @@ def _chunked_embedding(vocab_sz, embed_sz, weight, idx, arange):
 	
 	# should be batch, idx, word, emb
 	assert len(big_shp) == 4
-	print(big_shp[-2])
-	input(big_shp)
 	
+	# first, we need to get the number of chunks.
 	num_chunks = 1
 	for i in range(2, 33):
 		if vocab_sz % i == 0:
 			num_chunks = i
-	input(num_chunks)
 	
-	raise NotImplementedError
-	# first, we need to get the number of chunks.
-	# we will do this by splitting it across the vocabulary
-	# but each tensor will need to be chunked differently...
+	# chunk the arange and weight
+	arange_chunks = arange.chunk(num_chunks, 0)
+	weight_chunks = weight.chunk(num_chunks, 0)
 	
-	# shapes before expand: (49408, 1) (1, 77, 1, 1) (49408, 768)
-	arange, idx, vals = arange.expand(big_shp), idx.reshape(idx.shape+(1, 1)).expand(big_shp), weight.expand(big_shp)
-	#input(arange.dtype)
-	arange.realize()
-	idx.realize()
-	vals.realize()
+	# make the expanded chunk shape
+	big_chunk_shape = list(big_shp)
+	big_chunk_shape[-2] = vocab_sz // num_chunks
 	
-	# (-1, 77, 49408, -1)
-	inter = (arange == idx).realize()
-	
-	# (-1, 77, 49408, -1)
-	inter2 = inter.mul(vals).realize()
-	return inter2.sum(-2).realize()
+	# now iter!
+	out = None
+	for c_arange, c_weight in zip(arange_chunks, weight_chunks):
+		c_arange, c_idx, c_vals = c_arange.expand(big_chunk_shape), idx.reshape(idx.shape+(1, 1)).expand(big_chunk_shape), weight.expand(big_chunk_shape)
+		equivalent = (c_arange == c_idx)
+		c_emb = equivalent.mul(c_vals)
+		c_out = c_emb.sum(-2)
+		if out is None:
+			out = c_emb
+		else:
+			out = out + c_emb
+	return out.realize()
 		
 class Embedding(Module):
 	def __init__(self, vocab_size:int, embed_size:int):
