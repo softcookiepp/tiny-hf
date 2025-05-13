@@ -7,6 +7,7 @@ from ..tensor import convert_to_torch, convert_to_tg, assert_same_device
 from .. import tensor_constructors as tc
 from . import init as internal_init
 from ..types import highest_precision_int
+from ..device import tg_device_supports_longlong
 
 class AvgPool2d(Module):
 	def __init__(self, kernel_size, stride=None, padding=0,
@@ -226,6 +227,7 @@ class Embedding(Module):
 			requires_grad=False, device=weight.device, dtype = highest_precision_int(weight.device) ).unsqueeze(-1)
 		big_shp = idx.shape+(vocab_sz, embed_sz)
 		
+		tg_device_supports_longlong(weight.device)
 		# Ok, so it seems that the big_shp might be too big
 		# We may have to partition it into smaller tensors, it seems.
 		# Somehow

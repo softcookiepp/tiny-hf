@@ -1,4 +1,5 @@
 from .backend_environment_config import torch_dev_to_tiny, tiny_dev_to_torch
+import tinygrad
 
 def backend_from_device(dev_str):
 	if dev_str is None:
@@ -71,3 +72,16 @@ def parse_device(dev):
 	elif isinstance(dev, device):
 		return dev
 	raise ValueError
+	
+# Odd little backend-specific quirks that tinygrad doesn't account for
+_tg_device_quirk_table = {}
+
+def tg_device_supports_longlong(dev):
+	# The test will make a big enough tensor that requires long long to index
+	# If a compile error is thrown, then we return false.
+	# If it succeeds, we return true
+	big_shp = (1, 77, 49408, 768)
+	a = tinygrad.Tensor.arange(big_shp)
+	a.realize()
+	del a
+	return True
