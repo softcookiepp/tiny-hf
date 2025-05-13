@@ -259,36 +259,22 @@ class Embedding(Module):
 	def forward(self, idx):
 		vocab_sz, embed_sz, weight, idx = convert_to_tg(self.vocab_sz, self.embed_sz, self.weight, idx)
 		
+		original_device = idx.device
+		working_device = idx.device
+		
+		if not tg_device_supports_longlong(weight.device):
+			# perform embedding on the CPU as a fallback
+			working_device = "CPU"
+		
 		if not hasattr(self, 'arange'): self.arange = tinygrad.Tensor.arange(vocab_sz,
-			requires_grad=False, device=weight.device, dtype = highest_precision_int(weight.device) ).unsqueeze(-1)
+			requires_grad=False, device=working_device, dtype = highest_precision_int(working_device) ).unsqueeze(-1)
 		big_shp = idx.shape+(vocab_sz, embed_sz)
 		
-		force_cpu = False
-		original_device = idx.device
-		if not tg_device_supports_longlong(weight.device):
-			#return AT(_chunked_embedding(vocab_sz, embed_sz, weight, idx, self.arange ) )
-			force_cpu = True
-		# Ok, so it seems that the big_shp might be too big
-		# We may have to partition it into smaller tensors, it seems.
-		# Somehow
 		
-		"""
-		# big_shp: (1, 77, 49408, 768)
-		# shapes before expand: (49408, 1) (1, 77, 1, 1) (49408, 768)
-		# shapes after expand: (1, 77, 49408, 768) (1, 77, 49408, 768) (1, 77, 49408, 768)
+		idx = idx.to(working_device)
+		weight = weight.to(working_device)
 		
-		# could we do something like...
-		# (1, 1, 49408, 1) (1, 77, 1, 1) (1, 1, 49408, 768)
-		# we need to figure out how to not require such a large expansion.
-		"""
-		arange = self.arange
-		if force_cpu:
-			arange = arange.to("CPU").realize()
-			idx = idx.to("CPU").realize()
-			weight = weight.to("CPU").realize()
-		print(arange.device, idx.device, weight.device)
-			
-		arange, idx, vals = arange.expand(big_shp), idx.reshape(idx.shape+(1, 1)).expand(big_shp), weight.expand(big_shp)
+		arange, idx, vals = self.arange.expand(big_shp), idx.reshape(idx.shape+(1, 1)).expand(big_shp), weight.expand(big_shp)
 		#input(arange.dtype)
 		
 		# (-1, 77, 49408, -1)
@@ -298,9 +284,7 @@ class Embedding(Module):
 		inter2 = inter.mul(vals).realize()
 		out = inter2.sum(-2).realize()
 		
-		if force_cpu:
-			# move back to original device if applicable
-			out = out.to(original_device)
+		out = out.to(original_device)
 		return AT(out)
 		
 
