@@ -213,6 +213,29 @@ class Linear(Module):
 		x, weight, bias = convert_to_tg(x, self.weight, self.bias)
 		x = x.linear(weight.transpose(), bias)
 		return convert_to_torch(x)
+
+def _chunked_embedding(vocab_sz, embed_sz, weight, idx):
+	
+	
+	big_shp = idx.shape+(vocab_sz, embed_sz)
+	input(big_shp)
+	
+	raise NotImplementedError
+	# first, we need to get the number of chunks.
+	
+	
+	arange, idx, vals = self.arange.expand(big_shp), idx.reshape(idx.shape+(1, 1)).expand(big_shp), weight.expand(big_shp)
+	#input(arange.dtype)
+	arange.realize()
+	idx.realize()
+	vals.realize()
+	
+	# (-1, 77, 49408, -1)
+	inter = (arange == idx).realize()
+	
+	# (-1, 77, 49408, -1)
+	inter2 = inter.mul(vals).realize()
+	return inter2.sum(-2).realize()
 		
 class Embedding(Module):
 	def __init__(self, vocab_size:int, embed_size:int):
@@ -227,10 +250,8 @@ class Embedding(Module):
 			requires_grad=False, device=weight.device, dtype = highest_precision_int(weight.device) ).unsqueeze(-1)
 		big_shp = idx.shape+(vocab_sz, embed_sz)
 		
-		if tg_device_supports_longlong(weight.device):
-			pass
-		else:
-			raise NotImplementedError
+		if not tg_device_supports_longlong(weight.device):
+			return AT(_chunked_embedding(vocab_sz, embed_sz, weight, idx) )
 		# Ok, so it seems that the big_shp might be too big
 		# We may have to partition it into smaller tensors, it seems.
 		# Somehow
