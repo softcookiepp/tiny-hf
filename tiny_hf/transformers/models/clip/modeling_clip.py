@@ -295,7 +295,7 @@ class CLIPTextEmbeddings(nn.Module):
 
         position_ids = position_ids.to(torch.float)
         inputs_embeds = inputs_embeds.to(torch.float)
-        print(position_ids.dtype, inputs_embeds.dtype)
+        print(position_ids.dtype, inputs_embeds.to(torch.float).dtype)
         input("ugh whyyy")
 
         position_embeddings = self.position_embedding(position_ids)
