@@ -162,6 +162,8 @@ class AdapterTensor:
 				print(new_tensor.dtype)
 				# then move it to the new device
 				new_tensor = new_tensor.to(device.tg).cast(supported_type_new_device).realize()
+		if new_tensor._tg.dtype == _get_type("bfloat16"):
+			input("ouch!")
 		return convert_to_torch(new_tensor)
 		
 		if dtype is None and (not device is None):
