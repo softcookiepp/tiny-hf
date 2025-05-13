@@ -238,6 +238,9 @@ def _chunked_embedding(vocab_sz, embed_sz, weight, idx, arange):
 	out = None
 	for c_arange, c_weight in zip(arange_chunks, weight_chunks):
 		c_arange, c_idx, c_vals = c_arange.expand(big_chunk_shape), idx.reshape(idx.shape+(1, 1)).expand(big_chunk_shape), c_weight.expand(big_chunk_shape)
+		
+		# well looks like we may just have the same problem, since the arange and weight are fundamentally represented by the same tensors?
+		
 		equivalent = (c_arange == c_idx)
 		c_emb = equivalent.mul(c_vals)
 		c_out = c_emb.sum(-2)
@@ -260,8 +263,11 @@ class Embedding(Module):
 			requires_grad=False, device=weight.device, dtype = highest_precision_int(weight.device) ).unsqueeze(-1)
 		big_shp = idx.shape+(vocab_sz, embed_sz)
 		
+		force_cpu = False
+		original_device = idx.device
 		if not tg_device_supports_longlong(weight.device):
-			return AT(_chunked_embedding(vocab_sz, embed_sz, weight, idx, self.arange ) )
+			#return AT(_chunked_embedding(vocab_sz, embed_sz, weight, idx, self.arange ) )
+			force_cpu = True
 		# Ok, so it seems that the big_shp might be too big
 		# We may have to partition it into smaller tensors, it seems.
 		# Somehow
@@ -275,12 +281,14 @@ class Embedding(Module):
 		# (1, 1, 49408, 1) (1, 77, 1, 1) (1, 1, 49408, 768)
 		# we need to figure out how to not require such a large expansion.
 		"""
-		
-		arange, idx, vals = self.arange.expand(big_shp), idx.reshape(idx.shape+(1, 1)).expand(big_shp), weight.expand(big_shp)
+		arange = self.arange
+		if force_cpu:
+			arange = arange.to("CPU")
+			idx = idx.to("CPU")
+			weight = weight.to("CPU")
+			
+		arange, idx, vals = arange.expand(big_shp), idx.reshape(idx.shape+(1, 1)).expand(big_shp), weight.expand(big_shp)
 		#input(arange.dtype)
-		arange.realize()
-		idx.realize()
-		vals.realize()
 		
 		# (-1, 77, 49408, -1)
 		inter = (arange == idx).realize()
@@ -288,6 +296,10 @@ class Embedding(Module):
 		# (-1, 77, 49408, -1)
 		inter2 = inter.mul(vals).realize()
 		out = inter2.sum(-2).realize()
+		
+		if force_cpu:
+			# move back to original device if applicable
+			out = out.to(original_device)
 		return AT(out)
 		
 
