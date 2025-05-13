@@ -218,6 +218,10 @@ def _chunked_embedding(vocab_sz, embed_sz, weight, idx):
 	
 	
 	big_shp = idx.shape+(vocab_sz, embed_sz)
+	
+	# should be batch, idx, word, emb
+	assert len(big_shp) == 4
+	print(big_shp[-2])
 	input(big_shp)
 	
 	raise NotImplementedError
