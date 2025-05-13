@@ -214,9 +214,7 @@ class Linear(Module):
 		x = x.linear(weight.transpose(), bias)
 		return convert_to_torch(x)
 
-def _chunked_embedding(vocab_sz, embed_sz, weight, idx):
-	
-	
+def _chunked_embedding(vocab_sz, embed_sz, weight, idx, arange):
 	big_shp = idx.shape+(vocab_sz, embed_sz)
 	
 	# should be batch, idx, word, emb
@@ -224,11 +222,19 @@ def _chunked_embedding(vocab_sz, embed_sz, weight, idx):
 	print(big_shp[-2])
 	input(big_shp)
 	
+	num_chunks = 1
+	for i in range(2, 33):
+		if i % vocab_sz == 0:
+			num_chunks = i
+	input(num_chunks)
+	
 	raise NotImplementedError
 	# first, we need to get the number of chunks.
+	# we will do this by splitting it across the vocabulary
+	# but each tensor will need to be chunked differently...
 	
-	
-	arange, idx, vals = self.arange.expand(big_shp), idx.reshape(idx.shape+(1, 1)).expand(big_shp), weight.expand(big_shp)
+	# shapes before expand: (49408, 1) (1, 77, 1, 1) (49408, 768)
+	arange, idx, vals = arange.expand(big_shp), idx.reshape(idx.shape+(1, 1)).expand(big_shp), weight.expand(big_shp)
 	#input(arange.dtype)
 	arange.realize()
 	idx.realize()
@@ -255,7 +261,7 @@ class Embedding(Module):
 		big_shp = idx.shape+(vocab_sz, embed_sz)
 		
 		if not tg_device_supports_longlong(weight.device):
-			return AT(_chunked_embedding(vocab_sz, embed_sz, weight, idx) )
+			return AT(_chunked_embedding(vocab_sz, embed_sz, weight, idx, self.arange ) )
 		# Ok, so it seems that the big_shp might be too big
 		# We may have to partition it into smaller tensors, it seems.
 		# Somehow
