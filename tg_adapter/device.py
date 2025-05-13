@@ -81,7 +81,7 @@ def tg_device_supports_longlong(dev):
 	# If a compile error is thrown, then we return false.
 	# If it succeeds, we return true
 	big_shp = (1, 77, 49408, 768)
-	a = tinygrad.Tensor.arange(big_shp)
+	a = tinygrad.Tensor.randn(big_shp)
 	a.realize()
 	del a
 	return True
