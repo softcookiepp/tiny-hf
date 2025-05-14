@@ -163,8 +163,9 @@ class AttentionMaskConverter:
 
 		#mask = mask.to(dtype)
 		print(mask.device)
+		print(mask.dtype.tgt(mask._tg.device) )
 		input(dtype)
-		mask = mask.cast(dtype)
+		mask = mask.to(dtype)
 
 		if past_key_values_length > 0:
 			mask = torch.cat([torch.zeros(tgt_len, past_key_values_length, dtype=dtype, device=device), mask], dim=-1)

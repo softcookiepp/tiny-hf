@@ -47,7 +47,6 @@ class AdapterTensor:
 		elif isinstance(device, str):
 			device = Device(device)
 			tg_device = device.tg
-		
 		tgt = get_tgt(dtype, tg_device)
 		if isinstance(data, tinygrad.Tensor):
 			self._tg = data
@@ -62,9 +61,13 @@ class AdapterTensor:
 		self._rebuild_dtype()
 		assert is_dtype_supported(self._tg.dtype, self._tg.device)
 		maybe_realize(self._tg)
+		print(self.dtype, self._tg.dtype)
+		input("hmmmmm")
 	
 	def _rebuild_dtype(self):
+		print(self._dtype)
 		self._dtype = get_type_from_tg(self._tg.dtype, self._tg.device.split(":")[0], self._dtype)
+		print(self._dtype)
 	
 	@property
 	def tg(self):

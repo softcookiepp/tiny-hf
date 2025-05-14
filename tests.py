@@ -465,11 +465,13 @@ def test_dtype_override():
 @torch.no_grad()
 def main():
 	#test_dtype_override()
+	test_clip_text_model()
+	input("its gonna get dumb after this lool")
 	test_stable_diffusion_pipeline()
 	
 	test_clip_tokenizer_fast()
 	test_clip_tokenizer()
-	test_clip_text_model()
+	
 	test_autoencoderkl()
 	input("anything beyond here will make me run out of memory :c")
 	test_unet_2d_condition()
