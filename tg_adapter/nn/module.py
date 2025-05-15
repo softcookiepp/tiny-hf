@@ -152,11 +152,11 @@ class Module:
 			error_msgs):
 		# just because huggingface doesn't seem to understand that you REALLY SHOULD NOT BE USING PRIVATE METHODS
 		# goodness gracious
-		print(state_dict.keys() )
-		input(self.__dict__)
 		for k, v in self.__dict__.items():
-			if k in state_dict.keys():
-				v.tg.replace(state_dict[k].to(v.tg.device) ).realize()
+			full_key = prefix + k
+			if full_key in state_dict.keys():
+				v.tg.replace(state_dict[full_key].to(v.tg.device) ).realize()
+				print("initialized", full_key)
 	
 	def _load_elem_state_dict_recursive(self, k, v, state_dict, prefix):
 		if isinstance(v, Module):
