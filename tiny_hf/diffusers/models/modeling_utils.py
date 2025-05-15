@@ -1398,6 +1398,7 @@ class ModelMixin(tga.nn.Module, PushToHubMixin):
 		expected_keys = list(model_state_dict.keys())
 		print(expected_keys)
 		print(loaded_keys)
+		print(len(expected_keys), len(loaded_keys) )
 		input("why the different?")
 		missing_keys = list(set(expected_keys) - set(loaded_keys))
 		if hf_quantizer is not None:
