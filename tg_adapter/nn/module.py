@@ -197,9 +197,9 @@ class Module:
 		# use conventional method, but replace all dict keys with x._tg lol
 		new_state_dict = {}
 		for k, v in state_dict.items():
-			print(k, v)
+			#print(k, v)
 			k = k + "._tg"
-			input(k)
+			#input(k)
 			new_state_dict[k] = v
 		tinygrad.nn.state.load_state_dict(self, new_state_dict, strict = strict, verbose = True)
 		#_cb(self)
