@@ -188,17 +188,24 @@ class Module:
 				for i in range(len(v) ):
 					new_prefix = ".".join( [prefix, k, str(i)] )
 		"""
-		self._load_state_dict_recursive(state_dict)
-		return [], []
+		#self._load_state_dict_recursive(state_dict)
+		#return [], []
 		
-		"""
-		raise NotImplementedError
-		_disinherit(self)
-		tinygrad.nn.state.load_state_dict(self, state_dict, strict = strict, verbose = True)
-		_cb(self)
+		
+		#raise NotImplementedError
+		#_disinherit(self)
+		# use conventional method, but replace all dict keys with x._tg lol
+		new_state_dict = {}
+		for k, v in state_dict.items():
+			print(k, v)
+			k = k + "._tg"
+			input(k)
+			new_state_dict[k] = v
+		tinygrad.nn.state.load_state_dict(self, new_state_dict, strict = strict, verbose = True)
+		#_cb(self)
 		# expected and missing keys are not implemented yet
 		return [], []
-		"""
+		
 	
 	def state_dict(self, prefix = ""):
 		#return _disinherit(tinygrad.nn.state.get_state_dict(self) )

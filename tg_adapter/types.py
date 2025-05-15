@@ -193,7 +193,6 @@ class dtype:
 		else:
 			dt = TG_BACKEND_TYPE_MAP["DEFAULT"][self._key]
 		if dt is None:
-			print(self._key)
 			raise ValueError
 		return dt
 	
@@ -231,7 +230,6 @@ for dev in tinygrad.Device.get_available_devices():
 		
 		# substitute type should be good, assign it!
 		TG_BACKEND_TYPE_MAP[dev][ts] = TG_BACKEND_TYPE_MAP["DEFAULT"][ts_sub]
-print(TG_BACKEND_TYPE_MAP)
 
 def _get_type(attr):
 	attr = parse_alias(attr)
