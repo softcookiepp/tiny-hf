@@ -1105,4 +1105,6 @@ class StableDiffusionPipeline(
 		if not return_dict:
 			return (image, has_nsfw_concept)
 
-		return StableDiffusionPipelineOutput(images=image, nsfw_content_detected=has_nsfw_concept)
+		out = StableDiffusionPipelineOutput(images=image, nsfw_content_detected=has_nsfw_concept)
+		assert hasattr(out, "nsfw_content_detected")
+		return out
