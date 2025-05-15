@@ -94,7 +94,7 @@ def _get_output(hf_out):
 	#_print_dict_types(hf_out)
 	raise ValueError
 	
-def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4):
+def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = True):
 	print("types:", type(hf_dict), type(tg_dict) )
 	if isinstance(hf_dict, dict):
 		tested_keys = hf_dict.keys()
@@ -139,6 +139,9 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4):
 			val_mse = mse(tg_item, hf_item)
 			print("key:", k, "\nvalue mse:", val_mse, "\n")
 			if val_mse > error_threshold:
+				if print_values:
+					print(hf_item)
+					print(tg_item)
 				input()
 	elif isinstance(hf_dict, torch.Tensor):
 		error = mse(tg_dict.numpy(), hf_dict.detach().numpy())
