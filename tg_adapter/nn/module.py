@@ -152,6 +152,7 @@ class Module:
 			error_msgs):
 		# just because huggingface doesn't seem to understand that you REALLY SHOULD NOT BE USING PRIVATE METHODS
 		# goodness gracious
+		input(self.__dict__)
 		for k, v in self.__dict__.items():
 			if k in state_dict.keys():
 				v.tg.replace(state_dict[k].to(v.tg.device) ).realize()
