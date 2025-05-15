@@ -1,5 +1,5 @@
 from .tensor import AdapterTensor as T
-from .tensor import convert_to_tg
+from .tensor import convert_to_tg, convert_to_torch
 from .tensor import assert_same_device
 
 exp = lambda x: T( x.tg.exp() )
@@ -20,3 +20,10 @@ from .F import sigmoid
 
 
 from .F import cumprod
+
+def stack(tensors, dim = 0, out = None):
+	assert out is None
+	tbase = tensors[0].tg
+	trest = convert_to_tg( tuple(tensors[1:]) )
+	assert_same_device(tbase.device, trest)
+	return convert_to_torch(tbase.stack(*trest, dim = dim) )

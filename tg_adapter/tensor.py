@@ -58,16 +58,14 @@ class AdapterTensor:
 			self._tg = tinygrad.Tensor(data, device = tg_device, dtype = tgt)
 			#raise Exception(f"Tensor creationw with {type(data)} not yet implemented.")
 		self._dtype = dtype
+		assert not self._tg is None
 		self._rebuild_dtype()
 		assert is_dtype_supported(self._tg.dtype, self._tg.device)
 		maybe_realize(self._tg)
-		print(self.dtype, self._tg.dtype)
-		input("hmmmmm")
 	
 	def _rebuild_dtype(self):
-		print(self._dtype)
+		#from_tg = _get_type(self._tg.dtype)
 		self._dtype = get_type_from_tg(self._tg.dtype, self._tg.device.split(":")[0], self._dtype)
-		print(self._dtype)
 	
 	@property
 	def tg(self):
@@ -302,10 +300,6 @@ class AdapterTensor:
 		if len(inp) == 1:
 			inp = inp[0]
 		if isinstance(inp, AdapterTensor):
-			if inp.device != self.device:
-				print(self.shape, inp.shape)
-				print(self.device, inp.device)
-				input()
 			dev = _decide_device(self, inp)
 			# gotta do the inplace to
 			self.to_(dev)

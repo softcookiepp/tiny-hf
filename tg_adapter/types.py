@@ -139,19 +139,25 @@ def get_type_from_tg(tg_type, backend, other_type = None):
 			otk = other_type
 		else:
 			otk = other_type.key
-	if backend in TG_BACKEND_TYPE_MAP.keys():
+	
+	# actually try default first!
+	for k, v in TG_BACKEND_TYPE_MAP["DEFAULT"].items():
+		if v == tg_type:
+			type_key = k
+			if otk == k or otk == "" or otk is None:
+				break
+	
+	# then try overrides
+	if type_key is None and backend in TG_BACKEND_TYPE_MAP.keys():
 		for k, v in TG_BACKEND_TYPE_MAP[backend].items():
 			if v == tg_type:
 				type_key = k
 				if otk == k:
 					break
-	if type_key is None:
-		# wasn't in any of the overrides, should be in default map
-		for k, v in TG_BACKEND_TYPE_MAP["DEFAULT"].items():
-			if v == tg_type:
-				type_key = k
-				if otk == k:
-					break
+	elif type_key is None:
+		# no override, me made mistake :c
+		raise ValueError
+	
 	if type_key is None:
 		raise ValueError
 	return _types_map[type_key]
@@ -225,7 +231,7 @@ for dev in tinygrad.Device.get_available_devices():
 		
 		# substitute type should be good, assign it!
 		TG_BACKEND_TYPE_MAP[dev][ts] = TG_BACKEND_TYPE_MAP["DEFAULT"][ts_sub]
-
+print(TG_BACKEND_TYPE_MAP)
 
 def _get_type(attr):
 	attr = parse_alias(attr)

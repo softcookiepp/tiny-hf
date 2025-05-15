@@ -97,7 +97,11 @@ def _get_output(hf_out):
 def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4):
 	print("types:", type(hf_dict), type(tg_dict) )
 	if isinstance(hf_dict, dict):
-		assert list(hf_dict.keys() ) == list(tg_dict.keys() )
+		if list(hf_dict.keys() ) != list(tg_dict.keys() ):
+			print("keys don't match!")
+			print(hf_dict.keys() )
+			print(tg_dict.keys() )
+			raise ValueError
 		for k in hf_dict.keys():
 			hf_item = hf_dict[k]
 			tg_item = tg_dict[k]
@@ -466,14 +470,14 @@ def test_dtype_override():
 def main():
 	#test_dtype_override()
 	test_clip_text_model()
-	input("its gonna get dumb after this lool")
+	#input("its gonna get dumb after this lool")
 	test_stable_diffusion_pipeline()
 	
 	test_clip_tokenizer_fast()
 	test_clip_tokenizer()
 	
 	test_autoencoderkl()
-	input("anything beyond here will make me run out of memory :c")
+	#input("anything beyond here will make me run out of memory :c")
 	test_unet_2d_condition()
 	test_unet_2d()
 	test_named_parameters()

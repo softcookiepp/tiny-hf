@@ -267,7 +267,6 @@ class CLIPTextEmbeddings(nn.Module):
         self.position_embedding = nn.Embedding(config.max_position_embeddings, embed_dim)
 
         # position_ids (1, len position emb) is contiguous in memory and exported when serialized
-        #input(config.max_position_embeddings)
         self.register_buffer(
             "position_ids", torch.arange(config.max_position_embeddings).expand((1, -1)), persistent=False
         )
@@ -295,13 +294,9 @@ class CLIPTextEmbeddings(nn.Module):
 
         position_ids = position_ids.to(torch.float)
         inputs_embeds = inputs_embeds.to(torch.float)
-        print(torch.float.tgt("CPU"))
-        print(position_ids.dtype, inputs_embeds.to(torch.float).dtype)
-        input("ugh whyyy")
 
         position_embeddings = self.position_embedding(position_ids)
         embeddings = inputs_embeds + position_embeddings
-        input(embeddings.dtype)
         return embeddings
 
 
@@ -956,10 +951,6 @@ class CLIPTextTransformer(nn.Module):
 
         # CLIP's text model uses causal mask, prepare it here.
         # https://github.com/openai/CLIP/blob/cfcffb90e69f37bf2ff1e988237a0fbe41f33c04/clip/model.py#L324
-        print(input_ids.dtype)
-        print(position_ids)
-        print(hidden_states.dtype)
-        input("peepeepoopoo")
         causal_attention_mask = _create_4d_causal_attention_mask(
             input_shape, hidden_states.dtype, device="cpu"#hidden_states.device
         ).to(hidden_states.device)
@@ -995,9 +986,6 @@ class CLIPTextTransformer(nn.Module):
                 input_ids.to(dtype=torch.int, device=last_hidden_state.device).argmax(dim=-1),
             ]
             """
-            #print(type(input_ids) )
-            #print(type(last_hidden_state) )
-            #input(last_hidden_state.device)
             
             pooled_output = last_hidden_state[
                 torch.arange(last_hidden_state.shape[0], device=last_hidden_state.device).cast(torch.int),
@@ -1076,11 +1064,6 @@ class CLIPTextModel(CLIPPreTrainedModel):
         >>> pooled_output = outputs.pooler_output  # pooled (EOS token) states
         ```"""
         return_dict = return_dict if return_dict is not None else self.config.use_return_dict
-        for thing in (input_ids, attention_mask, position_ids):
-            if hasattr(thing, "dtype"):
-                print(thing.dtype)
-            else:
-                print(None)
 
         return self.text_model(
             input_ids=input_ids,
