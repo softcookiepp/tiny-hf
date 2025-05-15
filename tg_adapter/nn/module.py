@@ -140,6 +140,7 @@ class Module:
 		for k, v in self.__dict__.items():
 			if isinstance(v, Module):
 				modules[k] = v
+			# TODO: reimplement modulelist
 		return modules
 	
 	def _load_from_state_dict(self,
@@ -190,8 +191,9 @@ class Module:
 				for i in range(len(v) ):
 					new_prefix = ".".join( [prefix, k, str(i)] )
 		"""
-		#self._load_state_dict_recursive(state_dict)
-		#return [], []
+		# actually keep doing it this way, using tinygrad's method is going to screw shit up once we get into ModuleList s
+		self._load_state_dict_recursive(state_dict)
+		return [], []
 		
 		
 		#raise NotImplementedError
