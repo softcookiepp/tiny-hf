@@ -451,7 +451,7 @@ def test_stable_diffusion_pipeline():
 	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = hf_scheduler)
 	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = tg_scheduler)
 	
-	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 2}, hf_module, "__call__", tg_module, "__call__")
+	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 2, "safety_checker": None}, hf_module, "__call__", tg_module, "__call__")
 
 def test_ddim_scheduler():
 	raise NotImplementedError
