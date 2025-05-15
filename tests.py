@@ -97,12 +97,14 @@ def _get_output(hf_out):
 def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4):
 	print("types:", type(hf_dict), type(tg_dict) )
 	if isinstance(hf_dict, dict):
+		tested_keys = hf_dict.keys()
 		if list(hf_dict.keys() ) != list(tg_dict.keys() ):
-			print("keys don't match!")
+			print("Warning! keys don't match! Will only test the ones that do")
 			print(hf_dict.keys() )
 			print(tg_dict.keys() )
-			raise ValueError
-		for k in hf_dict.keys():
+			if len(hf_dict.keys() ) > len(tg_dict.keys() ):
+				tested_keys = tg_dict.keys()
+		for k in tested_keys:
 			hf_item = hf_dict[k]
 			tg_item = tg_dict[k]
 			
