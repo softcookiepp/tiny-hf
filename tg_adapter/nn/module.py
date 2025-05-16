@@ -192,8 +192,8 @@ class Module:
 					new_prefix = ".".join( [prefix, k, str(i)] )
 		"""
 		# actually keep doing it this way, using tinygrad's method is going to screw shit up once we get into ModuleList s
-		#self._load_state_dict_recursive(state_dict)
-		#return [], []
+		self._load_state_dict_recursive(state_dict)
+		return [], []
 		
 		
 		#raise NotImplementedError
