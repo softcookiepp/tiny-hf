@@ -2,8 +2,8 @@ from .module import Module
 from .layers import *
 from . import init
 from .losses import *
-#from .module_list import ModuleList
-from .container import ModuleList
+from .module_list import ModuleList
+#from .container import ModuleList
 
 # lets see if this runs lmao
 #from tinygrad.nn import *

@@ -251,7 +251,32 @@ class FromOriginalModelMixin:
 			raise ValueError(
 				"`from_single_file` cannot accept both `config` and `original_config` arguments. Please provide only one of these arguments"
 			)
-
+                                                                          | 0/7 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/external/development/tiny-hf/tiny_hf/diffusers/models/model_loading_utils.py", line 339, in load
+    load(child, prefix + name + ".", assign_to_params_buffers)
+  File "/external/development/tiny-hf/tiny_hf/diffusers/models/model_loading_utils.py", line 339, in load
+    load(child, prefix + name + ".", assign_to_params_buffers)
+  File "/external/development/tiny-hf/tiny_hf/diffusers/models/model_loading_utils.py", line 339, in load
+    load(child, prefix + name + ".", assign_to_params_buffers)
+  [Previous line repeated 991 more times]
+  File "/external/development/tiny-hf/tiny_hf/diffusers/models/model_loading_utils.py", line 332, in load
+    if assign_to_params_buffers and not is_torch_version(">=", "2.1"):
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/external/development/tiny-hf/tiny_hf/diffusers/utils/import_utils.py", line 591, in is_torch_version
+    return compare_versions(parse(_torch_version), operation, version)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/external/development/tiny-hf/tiny_hf/diffusers/utils/import_utils.py", line 577, in compare_versions
+    return operation(library_or_version, parse(requirement_version))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/me/external/miniconda3/envs/tinygrad/lib/python3.11/site-packages/packaging/version.py", line 56, in parse
+    return Version(version)
+           ^^^^^^^^^^^^^^^^
+  File "/home/me/external/miniconda3/envs/tinygrad/lib/python3.11/site-packages/packaging/version.py", line 205, in __init__
+    self._version = _Version(
+                    ^^^^^^^^^
+  File "<string>", line 1, in <lambda>
+RecursionError: maximum recursion depth exceeded while calling a P
 		force_download = kwargs.pop("force_download", False)
 		proxies = kwargs.pop("proxies", None)
 		token = kwargs.pop("token", None)
