@@ -177,7 +177,6 @@ def load_state_dict(
 				# will this work?
 				return tinygrad.nn.state.safe_load(open(checkpoint_file, "rb").read() )
 			else:
-				print("map_location", map_location)
 				# Ok, so we need to figure out how to do this...
 				# tinygrad has the safe_load
 				#c = safetensors.torch.load_file(checkpoint_file, device=map_location)
@@ -333,7 +332,6 @@ def _load_state_dict_into_model(
 		local_metadata["assign_to_params_buffers"] = assign_to_params_buffers
 		if assign_to_params_buffers and not is_torch_version(">=", "2.1"):
 			logger.info("You need to have torch>=2.1 in order to load the model with assign_to_params_buffers=True")
-		input(prefix)
 		args = (state_dict, prefix, local_metadata, True, [], [], error_msgs)
 		module._load_from_state_dict(*args)
 
