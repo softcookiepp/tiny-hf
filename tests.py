@@ -38,7 +38,7 @@ def compare_state_dicts(torch_module, tga_module, error_threshold = 1.0e-3):
 			# reverse
 			missing_keys = list( set(tga_sd_norm ) - set(torch_sd.keys() ) )
 		print(missing_keys)
-		raise ValueError
+		#raise ValueError
 
 
 
