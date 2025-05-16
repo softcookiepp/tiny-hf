@@ -458,6 +458,23 @@ def test_stable_diffusion_pipeline():
 	
 	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 2, "safety_checker": None}, hf_module, "__call__", tg_module, "__call__")
 
+def test_stable_diffusion_pipeline_manual():
+	# The from_pretrained method is broke, so lets just do it manually holy shit
+	from tiny_hf.diffusers.pipelines import StableDiffusionPipeline as tg_class
+	from tiny_hf.diffusers.schedulers import DDIMScheduler as tg_scheduler_class
+	
+	from diffusers.pipelines import StableDiffusionPipeline as hf_class
+	from diffusers.schedulers import DDIMScheduler as hf_scheduler_class
+	
+	hf_scheduler = hf_scheduler_class()
+	tg_scheduler = tg_scheduler_class()
+	
+	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = hf_scheduler)
+	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = tg_scheduler)
+	
+	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 2, "safety_checker": None}, hf_module, "__call__", tg_module, "__call__")
+
+
 def test_ddim_scheduler():
 	raise NotImplementedError
 

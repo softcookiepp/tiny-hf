@@ -328,20 +328,23 @@ def _load_state_dict_into_model(
 
 	# PyTorch's `_load_from_state_dict` does not copy parameters in a module's descendants
 	# so we need to apply the function recursively.
-	def load(module: tga.nn.Module, prefix: str = "", assign_to_params_buffers: bool = False):
-		local_metadata = {}
-		local_metadata["assign_to_params_buffers"] = assign_to_params_buffers
-		if assign_to_params_buffers and not is_torch_version(">=", "2.1"):
-			logger.info("You need to have torch>=2.1 in order to load the model with assign_to_params_buffers=True")
-		input(prefix)
-		args = (state_dict, prefix, local_metadata, True, [], [], error_msgs)
-		module._load_from_state_dict(*args)
+	if False:
+		def load(module: torch.nn.Module, prefix: str = "", assign_to_params_buffers: bool = False):
+			local_metadata = {}
+			local_metadata["assign_to_params_buffers"] = assign_to_params_buffers
+			if assign_to_params_buffers and not is_torch_version(">=", "2.1"):
+				logger.info("You need to have torch>=2.1 in order to load the model with assign_to_params_buffers=True")
+			args = (state_dict, prefix, local_metadata, True, [], [], error_msgs)
+			print(type(module) )
+			module._load_from_state_dict(*args)
 
-		for name, child in module._modules.items():
-			if child is not None:
-				load(child, prefix + name + ".", assign_to_params_buffers)
+			for name, child in module._modules.items():
+				if child is not None:
+					load(child, prefix + name + ".", assign_to_params_buffers)
 
-	load(model_to_load, assign_to_params_buffers=assign_to_params_buffers)
+		load(model_to_load, assign_to_params_buffers=assign_to_params_buffers)
+	else:
+		model_to_load.load_state_dict(state_dict)
 
 	return error_msgs
 
