@@ -278,7 +278,7 @@ class CLIPTextEmbeddings(nn.Module):
         inputs_embeds: Optional[torch.FloatTensor] = None,
     ) -> torch.Tensor:
         seq_length = input_ids.shape[-1] if input_ids is not None else inputs_embeds.shape[-2]
-        print( self.position_embedding.weight.shape )
+        print( input_ids )
         input(type(self.position_embedding) )
         max_position_embedding = self.position_embedding.weight.shape[0]
 
