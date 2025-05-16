@@ -14,9 +14,8 @@
 from typing import Any, Dict, Optional, Tuple, Union
 
 import numpy as np
-import numpy as np
 import tg_adapter as torch
-import from tg_adapter import nn, F	
+from tg_adapter import nn, F	
 
 from ...utils import deprecate, logging
 from ...utils.torch_utils import apply_freeu
