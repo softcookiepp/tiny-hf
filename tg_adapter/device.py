@@ -87,5 +87,8 @@ def tg_device_supports_longlong(dev: str) -> bool:
 	except tinygrad.device.CompileError:
 		del a
 		return False
+	except RuntimeError:
+		del a
+		return False
 	del a
 	return True

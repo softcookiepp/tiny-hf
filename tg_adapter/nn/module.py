@@ -141,6 +141,7 @@ class Module:
 		modules = {}
 		# immediate modules
 		for k, v in self.__dict__.items():
+			assert not v is self
 			if isinstance(v, Module):
 				modules[k] = v
 			# TODO: reimplement modulelist
