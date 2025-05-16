@@ -17,7 +17,7 @@ class Module:
 	def add_module(self, name: str, module = None):
 		assert not name in self.__dict__.keys() or self.__getattribute__(name) == module
 		self.__dict__[name] = module
-		self._refresh_modules()
+		
 		
 		# pretty sure this is just to check to see if it shits itself
 		self.__getattribute__(name)
@@ -159,7 +159,7 @@ class Module:
 		# goodness gracious
 		
 		# refresh modules just in case...
-		self._refresh_modules()
+		
 		
 		for k, v in self.__dict__.items():
 			full_key = prefix + k
@@ -192,7 +192,7 @@ class Module:
 	
 		
 	def load_state_dict(self, state_dict, strict = True, assign = False, prefix = ""):
-		self._refresh_modules()
+		
 		"""
 		for k, v in self.__dict__.items():
 			if isinstance(v, list):
@@ -261,7 +261,7 @@ class Module:
 					yield subk, subv
 	
 	def modules(self, remove_duplicate = True):
-		self._refresh_modules()
+		
 		for k, v in self.named_modules(remove_duplicate = remove_duplicate):
 			yield v
 	
