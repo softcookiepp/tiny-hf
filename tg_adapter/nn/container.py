@@ -292,17 +292,17 @@ class ModuleList(Module):
 	"""
 
 	__modules: Dict[str, Module]  # type: ignore[assignment]
+
+	def __init__(self, modules: Optional[Iterable[Module]] = None) -> None:
+		super().__init__()
+		if modules is not None:
+			self += modules
 	
 	@property
 	def _modules(self):
 		# because DUMB
 		input("getting self._modules")
 		return self.__modules
-
-	def __init__(self, modules: Optional[Iterable[Module]] = None) -> None:
-		super().__init__()
-		if modules is not None:
-			self += modules
 
 	def _get_abs_string_index(self, idx):
 		"""Get the absolute index for the list of modules."""
