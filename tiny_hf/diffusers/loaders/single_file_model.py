@@ -424,7 +424,6 @@ class FromOriginalModelMixin:
 				unexpected_keys = [k for k in unexpected_keys if re.search(pat, k) is None]
 
 		if len(unexpected_keys) > 0:
-			input("GAYER")
 			logger.warning(
 				f"Some weights of the model checkpoint were not used when initializing {cls.__name__}: \n {[', '.join(unexpected_keys)]}"
 			)
