@@ -291,7 +291,13 @@ class ModuleList(Module):
 				return x
 	"""
 
-	_modules: Dict[str, Module]  # type: ignore[assignment]
+	__modules: Dict[str, Module]  # type: ignore[assignment]
+	
+	@property
+	def _modules(self):
+		# because DUMB
+		input("getting self._modules")
+		return self.__modules
 
 	def __init__(self, modules: Optional[Iterable[Module]] = None) -> None:
 		super().__init__()

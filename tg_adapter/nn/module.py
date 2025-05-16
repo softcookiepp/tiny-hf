@@ -157,7 +157,6 @@ class Module:
 			full_key = prefix + k
 			if full_key in state_dict.keys():
 				v.tg.replace(state_dict[full_key].to(v.tg.device) ).realize()
-				print("initialized", full_key)
 	
 	def _load_elem_state_dict_recursive(self, k, v, state_dict, prefix):
 		if isinstance(v, Module):
