@@ -230,7 +230,10 @@ class AdapterTensor:
 			output = tg_self.__getattribute__(tg_attr)(*tg_args, **tg_kwargs)
 		return convert_to_torch(output)
 		
-	
+	@property
+	def data(self):
+		# lol
+		return self
 	
 	def __add__(self, other):
 		other = self._move_to_same_device(other)
