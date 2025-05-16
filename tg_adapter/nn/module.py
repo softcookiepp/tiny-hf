@@ -156,11 +156,12 @@ class Module:
 			missing_keys,
 			unexpected_keys,
 			error_msgs):
+				
 		# just because huggingface doesn't seem to understand that you REALLY SHOULD NOT BE USING PRIVATE METHODS
 		# goodness gracious
 		
 		# refresh modules just in case...
-		
+		raise NotImplementedError
 		
 		for k, v in self.__dict__.items():
 			full_key = prefix + k
@@ -178,11 +179,9 @@ class Module:
 		elif isinstance(v, AT):
 			new_key = prefix.strip(".")
 			if new_key in state_dict.keys():
-				tg_tensor = state_dict[new_key]
-				#print(v.dtype, v.tg.dtype)
+				sd_item = state_dict[new_key]
+				input(type(sd_item) )
 				v.tg.replace(state_dict[new_key].to(v.tg.device) ).realize()
-				#print(v.dtype, v.tg.dtype)
-				#input("looksie")
 			else:
 				# TODO: warn user or something, i forget
 				pass
