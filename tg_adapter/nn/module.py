@@ -212,16 +212,14 @@ class Module:
 		# actually keep doing it this way, using tinygrad's method is going to screw shit up once we get into ModuleList s
 		#self._load_state_dict_recursive(state_dict)
 		#return [], []
-		
-		
-		#raise NotImplementedError
-		#_disinherit(self)
-		# use conventional method, but replace all dict keys with x._tg lol
-		
+
 		# Ok so we actually have to check which parameters the provided state dict contains vs does not contain.
 		# How do we do that?
 		# It should
-		own_state_dict = self.state_dict()
+		missing_keys = []
+		unexpected_keys = []
+		
+		own_state_dict = get_state_dict(self)
 		
 		new_state_dict = {}
 		for k, v in state_dict.items():
@@ -231,10 +229,22 @@ class Module:
 			new_state_dict[k] = v
 		#input(new_state_dict.keys() )
 		
-		tinygrad.nn.state.load_state_dict(self, new_state_dict, strict = strict, verbose = True)
-		#_cb(self)
-		# expected and missing keys are not implemented yet
-		return [], []
+		own_sd = get_state_dict(self)
+		final_state_dict = {}
+		for k in own_sd.keys():
+			if k in new_state_dict.keys():
+				# key exists, transfer parameters
+				final_state_dict[k] = new_state_dict[k]
+			else:
+				# key is missing
+				missing_keys.append(k[0:len(k) - 4])
+		
+		for k in new_state_dict.keys():
+			if not k in own_sd.keys():
+				unexpected_keys.append(k[0:len(k) - 4] )
+		
+		tinygrad.nn.state.load_state_dict(self, final_state_dict, strict = strict, verbose = True)
+		return missing_keys, unexpected_keys
 		
 	
 	def state_dict(self, prefix = ""):
@@ -262,14 +272,11 @@ class Module:
 			pre_sd = get_state_dict(self)
 			post_sd = {}
 			for k, v in pre_sd.items():
-				print(k, type(v) )
 				# convert to regular state dict from tinygrad
 				new_key = k[0:len(k) - 4]
-				input(new_key)
 				new_v = AT(v)
-				
-				
-			raise NotImplementedError		
+				post_sd[new_key] = new_v
+			return post_sd
 	
 	def __repr__(self):
 		return f"{self.__class__}"
