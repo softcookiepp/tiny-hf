@@ -512,6 +512,7 @@ def test_dtype_override():
 def main():
 	#test_dtype_override()
 	test_clip_text_model()
+	test_unet_2d()
 	test_unet_2d_condition()
 	test_stable_diffusion_pipeline()
 	
@@ -521,7 +522,7 @@ def main():
 	test_autoencoderkl()
 	#input("anything beyond here will make me run out of memory :c")
 	
-	test_unet_2d()
+	
 	test_named_parameters()
 	test_named_modules()
 	test_autoencoderkl_from_single_file()
