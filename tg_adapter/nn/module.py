@@ -229,7 +229,7 @@ class Module:
 			k = k + "._tg"
 			#input(k)
 			new_state_dict[k] = v
-		input(new_state_dict.keys() )
+		#input(new_state_dict.keys() )
 		
 		tinygrad.nn.state.load_state_dict(self, new_state_dict, strict = strict, verbose = True)
 		#_cb(self)
