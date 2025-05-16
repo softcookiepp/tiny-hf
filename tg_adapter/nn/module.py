@@ -263,6 +263,12 @@ class Module:
 			post_sd = {}
 			for k, v in pre_sd.items():
 				print(k, type(v) )
+				# convert to regular state dict from tinygrad
+				new_key = k[0:len(k) - 4]
+				input(new_key)
+				new_v = AT(v)
+				
+				
 			raise NotImplementedError		
 	
 	def __repr__(self):
