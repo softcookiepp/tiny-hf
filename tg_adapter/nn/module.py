@@ -9,10 +9,10 @@ from ..tensor import convert_to_torch, _parse_to_arguments
 
 # adapter for https://pytorch.org/docs/stable/generated/torch.nn.Module.html
 class Module:
+	_modules = {}
 	def __init__(self, *args, **kwargs):
 		self._train = True
 		self._buffers = {}
-		self._modules = {}
 	
 	def add_module(self, name: str, module = None):
 		assert not name in self.__dict__.keys() or self.__getattribute__(name) == module
