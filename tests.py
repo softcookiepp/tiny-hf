@@ -371,8 +371,8 @@ def test_unet_2d_condition():
 	
 	a = make_test_data(2, 4, 32, 32)
 	
-	hf_module = hf_UNet2DConditionModel.from_pretrained("stablediffusionapi/anything-v5")
-	thf_module = thf_UNet2DConditionModel.from_pretrained("stablediffusionapi/anything-v5")
+	hf_module = hf_UNet2DConditionModel.from_pretrained("stablediffusionapi/anything-v5/unet")
+	thf_module = thf_UNet2DConditionModel.from_pretrained("stablediffusionapi/anything-v5/unet")
 	
 	args = (a, 3, None)
 	copy_state_dict(hf_module, thf_module)
