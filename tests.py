@@ -492,7 +492,7 @@ def test_dtype_override():
 def main():
 	#test_dtype_override()
 	test_clip_text_model()
-	#input("its gonna get dumb after this lool")
+	test_unet_2d_condition()
 	test_stable_diffusion_pipeline()
 	
 	test_clip_tokenizer_fast()
@@ -500,7 +500,7 @@ def main():
 	
 	test_autoencoderkl()
 	#input("anything beyond here will make me run out of memory :c")
-	test_unet_2d_condition()
+	
 	test_unet_2d()
 	test_named_parameters()
 	test_named_modules()
