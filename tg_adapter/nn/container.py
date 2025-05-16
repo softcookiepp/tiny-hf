@@ -297,7 +297,8 @@ class ModuleList(Module):
 		super().__init__()
 		if modules is not None:
 			self += modules
-
+		input(self._modules)
+		
 	def _get_abs_string_index(self, idx):
 		"""Get the absolute index for the list of modules."""
 		idx = operator.index(idx)
