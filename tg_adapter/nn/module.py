@@ -185,6 +185,7 @@ class Module:
 				elif isinstance(sd_item, AT):
 					raise NotImplementedError
 				else:
+					print(type(sd_item) )
 					raise ValueError
 			else:
 				# TODO: warn user or something, i forget
