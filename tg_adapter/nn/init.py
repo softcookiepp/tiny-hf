@@ -1,6 +1,8 @@
 import tinygrad
 from ..tensor import AdapterTensor as AT
+from ..tensor import convert_to_tg
 from ..device import parse_device, get_default_device
+
 
 def uniform_(tensor, a = 0.0, b = 1.0, generator = None):
 	tensor = tensor.tg
