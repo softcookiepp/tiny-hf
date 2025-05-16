@@ -284,8 +284,6 @@ class FromOriginalModelMixin:
 				revision=revision,
 				disable_mmap=disable_mmap,
 			)
-		#print("checkpoint type", type(checkpoint) )
-		#input( )
 		if quantization_config is not None:
 			raise NotImplementedError
 			#hf_quantizer = DiffusersAutoQuantizer.from_config(quantization_config)

@@ -381,6 +381,9 @@ class AdapterTensor:
 	def numel(self):
 		return np.prod(self.shape)
 	
+	def zero_(self):
+		self._tg[:] = 0
+	
 	def __len__(self):
 		if len(self.shape) == 0:
 			return 1

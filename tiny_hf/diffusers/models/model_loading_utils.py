@@ -183,7 +183,6 @@ def load_state_dict(
 				# Well, I found the problem!
 				
 				c = tinygrad.nn.state.safe_load(checkpoint_file)
-				#input(type(c[list(c.keys())[0]]) )
 				return c
 		elif file_extension == GGUF_FILE_EXTENSION:
 			raise NotImplementedError
