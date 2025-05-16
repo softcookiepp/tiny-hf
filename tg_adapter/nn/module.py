@@ -217,6 +217,12 @@ class Module:
 		#raise NotImplementedError
 		#_disinherit(self)
 		# use conventional method, but replace all dict keys with x._tg lol
+		
+		# Ok so we actually have to check which parameters the provided state dict contains vs does not contain.
+		# How do we do that?
+		# It should
+		own_state_dict = self.state_dict()
+		
 		new_state_dict = {}
 		for k, v in state_dict.items():
 			#print(k, v)
@@ -224,6 +230,7 @@ class Module:
 			#input(k)
 			new_state_dict[k] = v
 		input(new_state_dict.keys() )
+		
 		tinygrad.nn.state.load_state_dict(self, new_state_dict, strict = strict, verbose = True)
 		#_cb(self)
 		# expected and missing keys are not implemented yet
@@ -231,26 +238,32 @@ class Module:
 		
 	
 	def state_dict(self, prefix = ""):
-		#return _disinherit(tinygrad.nn.state.get_state_dict(self) )
-		# Can no longer do that, as AdapterTensor objects are no longer
-		# a subclass of tinygrad.Tensor.
-		# we will have to make a dedicated method...
-		state_dict = {}
-		for k, v in self.__dict__.items():
-			if isinstance(v, list):
-				for i in range(len(v) ):
-					l_prefix = ".".join([prefix, f"{k}.{i}"])
-					if isinstance(v[i], Module):
-						state_dict.update(v[i].state_dict(l_prefix) )
-					
-			elif isinstance(v, Module):
-				new_prefix = prefix + f".{k}"
-				state_dict.update(v.state_dict(new_prefix) )
-			elif isinstance(v, AT):
-				sd_key = ".".join([prefix, k]).strip(".")
-				state_dict[sd_key] = v
-		return state_dict
-				
+		if False:
+			#return _disinherit(tinygrad.nn.state.get_state_dict(self) )
+			# Can no longer do that, as AdapterTensor objects are no longer
+			# a subclass of tinygrad.Tensor.
+			# we will have to make a dedicated method...
+			state_dict = {}
+			for k, v in self.__dict__.items():
+				if isinstance(v, list):
+					for i in range(len(v) ):
+						l_prefix = ".".join([prefix, f"{k}.{i}"])
+						if isinstance(v[i], Module):
+							state_dict.update(v[i].state_dict(l_prefix) )
+						
+				elif isinstance(v, Module):
+					new_prefix = prefix + f".{k}"
+					state_dict.update(v.state_dict(new_prefix) )
+				elif isinstance(v, AT):
+					sd_key = ".".join([prefix, k]).strip(".")
+					state_dict[sd_key] = v
+			return state_dict
+		else:
+			pre_sd = get_state_dict(self)
+			post_sd = {}
+			for k, v in pre_sd.items():
+				print(k, type(v) )
+			raise NotImplementedError		
 	
 	def __repr__(self):
 		return f"{self.__class__}"
