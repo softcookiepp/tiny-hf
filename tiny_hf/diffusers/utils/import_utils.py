@@ -588,6 +588,7 @@ def is_torch_version(operation: str, version: str):
         version (`str`):
             A string version of PyTorch
     """
+    print(_torch_version, operation, version)
     input( compare_versions(parse(_torch_version), operation, version) )
     return compare_versions(parse(_torch_version), operation, version)
 
