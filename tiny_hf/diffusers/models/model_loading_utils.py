@@ -337,6 +337,7 @@ def _load_state_dict_into_model(
 
 		for name, child in module._modules.items():
 			if child is not None:
+				print(prefix)
 				load(child, prefix + name + ".", assign_to_params_buffers)
 
 	load(model_to_load, assign_to_params_buffers=assign_to_params_buffers)
