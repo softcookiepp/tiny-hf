@@ -9,6 +9,7 @@ from ..tensor import convert_to_torch, _parse_to_arguments
 
 # adapter for https://pytorch.org/docs/stable/generated/torch.nn.Module.html
 class Module:
+	__modules = {}
 	def __init__(self, *args, **kwargs):
 		self._train = True
 		self._buffers = {}
@@ -137,14 +138,14 @@ class Module:
 		raise NotImplementedError
 	@property
 	def _modules(self):
-		input( hasattr(self, "_modules") )
 		modules = {}
 		# immediate modules
 		for k, v in self.__dict__.items():
 			if isinstance(v, Module):
 				modules[k] = v
 			# TODO: reimplement modulelist
-		return modules
+		self.__modules.update(modules)
+		return self.__modules
 	
 	def _load_from_state_dict(self,
 			state_dict,
