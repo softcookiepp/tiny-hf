@@ -15,7 +15,7 @@ from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 import tg_adapter as torch
-import tg_adapter import nn
+from tg_adapter import nn
 import tg_adapter.utils.checkpoint
 
 from ...configuration_utils import ConfigMixin, register_to_config
