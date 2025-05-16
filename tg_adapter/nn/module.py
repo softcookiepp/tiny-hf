@@ -169,6 +169,7 @@ class Module:
 				if isinstance(sd_item, AT):
 					raise NotImplementedError
 				elif isinstance(sd_item, tinygrad.Tensor):
+					print(type(v), type(sd_item) )
 					v.tg.replace(state_dict[full_key].to(v.tg.device) ).realize()
 	
 	def _load_elem_state_dict_recursive(self, k, v, state_dict, prefix):
