@@ -180,8 +180,12 @@ class Module:
 			new_key = prefix.strip(".")
 			if new_key in state_dict.keys():
 				sd_item = state_dict[new_key]
-				input(type(sd_item) )
-				v.tg.replace(state_dict[new_key].to(v.tg.device) ).realize()
+				if isinstance(sd_item, tinygrad.Tensor):
+					v.tg.replace(state_dict[new_key].to(v.tg.device) ).realize()
+				elif isinstance(sd_item, AT):
+					raise NotImplementedError
+				else:
+					raise ValueError
 			else:
 				# TODO: warn user or something, i forget
 				pass
