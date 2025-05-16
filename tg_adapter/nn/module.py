@@ -165,7 +165,11 @@ class Module:
 		for k, v in self.__dict__.items():
 			full_key = prefix + k
 			if full_key in state_dict.keys():
-				v.tg.replace(state_dict[full_key].to(v.tg.device) ).realize()
+				sd_item = state_dict[full_key]
+				if isinstance(sd_item, AT):
+					raise NotImplementedError
+				elif isinstance(sd_item, tinygrad.Tensor):
+					v.tg.replace(state_dict[full_key].to(v.tg.device) ).realize()
 	
 	def _load_elem_state_dict_recursive(self, k, v, state_dict, prefix):
 		if isinstance(v, Module):
