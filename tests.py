@@ -19,6 +19,7 @@ def compare_state_dicts(torch_module, tga_module, error_threshold = 1.0e-3):
 		tga_sd = tga_module.state_dict()
 	except AttributeError:
 		tga_sd = get_state_dict(tga_module)
+	print(len(torch_sd), len(tga_sd) )
 	try:
 		assert len(tga_sd.keys() ) == len(torch_sd.keys() )
 		for torch_key, tga_key in zip(sorted(torch_sd.keys() ), sorted(tga_sd.keys() ) ):
