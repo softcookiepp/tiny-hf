@@ -234,6 +234,7 @@ class Module:
 		for k in own_sd.keys():
 			if k in new_state_dict.keys():
 				# key exists, transfer parameters
+				print(k)
 				final_state_dict[k] = new_state_dict[k]
 			else:
 				# key is missing
