@@ -12,10 +12,14 @@ class Module:
 	def __init__(self, *args, **kwargs):
 		self._train = True
 		self._buffers = {}
+		self._modules = {}
 	
 	def add_module(self, name: str, module = None):
 		assert not name in self.__dict__.keys() or self.__getattribute__(name) == module
 		self.__dict__[name] = module
+		self._refresh_modules()
+		
+		# pretty sure this is just to check to see if it shits itself
 		self.__getattribute__(name)
 	
 	def apply(self, fn):
@@ -133,15 +137,14 @@ class Module:
 	def forward(self, *args, **kwargs):
 		raise NotImplementedError
 		
-	@property
-	def _modules(self):
+	def _refresh_modules(self):
 		modules = {}
 		# immediate modules
 		for k, v in self.__dict__.items():
 			if isinstance(v, Module):
 				modules[k] = v
 			# TODO: reimplement modulelist
-		return modules
+		self._modules.update(modules)
 	
 	def _load_from_state_dict(self,
 			state_dict,
@@ -153,6 +156,10 @@ class Module:
 			error_msgs):
 		# just because huggingface doesn't seem to understand that you REALLY SHOULD NOT BE USING PRIVATE METHODS
 		# goodness gracious
+		
+		# refresh modules just in case...
+		self._refresh_modules()
+		
 		for k, v in self.__dict__.items():
 			full_key = prefix + k
 			if full_key in state_dict.keys():
@@ -184,6 +191,7 @@ class Module:
 	
 		
 	def load_state_dict(self, state_dict, strict = True, assign = False, prefix = ""):
+		self._refresh_modules()
 		"""
 		for k, v in self.__dict__.items():
 			if isinstance(v, list):
@@ -252,6 +260,7 @@ class Module:
 					yield subk, subv
 	
 	def modules(self, remove_duplicate = True):
+		self._refresh_modules()
 		for k, v in self.named_modules(remove_duplicate = remove_duplicate):
 			yield v
 	
