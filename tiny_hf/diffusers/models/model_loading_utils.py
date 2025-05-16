@@ -24,7 +24,9 @@ from typing import Dict, List, Optional, Union
 from zipfile import is_zipfile
 
 import safetensors
-import tg_adapter as torch
+
+import tinygrad
+import tg_adapter as tga
 from huggingface_hub import DDUFEntry
 from huggingface_hub.utils import EntryNotFoundError
 
@@ -62,7 +64,7 @@ if is_accelerate_available():
 
 # Adapted from `transformers` (see modeling_utils.py)
 def _determine_device_map(
-	model: torch.nn.Module, device_map, max_memory, torch_dtype, keep_in_fp32_modules=[], hf_quantizer=None
+	model: tga.nn.Module, device_map, max_memory, torch_dtype, keep_in_fp32_modules=[], hf_quantizer=None
 ):
 	if isinstance(device_map, str):
 		special_dtypes = {}
@@ -70,7 +72,7 @@ def _determine_device_map(
 			special_dtypes.update(hf_quantizer.get_special_dtypes_update(model, torch_dtype))
 		special_dtypes.update(
 			{
-				name: torch.float32
+				name: tga.float32
 				for name, _ in model.named_parameters()
 				if any(m in name for m in keep_in_fp32_modules)
 			}
@@ -134,7 +136,7 @@ def _fetch_remapped_cls_from_config(config, old_class):
 		return old_class
 
 
-def _determine_param_device(param_name: str, device_map: Optional[Dict[str, Union[int, str, torch.device]]]):
+def _determine_param_device(param_name: str, device_map: Optional[Dict[str, Union[int, str, tga.device]]]):
 	"""
 	Find the device of param_name from the device_map.
 	"""
@@ -155,7 +157,7 @@ def load_state_dict(
 	checkpoint_file: Union[str, os.PathLike],
 	dduf_entries: Optional[Dict[str, DDUFEntry]] = None,
 	disable_mmap: bool = False,
-	map_location: Union[str, torch.device] = "cpu",
+	map_location: Union[str, tga.device] = "cpu",
 ):
 	"""
 	Reads a checkpoint file, returning properly formatted errors if they arise.
@@ -171,12 +173,22 @@ def load_state_dict(
 				with dduf_entries[checkpoint_file].as_mmap() as mm:
 					return safetensors.torch.load(mm)
 			if disable_mmap:
-				return safetensors.torch.load(open(checkpoint_file, "rb").read())
+				#return safetensors.torch.load(open(checkpoint_file, "rb").read())
+				# will this work?
+				return tinygrad.nn.state.safe_load(open(checkpoint_file, "rb").read() )
 			else:
-				return safetensors.torch.load_file(checkpoint_file, device=map_location)
+				# Ok, so we need to figure out how to do this...
+				# tinygrad has the safe_load
+				#c = safetensors.torch.load_file(checkpoint_file, device=map_location)
+				# Well, I found the problem!
+				
+				c = tinygrad.nn.state.safe_load(checkpoint_file)
+				return c
 		elif file_extension == GGUF_FILE_EXTENSION:
+			raise NotImplementedError
 			return load_gguf_checkpoint(checkpoint_file)
 		else:
+			raise NotImplementedError
 			extra_args = {}
 			weights_only_kwarg = {"weights_only": True} if is_torch_version(">=", "1.13") else {}
 			# mmap can only be used with files serialized with zipfile-based format.
@@ -188,7 +200,7 @@ def load_state_dict(
 				and not disable_mmap
 			):
 				extra_args = {"mmap": True}
-			return torch.load(checkpoint_file, map_location=map_location, **weights_only_kwarg, **extra_args)
+			return tga.load(checkpoint_file, map_location=map_location, **weights_only_kwarg, **extra_args)
 	except Exception as e:
 		try:
 			with open(checkpoint_file) as f:
@@ -212,11 +224,11 @@ def load_state_dict(
 def load_model_dict_into_meta(
 	model,
 	state_dict: OrderedDict,
-	dtype: Optional[Union[str, torch.dtype]] = None,
+	dtype: Optional[Union[str, tga.dtype]] = None,
 	model_name_or_path: Optional[str] = None,
 	hf_quantizer: Optional[DiffusersQuantizer] = None,
 	keep_in_fp32_modules: Optional[List] = None,
-	device_map: Optional[Dict[str, Union[int, str, torch.device]]] = None,
+	device_map: Optional[Dict[str, Union[int, str, tga.device]]] = None,
 	unexpected_keys: Optional[List[str]] = None,
 	offload_folder: Optional[Union[str, os.PathLike]] = None,
 	offload_index: Optional[Dict] = None,
@@ -239,12 +251,12 @@ def load_model_dict_into_meta(
 		# We convert floating dtypes to the `dtype` passed. We also want to keep the buffers/params
 		# in int/uint/bool and not cast them.
 		# TODO: revisit cases when param.dtype == torch.float8_e4m3fn
-		if dtype is not None and torch.is_floating_point(param):
+		if dtype is not None and tga.is_floating_point(param):
 			if keep_in_fp32_modules is not None and any(
 				module_to_keep_in_fp32 in param_name.split(".") for module_to_keep_in_fp32 in keep_in_fp32_modules
 			):
-				param = param.to(torch.float32)
-				set_module_kwargs["dtype"] = torch.float32
+				param = param.to(tga.float32)
+				set_module_kwargs["dtype"] = tga.float32
 			# For quantizers have save weights using torch.float8_e4m3fn
 			elif hf_quantizer is not None and param.dtype == getattr(torch, "float8_e4m3fn", None):
 				pass
@@ -260,7 +272,7 @@ def load_model_dict_into_meta(
 		for split in splits:
 			old_param = getattr(old_param, split)
 
-		if not isinstance(old_param, (torch.nn.Parameter, torch.Tensor)):
+		if not isinstance(old_param, (tga.nn.Parameter, tga.Tensor)):
 			old_param = None
 
 		if old_param is not None:
@@ -520,7 +532,7 @@ def load_gguf_checkpoint(gguf_checkpoint_path, return_tensors=False):
 				)
 			)
 
-		weights = torch.from_numpy(tensor.data.copy())
+		weights = tga.from_numpy(tensor.data.copy() )
 		parsed_parameters[name] = GGUFParameter(weights, quant_type=quant_type) if is_gguf_quant else weights
 
 	return parsed_parameters
