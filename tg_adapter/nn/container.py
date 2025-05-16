@@ -294,6 +294,7 @@ class ModuleList(Module):
 	#_modules: Dict[str, Module]  # type: ignore[assignment]
 
 	def __init__(self, modules: Optional[Iterable[Module]] = None) -> None:
+		raise NotImplementedError
 		super().__init__()
 		if modules is not None:
 			self += modules
