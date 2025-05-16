@@ -38,9 +38,9 @@ def compare_state_dicts(torch_module, tga_module, error_threshold = 1.0e-3):
 
 		missing_keys_torch = list( set(tga_sd_norm ) - set(torch_sd.keys() ) )
 		
-		print("Keys missing from tga module:")
+		print("keys missing from tga module:")
 		print(missing_keys_tg)
-		print("\nKeys missing from torch module:")
+		print(f"\n{len(missing_keys_torch)} keys missing from torch module:")
 		print(missing_keys_torch)
 		input()
 		raise ValueError
