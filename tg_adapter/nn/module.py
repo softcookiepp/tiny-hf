@@ -135,6 +135,7 @@ class Module:
 		
 	@property
 	def _modules(self):
+		input( hasattr(self, "_modules")
 		modules = {}
 		# immediate modules
 		for k, v in self.__dict__.items():
