@@ -234,8 +234,11 @@ class Module:
 		for k in own_sd.keys():
 			if k in new_state_dict.keys():
 				# key exists, transfer parameters
-				print(k)
+				assert k in own_sd.keys() and k in new_state_dict.keys()
 				final_state_dict[k] = new_state_dict[k]
+				own_sd[k].replace(new_state_dict[k].to(own_sd[k].device))
+				own_sd[k].realize()
+				assert k in final_state_dict.keys()
 			else:
 				# key is missing
 				missing_keys.append(k[0:len(k) - 4])
@@ -244,7 +247,7 @@ class Module:
 			if not k in own_sd.keys():
 				unexpected_keys.append(k[0:len(k) - 4] )
 		
-		tinygrad.nn.state.load_state_dict(self, final_state_dict, strict = strict, verbose = True)
+		#tinygrad.nn.state.load_state_dict(self, final_state_dict, strict = strict, verbose = True)
 		return missing_keys, unexpected_keys
 		
 	
