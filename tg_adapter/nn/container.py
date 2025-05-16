@@ -291,7 +291,7 @@ class ModuleList(Module):
 				return x
 	"""
 
-	_modules: Dict[str, Module]  # type: ignore[assignment]
+	#_modules: Dict[str, Module]  # type: ignore[assignment]
 
 	def __init__(self, modules: Optional[Iterable[Module]] = None) -> None:
 		super().__init__()
