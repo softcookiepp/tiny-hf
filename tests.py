@@ -18,14 +18,23 @@ def compare_state_dicts(torch_module, tga_module, error_threshold = 1.0e-3):
 		tga_sd = tga_module.state_dict()
 	except AttributeError:
 		tga_sd = get_state_dict(tga_module)
-	assert len(tga_sd.keys() ) == len(torch_sd.keys() )
-	for torch_key, tga_key in zip(sorted(torch_sd.keys() ), sorted(tga_sd.keys() ) ):
-		#print(torch_key, tga_key)
-		assert torch_key == tga_key.replace("._tg", "")
-		key = torch_key
-		torch_value = torch_sd[key].detach().numpy()
-		tga_value = tga_sd[tga_key].numpy()
-		assert mse(torch_value, tga_value) < error_threshold
+	try:
+		assert len(tga_sd.keys() ) == len(torch_sd.keys() )
+		for torch_key, tga_key in zip(sorted(torch_sd.keys() ), sorted(tga_sd.keys() ) ):
+			#print(torch_key, tga_key)
+			assert torch_key == tga_key.replace("._tg", "")
+			key = torch_key
+			torch_value = torch_sd[key].detach().numpy()
+			tga_value = tga_sd[tga_key].numpy()
+			assert mse(torch_value, tga_value) < error_threshold
+	except AssertionError:
+		# keys are not equal
+		tga_sd_norm = []
+		for k in tga_sd.keys():
+			tga_sd_norm.append(k.replace("._tg", "") )
+		missing_keys = list(set(torch_sd.keys() ) - set(tga_sd_norm ) )
+		print(missing_keys)
+		raise ValueError
 
 
 
