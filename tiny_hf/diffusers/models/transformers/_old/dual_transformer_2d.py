@@ -13,7 +13,11 @@
 # limitations under the License.
 from typing import Optional
 
-from tg_adapter import nn
+#import torch
+#import torch.nn.functional as F
+#from torch import nn
+import tg_adapter as torch
+from tg_adapter import nn, F
 
 from ..modeling_outputs import Transformer2DModelOutput
 from .transformer_2d import Transformer2DModel

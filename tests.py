@@ -512,8 +512,8 @@ def test_dtype_override():
 @torch.no_grad()
 def main():
 	#test_dtype_override()
-	test_clip_text_model()
-	test_unet_2d()
+	#test_clip_text_model()
+	#test_unet_2d()
 	test_unet_2d_condition()
 	test_stable_diffusion_pipeline()
 	

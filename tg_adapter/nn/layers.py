@@ -205,13 +205,21 @@ class Linear(Module):
 		self.weight = tc.empty(  (out_features, in_features)  )
 		internal_init.uniform_(self.weight, a = -bound, b = bound)
 		#self.bias = AT( tinygrad.Tensor.uniform(out_features, low=-bound, high=bound) ) if bias else None
-		self.bias = tc.empty(  (out_features,)  )
-		internal_init.uniform_(self.bias, a = -bound, b = bound)
+		if bias:
+			self.bias = tc.empty(  (out_features,)  )
+			internal_init.uniform_(self.bias, a = -bound, b = bound)
+		else:
+			self.bias = None
+		
 	
 	def forward(self, x):
 		# disinherit stuff
 		x, weight, bias = convert_to_tg(x, self.weight, self.bias)
-		x = x.linear(weight.transpose(), bias)
+		try:
+			x = x.linear(weight.transpose(), bias)
+		except RuntimeError:
+			input("Ok, this is where it screwed up")
+			raise RuntimeError
 		return convert_to_torch(x)
 		
 class Embedding(Module):
