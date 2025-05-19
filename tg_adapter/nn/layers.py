@@ -216,7 +216,14 @@ class Linear(Module):
 		# disinherit stuff
 		x, weight, bias = convert_to_tg(x, self.weight, self.bias)
 		try:
+			in_features = weight.shape[1]
+			out_features = weight.shape[0]
+			out_shape = list(x.shape)
+			out_shape[-1] = out_features
+			out_shape = tuple(out_shape)
+			x = x.reshape(-1, in_features)
 			x = x.linear(weight.transpose(), bias)
+			x = x.reshape(out_shape)
 		except RuntimeError:
 			input("Ok, this is where it screwed up")
 			raise RuntimeError
