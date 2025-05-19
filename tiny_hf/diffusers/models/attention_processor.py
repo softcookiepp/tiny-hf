@@ -236,7 +236,6 @@ class Attention(nn.Module):
 			raise ValueError(
 				f"unknown cross_attention_norm: {cross_attention_norm}. Should be None, 'layer_norm' or 'group_norm'"
 			)
-		print("bias:", bias)
 		self.to_q = nn.Linear(query_dim, self.inner_dim, bias=bias)
 
 		if not self.only_cross_attention:
