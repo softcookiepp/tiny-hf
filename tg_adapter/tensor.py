@@ -156,7 +156,6 @@ class AdapterTensor:
 					dtype = self.dtype
 				supported_type_old_device = self.dtype.tgt(self.device.tg)
 				supported_type_new_device = dtype.tgt(device.tg)
-				#print(device.tg, dtype.tgt(self.device.tg), supported_type_old_device, supported_type_new_device)
 				# ok, so the problem is that it works one way, but not the other :c
 				
 				new_tensor = new_tensor.cast(supported_type_old_device).realize()
@@ -397,10 +396,8 @@ def assert_same_device(dev, *inp):
 	if len(inp) == 1:
 		inp = inp[0]
 	if isinstance(inp, AdapterTensor):
-		#print(dev, inp.tg.device)
 		assert dev == inp.tg.device
 	if isinstance(inp, tinygrad.Tensor):
-		#print(dev, inp.device)
 		assert dev == inp.device
 	elif isinstance(inp, list) or isinstance(inp, tuple):
 		for item in inp:
