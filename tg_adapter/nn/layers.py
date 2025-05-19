@@ -216,7 +216,7 @@ class Linear(Module):
 		# disinherit stuff
 		x, weight, bias = convert_to_tg(x, self.weight, self.bias)
 		try:
-			x = x.linear(weight, bias)
+			x = x.linear(weight.transpose(), bias)
 		except RuntimeError:
 			input("Ok, this is where it screwed up")
 			raise RuntimeError
