@@ -374,11 +374,12 @@ def test_unet_2d_condition():
 	from tiny_hf.diffusers import UNet2DConditionModel as thf_UNet2DConditionModel
 	
 	a = make_test_data(2, 4, 32, 32)
+	emb = make_test_data(2, 2, 320)
 	
 	hf_module = hf_UNet2DConditionModel()
 	thf_module = thf_UNet2DConditionModel()
 	
-	args = (a, 3, None)
+	args = (a, 3, emb)
 	copy_state_dict(hf_module, thf_module)
 	test_hf_reimplementation(args, {}, hf_module, "__call__", thf_module, "__call__")
 
