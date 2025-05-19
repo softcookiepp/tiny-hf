@@ -223,7 +223,7 @@ class Linear(Module):
 			out_shape = tuple(out_shape)
 			x = x.reshape(-1, in_features)
 			x = x.linear(weight.transpose(), bias)
-			print(out_shape)
+			print(x.shape, out_shape)
 			x = x.reshape(out_shape)
 		except RuntimeError:
 			input("Ok, this is where it screwed up")
