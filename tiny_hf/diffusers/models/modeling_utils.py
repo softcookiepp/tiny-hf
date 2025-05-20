@@ -1396,10 +1396,6 @@ class ModelMixin(tga.nn.Module, PushToHubMixin):
 	):
 		model_state_dict = model.state_dict()
 		expected_keys = list(model_state_dict.keys())
-		print(expected_keys)
-		print(loaded_keys)
-		print(len(expected_keys), len(loaded_keys) )
-		input("why the different?")
 		missing_keys = list(set(expected_keys) - set(loaded_keys))
 		if hf_quantizer is not None:
 			missing_keys = hf_quantizer.update_missing_keys(model, missing_keys, prefix="")
@@ -1516,7 +1512,6 @@ class ModelMixin(tga.nn.Module, PushToHubMixin):
 			raise RuntimeError(f"Error(s) in loading state_dict for {model.__class__.__name__}:\n\t{error_msg}")
 
 		if len(unexpected_keys) > 0:
-			input("GAYYYY")
 			logger.warning(
 				f"Some weights of the model checkpoint at {pretrained_model_name_or_path} were not used when initializing {cls.__name__}: \n {[', '.join(unexpected_keys)]}"
 			)

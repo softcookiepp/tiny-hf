@@ -109,7 +109,6 @@ class ResnetBlockCondNorm2D(nn.Module):
 			self.norm1 = SpatialNorm(in_channels, temb_channels)
 		else:
 			raise ValueError(f" unsupported time_embedding_norm: {self.time_embedding_norm}")
-		input(type(self.norm1) )
 		self.conv1 = nn.Conv2d(in_channels, out_channels, kernel_size=3, stride=1, padding=1)
 
 		if self.time_embedding_norm == "ada_group":  # ada_group

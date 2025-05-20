@@ -251,7 +251,6 @@ class Embedding(Module):
 		weight = weight.to(working_device)
 		
 		arange, idx, vals = self.arange.expand(big_shp), idx.reshape(idx.shape+(1, 1)).expand(big_shp), weight.expand(big_shp)
-		#input(arange.dtype)
 		
 		# (-1, 77, 49408, -1)
 		inter = (arange == idx).realize()
