@@ -8,6 +8,7 @@ import tinygrad
 from tinygrad.nn.state import torch_load, safe_load, load_state_dict, get_state_dict
 import safetensors
 from safetensors.torch import save_file
+from PIL import Image
 
 from tg_adapter import F
 import tg_adapter
@@ -137,6 +138,9 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 					for hf_item2, tg_item2 in zip(hf_item, tg_item):
 						_test_key_errors(hf_item2, tg_item2, error_threshold, display_images)
 					continue
+			elif isinstance(hf_item, Image):
+				input("gots us an image!")
+				hf_item, tg_item = np.array(hf_item), np.array(tg_item)
 			elif isinstance(hf_item, torch.Tensor):
 				hf_item = hf_item.detach().numpy()
 			elif hasattr(hf_item, "__dict__"):
