@@ -15,7 +15,7 @@ import importlib
 import inspect
 import os
 
-import torch
+import tg_adapter as torch
 from huggingface_hub import snapshot_download
 from huggingface_hub.utils import LocalEntryNotFoundError, validate_hf_hub_args
 from packaging import version
@@ -88,7 +88,7 @@ def load_single_file_sub_model(
 		and transformers_version >= version.parse("4.20.0")
 	)
 
-	diffusers_module = importlib.import_module(__name__.split(".")[0])
+	diffusers_module = importlib.import_module(__name__.split(".")[1])
 	is_diffusers_single_file_model = issubclass(class_obj, diffusers_module.FromOriginalModelMixin)
 	is_diffusers_model = issubclass(class_obj, diffusers_module.ModelMixin)
 	is_diffusers_scheduler = issubclass(class_obj, diffusers_module.SchedulerMixin)
