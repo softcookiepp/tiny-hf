@@ -115,7 +115,7 @@ def _get_output(hf_out):
 	#_print_dict_types(hf_out)
 	raise ValueError
 	
-def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = True):
+def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = True, display_images = False):
 	print("types:", type(hf_dict), type(tg_dict) )
 	if isinstance(hf_dict, dict):
 		tested_keys = hf_dict.keys()
@@ -135,15 +135,15 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 				except TypeError:
 					# list of other sort, non-numerical
 					for hf_item2, tg_item2 in zip(hf_item, tg_item):
-						_test_key_errors(hf_item2, tg_item2, error_threshold)
+						_test_key_errors(hf_item2, tg_item2, error_threshold, display_images)
 					continue
 			elif isinstance(hf_item, torch.Tensor):
 				hf_item = hf_item.detach().numpy()
 			elif hasattr(hf_item, "__dict__"):
-				_test_key_errors(hf_item.__dict__, tg_item.__dict__, error_threshold)
+				_test_key_errors(hf_item.__dict__, tg_item.__dict__, error_threshold, display_images)
 				continue
 			elif isinstance(hf_item, dict):
-				_test_key_errors(hf_item, tg_item, error_threshold)
+				_test_key_errors(hf_item, tg_item, error_threshold, display_images)
 				continue
 			elif hf_item is None and tg_item is None:
 				continue
@@ -164,6 +164,9 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 					print(hf_item)
 					print(tg_item)
 				input()
+			elif display_images:
+				pass
+				#raise NotImplementedError
 	elif isinstance(hf_dict, torch.Tensor):
 		error = mse(tg_dict.numpy(), hf_dict.detach().numpy())
 		print("single tensor output mse:", error, "\n")
@@ -176,7 +179,7 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 			#print(tiny_out.numpy() - torch_out.detach().numpy())
 			input()
 	elif isinstance(hf_dict, object) and hasattr(hf_dict, "__dict__"):
-		_test_key_errors(hf_dict.__dict__, tg_dict.__dict__, error_threshold)
+		_test_key_errors(hf_dict.__dict__, tg_dict.__dict__, error_threshold, display_images)
 		
 def _process_arg(arg, device):
 	if isinstance(arg, np.ndarray):
@@ -188,7 +191,7 @@ def _process_arg(arg, device):
 		# append as is
 		return arg, arg
 
-def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_method, error_threshold = 1.0e-4, device = "cuda:0"):
+def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_method, error_threshold = 1.0e-4, device = "cuda:0", display_images = False):
 	if not (isinstance(args, tuple) or isinstance(args, list) ):
 		args = (args,)
 	if hasattr(my_module, "to"):
@@ -232,7 +235,7 @@ def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_m
 	
 	#inspect_state_dict_devices(my_module)
 	print(f"MSE for {hf_module} and {my_module}:")
-	_test_key_errors(torch_out, tiny_out)
+	_test_key_errors(torch_out, tiny_out, display_images = display_images)
 	
 	del torch_out
 	del tiny_out
@@ -517,9 +520,9 @@ def main():
 	#test_dtype_override()
 	#test_clip_text_model()
 	#test_unet_2d()
-	test_unet_2d_condition()
+	#test_unet_2d_condition()
 	test_stable_diffusion_pipeline()
-	
+	input("look at the outputs first you dumdum")
 	test_clip_tokenizer_fast()
 	test_clip_tokenizer()
 	
