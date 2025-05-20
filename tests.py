@@ -252,10 +252,10 @@ def test_autoencoderkl():
 	args = (3,)
 	
 	# from single file is broken atm
-	hf_module = diffusers.AutoencoderKL()#.from_single_file("https://huggingface.co/stabilityai/sd-vae-ft-mse-original/blob/main/vae-ft-mse-840000-ema-pruned.safetensors" )
-	my_module = thf.diffusers.models.autoencoders.AutoencoderKL()
+	hf_module = diffusers.AutoencoderKL.from_single_file("https://huggingface.co/stabilityai/sd-vae-ft-mse-original/blob/main/vae-ft-mse-840000-ema-pruned.safetensors" )
+	my_module = thf.diffusers.models.autoencoders.AutoencoderKL.from_single_file("https://huggingface.co/stabilityai/sd-vae-ft-mse-original/blob/main/vae-ft-mse-840000-ema-pruned.safetensors" )
 	
-	copy_state_dict(hf_module, my_module)
+	#copy_state_dict(hf_module, my_module)
 	test_hf_reimplementation(inp, {}, hf_module, "__call__", my_module, "__call__")
 
 def test_state_dict():
@@ -525,12 +525,13 @@ def main():
 	#test_clip_text_model()
 	#test_unet_2d()
 	#test_unet_2d_condition()
+	test_autoencoderkl()
 	test_stable_diffusion_pipeline()
 	input("look at the outputs first you dumdum")
 	test_clip_tokenizer_fast()
 	test_clip_tokenizer()
 	
-	test_autoencoderkl()
+	
 	#input("anything beyond here will make me run out of memory :c")
 	
 	
