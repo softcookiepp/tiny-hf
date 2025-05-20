@@ -3,9 +3,9 @@ import warnings
 from typing import Callable, List, Optional, Union
 
 import numpy as np
-import torch
+import tg_adapter as torch
 from packaging import version
-from transformers import CLIPImageProcessor, CLIPTextModel, CLIPTokenizer, CLIPVisionModelWithProjection
+from ....transformers import CLIPImageProcessor, CLIPTextModel, CLIPTokenizer, CLIPVisionModelWithProjection
 
 from ...configuration_utils import FrozenDict
 from ...image_processor import PipelineImageInput

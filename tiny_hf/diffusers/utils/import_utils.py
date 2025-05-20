@@ -202,7 +202,8 @@ def is_torch_available():
 
 
 def is_torch_xla_available():
-    return _torch_xla_available
+    return False
+    #return _torch_xla_available
 
 
 def is_torch_npu_available():
