@@ -113,6 +113,8 @@ def load_single_file_sub_model(
 		)
 
 	elif is_transformers_model and is_clip_model_in_single_file(class_obj, checkpoint):
+		print("peepee")
+		input(class_obj)
 		loaded_sub_model = create_diffusers_clip_model_from_ldm(
 			class_obj,
 			checkpoint=checkpoint,
