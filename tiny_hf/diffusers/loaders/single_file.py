@@ -15,7 +15,7 @@ import importlib
 import inspect
 import os
 
-import tg_adapter as torch
+import torch
 from huggingface_hub import snapshot_download
 from huggingface_hub.utils import LocalEntryNotFoundError, validate_hf_hub_args
 from packaging import version
