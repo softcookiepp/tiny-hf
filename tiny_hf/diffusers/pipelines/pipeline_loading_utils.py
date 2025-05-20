@@ -417,7 +417,7 @@ def _get_pipeline_class(
 	if class_obj.__name__ != "DiffusionPipeline":
 		return class_obj
 
-	diffusers_module = importlib.import_module(class_obj.__module__.split(".")[0])
+	diffusers_module = importlib.import_module(class_obj.__module__.split(".")[1])
 	class_name = class_name or config["_class_name"]
 	if not class_name:
 		raise ValueError(
@@ -811,6 +811,7 @@ def _fetch_class_library_tuple(module):
 	# import it here to avoid circular import
 	#diffusers_module = importlib.import_module(__name__.split(".")[0])
 	diffusers_module = importlib.import_module(".".join(__name__.split(".")[0:2]) )
+	print(diffusers_module)
 	pipelines = getattr(diffusers_module, "pipelines")
 
 	# register the config from the original module, not the dynamo compiled one

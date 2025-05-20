@@ -182,7 +182,7 @@ def load_single_file_sub_model(
 
 
 def _map_component_types_to_config_dict(component_types):
-	diffusers_module = importlib.import_module(__name__.split(".")[0])
+	diffusers_module = importlib.import_module(__name__.split(".")[1])
 	config_dict = {}
 	component_types.pop("self", None)
 

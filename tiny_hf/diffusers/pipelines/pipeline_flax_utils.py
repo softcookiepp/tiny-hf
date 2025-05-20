@@ -377,7 +377,7 @@ class FlaxDiffusionPipeline(ConfigMixin, PushToHubMixin):
         if cls != FlaxDiffusionPipeline:
             pipeline_class = cls
         else:
-            diffusers_module = importlib.import_module(cls.__module__.split(".")[0])
+            diffusers_module = importlib.import_module(cls.__module__.split(".")[1])
             class_name = (
                 config_dict["_class_name"]
                 if config_dict["_class_name"].startswith("Flax")

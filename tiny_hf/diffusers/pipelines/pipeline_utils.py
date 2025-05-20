@@ -1578,7 +1578,7 @@ class DiffusionPipeline(ConfigMixin, PushToHubMixin):
 			cls_name = cls.load_config(os.path.join(cached_folder, "model_index.json")).get("_class_name", None)
 			cls_name = cls_name[4:] if isinstance(cls_name, str) and cls_name.startswith("Flax") else cls_name
 
-			diffusers_module = importlib.import_module(__name__.split(".")[0])
+			diffusers_module = importlib.import_module(__name__.split(".")[1])
 			pipeline_class = getattr(diffusers_module, cls_name, None) if isinstance(cls_name, str) else None
 
 			if pipeline_class is not None and pipeline_class._load_connected_pipes:
