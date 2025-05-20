@@ -27,7 +27,7 @@ if TYPE_CHECKING:
     from transformers import PreTrainedModel, PreTrainedTokenizer
 
 if is_transformers_available():
-    from transformers import PreTrainedModel, PreTrainedTokenizer
+    from ...transformers import PreTrainedModel, PreTrainedTokenizer
 
 if is_safetensors_available():
     import safetensors.torch

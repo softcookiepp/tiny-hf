@@ -214,7 +214,8 @@ def is_flax_available():
 
 
 def is_transformers_available():
-    return _transformers_available
+    #return _transformers_available
+    return True
 
 
 def is_inflect_available():
