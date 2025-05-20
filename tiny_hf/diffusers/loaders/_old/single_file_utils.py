@@ -22,7 +22,10 @@ from io import BytesIO
 from urllib.parse import urlparse
 
 import requests
-import tg_adapter as torch
+#import torch
+import tinygrad
+from tinygrad import dtypes
+import tg_adapter as tga
 import yaml
 
 from ..models.modeling_utils import load_state_dict
@@ -47,10 +50,10 @@ from ..utils import (
 from ..utils.hub_utils import _get_model_file
 
 
-if True or is_transformers_available():
-	from ...transformers import AutoImageProcessor
+if is_transformers_available():
+	from transformers import AutoImageProcessor
 
-if False and is_accelerate_available():
+if is_accelerate_available():
 	from accelerate import init_empty_weights
 
 	from ..models.modeling_utils import load_model_dict_into_meta
@@ -421,7 +424,7 @@ def load_single_file_checkpoint(
 			revision=revision,
 			user_agent=user_agent,
 		)
-
+	
 	checkpoint = load_state_dict(pretrained_model_link_or_path, disable_mmap=disable_mmap)
 
 	# some checkpoints contain the model state dict under a "state_dict" key
@@ -1598,7 +1601,7 @@ def create_diffusers_clip_model_from_ldm(
 		and checkpoint[CHECKPOINT_KEY_NAMES["clip_sd3"]].shape[-1] == position_embedding_dim
 	):
 		diffusers_format_checkpoint = convert_ldm_clip_checkpoint(checkpoint, "text_encoders.clip_l.transformer.")
-		diffusers_format_checkpoint["text_projection.weight"] = torch.eye(position_embedding_dim)
+		diffusers_format_checkpoint["text_projection.weight"] = tinygrad.Tensor.eye(position_embedding_dim)
 
 	elif is_open_clip_model(checkpoint):
 		prefix = "cond_stage_model.model."
@@ -1821,13 +1824,13 @@ def _legacy_load_safety_checker(local_files_only, torch_dtype):
 # while in diffusers it split into scale, shift. Here we swap the linear projection weights in order to be able to use diffusers implementation
 def swap_scale_shift(weight, dim):
 	shift, scale = weight.chunk(2, dim=0)
-	new_weight = torch.cat([scale, shift], dim=0)
+	new_weight = tga.cat([scale, shift], dim=0)
 	return new_weight
 
 
 def swap_proj_gate(weight):
 	proj, gate = weight.chunk(2, dim=0)
-	new_weight = torch.cat([gate, proj], dim=0)
+	new_weight = tga.cat([gate, proj], dim=0)
 	return new_weight
 
 
@@ -1888,32 +1891,32 @@ def convert_sd3_transformer_checkpoint_to_diffusers(checkpoint, **kwargs):
 	# Transformer blocks 🎸.
 	for i in range(num_layers):
 		# Q, K, V
-		sample_q, sample_k, sample_v = torch.chunk(
+		sample_q, sample_k, sample_v = tga.chunk(
 			checkpoint.pop(f"joint_blocks.{i}.x_block.attn.qkv.weight"), 3, dim=0
 		)
-		context_q, context_k, context_v = torch.chunk(
+		context_q, context_k, context_v = tga.chunk(
 			checkpoint.pop(f"joint_blocks.{i}.context_block.attn.qkv.weight"), 3, dim=0
 		)
-		sample_q_bias, sample_k_bias, sample_v_bias = torch.chunk(
+		sample_q_bias, sample_k_bias, sample_v_bias = tga.chunk(
 			checkpoint.pop(f"joint_blocks.{i}.x_block.attn.qkv.bias"), 3, dim=0
 		)
-		context_q_bias, context_k_bias, context_v_bias = torch.chunk(
+		context_q_bias, context_k_bias, context_v_bias = tga.chunk(
 			checkpoint.pop(f"joint_blocks.{i}.context_block.attn.qkv.bias"), 3, dim=0
 		)
 
-		converted_state_dict[f"transformer_blocks.{i}.attn.to_q.weight"] = torch.cat([sample_q])
-		converted_state_dict[f"transformer_blocks.{i}.attn.to_q.bias"] = torch.cat([sample_q_bias])
-		converted_state_dict[f"transformer_blocks.{i}.attn.to_k.weight"] = torch.cat([sample_k])
-		converted_state_dict[f"transformer_blocks.{i}.attn.to_k.bias"] = torch.cat([sample_k_bias])
-		converted_state_dict[f"transformer_blocks.{i}.attn.to_v.weight"] = torch.cat([sample_v])
-		converted_state_dict[f"transformer_blocks.{i}.attn.to_v.bias"] = torch.cat([sample_v_bias])
+		converted_state_dict[f"transformer_blocks.{i}.attn.to_q.weight"] = tga.cat([sample_q])
+		converted_state_dict[f"transformer_blocks.{i}.attn.to_q.bias"] = tga.cat([sample_q_bias])
+		converted_state_dict[f"transformer_blocks.{i}.attn.to_k.weight"] = tga.cat([sample_k])
+		converted_state_dict[f"transformer_blocks.{i}.attn.to_k.bias"] = tga.cat([sample_k_bias])
+		converted_state_dict[f"transformer_blocks.{i}.attn.to_v.weight"] = tga.cat([sample_v])
+		converted_state_dict[f"transformer_blocks.{i}.attn.to_v.bias"] = tga.cat([sample_v_bias])
 
-		converted_state_dict[f"transformer_blocks.{i}.attn.add_q_proj.weight"] = torch.cat([context_q])
-		converted_state_dict[f"transformer_blocks.{i}.attn.add_q_proj.bias"] = torch.cat([context_q_bias])
-		converted_state_dict[f"transformer_blocks.{i}.attn.add_k_proj.weight"] = torch.cat([context_k])
-		converted_state_dict[f"transformer_blocks.{i}.attn.add_k_proj.bias"] = torch.cat([context_k_bias])
-		converted_state_dict[f"transformer_blocks.{i}.attn.add_v_proj.weight"] = torch.cat([context_v])
-		converted_state_dict[f"transformer_blocks.{i}.attn.add_v_proj.bias"] = torch.cat([context_v_bias])
+		converted_state_dict[f"transformer_blocks.{i}.attn.add_q_proj.weight"] = tga.cat([context_q])
+		converted_state_dict[f"transformer_blocks.{i}.attn.add_q_proj.bias"] = tga.cat([context_q_bias])
+		converted_state_dict[f"transformer_blocks.{i}.attn.add_k_proj.weight"] = tga.cat([context_k])
+		converted_state_dict[f"transformer_blocks.{i}.attn.add_k_proj.bias"] = tga.cat([context_k_bias])
+		converted_state_dict[f"transformer_blocks.{i}.attn.add_v_proj.weight"] = tga.cat([context_v])
+		converted_state_dict[f"transformer_blocks.{i}.attn.add_v_proj.bias"] = tga.cat([context_v_bias])
 
 		# qk norm
 		if has_qk_norm:
@@ -1947,18 +1950,18 @@ def convert_sd3_transformer_checkpoint_to_diffusers(checkpoint, **kwargs):
 
 		if i in dual_attention_layers:
 			# Q, K, V
-			sample_q2, sample_k2, sample_v2 = torch.chunk(
+			sample_q2, sample_k2, sample_v2 = tga.chunk(
 				checkpoint.pop(f"joint_blocks.{i}.x_block.attn2.qkv.weight"), 3, dim=0
 			)
-			sample_q2_bias, sample_k2_bias, sample_v2_bias = torch.chunk(
+			sample_q2_bias, sample_k2_bias, sample_v2_bias = tga.chunk(
 				checkpoint.pop(f"joint_blocks.{i}.x_block.attn2.qkv.bias"), 3, dim=0
 			)
-			converted_state_dict[f"transformer_blocks.{i}.attn2.to_q.weight"] = torch.cat([sample_q2])
-			converted_state_dict[f"transformer_blocks.{i}.attn2.to_q.bias"] = torch.cat([sample_q2_bias])
-			converted_state_dict[f"transformer_blocks.{i}.attn2.to_k.weight"] = torch.cat([sample_k2])
-			converted_state_dict[f"transformer_blocks.{i}.attn2.to_k.bias"] = torch.cat([sample_k2_bias])
-			converted_state_dict[f"transformer_blocks.{i}.attn2.to_v.weight"] = torch.cat([sample_v2])
-			converted_state_dict[f"transformer_blocks.{i}.attn2.to_v.bias"] = torch.cat([sample_v2_bias])
+			converted_state_dict[f"transformer_blocks.{i}.attn2.to_q.weight"] = tga.cat([sample_q2])
+			converted_state_dict[f"transformer_blocks.{i}.attn2.to_q.bias"] = tga.cat([sample_q2_bias])
+			converted_state_dict[f"transformer_blocks.{i}.attn2.to_k.weight"] = tga.cat([sample_k2])
+			converted_state_dict[f"transformer_blocks.{i}.attn2.to_k.bias"] = tga.cat([sample_k2_bias])
+			converted_state_dict[f"transformer_blocks.{i}.attn2.to_v.weight"] = tga.cat([sample_v2])
+			converted_state_dict[f"transformer_blocks.{i}.attn2.to_v.bias"] = tga.cat([sample_v2_bias])
 
 			# qk norm
 			if has_qk_norm:
@@ -2088,7 +2091,7 @@ def create_diffusers_t5_model_from_checkpoint(
 	else:
 		model.load_state_dict(diffusers_format_checkpoint)
 
-	use_keep_in_fp32_modules = (cls._keep_in_fp32_modules is not None) and (torch_dtype == torch.float16)
+	use_keep_in_fp32_modules = (cls._keep_in_fp32_modules is not None) and (torch_dtype == dtypes.float16)
 	if use_keep_in_fp32_modules:
 		keep_in_fp32_modules = model._keep_in_fp32_modules
 	else:
@@ -2097,8 +2100,8 @@ def create_diffusers_t5_model_from_checkpoint(
 	if keep_in_fp32_modules is not None:
 		for name, param in model.named_parameters():
 			if any(module_to_keep_in_fp32 in name.split(".") for module_to_keep_in_fp32 in keep_in_fp32_modules):
-				# param = param.to(torch.float32) does not work here as only in the local scope.
-				param.data = param.data.to(torch.float32)
+				# param = param.to(dtypes.float32) does not work here as only in the local scope.
+				param.data = param.data.to(dtypes.float32)
 
 	return model
 
@@ -2139,7 +2142,7 @@ def convert_flux_transformer_checkpoint_to_diffusers(checkpoint, **kwargs):
 	# while in diffusers it split into scale, shift. Here we swap the linear projection weights in order to be able to use diffusers implementation
 	def swap_scale_shift(weight):
 		shift, scale = weight.chunk(2, dim=0)
-		new_weight = torch.cat([scale, shift], dim=0)
+		new_weight = tga.cat([scale, shift], dim=0)
 		return new_weight
 
 	## time_text_embed.timestep_embedder <-  time_in
@@ -2203,28 +2206,28 @@ def convert_flux_transformer_checkpoint_to_diffusers(checkpoint, **kwargs):
 			f"double_blocks.{i}.txt_mod.lin.bias"
 		)
 		# Q, K, V
-		sample_q, sample_k, sample_v = torch.chunk(checkpoint.pop(f"double_blocks.{i}.img_attn.qkv.weight"), 3, dim=0)
-		context_q, context_k, context_v = torch.chunk(
+		sample_q, sample_k, sample_v = tga.chunk(checkpoint.pop(f"double_blocks.{i}.img_attn.qkv.weight"), 3, dim=0)
+		context_q, context_k, context_v = tga.chunk(
 			checkpoint.pop(f"double_blocks.{i}.txt_attn.qkv.weight"), 3, dim=0
 		)
-		sample_q_bias, sample_k_bias, sample_v_bias = torch.chunk(
+		sample_q_bias, sample_k_bias, sample_v_bias = tga.chunk(
 			checkpoint.pop(f"double_blocks.{i}.img_attn.qkv.bias"), 3, dim=0
 		)
-		context_q_bias, context_k_bias, context_v_bias = torch.chunk(
+		context_q_bias, context_k_bias, context_v_bias = tga.chunk(
 			checkpoint.pop(f"double_blocks.{i}.txt_attn.qkv.bias"), 3, dim=0
 		)
-		converted_state_dict[f"{block_prefix}attn.to_q.weight"] = torch.cat([sample_q])
-		converted_state_dict[f"{block_prefix}attn.to_q.bias"] = torch.cat([sample_q_bias])
-		converted_state_dict[f"{block_prefix}attn.to_k.weight"] = torch.cat([sample_k])
-		converted_state_dict[f"{block_prefix}attn.to_k.bias"] = torch.cat([sample_k_bias])
-		converted_state_dict[f"{block_prefix}attn.to_v.weight"] = torch.cat([sample_v])
-		converted_state_dict[f"{block_prefix}attn.to_v.bias"] = torch.cat([sample_v_bias])
-		converted_state_dict[f"{block_prefix}attn.add_q_proj.weight"] = torch.cat([context_q])
-		converted_state_dict[f"{block_prefix}attn.add_q_proj.bias"] = torch.cat([context_q_bias])
-		converted_state_dict[f"{block_prefix}attn.add_k_proj.weight"] = torch.cat([context_k])
-		converted_state_dict[f"{block_prefix}attn.add_k_proj.bias"] = torch.cat([context_k_bias])
-		converted_state_dict[f"{block_prefix}attn.add_v_proj.weight"] = torch.cat([context_v])
-		converted_state_dict[f"{block_prefix}attn.add_v_proj.bias"] = torch.cat([context_v_bias])
+		converted_state_dict[f"{block_prefix}attn.to_q.weight"] = tga.cat([sample_q])
+		converted_state_dict[f"{block_prefix}attn.to_q.bias"] = tga.cat([sample_q_bias])
+		converted_state_dict[f"{block_prefix}attn.to_k.weight"] = tga.cat([sample_k])
+		converted_state_dict[f"{block_prefix}attn.to_k.bias"] = tga.cat([sample_k_bias])
+		converted_state_dict[f"{block_prefix}attn.to_v.weight"] = tga.cat([sample_v])
+		converted_state_dict[f"{block_prefix}attn.to_v.bias"] = tga.cat([sample_v_bias])
+		converted_state_dict[f"{block_prefix}attn.add_q_proj.weight"] = tga.cat([context_q])
+		converted_state_dict[f"{block_prefix}attn.add_q_proj.bias"] = tga.cat([context_q_bias])
+		converted_state_dict[f"{block_prefix}attn.add_k_proj.weight"] = tga.cat([context_k])
+		converted_state_dict[f"{block_prefix}attn.add_k_proj.bias"] = tga.cat([context_k_bias])
+		converted_state_dict[f"{block_prefix}attn.add_v_proj.weight"] = tga.cat([context_v])
+		converted_state_dict[f"{block_prefix}attn.add_v_proj.bias"] = tga.cat([context_v_bias])
 		# qk_norm
 		converted_state_dict[f"{block_prefix}attn.norm_q.weight"] = checkpoint.pop(
 			f"double_blocks.{i}.img_attn.norm.query_norm.scale"
@@ -2288,14 +2291,14 @@ def convert_flux_transformer_checkpoint_to_diffusers(checkpoint, **kwargs):
 		q_bias, k_bias, v_bias, mlp_bias = torch.split(
 			checkpoint.pop(f"single_blocks.{i}.linear1.bias"), split_size, dim=0
 		)
-		converted_state_dict[f"{block_prefix}attn.to_q.weight"] = torch.cat([q])
-		converted_state_dict[f"{block_prefix}attn.to_q.bias"] = torch.cat([q_bias])
-		converted_state_dict[f"{block_prefix}attn.to_k.weight"] = torch.cat([k])
-		converted_state_dict[f"{block_prefix}attn.to_k.bias"] = torch.cat([k_bias])
-		converted_state_dict[f"{block_prefix}attn.to_v.weight"] = torch.cat([v])
-		converted_state_dict[f"{block_prefix}attn.to_v.bias"] = torch.cat([v_bias])
-		converted_state_dict[f"{block_prefix}proj_mlp.weight"] = torch.cat([mlp])
-		converted_state_dict[f"{block_prefix}proj_mlp.bias"] = torch.cat([mlp_bias])
+		converted_state_dict[f"{block_prefix}attn.to_q.weight"] = tga.cat([q])
+		converted_state_dict[f"{block_prefix}attn.to_q.bias"] = tga.cat([q_bias])
+		converted_state_dict[f"{block_prefix}attn.to_k.weight"] = tga.cat([k])
+		converted_state_dict[f"{block_prefix}attn.to_k.bias"] = tga.cat([k_bias])
+		converted_state_dict[f"{block_prefix}attn.to_v.weight"] = tga.cat([v])
+		converted_state_dict[f"{block_prefix}attn.to_v.bias"] = tga.cat([v_bias])
+		converted_state_dict[f"{block_prefix}proj_mlp.weight"] = tga.cat([mlp])
+		converted_state_dict[f"{block_prefix}proj_mlp.bias"] = tga.cat([mlp_bias])
 		# qk norm
 		converted_state_dict[f"{block_prefix}attn.norm_q.weight"] = checkpoint.pop(
 			f"single_blocks.{i}.norm.query_norm.scale"
@@ -2432,7 +2435,7 @@ def convert_autoencoder_dc_checkpoint_to_diffusers(checkpoint, **kwargs):
 
 	def remap_qkv_(key: str, state_dict):
 		qkv = state_dict.pop(key)
-		q, k, v = torch.chunk(qkv, 3, dim=0)
+		q, k, v = tga.chunk(qkv, 3, dim=0)
 		parent_module, _, _ = key.rpartition(".qkv.conv.weight")
 		state_dict[f"{parent_module}.to_q.weight"] = q.squeeze()
 		state_dict[f"{parent_module}.to_k.weight"] = k.squeeze()
@@ -2617,7 +2620,7 @@ def convert_hunyuan_video_transformer_to_diffusers(checkpoint, **kwargs):
 	def remap_norm_scale_shift_(key, state_dict):
 		weight = state_dict.pop(key)
 		shift, scale = weight.chunk(2, dim=0)
-		new_weight = torch.cat([scale, shift], dim=0)
+		new_weight = tga.cat([scale, shift], dim=0)
 		state_dict[key.replace("final_layer.adaLN_modulation.1", "norm_out.linear")] = new_weight
 
 	def remap_txt_in_(key, state_dict):
@@ -2947,10 +2950,10 @@ def convert_sana_transformer_to_diffusers(checkpoint, **kwargs):
 		)
 
 		# Self-Attention
-		sample_q, sample_k, sample_v = torch.chunk(checkpoint.pop(f"blocks.{i}.attn.qkv.weight"), 3, dim=0)
-		converted_state_dict[f"transformer_blocks.{i}.attn1.to_q.weight"] = torch.cat([sample_q])
-		converted_state_dict[f"transformer_blocks.{i}.attn1.to_k.weight"] = torch.cat([sample_k])
-		converted_state_dict[f"transformer_blocks.{i}.attn1.to_v.weight"] = torch.cat([sample_v])
+		sample_q, sample_k, sample_v = tga.chunk(checkpoint.pop(f"blocks.{i}.attn.qkv.weight"), 3, dim=0)
+		converted_state_dict[f"transformer_blocks.{i}.attn1.to_q.weight"] = tga.cat([sample_q])
+		converted_state_dict[f"transformer_blocks.{i}.attn1.to_k.weight"] = tga.cat([sample_k])
+		converted_state_dict[f"transformer_blocks.{i}.attn1.to_v.weight"] = tga.cat([sample_v])
 
 		# Output Projections
 		converted_state_dict[f"transformer_blocks.{i}.attn1.to_out.0.weight"] = checkpoint.pop(
@@ -2968,10 +2971,10 @@ def convert_sana_transformer_to_diffusers(checkpoint, **kwargs):
 			f"blocks.{i}.cross_attn.q_linear.bias"
 		)
 
-		linear_sample_k, linear_sample_v = torch.chunk(
+		linear_sample_k, linear_sample_v = tga.chunk(
 			checkpoint.pop(f"blocks.{i}.cross_attn.kv_linear.weight"), 2, dim=0
 		)
-		linear_sample_k_bias, linear_sample_v_bias = torch.chunk(
+		linear_sample_k_bias, linear_sample_v_bias = tga.chunk(
 			checkpoint.pop(f"blocks.{i}.cross_attn.kv_linear.bias"), 2, dim=0
 		)
 		converted_state_dict[f"transformer_blocks.{i}.attn2.to_k.weight"] = linear_sample_k
