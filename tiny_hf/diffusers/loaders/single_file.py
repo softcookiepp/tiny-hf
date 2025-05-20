@@ -508,6 +508,7 @@ class FromSingleFileMixin:
 
 			else:
 				try:
+					print(class_name)
 					loaded_sub_model = load_single_file_sub_model(
 						library_name=library_name,
 						class_name=class_name,
