@@ -92,7 +92,7 @@ def load_single_file_sub_model(
 	is_diffusers_single_file_model = issubclass(class_obj, diffusers_module.FromOriginalModelMixin)
 	is_diffusers_model = issubclass(class_obj, diffusers_module.ModelMixin)
 	is_diffusers_scheduler = issubclass(class_obj, diffusers_module.SchedulerMixin)
-
+	input(class_obj)
 	if is_diffusers_single_file_model:
 		load_method = getattr(class_obj, "from_single_file")
 
