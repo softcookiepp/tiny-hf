@@ -64,6 +64,7 @@ def load_single_file_sub_model(
 	disable_mmap=False,
 	**kwargs,
 ):
+	print(library_name, class_name)
 	if is_pipeline_module:
 		pipeline_module = getattr(pipelines, library_name)
 		class_obj = getattr(pipeline_module, class_name)
