@@ -163,7 +163,7 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 			
 			val_mse = mse(tg_item, hf_item)
 			print("key:", k, "\nvalue mse:", val_mse, "\n")
-			if val_mse > error_threshold:
+			if val_mse > error_threshold or val_mse == np.nan:
 				if print_values:
 					print(hf_item)
 					print(tg_item)

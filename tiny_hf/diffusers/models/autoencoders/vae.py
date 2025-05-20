@@ -91,8 +91,7 @@ class Encoder(nn.Module):
 		norm_num_groups: int = 32,
 		act_fn: str = "silu",
 		double_z: bool = True,
-		#mid_block_add_attention=True,
-		mid_block_add_attention=False,
+		mid_block_add_attention=True,
 	):
 		super().__init__()
 		self.layers_per_block = layers_per_block

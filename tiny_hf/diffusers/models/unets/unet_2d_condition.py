@@ -1207,7 +1207,6 @@ class UNet2DConditionModel(
 
 		down_block_res_samples = (sample,)
 		for downsample_block in self.down_blocks:
-			print("peepeepoopoo")
 			if hasattr(downsample_block, "has_cross_attention") and downsample_block.has_cross_attention:
 				# For t2i-adapter CrossAttnDownBlock2D
 				additional_residuals = {}
