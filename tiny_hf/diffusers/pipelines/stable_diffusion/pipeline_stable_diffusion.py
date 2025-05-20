@@ -14,6 +14,7 @@
 import inspect
 from typing import Any, Callable, Dict, List, Optional, Union
 
+import numpy as np
 import tg_adapter as torch
 from packaging import version
 from ....transformers import CLIPImageProcessor, CLIPTextModel, CLIPTokenizer, CLIPVisionModelWithProjection
@@ -1050,6 +1051,7 @@ class StableDiffusionPipeline(
 					added_cond_kwargs=added_cond_kwargs,
 					return_dict=False,
 				)[0]
+				input(np.isnan(np.sum(noise_pred.numpy() ) ) )
 
 				# perform guidance
 				if self.do_classifier_free_guidance:
