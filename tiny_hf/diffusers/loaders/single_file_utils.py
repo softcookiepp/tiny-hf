@@ -1580,6 +1580,7 @@ def create_diffusers_clip_model_from_ldm(
 	model_config = cls.config_class.from_pretrained(**config, subfolder=subfolder, local_files_only=local_files_only)
 	ctx = init_empty_weights if is_accelerate_available() else nullcontext
 	with ctx():
+		input(type(cls) )
 		model = cls(model_config)
 
 	position_embedding_dim = model.text_model.embeddings.position_embedding.weight.shape[-1]

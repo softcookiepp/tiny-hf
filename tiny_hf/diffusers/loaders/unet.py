@@ -18,9 +18,7 @@ from pathlib import Path
 from typing import Callable, Dict, Union
 
 import safetensors
-#import torch
 import tg_adapter as torch
-#import torch.nn.functional as F
 from tg_adapter import F
 from huggingface_hub.utils import validate_hf_hub_args
 

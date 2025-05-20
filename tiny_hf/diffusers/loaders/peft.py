@@ -19,7 +19,6 @@ from pathlib import Path
 from typing import Dict, List, Optional, Union
 
 import safetensors
-#import torch
 import tinygrad
 import tg_adapter as torch
 
