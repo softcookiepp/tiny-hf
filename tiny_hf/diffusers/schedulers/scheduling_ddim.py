@@ -413,22 +413,20 @@ class DDIMScheduler(SchedulerMixin, ConfigMixin):
 		# "predicted x_0" of formula (12) from https://arxiv.org/pdf/2010.02502.pdf
 		if self.config.prediction_type == "epsilon":
 			pred_original_sample = (sample - beta_prod_t ** (0.5) * model_output) / alpha_prod_t ** (0.5)
-			input(np.isnan(pred_original_sample.numpy() ) )
 			pred_epsilon = model_output
 		elif self.config.prediction_type == "sample":
 			pred_original_sample = model_output
 			pred_epsilon = (sample - alpha_prod_t ** (0.5) * pred_original_sample) / beta_prod_t ** (0.5)
-			input(np.isnan(pred_epsilon.numpy() ) )
 		elif self.config.prediction_type == "v_prediction":
 			pred_original_sample = (alpha_prod_t**0.5) * sample - (beta_prod_t**0.5) * model_output
 			pred_epsilon = (alpha_prod_t**0.5) * model_output + (beta_prod_t**0.5) * sample
-			input(np.isnan(pred_original_sample.numpy() ) )
-			input(np.isnan(pred_epsilon.numpy() ) )
 		else:
 			raise ValueError(
 				f"prediction_type given as {self.config.prediction_type} must be one of `epsilon`, `sample`, or"
 				" `v_prediction`"
 			)
+		input(np.isnan(np.sum(pred_original_sample.numpy() ) ) )
+		input(np.isnan(np.sum(pred_epsilon.numpy() ) ) )
 
 		# 4. Clip or threshold "predicted x_0"
 		if self.config.thresholding:
@@ -437,7 +435,7 @@ class DDIMScheduler(SchedulerMixin, ConfigMixin):
 			pred_original_sample = pred_original_sample.clamp(
 				-self.config.clip_sample_range, self.config.clip_sample_range
 			)
-		input(np.isnan(pred_original_sample.numpy() ) )
+		input(np.isnan(np.sum(pred_original_sample.numpy() ) ) )
 
 		# 5. compute variance: "sigma_t(η)" -> see formula (16)
 		# σ_t = sqrt((1 − α_t−1)/(1 − α_t)) * sqrt(1 − α_t/α_t−1)
@@ -447,13 +445,13 @@ class DDIMScheduler(SchedulerMixin, ConfigMixin):
 		if use_clipped_model_output:
 			# the pred_epsilon is always re-derived from the clipped x_0 in Glide
 			pred_epsilon = (sample - alpha_prod_t ** (0.5) * pred_original_sample) / beta_prod_t ** (0.5)
-
+		input(np.isnan(np.sum(pred_epsilon.numpy() ) ) )
 		# 6. compute "direction pointing to x_t" of formula (12) from https://arxiv.org/pdf/2010.02502.pdf
 		pred_sample_direction = (1 - alpha_prod_t_prev - std_dev_t**2) ** (0.5) * pred_epsilon
-
+		input(np.isnan(np.sum(pred_sample_direction.numpy() ) ) )
 		# 7. compute x_t without "random noise" of formula (12) from https://arxiv.org/pdf/2010.02502.pdf
 		prev_sample = alpha_prod_t_prev ** (0.5) * pred_original_sample + pred_sample_direction
-
+		input(np.isnan(np.sum(prev_sample.numpy() ) ) )
 		if eta > 0:
 			if variance_noise is not None and generator is not None:
 				raise ValueError(
@@ -466,9 +464,9 @@ class DDIMScheduler(SchedulerMixin, ConfigMixin):
 					model_output.shape, generator=generator, device=model_output.device, dtype=model_output.dtype
 				)
 			variance = std_dev_t * variance_noise
-
+			input(np.isnan(np.sum(variance.numpy() ) ) )
 			prev_sample = prev_sample + variance
-
+		input(np.isnan(np.sum(prev_sample.numpy() ) ) )
 		if not return_dict:
 			return (
 				prev_sample,
