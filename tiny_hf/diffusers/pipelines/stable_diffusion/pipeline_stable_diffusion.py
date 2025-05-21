@@ -1066,7 +1066,7 @@ class StableDiffusionPipeline(
 
 				# compute the previous noisy sample x_t -> x_t-1
 				latents = self.scheduler.step(noise_pred, t, latents, **extra_step_kwargs, return_dict=False)[0]
-
+				print(np.isnan(np.sum(latents.numpy() ) ) )
 				if callback_on_step_end is not None:
 					callback_kwargs = {}
 					for k in callback_on_step_end_tensor_inputs:
@@ -1083,7 +1083,7 @@ class StableDiffusionPipeline(
 					if callback is not None and i % callback_steps == 0:
 						step_idx = i // getattr(self.scheduler, "order", 1)
 						callback(step_idx, t, latents)
-
+				input("any NaNnies?")
 				if XLA_AVAILABLE:
 					xm.mark_step()
 
