@@ -69,7 +69,15 @@ def copy_state_dict(torch_module, tga_module):
 	#load_state_dict(tga_module, state_dict)
 	compare_state_dicts(torch_module, tga_module)
 	os.remove(fn)
-	
+
+def normalize(v):
+	norm = np.linalg.norm(v)
+	if norm == 0: 
+		return v
+	return v / norm
+
+def norm_mse(predicted, actual):
+	return mse( normalize(predicted), normalize(actual) )
 
 def mse(predicted, actual):
 	return np.sum( (predicted - actual)**2 )
@@ -120,7 +128,7 @@ def _get_output(hf_out):
 	#_print_dict_types(hf_out)
 	raise ValueError
 	
-def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = True, display_images = False):
+def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = True, display_images = False, error_function = mse):
 	print("types:", type(hf_dict), type(tg_dict) )
 	if isinstance(hf_dict, dict):
 		tested_keys = hf_dict.keys()
@@ -140,7 +148,7 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 				except TypeError:
 					# list of other sort, non-numerical
 					for hf_item2, tg_item2 in zip(hf_item, tg_item):
-						_test_key_errors(hf_item2, tg_item2, error_threshold, display_images)
+						_test_key_errors(hf_item2, tg_item2, error_threshold, display_images, error_function)
 					continue
 			elif isinstance(hf_item, Image.Image):
 				input("gots us an image!")
@@ -148,10 +156,10 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 			elif isinstance(hf_item, torch.Tensor):
 				hf_item = hf_item.detach().numpy()
 			elif hasattr(hf_item, "__dict__"):
-				_test_key_errors(hf_item.__dict__, tg_item.__dict__, error_threshold, display_images)
+				_test_key_errors(hf_item.__dict__, tg_item.__dict__, error_threshold, display_images, error_function)
 				continue
 			elif isinstance(hf_item, dict):
-				_test_key_errors(hf_item, tg_item, error_threshold, display_images)
+				_test_key_errors(hf_item, tg_item, error_threshold, display_images, error_function)
 				continue
 			elif hf_item is None and tg_item is None:
 				continue
@@ -188,7 +196,7 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 			#print(tiny_out.numpy() - torch_out.detach().numpy())
 			input()
 	elif isinstance(hf_dict, object) and hasattr(hf_dict, "__dict__"):
-		_test_key_errors(hf_dict.__dict__, tg_dict.__dict__, error_threshold, display_images)
+		_test_key_errors(hf_dict.__dict__, tg_dict.__dict__, error_threshold, display_images, error_function)
 		
 def _process_arg(arg, device):
 	if isinstance(arg, np.ndarray):
@@ -244,7 +252,7 @@ def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_m
 	
 	#inspect_state_dict_devices(my_module)
 	print(f"MSE for {hf_module} and {my_module}:")
-	_test_key_errors(torch_out, tiny_out, display_images = display_images)
+	_test_key_errors(torch_out, tiny_out, display_images = display_images, error_function = mse)
 	
 	del torch_out
 	del tiny_out
@@ -499,7 +507,7 @@ def test_stable_diffusion_pipeline():
 	
 	# oh wait, i realized its impossible for them to have the same output image if the initial latents are not the same
 	latents = make_test_data(1, 4, 64, 64)
-	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 1, "safety_checker": None, "output_type": "latent", "latents": latents}, hf_module, "__call__", tg_module, "__call__")
+	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 1, "safety_checker": None, "latents": latents}, hf_module, "__call__", tg_module, "__call__")
 
 def test_stable_diffusion_pipeline_manual():
 	# The from_pretrained method is broke, so lets just do it manually holy shit
