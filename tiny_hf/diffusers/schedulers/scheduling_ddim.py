@@ -413,6 +413,10 @@ class DDIMScheduler(SchedulerMixin, ConfigMixin):
 		# "predicted x_0" of formula (12) from https://arxiv.org/pdf/2010.02502.pdf
 		if self.config.prediction_type == "epsilon":
 			pred_original_sample = (sample - beta_prod_t ** (0.5) * model_output) / alpha_prod_t ** (0.5)
+			print(sample)
+			print(beta_prod_t)
+			print(model_output.numpy() )
+			print(alpha_prod_t)
 			print(pred_original_sample.numpy() )
 			input(np.isnan(np.sum(pred_original_sample.numpy() ) ) )
 			pred_epsilon = model_output
