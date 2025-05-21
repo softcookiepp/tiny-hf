@@ -78,7 +78,7 @@ def make_test_data(*shape):
 	return np.random.randn(np.prod(shape) ).reshape(shape).astype(np.float32)
 
 
-def test_function(*inp_args, torch_function, tinygrad_function, error_threshold = 1.0e-4):
+def test_function(inp_args, torch_function, tinygrad_function, error_threshold = 1.0e-4):
 	torch_inp = []
 	tiny_inp = []
 	for inp in inp_args:
@@ -95,6 +95,10 @@ def test_function(*inp_args, torch_function, tinygrad_function, error_threshold 
 	error = mse(tiny_out.numpy(), torch_out.numpy())
 	print(f"MSE for {torch_function.__name__} and {tinygrad_function.__name__}:",  error)
 	if error > error_threshold:
+		
+		print(torch_out.numpy() )
+		print( tiny_out.numpy() )
+		print(torch_out.shape, tiny_out.shape)
 		input()
 
 def test_interpolate():
@@ -424,6 +428,11 @@ def test_functional_linear():
 	weight = make_test_data(5, 10)
 	test_function(inp, weight, torchF.linear, tinyF.linear)
 
+def test_cumprod():
+	from tg_adapter import F as tinyF
+	inp = np.arange(5*4).reshape(5, 4).astype(np.float32)
+	test_function( (inp, 0), torch.cumprod, tinyF.cumprod)
+
 def test_clip_tokenizer():
 	from tiny_hf.transformers import CLIPTokenizer as tg_module
 	from transformers import CLIPTokenizer as hf_module
@@ -482,8 +491,13 @@ def test_stable_diffusion_pipeline():
 	from diffusers.schedulers import DDIMScheduler as hf_scheduler_class
 	
 	hf_scheduler = hf_scheduler_class()
+	print(hf_scheduler.alphas)
+	print(hf_scheduler.betas)
 	print(hf_scheduler.alphas_cumprod)
 	tg_scheduler = tg_scheduler_class()
+	print("\n")
+	print(tg_scheduler.alphas.numpy() )
+	print(tg_scheduler.betas.numpy() )
 	input(tg_scheduler.alphas_cumprod.numpy() )
 	
 	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = hf_scheduler)
@@ -529,6 +543,7 @@ def main():
 	#test_unet_2d_condition()
 	#test_ddim_scheduler()
 	#test_autoencoderkl()
+	test_cumprod()
 	test_stable_diffusion_pipeline()
 	input("look at the outputs first you dumdum")
 	test_clip_tokenizer_fast()

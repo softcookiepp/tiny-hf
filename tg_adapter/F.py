@@ -2,7 +2,7 @@ import tinygrad
 import numpy as np
 from .tensor import convert_to_tg, convert_to_torch, assert_same_device
 from .debugging import maybe_realize
-
+from copy import deepcopy
 
 def interpolate(inp,
 		size=None,
@@ -85,14 +85,15 @@ def cumprod(inp, dim, dtype=None, out=None):
 	for i in range(len(inp.shape)):
 		slices.append(slice(None, None, None) )
 	
+	outputs = []
 	for i in range(inp.shape[dim] ):
-		slices[dim] = i
-		if out is None:
-			out = tinygrad.Tensor.ones(inp[slices].shape, device = inp.device, dtype = inp.dtype)
-		else:
-			out = out*inp[slices]
-		out = maybe_realize(out)
-	return convert_to_torch(out)
+		slices[dim] = slice(0, i + 1, None)
+		new_shape = list(inp.shape)
+		new_shape[dim] = -1
+		new_shape = tuple(new_shape)
+		outputs.append(inp[slices].prod(dim).reshape(new_shape) )
+	outputs = convert_to_torch(outputs)
+	return cat(outputs, dim)
 	
 # easier than rearranging huggingface code lol
 def chunk(inp, chunks: int, dim: int = 0):
