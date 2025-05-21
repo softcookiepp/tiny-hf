@@ -502,8 +502,8 @@ def test_stable_diffusion_pipeline():
 	hf_scheduler = hf_scheduler_class()
 	tg_scheduler = tg_scheduler_class()
 	
-	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = hf_scheduler)
-	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = tg_scheduler)
+	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = hf_scheduler, safety_checker = None)
+	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = tg_scheduler, safety_checker = None)
 	
 	# oh wait, i realized its impossible for them to have the same output image if the initial latents are not the same
 	latents = make_test_data(1, 4, 64, 64)
