@@ -491,14 +491,7 @@ def test_stable_diffusion_pipeline():
 	from diffusers.schedulers import DDIMScheduler as hf_scheduler_class
 	
 	hf_scheduler = hf_scheduler_class()
-	print(hf_scheduler.alphas)
-	print(hf_scheduler.betas)
-	print(hf_scheduler.alphas_cumprod)
 	tg_scheduler = tg_scheduler_class()
-	print("\n")
-	print(tg_scheduler.alphas.numpy() )
-	print(tg_scheduler.betas.numpy() )
-	input(tg_scheduler.alphas_cumprod.numpy() )
 	
 	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = hf_scheduler)
 	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = tg_scheduler)
