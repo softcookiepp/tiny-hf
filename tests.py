@@ -498,7 +498,8 @@ def test_stable_diffusion_pipeline():
 	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = tg_scheduler)
 	
 	# oh wait, i realized its impossible for them to have the same output image if the initial latents are not the same
-	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 1, "safety_checker": None, "output_type": "latent", "seed": 2}, hf_module, "__call__", tg_module, "__call__")
+	latents = make_test_data(1, 4, 64, 64)
+	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 1, "safety_checker": None, "output_type": "latent", "latents": latents}, hf_module, "__call__", tg_module, "__call__")
 
 def test_stable_diffusion_pipeline_manual():
 	# The from_pretrained method is broke, so lets just do it manually holy shit
