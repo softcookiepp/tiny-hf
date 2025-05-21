@@ -526,7 +526,7 @@ def main():
 	#test_unet_2d()
 	#test_unet_2d_condition()
 	#test_ddim_scheduler()
-	test_autoencoderkl()
+	#test_autoencoderkl()
 	test_stable_diffusion_pipeline()
 	input("look at the outputs first you dumdum")
 	test_clip_tokenizer_fast()
