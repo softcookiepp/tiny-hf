@@ -1065,6 +1065,7 @@ class StableDiffusionPipeline(
 				print(np.isnan(np.sum(noise_pred.numpy() ) ) )
 
 				# compute the previous noisy sample x_t -> x_t-1
+				print(np.isnan(np.sum(latents.numpy() ) ) )
 				latents = self.scheduler.step(noise_pred, t, latents, **extra_step_kwargs, return_dict=False)[0]
 				print(np.isnan(np.sum(latents.numpy() ) ) )
 				if callback_on_step_end is not None:
