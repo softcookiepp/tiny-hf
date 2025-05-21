@@ -437,7 +437,7 @@ class DDIMScheduler(SchedulerMixin, ConfigMixin):
 			pred_original_sample = pred_original_sample.clamp(
 				-self.config.clip_sample_range, self.config.clip_sample_range
 			)
-		input(np.isnan(pred_original_sample.numpy() ) 
+		input(np.isnan(pred_original_sample.numpy() ) )
 
 		# 5. compute variance: "sigma_t(η)" -> see formula (16)
 		# σ_t = sqrt((1 − α_t−1)/(1 − α_t)) * sqrt(1 − α_t/α_t−1)
