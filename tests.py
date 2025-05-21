@@ -484,8 +484,8 @@ def test_stable_diffusion_pipeline():
 	hf_scheduler = hf_scheduler_class()
 	tg_scheduler = tg_scheduler_class()
 	
-	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = hf_scheduler)
-	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = tg_scheduler)
+	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False)#, scheduler = hf_scheduler)
+	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False)#, scheduler = tg_scheduler)
 	
 	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 2, "safety_checker": None, "output_type": "latent"}, hf_module, "__call__", tg_module, "__call__")
 
@@ -525,6 +525,7 @@ def main():
 	#test_clip_text_model()
 	#test_unet_2d()
 	#test_unet_2d_condition()
+	test_ddim_scheduler()
 	test_autoencoderkl()
 	test_stable_diffusion_pipeline()
 	input("look at the outputs first you dumdum")
