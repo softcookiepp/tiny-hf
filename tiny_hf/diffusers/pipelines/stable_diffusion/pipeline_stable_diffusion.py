@@ -1051,23 +1051,18 @@ class StableDiffusionPipeline(
 					added_cond_kwargs=added_cond_kwargs,
 					return_dict=False,
 				)[0]
-				print(np.isnan(np.sum(noise_pred.numpy() ) ) )
 
 				# perform guidance
 				if self.do_classifier_free_guidance:
 					noise_pred_uncond, noise_pred_text = noise_pred.chunk(2)
 					noise_pred = noise_pred_uncond + self.guidance_scale * (noise_pred_text - noise_pred_uncond)
-				print(np.isnan(np.sum(noise_pred.numpy() ) ) )
 
 				if self.do_classifier_free_guidance and self.guidance_rescale > 0.0:
 					# Based on 3.4. in https://arxiv.org/pdf/2305.08891.pdf
 					noise_pred = rescale_noise_cfg(noise_pred, noise_pred_text, guidance_rescale=self.guidance_rescale)
-				print(np.isnan(np.sum(noise_pred.numpy() ) ) )
 
 				# compute the previous noisy sample x_t -> x_t-1
-				print(np.isnan(np.sum(latents.numpy() ) ) )
 				latents = self.scheduler.step(noise_pred, t, latents, **extra_step_kwargs, return_dict=False)[0]
-				print(np.isnan(np.sum(latents.numpy() ) ) )
 				if callback_on_step_end is not None:
 					callback_kwargs = {}
 					for k in callback_on_step_end_tensor_inputs:
@@ -1084,7 +1079,6 @@ class StableDiffusionPipeline(
 					if callback is not None and i % callback_steps == 0:
 						step_idx = i // getattr(self.scheduler, "order", 1)
 						callback(step_idx, t, latents)
-				input("any NaNnies?")
 				if XLA_AVAILABLE:
 					xm.mark_step()
 
