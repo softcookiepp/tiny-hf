@@ -168,6 +168,7 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 			val_mse = mse(tg_item, hf_item)
 			print("key:", k, "\nvalue mse:", val_mse, "\n")
 			if val_mse > error_threshold or np.isnan(val_mse):
+				print(hf_item.shape, tg_item.shape)
 				if print_values:
 					print(hf_item)
 					print(tg_item)
@@ -496,7 +497,8 @@ def test_stable_diffusion_pipeline():
 	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = hf_scheduler)
 	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = tg_scheduler)
 	
-	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 1, "safety_checker": None, "output_type": "latent"}, hf_module, "__call__", tg_module, "__call__")
+	# oh wait, i realized its impossible for them to have the same output image if the initial latents are not the same
+	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 1, "safety_checker": None, "output_type": "latent", "seed": 2}, hf_module, "__call__", tg_module, "__call__")
 
 def test_stable_diffusion_pipeline_manual():
 	# The from_pretrained method is broke, so lets just do it manually holy shit
