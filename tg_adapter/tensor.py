@@ -252,12 +252,15 @@ class AdapterTensor:
 		return self._tg_override(other)
 	
 	def __rmul__(self, other):
+		other = self._move_to_same_device(other)
 		return self._tg_override(other)
 	
 	def __truediv__(self, other):
+		other = self._move_to_same_device(other)
 		return self._tg_override(other)
 	
 	def __rtruediv__(self, other):
+		other = self._move_to_same_device(other)
 		return self._tg_override(other)
 		
 	def numpy(self):
