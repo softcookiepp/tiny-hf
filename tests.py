@@ -139,13 +139,11 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 			if len(hf_dict.keys() ) > len(tg_dict.keys() ):
 				tested_keys = tg_dict.keys()
 		for k in tested_keys:
+			print("key:", k)
 			hf_item = hf_dict[k]
 			tg_item = tg_dict[k]
-			if isinstance(hf_item, tuple):
-				# tuple of crap
-				for hf_item2, tg_item2 in zip(hf_item, tg_item):
-					_test_key_errors(hf_item2, tg_item2, error_threshold, display_images, error_function)
-				continue
+			_test_key_errors(hf_item, tg_item)
+			continue
 			elif isinstance(hf_item, list):
 				try:
 					hf_item = np.array(hf_item).astype(np.float32)
@@ -159,9 +157,6 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 					for hf_item2, tg_item2 in zip(hf_item, tg_item):
 						_test_key_errors(hf_item2, tg_item2, error_threshold, display_images, error_function)
 					continue
-			elif isinstance(hf_item, Image.Image):
-				input("gots us an image!")
-				hf_item, tg_item = np.array(hf_item), np.array(tg_item)
 			elif isinstance(hf_item, torch.Tensor):
 				hf_item = hf_item.detach().numpy()
 			elif hasattr(hf_item, "__dict__"):
@@ -181,33 +176,32 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 				hf_item, tg_item = float(hf_item), float(tg_item)
 				#raise ValueError
 				
-			if isinstance(tg_item, list):
-				tg_item = np.array(tg_item).astype(np.float32)
-			elif isinstance(tg_item, tinygrad.Tensor) or isinstance(tg_item, tg_adapter.Tensor):
-				tg_item = tg_item.numpy()
-			
-			val_mse = mse(tg_item, hf_item)
-			print("key:", k, "\nvalue mse:", val_mse, "\n")
-			if val_mse > error_threshold or np.isnan(val_mse):
-				print(hf_item.shape, tg_item.shape)
-				if print_values:
-					print(hf_item)
-					print(tg_item)
-				input()
-			elif display_images:
-				pass
-				#raise NotImplementedError
 	elif isinstance(hf_dict, torch.Tensor):
 		error = mse(tg_dict.numpy(), hf_dict.detach().numpy())
-		print("single tensor output mse:", error, "\n")
-		if error > error_threshold:
-			#print("tiny:")
-			#print(tiny_out.numpy())
-			#print("torch")
-			#print(torch_out.detach().numpy() )
-			#print("difference:")
-			#print(tiny_out.numpy() - torch_out.detach().numpy())
+		print("value mse:", error, "\n")
+		if error > error_threshold or np.isnan(error):
+			print(hf_item.shape, tg_item.shape)
+			if print_values:
+				print(hf_item)
+				print(tg_item)
 			input()
+	elif isinstance(hf_item, Image.Image):
+		hf_item, tg_item = np.array(hf_dict), np.array(tg_dict)
+		_test_key_errors(hf_item, tg_item, error_threshold, display_images, error_function)
+	elif isinstance(hf_dict, list):
+		try:
+			hf_dict = np.array(hf_dict).astype(np.float32)
+		except TypeError:
+			# list of other sort, non-numerical
+			for hf_item2, tg_item2 in zip(hf_dict, tg_dict):
+				_test_key_errors(hf_item2, tg_item2, error_threshold, display_images, error_function)
+			continue
+		except ValueError:
+			# list of other sort, non-numerical
+			for hf_item2, tg_item2 in zip(hf_item, tg_item):
+				_test_key_errors(hf_item2, tg_item2, error_threshold, display_images, error_function)
+			continue
+	
 	elif isinstance(hf_dict, tuple):
 		# tuple of crap
 		for hf_item2, tg_item2 in zip(hf_dict, tg_dict):
