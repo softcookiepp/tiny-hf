@@ -538,7 +538,7 @@ def test_stable_diffusion_pipeline():
 		None,
 	]
 	test_hf_reimplementation(prepare_latents_test_args, {"latents": latents}, hf_module, "prepare_latents", tg_module, "prepare_latents")
-	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 7, "safety_checker": None, "latents": latents, "output_type": "pil"}, hf_module, "__call__", tg_module, "__call__")
+	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 7, "safety_checker": None, "latents": latents, "output_type": "latents"}, hf_module, "__call__", tg_module, "__call__")
 
 def test_stable_diffusion_pipeline_manual():
 	# The from_pretrained method is broke, so lets just do it manually holy shit
