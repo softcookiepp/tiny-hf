@@ -561,6 +561,7 @@ def test_ddim_scheduler():
 	noise = make_test_data(2, 4, 64, 64)
 	
 	test_hf_reimplementation([noise, 1, latent], {"return_dict": False}, hf_scheduler, "step", tg_scheduler, "step")
+	input("wait did this even work?")
 
 def test_dtype_override():
 	a = tg_adapter.arange(4, device = "cpu", dtype = tg_adapter.int64)
