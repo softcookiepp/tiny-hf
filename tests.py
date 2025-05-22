@@ -163,6 +163,9 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 				continue
 			elif hf_item is None and tg_item is None:
 				continue
+			elif isinstance(hf_item, str):
+				# don't bother
+				continue
 			else:
 				#print(hf_item)
 				hf_item, tg_item = float(hf_item), float(tg_item)
