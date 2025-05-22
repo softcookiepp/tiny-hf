@@ -252,7 +252,6 @@ def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_m
 				hf_args.append(arg )
 				my_args.append(arg )
 		else:
-			raise NotImplementedError
 			torch_v, tg_v = _process_arg(arg, device)
 			hf_args.append(torch_v)
 			my_args.append(tg_v )
