@@ -534,7 +534,7 @@ def test_stable_diffusion_pipeline():
 		512,
 		512,
 		None, # this doesn't get checked if the latents are supplied
-		"cuda:0",
+		"cpu",
 		None,
 	]
 	test_hf_reimplementation(prepare_latents_test_args, {"latents": latents}, hf_module, "prepare_latents", tg_module, "prepare_latents")
