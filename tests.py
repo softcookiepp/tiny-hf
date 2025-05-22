@@ -142,20 +142,23 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 			hf_item = hf_dict[k]
 			tg_item = tg_dict[k]
 			
-			if isinstance(hf_item, list) or isinstance(hf_item, tuple):
+			if isinstance(hf_item, tuple):
+				# tuple of crap
+				for hf_item2, tg_item2 in zip(hf_item, tg_item):
+					_test_key_errors(hf_item2, tg_item2, error_threshold, display_images, error_function)
+				continue
+			elif isinstance(hf_item, list):
 				try:
 					hf_item = np.array(hf_item).astype(np.float32)
 				except TypeError:
 					# list of other sort, non-numerical
 					for hf_item2, tg_item2 in zip(hf_item, tg_item):
 						_test_key_errors(hf_item2, tg_item2, error_threshold, display_images, error_function)
-					input("EEOOOEOEEOEOEO2")
 					continue
 				except ValueError:
 					# list of other sort, non-numerical
 					for hf_item2, tg_item2 in zip(hf_item, tg_item):
 						_test_key_errors(hf_item2, tg_item2, error_threshold, display_images, error_function)
-					input("EEOOOEOEEOEOEO2")
 					continue
 			elif isinstance(hf_item, Image.Image):
 				input("gots us an image!")
