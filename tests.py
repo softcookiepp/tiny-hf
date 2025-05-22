@@ -528,6 +528,16 @@ def test_stable_diffusion_pipeline():
 	
 	# oh wait, i realized its impossible for them to have the same output image if the initial latents are not the same
 	latents = make_test_data(1, 4, 64, 64)
+	prepare_latents_test_args = [
+		1
+		4,
+		512,
+		512,
+		None, # this doesn't get checked if the latents are supplied
+		"cuda:0",
+		None,
+	]
+	test_hf_reimplementation(prepare_latents_test_args, {"latents": latents}, hf_module, "prepare_latents", tg_module, "prepare_latents")
 	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 1, "safety_checker": None, "latents": latents, "output_type": "pil"}, hf_module, "__call__", tg_module, "__call__")
 
 def test_stable_diffusion_pipeline_manual():
