@@ -573,6 +573,7 @@ def main():
 	#test_unet_2d()
 	#test_unet_2d_condition()
 	test_ddim_scheduler()
+	input("meeeep")
 	#test_autoencoderkl()
 	test_cumprod()
 	test_stable_diffusion_pipeline()
