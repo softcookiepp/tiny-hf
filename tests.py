@@ -141,7 +141,7 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 		for k in tested_keys:
 			hf_item = hf_dict[k]
 			tg_item = tg_dict[k]
-			
+			print(isinstance(hf_item, tuple) )
 			if isinstance(hf_item, tuple):
 				print(hf_item)
 				# tuple of crap
