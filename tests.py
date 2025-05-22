@@ -529,7 +529,7 @@ def test_stable_diffusion_pipeline():
 	# oh wait, i realized its impossible for them to have the same output image if the initial latents are not the same
 	latents = make_test_data(1, 4, 64, 64)
 	prepare_latents_test_args = [
-		1
+		1,
 		4,
 		512,
 		512,
