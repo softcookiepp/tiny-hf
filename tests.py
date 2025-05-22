@@ -510,6 +510,7 @@ def test_stable_diffusion_pipeline():
 	hf_scheduler = hf_scheduler_class()
 	tg_scheduler = tg_scheduler_class()
 	
+	# ensure the scheduler is initialized properly
 	_test_key_errors(hf_scheduler, tg_scheduler)
 	
 	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = hf_scheduler, safety_checker = None)
@@ -539,7 +540,18 @@ def test_stable_diffusion_pipeline_manual():
 
 
 def test_ddim_scheduler():
-	raise NotImplementedError
+	from tiny_hf.diffusers.schedulers import DDIMScheduler as tg_scheduler_class
+	from diffusers.schedulers import DDIMScheduler as hf_scheduler_class
+	
+	hf_scheduler = hf_scheduler_class()
+	tg_scheduler = tg_scheduler_class()
+	
+	_test_key_errors(hf_scheduler, tg_scheduler)
+	
+	latent = make_test_data(2, 4, 64, 64)
+	noise = make_test_data(2, 4, 64, 64)
+	
+	test_hf_reimplementation([noise, 1, latent], {"return_dict": False}, hf_scheduler, "step", tg_scheduler, "step")
 
 def test_dtype_override():
 	a = tg_adapter.arange(4, device = "cpu", dtype = tg_adapter.int64)
@@ -557,7 +569,7 @@ def main():
 	#test_clip_text_model()
 	#test_unet_2d()
 	#test_unet_2d_condition()
-	#test_ddim_scheduler()
+	test_ddim_scheduler()
 	#test_autoencoderkl()
 	test_cumprod()
 	test_stable_diffusion_pipeline()
