@@ -546,6 +546,9 @@ def test_ddim_scheduler():
 	hf_scheduler = hf_scheduler_class()
 	tg_scheduler = tg_scheduler_class()
 	
+	hf_scheduler.set_timesteps(4)
+	tg_scheduler.set_timesteps(4)
+	
 	_test_key_errors(hf_scheduler, tg_scheduler)
 	
 	latent = make_test_data(2, 4, 64, 64)
