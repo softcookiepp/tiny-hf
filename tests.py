@@ -144,7 +144,7 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 			tg_item = tg_dict[k]
 			_test_key_errors(hf_item, tg_item)
 			continue
-			elif isinstance(hf_item, list):
+			if isinstance(hf_item, list):
 				try:
 					hf_item = np.array(hf_item).astype(np.float32)
 				except TypeError:
