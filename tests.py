@@ -141,7 +141,6 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 		for k in tested_keys:
 			hf_item = hf_dict[k]
 			tg_item = tg_dict[k]
-			print(isinstance(hf_item, tuple) )
 			if isinstance(hf_item, tuple):
 				print(hf_item)
 				# tuple of crap
@@ -209,6 +208,10 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 			#print("difference:")
 			#print(tiny_out.numpy() - torch_out.detach().numpy())
 			input()
+	elif isinstance(hf_dict, tuple):
+		# tuple of crap
+		for hf_item2, tg_item2 in zip(hf_dict, tg_dict):
+			_test_key_errors(hf_item2, tg_item2, error_threshold, display_images, error_function)
 	elif isinstance(hf_dict, object) and hasattr(hf_dict, "__dict__"):
 		_test_key_errors(hf_dict.__dict__, tg_dict.__dict__, error_threshold, display_images, error_function)
 		
