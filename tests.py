@@ -142,7 +142,6 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 			hf_item = hf_dict[k]
 			tg_item = tg_dict[k]
 			if isinstance(hf_item, tuple):
-				print(hf_item)
 				# tuple of crap
 				for hf_item2, tg_item2 in zip(hf_item, tg_item):
 					_test_key_errors(hf_item2, tg_item2, error_threshold, display_images, error_function)
@@ -529,7 +528,7 @@ def test_stable_diffusion_pipeline():
 	
 	# oh wait, i realized its impossible for them to have the same output image if the initial latents are not the same
 	latents = make_test_data(1, 4, 64, 64)
-	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 1, "safety_checker": None, "latents": latents}, hf_module, "__call__", tg_module, "__call__")
+	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 1, "safety_checker": None, "latents": latents, "output_type": "pil"}, hf_module, "__call__", tg_module, "__call__")
 
 def test_stable_diffusion_pipeline_manual():
 	# The from_pretrained method is broke, so lets just do it manually holy shit
@@ -564,7 +563,6 @@ def test_ddim_scheduler():
 	noise = make_test_data(2, 4, 64, 64)
 	
 	test_hf_reimplementation([noise, 1, latent], {"return_dict": False}, hf_scheduler, "step", tg_scheduler, "step")
-	input("wait did this even work?")
 
 def test_dtype_override():
 	a = tg_adapter.arange(4, device = "cpu", dtype = tg_adapter.int64)
@@ -583,7 +581,6 @@ def main():
 	#test_unet_2d()
 	#test_unet_2d_condition()
 	test_ddim_scheduler()
-	input("meeeep")
 	#test_autoencoderkl()
 	test_cumprod()
 	test_stable_diffusion_pipeline()
