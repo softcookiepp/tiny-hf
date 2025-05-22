@@ -226,6 +226,7 @@ def _process_arg(arg, device):
 			h, t = _process_arg(arg2, device)
 			hf_list.append(h)
 			tg_list.append(t)
+		return hf_list, tg_list
 	elif isinstance(arg, tuple):
 		alist = list(arg)
 		hf_list, tg_list = _process_arg(alist, device)
