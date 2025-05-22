@@ -220,6 +220,16 @@ def _process_arg(arg, device):
 		tgt = tg_adapter.tensor(arg).to(device)
 		tgt.tg.realize()
 		return torch.tensor(arg), tgt
+	elif isinstance(arg, list):
+		hf_list, tg_list = [], []
+		for arg2 in arg:
+			h, t = _process_arg(arg2, device)
+			hf_list.append(h)
+			tg_list.append(t)
+	elif isinstance(arg, tuple):
+		alist = list(arg)
+		hf_list, tg_list = _process_arg(alist, device)
+		return tuple(hf_list), tuple(tg_list)
 	else:
 		# append as is
 		return arg, arg
@@ -231,15 +241,21 @@ def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_m
 		my_module = my_module.to(device)
 	hf_args, my_args = [], []
 	for arg in args:
-		if isinstance(arg, np.ndarray):
-			# convert to tensor
+		if False:
+			if isinstance(arg, np.ndarray):
+				# convert to tensor
+				torch_v, tg_v = _process_arg(arg, device)
+				hf_args.append(torch_v)
+				my_args.append(tg_v )
+			else:
+				# append as is
+				hf_args.append(arg )
+				my_args.append(arg )
+		else:
+			raise NotImplementedError
 			torch_v, tg_v = _process_arg(arg, device)
 			hf_args.append(torch_v)
 			my_args.append(tg_v )
-		else:
-			# append as is
-			hf_args.append(arg )
-			my_args.append(arg )
 	
 	hf_args = tuple(hf_args)
 	my_args = tuple(my_args)
