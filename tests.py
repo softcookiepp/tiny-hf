@@ -145,7 +145,12 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 			if isinstance(hf_item, list):
 				try:
 					hf_item = np.array(hf_item).astype(np.float32)
-				except TypeError, ValueError:
+				except TypeError:
+					# list of other sort, non-numerical
+					for hf_item2, tg_item2 in zip(hf_item, tg_item):
+						_test_key_errors(hf_item2, tg_item2, error_threshold, display_images, error_function)
+					continue
+				except ValueError:
 					# list of other sort, non-numerical
 					for hf_item2, tg_item2 in zip(hf_item, tg_item):
 						_test_key_errors(hf_item2, tg_item2, error_threshold, display_images, error_function)
