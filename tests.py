@@ -457,6 +457,11 @@ def test_cumprod():
 	from tg_adapter import F as tinyF
 	inp = np.arange(5*4).reshape(5, 4).astype(np.float32)
 	test_function( (inp, 0), torch.cumprod, tinyF.cumprod)
+	
+def test_cat():
+	a = make_test_data(40, 2, 5)
+	b = make_test_data(2, 2, 5)
+	test_function( ([a, b], 0), torch.cat, tg_adapter.cat )
 
 def test_clip_tokenizer():
 	from tiny_hf.transformers import CLIPTokenizer as tg_module
@@ -590,6 +595,7 @@ def main():
 	#test_clip_text_model()
 	#test_unet_2d()
 	#test_unet_2d_condition()
+	test_cat()
 	test_ddim_scheduler()
 	#test_autoencoderkl()
 	test_cumprod()
