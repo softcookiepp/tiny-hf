@@ -126,10 +126,10 @@ def sd_pipeline_call(
 			"1.0.0",
 			"Passing `callback_steps` as an input argument to `__call__` is deprecated, consider using `callback_on_step_end`",
 		)
-
+	"""
 	if isinstance(callback_on_step_end, (PipelineCallback, MultiPipelineCallbacks)):
 		callback_on_step_end_tensor_inputs = callback_on_step_end.tensor_inputs
-
+	"""
 	# 0. Default height and width to unet
 	if not height or not width:
 		height = (
