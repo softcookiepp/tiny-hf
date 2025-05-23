@@ -548,7 +548,7 @@ def test_stable_diffusion_pipeline():
 	latents = make_test_data(1, 4, 64, 64)
 	
 	# test the unet
-	test_unet_2d_condition(hf_module.unet, tg_module.unet, latents.shape, (2, 77, 768) )
+	test_unet_2d_condition(hf_module.unet, tg_module.unet, latents.shape, (1, 77, 768) )
 	
 	# test the image processor
 	test_hf_reimplementation([latents], {}, hf_module.image_processor, "postprocess", tg_module.image_processor, "postprocess")
