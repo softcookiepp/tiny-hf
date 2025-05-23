@@ -414,18 +414,18 @@ def test_UNetMidBlock2D():
 	copy_state_dict(hf_module, my_module)
 	test_hf_reimplementation(args, {}, hf_module, "forward", my_module, "forward")
 
-def test_unet_2d_condition():
-	from diffusers import UNet2DConditionModel as hf_UNet2DConditionModel
-	from tiny_hf.diffusers import UNet2DConditionModel as thf_UNet2DConditionModel
-	
+def test_unet_2d_condition(hf_module = None, tg_module = None):
 	a = make_test_data(2, 4, 32, 32)
 	emb = make_test_data(2, 2, 1280)
 	
-	hf_module = hf_UNet2DConditionModel()
-	thf_module = thf_UNet2DConditionModel()
+	if hf_module is None and tg_module is None:
+		from diffusers import UNet2DConditionModel as hf_UNet2DConditionModel
+		from tiny_hf.diffusers import UNet2DConditionModel as thf_UNet2DConditionModel
+		hf_module = hf_UNet2DConditionModel()
+		thf_module = thf_UNet2DConditionModel()
+		copy_state_dict(hf_module, thf_module)
 	
 	args = (a, 3, emb)
-	copy_state_dict(hf_module, thf_module)
 	test_hf_reimplementation(args, {}, hf_module, "__call__", thf_module, "__call__")
 
 def test_unet_2d():
@@ -535,10 +535,14 @@ def test_stable_diffusion_pipeline():
 	# ensure the scheduler is initialized properly
 	_test_key_errors(hf_scheduler, tg_scheduler)
 	
+	
+	
 	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = hf_scheduler, safety_checker = None)
 	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = tg_scheduler, safety_checker = None)
 	
 	
+	# test the unet
+	test_unet_2d_condition(hf_module.unet, tg_module.unet)
 	
 	# oh wait, i realized its impossible for them to have the same output image if the initial latents are not the same
 	latents = make_test_data(1, 4, 64, 64)
