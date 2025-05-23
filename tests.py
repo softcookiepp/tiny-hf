@@ -185,6 +185,8 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 		hf_dict = str_to_numerical(hf_dict)
 		tg_dict = str_to_numerical(tg_dict)
 		_test_key_errors(hf_dict, tg_dict, error_threshold, display_images, error_function)
+	elif isinstance(hf_dict, type(None) ):
+		pass
 	else:
 		raise ValueError
 		
