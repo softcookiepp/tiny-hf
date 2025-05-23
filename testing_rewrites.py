@@ -358,7 +358,7 @@ def sd_pipeline_call(
 					callback(step_idx, t, latents)
 			if XLA_AVAILABLE:
 				xm.mark_step()
-	return latents
+	return noise_pred
 	if not output_type == "latent":
 		image = self.vae.decode(latents / self.vae.config.scaling_factor, return_dict=False, generator=generator)[
 			0
