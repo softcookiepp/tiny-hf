@@ -266,7 +266,7 @@ def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_m
 	
 	#inspect_state_dict_devices(my_module)
 	print(f"MSE for {hf_module} and {my_module}:")
-	_test_key_errors(torch_out, tiny_out, display_images = display_images, error_function = mse)
+	_test_key_errors(torch_out, tiny_out, display_images = display_images, error_threshold = error_threshold, error_function = mse)
 	
 	del torch_out
 	del tiny_out
