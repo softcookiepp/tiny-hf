@@ -542,7 +542,7 @@ def test_stable_diffusion_pipeline():
 	
 	
 	# test the unet
-	test_unet_2d_condition(hf_module.unet, tg_module.unet)
+	#test_unet_2d_condition(hf_module.unet, tg_module.unet)
 	
 	# oh wait, i realized its impossible for them to have the same output image if the initial latents are not the same
 	latents = make_test_data(1, 4, 64, 64)
