@@ -128,6 +128,10 @@ def _get_output(hf_out):
 	#_print_dict_types(hf_out)
 	raise ValueError
 	
+def str_to_numerical(s: str):
+	b = bytes(s, "utf-8")
+	return np.array(memoryview(b) ).astype(np.float32)
+	
 def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = True, display_images = False, error_function = mse):
 	print("types:", type(hf_dict), type(tg_dict) )
 	if isinstance(hf_dict, dict):
@@ -143,42 +147,8 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 			hf_item = hf_dict[k]
 			tg_item = tg_dict[k]
 			_test_key_errors(hf_item, tg_item)
-			continue
-			if isinstance(hf_item, list):
-				try:
-					hf_item = np.array(hf_item).astype(np.float32)
-				except TypeError:
-					# list of other sort, non-numerical
-					for hf_item2, tg_item2 in zip(hf_item, tg_item):
-						_test_key_errors(hf_item2, tg_item2, error_threshold, display_images, error_function)
-					continue
-				except ValueError:
-					# list of other sort, non-numerical
-					for hf_item2, tg_item2 in zip(hf_item, tg_item):
-						_test_key_errors(hf_item2, tg_item2, error_threshold, display_images, error_function)
-					continue
-			elif isinstance(hf_item, torch.Tensor):
-				hf_item = hf_item.detach().numpy()
-			elif hasattr(hf_item, "__dict__"):
-				_test_key_errors(hf_item.__dict__, tg_item.__dict__, error_threshold, display_images, error_function)
-				continue
-			elif isinstance(hf_item, dict):
-				_test_key_errors(hf_item, tg_item, error_threshold, display_images, error_function)
-				continue
-			elif hf_item is None and tg_item is None:
-				continue
-			elif isinstance(hf_item, str):
-				# don't bother
-				continue
-			else:
-				print(hf_item)
-				print(tg_item)
-				hf_item, tg_item = float(hf_item), float(tg_item)
-				#raise ValueError
-				
 	elif isinstance(hf_dict, torch.Tensor):
 		_test_key_errors(hf_dict.detach().numpy(), tg_dict.numpy(), error_threshold, display_images, error_function)
-		
 	elif isinstance(hf_dict, Image.Image):
 		hf_item, tg_item = np.array(hf_dict), np.array(tg_dict)
 		_test_key_errors(hf_item, tg_item, error_threshold, display_images, error_function)
@@ -211,6 +181,10 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 			input()
 	elif type(hf_dict) in [int, float]:
 		_test_key_errors(np.array(hf_dict), np.array(tg_dict), error_threshold, display_images, error_function)
+	elif isinstance(hf_dict, str):
+		hf_dict = str_to_numerical(hf_dict)
+		tg_dict = str_to_numerical(tg_dict)
+		_test_key_errors(hf_dict, tg_dict, error_threshold, display_images, error_function)
 	else:
 		raise ValueError
 		
