@@ -177,7 +177,9 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 				#raise ValueError
 				
 	elif isinstance(hf_dict, torch.Tensor):
-		error = mse(tg_dict.numpy(), hf_dict.detach().numpy())
+		tg_dict = tg_dict.numpy()
+		hf_dict = hf_dict.detach().numpy()
+		error = mse(hf_dict, tg_dict)
 		print("value mse:", error, "\n")
 		if error > error_threshold or np.isnan(error):
 			print(hf_dict.shape, tg_dict.shape)
