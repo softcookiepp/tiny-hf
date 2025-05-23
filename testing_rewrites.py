@@ -79,7 +79,7 @@ def sd_pipeline_call(
 	ip_adapter_image = None,
 	ip_adapter_image_embeds = None,
 	output_type = "pil",
-	return_dict: bool = True,
+	return_dict: bool = False,
 	cross_attention_kwargs = None,
 	guidance_rescale: float = 0.0,
 	clip_skip = None,
@@ -332,7 +332,7 @@ def sd_pipeline_call(
 				noise_pred_uncond, noise_pred_text = noise_pred.chunk(2)
 				noise_pred = noise_pred_uncond + self.guidance_scale * (noise_pred_text - noise_pred_uncond)
 				
-			return noise_pred
+			#return noise_pred
 
 			if self.do_classifier_free_guidance and self.guidance_rescale > 0.0:
 				# Based on 3.4. in https://arxiv.org/pdf/2305.08891.pdf
