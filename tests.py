@@ -175,9 +175,8 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 		print("value mse:", error, "\n")
 		if error > error_threshold or np.isnan(error):
 			print(hf_dict.shape, tg_dict.shape)
-			if print_values:
-				print(hf_dict)
-				print(tg_dict)
+			print(hf_dict)
+			print(tg_dict)
 			input()
 	elif type(hf_dict) in [int, float]:
 		_test_key_errors(np.array(hf_dict), np.array(tg_dict), error_threshold, display_images, error_function)
