@@ -415,7 +415,7 @@ def test_UNetMidBlock2D():
 	test_hf_reimplementation(args, {}, hf_module, "forward", my_module, "forward")
 
 def test_unet_2d_condition(hf_module = None, thf_module = None,
-		latent_shape = (2, 4, 32, 32) embed_shape = (2, 2, 1280) ):
+		latent_shape = (2, 4, 32, 32), embed_shape = (2, 2, 1280) ):
 	a = make_test_data(*latent_shape)
 	emb = make_test_data(*embed_shape)
 	
