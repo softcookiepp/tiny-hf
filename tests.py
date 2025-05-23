@@ -414,11 +414,11 @@ def test_UNetMidBlock2D():
 	copy_state_dict(hf_module, my_module)
 	test_hf_reimplementation(args, {}, hf_module, "forward", my_module, "forward")
 
-def test_unet_2d_condition(hf_module = None, tg_module = None):
+def test_unet_2d_condition(hf_module = None, thf_module = None):
 	a = make_test_data(2, 4, 32, 32)
 	emb = make_test_data(2, 2, 1280)
 	
-	if hf_module is None and tg_module is None:
+	if hf_module is None and thf_module is None:
 		from diffusers import UNet2DConditionModel as hf_UNet2DConditionModel
 		from tiny_hf.diffusers import UNet2DConditionModel as thf_UNet2DConditionModel
 		hf_module = hf_UNet2DConditionModel()
