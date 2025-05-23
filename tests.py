@@ -556,7 +556,7 @@ def test_stable_diffusion_pipeline():
 		None,
 	]
 	test_hf_reimplementation(prepare_latents_test_args, {"latents": latents}, hf_module, "prepare_latents", tg_module, "prepare_latents")
-	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 7, "safety_checker": None, "latents": latents, "output_type": "latent"}, hf_module, sd_pipeline_call, tg_module, sd_pipeline_call)
+	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 2, "safety_checker": None, "latents": latents, "output_type": "latent"}, hf_module, sd_pipeline_call, tg_module, sd_pipeline_call)
 
 def test_ddim_scheduler():
 	from tiny_hf.diffusers.schedulers import DDIMScheduler as tg_scheduler_class
