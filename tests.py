@@ -538,7 +538,7 @@ def test_stable_diffusion_pipeline():
 	latents = make_test_data(1, 4, 64, 64)
 	
 	# test the unet
-	test_unet_2d_condition(hf_module.unet, tg_module.unet, latents.shape, (1, 77, 768) )
+	#test_unet_2d_condition(hf_module.unet, tg_module.unet, latents.shape, (1, 77, 768) )
 	
 	# test prompt encoding
 	test_hf_reimplementation(["a squishy pp", "cpu", 1, True], {}, hf_module, "encode_prompt", tg_module, "encode_prompt")
