@@ -180,10 +180,10 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 		error = mse(tg_dict.numpy(), hf_dict.detach().numpy())
 		print("value mse:", error, "\n")
 		if error > error_threshold or np.isnan(error):
-			print(hf_item.shape, tg_item.shape)
+			print(hf_dict.shape, tg_dict.shape)
 			if print_values:
-				print(hf_item)
-				print(tg_item)
+				print(hf_dict)
+				print(tg_dict)
 			input()
 	elif isinstance(hf_dict, Image.Image):
 		hf_item, tg_item = np.array(hf_dict), np.array(tg_dict)
