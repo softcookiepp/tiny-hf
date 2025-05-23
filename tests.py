@@ -150,6 +150,8 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 	elif isinstance(hf_dict, torch.Tensor):
 		_test_key_errors(hf_dict.detach().numpy(), tg_dict.numpy(), error_threshold, display_images, error_function)
 	elif isinstance(hf_dict, Image.Image):
+		hf_dict.save("test_hf.png")
+		tg_dict.save("test_tg.png")
 		hf_item, tg_item = np.array(hf_dict), np.array(tg_dict)
 		_test_key_errors(hf_item, tg_item, error_threshold, display_images, error_function)
 	elif isinstance(hf_dict, list):
