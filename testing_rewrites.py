@@ -1,5 +1,8 @@
+XLA_AVAILABLE = False
+
 def sd_pipeline_call(
 	self,
+	torch,
 	prompt = None,
 	height = None,
 	width = None,

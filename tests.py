@@ -252,8 +252,8 @@ def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_m
 		torch_out = hf_module.__getattribute__(hf_method)(*hf_args, **hf_kwargs)
 	else:
 		# function substitute
-		tiny_out = my_method(my_module, *my_args, **my_kwargs)
-		torch_out = hf_method(hf_module, *hf_args, **hf_kwargs)
+		tiny_out = my_method(my_module, tg_adapter, *my_args, **my_kwargs)
+		torch_out = hf_method(hf_module, torch, *hf_args, **hf_kwargs)
 	
 	"""
 	if isinstance(torch_out, tuple):
