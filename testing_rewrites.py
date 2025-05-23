@@ -286,9 +286,6 @@ def sd_pipeline_call(
 		latents,
 	)
 	
-	# first we gotta ensure that the latents even work
-	return latents
-	
 	# 6. Prepare extra step kwargs. TODO: Logic should ideally just be moved out of the pipeline
 	extra_step_kwargs = self.prepare_extra_step_kwargs(generator, eta)
 
@@ -329,7 +326,10 @@ def sd_pipeline_call(
 				added_cond_kwargs=added_cond_kwargs,
 				return_dict=False,
 			)[0]
-
+			
+			# now we check the predicted noise...
+			return noise_pred
+			
 			# perform guidance
 			if self.do_classifier_free_guidance:
 				noise_pred_uncond, noise_pred_text = noise_pred.chunk(2)
