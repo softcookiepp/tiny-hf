@@ -209,6 +209,8 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 				print(hf_dict)
 				print(tg_dict)
 			input()
+	elif type(hf_dict) in [int, float]:
+		_test_key_errors(np.array(hf_item), np.array(tg_item), error_threshold, display_images, error_function)
 	else:
 		raise ValueError
 		
