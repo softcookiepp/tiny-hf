@@ -177,16 +177,8 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 				#raise ValueError
 				
 	elif isinstance(hf_dict, torch.Tensor):
-		tg_dict = tg_dict.numpy()
-		hf_dict = hf_dict.detach().numpy()
-		error = mse(hf_dict, tg_dict)
-		print("value mse:", error, "\n")
-		if error > error_threshold or np.isnan(error):
-			print(hf_dict.shape, tg_dict.shape)
-			if print_values:
-				print(hf_dict)
-				print(tg_dict)
-			input()
+		_test_key_errors(hf_dict.detach().numpy(), tg_dict.numpy(), error_threshold, display_images, error_function)
+		
 	elif isinstance(hf_dict, Image.Image):
 		hf_item, tg_item = np.array(hf_dict), np.array(tg_dict)
 		_test_key_errors(hf_item, tg_item, error_threshold, display_images, error_function)
@@ -208,6 +200,17 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 			_test_key_errors(hf_item2, tg_item2, error_threshold, display_images, error_function)
 	elif isinstance(hf_dict, object) and hasattr(hf_dict, "__dict__"):
 		_test_key_errors(hf_dict.__dict__, tg_dict.__dict__, error_threshold, display_images, error_function)
+	elif isinstance(hf_dict, np.ndarray):
+		error = mse(hf_dict, tg_dict)
+		print("value mse:", error, "\n")
+		if error > error_threshold or np.isnan(error):
+			print(hf_dict.shape, tg_dict.shape)
+			if print_values:
+				print(hf_dict)
+				print(tg_dict)
+			input()
+	else:
+		raise ValueError
 		
 def _process_arg(arg, device):
 	if isinstance(arg, np.ndarray):
