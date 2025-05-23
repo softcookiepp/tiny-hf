@@ -331,8 +331,6 @@ def sd_pipeline_call(
 			if self.do_classifier_free_guidance:
 				noise_pred_uncond, noise_pred_text = noise_pred.chunk(2)
 				noise_pred = noise_pred_uncond + self.guidance_scale * (noise_pred_text - noise_pred_uncond)
-				
-			#return noise_pred
 
 			if self.do_classifier_free_guidance and self.guidance_rescale > 0.0:
 				# Based on 3.4. in https://arxiv.org/pdf/2305.08891.pdf
@@ -358,7 +356,6 @@ def sd_pipeline_call(
 					callback(step_idx, t, latents)
 			if XLA_AVAILABLE:
 				xm.mark_step()
-	return noise_pred
 	if not output_type == "latent":
 		image = self.vae.decode(latents / self.vae.config.scaling_factor, return_dict=False, generator=generator)[
 			0
