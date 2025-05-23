@@ -414,9 +414,10 @@ def test_UNetMidBlock2D():
 	copy_state_dict(hf_module, my_module)
 	test_hf_reimplementation(args, {}, hf_module, "forward", my_module, "forward")
 
-def test_unet_2d_condition(hf_module = None, thf_module = None):
-	a = make_test_data(2, 4, 32, 32)
-	emb = make_test_data(2, 2, 1280)
+def test_unet_2d_condition(hf_module = None, thf_module = None,
+		latent_shape = (2, 4, 32, 32) embed_shape = (2, 2, 1280) ):
+	a = make_test_data(*latent_shape)
+	emb = make_test_data(*embed_shape)
 	
 	if hf_module is None and thf_module is None:
 		from diffusers import UNet2DConditionModel as hf_UNet2DConditionModel
@@ -541,11 +542,13 @@ def test_stable_diffusion_pipeline():
 	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = tg_scheduler, safety_checker = None)
 	
 	
-	# test the unet
-	#test_unet_2d_condition(hf_module.unet, tg_module.unet)
+	
 	
 	# oh wait, i realized its impossible for them to have the same output image if the initial latents are not the same
 	latents = make_test_data(1, 4, 64, 64)
+	
+	# test the unet
+	test_unet_2d_condition(hf_module.unet, tg_module.unet, latents.shape, (2, 77, 768) )
 	
 	# test the image processor
 	test_hf_reimplementation([latents], {}, hf_module.image_processor, "postprocess", tg_module.image_processor, "postprocess")

@@ -992,7 +992,6 @@ class StableDiffusionPipeline(
 				batch_size * num_images_per_prompt,
 				self.do_classifier_free_guidance,
 			)
-		input(prompt_embeds.shape)
 		# 4. Prepare timesteps
 		timesteps, num_inference_steps = retrieve_timesteps(
 			self.scheduler, num_inference_steps, device, timesteps, sigmas
