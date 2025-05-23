@@ -247,8 +247,13 @@ def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_m
 	
 	
 	# compute tiny out first so we don't have to wait for torch
-	tiny_out = my_module.__getattribute__(my_method)(*my_args, **my_kwargs)
-	torch_out = hf_module.__getattribute__(hf_method)(*hf_args, **hf_kwargs)
+	if isinstance(hf_method, str):
+		tiny_out = my_module.__getattribute__(my_method)(*my_args, **my_kwargs)
+		torch_out = hf_module.__getattribute__(hf_method)(*hf_args, **hf_kwargs)
+	else:
+		# function substitute
+		tiny_out = my_method(my_module, *my_args, **my_kwargs)
+		torch_out = hf_method(hf_module, *hf_args, **hf_kwargs)
 	
 	"""
 	if isinstance(torch_out, tuple):
@@ -508,6 +513,7 @@ def test_audio_diffusion_pipeline():
 	test_hf_reimplementation([], {}, hf_module, "__call__", tg_module, "__call__")
 	
 def test_stable_diffusion_pipeline():
+	from testing_rewrites import sd_pipeline_call
 	from tiny_hf.diffusers.pipelines import StableDiffusionPipeline as tg_class
 	from tiny_hf.diffusers.schedulers import DDIMScheduler as tg_scheduler_class
 	
@@ -550,7 +556,7 @@ def test_stable_diffusion_pipeline():
 		None,
 	]
 	test_hf_reimplementation(prepare_latents_test_args, {"latents": latents}, hf_module, "prepare_latents", tg_module, "prepare_latents")
-	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 7, "safety_checker": None, "latents": latents, "output_type": "latent"}, hf_module, "__call__", tg_module, "__call__")
+	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 7, "safety_checker": None, "latents": latents, "output_type": "latent"}, hf_module, sd_pipeline_call, tg_module, sd_pipeline_call)
 
 def test_ddim_scheduler():
 	from tiny_hf.diffusers.schedulers import DDIMScheduler as tg_scheduler_class
