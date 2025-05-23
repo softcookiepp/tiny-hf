@@ -153,6 +153,7 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = 
 		hf_item, tg_item = np.array(hf_dict), np.array(tg_dict)
 		_test_key_errors(hf_item, tg_item, error_threshold, display_images, error_function)
 	elif isinstance(hf_dict, list):
+		input(hf_dict)
 		try:
 			hf_dict = np.array(hf_dict).astype(np.float32)
 		except TypeError:
