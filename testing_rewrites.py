@@ -339,8 +339,8 @@ def sd_pipeline_call(
 				noise_pred = rescale_noise_cfg(noise_pred, noise_pred_text, guidance_rescale=self.guidance_rescale)
 
 			# compute the previous noisy sample x_t -> x_t-1
-			latents = self.scheduler.step(noise_pred, t, latents, **extra_step_kwargs, return_dict=False)[0
-			return latents
+			latents = self.scheduler.step(noise_pred, t, latents, **extra_step_kwargs, return_dict=False)[0]
+			
 			if callback_on_step_end is not None:
 				callback_kwargs = {}
 				for k in callback_on_step_end_tensor_inputs:
