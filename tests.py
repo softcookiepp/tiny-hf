@@ -271,11 +271,6 @@ def test_stable_diffusion_pipeline():
 	# ensure there is no difference in state dict
 	compare_state_dicts(hf_module.unet, tg_module.unet)
 	
-	# ensure all the weights and other thingies in the U-Net are the same
-	#_test_key_errors(hf_module.unet, tg_module.unet)
-	input("beep boop")
-	
-	
 	# oh wait, i realized its impossible for them to have the same output image if the initial latents are not the same
 	latents = make_test_data(1, 4, 64, 64)
 	
@@ -334,6 +329,7 @@ def main():
 	#test_clip_text_model()
 	#test_unet_2d()
 	#test_unet_2d_condition()
+	test_unary()
 	test_interpolate()
 	test_cat()
 	test_ddim_scheduler()

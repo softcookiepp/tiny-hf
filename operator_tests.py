@@ -24,3 +24,7 @@ def test_interpolate():
 	a = np.arange(np.prod(shape)).reshape(shape).astype(np.float32)
 	args = (a, None, 2.0)
 	test_function(args, {}, torch_function = torch.nn.functional.interpolate, tinygrad_function = tg_adapter.F.interpolate)
+
+def test_unary(torch_function, tinygrad_function):
+	shape = tuple( (np.random.randn(4)*10).astype(int) )
+	input(shape)

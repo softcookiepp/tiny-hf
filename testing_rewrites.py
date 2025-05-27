@@ -315,7 +315,7 @@ def sd_pipeline_call(
 			# expand the latents if we are doing classifier free guidance
 			latent_model_input = torch.cat([latents] * 2) if self.do_classifier_free_guidance else latents
 			latent_model_input = self.scheduler.scale_model_input(latent_model_input, t)
-
+			return latent_model_input
 			# predict the noise residual
 			noise_pred = self.unet(
 				latent_model_input,
@@ -326,7 +326,7 @@ def sd_pipeline_call(
 				added_cond_kwargs=added_cond_kwargs,
 				return_dict=False,
 			)[0]
-			return noise_pred
+			#return noise_pred
 			# perform guidance
 			if self.do_classifier_free_guidance:
 				noise_pred_uncond, noise_pred_text = noise_pred.chunk(2)
