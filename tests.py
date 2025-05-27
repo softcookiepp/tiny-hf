@@ -330,7 +330,7 @@ def main():
 	#test_unet_2d()
 	#test_unet_2d_condition()
 	test_all_operators()
-	input("operators tested")
+	
 	test_ddim_scheduler()
 	#test_autoencoderkl()
 	test_cumprod()
