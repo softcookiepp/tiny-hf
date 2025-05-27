@@ -329,7 +329,7 @@ def main():
 	#test_clip_text_model()
 	#test_unet_2d()
 	#test_unet_2d_condition()
-	test_unary()
+	test_unary(None, None)
 	test_interpolate()
 	test_cat()
 	test_ddim_scheduler()
