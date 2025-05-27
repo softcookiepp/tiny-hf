@@ -62,7 +62,7 @@ def _make_input_tensor(arg):
 def test_submodule(torch_module, tg_module):
 	args = []
 	for arg in tg_module._input_spec[0]:
-		args.append(_process_submodule_test_arg(arg)
+		args.append(_process_submodule_test_arg(arg) )
 	kwargs = {}
 	for k, arg in tg_module._input_spec[1]:
 		kwargs[k] = _process_submodule_test_arg(arg)
