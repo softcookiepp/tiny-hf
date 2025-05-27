@@ -69,7 +69,7 @@ def test_submodule(torch_module, tg_module):
 	test_hf_reimplementation(args, kwargs, torch_module, "__call__", tg_module, "__call__")
 	
 def test_all_submodules(torch_module, tg_module):
-	torch_submodules, tg_submodules = get_submodules(torch_module)
+	torch_submodules, tg_submodules = get_submodules(torch_module, tg_module)
 	for k in torch_submodules.keys():
 		torch_sub = torch_submodules[k]
 		tg_sub = tg_submodules[k]
