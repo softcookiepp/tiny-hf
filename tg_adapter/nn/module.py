@@ -244,6 +244,16 @@ class Module:
 	def named_modules(self, memo=None, prefix="", remove_duplicate=True):
 		#raise NotImplementedError
 		# prefix indicates this method is called recursively
+		def _get_named_modules_from_list(v: list, prefix):
+			for i, v2 in enumerate(v):
+				if isinstance(v2, Module):
+					for subk, subv in v2.named_modules(prefix = f"{prefix}.{i}."):
+						yield subk, subv
+				elif isinstance(v2, list):
+					for subk, subv in _get_named_modules_from_list(v2, f"{prefix}.{i}."):
+						yield subk, subv
+				
+		
 		for k, v in self.__dict__.items():
 			if isinstance(v, Module):
 				k = prefix + k
@@ -252,10 +262,8 @@ class Module:
 					# use recursion c:
 					yield subk, subv
 			elif isinstance(v, list):
-				for i, v2 in enumerate(v):
-					if isinstance(v2, Module):
-						for subk, subv in v2.named_modules(prefix = f"{k}.{i}."):
-							yield subk, subv
+				for subk, subv in _get_named_modules_from_list(v, f"{k}."):
+					yield subk, subv
 					
 	
 	def modules(self, remove_duplicate = True):
