@@ -12,7 +12,8 @@ import tg_adapter
 from operator_tests import *
 from testing_utils import compare_state_dicts, copy_state_dict, \
 	inspect_state_dict_devices, make_test_data, test_function, \
-	test_hf_reimplementation, mse, norm_mse, _test_key_errors
+	test_hf_reimplementation, mse, norm_mse, _test_key_errors, \
+	get_submodules
 
 
 
@@ -259,6 +260,9 @@ def test_stable_diffusion_pipeline():
 	
 	hf_scheduler = hf_scheduler_class()
 	tg_scheduler = tg_scheduler_class()
+	
+	get_submodules(hf_scheduler, tg_scheduler)
+	input("pp")
 	
 	# ensure the scheduler is initialized properly
 	_test_key_errors(hf_scheduler, tg_scheduler)
