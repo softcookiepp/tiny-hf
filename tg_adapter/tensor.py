@@ -103,6 +103,12 @@ class AdapterTensor:
 	def data(self):
 		# no idea why this exists :c
 		return self
+	
+	def fill_(self, value):
+		self.tg[:] = value
+	
+	def zero_(self):
+		self.fill_(0)
 		
 	@property
 	def tdtype(self):
