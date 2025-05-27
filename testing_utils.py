@@ -19,10 +19,18 @@ def _get_attributes_from_key(torch_root, tg_root, sd_key):
 			torch_obj = torch_obj[i]
 			tg_obj = tg_obj[i]
 			
-		except:
+		except ValueError:
 			# not an int
-			torch_obj = torch_obj.__getattribute__(k)
-			tg_obj = tg_obj.__getattribute__(k)
+			try:
+				torch_obj.__getattribute__(k)
+				tg_obj.__getattribute__(k)
+				
+				torch_obj = torch_obj.__getattribute__(k)
+				tg_obj = tg_obj.__getattribute__(k)
+			except AttributeError:
+				torch_obj = torch_obj.__getattr__(k)
+				tg_obj = tg_obj.__getattr__(k)
+			
 		yield k, torch_obj, tg_obj
 
 def get_submodules(torch_module, tg_module):
