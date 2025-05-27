@@ -253,8 +253,9 @@ class Module:
 					yield subk, subv
 			elif isinstance(v, list):
 				for i, v2 in enumerate(v):
-					for subk, subv in v2.named_modules(prefix = f"{k}.{i}."):
-						yield subk, subv
+					if isinstance(v2, Module):
+						for subk, subv in v2.named_modules(prefix = f"{k}.{i}."):
+							yield subk, subv
 					
 	
 	def modules(self, remove_duplicate = True):
