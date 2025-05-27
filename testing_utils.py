@@ -53,7 +53,7 @@ def get_submodules(torch_module, tg_module):
 				# key is all good, lets add it
 				tg_submodules[k] = tg_v
 				torch_submodules[k] = torch_v
-	print(torch_submodules.keys() )
+	assert len(torch_submodules) == len(tg_submodules)
 	return torch_submodules, tg_submodules
 
 def compare_state_dicts(torch_module, tga_module, error_threshold = 1.0e-3):
