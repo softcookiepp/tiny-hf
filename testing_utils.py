@@ -36,7 +36,7 @@ def get_submodules(torch_module, tg_module):
 	
 	# then, determine which ones are modules
 	for sd_key in tg_sd.keys():
-		for k, torch_v, tg_v in _get_attributes_from_key(tg_module, sd_key):
+		for k, torch_v, tg_v in _get_attributes_from_key(torch_module, tg_module, sd_key):
 			if (not k in tg_submodules.keys() ) and ( isinstance(torch_v, torch.nn.Module) ):
 				# key is all good, lets add it
 				tg_submodules[k] = tg_v
