@@ -2,10 +2,6 @@ import torch
 import tg_adapter
 from testing_utils import *
 
-def import_non_recursive():
-	from tests import make_test_data, test_function, test_hf_reimplementation
-
-
 def test_cumprod():
 	import_non_recursive()
 	from tg_adapter import F as tinyF
@@ -34,6 +30,14 @@ def test_unary_operators():
 	raise NotImplementedError
 
 def test_scaled_dot_product_attention():
-	q = make_test_data()
-	k = make_test_data()
-	v = make_test_data()
+	q = make_test_data(1, 8, 4096, 40)
+	k = make_test_data(1, 8, 4096, 40)
+	v = make_test_data(1, 8, 4096, 40)
+	test_function( [q, k, v], {}, torch.nn.functional.scaled_dot_product_attention, tg_adapter.F.scaled_dot_product_attention)
+
+
+def test_all_operators():
+	test_cumprod()
+	test_cat()
+	test_interpolate()
+	test_scaled_dot_product_attention()
