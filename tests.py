@@ -6,23 +6,11 @@ import numpy as np
 import os
 import tinygrad
 
-
-from PIL import Image
-
 from tg_adapter import F
 import tg_adapter
 
 from operator_tests import test_cat, test_cumprod
 from testing_utils import compare_state_dicts, copy_state_dict, inspect_state_dict_devices, make_test_data, test_function, test_hf_reimplementation, mse, norm_mse
-
-
-
-
-
-
-
-
-
 
 
 def test_interpolate():
