@@ -27,7 +27,7 @@ def get_submodules(torch_module, tg_module):
 	
 	# then, determine which ones are modules
 	for k in tg_sd.keys():
-		input(_get_attribute_from_key(tg_module, k)
+		input(_get_attribute_from_key(tg_module, k) )
 
 def compare_state_dicts(torch_module, tga_module, error_threshold = 1.0e-3):
 	print(type(torch_module), type(tga_module) )
