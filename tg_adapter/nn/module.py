@@ -129,9 +129,10 @@ class Module:
 		if False or ( (not parent_function in ["__call__", "forward"]) and isinstance(out, tinygrad.Tensor) ):
 			out = recursive_realize(out)
 		"""
-		print(args)
-		print(kwargs)
-		input("heres the input spec thingy")
+		
+		# this is here for the submodule tester thingy
+		self._input_spec = args, kwargs
+		
 		return out
 		
 	def forward(self, *args, **kwargs):

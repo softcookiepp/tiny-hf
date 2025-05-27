@@ -55,11 +55,28 @@ def get_submodules(torch_module, tg_module):
 				torch_submodules[k] = torch_v
 	assert len(torch_submodules) == len(tg_submodules)
 	return torch_submodules, tg_submodules
+
+def _make_input_tensor(arg):
+	return np.random.randn(arg.shape, arg.numpy().dtype)
+	
+def test_submodule(torch_module, tg_module):
+	args = []
+	for arg in tg_module._input_spec[0]:
+		args.append(_process_submodule_test_arg(arg)
+	kwargs = {}
+	for k, arg in tg_module._input_spec[1]:
+		kwargs[k] = _process_submodule_test_arg(arg)
+	test_hf_reimplementation(args, kwargs, torch_module, "__call__", tg_module, "__call__")
 	
 def test_all_submodules(torch_module, tg_module):
 	torch_submodules, tg_submodules = get_submodules(torch_module)
 	for k in torch_submodules.keys():
-		raise NotImplementedError
+		torch_sub = torch_submodules[k]
+		tg_sub = tg_submodules[k]
+		
+		# must have input spec in order to run any tests whatsoever
+		if not tg_sub._input_spec is None:
+			test_submodule(torch_sub, tg_sub)
 
 def compare_state_dicts(torch_module, tga_module, error_threshold = 1.0e-3):
 	print(type(torch_module), type(tga_module) )
@@ -229,6 +246,24 @@ def _process_arg(arg, device):
 	else:
 		# append as is
 		return arg, arg
+		
+def _process_submodule_test_arg(arg):
+	if isinstance(arg, tg_adapter.Tensor):
+		# convert to tensor
+		return _make_input_tensor(arg)
+	elif isinstance(arg, list):
+		arg_list = []
+		for arg2 in arg:
+			a = _process_submodule_test_arg(arg2)
+			arg_list.append(a)
+		return arg_list
+	elif isinstance(arg, tuple):
+		alist = list(arg)
+		arg_list = _process_submodule_test_arg(alist)
+		return tuple(arg_list)
+	else:
+		# append as is
+		return arg
 
 def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_method, error_threshold = 5.0e-4, device = "cuda:0", display_images = False):
 	if not (isinstance(args, tuple) or isinstance(args, list) ):

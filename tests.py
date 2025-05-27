@@ -13,7 +13,7 @@ from operator_tests import *
 from testing_utils import compare_state_dicts, copy_state_dict, \
 	inspect_state_dict_devices, make_test_data, test_function, \
 	test_hf_reimplementation, mse, norm_mse, _test_key_errors, \
-	get_submodules
+	get_submodules, test_all_submodules
 
 
 
@@ -163,6 +163,8 @@ def test_unet_2d_condition(hf_module = None, thf_module = None,
 	
 	args = (a, 3, emb)
 	test_hf_reimplementation(args, {}, hf_module, "__call__", thf_module, "__call__")
+	input("lets do the submodule test!")
+	test_all_submodules(hf_module, thf_module)
 
 def test_unet_2d():
 	from diffusers.models.unets.unet_2d import UNet2DModel as hf_class
@@ -273,8 +275,6 @@ def test_stable_diffusion_pipeline():
 	
 	# ensure there is no difference in state dict
 	compare_state_dicts(hf_module.unet, tg_module.unet)
-	print(len(list(hf_module.unet.named_modules())), len(list(tg_module.unet.named_modules() )) )
-	input("looksie")
 	#compare_state_dicts(hf_module.vae, tg_module.vae)
 	
 	# oh wait, i realized its impossible for them to have the same output image if the initial latents are not the same
