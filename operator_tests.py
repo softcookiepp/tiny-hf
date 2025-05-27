@@ -18,3 +18,4 @@ def test_cat():
 	a = make_test_data(40, 2, 5)
 	b = make_test_data(2, 2, 5)
 	test_function( ([a, b], 0), {}, torch.cat, tg_adapter.cat)
+
