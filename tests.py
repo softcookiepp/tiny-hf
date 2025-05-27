@@ -530,8 +530,11 @@ def test_stable_diffusion_pipeline():
 	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = hf_scheduler, safety_checker = None)
 	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = tg_scheduler, safety_checker = None)
 	
+	# ensure there is no difference in state dict
+	compare_state_dicts(hf_module.unet, tg_module.unet)
+	
 	# ensure all the weights and other thingies in the U-Net are the same
-	_test_key_errors(hf_module.unet, tg_module.unet)
+	#_test_key_errors(hf_module.unet, tg_module.unet)
 	input("beep boop")
 	
 	
