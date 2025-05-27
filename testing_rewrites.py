@@ -326,7 +326,7 @@ def sd_pipeline_call(
 				added_cond_kwargs=added_cond_kwargs,
 				return_dict=False,
 			)[0]
-			
+			return noise_pred
 			# perform guidance
 			if self.do_classifier_free_guidance:
 				noise_pred_uncond, noise_pred_text = noise_pred.chunk(2)
