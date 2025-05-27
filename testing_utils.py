@@ -9,25 +9,40 @@ tga = tg_adapter
 from PIL import Image
 import os
 
-def _get_attribute_from_key(root, sd_key):
+def _get_attributes_from_key(torch_root, tg_root, sd_key):
 	attr_chain = sd_key.split(".")
-	obj = root
+	tg_obj = tg_root
+	torch_obj = torch_root
 	for k in attr_chain:
 		try:
 			i = int(k)
-			obj = obj[i]
+			torch_obj = torch_obj[i]
+			tg_obj = tg_obj[i]
+			
 		except:
 			# not an int
-			obj = obj.__getattribute__(k)
-	return obj
+			torch_obj = torch_obj.__getattribute__(k)
+			tg_obj = tg_obj.__getattribute__(k)
+		yield k, torch_obj, tg_obj
 
 def get_submodules(torch_module, tg_module):
 	# first, get all the state dict keys
 	tg_sd = tg_module.state_dict()
+	torch_sd = torch_module.state_dict()
+	
+	
+	tg_submodules = {}
+	torch_submodules = {}
 	
 	# then, determine which ones are modules
-	for k in tg_sd.keys():
-		input(_get_attribute_from_key(tg_module, k) )
+	for sd_key in tg_sd.keys():
+		for k, torch_v, tg_v in _get_attributes_from_key(tg_module, sd_key):
+			if (not k in tg_submodules.keys() ) and ( isinstance(torch_v, torch.nn.Module) ):
+				# key is all good, lets add it
+				tg_submodules[k] = tg_v
+				torch_submodules[k] = torch_v
+	print(torch_submodules.keys() )
+	return torch_submodules, tg_submodules
 
 def compare_state_dicts(torch_module, tga_module, error_threshold = 1.0e-3):
 	print(type(torch_module), type(tga_module) )
