@@ -251,6 +251,11 @@ class Module:
 				for subk, subv in v.named_modules(prefix = f"{k}."):
 					# use recursion c:
 					yield subk, subv
+			elif isinstance(v, list):
+				for i, v2 in enumerate(v):
+					for subk, subv in v2.named_modules(prefix = f"{k}.{i}."):
+						yield subk, subv
+					
 	
 	def modules(self, remove_duplicate = True):
 		for k, v in self.named_modules(remove_duplicate = remove_duplicate):
