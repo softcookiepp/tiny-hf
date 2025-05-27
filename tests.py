@@ -272,6 +272,7 @@ def test_stable_diffusion_pipeline():
 	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = tg_scheduler, safety_checker = None)
 	
 	get_submodules(hf_module.vae, tg_module.vae)
+	input("meep meep")
 	
 	# ensure there is no difference in state dict
 	compare_state_dicts(hf_module.unet, tg_module.unet)
