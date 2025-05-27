@@ -530,7 +530,9 @@ def test_stable_diffusion_pipeline():
 	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = hf_scheduler, safety_checker = None)
 	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = tg_scheduler, safety_checker = None)
 	
-	
+	# ensure all the weights and other thingies in the U-Net are the same
+	_test_key_errors(hf_module.unet, tg_module.unet)
+	input("beep boop")
 	
 	
 	# oh wait, i realized its impossible for them to have the same output image if the initial latents are not the same
@@ -556,7 +558,7 @@ def test_stable_diffusion_pipeline():
 		None,
 	]
 	test_hf_reimplementation(prepare_latents_test_args, {"latents": latents}, hf_module, "prepare_latents", tg_module, "prepare_latents")
-	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 2, "safety_checker": None, "latents": latents, "output_type": "pil"}, hf_module, sd_pipeline_call, tg_module, sd_pipeline_call)
+	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 15, "safety_checker": None, "latents": latents, "output_type": "pil"}, hf_module, sd_pipeline_call, tg_module, sd_pipeline_call)
 
 def test_ddim_scheduler():
 	from tiny_hf.diffusers.schedulers import DDIMScheduler as tg_scheduler_class
