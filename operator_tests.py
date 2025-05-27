@@ -1,3 +1,10 @@
+import torch
+import tg_adapter
+
+
+def import_non_recursive():
+	from tests import make_test_data, test_function, test_hf_reimplementation
+import_non_recursive()
 
 def test_cumprod():
 	from tg_adapter import F as tinyF
