@@ -272,6 +272,8 @@ def test_stable_diffusion_pipeline():
 	
 	# ensure there is no difference in state dict
 	compare_state_dicts(hf_module.unet, tg_module.unet)
+	print(len(hf_module.unet.named_modules()), len(tg_module.unet.named_modules) )
+	input("looksie")
 	#compare_state_dicts(hf_module.vae, tg_module.vae)
 	
 	# oh wait, i realized its impossible for them to have the same output image if the initial latents are not the same
