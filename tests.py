@@ -272,7 +272,7 @@ def test_stable_diffusion_pipeline():
 	
 	# ensure there is no difference in state dict
 	compare_state_dicts(hf_module.unet, tg_module.unet)
-	print(len(list(hf_module.unet.named_modules())), len(list(tg_module.unet.named_modules)) )
+	print(len(list(hf_module.unet.named_modules())), len(list(tg_module.unet.named_modules() )) )
 	input("looksie")
 	#compare_state_dicts(hf_module.vae, tg_module.vae)
 	
@@ -347,7 +347,6 @@ def main():
 	
 	test_ddim_scheduler()
 	#test_autoencoderkl()
-	test_cumprod()
 	test_stable_diffusion_pipeline()
 	input("look at the outputs first you dumdum")
 	test_clip_tokenizer_fast()
