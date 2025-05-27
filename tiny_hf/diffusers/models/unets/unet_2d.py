@@ -147,6 +147,7 @@ class UNet2DModel(ModelMixin, ConfigMixin):
 		self.conv_in = nn.Conv2d(in_channels, block_out_channels[0], kernel_size=3, padding=(1, 1))
 
 		# time
+		input(time_embedding_type)
 		if time_embedding_type == "fourier":
 			self.time_proj = GaussianFourierProjection(embedding_size=block_out_channels[0], scale=16)
 			timestep_input_dim = 2 * block_out_channels[0]
