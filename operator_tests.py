@@ -25,6 +25,10 @@ def test_interpolate():
 	args = (a, None, 2.0)
 	test_function(args, {}, torch_function = torch.nn.functional.interpolate, tinygrad_function = tg_adapter.F.interpolate)
 
-def test_unary(torch_function, tinygrad_function):
-	shape = tuple( (np.random.randn(4)*10).astype(int) )
-	input(shape)
+def _test_unary(torch_function, tinygrad_function):
+	shape = (4, 2, 6, 8)
+	data = make_test_data(*shape)
+	test_function( (data), {}, torch_function, tinygrad_function)
+	
+def test_unary_operators():
+	
