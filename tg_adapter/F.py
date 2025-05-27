@@ -48,10 +48,6 @@ def group_norm(x, num_groups, weight = None, bias = None, eps = 1.0e-5):
 	
 def scaled_dot_product_attention(query, key, value, attn_mask=None,
 		dropout_p=0.0, is_causal=False, scale=None, enable_gqa=False):
-	print(query.shape, key.shape, value.shape)
-	if hasattr(attn_mask, "shape"):
-		print(attn_mask.shape)
-	input("looksies")
 	query, key, value, attn_mask = convert_to_tg( (query, key, value, attn_mask) )
 	assert_same_device(query.device, key, value, attn_mask)
 	if enable_gqa:
