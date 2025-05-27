@@ -119,6 +119,7 @@ class Module:
 		# get parent function, check if it is not forward or __call__,
 		# then invoke realize() if that is the case
 		parent_function = inspect.stack()[1].function
+		input(self)
 		
 		args, kwargs = convert_to_torch(args, kwargs)
 		
