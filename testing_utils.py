@@ -26,7 +26,7 @@ def compare_state_dicts(torch_module, tga_module, error_threshold = 1.0e-3):
 				print("Key mismatch:", torch_key)
 			key = torch_key
 			torch_value = torch_sd[key].detach().numpy()
-			tga_value = tga_sd[tga_key].to("CPU").realize().numpy()
+			tga_value = tga_sd[tga_key]._tg.to("CPU").realize().numpy()
 			
 			error = mse(torch_value, tga_value)
 			if error >= error_threshold:
