@@ -261,8 +261,7 @@ def test_stable_diffusion_pipeline():
 	hf_scheduler = hf_scheduler_class()
 	tg_scheduler = tg_scheduler_class()
 	
-	get_submodules(hf_scheduler, tg_scheduler)
-	input("pp")
+	
 	
 	# ensure the scheduler is initialized properly
 	_test_key_errors(hf_scheduler, tg_scheduler)
@@ -272,7 +271,8 @@ def test_stable_diffusion_pipeline():
 	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = hf_scheduler, safety_checker = None)
 	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = tg_scheduler, safety_checker = None)
 	
-	
+	get_submodules(hf_scheduler.vae, tg_scheduler.vae)
+	input("pp")
 	
 	# ensure there is no difference in state dict
 	compare_state_dicts(hf_module.unet, tg_module.unet)
