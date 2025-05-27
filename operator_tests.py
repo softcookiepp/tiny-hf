@@ -34,6 +34,7 @@ def test_scaled_dot_product_attention():
 	test_function( [q, k, v], {}, torch.nn.functional.scaled_dot_product_attention, tg_adapter.F.scaled_dot_product_attention)
 
 
+
 def test_all_operators():
 	test_cumprod()
 	test_cat()
