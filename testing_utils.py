@@ -32,7 +32,7 @@ def compare_state_dicts(torch_module, tga_module, error_threshold = 1.0e-3):
 			if error >= error_threshold:
 				print("state dict values don't match for", torch_key)
 				input()
-			assert mse(torch_value, tga_value) < error_threshold
+			assert error < error_threshold
 	except AssertionError:
 		# keys are not equal
 		tga_sd_norm = []
