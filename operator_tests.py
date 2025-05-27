@@ -31,4 +31,9 @@ def _test_unary(torch_function, tinygrad_function):
 	test_function( (data), {}, torch_function, tinygrad_function)
 	
 def test_unary_operators():
-	
+	raise NotImplementedError
+
+def test_scaled_dot_product_attention():
+	q = make_test_data()
+	k = make_test_data()
+	v = make_test_data()
