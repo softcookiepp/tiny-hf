@@ -13,7 +13,9 @@ def _get_attributes_from_key(torch_root, tg_root, sd_key):
 	attr_chain = sd_key.split(".")
 	tg_obj = tg_root
 	torch_obj = torch_root
+	keys = []
 	for k in attr_chain:
+		keys.append(k)
 		try:
 			i = int(k)
 			torch_obj = torch_obj[i]
@@ -33,7 +35,7 @@ def _get_attributes_from_key(torch_root, tg_root, sd_key):
 			except AttributeError:
 				tg_obj = tg_obj.__getattr__(k)
 			
-		yield k, torch_obj, tg_obj
+		yield ".".join(keys), torch_obj, tg_obj
 
 def get_submodules(torch_module, tg_module):
 	# first, get all the state dict keys
