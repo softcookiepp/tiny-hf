@@ -12,6 +12,7 @@ class Module:
 	def __init__(self, *args, **kwargs):
 		self._train = True
 		self._buffers = {}
+		self._input_spec = None
 	
 	def add_module(self, name: str, module = None):
 		assert not name in self.__dict__.keys() or self.__getattribute__(name) == module
@@ -128,6 +129,9 @@ class Module:
 		if False or ( (not parent_function in ["__call__", "forward"]) and isinstance(out, tinygrad.Tensor) ):
 			out = recursive_realize(out)
 		"""
+		print(args)
+		print(kwargs)
+		input("heres the input spec thingy")
 		return out
 		
 	def forward(self, *args, **kwargs):

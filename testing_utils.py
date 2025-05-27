@@ -55,6 +55,11 @@ def get_submodules(torch_module, tg_module):
 				torch_submodules[k] = torch_v
 	assert len(torch_submodules) == len(tg_submodules)
 	return torch_submodules, tg_submodules
+	
+def test_all_submodules(torch_module, tg_module):
+	torch_submodules, tg_submodules = get_submodules(torch_module)
+	for k in torch_submodules.keys():
+		raise NotImplementedError
 
 def compare_state_dicts(torch_module, tga_module, error_threshold = 1.0e-3):
 	print(type(torch_module), type(tga_module) )

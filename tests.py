@@ -271,9 +271,6 @@ def test_stable_diffusion_pipeline():
 	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = hf_scheduler, safety_checker = None)
 	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = tg_scheduler, safety_checker = None)
 	
-	get_submodules(hf_module.vae, tg_module.vae)
-	input("meep meep")
-	
 	# ensure there is no difference in state dict
 	compare_state_dicts(hf_module.unet, tg_module.unet)
 	print(len(list(hf_module.unet.named_modules())), len(list(tg_module.unet.named_modules() )) )
@@ -284,17 +281,17 @@ def test_stable_diffusion_pipeline():
 	latents = make_test_data(1, 4, 64, 64)
 	
 	# test the vae too
-	test_hf_reimplementation([latents], {}, hf_module.vae, "decode", tg_module.vae, "decode")
+	#test_hf_reimplementation([latents], {}, hf_module.vae, "decode", tg_module.vae, "decode")
 	# then copy the state dict from the torch model to the tinygrad one and see if it helps at all
 	copy_state_dict(hf_module.vae, tg_module.vae)
 	test_hf_reimplementation([latents], {}, hf_module.vae, "decode", tg_module.vae, "decode")
-	input("does the vae work?")
+	#input("does the vae work?")
 	
 	# test the unet
-	test_unet_2d_condition(hf_module.unet, tg_module.unet, latents.shape, (1, 77, 768) )
+	#test_unet_2d_condition(hf_module.unet, tg_module.unet, latents.shape, (1, 77, 768) )
 	copy_state_dict(hf_module.unet, tg_module.unet)
 	test_unet_2d_condition(hf_module.unet, tg_module.unet, latents.shape, (1, 77, 768) )
-	input("does the unet work?")
+	#input("does the unet work?")
 	
 	# test prompt encoding
 	test_hf_reimplementation(["a squishy pp", "cpu", 1, True], {}, hf_module, "encode_prompt", tg_module, "encode_prompt")
