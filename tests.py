@@ -279,6 +279,7 @@ def test_stable_diffusion_pipeline():
 	
 	# test the vae too
 	test_hf_reimplementation([latents], {}, hf_module.vae, "decode", tg_module.vae, "decode")
+	input("does the vae work?")
 	
 	# test the unet
 	# Ok, so the unet conditioner thingy is semi-broken, and I really don't know why...
