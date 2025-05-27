@@ -9,17 +9,12 @@ import tinygrad
 from tg_adapter import F
 import tg_adapter
 
-from operator_tests import test_cat, test_cumprod
+from operator_tests import *
 from testing_utils import compare_state_dicts, copy_state_dict, \
 	inspect_state_dict_devices, make_test_data, test_function, \
 	test_hf_reimplementation, mse, norm_mse, _test_key_errors
 
 
-def test_interpolate():
-	shape = (2, 3, 6, 6)
-	a = np.arange(np.prod(shape)).reshape(shape).astype(np.float32)
-	args = (a, None, 2.0)
-	test_function(*args, torch_function = torch.nn.functional.interpolate, tinygrad_function = F.interpolate)
 
 
 	

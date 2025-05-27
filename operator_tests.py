@@ -19,3 +19,8 @@ def test_cat():
 	b = make_test_data(2, 2, 5)
 	test_function( ([a, b], 0), {}, torch.cat, tg_adapter.cat)
 
+def test_interpolate():
+	shape = (2, 3, 6, 6)
+	a = np.arange(np.prod(shape)).reshape(shape).astype(np.float32)
+	args = (a, None, 2.0)
+	test_function(args, {}, torch_function = torch.nn.functional.interpolate, tinygrad_function = tg_adapter.F.interpolate)
