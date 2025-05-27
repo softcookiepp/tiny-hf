@@ -13,6 +13,8 @@ from PIL import Image
 from tg_adapter import F
 import tg_adapter
 
+from operator_tests import test_cat, test_cumprod
+
 def compare_state_dicts(torch_module, tga_module, error_threshold = 1.0e-3):
 	print(type(torch_module), type(tga_module) )
 	torch_sd = torch_module.state_dict()
@@ -86,28 +88,8 @@ def make_test_data(*shape):
 	return np.random.randn(np.prod(shape) ).reshape(shape).astype(np.float32)
 
 
-def test_function(inp_args, torch_function, tinygrad_function, error_threshold = 1.0e-4):
-	torch_inp = []
-	tiny_inp = []
-	for inp in inp_args:
-		if isinstance(inp, np.ndarray):
-			torch_inp.append(torch.tensor(inp) )
-			tiny_inp.append(tinygrad.Tensor(inp) )
-		else:
-			torch_inp.append(inp)
-			tiny_inp.append(inp)
-	torch_out = torch_function(*tuple(torch_inp) )
-	tiny_out = tinygrad_function(*tuple(tiny_inp) )
-	
-	#print(tiny_out.shape, torch_out.shape )
-	error = mse(tiny_out.numpy(), torch_out.numpy())
-	print(f"MSE for {torch_function.__name__} and {tinygrad_function.__name__}:",  error)
-	if error > error_threshold:
-		
-		print(torch_out.numpy() )
-		print( tiny_out.numpy() )
-		print(torch_out.shape, tiny_out.shape)
-		input()
+def test_function(inp_args, inp_kwargs, torch_function, tinygrad_function, error_threshold = 1.0e-5):
+	test_hf_reimplementation( inp_args, inp_kwargs, torch_function, "__call__", tinygrad_function, "__call__", error_threshold = error_threshold)
 
 def test_interpolate():
 	shape = (2, 3, 6, 6)
@@ -451,15 +433,7 @@ def test_functional_linear():
 	weight = make_test_data(5, 10)
 	test_function(inp, weight, torchF.linear, tinyF.linear)
 
-def test_cumprod():
-	from tg_adapter import F as tinyF
-	inp = np.arange(5*4).reshape(5, 4).astype(np.float32)
-	test_function( (inp, 0), torch.cumprod, tinyF.cumprod)
-	
-def test_cat():
-	a = make_test_data(40, 2, 5)
-	b = make_test_data(2, 2, 5)
-	test_hf_reimplementation( ([a, b], 0), {}, torch.cat, "__call__", tg_adapter.cat, "__call__")
+
 
 def test_clip_tokenizer():
 	from tiny_hf.transformers import CLIPTokenizer as tg_module
