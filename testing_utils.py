@@ -7,6 +7,7 @@ import numpy as np
 import tg_adapter
 tga = tg_adapter
 from PIL import Image
+import os
 
 def compare_state_dicts(torch_module, tga_module, error_threshold = 1.0e-3):
 	print(type(torch_module), type(tga_module) )
