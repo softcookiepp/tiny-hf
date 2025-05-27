@@ -19,8 +19,10 @@ def normal_(tensor, mean = 0.0, std = 1.0, generator = None):
 	tensor = convert_to_tg(tensor)
 	if not generator is None:
 		raise NotImplementedError
-	norm = tinygrad.Tensor.normal(*tensor.shape, mean, std,
-		tensor.requires_grad,
+	norm = tinygrad.Tensor.normal(*tensor.shape,
+		mean = mean,
+		std = std,
+		requires_grad = tensor.requires_grad,
 		dtype = tensor.dtype,
 		device = tensor.device)
 	return AT(tensor.assign(norm) )
@@ -31,8 +33,10 @@ def trunc_normal_(tensor, mean = 0.0, std = 1.0, a = -2.0, b = 2.0, generator = 
 	tensor = tensor.tg
 	if not generator is None:
 		raise NotImplementedError
-	norm = tinygrad.Tensor.normal(*tensor.shape, mean, std,
-		tensor.requires_grad,
+	norm = tinygrad.Tensor.normal(*tensor.shape,
+		mean = mean,
+		std = std,
+		requires_grad = tensor.requires_grad,
 		dtype = tensor.dtype,
 		device = tensor.device)
 	norm = norm.clamp(a, b)
