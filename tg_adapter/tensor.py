@@ -105,7 +105,7 @@ class AdapterTensor:
 		return self
 	
 	def fill_(self, value):
-		self.tg.assign(value)
+		self.tg.assign(self.tg.zeros_like() + value)
 	
 	def zero_(self):
 		self.fill_(0)
