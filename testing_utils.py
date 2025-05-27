@@ -23,12 +23,14 @@ def _get_attributes_from_key(torch_root, tg_root, sd_key):
 			# not an int
 			try:
 				torch_obj.__getattribute__(k)
-				tg_obj.__getattribute__(k)
-				
 				torch_obj = torch_obj.__getattribute__(k)
-				tg_obj = tg_obj.__getattribute__(k)
 			except AttributeError:
 				torch_obj = torch_obj.__getattr__(k)
+			
+			try:
+				tg_obj.__getattribute__(k)
+				tg_obj = tg_obj.__getattribute__(k)
+			except AttributeError:
 				tg_obj = tg_obj.__getattr__(k)
 			
 		yield k, torch_obj, tg_obj
