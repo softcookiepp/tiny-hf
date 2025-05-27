@@ -285,8 +285,10 @@ def test_stable_diffusion_pipeline():
 	input("does the vae work?")
 	
 	# test the unet
-	# Ok, so the unet conditioner thingy is semi-broken, and I really don't know why...
 	test_unet_2d_condition(hf_module.unet, tg_module.unet, latents.shape, (1, 77, 768) )
+	copy_state_dict(hf_module.unet, tg_module.unet)
+	test_unet_2d_condition(hf_module.unet, tg_module.unet, latents.shape, (1, 77, 768) )
+	input("does the unet work?")
 	
 	# test prompt encoding
 	test_hf_reimplementation(["a squishy pp", "cpu", 1, True], {}, hf_module, "encode_prompt", tg_module, "encode_prompt")
