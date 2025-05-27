@@ -338,7 +338,7 @@ def sd_pipeline_call(
 
 			# compute the previous noisy sample x_t -> x_t-1
 			latents = self.scheduler.step(noise_pred, t, latents, **extra_step_kwargs, return_dict=False)[0]
-			return latents
+			return latents, noise_pred
 			#return noise_pred, latents, t
 			if callback_on_step_end is not None:
 				callback_kwargs = {}
