@@ -98,6 +98,11 @@ class AdapterTensor:
 	@property
 	def dtype(self):
 		return self._dtype
+	
+	@property
+	def data(self):
+		# no idea why this exists :c
+		return self
 		
 	@property
 	def tdtype(self):
