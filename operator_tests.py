@@ -35,7 +35,19 @@ def test_scaled_dot_product_attention():
 def test_gelu():
 	_test_unary(torch.nn.functional.gelu, tg_adapter.F.gelu, np.arange(1000).astype(np.float32) - 500.0 )
 
+
+def _test_chunk(dim):	
+	data = make_test_data(16, 8, 4, 8)
+	test_function([data, 2, dim], {}, torch.chunk, tiny_hf.chunk)
+
+def test_chunk():
+	for i in range(4):
+		_test_chunk(i)
+	_test_chunk(-1)
+	
+
 def test_all_operators():
+	test_chunk()
 	test_cumprod()
 	test_cat()
 	test_interpolate()
