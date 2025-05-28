@@ -79,15 +79,16 @@ def embedding(inp, weight, padding_idx=None, max_norm=None, norm_type=2.0, scale
 def _true_gelu(x: tinygrad.Tensor):
 	return x*(1 + (x / math.sqrt(2) ).erf() ) / 2
 
-def gelu(x, approximation = "tanh"):
+def gelu(x, approximation = None):
 	x = convert_to_tg(x)
 	if approximation is None:
-		#raise NotImplementedError
+		# use my own implementation, _true_gelu
 		return convert_to_torch(_true_gelu(x) )
-		
 	elif approximation == "tanh":
 		# Tinygrad uses the tanh approximation internally
 		return convert_to_torch(x.gelu() )
+	else:
+		raise ValueError
 
 mish = lambda x: convert_to_torch(convert_to_tg(x).mish() )
 sigmoid = lambda x: convert_to_torch(convert_to_tg(x).sigmoid() )
