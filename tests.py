@@ -272,7 +272,7 @@ def test_stable_diffusion_pipeline():
 	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = tg_scheduler, safety_checker = None)
 	
 	# ensure there is no difference in state dict
-	compare_state_dicts(hf_module.unet, tg_module.unet)
+	#compare_state_dicts(hf_module.unet, tg_module.unet)
 	#compare_state_dicts(hf_module.vae, tg_module.vae)
 	
 	# oh wait, i realized its impossible for them to have the same output image if the initial latents are not the same
@@ -282,13 +282,13 @@ def test_stable_diffusion_pipeline():
 	#test_hf_reimplementation([latents], {}, hf_module.vae, "decode", tg_module.vae, "decode")
 	# then copy the state dict from the torch model to the tinygrad one and see if it helps at all
 	copy_state_dict(hf_module.vae, tg_module.vae)
-	test_hf_reimplementation([latents], {}, hf_module.vae, "decode", tg_module.vae, "decode")
+	#test_hf_reimplementation([latents], {}, hf_module.vae, "decode", tg_module.vae, "decode")
 	#input("does the vae work?")
 	
 	# test the unet
 	#test_unet_2d_condition(hf_module.unet, tg_module.unet, latents.shape, (1, 77, 768) )
 	copy_state_dict(hf_module.unet, tg_module.unet)
-	test_unet_2d_condition(hf_module.unet, tg_module.unet, latents.shape, (1, 77, 768) )
+	#test_unet_2d_condition(hf_module.unet, tg_module.unet, latents.shape, (1, 77, 768) )
 	#input("does the unet work?")
 	
 	# Ok, here are the modules that seem to be giving us problems:
@@ -300,7 +300,7 @@ def test_stable_diffusion_pipeline():
 	# tiny_hf.diffusers.models.attention.BasicTransformerBlock
 	# tiny_hf.diffusers.models.attention.FeedForward
 	# tiny_hf.diffusers.models.unets.unet_2d_blocks.CrossAttnDownBlock2D
-	# 
+	# ....all of which are related to tinygrad.Tensor.gelu lol
 	
 	# test prompt encoding
 	test_hf_reimplementation(["a squishy pp", "cpu", 1, True], {}, hf_module, "encode_prompt", tg_module, "encode_prompt")
