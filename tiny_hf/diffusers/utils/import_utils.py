@@ -207,7 +207,8 @@ def is_torch_xla_available():
 
 
 def is_torch_npu_available():
-    return _torch_npu_available
+    #return _torch_npu_available
+    return False
 
 
 def is_flax_available():
