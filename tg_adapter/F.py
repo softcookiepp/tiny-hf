@@ -3,6 +3,7 @@ import numpy as np
 from .tensor import convert_to_tg, convert_to_torch, assert_same_device
 from .debugging import maybe_realize
 from copy import deepcopy
+import math
 
 def interpolate(inp,
 		size=None,
@@ -74,7 +75,20 @@ def pad(inp, pad, mode='constant', value=None):
 def embedding(inp, weight, padding_idx=None, max_norm=None, norm_type=2.0, scale_grad_by_freq=False, sparse=False):
 	raise NotImplementedError
 
-gelu = lambda x: convert_to_torch(convert_to_tg(x).gelu() )
+
+def _true_gelu(x: tinygrad.Tensor):
+	return x*(1 + (x / math.sqrt(2) ).erf() ) / 2
+
+def gelu(x, approximation = None):
+	x = convert_to_tg(x)
+	if approximation is None:
+		#raise NotImplementedError
+		return convert_to_torch(_true_gelu(x) )
+		
+	elif approximation == "tanh":
+		# Tinygrad uses the tanh approximation internally
+		return convert_to_torch(x.gelu() )
+
 mish = lambda x: convert_to_torch(convert_to_tg(x).mish() )
 sigmoid = lambda x: convert_to_torch(convert_to_tg(x).sigmoid() )
 
