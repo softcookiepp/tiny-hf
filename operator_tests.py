@@ -24,8 +24,6 @@ def _test_unary(torch_function, tinygrad_function):
 	data = make_test_data(*shape)
 	test_function( (data), {}, torch_function, tinygrad_function)
 	
-def test_unary_operators():
-	raise NotImplementedError
 
 def test_scaled_dot_product_attention():
 	q = make_test_data(1, 8, 4096, 40)
