@@ -103,7 +103,7 @@ def compare_state_dicts(torch_module, tga_module, error_threshold = 1.0e-3):
 			tga_value = tga_sd[tga_key]._tg.to("CPU").realize().numpy()
 			
 			error = mse(torch_value, tga_value)
-			if error >= error_threshold:
+			if error >= error_threshold or np.isnan(error):
 				print("state dict values don't match for", torch_key)
 				input()
 			assert error < error_threshold
