@@ -79,7 +79,7 @@ def embedding(inp, weight, padding_idx=None, max_norm=None, norm_type=2.0, scale
 def _true_gelu(x: tinygrad.Tensor):
 	return x*(1 + (x / math.sqrt(2) ).erf() ) / 2
 
-def gelu(x, approximation = None):
+def gelu(x, approximation = "tanh"):
 	x = convert_to_tg(x)
 	if approximation is None:
 		#raise NotImplementedError
