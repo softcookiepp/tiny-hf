@@ -62,6 +62,7 @@ def _make_input_tensor(arg):
 def test_submodule(torch_module, tg_module):
 	# might as well
 	compare_state_dicts(torch_module, tg_module)
+	copy_state_dict(torch_module, tg_module)
 	args = []
 	for arg in tg_module._input_spec[0]:
 		args.append(_process_submodule_test_arg(arg) )
