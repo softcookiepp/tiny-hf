@@ -19,9 +19,10 @@ def test_interpolate():
 	args = (a, None, 2.0)
 	test_function(args, {}, torch_function = torch.nn.functional.interpolate, tinygrad_function = tg_adapter.F.interpolate)
 
-def _test_unary(torch_function, tinygrad_function):
-	shape = (4, 2, 6, 8)
-	data = make_test_data(*shape)
+def _test_unary(torch_function, tinygrad_function, data = None):
+	if data is None:
+		shape = (4, 2, 6, 8)
+		data = make_test_data(*shape)
 	test_function( (data), {}, torch_function, tinygrad_function)
 	
 
@@ -32,7 +33,7 @@ def test_scaled_dot_product_attention():
 	test_function( [q, k, v], {}, torch.nn.functional.scaled_dot_product_attention, tg_adapter.F.scaled_dot_product_attention)
 
 def test_gelu():
-	_test_unary(torch.nn.functional.gelu, tg_adapter.F.gelu)
+	_test_unary(torch.nn.functional.gelu, tg_adapter.F.gelu, np.arange(1000).astype(np.float32) - 500.0 )
 
 def test_all_operators():
 	test_cumprod()
