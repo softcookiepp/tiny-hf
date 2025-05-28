@@ -68,7 +68,6 @@ def test_submodule(torch_module, tg_module):
 	kwargs = {}
 	for k, arg in tg_module._input_spec[1].items():
 		kwargs[k] = _process_submodule_test_arg(arg)
-	print(args, kwargs)
 	test_hf_reimplementation(args, kwargs, torch_module, "__call__", tg_module, "__call__")
 	
 def test_all_submodules(torch_module, tg_module):
