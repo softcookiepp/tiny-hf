@@ -11,6 +11,7 @@ def _test_geglu(use_bias = True):
 	tg_module = tg_class(8, 4, use_bias)
 	copy_state_dict(hf_module, tg_module)
 	a = np.arange(64*8).reshape(64, 8).astype(np.float32)*100
+	input(a)
 	test_hf_reimplementation([a], {}, hf_module, "__call__", tg_module, "__call__")
 
 def test_geglu():
