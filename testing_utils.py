@@ -157,6 +157,7 @@ def norm_mse(predicted, actual):
 	return mse( normalize(predicted), normalize(actual) )
 
 def mse(predicted, actual):
+	assert predicted.shape == actual.shape
 	return np.sum( (predicted - actual)**2 )
 	
 def make_test_data(*shape):
