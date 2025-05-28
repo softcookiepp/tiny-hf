@@ -354,6 +354,7 @@ def main():
 	#test_unet_2d()
 	#test_unet_2d_condition()
 	test_modules()
+	input("peepeepoopoo")
 	test_all_operators()
 	
 	test_ddim_scheduler()
