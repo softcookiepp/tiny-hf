@@ -3,6 +3,15 @@ import tg_adapter
 from testing_utils import *
 
 
+def test_geglu():
+	from tiny_hf.diffusers.models.activations import GEGLU as tg_class
+	from diffusers.models.activations import GEGLU as hf_class
+	
+	hf_module = hf_class(8, 4)
+	tg_module = tg_class(8, 4)
+	copy_state_dict(hf_module, tg_module)
+	a = make_test_data(4, 8, 8)
+	test_hf_reimplementation([a], {}, hf_module, "__call__", tg_module, "__call__")
 
 def test_modules():
-	raise NotImplementedError
+	test_geglu()
