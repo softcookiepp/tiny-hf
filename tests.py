@@ -355,6 +355,7 @@ def main():
 	#test_unet_2d_condition()
 	test_modules()
 	test_all_operators()
+	input("just wait for now hehe")
 	
 	test_ddim_scheduler()
 	#test_autoencoderkl()
