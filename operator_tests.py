@@ -38,7 +38,7 @@ def test_gelu():
 
 def _test_chunk(dim):	
 	data = make_test_data(16, 8, 4, 8)
-	test_function([data, 2, dim], {}, torch.chunk, tiny_hf.chunk)
+	test_function([data, 2, dim], {}, torch.chunk, tg_adapter.chunk)
 
 def test_chunk():
 	for i in range(4):
