@@ -33,10 +33,12 @@ def test_scaled_dot_product_attention():
 	v = make_test_data(1, 8, 4096, 40)
 	test_function( [q, k, v], {}, torch.nn.functional.scaled_dot_product_attention, tg_adapter.F.scaled_dot_product_attention)
 
-
+def test_gelu():
+	_test_unary(torch.nn.functional.gelu, tg_adapter.F.gelu)
 
 def test_all_operators():
 	test_cumprod()
 	test_cat()
 	test_interpolate()
 	test_scaled_dot_product_attention()
+	test_gelu()

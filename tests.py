@@ -10,13 +10,11 @@ from tg_adapter import F
 import tg_adapter
 
 from operator_tests import *
+from module_tests import *
 from testing_utils import compare_state_dicts, copy_state_dict, \
 	inspect_state_dict_devices, make_test_data, test_function, \
 	test_hf_reimplementation, mse, norm_mse, _test_key_errors, \
 	get_submodules, test_all_submodules
-
-
-
 
 	
 
@@ -355,6 +353,7 @@ def main():
 	#test_clip_text_model()
 	#test_unet_2d()
 	#test_unet_2d_condition()
+	test_modules()
 	test_all_operators()
 	
 	test_ddim_scheduler()

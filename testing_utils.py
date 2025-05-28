@@ -60,12 +60,15 @@ def _make_input_tensor(arg):
 	return np.random.randn(int(np.prod(arg.shape)) ).astype(arg.numpy().dtype).reshape(arg.shape)
 	
 def test_submodule(torch_module, tg_module):
+	# might as well
+	compare_state_dicts(torch_module, tg_module)
 	args = []
 	for arg in tg_module._input_spec[0]:
 		args.append(_process_submodule_test_arg(arg) )
 	kwargs = {}
 	for k, arg in tg_module._input_spec[1].items():
 		kwargs[k] = _process_submodule_test_arg(arg)
+	
 	test_hf_reimplementation(args, kwargs, torch_module, "__call__", tg_module, "__call__")
 	
 def test_all_submodules(torch_module, tg_module):
