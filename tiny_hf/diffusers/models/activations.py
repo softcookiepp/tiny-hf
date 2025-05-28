@@ -120,7 +120,8 @@ class GEGLU(nn.Module):
             return torch_npu.npu_geglu(hidden_states, dim=-1, approximate=1)[0]
         else:
             hidden_states, gate = hidden_states.chunk(2, dim=-1)
-            return hidden_states * self.gelu(gate)
+            shape = hidden_states.shape
+            return (hidden_states.reshape(-1) * self.gelu(gate).reshape(-1)).reshape(hidden_states.shape)
 
 
 class SwiGLU(nn.Module):
