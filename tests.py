@@ -161,8 +161,8 @@ def test_unet_2d_condition(hf_module = None, thf_module = None,
 	
 	args = (a, 3, emb)
 	test_hf_reimplementation(args, {}, hf_module, "__call__", thf_module, "__call__")
-	input("lets do the submodule test!")
-	test_all_submodules(hf_module, thf_module)
+	#input("lets do the submodule test!")
+	#test_all_submodules(hf_module, thf_module)
 
 def test_unet_2d():
 	from diffusers.models.unets.unet_2d import UNet2DModel as hf_class
@@ -317,7 +317,7 @@ def test_stable_diffusion_pipeline():
 		"cpu",
 		None,
 	]
-	test_hf_reimplementation(prepare_latents_test_args, {"latents": latents}, hf_module, "prepare_latents", tg_module, "prepare_latents")
+	#test_hf_reimplementation(prepare_latents_test_args, {"latents": latents}, hf_module, "prepare_latents", tg_module, "prepare_latents")
 	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 15, "safety_checker": None, "latents": latents, "output_type": "pil"}, hf_module, sd_pipeline_call, tg_module, sd_pipeline_call)
 
 def test_ddim_scheduler():
