@@ -293,6 +293,17 @@ def test_stable_diffusion_pipeline():
 	test_unet_2d_condition(hf_module.unet, tg_module.unet, latents.shape, (1, 77, 768) )
 	#input("does the unet work?")
 	
+	# Ok, here are the modules that seem to be giving us problems:
+	# tiny_hf.diffusers.models.unets.unet_2d_blocks.CrossAttnDownBlock2D
+	# tiny_hf.diffusers.models.transformers.transformer_2d.Transformer2DModel
+	# tiny_hf.diffusers.models.attention.BasicTransformerBlock
+	# tiny_hf.diffusers.models.attention.FeedForward
+	# tiny_hf.diffusers.models.activations.GEGLU
+	# tiny_hf.diffusers.models.attention.BasicTransformerBlock
+	# tiny_hf.diffusers.models.attention.FeedForward
+	# tiny_hf.diffusers.models.unets.unet_2d_blocks.CrossAttnDownBlock2D
+	# 
+	
 	# test prompt encoding
 	test_hf_reimplementation(["a squishy pp", "cpu", 1, True], {}, hf_module, "encode_prompt", tg_module, "encode_prompt")
 	

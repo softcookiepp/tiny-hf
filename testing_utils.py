@@ -57,14 +57,14 @@ def get_submodules(torch_module, tg_module):
 	return torch_submodules, tg_submodules
 
 def _make_input_tensor(arg):
-	return np.random.randn(arg.shape, arg.numpy().dtype)
+	return np.random.randn(int(np.prod(arg.shape)) ).astype(arg.numpy().dtype).reshape(arg.shape)
 	
 def test_submodule(torch_module, tg_module):
 	args = []
 	for arg in tg_module._input_spec[0]:
 		args.append(_process_submodule_test_arg(arg) )
 	kwargs = {}
-	for k, arg in tg_module._input_spec[1]:
+	for k, arg in tg_module._input_spec[1].items():
 		kwargs[k] = _process_submodule_test_arg(arg)
 	test_hf_reimplementation(args, kwargs, torch_module, "__call__", tg_module, "__call__")
 	
@@ -73,6 +73,9 @@ def test_all_submodules(torch_module, tg_module):
 	for k in torch_submodules.keys():
 		torch_sub = torch_submodules[k]
 		tg_sub = tg_submodules[k]
+		if isinstance(tg_sub, list):
+			# module lists cannot be called
+			continue
 		
 		# must have input spec in order to run any tests whatsoever
 		if not tg_sub._input_spec is None:

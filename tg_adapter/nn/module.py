@@ -131,7 +131,7 @@ class Module:
 		"""
 		
 		# this is here for the submodule tester thingy
-		self._input_spec = args, kwargs
+		self._input_spec = [args, kwargs]
 		
 		return out
 		
