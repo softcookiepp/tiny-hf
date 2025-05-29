@@ -10,8 +10,10 @@ def test_cumprod():
 
 def test_cat():
 	a = make_test_data(40, 2, 5)
-	b = make_test_data(2, 2, 5)
-	test_function( ([a, b], 0), {}, torch.cat, tg_adapter.cat)
+	b = make_test_data(40, 2, 5)
+	for i in range(3):
+		test_function( ([a, b], i), {}, torch.cat, tg_adapter.cat)
+	test_function( ([a, b], -1), {}, torch.cat, tg_adapter.cat)
 
 def test_interpolate():
 	shape = (2, 3, 6, 6)
@@ -35,6 +37,12 @@ def test_scaled_dot_product_attention():
 def test_gelu():
 	_test_unary(torch.nn.functional.gelu, tg_adapter.F.gelu, np.arange(1000).astype(np.float32) - 500.0 )
 
+def test_sigmoid():
+	_test_unary(torch.nn.functional.sigmoid, tg_adapter.F.sigmoid, np.arange(1000).astype(np.float32) - 500.0 )
+
+def test_mish():
+	_test_unary(torch.nn.functional.mish, tg_adapter.F.mish, np.arange(1000).astype(np.float32) - 500.0 )
+
 
 def _test_chunk(dim):	
 	data = make_test_data(16, 8, 4, 8)
@@ -44,6 +52,10 @@ def test_chunk():
 	for i in range(4):
 		_test_chunk(i)
 	_test_chunk(-1)
+
+def test_clamp():
+	data = make_test_data(3, 5, 8)
+	test_function([data, 0.0, 0.5], {} torch.nn.functional.clamp, tg_adapter.F.clamp)
 	
 
 def test_all_operators():
@@ -53,3 +65,4 @@ def test_all_operators():
 	test_interpolate()
 	test_scaled_dot_product_attention()
 	test_gelu()
+	test_clamp()
