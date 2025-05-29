@@ -283,7 +283,11 @@ def test_stable_diffusion_pipeline():
 	#test_hf_reimplementation([latents], {}, hf_module.vae, "decode", tg_module.vae, "decode")
 	# then copy the state dict from the torch model to the tinygrad one and see if it helps at all
 	copy_state_dict(hf_module.vae, tg_module.vae)
-	#test_hf_reimplementation([latents], {}, hf_module.vae, "decode", tg_module.vae, "decode")
+	test_hf_reimplementation([latents], {}, hf_module.vae, "__call__", tg_module.vae, "__call__")
+	
+	# lets do the submodule test on the vae just in case...
+	test_all_submodules(hf_module.vae, tg_module.vae)
+	
 	#input("does the vae work?")
 	
 	# test the unet
@@ -291,6 +295,8 @@ def test_stable_diffusion_pipeline():
 	copy_state_dict(hf_module.unet, tg_module.unet)
 	#test_unet_2d_condition(hf_module.unet, tg_module.unet, latents.shape, (1, 77, 768) )
 	#input("does the unet work?")
+	
+	
 	
 	# even after gelu was fixed, there is even more that aren't working :c
 	# tiny_hf.diffusers.models.unets.unet_2d_blocks.UpBlock2D
@@ -363,8 +369,8 @@ def main():
 	
 	#test_ddim_scheduler()
 	#input("peepee")
-	test_autoencoderkl()
-	input("poopoo")
+	#test_autoencoderkl()
+	#input("poopoo")
 	test_stable_diffusion_pipeline()
 	input("look at the outputs first you dumdum")
 	test_clip_tokenizer_fast()
