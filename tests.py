@@ -270,7 +270,7 @@ def test_stable_diffusion_pipeline():
 	
 	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, safety_checker = None)
 	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, safety_checker = None)
-	
+	input(tg_module.scheduler)
 	# ensure there is no difference in state dict
 	#compare_state_dicts(hf_module.unet, tg_module.unet)
 	#compare_state_dicts(hf_module.vae, tg_module.vae)
