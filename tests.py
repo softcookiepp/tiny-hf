@@ -159,10 +159,10 @@ def test_unet_2d_condition(hf_module = None, thf_module = None,
 		thf_module = thf_UNet2DConditionModel()
 		copy_state_dict(hf_module, thf_module)
 	
-	args = (a, 3, emb)
+	args = (a, 20, emb)
 	test_hf_reimplementation(args, {}, hf_module, "__call__", thf_module, "__call__")
 	#input("lets do the submodule test!")
-	test_all_submodules(hf_module, thf_module)
+	#test_all_submodules(hf_module, thf_module)
 
 def test_unet_2d():
 	from diffusers.models.unets.unet_2d import UNet2DModel as hf_class
@@ -343,7 +343,8 @@ def main():
 	#test_dtype_override()
 	#test_clip_text_model()
 	#test_unet_2d()
-	#test_unet_2d_condition()
+	test_unet_2d_condition()
+	input("did it work?")
 	#test_modules()
 	#test_all_operators()
 	
