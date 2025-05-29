@@ -279,11 +279,13 @@ def test_stable_diffusion_pipeline():
 	# oh wait, i realized its impossible for them to have the same output image if the initial latents are not the same
 	latents = make_test_data(1, 4, 64, 64)
 	
+	img = make_test_data(1, 3, 256, 256)
+	
 	# test the vae too
 	#test_hf_reimplementation([latents], {}, hf_module.vae, "decode", tg_module.vae, "decode")
 	# then copy the state dict from the torch model to the tinygrad one and see if it helps at all
 	copy_state_dict(hf_module.vae, tg_module.vae)
-	test_hf_reimplementation([latents], {}, hf_module.vae, "__call__", tg_module.vae, "__call__")
+	test_hf_reimplementation([img], {}, hf_module.vae, "__call__", tg_module.vae, "__call__")
 	
 	# lets do the submodule test on the vae just in case...
 	test_all_submodules(hf_module.vae, tg_module.vae)
