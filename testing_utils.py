@@ -84,7 +84,7 @@ def test_all_submodules(torch_module, tg_module):
 		if not tg_sub._input_spec is None:
 			test_submodule(torch_sub, tg_sub)
 
-def compare_state_dicts(torch_module, tga_module, error_threshold = 1.0e-3):
+def compare_state_dicts(torch_module, tga_module, error_threshold = 1.0e-9):
 	print(type(torch_module), type(tga_module) )
 	torch_sd = torch_module.state_dict()
 	try:
@@ -159,12 +159,12 @@ def norm_mse(predicted, actual):
 
 def mse(predicted, actual):
 	assert predicted.shape == actual.shape
-	return np.sum( (predicted - actual)**2 )
+	return (np.sum( (predicted - actual)**2 ))/predicted.size
 	
 def make_test_data(*shape):
 	return np.random.randn(np.prod(shape) ).reshape(shape).astype(np.float32)
 	
-def test_function(inp_args, inp_kwargs, torch_function, tinygrad_function, error_threshold = 1.0e-5):
+def test_function(inp_args, inp_kwargs, torch_function, tinygrad_function, error_threshold = 1.0e-9):
 	test_hf_reimplementation( inp_args, inp_kwargs, torch_function, "__call__", tinygrad_function, "__call__", error_threshold = error_threshold)
 	
 
@@ -176,7 +176,7 @@ def str_to_numerical(s: str):
 	b = bytes(s, "utf-8")
 	return np.array(memoryview(b) ).astype(np.float32)
 	
-def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-4, print_values = True, display_images = False, error_function = mse):
+def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-9, print_values = True, display_images = False, error_function = mse):
 	print("types:", type(hf_dict), type(tg_dict) )
 	if isinstance(hf_dict, dict):
 		tested_keys = hf_dict.keys()
@@ -273,7 +273,7 @@ def _process_submodule_test_arg(arg):
 		# append as is
 		return arg
 
-def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_method, error_threshold = 5.0e-4, device = "cuda:0", display_images = False):
+def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_method, error_threshold = 1.0e-9, device = "cuda:0", display_images = False):
 	if not (isinstance(args, tuple) or isinstance(args, list) ):
 		args = (args,)
 	if hasattr(my_module, "to"):
@@ -322,5 +322,3 @@ def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_m
 	
 	del torch_out
 	del tiny_out
-	del hf_module
-	del my_module

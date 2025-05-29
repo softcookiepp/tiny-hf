@@ -6,6 +6,7 @@ from ..device import device
 from ..utils import recursive_realize
 from ..tensor import AdapterTensor as AT
 from ..tensor import convert_to_torch, _parse_to_arguments
+from ..debugging import KEEP_INPUT_TENSORS
 
 # adapter for https://pytorch.org/docs/stable/generated/torch.nn.Module.html
 class Module:
@@ -131,7 +132,8 @@ class Module:
 		"""
 		
 		# this is here for the submodule tester thingy
-		self._input_spec = [args, kwargs]
+		if KEEP_INPUT_TENSORS:
+			self._input_spec = [args, kwargs]
 		
 		return out
 		

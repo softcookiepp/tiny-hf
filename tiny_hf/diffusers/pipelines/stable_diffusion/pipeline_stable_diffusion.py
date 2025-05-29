@@ -14,6 +14,7 @@
 import inspect
 from typing import Any, Callable, Dict, List, Optional, Union
 
+import tinygrad
 import numpy as np
 import tg_adapter as torch
 from packaging import version
@@ -779,6 +780,30 @@ class StableDiffusionPipeline(
 	@property
 	def interrupt(self):
 		return self._interrupt
+		
+	@tinygrad.TinyJit
+	def run_unet(self,
+				latent_model_input,
+				prompt_embeds,
+				t,
+				encoder_hidden_states,
+				timestep_cond,
+				cross_attention_kwargs,
+				added_cond_kwargs,
+				return_dict = False
+			):
+		noise_pred = self.unet(
+			latent_model_input,
+			t,
+			encoder_hidden_states=prompt_embeds,
+			timestep_cond=timestep_cond,
+			cross_attention_kwargs=self.cross_attention_kwargs,
+			added_cond_kwargs=added_cond_kwargs,
+			return_dict=False,
+		)[0]
+		noise_pred.tg.realize()
+		return noise_pred
+		
 
 	@torch.no_grad()
 	@replace_example_docstring(EXAMPLE_DOC_STRING)
@@ -1031,6 +1056,7 @@ class StableDiffusionPipeline(
 		# 7. Denoising loop
 		num_warmup_steps = len(timesteps) - num_inference_steps * self.scheduler.order
 		self._num_timesteps = len(timesteps)
+		
 		with self.progress_bar(total=num_inference_steps) as progress_bar:
 			for i, t in enumerate(timesteps):
 				if self.interrupt:
@@ -1050,6 +1076,16 @@ class StableDiffusionPipeline(
 					added_cond_kwargs=added_cond_kwargs,
 					return_dict=False,
 				)[0]
+				"""
+				noise_pred = self.run_unet(
+					latent_model_input, prompt_embeds,
+					t,
+					encoder_hidden_states=prompt_embeds,
+					timestep_cond=timestep_cond,
+					cross_attention_kwargs=self.cross_attention_kwargs,
+					added_cond_kwargs=added_cond_kwargs,
+					return_dict=False)
+				"""
 
 				# perform guidance
 				if self.do_classifier_free_guidance:

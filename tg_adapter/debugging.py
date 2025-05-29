@@ -1,4 +1,5 @@
-REALIZE_ASAP = False
+REALIZE_ASAP = True
+KEEP_INPUT_TENSORS = False
 
 def maybe_realize(t):
 	if REALIZE_ASAP:

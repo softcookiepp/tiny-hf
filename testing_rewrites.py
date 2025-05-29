@@ -338,7 +338,8 @@ def sd_pipeline_call(
 
 			# compute the previous noisy sample x_t -> x_t-1
 			latents = self.scheduler.step(noise_pred, t, latents, **extra_step_kwargs, return_dict=False)[0]
-			#return noise_pred, latents, t
+			#if i == 9:
+			#	return noise_pred, latents, t
 			if callback_on_step_end is not None:
 				callback_kwargs = {}
 				for k in callback_on_step_end_tensor_inputs:
@@ -357,6 +358,7 @@ def sd_pipeline_call(
 					callback(step_idx, t, latents)
 			if XLA_AVAILABLE:
 				xm.mark_step()
+	#return latents
 	if not output_type == "latent":
 		image = self.vae.decode(latents / self.vae.config.scaling_factor, return_dict=False, generator=generator)[
 			0
@@ -370,6 +372,8 @@ def sd_pipeline_call(
 		do_denormalize = [True] * image.shape[0]
 	else:
 		do_denormalize = [not has_nsfw for has_nsfw in has_nsfw_concept]
+	# skip the processor for now...
+	#return image
 	image = self.image_processor.postprocess(image, output_type=output_type, do_denormalize=do_denormalize)
 
 	# Offload all models

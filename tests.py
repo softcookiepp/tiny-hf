@@ -162,7 +162,7 @@ def test_unet_2d_condition(hf_module = None, thf_module = None,
 	args = (a, 3, emb)
 	test_hf_reimplementation(args, {}, hf_module, "__call__", thf_module, "__call__")
 	#input("lets do the submodule test!")
-	#test_all_submodules(hf_module, thf_module)
+	test_all_submodules(hf_module, thf_module)
 
 def test_unet_2d():
 	from diffusers.models.unets.unet_2d import UNet2DModel as hf_class
@@ -258,18 +258,18 @@ def test_stable_diffusion_pipeline():
 	from diffusers.pipelines import StableDiffusionPipeline as hf_class
 	from diffusers.schedulers import DDIMScheduler as hf_scheduler_class
 	
-	hf_scheduler = hf_scheduler_class()
-	tg_scheduler = tg_scheduler_class()
+	#hf_scheduler = hf_scheduler_class()
+	#tg_scheduler = tg_scheduler_class()
 	
 	
 	
 	# ensure the scheduler is initialized properly
-	_test_key_errors(hf_scheduler, tg_scheduler)
+	#_test_key_errors(hf_scheduler, tg_scheduler)
 	
 	
 	
-	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = hf_scheduler, safety_checker = None)
-	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, scheduler = tg_scheduler, safety_checker = None)
+	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, safety_checker = None)
+	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, safety_checker = None)
 	
 	# ensure there is no difference in state dict
 	#compare_state_dicts(hf_module.unet, tg_module.unet)
@@ -291,34 +291,24 @@ def test_stable_diffusion_pipeline():
 	#test_unet_2d_condition(hf_module.unet, tg_module.unet, latents.shape, (1, 77, 768) )
 	#input("does the unet work?")
 	
-	# Ok, here are the modules that seem to be giving us problems:
-	# tiny_hf.diffusers.models.unets.unet_2d_blocks.CrossAttnDownBlock2D
-	# tiny_hf.diffusers.models.transformers.transformer_2d.Transformer2DModel
-	# tiny_hf.diffusers.models.attention.BasicTransformerBlock
+	# even after gelu was fixed, there is even more that aren't working :c
+	# tiny_hf.diffusers.models.unets.unet_2d_blocks.UpBlock2D
+	# tiny_hf.diffusers.models.attention_processor.Attention
 	# tiny_hf.diffusers.models.attention.FeedForward
-	# tiny_hf.diffusers.models.activations.GEGLU
-	# tiny_hf.diffusers.models.attention.BasicTransformerBlock
-	# tiny_hf.diffusers.models.attention.FeedForward
-	# tiny_hf.diffusers.models.unets.unet_2d_blocks.CrossAttnDownBlock2D
-	# ....all of which are related to tinygrad.Tensor.gelu lol
+	# surprisingly conv2d is having problems in some circumstances
+	# tg_adapter.nn.layers.Conv2d
+	# 	Conv2d(1920, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+	# 	Conv2d(2560, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+	# 	output shape: (1, 1280, 16, 16)
+	# tiny_hf.diffusers.models.resnet.ResnetBlock2D
+	# tiny_hf.diffusers.models.unets.unet_2d_blocks.CrossAttnUpBlock2D
 	
 	# test prompt encoding
-	test_hf_reimplementation(["a squishy pp", "cpu", 1, True], {}, hf_module, "encode_prompt", tg_module, "encode_prompt")
+	#test_hf_reimplementation(["a squishy pp", "cpu", 1, True], {}, hf_module, "encode_prompt", tg_module, "encode_prompt")
 	
 	# test the image processor
-	test_hf_reimplementation([latents], {}, hf_module.image_processor, "postprocess", tg_module.image_processor, "postprocess")
-	
-	prepare_latents_test_args = [
-		1,
-		4,
-		512,
-		512,
-		None, # this doesn't get checked if the latents are supplied
-		"cpu",
-		None,
-	]
-	#test_hf_reimplementation(prepare_latents_test_args, {"latents": latents}, hf_module, "prepare_latents", tg_module, "prepare_latents")
-	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 15, "safety_checker": None, "latents": latents, "output_type": "pil"}, hf_module, sd_pipeline_call, tg_module, sd_pipeline_call)
+	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 40, "safety_checker": None, "latents": latents, "output_type": "pil"}, hf_module, sd_pipeline_call, tg_module, sd_pipeline_call, error_threshold = 1.0e-6)
+	#test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 2, "safety_checker": None, "latents": latents, "output_type": "latent"}, hf_module, "__call__", tg_module, "__call__")
 
 def test_ddim_scheduler():
 	from tiny_hf.diffusers.schedulers import DDIMScheduler as tg_scheduler_class
@@ -327,15 +317,16 @@ def test_ddim_scheduler():
 	hf_scheduler = hf_scheduler_class()
 	tg_scheduler = tg_scheduler_class()
 	
-	hf_scheduler.set_timesteps(4)
-	tg_scheduler.set_timesteps(4)
+	hf_scheduler.set_timesteps(100)
+	tg_scheduler.set_timesteps(100)
 	
 	_test_key_errors(hf_scheduler, tg_scheduler)
 	
 	latent = make_test_data(2, 4, 64, 64)
 	noise = make_test_data(2, 4, 64, 64)
 	
-	test_hf_reimplementation([noise, 3, latent], {"return_dict": False}, hf_scheduler, "step", tg_scheduler, "step")
+	for i in range(100):
+		test_hf_reimplementation([noise, i, latent], {"return_dict": False}, hf_scheduler, "step", tg_scheduler, "step")
 
 def test_dtype_override():
 	a = tg_adapter.arange(4, device = "cpu", dtype = tg_adapter.int64)
@@ -353,11 +344,10 @@ def main():
 	#test_clip_text_model()
 	#test_unet_2d()
 	#test_unet_2d_condition()
-	test_modules()
-	test_all_operators()
-	input("just wait for now hehe")
+	#test_modules()
+	#test_all_operators()
 	
-	test_ddim_scheduler()
+	#test_ddim_scheduler()
 	#test_autoencoderkl()
 	test_stable_diffusion_pipeline()
 	input("look at the outputs first you dumdum")
