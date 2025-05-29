@@ -3,6 +3,7 @@ XLA_AVAILABLE = False
 
 def retrieve_timesteps(
 	scheduler,
+	torch,
 	num_inference_steps = None,
 	device = None,
 	timesteps = None,
@@ -270,8 +271,9 @@ def sd_pipeline_call(
 		)
 	# 4. Prepare timesteps
 	timesteps, num_inference_steps = retrieve_timesteps(
-		self.scheduler, num_inference_steps, device, timesteps, sigmas
+		self.scheduler, torch, num_inference_steps, device, timesteps, sigmas
 	)
+	return timesteps, num_inference_steps
 
 	# 5. Prepare latent variables
 	num_channels_latents = self.unet.config.in_channels

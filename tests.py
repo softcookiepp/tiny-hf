@@ -251,7 +251,7 @@ def test_audio_diffusion_pipeline():
 	test_hf_reimplementation([], {}, hf_module, "__call__", tg_module, "__call__")
 	
 def test_stable_diffusion_pipeline():
-	from testing_rewrites import sd_pipeline_call
+	from testing_rewrites import sd_pipeline_call, retrieve_timesteps
 	from tiny_hf.diffusers.pipelines import StableDiffusionPipeline as tg_class
 	from tiny_hf.diffusers.schedulers import DDIMScheduler as tg_scheduler_class
 	
@@ -302,6 +302,13 @@ def test_stable_diffusion_pipeline():
 	# 	output shape: (1, 1280, 16, 16)
 	# tiny_hf.diffusers.models.resnet.ResnetBlock2D
 	# tiny_hf.diffusers.models.unets.unet_2d_blocks.CrossAttnUpBlock2D
+	
+	
+	# Looks like there may be a timestep problem.
+	# Lets look at that...
+	# First, we need to ensure that the timestep retrieval function isn't wrong
+	#test_hf_reimplementation(
+	
 	
 	# test prompt encoding
 	#test_hf_reimplementation(["a squishy pp", "cpu", 1, True], {}, hf_module, "encode_prompt", tg_module, "encode_prompt")
