@@ -252,10 +252,6 @@ class PNDMScheduler(SchedulerMixin, ConfigMixin):
 				tuple is returned where the first element is the sample tensor.
 
 		"""
-		print(self.counter)
-		print(len(self.prk_timesteps) )
-		print(self.prk_timesteps)
-		input()
 		if self.counter < len(self.prk_timesteps) and not self.config.skip_prk_steps:
 			return self.step_prk(model_output=model_output, timestep=timestep, sample=sample, return_dict=return_dict)
 		else:

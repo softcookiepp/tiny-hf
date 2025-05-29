@@ -270,7 +270,7 @@ def test_stable_diffusion_pipeline():
 	
 	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, safety_checker = None)
 	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, safety_checker = None)
-	input(tg_module.scheduler)
+	
 	# ensure there is no difference in state dict
 	#compare_state_dicts(hf_module.unet, tg_module.unet)
 	#compare_state_dicts(hf_module.vae, tg_module.vae)
@@ -335,6 +335,11 @@ def test_ddim_scheduler():
 	for i in range(100):
 		test_hf_reimplementation([noise, i, latent], {"return_dict": False}, hf_scheduler, "step", tg_scheduler, "step")
 
+def test_scheduler(hf_module = None, tg_module = None):
+	if hf_module is None or tg_module is None:
+		raise NotImplementedError
+	raise NotImplementedError
+
 def test_dtype_override():
 	a = tg_adapter.arange(4, device = "cpu", dtype = tg_adapter.int64)
 	b = a.to("cuda:0")
@@ -355,7 +360,8 @@ def main():
 	#test_modules()
 	#test_all_operators()
 	
-	#test_ddim_scheduler()
+	test_ddim_scheduler()
+	input("peepee")
 	#test_autoencoderkl()
 	test_stable_diffusion_pipeline()
 	input("look at the outputs first you dumdum")
