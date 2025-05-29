@@ -90,5 +90,5 @@ def test_all_operators():
 	test_clamp()
 	test_stack()
 	test_pow()
-	
+	test_magic_pow()
 	
