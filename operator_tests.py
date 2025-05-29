@@ -63,7 +63,7 @@ def test_stack():
 		tensors.append(make_test_data(4, 4, 4) )
 	
 	for i in range(3):
-		test_function( [tensors, i], torch.stack, tg_adapter.stack )
+		test_function( [tensors, i], {}, torch.stack, tg_adapter.stack )
 
 def test_pow():
 	x = make_test_data(3, 4, 5)
