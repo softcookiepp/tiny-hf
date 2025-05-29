@@ -16,6 +16,9 @@ sin = lambda x: T( x.tg.sin() )
 cos = lambda x: T( convert_to_tg(x).cos() )
 tan = lambda x: T( convert_to_tg(x).tan() )
 
+def max(x, dim = None, keepdim = False):
+	return x.max(dim, keepdim)
+
 from .F import sigmoid
 
 

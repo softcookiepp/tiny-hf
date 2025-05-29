@@ -288,6 +288,9 @@ class AdapterTensor:
 			return convert_to_torch(convert_to_tg(self).masked_fill(*args, **kwargs) )
 		else:
 			return self._tg_override(*args, **kwargs)
+	
+	def max(self, dim = None, keepdim = False):
+		return self._tg_override(axis = dim, keepdim = keepdim)
 
 	def argmax(self, *args, **kwargs):
 		return self._tg_override(*args, **kwargs)

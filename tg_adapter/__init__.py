@@ -10,6 +10,7 @@ from . import distributed
 from . import version
 from . import compiler
 from . import cuda
+from . import linalg
 
 from .io import *
 

@@ -124,3 +124,6 @@ def cat(tensors, dim = 0):
 	trest = convert_to_tg( tuple(tensors[1:]) )
 	assert_same_device(tbase.device, trest)
 	return convert_to_torch(tbase.cat(*trest, dim = dim) )
+	
+def normalize(inp, p = 2.0, dim = 1, eps = 1.0e-12, out = None):
+	raise NotImplementedError

@@ -76,6 +76,10 @@ def test_magic_pow():
 		return x ** y
 	test_function([a, 0.5], {}, pow_impl, pow_impl)
 
+def test_max():
+	a = make_test_data(3, 2, 5, 8)
+	test_function([], {}, torch.max, tg_adapter.max)
+
 def test_all_operators():
 	test_chunk()
 	test_cumprod()
@@ -91,4 +95,5 @@ def test_all_operators():
 	test_stack()
 	test_pow()
 	test_magic_pow()
+	test_max()
 	
