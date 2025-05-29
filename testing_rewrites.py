@@ -340,7 +340,7 @@ def sd_pipeline_call(
 			latents = self.scheduler.step(noise_pred, t, latents, **extra_step_kwargs, return_dict=False)[0]
 			
 			if i == self._num_timesteps - 1:
-				print(self.timesteps)
+				print(timesteps)
 				return noise_pred, latents, t
 			
 			if callback_on_step_end is not None:
