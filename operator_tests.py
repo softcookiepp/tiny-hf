@@ -66,7 +66,7 @@ def test_stack():
 		test_function( [tensors, i], {}, torch.stack, tg_adapter.stack )
 
 def test_pow():
-	x = make_test_data(3, 4, 5)
+	x = np.abs(make_test_data(3, 4, 5) )
 	y = make_test_data(3, 4, 5)
 	test_function([x, y], {}, torch.pow, tg_adapter.pow)
 	
