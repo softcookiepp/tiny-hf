@@ -71,7 +71,7 @@ def test_pow():
 	test_function([x, y], {}, torch.pow, tg_adapter.pow)
 	
 def test_magic_pow():
-	a = make_test_data(3, 4, 7)
+	a = np.abs(make_test_data(3, 4, 7) )
 	def pow_impl(x, y):
 		return x ** y
 	test_function([a, 0.5], {}, pow_impl, pow_impl)
