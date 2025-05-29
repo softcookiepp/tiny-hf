@@ -56,7 +56,19 @@ def test_chunk():
 def test_clamp():
 	data = make_test_data(3, 5, 8)
 	test_function([data, 0.0, 0.5], {}, torch.clamp, tg_adapter.F.clamp)
+
+def test_stack():
+	tensors = []
+	for i in range(3):
+		tensors.append(make_test_data(4, 4, 4) )
 	
+	for i in range(3):
+		test_function( [tensors, i], torch.stack, tg_adapter.stack )
+
+def test_pow():
+	x = make_test_data(3, 4, 5)
+	y = make_test_data(3, 4, 5)
+	test_function([x, y], {}, torch.pow, tg_adapter.pow)
 
 def test_all_operators():
 	test_chunk()
@@ -64,5 +76,12 @@ def test_all_operators():
 	test_cat()
 	test_interpolate()
 	test_scaled_dot_product_attention()
+	
 	test_gelu()
+	test_sigmoid()
+	test_mish()
+	
 	test_clamp()
+	test_stack()
+	
+	
