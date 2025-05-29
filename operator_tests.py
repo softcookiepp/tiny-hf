@@ -55,7 +55,7 @@ def test_chunk():
 
 def test_clamp():
 	data = make_test_data(3, 5, 8)
-	test_function([data, 0.0, 0.5], {} torch.nn.functional.clamp, tg_adapter.F.clamp)
+	test_function([data, 0.0, 0.5], {}, torch.nn.functional.clamp, tg_adapter.F.clamp)
 	
 
 def test_all_operators():
