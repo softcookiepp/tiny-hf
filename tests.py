@@ -362,7 +362,8 @@ def main():
 	
 	test_ddim_scheduler()
 	input("peepee")
-	#test_autoencoderkl()
+	test_autoencoderkl()
+	input("poopoo")
 	test_stable_diffusion_pipeline()
 	input("look at the outputs first you dumdum")
 	test_clip_tokenizer_fast()
