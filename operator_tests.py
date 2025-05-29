@@ -69,6 +69,12 @@ def test_pow():
 	x = make_test_data(3, 4, 5)
 	y = make_test_data(3, 4, 5)
 	test_function([x, y], {}, torch.pow, tg_adapter.pow)
+	
+def test_magic_pow():
+	a = make_test_data(3, 4, 7)
+	def pow_impl(x, y):
+		return x ** y
+	test_function([a, 0.5], {}, pow_impl, pow_impl)
 
 def test_all_operators():
 	test_chunk()
@@ -83,5 +89,6 @@ def test_all_operators():
 	
 	test_clamp()
 	test_stack()
+	test_pow()
 	
 	
