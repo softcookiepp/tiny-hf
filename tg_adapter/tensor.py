@@ -291,6 +291,9 @@ class AdapterTensor:
 	
 	def max(self, dim = None, keepdim = False):
 		return self._tg_override(axis = dim, keepdim = keepdim)
+	
+	def min(self, dim = None, keepdim = False):
+		return self._tg_override(axis = dim, keepdim = keepdim)
 
 	def argmax(self, *args, **kwargs):
 		return self._tg_override(*args, **kwargs)

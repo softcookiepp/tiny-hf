@@ -78,7 +78,11 @@ def test_magic_pow():
 
 def test_max():
 	a = make_test_data(3, 2, 5, 8)
-	test_function([], {}, torch.max, tg_adapter.max)
+	test_function([a], {}, torch.max, tg_adapter.max)
+	
+def test_min():
+	a = make_test_data(3, 2, 5, 8)
+	test_function([a], {}, torch.min, tg_adapter.min)
 
 def test_all_operators():
 	test_chunk()
@@ -96,4 +100,5 @@ def test_all_operators():
 	test_pow()
 	test_magic_pow()
 	test_max()
+	test_min()
 	

@@ -16,6 +16,9 @@ sin = lambda x: T( x.tg.sin() )
 cos = lambda x: T( convert_to_tg(x).cos() )
 tan = lambda x: T( convert_to_tg(x).tan() )
 
+def min(x, dim = None, keepdim = False):
+	return x.min(dim, keepdim)
+	
 def max(x, dim = None, keepdim = False):
 	return x.max(dim, keepdim)
 
