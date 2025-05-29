@@ -18,7 +18,7 @@ from testing_utils import compare_state_dicts, copy_state_dict, \
 
 	
 
-def test_autoencoderkl():
+def test_autoencoderkl(hf_module = None, my_module = None):
 	inp = np.random.randn(2*3*64*64).reshape(2, 3, 64, 64).astype(np.float32)
 	args = (3,)
 	
@@ -28,6 +28,7 @@ def test_autoencoderkl():
 	
 	#copy_state_dict(hf_module, my_module)
 	test_hf_reimplementation(inp, {}, hf_module, "__call__", my_module, "__call__")
+	test_all_submodules(hf_module, my_module)
 
 def test_state_dict():
 	raise NotImplementedError
@@ -360,8 +361,8 @@ def main():
 	#test_modules()
 	#test_all_operators()
 	
-	test_ddim_scheduler()
-	input("peepee")
+	#test_ddim_scheduler()
+	#input("peepee")
 	test_autoencoderkl()
 	input("poopoo")
 	test_stable_diffusion_pipeline()
