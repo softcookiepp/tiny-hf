@@ -341,11 +341,9 @@ def sd_pipeline_call(
 
 			# compute the previous noisy sample x_t -> x_t-1
 			#latents = self.scheduler.step(noise_pred, t, latents, **extra_step_kwargs, return_dict=False)[0]
-			latents = self.scheduler.step(noise_pred, t, latents, **extra_step_kwargs, return_dict=False)[0]
-			print(type(latents) )
+			latents = ddim_step(self.scheduler, torch, noise_pred, t, latents, **extra_step_kwargs, return_dict=False)[0]
 			
 			if i == self._num_timesteps - 1:
-				print(timesteps)
 				return noise_pred, latents, t
 			
 			if callback_on_step_end is not None:
@@ -467,6 +465,7 @@ def ddim_step(self,
 	# 7. compute x_t without "random noise" of formula (12) from https://arxiv.org/pdf/2010.02502.pdf
 	prev_sample = alpha_prod_t_prev ** (0.5) * pred_original_sample + pred_sample_direction
 	if eta > 0:
+		print(eta)
 		if variance_noise is not None and generator is not None:
 			raise ValueError(
 				"Cannot pass both generator and variance_noise. Please make sure that either `generator` or"
