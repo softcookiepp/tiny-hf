@@ -83,8 +83,18 @@ def test_max():
 def test_min():
 	a = make_test_data(3, 2, 5, 8)
 	test_function([a], {}, torch.min, tg_adapter.min)
+	
+def test_radd():
+	raise NotImplementedError
+	
+def test_rsub():
+	a = np.abs(make_test_data(3, 4, 7) )
+	def _rsub_test(a, b):
+		return a - b
+	test_function([1, a], {}, _rsub_test, _rsub_test)
 
 def test_all_operators():
+	test_rsub()
 	test_chunk()
 	test_cumprod()
 	test_cat()
