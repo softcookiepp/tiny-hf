@@ -402,7 +402,7 @@ def _get_variance(self, torch, timestep, prev_timestep):
 
 	variance = (beta_prod_t_prev / beta_prod_t) * (1 - alpha_prod_t / alpha_prod_t_prev)
 
-	return variance, alpha_prod_t, alpha_prod_t_prev
+	return variance, alpha_prod_t, alpha_prod_t_prev, beta_prod_t, beta_prod_t_prev
 	
 def ddim_step(self,
 		torch,
@@ -470,7 +470,6 @@ def ddim_step(self,
 	#variance = self._get_variance(timestep, prev_timestep)
 	var_out = _get_variance(self, torch, timestep, prev_timestep)
 	variance = var_out[0]
-	initial_variance = variance
 	std_dev_t = eta * variance ** (0.5)
 
 	if use_clipped_model_output:
@@ -502,9 +501,9 @@ def ddim_step(self,
 			pred_original_sample,
 			variance_noise,
 			std_dev_t,
-			initial_variance,
 			timestep,
-			prev_timestep
+			prev_timestep,
+			var_out
 		)
 	raise NotImplementedError
 	return DDIMSchedulerOutput(prev_sample=prev_sample, pred_original_sample=pred_original_sample)
