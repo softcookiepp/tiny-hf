@@ -309,12 +309,14 @@ def sd_pipeline_call(
 	num_warmup_steps = len(timesteps) - num_inference_steps * self.scheduler.order
 	self._num_timesteps = len(timesteps)
 	with self.progress_bar(total=num_inference_steps) as progress_bar:
-		for i, t in enumerate(timesteps):
+		for i, t in enumerate(timesteps.numpy()):
 			if self.interrupt:
 				continue
 
 			# expand the latents if we are doing classifier free guidance
 			latent_model_input = torch.cat([latents] * 2) if self.do_classifier_free_guidance else latents
+			
+			t = torch.tensor(t).to(latent_model_input.device)
 			latent_model_input = self.scheduler.scale_model_input(latent_model_input, t)
 			
 			# predict the noise residual
@@ -340,7 +342,7 @@ def sd_pipeline_call(
 			# compute the previous noisy sample x_t -> x_t-1
 			latents = self.scheduler.step(noise_pred, t, latents, **extra_step_kwargs, return_dict=False)[0]
 			
-			if i == self._num_timesteps + 50:
+			if i == self._num_timesteps - 1:
 				print(timesteps)
 				return noise_pred, latents, t
 			

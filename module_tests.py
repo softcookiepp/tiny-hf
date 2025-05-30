@@ -38,7 +38,13 @@ def _test_linear(use_bias):
 def test_linear():
 	_test_linear(True)
 	_test_linear(False)
-	
+
+
+def test_avg_pool_2d():
+	from tg_adapter.nn import AvgPool2d as tg_class
+	from torch.nn import Linear as hf_class
+	hf_module = hf_class(4096, 2048, use_bias)
+	tg_module = tg_class(4096, 2048, use_bias)
 
 def test_modules():
 	test_geglu()
