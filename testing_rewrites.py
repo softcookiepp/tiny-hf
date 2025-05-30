@@ -395,7 +395,14 @@ def sd_pipeline_call(
 	return out
 	
 def _get_variance(self, torch, timestep, prev_timestep):
-	raise NotImplementedError
+	alpha_prod_t = self.alphas_cumprod[timestep]
+	alpha_prod_t_prev = self.alphas_cumprod[prev_timestep] if prev_timestep >= 0 else self.final_alpha_cumprod
+	beta_prod_t = 1 - alpha_prod_t
+	beta_prod_t_prev = 1 - alpha_prod_t_prev
+
+	variance = (beta_prod_t_prev / beta_prod_t) * (1 - alpha_prod_t / alpha_prod_t_prev)
+
+	return variance, alpha_prod_t, alpha_prod_t_prev
 	
 def ddim_step(self,
 		torch,
@@ -460,7 +467,9 @@ def ddim_step(self,
 
 	# 5. compute variance: "sigma_t(η)" -> see formula (16)
 	# σ_t = sqrt((1 − α_t−1)/(1 − α_t)) * sqrt(1 − α_t/α_t−1)
-	variance = self._get_variance(timestep, prev_timestep)
+	#variance = self._get_variance(timestep, prev_timestep)
+	var_out = _get_variance(self, torch, timestep, prev_timestep)
+	variance = var_out[0]
 	initial_variance = variance
 	std_dev_t = eta * variance ** (0.5)
 
