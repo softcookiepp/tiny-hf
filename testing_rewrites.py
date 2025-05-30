@@ -489,7 +489,9 @@ def ddim_step(self,
 			pred_original_sample,
 			variance_noise,
 			std_dev_t,
-			initial_variance
+			initial_variance,
+			timestep,
+			prev_timestep
 		)
 	raise NotImplementedError
 	return DDIMSchedulerOutput(prev_sample=prev_sample, pred_original_sample=pred_original_sample)
