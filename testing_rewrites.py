@@ -458,6 +458,7 @@ def ddim_step(self,
 	# 5. compute variance: "sigma_t(η)" -> see formula (16)
 	# σ_t = sqrt((1 − α_t−1)/(1 − α_t)) * sqrt(1 − α_t/α_t−1)
 	variance = self._get_variance(timestep, prev_timestep)
+	initial_variance = variance
 	std_dev_t = eta * variance ** (0.5)
 
 	if use_clipped_model_output:
@@ -479,14 +480,16 @@ def ddim_step(self,
 			variance_noise = randn_tensor(
 				model_output.shape, generator=generator, device=model_output.device, dtype=model_output.dtype
 			)
+		# Ok, so the variance is definitely the problem. WHY?
 		variance = std_dev_t * variance_noise
 		prev_sample = prev_sample + variance
 	if not return_dict:
 		return (
 			prev_sample,
 			pred_original_sample,
-			variance,
-			std_dev_t
+			variance_noise,
+			std_dev_t,
+			initial_variance
 		)
 	raise NotImplementedError
 	return DDIMSchedulerOutput(prev_sample=prev_sample, pred_original_sample=pred_original_sample)
