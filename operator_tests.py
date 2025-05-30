@@ -95,6 +95,7 @@ def test_rsub():
 
 def test_all_operators():
 	test_rsub()
+	input("ok lets seeeeeeeee")
 	test_chunk()
 	test_cumprod()
 	test_cat()
