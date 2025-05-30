@@ -309,14 +309,13 @@ def sd_pipeline_call(
 	num_warmup_steps = len(timesteps) - num_inference_steps * self.scheduler.order
 	self._num_timesteps = len(timesteps)
 	with self.progress_bar(total=num_inference_steps) as progress_bar:
-		for i, t in enumerate(timesteps.numpy()):
+		for i, t in enumerate(timesteps):
 			if self.interrupt:
 				continue
 
 			# expand the latents if we are doing classifier free guidance
 			latent_model_input = torch.cat([latents] * 2) if self.do_classifier_free_guidance else latents
 			
-			t = torch.tensor(t).to(latent_model_input.device)
 			latent_model_input = self.scheduler.scale_model_input(latent_model_input, t)
 			
 			# predict the noise residual
@@ -397,8 +396,6 @@ def sd_pipeline_call(
 def _get_variance(self, torch, timestep, prev_timestep):
 	alpha_prod_t = self.alphas_cumprod[timestep]
 	alpha_prod_t_prev = self.alphas_cumprod[prev_timestep] if prev_timestep >= 0 else self.final_alpha_cumprod
-	print(prev_timestep)
-	input(prev_timestep >= 0)
 	beta_prod_t = 1 - alpha_prod_t
 	beta_prod_t_prev = 1 - alpha_prod_t_prev
 
