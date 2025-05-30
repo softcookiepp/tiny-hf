@@ -423,7 +423,7 @@ def ddim_step(self,
 	# - eta -> η
 	# - pred_sample_direction -> "direction pointing to x_t"
 	# - pred_prev_sample -> "x_t-1"
-
+	print(type(timestep) )
 	# 1. get previous step value (=t-1)
 	prev_timestep = timestep - self.config.num_train_timesteps // self.num_inference_steps
 
