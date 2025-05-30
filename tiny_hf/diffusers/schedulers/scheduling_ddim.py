@@ -351,6 +351,7 @@ class DDIMScheduler(SchedulerMixin, ConfigMixin):
 		variance_noise: Optional[torch.Tensor] = None,
 		return_dict: bool = True,
 	) -> Union[DDIMSchedulerOutput, Tuple]:
+		print("MY PP HURTS")
 		"""
 		Predict the sample from the previous timestep by reversing the SDE. This function propagates the diffusion
 		process from the learned model outputs (most often the predicted noise).

@@ -338,11 +338,23 @@ def test_ddim_scheduler():
 	
 	_test_key_errors(hf_scheduler, tg_scheduler)
 	
+	
+	def _test(scheduler, torchm):
+		return scheduler.timesteps
+	
+	test_hf_reimplementation([], {}, hf_scheduler, _test, tg_scheduler, _test)
+	
 	latent = make_test_data(2, 4, 64, 64)
 	noise = make_test_data(2, 4, 64, 64)
 	
+	def _test_denoise(scheduler, torchm, noise_, i_, latent_, *args, **kwargs):
+		t = scheduler.timesteps[i]
+		return scheduler.step(noise_, i_, latent_, *args, **kwargs)
+		
+	
 	for i in range(100):
-		test_hf_reimplementation([noise, i, latent], {"return_dict": False}, hf_scheduler, "step", tg_scheduler, "step")
+		#test_hf_reimplementation([noise, i, latent], {"return_dict": False}, hf_scheduler, "step", tg_scheduler, "step")
+		test_hf_reimplementation([noise, i, latent], {"return_dict": False}, hf_scheduler, _test_denoise, tg_scheduler, _test_denoise)
 
 def test_scheduler(hf_module = None, tg_module = None):
 	if hf_module is None or tg_module is None:
@@ -361,8 +373,9 @@ def test_dtype_override():
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
+	test_ddim_scheduler()
 	test_all_operators()
-	input("ooperators tested")
+	#input("ooperators tested")
 	
 	test_stable_diffusion_pipeline()
 	input("look at the outputs first you dumdum")
