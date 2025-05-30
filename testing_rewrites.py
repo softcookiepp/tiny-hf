@@ -342,11 +342,12 @@ def sd_pipeline_call(
 			# compute the previous noisy sample x_t -> x_t-1
 			#latents = self.scheduler.step(noise_pred, t, latents, **extra_step_kwargs, return_dict=False)[0]
 			ddim_out = ddim_step(self.scheduler, torch, noise_pred, t, latents, **extra_step_kwargs, return_dict=False)
+			old_latents = latents
 			latents = ddim_out[0]
 			
 			if i == self._num_timesteps - 1:
 				# ddim_out includes the other crap as well
-				return noise_pred, t, ddim_out
+				return noise_pred, t, old_latents, ddim_out
 			
 			if callback_on_step_end is not None:
 				callback_kwargs = {}
@@ -484,6 +485,8 @@ def ddim_step(self,
 		return (
 			prev_sample,
 			pred_original_sample,
+			variance,
+			std_dev_t
 		)
 	raise NotImplementedError
 	return DDIMSchedulerOutput(prev_sample=prev_sample, pred_original_sample=pred_original_sample)
