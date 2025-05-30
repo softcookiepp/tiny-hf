@@ -352,13 +352,16 @@ class AdapterTensor:
 		return self._tg_override(*args, **kwargs)
 
 	def __gt__(self, other):
+		# TODO: write tests for this crap
 		return self._tg_override(other)
 		
 		
 	def __lt__(self, other):
+		# TODO: write tests for this crap
 		return self._tg_override(other)
 	
 	def __ge__(self, other):
+		# TODO: write tests for this crap
 		return self._tg_override(other)
 		
 	def __le__(self, other):
