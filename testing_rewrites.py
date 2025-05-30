@@ -394,6 +394,9 @@ def sd_pipeline_call(
 	out = StableDiffusionPipelineOutput(images=image, nsfw_content_detected=has_nsfw_concept)
 	return out
 	
+def _get_variance(self, torch, timestep, prev_timestep):
+	raise NotImplementedError
+	
 def ddim_step(self,
 		torch,
 		model_output,
@@ -484,6 +487,7 @@ def ddim_step(self,
 		variance = std_dev_t * variance_noise
 		prev_sample = prev_sample + variance
 	if not return_dict:
+		print(timestep.numpy(), prev_timestep.numpy() )
 		return (
 			prev_sample,
 			pred_original_sample,
