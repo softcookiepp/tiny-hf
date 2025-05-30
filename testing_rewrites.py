@@ -401,7 +401,7 @@ def ddim_step(self,
 		eta: float = 0.0,
 		use_clipped_model_output: bool = False,
 		generator=None,
-		variance_noise: Optional[torch.Tensor] = None,
+		variance_noise = None,
 		return_dict: bool = True,):
 			
 	if self.num_inference_steps is None:
