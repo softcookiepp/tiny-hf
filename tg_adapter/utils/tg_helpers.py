@@ -1,4 +1,6 @@
 import tinygrad
+import os
+import inspect
 
 def recursive_realize(self, *args):
 	new_args = []
@@ -34,3 +36,9 @@ class TinygradFunction:
 	def __call__(*args, **kwargs):
 		for arg in args:
 			pass
+
+def is_jitted():
+	for item in inspect.stack():
+		if os.path.basename(item.filename) == "jit.py" and item.function == "__call__":
+			return True
+	return False
