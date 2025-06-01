@@ -304,7 +304,7 @@ def sd_pipeline_call(
 		timestep_cond = self.get_guidance_scale_embedding(
 			guidance_scale_tensor, embedding_dim=self.unet.config.time_cond_proj_dim
 		).to(device=device, dtype=latents.dtype)
-	input(type(timesteps) )
+	
 	# 7. Denoising loop
 	num_warmup_steps = len(timesteps) - num_inference_steps * self.scheduler.order
 	self._num_timesteps = len(timesteps)

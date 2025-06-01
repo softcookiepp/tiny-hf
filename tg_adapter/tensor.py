@@ -8,6 +8,7 @@ from .types import get_type_from_tg, get_tgt, convert_np_type_correctly, _get_ty
 from .types import dtype as dtype_class
 from .backend_environment_config import *
 from .debugging import maybe_realize
+from .utils import is_jitted
 
 
 
@@ -241,8 +242,15 @@ class AdapterTensor:
 		return convert_to_torch(output)
 		
 	def __bool__(self):
-		# TODO: determine if we are in a jitted segment of code
-		raise NotImplementedError
+		if is_jitted():
+			# TinyJit doesn't behave well with python's flow control
+			raise RuntimeError("Tensor cannot be evaluated as boolean when using TinyJit.\n Your code must be refactored to avoid using python's built-in flow control.")
+		return self.item() > 0
+		
+	def item(self):
+		if self.numel() > 1:
+			raise RuntimeError("item() for multi-element tensor is ambiguous")
+		return self._tg_override()
 	
 	def __add__(self, other):
 		other = self._move_to_same_device(other)
