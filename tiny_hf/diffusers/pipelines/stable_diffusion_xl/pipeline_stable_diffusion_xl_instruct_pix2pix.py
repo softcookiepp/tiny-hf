@@ -16,8 +16,8 @@ import inspect
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 import PIL.Image
-import torch
-from transformers import CLIPTextModel, CLIPTextModelWithProjection, CLIPTokenizer
+import tg_adapter as torch
+from ....transformers import CLIPTextModel, CLIPTextModelWithProjection, CLIPTokenizer
 
 from ...image_processor import PipelineImageInput, VaeImageProcessor
 from ...loaders import FromSingleFileMixin, StableDiffusionXLLoraLoaderMixin, TextualInversionLoaderMixin

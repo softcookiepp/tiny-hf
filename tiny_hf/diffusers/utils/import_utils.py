@@ -173,6 +173,9 @@ _compel_available, _compel_version = _is_package_available("compel")
 _sentencepiece_available, _sentencepiece_version = _is_package_available("sentencepiece")
 _torchsde_available, _torchsde_version = _is_package_available("torchsde")
 _peft_available, _peft_version = _is_package_available("peft")
+
+# setting it this way since the tiny_hf package contains peft automatically
+_peft_available = True
 _torchvision_available, _torchvision_version = _is_package_available("torchvision")
 _matplotlib_available, _matplotlib_version = _is_package_available("matplotlib")
 _timm_available, _timm_version = _is_package_available("timm")
@@ -664,6 +667,8 @@ def is_peft_version(operation: str, version: str):
         version (`str`):
             A version string
     """
+    # whatever lmao
+    return True
     if not _peft_available:
         return False
     return compare_versions(parse(_peft_version), operation, version)

@@ -15,7 +15,7 @@
 import inspect
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
-import torch
+import tg_adapter as torch
 from transformers import (
     CLIPImageProcessor,
     CLIPTextModel,

@@ -39,8 +39,8 @@ DEFAULT_SKIP_MODULES_PATTERN = ("pos_embed", "patch_embed", "norm", "^proj_in$",
 
 _SHOULD_DISABLE_PEFT_INPUT_AUTOCAST = is_peft_available() and is_peft_version(">", "0.14.0")
 if _SHOULD_DISABLE_PEFT_INPUT_AUTOCAST:
-    from peft.helpers import disable_input_dtype_casting
-    from peft.tuners.tuners_utils import BaseTunerLayer
+    from ...peft.helpers import disable_input_dtype_casting
+    from ...peft.tuners.tuners_utils import BaseTunerLayer
 
 
 class LayerwiseCastingHook(ModelHook):

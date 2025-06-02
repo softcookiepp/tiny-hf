@@ -1,5 +1,5 @@
 import numpy as np
-import torch
+import tg_adapter as torch
 
 from ...utils import is_invisible_watermark_available
 

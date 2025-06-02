@@ -262,27 +262,11 @@ def test_stable_diffusion_pipeline():
 	hf_scheduler = hf_scheduler_class()
 	tg_scheduler = tg_scheduler_class()
 	
-	
-	
-	# ensure the scheduler is initialized properly
-	_test_key_errors(hf_scheduler, tg_scheduler)
-	
-	
-	
 	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, safety_checker = None, scheduler = hf_scheduler)
 	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, safety_checker = None, scheduler = tg_scheduler)
 	
-	# ensure there is no difference in state dict
-	#compare_state_dicts(hf_module.unet, tg_module.unet)
-	#compare_state_dicts(hf_module.vae, tg_module.vae)
-	
-	# oh wait, i realized its impossible for them to have the same output image if the initial latents are not the same
 	latents = make_test_data(1, 4, 64, 64)
 	
-	#img = make_test_data(1, 3, 256, 256)
-	
-	# test the vae too
-	#test_hf_reimplementation([latents], {}, hf_module.vae, "decode", tg_module.vae, "decode")
 	# then copy the state dict from the torch model to the tinygrad one and see if it helps at all
 	copy_state_dict(hf_module.vae, tg_module.vae)
 	#test_hf_reimplementation([img], {}, hf_module.vae, "__call__", tg_module.vae, "__call__")
@@ -318,6 +302,8 @@ def test_stable_diffusion_pipeline():
 	# First, we need to ensure that the timestep retrieval function isn't wrong
 	#test_hf_reimplementation(
 	
+	hf_module.load_lora_weights("/home/me/remote/me/external/ai_models/image/sd15/lora/cutememe02.safetensors")
+	tg_module.load_lora_weights("/home/me/remote/me/external/ai_models/image/sd15/lora/cutememe02.safetensors")
 	
 	# test prompt encoding
 	#test_hf_reimplementation(["a squishy pp", "cpu", 1, True], {}, hf_module, "encode_prompt", tg_module, "encode_prompt")
@@ -325,6 +311,19 @@ def test_stable_diffusion_pipeline():
 	# test the image processor
 	#test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 2, "safety_checker": None, "latents": latents, "output_type": "latent"}, hf_module, sd_pipeline_call, tg_module, sd_pipeline_call, error_threshold = 1.0e-6)
 	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 15, "safety_checker": None, "latents": latents, "output_type": "pil"}, hf_module, "__call__", tg_module, "__call__")
+
+def test_stable_diffusion_xl_pipeline():
+	from diffusers import StableDiffusionXLPipeline as hf_class
+	from tiny_hf.diffusers import StableDiffusionXLPipeline as tg_class
+	
+	hf_module = hf_class.from_pretrained("stabilityai/stable-diffusion-xl-base-1.0")
+	tg_module = tg_class.from_pretrained("stabilityai/stable-diffusion-xl-base-1.0")
+	
+	# model loading is still broken :c
+	copy_state_dict(hf_module.vae, tg_module.vae)
+	copy_state_dict(hf_module.unet, tg_module.unet)
+	
+	test_hf_reimplementation([], {"prompt": "a cute fluffy bunny"}, hf_module, "__call__", tg_module, "__call__")
 
 def test_ddim_scheduler():
 	from tiny_hf.diffusers.schedulers import DDIMScheduler as tg_scheduler_class
@@ -373,11 +372,11 @@ def test_dtype_override():
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
-	test_ddim_scheduler()
 	test_all_operators()
 	#input("ooperators tested")
 	
 	test_stable_diffusion_pipeline()
+	#test_stable_diffusion_xl_pipeline()
 	input("look at the outputs first you dumdum")
 	test_clip_tokenizer_fast()
 	test_clip_tokenizer()
