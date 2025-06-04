@@ -22,7 +22,7 @@ from tg_adapter import nn, F
 from tg_adapter import svd_lowrank
 from tiny_hf.transformers.pytorch_utils import Conv1D
 
-from ..tuners.tuners_utils import BaseTunerLayer, check_adapters_to_merge
+from ...tuners.tuners_utils import BaseTunerLayer, check_adapters_to_merge
 from ...utils.integrations import (
     dequantize_module_weight,
     gather_params_ctx,
