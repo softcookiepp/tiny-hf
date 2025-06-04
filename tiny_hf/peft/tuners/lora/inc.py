@@ -18,10 +18,10 @@
 
 from typing import Optional
 
-import torch
+import tg_adapter as torch
 
-from peft.import_utils import is_inc_available
-from peft.tuners.tuners_utils import BaseTunerLayer
+from tiny_hf.peft.import_utils import is_inc_available
+from tiny_hf.peft.tuners.tuners_utils import BaseTunerLayer
 
 from .layer import Linear
 

@@ -22,10 +22,10 @@ import math
 from collections.abc import Iterable
 from typing import Callable
 
-import torch
-import torch.nn as nn
-from torch.cuda.amp import autocast
-from torch.optim import Optimizer
+import tg_adapter as torch
+from tg_adapter import nn, F
+from tg_adapter.cuda.amp import autocast
+from tg_adapter.optim import Optimizer
 
 from ..peft_model import PeftModel
 

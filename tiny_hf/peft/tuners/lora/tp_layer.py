@@ -18,13 +18,13 @@ import math
 import warnings
 from typing import Any, Optional, Union
 
-import torch
-import torch.nn as nn
-import torch.nn.init as init
+import tg_adapter as torch
+from tg_adapter import nn, F
+import tg_adapter.nn.init as init
 
-from peft.tuners.tuners_utils import BaseTunerLayer, check_adapters_to_merge
-from peft.utils import transpose
-from peft.utils.integrations import gather_params_ctx
+from tiny_hf.peft.tuners.tuners_utils import BaseTunerLayer, check_adapters_to_merge
+from tiny_hf.peft.utils import transpose
+from tiny_hf.peft.utils.integrations import gather_params_ctx
 
 from .layer import LoraLayer
 

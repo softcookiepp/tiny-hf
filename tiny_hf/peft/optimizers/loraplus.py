@@ -20,10 +20,10 @@ from __future__ import annotations
 
 from operator import attrgetter
 
-import torch.nn as nn
-from torch.optim import Optimizer
-from transformers.pytorch_utils import ALL_LAYERNORM_LAYERS
-from transformers.trainer_pt_utils import get_parameter_names
+from tg_adapter import nn, F
+from tg_adapter.optim import Optimizer
+from tiny_hf.transformers.pytorch_utils import ALL_LAYERNORM_LAYERS
+from tiny_hf.transformers.trainer_pt_utils import get_parameter_names
 
 from ..peft_model import PeftModel
 from ..tuners.lora.layer import Embedding

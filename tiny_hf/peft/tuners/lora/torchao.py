@@ -16,11 +16,11 @@ from __future__ import annotations
 import warnings
 from typing import Any, Optional
 
-import torch
+import tg_adapter as torch
 
 # from torch import nn
-from peft.import_utils import is_torchao_available
-from peft.tuners.tuners_utils import BaseTunerLayer, check_adapters_to_merge
+from tiny_hf.peft.import_utils import is_torchao_available
+from tiny_hf.peft.tuners.tuners_utils import BaseTunerLayer, check_adapters_to_merge
 
 from .config import LoraConfig
 from .layer import Linear

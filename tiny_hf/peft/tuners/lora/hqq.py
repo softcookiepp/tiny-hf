@@ -17,11 +17,11 @@ import copy
 import warnings
 from typing import Any, Optional
 
-import torch
+import tg_adapter as torch
 
-from peft.import_utils import is_hqq_available
-from peft.tuners.tuners_utils import BaseTunerLayer, check_adapters_to_merge
-from peft.utils.other import transpose
+from tiny_hf.peft.import_utils import is_hqq_available
+from tiny_hf.peft.tuners.tuners_utils import BaseTunerLayer, check_adapters_to_merge
+from tiny_hf.peft.utils.other import transpose
 
 from .layer import LoraLayer, LoraVariant
 
