@@ -16,13 +16,13 @@ import warnings
 from typing import Any, Optional
 
 import packaging
-import torch
-import transformers
-from torch import nn
+import tg_adapter as torch
+from tg_adapter import nn, F
+from tiny_hf import transformers
 
-from peft.tuners.lora import LoraLayer
-from peft.tuners.tuners_utils import check_adapters_to_merge
-from peft.utils import transpose
+from tiny_hf.peft.tuners.lora import LoraLayer
+from tiny_hf.peft.tuners.tuners_utils import check_adapters_to_merge
+from tiny_hf.peft.utils import transpose
 
 
 if packaging.version.parse(transformers.__version__) >= packaging.version.parse("4.33.0"):

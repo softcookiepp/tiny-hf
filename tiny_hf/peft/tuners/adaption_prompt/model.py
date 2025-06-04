@@ -13,9 +13,10 @@
 # limitations under the License.
 
 
-import torch.nn as nn
+import tg_adapter as torch
+from tg_adapter import nn, F
 
-from peft.utils import _freeze_adapter, _get_submodules
+from tiny_hf.peft.utils import _freeze_adapter, _get_submodules
 
 from .config import AdaptionPromptConfig, prepare_config
 from .layer import AdaptedAttention

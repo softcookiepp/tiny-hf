@@ -13,8 +13,8 @@
 # limitations under the License.
 import inspect
 
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+from tg_adapter import nn, F
 
 
 def llama_rotate_half(x: torch.Tensor) -> torch.Tensor:

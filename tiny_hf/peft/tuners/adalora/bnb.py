@@ -14,9 +14,9 @@
 
 from typing import Any
 
-import torch
+import tg_adapter as torch
 
-from peft.import_utils import is_bnb_4bit_available, is_bnb_available
+from tiny_hf.peft.import_utils import is_bnb_4bit_available, is_bnb_available
 
 from .layer import AdaLoraLayer
 
