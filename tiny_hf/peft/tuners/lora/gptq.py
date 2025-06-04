@@ -13,12 +13,12 @@
 # limitations under the License.
 from typing import Any, Optional
 
-import torch
+import tg_adpater as torch
 
-from peft.import_utils import is_gptqmodel_available
-from peft.tuners.lora.layer import LoraLayer
-from peft.tuners.tuners_utils import BaseTunerLayer
-from peft.utils import get_auto_gptq_quant_linear
+from tg_adpater.peft.import_utils import is_gptqmodel_available
+from tg_adpater.peft.tuners.lora.layer import LoraLayer
+from tg_adpater.peft.tuners.tuners_utils import BaseTunerLayer
+from tg_adpater.peft.utils import get_auto_gptq_quant_linear
 
 
 class GPTQLoraLinear(torch.nn.Module, LoraLayer):
