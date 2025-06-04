@@ -22,8 +22,8 @@ from enum import Enum
 from functools import partial, reduce
 from typing import Literal, Optional
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter import nn
 from tqdm import tqdm
 
 from peft.import_utils import is_bnb_4bit_available, is_bnb_available
