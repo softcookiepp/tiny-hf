@@ -15,11 +15,11 @@
 import math
 from typing import Any
 
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
+import tg_adapter as torch
+import tg_adapter as torch.nn as nn
+import tg_adapter as torch.nn.functional as F
 
-from peft.tuners.lycoris_utils import LycorisLayer
+from tiny_hf.peft.tuners.lycoris_utils import LycorisLayer
 
 
 class LoHaLayer(nn.Module, LycorisLayer):

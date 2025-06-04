@@ -13,7 +13,7 @@
 # limitations under the License.
 
 
-from peft.utils import register_peft_method
+from tiny_hf.peft.utils import register_peft_method
 
 from .config import CPTConfig
 from .model import CPTEmbedding

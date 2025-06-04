@@ -18,13 +18,13 @@ from dataclasses import asdict
 from enum import Enum
 from typing import Optional
 
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+import tg_adapter as torch.nn as nn
 from tqdm import tqdm
-from transformers.pytorch_utils import Conv1D
+from tiny_hf.transformers.pytorch_utils import Conv1D
 
-from peft.tuners.tuners_utils import BaseTuner, BaseTunerLayer, check_target_module_exists
-from peft.utils import TRANSFORMERS_MODELS_TO_VBLORA_TARGET_MODULES_MAPPING, ModulesToSaveWrapper, _get_submodules
+from tiny_hf.peft.tuners.tuners_utils import BaseTuner, BaseTunerLayer, check_target_module_exists
+from tiny_hf.peft.utils import TRANSFORMERS_MODELS_TO_VBLORA_TARGET_MODULES_MAPPING, ModulesToSaveWrapper, _get_submodules
 
 from .config import VBLoRAConfig
 from .layer import Linear, VBLoRALayer
@@ -50,7 +50,7 @@ class VBLoRAModel(BaseTuner):
 
         ```py
         >>> from transformers import AutoModelForCausalLM
-        >>> from peft import VBLoRAConfig, get_peft_model
+        >>> from tiny_hf.peft import VBLoRAConfig, get_peft_model
 
         >>> base_model = AutoModelForCausalLM.from_pretrained("facebook/opt-125m")
         >>> config = VBLoRAConfig(
@@ -384,7 +384,7 @@ class VBLoRAModel(BaseTuner):
 
         ```py
         >>> from transformers import AutoModelForCausalLM
-        >>> from peft import PeftModel
+        >>> from tiny_hf.peft import PeftModel
 
         >>> base_model = AutoModelForCausalLM.from_pretrained("tiiuae/falcon-40b")
         >>> peft_model_id = "smangrul/falcon-40B-int4-peft-lora-sfttrainer-sample"

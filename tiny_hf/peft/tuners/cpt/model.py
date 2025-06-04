@@ -14,10 +14,10 @@
 
 import copy
 
-import torch
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+from tg_adapter.nn import CrossEntropyLoss
 
-from peft.utils.integrations import gather_params_ctx
+from tiny_hf.peft.utils.integrations import gather_params_ctx
 
 
 class CPTEmbedding(torch.nn.Module):

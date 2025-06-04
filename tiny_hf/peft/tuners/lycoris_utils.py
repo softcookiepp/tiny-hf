@@ -22,8 +22,8 @@ import tg_adapter as torch
 from tg_adapter import nn
 from tqdm import tqdm
 
-from peft.config import PeftConfig
-from peft.utils import (
+from tiny_hf.peft.config import PeftConfig
+from tiny_hf.peft.utils import (
     ModulesToSaveWrapper,
     _get_submodules,
 )

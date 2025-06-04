@@ -14,8 +14,8 @@
 
 from dataclasses import dataclass, field
 
-from peft.config import PromptLearningConfig
-from peft.utils import PeftType
+from tiny_hf.peft.config import PromptLearningConfig
+from tiny_hf.peft.utils import PeftType
 
 
 @dataclass

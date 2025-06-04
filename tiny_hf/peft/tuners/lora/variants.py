@@ -15,11 +15,11 @@ from __future__ import annotations
 
 from typing import Any
 
-import torch
-from accelerate.utils.imports import is_xpu_available
-from torch import nn
+import tg_adapter as torch
+from tiny_hf.accelerate.utils.imports import is_xpu_available
+from tg_adapter import nn
 
-from peft.utils.other import transpose
+from tiny_hf.peft.utils.other import transpose
 
 from .dora import DoraConv1dLayer, DoraConv2dLayer, DoraConv3dLayer, DoraEmbeddingLayer, DoraLinearLayer
 from .layer import Conv1d, Conv2d, Conv3d, Embedding, Linear, LoraVariant, _ConvNd

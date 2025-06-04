@@ -14,7 +14,7 @@
 
 # Based on https://github.com/THUDM/P-tuning-v2/blob/main/model/prefix_encoder.py
 # with some refactor
-import torch
+import tg_adapter as torch
 
 
 class PrefixEncoder(torch.nn.Module):
@@ -27,7 +27,7 @@ class PrefixEncoder(torch.nn.Module):
     Example:
 
     ```py
-    >>> from peft import PrefixEncoder, PrefixTuningConfig
+    >>> from tiny_hf.peft import PrefixEncoder, PrefixTuningConfig
 
     >>> config = PrefixTuningConfig(
     ...     peft_type="PREFIX_TUNING",

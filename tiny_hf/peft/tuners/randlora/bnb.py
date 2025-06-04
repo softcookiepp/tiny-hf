@@ -17,12 +17,12 @@ import warnings
 from typing import Optional
 
 import bitsandbytes as bnb
-import torch
+import tg_adapter as torch
 
-from peft.import_utils import is_bnb_4bit_available, is_bnb_available
-from peft.tuners.tuners_utils import check_adapters_to_merge
-from peft.utils.integrations import dequantize_bnb_weight
-from peft.utils.other import transpose
+from tiny_hf.peft.import_utils import is_bnb_4bit_available, is_bnb_available
+from tiny_hf.peft.tuners.tuners_utils import check_adapters_to_merge
+from tiny_hf.peft.utils.integrations import dequantize_bnb_weight
+from tiny_hf.peft.utils.other import transpose
 
 from .layer import RandLoraLayer, UniqueBaseGrad
 

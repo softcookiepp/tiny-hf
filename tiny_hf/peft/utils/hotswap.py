@@ -556,7 +556,7 @@ def hotswap_adapter(model, model_name_or_path, adapter_name, torch_device=None, 
     Example:
 
     ```py
-    >>> import torch
+    >>> import tg_adapter as torch
     >>> from transformers import AutoModelForCausalLM
     >>> from peft import PeftModel
     >>> from peft.utils.hotswap import hotswap_adapter

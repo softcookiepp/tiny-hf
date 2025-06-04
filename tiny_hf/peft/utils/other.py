@@ -247,7 +247,7 @@ class AuxiliaryTrainingWrapper(torch.nn.Module):
             raise TypeError(f"{self._error_message_name()} cannot be applied to modules of type {cls_name}")
 
         # local import to avoid circular import
-        from peft.tuners.tuners_utils import BaseTunerLayer
+        from tiny_hf.peft.tuners.tuners_utils import BaseTunerLayer
 
         if isinstance(self.original_module, BaseTunerLayer):
             # e.g. applying a training wrapper to a lora layer makes no sense
@@ -664,7 +664,7 @@ class TrainableTokensWrapper(AuxiliaryTrainingWrapper):
 
     def init_modules(self, adapter_name, token_indices, tied_adapter):
         # use a local import to avoid potential circular imports
-        from peft.tuners.trainable_tokens import TrainableTokensLayer
+        from tiny_hf.peft.tuners.trainable_tokens import TrainableTokensLayer
 
         # since super().__init__() calls update before we have a chance to initialise the adapter we would
         # need here, we do the initialization here.

@@ -103,10 +103,10 @@ def _load_adapter_into_lora_model(
 
     All params pertain to the adapter (adapter name, model id, `i` is the adapter number in 0 indexing).
     """
-    from peft.peft_model import PeftModel
-    from peft.tuners.lora.config import LoraConfig
-    from peft.utils.other import infer_device
-    from peft.utils.save_and_load import load_peft_weights
+    from tiny_hf.peft.peft_model import PeftModel
+    from tiny_hf.peft.tuners.lora.config import LoraConfig
+    from tiny_hf.peft.utils.other import infer_device
+    from tiny_hf.peft.utils.save_and_load import load_peft_weights
 
     hf_hub_download_kwargs, kwargs = PeftModel._split_kwargs(kwargs)
     if torch_device is None:
@@ -171,7 +171,7 @@ class XLoraModel(BaseTuner):
     Example:
         ```py
         >>> from transformers import AutoModelForCausalLM, AutoConfig, BitsAndBytesConfig
-        >>> from peft import LoraConfig, PeftModel, get_peft_model, prepare_model_for_kbit_training
+        >>> from tiny_hf.peft import LoraConfig, PeftModel, get_peft_model, prepare_model_for_kbit_training
 
         >>> model_config = AutoConfig.from_pretrained("mistralai/Mistral-7B-Instruct-v0.1")
         >>> config = XLoraConfig(

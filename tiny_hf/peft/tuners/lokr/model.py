@@ -14,11 +14,11 @@
 
 from typing import Union
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter import nn
 
-from peft.tuners.lycoris_utils import LycorisConfig, LycorisTuner
-from peft.utils.other import get_pattern_key
+from tiny_hf.peft.tuners.lycoris_utils import LycorisConfig, LycorisTuner
+from tiny_hf.peft.utils.other import get_pattern_key
 
 from .layer import Conv2d, Linear, LoKrLayer
 

@@ -1464,7 +1464,7 @@ class PeftModelForSequenceClassification(PeftModel):
 
         ```py
         >>> from transformers import AutoModelForSequenceClassification
-        >>> from peft import PeftModelForSequenceClassification, get_peft_config
+        >>> from tiny_hf.peft import PeftModelForSequenceClassification, get_peft_config
 
         >>> config = {
         ...     "peft_type": "PREFIX_TUNING",
@@ -1699,7 +1699,7 @@ class PeftModelForCausalLM(PeftModel):
 
         ```py
         >>> from transformers import AutoModelForCausalLM
-        >>> from peft import PeftModelForCausalLM, get_peft_config
+        >>> from tiny_hf.peft import PeftModelForCausalLM, get_peft_config
 
         >>> config = {
         ...     "peft_type": "PREFIX_TUNING",
@@ -1999,7 +1999,7 @@ class PeftModelForSeq2SeqLM(PeftModel):
 
         ```py
         >>> from transformers import AutoModelForSeq2SeqLM
-        >>> from peft import PeftModelForSeq2SeqLM, get_peft_config
+        >>> from tiny_hf.peft import PeftModelForSeq2SeqLM, get_peft_config
 
         >>> config = {
         ...     "peft_type": "LORA",
@@ -2273,7 +2273,7 @@ class PeftModelForTokenClassification(PeftModel):
 
         ```py
         >>> from transformers import AutoModelForSequenceClassification
-        >>> from peft import PeftModelForTokenClassification, get_peft_config
+        >>> from tiny_hf.peft import PeftModelForTokenClassification, get_peft_config
 
         >>> config = {
         ...     "peft_type": "PREFIX_TUNING",
@@ -2491,7 +2491,7 @@ class PeftModelForQuestionAnswering(PeftModel):
 
         ```py
         >>> from transformers import AutoModelForQuestionAnswering
-        >>> from peft import PeftModelForQuestionAnswering, get_peft_config
+        >>> from tiny_hf.peft import PeftModelForQuestionAnswering, get_peft_config
 
         >>> config = {
         ...     "peft_type": "LORA",
@@ -2729,7 +2729,7 @@ class PeftModelForFeatureExtraction(PeftModel):
 
         ```py
         >>> from transformers import AutoModel
-        >>> from peft import PeftModelForFeatureExtraction, get_peft_config
+        >>> from tiny_hf.peft import PeftModelForFeatureExtraction, get_peft_config
 
         >>> config = {
         ...     "peft_type": "LORA",
@@ -3104,7 +3104,7 @@ def __getattr__(name):
         # https://github.com/AutoGPTQ/AutoGPTQ/blob/6689349625de973b9ee3016c28c11f32acf7f02c/auto_gptq/utils/peft_utils.py#L8
         # TODO: Remove after 2026-01
         msg = (
-            "PEFT_TYPE_TO_MODEL_MAPPING is deprecated, please use `from peft import PEFT_TYPE_TO_TUNER_MAPPING` instead. "
+            "PEFT_TYPE_TO_MODEL_MAPPING is deprecated, please use `from tiny_hf.peft import PEFT_TYPE_TO_TUNER_MAPPING` instead. "
             "The deprecated variable will be removed in 2026."
         )
         warnings.warn(msg, category=DeprecationWarning)

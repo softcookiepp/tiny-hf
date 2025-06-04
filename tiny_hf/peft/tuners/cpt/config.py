@@ -16,8 +16,8 @@ import warnings
 from dataclasses import dataclass, field
 from typing import Literal, Optional
 
-from peft.config import PromptLearningConfig
-from peft.utils import PeftType, TaskType
+from tiny_hf.peft.config import PromptLearningConfig
+from tiny_hf.peft.utils import PeftType, TaskType
 
 
 @dataclass

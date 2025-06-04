@@ -16,7 +16,7 @@
 # with some refactor
 import warnings
 
-import torch
+import tg_adapter as torch
 
 from .config import PromptEncoderConfig, PromptEncoderReparameterizationType
 
@@ -31,7 +31,7 @@ class PromptEncoder(torch.nn.Module):
     Example:
 
     ```py
-    >>> from peft import PromptEncoder, PromptEncoderConfig
+    >>> from tiny_hf.peft import PromptEncoder, PromptEncoderConfig
 
     >>> config = PromptEncoderConfig(
     ...     peft_type="P_TUNING",

@@ -17,13 +17,13 @@ from __future__ import annotations
 import warnings
 from typing import Optional
 
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+import tg_adapter as torch.nn as nn
 from tqdm import tqdm
 
-from peft.config import PeftConfig
-from peft.tuners.tuners_utils import BaseTuner, BaseTunerLayer, check_target_module_exists, onload_layer
-from peft.utils import AuxiliaryTrainingWrapper, _get_input_embeddings_name, _get_submodules
+from tiny_hf.peft.config import PeftConfig
+from tiny_hf.peft.tuners.tuners_utils import BaseTuner, BaseTunerLayer, check_target_module_exists, onload_layer
+from tiny_hf.peft.utils import AuxiliaryTrainingWrapper, _get_input_embeddings_name, _get_submodules
 
 from .layer import TrainableTokensLayer
 

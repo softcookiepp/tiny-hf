@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import torch
+import tg_adapter as torch
 
-from peft.tuners.prompt_tuning import PromptEmbedding
-from peft.utils import TaskType
-from peft.utils.save_and_load import torch_load
+from tiny_hf.peft.tuners.prompt_tuning import PromptEmbedding
+from tiny_hf.peft.utils import TaskType
+from tiny_hf.peft.utils.save_and_load import torch_load
 
 from .config import MultitaskPromptTuningConfig, MultitaskPromptTuningInit
 

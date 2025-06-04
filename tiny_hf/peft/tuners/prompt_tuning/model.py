@@ -14,9 +14,9 @@
 
 import math
 
-import torch
+import tg_adapter as torch
 
-from peft.utils.integrations import gather_params_ctx
+from tiny_hf.peft.utils.integrations import gather_params_ctx
 
 from .config import PromptTuningInit
 

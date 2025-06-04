@@ -17,12 +17,12 @@ from dataclasses import asdict
 from enum import Enum
 from typing import Optional
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter import nn
 from tqdm import tqdm
 
-from peft.tuners.tuners_utils import BaseTuner, BaseTunerLayer, check_target_module_exists
-from peft.utils import (
+from tiny_hf.peft.tuners.tuners_utils import BaseTuner, BaseTunerLayer, check_target_module_exists
+from tiny_hf.peft.utils import (
     TRANSFORMERS_MODELS_TO_LORA_TARGET_MODULES_MAPPING,
     ModulesToSaveWrapper,
     _get_submodules,
@@ -50,7 +50,7 @@ class BoneModel(BaseTuner):
     Example:
         ```py
         >>> from diffusers import StableDiffusionPipeline
-        >>> from peft import BoneModel, BoneConfig
+        >>> from tiny_hf.peft import BoneModel, BoneConfig
 
         >>> config_te = BoneConfig(
         ...     r=8,

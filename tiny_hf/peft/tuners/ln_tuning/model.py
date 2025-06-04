@@ -20,9 +20,9 @@ from torch import nn
 from torch.nn.modules import Module
 from tqdm import tqdm
 
-from peft.config import PeftConfig
-from peft.tuners.tuners_utils import BaseTuner, _get_submodules, check_target_module_exists
-from peft.utils import TRANSFORMERS_MODELS_TO_LNTUNING_TARGET_MODULES_MAPPING, ModulesToSaveWrapper
+from tiny_hf.peft.config import PeftConfig
+from tiny_hf.peft.tuners.tuners_utils import BaseTuner, _get_submodules, check_target_module_exists
+from tiny_hf.peft.utils import TRANSFORMERS_MODELS_TO_LNTUNING_TARGET_MODULES_MAPPING, ModulesToSaveWrapper
 
 from .layer import LNTuningLayer
 

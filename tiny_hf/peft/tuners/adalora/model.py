@@ -14,13 +14,13 @@
 
 import warnings
 
-import torch
-from transformers.pytorch_utils import Conv1D
+import tg_adapter as torch
+from tiny_hf.transformers.pytorch_utils import Conv1D
 
-from peft.import_utils import is_bnb_4bit_available, is_bnb_available, is_gptqmodel_available
-from peft.tuners.lora import LoraConfig, LoraModel
-from peft.tuners.tuners_utils import BaseTunerLayer
-from peft.utils import (
+from tiny_hf.peft.import_utils import is_bnb_4bit_available, is_bnb_available, is_gptqmodel_available
+from tiny_hf.peft.tuners.lora import LoraConfig, LoraModel
+from tiny_hf.peft.tuners.tuners_utils import BaseTunerLayer
+from tiny_hf.peft.utils import (
     TRANSFORMERS_MODELS_TO_ADALORA_TARGET_MODULES_MAPPING,
     _freeze_adapter,
     _get_submodules,
@@ -28,7 +28,7 @@ from peft.utils import (
     get_gptqmodel_quant_linear,
     get_quantization_config,
 )
-from peft.utils.integrations import gather_params_ctx
+from tiny_hf.peft.utils.integrations import gather_params_ctx
 
 from .gptq import SVDQuantLinear
 from .layer import AdaLoraLayer, RankAllocator, SVDLinear

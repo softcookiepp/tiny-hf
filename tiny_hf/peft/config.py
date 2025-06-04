@@ -120,7 +120,7 @@ class PeftConfigMixin(PushToHubMixin):
                 Keyword arguments passed along to the configuration initialization.
         """
         # Avoid circular dependency .. TODO: fix this with a larger refactor
-        from peft.mapping import PEFT_TYPE_TO_CONFIG_MAPPING
+        from tiny_hf.peft.mapping import PEFT_TYPE_TO_CONFIG_MAPPING
 
         # TODO: this hack is needed to fix the following issue (on commit 702f937):
         # if someone saves a default config and loads it back with `PeftConfig` class it yields to

@@ -17,12 +17,12 @@ from __future__ import annotations
 import warnings
 from typing import Optional
 
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
+import tg_adapter as torch
+import tg_adapter as torch.nn as nn
+import tg_adapter as torch.nn.functional as F
 
-from peft.tuners._buffer_dict import BufferDict
-from peft.tuners.tuners_utils import BaseTunerLayer, check_adapters_to_merge
+from tiny_hf.peft.tuners._buffer_dict import BufferDict
+from tiny_hf.peft.tuners.tuners_utils import BaseTunerLayer, check_adapters_to_merge
 
 
 class TrainableTokensLayer(nn.Module, BaseTunerLayer):

@@ -422,7 +422,7 @@ class LoraLayer(BaseTunerLayer):
         del linear.eigens
 
     def loftq_init(self, adapter_name):
-        from peft.utils.loftq_utils import loftq_init
+        from tiny_hf.peft.utils.loftq_utils import loftq_init
 
         weight = self.get_base_layer().weight
         kwargs = {
