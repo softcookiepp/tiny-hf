@@ -14,11 +14,11 @@
 
 from typing import Any, Optional
 
-import torch
+import tg_adapter as torch
 
-from peft.import_utils import is_aqlm_available
-from peft.tuners.lora.layer import LoraLayer
-from peft.tuners.tuners_utils import BaseTunerLayer
+from tiny_hf.peft.import_utils import is_aqlm_available
+from tiny_hf.peft.tuners.lora.layer import LoraLayer
+from tiny_hf.peft.tuners.tuners_utils import BaseTunerLayer
 
 
 if is_aqlm_available():
