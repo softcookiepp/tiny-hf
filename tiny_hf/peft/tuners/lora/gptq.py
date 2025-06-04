@@ -15,10 +15,10 @@ from typing import Any, Optional
 
 import tg_adapter as torch
 
-from tg_adapter.peft.import_utils import is_gptqmodel_available
-from tg_adapter.peft.tuners.lora.layer import LoraLayer
-from tg_adapter.peft.tuners.tuners_utils import BaseTunerLayer
-from tg_adapter.peft.utils import get_auto_gptq_quant_linear
+from tiny_hf.peft.import_utils import is_gptqmodel_available
+from tiny_hf.peft.tuners.lora.layer import LoraLayer
+from tiny_hf.peft.tuners.tuners_utils import BaseTunerLayer
+from tiny_hf.peft.utils import get_auto_gptq_quant_linear
 
 
 class GPTQLoraLinear(torch.nn.Module, LoraLayer):
