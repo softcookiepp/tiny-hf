@@ -16,8 +16,8 @@ import warnings
 from typing import Optional
 
 import tg_adapter as torch
-import tg_adapter as torch.nn as nn
-import tg_adapter as torch.nn.functional as F
+from tg_adapter import nn
+from tg_adapter import F
 from tiny_hf.transformers.pytorch_utils import Conv1D
 
 from tiny_hf.peft.tuners.tuners_utils import BaseTunerLayer, check_adapters_to_merge

@@ -18,8 +18,8 @@ import warnings
 from typing import Any, Optional, Union
 
 import tg_adapter as torch
-import tg_adapter as torch.nn as nn
-import tg_adapter as torch.nn.functional as F
+from tg_adapter import nn
+from tg_adapter import F
 
 from tiny_hf.peft.tuners.tuners_utils import BaseTunerLayer, check_adapters_to_merge
 

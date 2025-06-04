@@ -18,7 +18,7 @@ import warnings
 from typing import Optional
 
 import tg_adapter as torch
-import tg_adapter as torch.nn as nn
+from tg_adapter import nn
 from tqdm import tqdm
 
 from tiny_hf.peft.config import PeftConfig
