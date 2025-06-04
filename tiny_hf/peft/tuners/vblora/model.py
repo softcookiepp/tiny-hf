@@ -19,7 +19,7 @@ from enum import Enum
 from typing import Optional
 
 import tg_adapter as torch
-import tg_adapter as torch.nn as nn
+from tg_adapter import nn
 from tqdm import tqdm
 from tiny_hf.transformers.pytorch_utils import Conv1D
 
