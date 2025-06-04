@@ -15,11 +15,11 @@ import importlib.metadata as importlib_metadata
 from typing import Any, Optional
 
 import packaging.version
-import torch
+import tg_adapter as torch
 
-from peft.import_utils import is_auto_awq_available
-from peft.tuners.lora.layer import LoraLayer
-from peft.tuners.tuners_utils import BaseTunerLayer
+from tiny_hf.peft.import_utils import is_auto_awq_available
+from tiny_hf.peft.tuners.lora.layer import LoraLayer
+from tiny_hf.peft.tuners.tuners_utils import BaseTunerLayer
 
 
 class AwqLoraLinear(torch.nn.Module, LoraLayer):
