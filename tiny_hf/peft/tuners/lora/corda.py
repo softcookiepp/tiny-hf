@@ -19,14 +19,14 @@ import os
 from collections.abc import Iterable
 from typing import Any, Callable, Optional
 
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+from tg_adapter import nn, F
 from attr import dataclass
 from tqdm import tqdm
 
-from peft.tuners.lora.config import LoraConfig
-from peft.tuners.lora.model import LoraModel
-from peft.utils.other import get_pattern_key
+from tiny_hf.peft.tuners.lora.config import LoraConfig
+from tiny_hf.peft.tuners.lora.model import LoraModel
+from tiny_hf.peft.utils.other import get_pattern_key
 
 
 @dataclass

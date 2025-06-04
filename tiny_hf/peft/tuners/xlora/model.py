@@ -18,14 +18,14 @@ from contextlib import contextmanager
 from functools import partial
 from typing import Optional, Union
 
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+from tg_adapter import nn, F
 
-from peft.tuners.lora.layer import LoraLayer
-from peft.tuners.lora.model import LoraModel
-from peft.tuners.tuners_utils import BaseTuner
-from peft.utils.constants import DUMMY_TARGET_MODULES
-from peft.utils.save_and_load import set_peft_model_state_dict
+from tiny_hf.peft.tuners.lora.layer import LoraLayer
+from tiny_hf.peft.tuners.lora.model import LoraModel
+from tiny_hf.peft.tuners.tuners_utils import BaseTuner
+from tiny_hf.peft.utils.constants import DUMMY_TARGET_MODULES
+from tiny_hf.peft.utils.save_and_load import set_peft_model_state_dict
 
 from .. import lora
 from .classifier import XLoraClassifier

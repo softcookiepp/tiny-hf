@@ -15,11 +15,10 @@ from __future__ import annotations
 
 from typing import Any, Callable, Optional
 
-import torch
-import torch.nn as nn
-from torch import Tensor
+import tg_adapter as torch
+from tg_adapter import nn, F, Tensor
 
-from peft.tuners import lora
+from tiny_hf.peft.tuners import lora
 
 from .config import XLoraConfig
 

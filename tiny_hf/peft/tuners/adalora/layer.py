@@ -26,9 +26,9 @@ from tiny_hf.peft.utils import transpose
 
 
 if packaging.version.parse(transformers.__version__) >= packaging.version.parse("4.33.0"):
-    from transformers.integrations import deepspeed_config
+    from tiny_hf.transformers.integrations import deepspeed_config
 else:
-    from transformers.deepspeed import deepspeed_config
+    from tiny_hf.transformers.deepspeed import deepspeed_config
 
 
 class AdaLoraLayer(LoraLayer):

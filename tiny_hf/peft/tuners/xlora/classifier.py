@@ -16,8 +16,8 @@ from __future__ import annotations
 import builtins
 from typing import Optional, Union
 
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+from tg_adapter import nn, F
 
 from .config import XLoraConfig
 
