@@ -20,17 +20,17 @@ from dataclasses import asdict
 from enum import Enum
 from typing import Optional
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter import nn, F
 from tqdm import tqdm
 
-from peft.tuners.tuners_utils import (
+from tiny_hf.peft.tuners.tuners_utils import (
     BaseTuner,
     BaseTunerLayer,
     check_target_module_exists,
     onload_layer,
 )
-from peft.utils import (
+from tiny_hf.peft.utils import (
     TRANSFORMERS_MODELS_TO_LORA_TARGET_MODULES_MAPPING,
     ModulesToSaveWrapper,
     _get_submodules,

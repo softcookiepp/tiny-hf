@@ -17,7 +17,7 @@ import platform
 from functools import lru_cache
 
 import packaging.version
-import torch
+import tg_adapter as torch
 
 
 @lru_cache

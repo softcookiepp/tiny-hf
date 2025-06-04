@@ -12,8 +12,8 @@ from __future__ import annotations
 import collections
 from collections import OrderedDict
 
-import torch
-from torch.nn import Module
+import tg_adapter as torch
+from tg_adapter.nn import Module
 
 
 class BufferDict(Module):

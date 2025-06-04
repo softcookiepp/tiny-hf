@@ -16,7 +16,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
-import torch
+import tg_adapter as torch
 
 from .utils import PeftType
 

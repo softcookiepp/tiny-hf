@@ -14,9 +14,9 @@
 
 from abc import ABC, abstractmethod
 
-import torch
-from torch import nn
-from torch.distributions.relaxed_bernoulli import RelaxedBernoulli
+import tg_adapter as torch
+from tg_adapter import nn
+from tg_adapter.distributions.relaxed_bernoulli import RelaxedBernoulli
 
 from .config import PolyConfig
 

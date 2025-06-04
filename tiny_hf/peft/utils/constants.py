@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import torch
-from transformers import BloomPreTrainedModel
+import tg_adapter as torch
+from tiny_hf.transformers import BloomPreTrainedModel
 
 
 # needed for prefix-tuning of bloom model

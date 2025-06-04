@@ -19,9 +19,9 @@ from contextlib import contextmanager
 from typing import Literal
 
 import packaging.version
-import torch
-import transformers
-from torch import nn
+import tg_adapter as torch
+from tiny_hf import transformers
+from tg_adapter import nn
 
 from ..import_utils import is_xpu_available
 

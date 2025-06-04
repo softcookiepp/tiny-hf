@@ -17,11 +17,11 @@ from dataclasses import asdict
 from enum import Enum
 from typing import Any
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter import nn
 
-from peft.tuners.tuners_utils import BaseTuner, BaseTunerLayer, check_target_module_exists
-from peft.utils import (
+from tiny_hf.peft.tuners.tuners_utils import BaseTuner, BaseTunerLayer, check_target_module_exists
+from tiny_hf.peft.utils import (
     TRANSFORMERS_MODELS_TO_LORA_TARGET_MODULES_MAPPING,
     ModulesToSaveWrapper,
 )

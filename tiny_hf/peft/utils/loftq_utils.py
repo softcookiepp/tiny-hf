@@ -21,7 +21,7 @@ import logging
 import os
 from typing import Callable, Optional, Union
 
-import torch
+import tg_adapter as torch
 from ...accelerate.utils.memory import clear_device_cache
 from huggingface_hub import snapshot_download
 from huggingface_hub.errors import HFValidationError, LocalEntryNotFoundError

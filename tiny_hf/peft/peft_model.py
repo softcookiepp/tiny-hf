@@ -25,18 +25,18 @@ from dataclasses import dataclass
 from typing import Any, Literal, Optional, Union
 
 import packaging.version
-import torch
-import transformers
+import tg_adapter as torch
+from tiny_hf import transformers
 from ..accelerate import dispatch_model, infer_auto_device_map
 from ..accelerate.hooks import AlignDevicesHook, add_hook_to_module, remove_hook_from_submodules
 from ..accelerate.utils import get_balanced_memory, named_module_tensors
 from huggingface_hub import HfFileSystem, ModelCard, ModelCardData, hf_hub_download
 from safetensors import safe_open
 from safetensors.torch import save_file as safe_save_file
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
-from transformers import Cache, DynamicCache, EncoderDecoderCache, HybridCache, PreTrainedModel
-from transformers.modeling_outputs import QuestionAnsweringModelOutput, SequenceClassifierOutput, TokenClassifierOutput
-from transformers.utils import PushToHubMixin
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+from tiny_hf.transformers import Cache, DynamicCache, EncoderDecoderCache, HybridCache, PreTrainedModel
+from tiny_hf.transformers.modeling_outputs import QuestionAnsweringModelOutput, SequenceClassifierOutput, TokenClassifierOutput
+from tiny_hf.transformers.utils import PushToHubMixin
 
 from .tuners.tuners_utils import BaseTuner, BaseTunerLayer
 from .utils.constants import DUMMY_MODEL_CONFIG

@@ -23,12 +23,11 @@ import warnings
 from contextlib import contextmanager
 from typing import Any, Optional, Union
 
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-from torch.autograd import Function
+import tg_adapter as torch
+from tg_adapter import nn, F
+from tg_adapter.autograd import Function
 
-from peft.tuners.tuners_utils import BaseTunerLayer, check_adapters_to_merge
+from tiny_hf.peft.tuners.tuners_utils import BaseTunerLayer, check_adapters_to_merge
 
 
 _FBD_CUDA = None

@@ -15,10 +15,10 @@
 import math
 from typing import Any
 
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+from tg_adapter import nn
 
-from peft.tuners.tuners_utils import BaseTunerLayer
+from tiny_hf.peft.tuners.tuners_utils import BaseTunerLayer
 
 from .config import PolyConfig
 from .router import get_router

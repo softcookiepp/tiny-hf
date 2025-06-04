@@ -15,7 +15,7 @@
 import warnings
 from typing import Literal
 
-import torch
+import tg_adapter as torch
 
 
 def reshape_weight_task_tensors(task_tensors, weights):

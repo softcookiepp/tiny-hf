@@ -18,11 +18,11 @@ import warnings
 from operator import attrgetter
 from typing import Literal, Optional
 
-import torch
+import tg_adapter as torch
 
-from peft.config import PeftConfig
-from peft.mapping import PEFT_TYPE_TO_CONFIG_MAPPING, PEFT_TYPE_TO_PREFIX_MAPPING
-from peft.tuners.lora import Conv2d, Linear, LoraConfig, LoraLayer
+from tiny_hf.peft.config import PeftConfig
+from tiny_hf.peft.mapping import PEFT_TYPE_TO_CONFIG_MAPPING, PEFT_TYPE_TO_PREFIX_MAPPING
+from tiny_hf.peft.tuners.lora import Conv2d, Linear, LoraConfig, LoraLayer
 
 from .other import get_pattern_key, infer_device
 from .peft_types import PeftType

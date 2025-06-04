@@ -14,7 +14,7 @@
 
 from typing import Optional
 
-import torch
+import tg_adapter as torch
 
 
 class IncrementalPCA:

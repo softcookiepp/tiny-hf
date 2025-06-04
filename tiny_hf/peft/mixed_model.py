@@ -18,12 +18,12 @@ import os
 from contextlib import contextmanager
 from typing import Any, Optional, Union
 
-import torch
-from accelerate.hooks import remove_hook_from_submodules
-from torch import nn
-from transformers.utils import PushToHubMixin
+import tg_adapter as torch
+from tiny_hf.accelerate.hooks import remove_hook_from_submodules
+from tg_adapter import nn
+from tiny_hf.transformers.utils import PushToHubMixin
 
-from peft.utils.constants import DUMMY_MODEL_CONFIG
+from tiny_hf.peft.utils.constants import DUMMY_MODEL_CONFIG
 
 from .config import PeftConfig
 from .peft_model import PeftModel

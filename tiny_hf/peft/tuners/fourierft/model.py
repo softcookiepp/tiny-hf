@@ -20,12 +20,12 @@ from enum import Enum
 from itertools import chain
 from typing import Optional
 
-import torch
+import tg_adapter as torch
 from tqdm import tqdm
-from transformers.pytorch_utils import Conv1D
+from tiny_hf.transformers.pytorch_utils import Conv1D
 
-from peft.tuners.tuners_utils import BaseTuner, BaseTunerLayer, check_target_module_exists
-from peft.utils import (
+from tiny_hf.peft.tuners.tuners_utils import BaseTuner, BaseTunerLayer, check_target_module_exists
+from tiny_hf.peft.utils import (
     TRANSFORMERS_MODELS_TO_FOURIERFT_TARGET_MODULES_MAPPING,
     ModulesToSaveWrapper,
     _get_submodules,

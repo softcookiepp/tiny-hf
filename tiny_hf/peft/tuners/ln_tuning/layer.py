@@ -16,10 +16,10 @@ import warnings
 from copy import deepcopy
 from typing import Optional
 
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+from tg_adapter import nn, F
 
-from peft.tuners.tuners_utils import BaseTunerLayer, check_adapters_to_merge
+from tiny_hf.peft.tuners.tuners_utils import BaseTunerLayer, check_adapters_to_merge
 
 
 class LNTuningLayer(nn.Module, BaseTunerLayer):

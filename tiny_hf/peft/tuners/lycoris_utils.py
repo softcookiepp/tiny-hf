@@ -18,8 +18,8 @@ from abc import abstractmethod
 from dataclasses import dataclass, field
 from typing import Any, Optional, Union
 
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+from tg_adapter import nn
 from tqdm import tqdm
 
 from peft.config import PeftConfig

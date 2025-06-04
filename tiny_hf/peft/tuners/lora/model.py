@@ -26,15 +26,15 @@ import tg_adapter as torch
 from tg_adapter import nn
 from tqdm import tqdm
 
-from peft.import_utils import is_bnb_4bit_available, is_bnb_available
-from peft.tuners.tuners_utils import (
+from tiny_hf.peft.import_utils import is_bnb_4bit_available, is_bnb_available
+from tiny_hf.peft.tuners.tuners_utils import (
     BaseTuner,
     BaseTunerLayer,
     check_target_module_exists,
     onload_layer,
     replicate_layers,
 )
-from peft.utils import (
+from tiny_hf.peft.utils import (
     TRANSFORMERS_MODELS_TO_LORA_TARGET_MODULES_MAPPING,
     AuxiliaryTrainingWrapper,
     ModulesToSaveWrapper,
@@ -43,8 +43,8 @@ from peft.utils import (
     get_peft_model_state_dict,
     get_quantization_config,
 )
-from peft.utils.merge_utils import dare_linear, dare_ties, magnitude_prune, task_arithmetic, ties
-from peft.utils.other import get_pattern_key
+from tiny_hf.peft.utils.merge_utils import dare_linear, dare_ties, magnitude_prune, task_arithmetic, ties
+from tiny_hf.peft.utils.other import get_pattern_key
 
 from .aqlm import dispatch_aqlm
 from .awq import dispatch_awq
