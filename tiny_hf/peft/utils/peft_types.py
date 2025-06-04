@@ -122,7 +122,7 @@ def register_peft_method(
         register_peft_method(name="my_peft_method", config_cls=MyConfig, model_cls=MyModel)
         ```
     """
-    from peft.mapping import (
+    from tiny_hf.peft.mapping import (
         PEFT_TYPE_TO_CONFIG_MAPPING,
         PEFT_TYPE_TO_MIXED_MODEL_MAPPING,
         PEFT_TYPE_TO_PREFIX_MAPPING,
