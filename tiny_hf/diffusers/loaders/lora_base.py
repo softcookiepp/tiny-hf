@@ -57,10 +57,10 @@ if is_transformers_available():
 	from ..models.lora import text_encoder_attn_modules, text_encoder_mlp_modules
 
 if is_peft_available():
-	from peft.tuners.tuners_utils import BaseTunerLayer
+	from tiny_hf.peft.tuners.tuners_utils import BaseTunerLayer
 
 if is_accelerate_available():
-	from accelerate.hooks import AlignDevicesHook, CpuOffload, remove_hook_from_module
+	from tiny_hf.accelerate.hooks import AlignDevicesHook, CpuOffload, remove_hook_from_module
 
 logger = logging.get_logger(__name__)
 
@@ -338,7 +338,7 @@ def _load_lora_into_text_encoder(
 			)
 		peft_kwargs["low_cpu_mem_usage"] = low_cpu_mem_usage
 
-	from peft import LoraConfig
+	from tiny_hf.peft import LoraConfig
 
 	# If the serialization format is new (introduced in https://github.com/huggingface/diffusers/pull/2918),
 	# then the `state_dict` keys should have `unet_name` and/or `text_encoder_name` as
