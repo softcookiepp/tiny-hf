@@ -596,7 +596,11 @@ def load_state_dict(
 					return state_dict
 			
 			# continue
-			return tinygrad.nn.state.safe_load(checkpoint_file)
+			# so it expects the state dict to be in the
+			state_dict = tinygrad.nn.state.safe_load(checkpoint_file)
+			tsd = {}
+			for k, v in state_dict.items():
+				tsd[k] = torch.Tensor(v)
 
 	try:
 		if map_location is None:
