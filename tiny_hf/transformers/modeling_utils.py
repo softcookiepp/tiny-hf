@@ -812,7 +812,7 @@ def _load_state_dict_into_meta_model(
 	file_pointer = None
 	if is_meta_state_dict:
 		file_pointer = safe_open(shard_file, framework="pt", device=tensor_device)
-
+	input(state_dict)
 	for param_name, empty_param in state_dict.items():
 		if param_name not in expected_keys:
 			continue
