@@ -812,7 +812,7 @@ def _load_state_dict_into_meta_model(
 	file_pointer = None
 	if is_meta_state_dict:
 		file_pointer = safe_open(shard_file, framework="pt", device=tensor_device)
-	input(state_dict)
+	
 	for param_name, empty_param in state_dict.items():
 		if param_name not in expected_keys:
 			continue
@@ -882,6 +882,7 @@ def _load_state_dict_into_meta_model(
 				if is_fsdp_enabled():
 					param_device = "cpu" if is_local_dist_rank_0() else "meta"
 				module, param_type = get_module_from_name(model, param_name)
+				input(param)
 				module.load_state_dict(
 					{param_type: param.to(param_device)},
 					strict=False,
