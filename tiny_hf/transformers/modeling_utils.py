@@ -601,7 +601,7 @@ def load_state_dict(
 			tsd = {}
 			for k, v in state_dict.items():
 				tsd[k] = torch.Tensor(v)
-
+			return tsd
 	try:
 		if map_location is None:
 			if (
