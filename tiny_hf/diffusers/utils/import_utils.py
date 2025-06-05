@@ -185,6 +185,9 @@ _ftfy_available, _ftfy_version = _is_package_available("ftfy")
 _scipy_available, _scipy_version = _is_package_available("scipy")
 _librosa_available, _librosa_version = _is_package_available("librosa")
 _accelerate_available, _accelerate_version = _is_package_available("accelerate")
+
+# I really am not interested in having to port accelerate right now
+_accelerate_available = False
 _xformers_available, _xformers_version = _is_package_available("xformers")
 _gguf_available, _gguf_version = _is_package_available("gguf")
 _torchao_available, _torchao_version = _is_package_available("torchao")
