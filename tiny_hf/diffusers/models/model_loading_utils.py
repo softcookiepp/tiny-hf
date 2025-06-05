@@ -58,8 +58,8 @@ _CLASS_REMAPPING_DICT = {
 
 
 if is_accelerate_available():
-	from accelerate import infer_auto_device_map
-	from accelerate.utils import get_balanced_memory, get_max_memory, offload_weight, set_module_tensor_to_device
+	from tiny_hf.accelerate import infer_auto_device_map
+	from tiny_hf.accelerate.utils import get_balanced_memory, get_max_memory, offload_weight, set_module_tensor_to_device
 
 
 # Adapted from `transformers` (see modeling_utils.py)
