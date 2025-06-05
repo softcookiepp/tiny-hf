@@ -5384,7 +5384,6 @@ class PreTrainedModel(nn.Module, ModuleUtilsMixin, GenerationMixin, PushToHubMix
 		`get_parameter()` and `get_buffer()` in a single handy function. Note that it only work if `target` is a
 		leaf of the model.
 		"""
-		input(target)
 		try:
 			return self.get_parameter(target)
 		except AttributeError:
