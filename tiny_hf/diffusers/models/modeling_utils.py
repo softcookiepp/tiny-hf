@@ -1394,7 +1394,6 @@ class ModelMixin(tga.nn.Module, PushToHubMixin):
 		offload_folder: Optional[Union[str, os.PathLike]] = None,
 		dduf_entries: Optional[Dict[str, DDUFEntry]] = None,
 	):
-		input(state_dict)
 		model_state_dict = model.state_dict()
 		expected_keys = list(model_state_dict.keys())
 		missing_keys = list(set(expected_keys) - set(loaded_keys))

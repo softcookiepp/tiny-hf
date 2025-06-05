@@ -184,8 +184,11 @@ def load_state_dict(
 				# Well, I found the problem!
 				
 				c = tinygrad.nn.state.safe_load(checkpoint_file)
+				tc = {}
+				for k, v in c.items():
+					tc[k] = tga.Tensor(v)
 				#input(type(c[list(c.keys())[0]]) )
-				return c
+				return tc
 		elif file_extension == GGUF_FILE_EXTENSION:
 			raise NotImplementedError
 			return load_gguf_checkpoint(checkpoint_file)
