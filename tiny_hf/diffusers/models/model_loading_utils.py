@@ -253,7 +253,6 @@ def load_model_dict_into_meta(
 		# We convert floating dtypes to the `dtype` passed. We also want to keep the buffers/params
 		# in int/uint/bool and not cast them.
 		# TODO: revisit cases when param.dtype == torch.float8_e4m3fn
-		input(param)
 		if dtype is not None and tga.is_floating_point(param):
 			if keep_in_fp32_modules is not None and any(
 				module_to_keep_in_fp32 in param_name.split(".") for module_to_keep_in_fp32 in keep_in_fp32_modules
