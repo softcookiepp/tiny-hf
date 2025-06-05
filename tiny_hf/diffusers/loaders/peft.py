@@ -191,8 +191,8 @@ class PeftAdapterMixin:
 				Speed up model loading by only loading the pretrained LoRA weights and not initializing the random
 				weights.
 		"""
-		from peft import LoraConfig, inject_adapter_in_model, set_peft_model_state_dict
-		from peft.tuners.tuners_utils import BaseTunerLayer
+		from tiny_hf.peft import LoraConfig, inject_adapter_in_model, set_peft_model_state_dict
+		from tiny_hf.peft.tuners.tuners_utils import BaseTunerLayer
 
 		cache_dir = kwargs.pop("cache_dir", None)
 		force_download = kwargs.pop("force_download", False)
@@ -389,7 +389,7 @@ class PeftAdapterMixin:
 				Whether to save the model using `safetensors` or the traditional PyTorch way with `pickle`.
 			weight_name: (`str`, *optional*, defaults to `None`): Name of the file to serialize the state dict with.
 		"""
-		from peft.utils import get_peft_model_state_dict
+		from tiny_hf.peft.utils import get_peft_model_state_dict
 
 		from .lora_base import LORA_WEIGHT_NAME, LORA_WEIGHT_NAME_SAFE
 
@@ -502,7 +502,7 @@ class PeftAdapterMixin:
 		if not is_peft_available():
 			raise ImportError("PEFT is not available. Please install PEFT to use this function: `pip install peft`.")
 
-		from peft import PeftConfig, inject_adapter_in_model
+		from tiny_hf.peft import PeftConfig, inject_adapter_in_model
 
 		if not self._hf_peft_config_loaded:
 			self._hf_peft_config_loaded = True
@@ -546,7 +546,7 @@ class PeftAdapterMixin:
 				f" current loaded adapters are: {list(self.peft_config.keys())}"
 			)
 
-		from peft.tuners.tuners_utils import BaseTunerLayer
+		from tiny_hf.peft.tuners.tuners_utils import BaseTunerLayer
 
 		_adapters_has_been_set = False
 
@@ -581,7 +581,7 @@ class PeftAdapterMixin:
 		if not self._hf_peft_config_loaded:
 			raise ValueError("No adapter loaded. Please load an adapter first.")
 
-		from peft.tuners.tuners_utils import BaseTunerLayer
+		from tiny_hf.peft.tuners.tuners_utils import BaseTunerLayer
 
 		for _, module in self.named_modules():
 			if isinstance(module, BaseTunerLayer):
@@ -604,7 +604,7 @@ class PeftAdapterMixin:
 		if not self._hf_peft_config_loaded:
 			raise ValueError("No adapter loaded. Please load an adapter first.")
 
-		from peft.tuners.tuners_utils import BaseTunerLayer
+		from tiny_hf.peft.tuners.tuners_utils import BaseTunerLayer
 
 		for _, module in self.named_modules():
 			if isinstance(module, BaseTunerLayer):
@@ -629,7 +629,7 @@ class PeftAdapterMixin:
 		if not self._hf_peft_config_loaded:
 			raise ValueError("No adapter loaded. Please load an adapter first.")
 
-		from peft.tuners.tuners_utils import BaseTunerLayer
+		from tiny_hf.peft.tuners.tuners_utils import BaseTunerLayer
 
 		for _, module in self.named_modules():
 			if isinstance(module, BaseTunerLayer):
@@ -644,7 +644,7 @@ class PeftAdapterMixin:
 		self.apply(partial(self._fuse_lora_apply, adapter_names=adapter_names))
 
 	def _fuse_lora_apply(self, module, adapter_names=None):
-		from peft.tuners.tuners_utils import BaseTunerLayer
+		from tiny_hf.peft.tuners.tuners_utils import BaseTunerLayer
 
 		merge_kwargs = {"safe_merge": self._safe_fusing}
 
@@ -671,7 +671,7 @@ class PeftAdapterMixin:
 		self.apply(self._unfuse_lora_apply)
 
 	def _unfuse_lora_apply(self, module):
-		from peft.tuners.tuners_utils import BaseTunerLayer
+		from tiny_hf.peft.tuners.tuners_utils import BaseTunerLayer
 
 		if isinstance(module, BaseTunerLayer):
 			module.unmerge()

@@ -24,7 +24,7 @@ from ..utils import is_safetensors_available, is_transformers_available, is_tran
 
 
 if TYPE_CHECKING:
-    from transformers import PreTrainedModel, PreTrainedTokenizer
+    from tiny_hf.transformers import PreTrainedModel, PreTrainedTokenizer
 
 if is_transformers_available():
     from ...transformers import PreTrainedModel, PreTrainedTokenizer
@@ -92,7 +92,7 @@ def _load_transformers_model_from_dduf(
         )
 
     with tempfile.TemporaryDirectory() as tmp_dir:
-        from transformers import AutoConfig, GenerationConfig
+        from tiny_hf.transformers import AutoConfig, GenerationConfig
 
         tmp_config_file = os.path.join(tmp_dir, "config.json")
         with open(tmp_config_file, "w") as f:

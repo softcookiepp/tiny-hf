@@ -293,7 +293,7 @@ class UNet2DConditionLoadersMixin:
         if not USE_PEFT_BACKEND:
             raise ValueError("PEFT backend is required for this method.")
 
-        from peft import LoraConfig, inject_adapter_in_model, set_peft_model_state_dict
+        from tiny_hf.peft import LoraConfig, inject_adapter_in_model, set_peft_model_state_dict
 
         keys = list(state_dict.keys())
 
@@ -486,7 +486,7 @@ class UNet2DConditionLoadersMixin:
             if not USE_PEFT_BACKEND:
                 raise ValueError("PEFT backend is required for saving LoRAs using the `save_attn_procs()` method.")
 
-            from peft.utils import get_peft_model_state_dict
+            from tiny_hf.peft.utils import get_peft_model_state_dict
 
             state_dict = get_peft_model_state_dict(self)
 

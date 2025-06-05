@@ -29,7 +29,7 @@ if is_transformers_available():
         import deepspeed
 
 if is_peft_available():
-    from peft import set_peft_model_state_dict
+    from tiny_hf.peft import set_peft_model_state_dict
 
 if is_torchvision_available():
     from torchvision import transforms

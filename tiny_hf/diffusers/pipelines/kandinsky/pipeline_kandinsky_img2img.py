@@ -18,7 +18,7 @@ import numpy as np
 import PIL.Image
 import torch
 from PIL import Image
-from transformers import (
+from tiny_hf.transformers import (
     XLMRobertaTokenizer,
 )
 

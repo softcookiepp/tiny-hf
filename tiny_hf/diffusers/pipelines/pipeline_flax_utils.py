@@ -42,7 +42,7 @@ from ..utils import (
 
 
 if is_transformers_available():
-    from transformers import FlaxPreTrainedModel
+    from tiny_hf.transformers import FlaxPreTrainedModel
 
 INDEX_FILE = "diffusion_flax_model.bin"
 

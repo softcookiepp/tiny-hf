@@ -529,9 +529,9 @@ class ModelMixin(tga.nn.Module, PushToHubMixin):
 			# `~diffusers.hooks.layerwise_casting.apply_layerwise_casting` function which provides
 			# them with more flexibility and control.
 
-			from peft.tuners.loha.layer import LoHaLayer
-			from peft.tuners.lokr.layer import LoKrLayer
-			from peft.tuners.lora.layer import LoraLayer
+			from tiny_hf.peft.tuners.loha.layer import LoHaLayer
+			from tiny_hf.peft.tuners.lokr.layer import LoKrLayer
+			from tiny_hf.peft.tuners.lora.layer import LoraLayer
 
 			for layer in (LoHaLayer, LoKrLayer, LoraLayer):
 				skip_modules_pattern += tuple(layer.adapter_layer_names)
