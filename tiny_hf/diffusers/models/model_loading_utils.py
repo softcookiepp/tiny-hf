@@ -186,7 +186,7 @@ def load_state_dict(
 				c = tinygrad.nn.state.safe_load(checkpoint_file)
 				tc = {}
 				for k, v in c.items():
-					tc[k] = tga.Tensor(v)
+					tc[k] = tga.Tensor(v.to("CPU").realize() )
 				#input(type(c[list(c.keys())[0]]) )
 				return tc
 		elif file_extension == GGUF_FILE_EXTENSION:
