@@ -208,12 +208,14 @@ class PeftAdapterMixin:
 		_pipeline = kwargs.pop("_pipeline", None)
 		low_cpu_mem_usage = kwargs.pop("low_cpu_mem_usage", False)
 		allow_pickle = False
-
+		
+		# dumb
+		"""
 		if low_cpu_mem_usage and is_peft_version("<=", "0.13.0"):
 			raise ValueError(
 				"`low_cpu_mem_usage=True` is not compatible with this `peft` version. Please update it with `pip install -U peft`."
 			)
-
+		"""
 		user_agent = {
 			"file_type": "attn_procs_weights",
 			"framework": "pytorch",
