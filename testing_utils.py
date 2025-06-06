@@ -233,7 +233,7 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-9, print_values = 
 		_test_key_errors(int(hf_dict), int(tg_dict), error_threshold, display_images, error_function)
 	elif hasattr(hf_dict, "__iter__"):
 		for hf_item, tg_item in zip(sorted(hf_dict), sorted(tg_dict) ):
-			_test_key_errors(int(hf_item), int(tg_item), error_threshold, display_images, error_function)
+			_test_key_errors(hf_item, tg_item, error_threshold, display_images, error_function)
 	else:
 		raise ValueError
 		
