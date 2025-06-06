@@ -419,7 +419,7 @@ class BaseTuner(nn.Module, ABC):
 
         """
         print(adapter_name)
-        input(type(model) )
+        #input(type(model) )
         peft_config = self.peft_config[adapter_name]
         excluded_modules = []
         unmatched_modules = []
@@ -472,6 +472,7 @@ class BaseTuner(nn.Module, ABC):
             if len(new_target_modules) < len(peft_config.target_modules):
                 peft_config.target_modules = new_target_modules
 
+        input(named_modules)
         existing_adapter_map = {}
         for key, module in named_modules:
             if isinstance(module, BaseTunerLayer):
