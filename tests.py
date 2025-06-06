@@ -312,6 +312,24 @@ def test_stable_diffusion_pipeline():
 	#test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 2, "safety_checker": None, "latents": latents, "output_type": "latent"}, hf_module, sd_pipeline_call, tg_module, sd_pipeline_call, error_threshold = 1.0e-6)
 	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 15, "safety_checker": None, "latents": latents, "output_type": "pil"}, hf_module, "__call__", tg_module, "__call__")
 
+def test_named_modules():
+	from testing_rewrites import sd_pipeline_call, retrieve_timesteps
+	from tiny_hf.diffusers.pipelines import StableDiffusionPipeline as tg_class
+	from tiny_hf.diffusers.schedulers import DDIMScheduler as tg_scheduler_class
+	
+	from diffusers.pipelines import StableDiffusionPipeline as hf_class
+	from diffusers.schedulers import DDIMScheduler as hf_scheduler_class
+	
+	hf_scheduler = hf_scheduler_class()
+	tg_scheduler = tg_scheduler_class()
+	
+	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, safety_checker = None, scheduler = hf_scheduler)
+	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, safety_checker = None, scheduler = tg_scheduler)
+	
+	copy_state_dict(hf_module.unet, tg_module.unet)
+	get_named_modules = lambda x, _torch: dict(x.named_modules() ).keys()
+	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 15, "safety_checker": None, "latents": latents, "output_type": "pil"}, hf_module, get_named_modules, tg_module, get_named_modules)
+
 def test_stable_diffusion_xl_pipeline():
 	from diffusers import StableDiffusionXLPipeline as hf_class
 	from tiny_hf.diffusers import StableDiffusionXLPipeline as tg_class
@@ -372,6 +390,7 @@ def test_dtype_override():
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
+	test_named_modules()
 	test_all_operators()
 	#input("ooperators tested")
 	
