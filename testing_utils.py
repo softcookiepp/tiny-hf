@@ -232,6 +232,7 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-9, print_values = 
 	elif isinstance(hf_dict, bool):
 		_test_key_errors(int(hf_dict), int(tg_dict), error_threshold, display_images, error_function)
 	else:
+		print(type(hf_dict) )
 		raise ValueError
 		
 def _process_arg(arg, device):
