@@ -418,6 +418,8 @@ class BaseTuner(nn.Module, ABC):
                 Create empty adapter weights on meta device. Useful to speed up the loading process.
 
         """
+        print(adapter_name)
+        input(type(model) )
         peft_config = self.peft_config[adapter_name]
         excluded_modules = []
         unmatched_modules = []
