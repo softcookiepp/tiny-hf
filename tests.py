@@ -391,6 +391,7 @@ def test_dtype_override():
 @torch.no_grad()
 def main():
 	test_named_modules()
+	input("did it work?")
 	test_all_operators()
 	#input("ooperators tested")
 	
