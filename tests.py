@@ -328,7 +328,7 @@ def test_named_modules():
 	
 	copy_state_dict(hf_module.unet, tg_module.unet)
 	get_named_modules = lambda x, _torch: dict(x.named_modules() ).keys()
-	test_hf_reimplementation([], {}, hf_module, get_named_modules, tg_module, get_named_modules)
+	test_hf_reimplementation([], {}, hf_module.unet, get_named_modules, tg_module.unet, get_named_modules)
 
 def test_stable_diffusion_xl_pipeline():
 	from diffusers import StableDiffusionXLPipeline as hf_class
