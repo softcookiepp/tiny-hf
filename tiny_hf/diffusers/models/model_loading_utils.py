@@ -347,7 +347,6 @@ def _load_state_dict_into_model(
 
 		load(model_to_load, assign_to_params_buffers=assign_to_params_buffers)
 	else:
-		input(list(state_dict.items() )[0] )
 		model_to_load.load_state_dict(state_dict)
 
 	return error_msgs
