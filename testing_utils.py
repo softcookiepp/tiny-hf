@@ -231,8 +231,10 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-9, print_values = 
 		pass
 	elif isinstance(hf_dict, bool):
 		_test_key_errors(int(hf_dict), int(tg_dict), error_threshold, display_images, error_function)
+	elif hasattr(hf_dict, "__iter__"):
+		for hf_item, tg_item in zip(hf_dict, tg_dict):
+			_test_key_errors(int(hf_item), int(tg_item), error_threshold, display_images, error_function)
 	else:
-		print(type(hf_dict) )
 		raise ValueError
 		
 def _process_arg(arg, device):
