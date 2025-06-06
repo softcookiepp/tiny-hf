@@ -249,8 +249,6 @@ def load_model_dict_into_meta(
 	empty_state_dict = model.state_dict()
 	
 	for param_name, param in state_dict.items():
-		print(param_name)
-		input(type(param) )
 		if param_name not in empty_state_dict:
 			continue
 

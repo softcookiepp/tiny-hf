@@ -815,7 +815,6 @@ def _load_state_dict_into_meta_model(
 		file_pointer = safe_open(shard_file, framework="pt", device=tensor_device)
 	
 	for param_name, empty_param in state_dict.items():
-		input(empty_param)
 		if param_name not in expected_keys:
 			continue
 
@@ -826,7 +825,6 @@ def _load_state_dict_into_meta_model(
 			param = file_pointer.get_slice(serialized_param_name)
 		else:
 			param = empty_param  # It is actually not empty!
-		input(param)
 		to_contiguous, casting_dtype = _infer_parameter_dtype(
 			model,
 			param_name,
