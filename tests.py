@@ -327,7 +327,7 @@ def test_named_modules():
 	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, safety_checker = None, scheduler = tg_scheduler)
 	
 	copy_state_dict(hf_module.unet, tg_module.unet)
-	get_named_modules = lambda x, _torch: list(dict(x.named_modules() ).keys())
+	get_named_modules = lambda x, _torch: dict(x.named_modules() ).keys()
 	test_hf_reimplementation([], {}, hf_module.unet, get_named_modules, tg_module.unet, get_named_modules)
 
 def test_stable_diffusion_xl_pipeline():
