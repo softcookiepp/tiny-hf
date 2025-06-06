@@ -302,8 +302,8 @@ def test_stable_diffusion_pipeline():
 	# First, we need to ensure that the timestep retrieval function isn't wrong
 	#test_hf_reimplementation(
 	
-	hf_module.load_lora_weights(".../external/ai_models/image/sd15/lora/cutememe02.safetensors")
-	tg_module.load_lora_weights(".../external/ai_models/image/sd15/lora/cutememe02.safetensors")
+	hf_module.load_lora_weights("LarryAIDraw/maiden_with_eyes_of_blue_v1")
+	tg_module.load_lora_weights("LarryAIDraw/maiden_with_eyes_of_blue_v1")
 	
 	# test prompt encoding
 	#test_hf_reimplementation(["a squishy pp", "cpu", 1, True], {}, hf_module, "encode_prompt", tg_module, "encode_prompt")
