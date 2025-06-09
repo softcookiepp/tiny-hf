@@ -203,6 +203,11 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-9, print_values = 
 			hf_dict = np.array(hf_dict).astype(np.float32)
 			_test_key_errors(hf_dict, tg_dict, error_threshold, display_images, error_function)
 		else:
+			if len(hf_dict) != len(tg_dict):
+				print("Lengths differ!")
+				print("torch:", hf_dict)
+				print("tg_adapter:", tg_dict)
+				raise ValueError
 			# list of other sort, non-numerical
 			for hf_item2, tg_item2 in zip(hf_dict, tg_dict):
 				_test_key_errors(hf_item2, tg_item2, error_threshold, display_images, error_function)
