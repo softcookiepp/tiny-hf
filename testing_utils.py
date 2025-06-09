@@ -205,8 +205,10 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-9, print_values = 
 		else:
 			if len(hf_dict) != len(tg_dict):
 				print("Lengths differ!")
-				print("torch:", hf_dict)
-				print("tg_adapter:", tg_dict)
+				hf_dict = set(hf_dict)
+				tg_dict = set(tg_dict)
+				if len(tg_dict) < len(hf_dict):
+					print("Values missing from tg:", hf_dict - tg_dict)
 				raise ValueError
 			# list of other sort, non-numerical
 			for hf_item2, tg_item2 in zip(hf_dict, tg_dict):
