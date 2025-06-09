@@ -332,7 +332,6 @@ def test_named_modules():
 		modules = list(x.named_modules())
 		keys = list(dict(modules).keys() )
 		print(len(keys), len(modules))
-		input(_torch)
 		return keys
 	test_hf_reimplementation([], {}, hf_module.unet, get_named_modules, tg_module.unet, get_named_modules)
 
@@ -396,8 +395,8 @@ def test_dtype_override():
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
-	test_named_modules()
-	input("did it work?")
+	#test_named_modules()
+	#input("did it work?")
 	test_all_operators()
 	#input("ooperators tested")
 	
