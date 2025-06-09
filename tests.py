@@ -177,13 +177,14 @@ def test_unet_2d():
 	args = (a, 2)
 	copy_state_dict(hf_module, thf_module)
 	test_hf_reimplementation(args, {}, hf_module, "__call__", thf_module, "__call__")
-
+"""
 def test_named_modules():
 	hf_module = diffusers.AutoencoderKL()
 	my_module = thf.diffusers.models.autoencoders.AutoencoderKL()
 	
 	for name, module in hf_module.named_modules():
 		print(name, module)
+"""
 
 def test_named_parameters():
 	hf_module = diffusers.AutoencoderKL()
@@ -327,7 +328,12 @@ def test_named_modules():
 	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, safety_checker = None, scheduler = tg_scheduler)
 	
 	copy_state_dict(hf_module.unet, tg_module.unet)
-	get_named_modules = lambda x, _torch: dict(x.named_modules() ).keys()
+	def get_named_modules(x, _torch):
+		modules = list(x.named_modules())
+		keys = list(dict(modules).keys() )
+		print(len(keys), len(modules))
+		input(_torch)
+		return keys
 	test_hf_reimplementation([], {}, hf_module.unet, get_named_modules, tg_module.unet, get_named_modules)
 
 def test_stable_diffusion_xl_pipeline():
