@@ -400,7 +400,6 @@ class DDIMScheduler(SchedulerMixin, ConfigMixin):
 		# - pred_prev_sample -> "x_t-1"
 
 		# 1. get previous step value (=t-1)
-		print(timestep, self.config.num_train_timesteps, self.num_inference_steps)
 		prev_timestep = timestep - self.config.num_train_timesteps // self.num_inference_steps
 
 		# 2. compute alphas, betas
