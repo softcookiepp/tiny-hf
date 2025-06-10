@@ -239,7 +239,9 @@ def _fetch_state_dict(
 					subfolder=subfolder,
 					user_agent=user_agent,
 				)
-				state_dict = safetensors.torch.load_file(model_file, device="cpu")
+				
+				state_dict = tinygrad.nn.state.safe_load(model_file)
+				#state_dict = safetensors.torch.load_file(model_file, device="cpu")
 			except (IOError, safetensors.SafetensorError) as e:
 				if not allow_pickle:
 					raise e
@@ -248,6 +250,7 @@ def _fetch_state_dict(
 				pass
 
 		if model_file is None:
+			raise NotImplementedError("Gonna wait until later to implement torch loading")
 			if weight_name is None:
 				weight_name = _best_guess_weight_name(
 					pretrained_model_name_or_path_or_dict, file_extension=".bin", local_files_only=local_files_only
