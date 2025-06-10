@@ -1021,7 +1021,7 @@ class StableDiffusionPipeline(
 		timesteps, num_inference_steps = retrieve_timesteps(
 			self.scheduler, num_inference_steps, device, timesteps, sigmas
 		)
-		timesteps.tg.realize()
+		timesteps = timesteps.to("cpu")
 
 		# 5. Prepare latent variables
 		num_channels_latents = self.unet.config.in_channels
@@ -1061,7 +1061,6 @@ class StableDiffusionPipeline(
 			for i, t in enumerate(timesteps):
 				if self.interrupt:
 					continue
-				t = t.contiguous()
 				# expand the latents if we are doing classifier free guidance
 				latent_model_input = torch.cat([latents] * 2) if self.do_classifier_free_guidance else latents
 				latent_model_input = self.scheduler.scale_model_input(latent_model_input, t)
