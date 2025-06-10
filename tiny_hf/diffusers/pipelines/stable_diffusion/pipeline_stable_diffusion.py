@@ -1021,7 +1021,7 @@ class StableDiffusionPipeline(
 		timesteps, num_inference_steps = retrieve_timesteps(
 			self.scheduler, num_inference_steps, device, timesteps, sigmas
 		)
-		input(timesteps)
+		timesteps.tg.realize()
 
 		# 5. Prepare latent variables
 		num_channels_latents = self.unet.config.in_channels
@@ -1057,7 +1057,6 @@ class StableDiffusionPipeline(
 		# 7. Denoising loop
 		num_warmup_steps = len(timesteps) - num_inference_steps * self.scheduler.order
 		self._num_timesteps = len(timesteps)
-		assert isinstance(timesteps, list)
 		with self.progress_bar(total=num_inference_steps) as progress_bar:
 			for i, t in enumerate(timesteps):
 				if self.interrupt:
