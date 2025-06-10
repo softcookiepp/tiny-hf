@@ -17,9 +17,9 @@ from typing import Any, Callable, Dict, List, Optional, Union
 
 import numpy as np
 import PIL.Image
-import torch
+import tg_adapter as torch
 from packaging import version
-from transformers import CLIPImageProcessor, CLIPTextModel, CLIPTokenizer, CLIPVisionModelWithProjection
+from tiny_hf.transformers import CLIPImageProcessor, CLIPTextModel, CLIPTokenizer, CLIPVisionModelWithProjection
 
 from ...callbacks import MultiPipelineCallbacks, PipelineCallback
 from ...configuration_utils import FrozenDict

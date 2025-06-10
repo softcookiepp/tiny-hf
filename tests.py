@@ -390,11 +390,17 @@ def test_dtype_override():
 	c = b.to("cpu")
 	print(c.numpy() )
 	print(c.dtype, c.tg.dtype)
+	
+def test_pipeline_image_input():
+	from tiny_hf.diffusers import PipelineImageInput as tg_class
+	from diffusers import PipelineImageInput as hf_class
+	
 
 @tinygrad.Tensor.test()
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
+	test_pipeline_image_input()
 	test_stable_diffusion_pipeline()
 	#test_stable_diffusion_xl_pipeline()
 	input("look at the outputs first you dumdum")
