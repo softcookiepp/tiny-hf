@@ -391,16 +391,73 @@ def test_dtype_override():
 	print(c.numpy() )
 	print(c.dtype, c.tg.dtype)
 	
-def test_pipeline_image_input():
-	from tiny_hf.diffusers import PipelineImageInput as tg_class
-	from diffusers import PipelineImageInput as hf_class
+def test_stable_diffusion_img2img():
+	from testing_rewrites import sd_pipeline_call, retrieve_timesteps
+	from tiny_hf.diffusers.pipelines import StableDiffusionImg2ImgPipeline as tg_class
+	from tiny_hf.diffusers.schedulers import DDIMScheduler as tg_scheduler_class
 	
+	from diffusers.pipelines import StableDiffusionImg2ImgPipeline as hf_class
+	from diffusers.schedulers import DDIMScheduler as hf_scheduler_class
+	
+	hf_scheduler = hf_scheduler_class()
+	tg_scheduler = tg_scheduler_class()
+	
+	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, safety_checker = None, scheduler = hf_scheduler)
+	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, safety_checker = None, scheduler = tg_scheduler)
+	
+	latents = make_test_data(1, 4, 64, 64)
+	
+	# then copy the state dict from the torch model to the tinygrad one and see if it helps at all
+	copy_state_dict(hf_module.vae, tg_module.vae)
+	#test_hf_reimplementation([img], {}, hf_module.vae, "__call__", tg_module.vae, "__call__")
+	
+	# lets do the submodule test on the vae just in case...
+	#test_all_submodules(hf_module.vae, tg_module.vae)
+	
+	#input("does the vae work?")
+	
+	# test the unet
+	#test_unet_2d_condition(hf_module.unet, tg_module.unet, latents.shape, (1, 77, 768) )
+	copy_state_dict(hf_module.unet, tg_module.unet)
+	#test_unet_2d_condition(hf_module.unet, tg_module.unet, latents.shape, (1, 77, 768) )
+	#input("does the unet work?")
+	
+	
+	
+	# even after gelu was fixed, there is even more that aren't working :c
+	# tiny_hf.diffusers.models.unets.unet_2d_blocks.UpBlock2D
+	# tiny_hf.diffusers.models.attention_processor.Attention
+	# tiny_hf.diffusers.models.attention.FeedForward
+	# surprisingly conv2d is having problems in some circumstances
+	# tg_adapter.nn.layers.Conv2d
+	# 	Conv2d(1920, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+	# 	Conv2d(2560, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+	# 	output shape: (1, 1280, 16, 16)
+	# tiny_hf.diffusers.models.resnet.ResnetBlock2D
+	# tiny_hf.diffusers.models.unets.unet_2d_blocks.CrossAttnUpBlock2D
+	
+	
+	# Looks like there may be a timestep problem.
+	# Lets look at that...
+	# First, we need to ensure that the timestep retrieval function isn't wrong
+	#test_hf_reimplementation(
+	
+	hf_module.load_lora_weights("ybelkada/sd-1.5-pokemon-lora-peft")
+	tg_module.load_lora_weights("ybelkada/sd-1.5-pokemon-lora-peft")
+	
+	# test prompt encoding
+	#test_hf_reimplementation(["a squishy pp", "cpu", 1, True], {}, hf_module, "encode_prompt", tg_module, "encode_prompt")
+	
+	# test the image processor
+	#test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 2, "safety_checker": None, "latents": latents, "output_type": "latent"}, hf_module, sd_pipeline_call, tg_module, sd_pipeline_call, error_threshold = 1.0e-6)
+	test_hf_reimplementation([], {"prompt": "a fluffy bunny pokemon", "num_inference_steps": 15, "safety_checker": None, "latents": latents, "output_type": "pil"}, hf_module, "__call__", tg_module, "__call__")
 
 @tinygrad.Tensor.test()
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
-	test_pipeline_image_input()
+	test_stable_diffusion_img2img()
+	input("pp")
 	test_stable_diffusion_pipeline()
 	#test_stable_diffusion_xl_pipeline()
 	input("look at the outputs first you dumdum")
