@@ -1061,6 +1061,7 @@ class StableDiffusionPipeline(
 			for i, t in enumerate(timesteps):
 				if self.interrupt:
 					continue
+				input(t.tg.device)
 				# expand the latents if we are doing classifier free guidance
 				latent_model_input = torch.cat([latents] * 2) if self.do_classifier_free_guidance else latents
 				latent_model_input = self.scheduler.scale_model_input(latent_model_input, t)
