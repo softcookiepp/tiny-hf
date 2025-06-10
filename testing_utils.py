@@ -319,12 +319,12 @@ def test_hf_reimplementation(args, kwargs, hf_module, hf_method, my_module, my_m
 	
 	
 	if isinstance(hf_method, str):
-		torch_out = hf_module.__getattribute__(hf_method)(*hf_args, **hf_kwargs)
 		tiny_out = my_module.__getattribute__(my_method)(*my_args, **my_kwargs)
+		torch_out = hf_module.__getattribute__(hf_method)(*hf_args, **hf_kwargs)
 	else:
 		# function substitute
-		torch_out = hf_method(hf_module, torch, *hf_args, **hf_kwargs)
 		tiny_out = my_method(my_module, tg_adapter, *my_args, **my_kwargs)
+		torch_out = hf_method(hf_module, torch, *hf_args, **hf_kwargs)
 	
 	#inspect_state_dict_devices(my_module)
 	print(f"MSE for {hf_module} and {my_module}:")

@@ -124,7 +124,7 @@ class StableDiffusionLoraLoaderMixin(LoraBaseMixin):
 
 		# First, ensure that the checkpoint is a compatible one and can be successfully loaded.
 		state_dict, network_alphas = self.lora_state_dict(pretrained_model_name_or_path_or_dict, **kwargs)
-		input(type(list(state_dict.items())[0][1]))
+		#input(type(list(state_dict.items())[0][1]))
 		is_correct_format = all("lora" in key for key in state_dict.keys())
 		if not is_correct_format:
 			raise ValueError("Invalid LoRA checkpoint.")

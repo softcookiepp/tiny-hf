@@ -395,11 +395,6 @@ def test_dtype_override():
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
-	#test_named_modules()
-	#input("did it work?")
-	test_all_operators()
-	#input("ooperators tested")
-	
 	test_stable_diffusion_pipeline()
 	#test_stable_diffusion_xl_pipeline()
 	input("look at the outputs first you dumdum")
