@@ -8,6 +8,7 @@ import tinygrad
 
 from tg_adapter import F
 import tg_adapter
+from PIL import Image
 
 from operator_tests import *
 from module_tests import *
@@ -420,37 +421,12 @@ def test_stable_diffusion_img2img():
 	#test_unet_2d_condition(hf_module.unet, tg_module.unet, latents.shape, (1, 77, 768) )
 	copy_state_dict(hf_module.unet, tg_module.unet)
 	#test_unet_2d_condition(hf_module.unet, tg_module.unet, latents.shape, (1, 77, 768) )
-	#input("does the unet work?")
 	
-	
-	
-	# even after gelu was fixed, there is even more that aren't working :c
-	# tiny_hf.diffusers.models.unets.unet_2d_blocks.UpBlock2D
-	# tiny_hf.diffusers.models.attention_processor.Attention
-	# tiny_hf.diffusers.models.attention.FeedForward
-	# surprisingly conv2d is having problems in some circumstances
-	# tg_adapter.nn.layers.Conv2d
-	# 	Conv2d(1920, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
-	# 	Conv2d(2560, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
-	# 	output shape: (1, 1280, 16, 16)
-	# tiny_hf.diffusers.models.resnet.ResnetBlock2D
-	# tiny_hf.diffusers.models.unets.unet_2d_blocks.CrossAttnUpBlock2D
-	
-	
-	# Looks like there may be a timestep problem.
-	# Lets look at that...
-	# First, we need to ensure that the timestep retrieval function isn't wrong
-	#test_hf_reimplementation(
-	
-	hf_module.load_lora_weights("ybelkada/sd-1.5-pokemon-lora-peft")
-	tg_module.load_lora_weights("ybelkada/sd-1.5-pokemon-lora-peft")
-	
-	# test prompt encoding
-	#test_hf_reimplementation(["a squishy pp", "cpu", 1, True], {}, hf_module, "encode_prompt", tg_module, "encode_prompt")
-	
-	# test the image processor
 	#test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 2, "safety_checker": None, "latents": latents, "output_type": "latent"}, hf_module, sd_pipeline_call, tg_module, sd_pipeline_call, error_threshold = 1.0e-6)
-	test_hf_reimplementation([], {"prompt": "a fluffy bunny pokemon", "num_inference_steps": 15, "safety_checker": None, "latents": latents, "output_type": "pil"}, hf_module, "__call__", tg_module, "__call__")
+	
+	# So we need to load an image...
+	img = Image.open("test_hf.png")
+	test_hf_reimplementation([img, "cuda:1"], {}, hf_module, "encode_image", tg_module, "encode_image")
 
 @tinygrad.Tensor.test()
 @tinygrad.Tensor.train(mode = False)
