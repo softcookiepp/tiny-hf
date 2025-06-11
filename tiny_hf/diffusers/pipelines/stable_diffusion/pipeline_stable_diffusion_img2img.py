@@ -1056,7 +1056,10 @@ class StableDiffusionImg2ImgPipeline(
         )
         timesteps, num_inference_steps = self.get_timesteps(num_inference_steps, strength, device)
         latent_timestep = timesteps[:1].repeat(batch_size * num_images_per_prompt)
-
+        
+        # gotta move timesteps to CPU so tinygrad doesn't shit itself
+        timesteps = timesteps.to("cpu")
+        
         # 6. Prepare latent variables
         latents = self.prepare_latents(
             image,
