@@ -403,8 +403,8 @@ def test_stable_diffusion_img2img():
 	hf_scheduler = hf_scheduler_class()
 	tg_scheduler = tg_scheduler_class()
 	
-	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, safety_checker = None, scheduler = hf_scheduler)
-	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, safety_checker = None, scheduler = tg_scheduler)
+	hf_module = hf_class.from_pretrained("stable-diffusion-v1-5/stable-diffusion-v1-5", use_safetensors = True, requires_safety_checker = False, safety_checker = None, scheduler = hf_scheduler)
+	tg_module = tg_class.from_pretrained("stable-diffusion-v1-5/stable-diffusion-v1-5", use_safetensors = True, requires_safety_checker = False, safety_checker = None, scheduler = tg_scheduler)
 	
 	latents = make_test_data(1, 4, 64, 64)
 	
