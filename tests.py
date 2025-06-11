@@ -426,7 +426,7 @@ def test_stable_diffusion_img2img():
 	
 	# So we need to load an image...
 	img = Image.open("test_hf.png")
-	test_hf_reimplementation([img, "cuda:1"], {}, hf_module, "encode_image", tg_module, "encode_image")
+	test_hf_reimplementation([img, "cuda:1", 1], {}, hf_module, "encode_image", tg_module, "encode_image")
 
 @tinygrad.Tensor.test()
 @tinygrad.Tensor.train(mode = False)
