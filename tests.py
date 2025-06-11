@@ -405,8 +405,6 @@ def test_stable_diffusion_img2img():
 	
 	hf_module = hf_class.from_pretrained("stable-diffusion-v1-5/stable-diffusion-v1-5", use_safetensors = True, requires_safety_checker = False, safety_checker = None, scheduler = hf_scheduler)
 	tg_module = tg_class.from_pretrained("stable-diffusion-v1-5/stable-diffusion-v1-5", use_safetensors = True, requires_safety_checker = False, safety_checker = None, scheduler = tg_scheduler)
-	print(hf_module.image_encoder)
-	input(tg_module.image_encoder)
 	latents = make_test_data(1, 4, 64, 64)
 	
 	# then copy the state dict from the torch model to the tinygrad one and see if it helps at all
