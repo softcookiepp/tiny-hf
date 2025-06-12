@@ -427,13 +427,14 @@ def test_stable_diffusion_img2img():
 	img = Image.open("test_hf.png")
 	# self, image, timestep, batch_size, num_images_per_prompt, dtype, device, generator=None
 	# test_hf_reimplementation([img, 1, 1, 1, None, "cuda:1", 1], {}, hf_module, "prepare_latents", tg_module, "prepare_latents")
-	test_hf_reimplementation([], {"prompt": "a fluffy bunny pokemon", "image": img, "num_inference_steps": 15, "safety_checker": None}, hf_module, "__call__", tg_module, "__call__")
+	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "image": img, "num_inference_steps": 15, "safety_checker": None}, hf_module, "__call__", tg_module, "__call__")
 
 
 @tinygrad.Tensor.test()
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
+	test_stable_diffusion_xl_pipeline()
 	test_stable_diffusion_img2img()
 	input("pp")
 	test_stable_diffusion_pipeline()
