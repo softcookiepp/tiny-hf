@@ -16,7 +16,7 @@ import inspect
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 import tg_adapter as torch
-from transformers import (
+from tiny_hf.transformers import (
     CLIPImageProcessor,
     CLIPTextModel,
     CLIPTextModelWithProjection,
