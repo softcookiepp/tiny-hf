@@ -348,6 +348,37 @@ def test_stable_diffusion_xl_pipeline():
 	copy_state_dict(hf_module.unet, tg_module.unet)
 	
 	test_hf_reimplementation([], {"prompt": "a cute fluffy bunny"}, hf_module, "__call__", tg_module, "__call__")
+	
+def test_euler_discrete_scheduler():
+	from tiny_hf.diffusers.schedulers import DDIMScheduler as tg_scheduler_class
+	from diffusers.schedulers import DDIMScheduler as hf_scheduler_class
+	
+	hf_scheduler = hf_scheduler_class()
+	tg_scheduler = tg_scheduler_class()
+	
+	hf_scheduler.set_timesteps(100)
+	tg_scheduler.set_timesteps(100)
+	
+	_test_key_errors(hf_scheduler, tg_scheduler)
+	
+	
+	def _test(scheduler, torchm):
+		return scheduler.timesteps
+	
+	test_hf_reimplementation([], {}, hf_scheduler, _test, tg_scheduler, _test)
+	
+	latent = make_test_data(2, 4, 64, 64)
+	noise = make_test_data(2, 4, 64, 64)
+	
+	def _test_denoise(scheduler, torchm, noise_, i_, latent_, *args, **kwargs):
+		t = scheduler.timesteps[i]
+		return scheduler.step(noise_, i_, latent_, *args, **kwargs)
+		
+	
+	for i in range(100):
+		#test_hf_reimplementation([noise, i, latent], {"return_dict": False}, hf_scheduler, "step", tg_scheduler, "step")
+		test_hf_reimplementation([noise, i, latent], {"return_dict": False}, hf_scheduler, _test_denoise, tg_scheduler, _test_denoise)
+
 
 def test_ddim_scheduler():
 	from tiny_hf.diffusers.schedulers import DDIMScheduler as tg_scheduler_class
