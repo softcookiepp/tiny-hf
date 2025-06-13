@@ -559,6 +559,7 @@ class EulerDiscreteScheduler(SchedulerMixin, ConfigMixin):
         print(schedule_timesteps.numpy() )
         print(timestep)
         print(timestep.numpy() )
+        print( (schedule_timesteps == timestep) )
 
         indices = (schedule_timesteps == timestep).nonzero()
 
