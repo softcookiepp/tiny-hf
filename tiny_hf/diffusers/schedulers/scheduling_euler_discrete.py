@@ -614,7 +614,8 @@ class EulerDiscreteScheduler(SchedulerMixin, ConfigMixin):
                 returned, otherwise a tuple is returned where the first element is the sample tensor.
         """
 
-        if isinstance(timestep, (int, torch.IntTensor, torch.LongTensor)):
+        if isinstance(timestep, int):#(int, torch.IntTensor, torch.LongTensor)):
+            # torch.XTensor is identical for tg_adapter...
             raise ValueError(
                 (
                     "Passing integer indices (e.g. from `enumerate(timesteps)`) as timesteps to"
