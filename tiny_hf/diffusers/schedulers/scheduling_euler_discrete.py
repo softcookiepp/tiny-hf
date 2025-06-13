@@ -555,8 +555,8 @@ class EulerDiscreteScheduler(SchedulerMixin, ConfigMixin):
     def index_for_timestep(self, timestep, schedule_timesteps=None):
         if schedule_timesteps is None:
             schedule_timesteps = self.timesteps
-        print(schedule_timesteps)
-        print(timestep)
+        print(schedule_timesteps.numpy() )
+        print(timestep.numpy() )
 
         indices = (schedule_timesteps == timestep).nonzero()
 
