@@ -355,6 +355,9 @@ def test_euler_discrete_scheduler():
 	
 	hf_scheduler = hf_scheduler_class()
 	tg_scheduler = tg_scheduler_class()
+	print(hf_scheduler.alphas_cumprod)
+	print(tg_scheduler.alphas_cumprod)
+	
 	
 	hf_scheduler.set_timesteps(100)
 	tg_scheduler.set_timesteps(100)
