@@ -406,8 +406,6 @@ class EulerDiscreteScheduler(SchedulerMixin, ConfigMixin):
             sigmas = np.array(((1 - self.alphas_cumprod) / self.alphas_cumprod) ** 0.5)
             log_sigmas = np.log(sigmas)
             if self.config.interpolation_type == "linear":
-                print(sigmas)
-                input(timesteps)
                 sigmas = np.interp(timesteps, np.arange(0, len(sigmas)), sigmas)
             elif self.config.interpolation_type == "log_linear":
                 sigmas = torch.linspace(np.log(sigmas[-1]), np.log(sigmas[0]), num_inference_steps + 1).exp().numpy()
