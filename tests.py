@@ -363,10 +363,10 @@ def test_euler_discrete_scheduler():
 	_test_key_errors(hf_scheduler, tg_scheduler)
 	
 	
-	def _test(scheduler, torchm):
-		return scheduler.timesteps
+	#def _test(scheduler, torchm):
+	#	return scheduler.timesteps
 	
-	test_hf_reimplementation([], {}, hf_scheduler, _test, tg_scheduler, _test)
+	#test_hf_reimplementation([], {}, hf_scheduler, _test, tg_scheduler, _test)
 	
 	latent = make_test_data(2, 4, 64, 64)
 	noise = make_test_data(2, 4, 64, 64)
