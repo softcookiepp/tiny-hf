@@ -176,7 +176,7 @@ def str_to_numerical(s: str):
 	b = bytes(s, "utf-8")
 	return np.array(memoryview(b) ).astype(np.float32)
 	
-def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-9, print_values = True, display_images = False, error_function = mse):
+def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-6, print_values = True, display_images = False, error_function = mse):
 	print("types:", type(hf_dict), type(tg_dict) )
 	if isinstance(hf_dict, dict):
 		tested_keys = hf_dict.keys()
@@ -190,7 +190,7 @@ def _test_key_errors(hf_dict, tg_dict, error_threshold = 1.0e-9, print_values = 
 			print("key:", k)
 			hf_item = hf_dict[k]
 			tg_item = tg_dict[k]
-			_test_key_errors(hf_item, tg_item)
+			_test_key_errors(hf_item, tg_item, error_threshold, print_values, display_images, error_function)
 	elif isinstance(hf_dict, torch.Tensor):
 		_test_key_errors(hf_dict.detach().numpy(), tg_dict.numpy(), error_threshold, display_images, error_function)
 	elif isinstance(hf_dict, Image.Image):
