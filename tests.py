@@ -350,8 +350,8 @@ def test_stable_diffusion_xl_pipeline():
 	test_hf_reimplementation([], {"prompt": "a cute fluffy bunny"}, hf_module, "__call__", tg_module, "__call__")
 	
 def test_euler_discrete_scheduler():
-	from tiny_hf.diffusers.schedulers import DDIMScheduler as tg_scheduler_class
-	from diffusers.schedulers import DDIMScheduler as hf_scheduler_class
+	from tiny_hf.diffusers.schedulers import EulerDiscretScheduler as tg_scheduler_class
+	from diffusers.schedulers import EulerDiscretScheduler as hf_scheduler_class
 	
 	hf_scheduler = hf_scheduler_class()
 	tg_scheduler = tg_scheduler_class()
