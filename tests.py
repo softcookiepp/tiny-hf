@@ -355,8 +355,6 @@ def test_euler_discrete_scheduler():
 	
 	hf_scheduler = hf_scheduler_class()
 	tg_scheduler = tg_scheduler_class()
-	print(hf_scheduler.alphas_cumprod)
-	print(tg_scheduler.alphas_cumprod)
 	
 	
 	hf_scheduler.set_timesteps(100)
@@ -374,8 +372,8 @@ def test_euler_discrete_scheduler():
 	noise = make_test_data(2, 4, 64, 64)
 	
 	def _test_denoise(scheduler, torchm, noise_, i_, latent_, *args, **kwargs):
-		t = scheduler.timesteps[i]
-		return scheduler.step(noise_, i_, latent_, *args, **kwargs)
+		t = scheduler.timesteps[i_]
+		return scheduler.step(noise_, t, latent_, *args, **kwargs)
 		
 	
 	for i in range(100):
