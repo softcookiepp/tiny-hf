@@ -10,8 +10,8 @@ from tg_adapter import F
 import tg_adapter
 from PIL import Image
 
-from operator_tests import *
-from module_tests import *
+from tg_adapter.testing.operator_tests import *
+from tg_adapter.testing.module_tests import *
 from tg_adapter.testing.testing_utils import compare_state_dicts, copy_state_dict, \
 	inspect_state_dict_devices, make_test_data, test_function, \
 	test_hf_reimplementation, mse, norm_mse, _test_key_errors, \
