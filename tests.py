@@ -13,8 +13,8 @@ from PIL import Image
 from tg_adapter.testing.operator_tests import *
 from tg_adapter.testing.module_tests import *
 from tg_adapter.testing.testing_utils import compare_state_dicts, copy_state_dict, \
-	inspect_state_dict_devices, make_test_data, test_function, \
-	test_hf_reimplementation, mse, norm_mse, _test_key_errors, \
+	inspect_state_dict_devices, make_test_data, _test_function, \
+	_test_hf_reimplementation, mse, norm_mse, _test_key_errors, \
 	get_submodules, test_all_submodules
 
 	
@@ -28,7 +28,7 @@ def test_autoencoderkl(hf_module = None, my_module = None):
 	my_module = thf.diffusers.models.autoencoders.AutoencoderKL.from_single_file("https://huggingface.co/stabilityai/sd-vae-ft-mse-original/blob/main/vae-ft-mse-840000-ema-pruned.safetensors" )
 	
 	#copy_state_dict(hf_module, my_module)
-	test_hf_reimplementation(inp, {}, hf_module, "__call__", my_module, "__call__")
+	_test_hf_reimplementation(inp, {}, hf_module, "__call__", my_module, "__call__")
 	test_all_submodules(hf_module, my_module)
 
 def test_state_dict():
@@ -46,7 +46,7 @@ def test_autoencoderkl_from_single_file():
 	
 	compare_state_dicts(hf_module, my_module)
 	#copy_state_dict(hf_module, my_module)
-	test_hf_reimplementation(inp, {}, hf_module, "__call__", my_module, "__call__")
+	_test_hf_reimplementation(inp, {}, hf_module, "__call__", my_module, "__call__")
 
 	
 	
@@ -61,7 +61,7 @@ def test_downsample2d():
 	
 	# now we need to transfer state dicts...
 	copy_state_dict(hf_module, my_module)
-	test_hf_reimplementation(a, {}, hf_module, "forward", my_module, "forward")
+	_test_hf_reimplementation(a, {}, hf_module, "forward", my_module, "forward")
 
 def test_resnet_block2d():
 	from diffusers.models.resnet import ResnetBlock2D as hf_ResnetBlock2D
@@ -75,7 +75,7 @@ def test_resnet_block2d():
 	args = (a, None)
 	
 	copy_state_dict(hf_module, my_module)
-	test_hf_reimplementation(args, {}, hf_module, "forward", my_module, "forward")
+	_test_hf_reimplementation(args, {}, hf_module, "forward", my_module, "forward")
 
 def test_vae_encoder():
 	from diffusers.models.autoencoders.vae import Encoder as hf_Encoder
@@ -89,7 +89,7 @@ def test_vae_encoder():
 	args = (a,)
 	
 	copy_state_dict(hf_module, my_module)
-	test_hf_reimplementation(args, {}, hf_module, "forward", my_module, "forward")
+	_test_hf_reimplementation(args, {}, hf_module, "forward", my_module, "forward")
 	compare_state_dicts(hf_module, my_module)
 
 def test_down_encoder_block_2d():
@@ -104,7 +104,7 @@ def test_down_encoder_block_2d():
 	args = (a,)
 	
 	copy_state_dict(hf_module, my_module)
-	test_hf_reimplementation(args, {}, hf_module, "forward", my_module, "forward")
+	_test_hf_reimplementation(args, {}, hf_module, "forward", my_module, "forward")
 
 def test_upsampling_2d():
 	# I really need to reduce the silly code required for this...or do I?
@@ -119,7 +119,7 @@ def test_upsampling_2d():
 	args = (a,)
 	
 	copy_state_dict(hf_module, my_module)
-	test_hf_reimplementation(args, {}, hf_module, "forward", my_module, "forward")
+	_test_hf_reimplementation(args, {}, hf_module, "forward", my_module, "forward")
 
 def test_vae_decoder():
 	from diffusers.models.autoencoders.vae import Decoder as hf_Decoder
@@ -133,7 +133,7 @@ def test_vae_decoder():
 	args = (a,)
 	
 	copy_state_dict(hf_module, my_module)
-	test_hf_reimplementation(args, {}, hf_module, "forward", my_module, "forward")
+	_test_hf_reimplementation(args, {}, hf_module, "forward", my_module, "forward")
 
 def test_UNetMidBlock2D():
 	from diffusers.models.unets.unet_2d_blocks import UNetMidBlock2D as hf_UNetMidBlock2D
@@ -147,7 +147,7 @@ def test_UNetMidBlock2D():
 	args = (a,)
 	
 	copy_state_dict(hf_module, my_module)
-	test_hf_reimplementation(args, {}, hf_module, "forward", my_module, "forward")
+	_test_hf_reimplementation(args, {}, hf_module, "forward", my_module, "forward")
 
 def test_unet_2d_condition(hf_module = None, thf_module = None,
 		latent_shape = (2, 4, 32, 32), embed_shape = (2, 2, 1280) ):
@@ -162,7 +162,7 @@ def test_unet_2d_condition(hf_module = None, thf_module = None,
 		copy_state_dict(hf_module, thf_module)
 	
 	args = (a, 20, emb)
-	test_hf_reimplementation(args, {}, hf_module, "__call__", thf_module, "__call__")
+	_test_hf_reimplementation(args, {}, hf_module, "__call__", thf_module, "__call__")
 	#input("lets do the submodule test!")
 	#test_all_submodules(hf_module, thf_module)
 
@@ -177,7 +177,7 @@ def test_unet_2d():
 	
 	args = (a, 2)
 	copy_state_dict(hf_module, thf_module)
-	test_hf_reimplementation(args, {}, hf_module, "__call__", thf_module, "__call__")
+	_test_hf_reimplementation(args, {}, hf_module, "__call__", thf_module, "__call__")
 """
 def test_named_modules():
 	hf_module = diffusers.AutoencoderKL()
@@ -199,7 +199,7 @@ def test_functional_linear():
 	import torch.nn.functional as torchF
 	inp = make_test_data(40, 5)
 	weight = make_test_data(5, 10)
-	test_function(inp, weight, torchF.linear, tinyF.linear)
+	_test_function(inp, weight, torchF.linear, tinyF.linear)
 
 
 
@@ -209,7 +209,7 @@ def test_clip_tokenizer():
 	tg = tg_module.from_pretrained("openai/clip-vit-base-patch32")
 	hf = hf_module.from_pretrained("openai/clip-vit-base-patch32")
 	args = ["the quick brown fox jumped over the lazy dog"]
-	test_hf_reimplementation(args, {}, hf, "__call__", tg, "__call__")
+	_test_hf_reimplementation(args, {}, hf, "__call__", tg, "__call__")
 
 def test_clip_tokenizer_fast():
 	from tiny_hf.transformers import CLIPTokenizerFast as tg_module
@@ -217,7 +217,7 @@ def test_clip_tokenizer_fast():
 	tg = tg_module.from_pretrained("openai/clip-vit-base-patch32")
 	hf = hf_module.from_pretrained("openai/clip-vit-base-patch32")
 	args = ["the quick brown fox jumped over the lazy dog"]
-	test_hf_reimplementation(args, {}, hf, "__call__", tg, "__call__")
+	_test_hf_reimplementation(args, {}, hf, "__call__", tg, "__call__")
 
 def _convert_tokenizer_output(out):
 	new_out = {}
@@ -241,7 +241,7 @@ def test_clip_text_model():
 	#print(tokenizer_output)
 	#input(type(tokenizer_output["input_ids"]) )
 	tokenizer_output = _convert_tokenizer_output( tokenizer_output )
-	test_hf_reimplementation([], tokenizer_output, hf_module, "__call__", tg_module, "__call__")
+	_test_hf_reimplementation([], tokenizer_output, hf_module, "__call__", tg_module, "__call__")
 
 
 def test_audio_diffusion_pipeline():
@@ -251,7 +251,7 @@ def test_audio_diffusion_pipeline():
 	hf_module = hf_class.from_pretrained("teticio/audio-diffusion-256", use_safetensors = False)
 	tg_module = tg_class.from_pretrained("teticio/audio-diffusion-256", use_safetensors = False)
 	
-	test_hf_reimplementation([], {}, hf_module, "__call__", tg_module, "__call__")
+	_test_hf_reimplementation([], {}, hf_module, "__call__", tg_module, "__call__")
 	
 def test_stable_diffusion_pipeline():
 	from testing_rewrites import sd_pipeline_call, retrieve_timesteps
@@ -271,7 +271,7 @@ def test_stable_diffusion_pipeline():
 	
 	# then copy the state dict from the torch model to the tinygrad one and see if it helps at all
 	copy_state_dict(hf_module.vae, tg_module.vae)
-	#test_hf_reimplementation([img], {}, hf_module.vae, "__call__", tg_module.vae, "__call__")
+	#_test_hf_reimplementation([img], {}, hf_module.vae, "__call__", tg_module.vae, "__call__")
 	
 	# lets do the submodule test on the vae just in case...
 	#test_all_submodules(hf_module.vae, tg_module.vae)
@@ -302,17 +302,17 @@ def test_stable_diffusion_pipeline():
 	# Looks like there may be a timestep problem.
 	# Lets look at that...
 	# First, we need to ensure that the timestep retrieval function isn't wrong
-	#test_hf_reimplementation(
+	#_test_hf_reimplementation(
 	
 	hf_module.load_lora_weights("ybelkada/sd-1.5-pokemon-lora-peft")
 	tg_module.load_lora_weights("ybelkada/sd-1.5-pokemon-lora-peft")
 	
 	# test prompt encoding
-	#test_hf_reimplementation(["a squishy pp", "cpu", 1, True], {}, hf_module, "encode_prompt", tg_module, "encode_prompt")
+	#_test_hf_reimplementation(["a squishy pp", "cpu", 1, True], {}, hf_module, "encode_prompt", tg_module, "encode_prompt")
 	
 	# test the image processor
-	#test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 2, "safety_checker": None, "latents": latents, "output_type": "latent"}, hf_module, sd_pipeline_call, tg_module, sd_pipeline_call, error_threshold = 1.0e-6)
-	test_hf_reimplementation([], {"prompt": "a fluffy bunny pokemon", "num_inference_steps": 15, "safety_checker": None, "latents": latents, "output_type": "pil"}, hf_module, "__call__", tg_module, "__call__")
+	#_test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 2, "safety_checker": None, "latents": latents, "output_type": "latent"}, hf_module, sd_pipeline_call, tg_module, sd_pipeline_call, error_threshold = 1.0e-6)
+	_test_hf_reimplementation([], {"prompt": "a fluffy bunny pokemon", "num_inference_steps": 15, "safety_checker": None, "latents": latents, "output_type": "pil"}, hf_module, "__call__", tg_module, "__call__")
 
 def test_named_modules():
 	from testing_rewrites import sd_pipeline_call, retrieve_timesteps
@@ -334,7 +334,7 @@ def test_named_modules():
 		keys = list(dict(modules).keys() )
 		print(len(keys), len(modules))
 		return keys
-	test_hf_reimplementation([], {}, hf_module.unet, get_named_modules, tg_module.unet, get_named_modules)
+	_test_hf_reimplementation([], {}, hf_module.unet, get_named_modules, tg_module.unet, get_named_modules)
 
 def test_stable_diffusion_xl_pipeline():
 	from diffusers import StableDiffusionXLPipeline as hf_class
@@ -347,7 +347,7 @@ def test_stable_diffusion_xl_pipeline():
 	copy_state_dict(hf_module.vae, tg_module.vae)
 	copy_state_dict(hf_module.unet, tg_module.unet)
 	
-	test_hf_reimplementation([], {"prompt": "a cute fluffy bunny"}, hf_module, "__call__", tg_module, "__call__")
+	_test_hf_reimplementation([], {"prompt": "a cute fluffy bunny"}, hf_module, "__call__", tg_module, "__call__")
 	
 def test_euler_discrete_scheduler():
 	from tiny_hf.diffusers.schedulers import EulerDiscreteScheduler as tg_scheduler_class
@@ -366,7 +366,7 @@ def test_euler_discrete_scheduler():
 	#def _test(scheduler, torchm):
 	#	return scheduler.timesteps
 	
-	#test_hf_reimplementation([], {}, hf_scheduler, _test, tg_scheduler, _test)
+	#_test_hf_reimplementation([], {}, hf_scheduler, _test, tg_scheduler, _test)
 	
 	latent = make_test_data(2, 4, 64, 64)
 	noise = make_test_data(2, 4, 64, 64)
@@ -377,8 +377,8 @@ def test_euler_discrete_scheduler():
 		
 	
 	for i in range(100):
-		#test_hf_reimplementation([noise, i, latent], {"return_dict": False}, hf_scheduler, "step", tg_scheduler, "step")
-		test_hf_reimplementation([noise, i, latent], {"return_dict": False}, hf_scheduler, _test_denoise, tg_scheduler, _test_denoise)
+		#_test_hf_reimplementation([noise, i, latent], {"return_dict": False}, hf_scheduler, "step", tg_scheduler, "step")
+		_test_hf_reimplementation([noise, i, latent], {"return_dict": False}, hf_scheduler, _test_denoise, tg_scheduler, _test_denoise)
 
 
 def test_ddim_scheduler():
@@ -397,7 +397,7 @@ def test_ddim_scheduler():
 	def _test(scheduler, torchm):
 		return scheduler.timesteps
 	
-	test_hf_reimplementation([], {}, hf_scheduler, _test, tg_scheduler, _test)
+	_test_hf_reimplementation([], {}, hf_scheduler, _test, tg_scheduler, _test)
 	
 	latent = make_test_data(2, 4, 64, 64)
 	noise = make_test_data(2, 4, 64, 64)
@@ -408,8 +408,8 @@ def test_ddim_scheduler():
 		
 	
 	for i in range(100):
-		#test_hf_reimplementation([noise, i, latent], {"return_dict": False}, hf_scheduler, "step", tg_scheduler, "step")
-		test_hf_reimplementation([noise, i, latent], {"return_dict": False}, hf_scheduler, _test_denoise, tg_scheduler, _test_denoise)
+		#_test_hf_reimplementation([noise, i, latent], {"return_dict": False}, hf_scheduler, "step", tg_scheduler, "step")
+		_test_hf_reimplementation([noise, i, latent], {"return_dict": False}, hf_scheduler, _test_denoise, tg_scheduler, _test_denoise)
 
 def test_scheduler(hf_module = None, tg_module = None):
 	if hf_module is None or tg_module is None:
@@ -441,7 +441,7 @@ def test_stable_diffusion_img2img():
 	
 	# then copy the state dict from the torch model to the tinygrad one and see if it helps at all
 	copy_state_dict(hf_module.vae, tg_module.vae)
-	#test_hf_reimplementation([img], {}, hf_module.vae, "__call__", tg_module.vae, "__call__")
+	#_test_hf_reimplementation([img], {}, hf_module.vae, "__call__", tg_module.vae, "__call__")
 	
 	# lets do the submodule test on the vae just in case...
 	#test_all_submodules(hf_module.vae, tg_module.vae)
@@ -453,13 +453,13 @@ def test_stable_diffusion_img2img():
 	copy_state_dict(hf_module.unet, tg_module.unet)
 	#test_unet_2d_condition(hf_module.unet, tg_module.unet, latents.shape, (1, 77, 768) )
 	
-	#test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 2, "safety_checker": None, "latents": latents, "output_type": "latent"}, hf_module, sd_pipeline_call, tg_module, sd_pipeline_call, error_threshold = 1.0e-6)
+	#_test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 2, "safety_checker": None, "latents": latents, "output_type": "latent"}, hf_module, sd_pipeline_call, tg_module, sd_pipeline_call, error_threshold = 1.0e-6)
 	
 	# So we need to load an image...
 	img = Image.open("test_hf.png")
 	# self, image, timestep, batch_size, num_images_per_prompt, dtype, device, generator=None
-	# test_hf_reimplementation([img, 1, 1, 1, None, "cuda:1", 1], {}, hf_module, "prepare_latents", tg_module, "prepare_latents")
-	test_hf_reimplementation([], {"prompt": "a fluffy bunny", "image": img, "num_inference_steps": 15, "safety_checker": None}, hf_module, "__call__", tg_module, "__call__")
+	# _test_hf_reimplementation([img, 1, 1, 1, None, "cuda:1", 1], {}, hf_module, "prepare_latents", tg_module, "prepare_latents")
+	_test_hf_reimplementation([], {"prompt": "a fluffy bunny", "image": img, "num_inference_steps": 15, "safety_checker": None}, hf_module, "__call__", tg_module, "__call__")
 
 
 @tinygrad.Tensor.test()
