@@ -15,7 +15,7 @@ from tg_adapter.testing.module_tests import *
 from tg_adapter.testing.testing_utils import compare_state_dicts, copy_state_dict, \
 	inspect_state_dict_devices, make_test_data, _test_function, \
 	_test_hf_reimplementation, mse, norm_mse, _test_key_errors, \
-	get_submodules, test_all_submodules
+	get_submodules, _test_all_submodules
 
 	
 
@@ -29,7 +29,7 @@ def test_autoencoderkl(hf_module = None, my_module = None):
 	
 	#copy_state_dict(hf_module, my_module)
 	_test_hf_reimplementation(inp, {}, hf_module, "__call__", my_module, "__call__")
-	test_all_submodules(hf_module, my_module)
+	_test_all_submodules(hf_module, my_module)
 
 def test_state_dict():
 	raise NotImplementedError
@@ -164,7 +164,7 @@ def test_unet_2d_condition(hf_module = None, thf_module = None,
 	args = (a, 20, emb)
 	_test_hf_reimplementation(args, {}, hf_module, "__call__", thf_module, "__call__")
 	#input("lets do the submodule test!")
-	#test_all_submodules(hf_module, thf_module)
+	#_test_all_submodules(hf_module, thf_module)
 
 def test_unet_2d():
 	from diffusers.models.unets.unet_2d import UNet2DModel as hf_class
@@ -274,7 +274,7 @@ def test_stable_diffusion_pipeline():
 	#_test_hf_reimplementation([img], {}, hf_module.vae, "__call__", tg_module.vae, "__call__")
 	
 	# lets do the submodule test on the vae just in case...
-	#test_all_submodules(hf_module.vae, tg_module.vae)
+	#_test_all_submodules(hf_module.vae, tg_module.vae)
 	
 	#input("does the vae work?")
 	
@@ -444,7 +444,7 @@ def test_stable_diffusion_img2img():
 	#_test_hf_reimplementation([img], {}, hf_module.vae, "__call__", tg_module.vae, "__call__")
 	
 	# lets do the submodule test on the vae just in case...
-	#test_all_submodules(hf_module.vae, tg_module.vae)
+	#_test_all_submodules(hf_module.vae, tg_module.vae)
 	
 	#input("does the vae work?")
 	
