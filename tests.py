@@ -468,12 +468,12 @@ def test_stable_diffusion_img2img():
 def main():
 	#test_euler_discrete_scheduler()
 	#input("got the euler discrete scheduler to work")
-	test_stable_diffusion_xl_pipeline()
+	#test_stable_diffusion_xl_pipeline()
 	test_stable_diffusion_img2img()
-	input("pp")
+	#input("pp")
 	test_stable_diffusion_pipeline()
 	#test_stable_diffusion_xl_pipeline()
-	input("look at the outputs first you dumdum")
+	#input("look at the outputs first you dumdum")
 	test_clip_tokenizer_fast()
 	test_clip_tokenizer()
 	
