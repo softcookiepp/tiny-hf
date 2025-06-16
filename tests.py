@@ -267,6 +267,9 @@ def test_stable_diffusion_pipeline():
 	hf_module = hf_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, safety_checker = None, scheduler = hf_scheduler)
 	tg_module = tg_class.from_pretrained("stablediffusionapi/anything-v5", use_safetensors = True, requires_safety_checker = False, safety_checker = None, scheduler = tg_scheduler)
 	
+	hf_module.enable_vae_tiling()
+	tg_module.enable_vae_tiling()
+	
 	latents = make_test_data(1, 4, 64, 64)
 	
 	# then copy the state dict from the torch model to the tinygrad one and see if it helps at all
