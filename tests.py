@@ -466,8 +466,8 @@ def test_stable_diffusion_img2img():
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
-	test_euler_discrete_scheduler()
-	input("got the euler discrete scheduler to work")
+	#test_euler_discrete_scheduler()
+	#input("got the euler discrete scheduler to work")
 	test_stable_diffusion_xl_pipeline()
 	test_stable_diffusion_img2img()
 	input("pp")
