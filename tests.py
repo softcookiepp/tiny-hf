@@ -269,7 +269,7 @@ def test_stable_diffusion_pipeline():
 	
 	hf_module.enable_vae_tiling()
 	tg_module.enable_vae_tiling()
-	tg_module.enable_sequential_cpu_offload()
+	#tg_module.enable_sequential_cpu_offload()
 	
 	latents = make_test_data(1, 4, 64, 64)
 	
@@ -474,17 +474,14 @@ def test_tg_state_dict():
 		else:
 			return module.tg_state_dict()
 	_test_hf_reimplementation([], {}, hf_module, _test_state_dict, my_module, _test_state_dict)
-	input("poop")
 
 @tinygrad.Tensor.test()
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
-	test_tg_state_dict()
 	#test_euler_discrete_scheduler()
-	#input("got the euler discrete scheduler to work")
 	#test_stable_diffusion_xl_pipeline()
-	test_stable_diffusion_img2img()
+	#test_stable_diffusion_img2img()
 	#input("pp")
 	test_stable_diffusion_pipeline()
 	#test_stable_diffusion_xl_pipeline()
