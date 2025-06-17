@@ -482,7 +482,6 @@ def main():
 	#test_euler_discrete_scheduler()
 	#test_stable_diffusion_xl_pipeline()
 	#test_stable_diffusion_img2img()
-	#input("pp")
 	test_stable_diffusion_pipeline()
 	#test_stable_diffusion_xl_pipeline()
 	#input("look at the outputs first you dumdum")
