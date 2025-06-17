@@ -465,11 +465,22 @@ def test_stable_diffusion_img2img():
 	# _test_hf_reimplementation([img, 1, 1, 1, None, "cuda:1", 1], {}, hf_module, "prepare_latents", tg_module, "prepare_latents")
 	_test_hf_reimplementation([], {"prompt": "a fluffy bunny", "image": img, "num_inference_steps": 15, "safety_checker": None}, hf_module, "__call__", tg_module, "__call__")
 
+def test_tg_state_dict():
+	hf_module = diffusers.AutoencoderKL.from_single_file("https://huggingface.co/stabilityai/sd-vae-ft-mse-original/blob/main/vae-ft-mse-840000-ema-pruned.safetensors" )
+	my_module = thf.diffusers.models.autoencoders.AutoencoderKL.from_single_file("https://huggingface.co/stabilityai/sd-vae-ft-mse-original/blob/main/vae-ft-mse-840000-ema-pruned.safetensors" )
+	def _test_state_dict(module, _torch):
+		if isinstance(module, torch.nn.Module):
+			return module.state_dict()
+		else:
+			return module.tg_state_dict()
+	_test_hf_reimplementation([], {}, hf_module, _test_state_dict, my_module, _test_state_dict)
+	input("poop")
 
 @tinygrad.Tensor.test()
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
+	test_tg_state_dict()
 	#test_euler_discrete_scheduler()
 	#input("got the euler discrete scheduler to work")
 	#test_stable_diffusion_xl_pipeline()

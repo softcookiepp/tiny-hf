@@ -712,7 +712,8 @@ class ModelMixin(tga.nn.Module, PushToHubMixin):
 			if safe_serialization:
 				# At some point we will need to deal better with save_function (used for TPU and other distributed
 				# joyfulness), but for now this enough.
-				safetensors.tga.save_file(shard, filepath, metadata={"format": "pt"})
+				raise NotImplementedError
+				safetensors.torch.save_file(shard, filepath, metadata={"format": "pt"})
 			else:
 				tga.save(shard, filepath)
 

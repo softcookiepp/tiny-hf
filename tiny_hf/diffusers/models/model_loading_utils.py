@@ -171,10 +171,12 @@ def load_state_dict(
 			if dduf_entries:
 				# tensors are loaded on cpu
 				with dduf_entries[checkpoint_file].as_mmap() as mm:
+					raise NotImplementedError
 					return safetensors.torch.load(mm)
 			if disable_mmap:
 				#return safetensors.torch.load(open(checkpoint_file, "rb").read())
 				# will this work?
+				raise NotImplementedError
 				return tinygrad.nn.state.safe_load(open(checkpoint_file, "rb").read() )
 			else:
 				print("map_location", map_location)
@@ -193,9 +195,8 @@ def load_state_dict(
 			raise NotImplementedError
 			return load_gguf_checkpoint(checkpoint_file)
 		else:
-			raise NotImplementedError
 			extra_args = {}
-			weights_only_kwarg = {"weights_only": True} if is_torch_version(">=", "1.13") else {}
+			#weights_only_kwarg = {"weights_only": True}# if is_torch_version(">=", "1.13") else {}
 			# mmap can only be used with files serialized with zipfile-based format.
 			if (
 				isinstance(checkpoint_file, str)
@@ -205,7 +206,7 @@ def load_state_dict(
 				and not disable_mmap
 			):
 				extra_args = {"mmap": True}
-			return tga.load(checkpoint_file, map_location=map_location, **weights_only_kwarg, **extra_args)
+			return tga.load(checkpoint_file, map_location=map_location, weights_only = True, **extra_args)
 	except Exception as e:
 		try:
 			with open(checkpoint_file) as f:
@@ -263,7 +264,7 @@ def load_model_dict_into_meta(
 				param = param.to(tga.float32)
 				set_module_kwargs["dtype"] = tga.float32
 			# For quantizers have save weights using torch.float8_e4m3fn
-			elif hf_quantizer is not None and param.dtype == getattr(torch, "float8_e4m3fn", None):
+			elif hf_quantizer is not None and param.dtype == getattr(tga, "float8_e4m3fn", None):
 				pass
 			else:
 				param = param.to(dtype)
