@@ -269,6 +269,7 @@ def test_stable_diffusion_pipeline():
 	
 	hf_module.enable_vae_tiling()
 	tg_module.enable_vae_tiling()
+	tg_module.enable_sequential_cpu_offload()
 	
 	latents = make_test_data(1, 4, 64, 64)
 	
