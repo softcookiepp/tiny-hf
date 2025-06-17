@@ -274,7 +274,7 @@ def test_stable_diffusion_pipeline():
 	latents = make_test_data(1, 4, 64, 64)
 	
 	# then copy the state dict from the torch model to the tinygrad one and see if it helps at all
-	copy_state_dict(hf_module.vae, tg_module.vae)
+	#copy_state_dict(hf_module.vae, tg_module.vae)
 	#_test_hf_reimplementation([img], {}, hf_module.vae, "__call__", tg_module.vae, "__call__")
 	
 	# lets do the submodule test on the vae just in case...
@@ -284,7 +284,7 @@ def test_stable_diffusion_pipeline():
 	
 	# test the unet
 	#test_unet_2d_condition(hf_module.unet, tg_module.unet, latents.shape, (1, 77, 768) )
-	copy_state_dict(hf_module.unet, tg_module.unet)
+	#copy_state_dict(hf_module.unet, tg_module.unet)
 	#test_unet_2d_condition(hf_module.unet, tg_module.unet, latents.shape, (1, 77, 768) )
 	#input("does the unet work?")
 	
@@ -444,7 +444,7 @@ def test_stable_diffusion_img2img():
 	latents = make_test_data(1, 4, 64, 64)
 	
 	# then copy the state dict from the torch model to the tinygrad one and see if it helps at all
-	copy_state_dict(hf_module.vae, tg_module.vae)
+	#copy_state_dict(hf_module.vae, tg_module.vae)
 	#_test_hf_reimplementation([img], {}, hf_module.vae, "__call__", tg_module.vae, "__call__")
 	
 	# lets do the submodule test on the vae just in case...
@@ -454,7 +454,7 @@ def test_stable_diffusion_img2img():
 	
 	# test the unet
 	#test_unet_2d_condition(hf_module.unet, tg_module.unet, latents.shape, (1, 77, 768) )
-	copy_state_dict(hf_module.unet, tg_module.unet)
+	#copy_state_dict(hf_module.unet, tg_module.unet)
 	#test_unet_2d_condition(hf_module.unet, tg_module.unet, latents.shape, (1, 77, 768) )
 	
 	#_test_hf_reimplementation([], {"prompt": "a fluffy bunny", "num_inference_steps": 2, "safety_checker": None, "latents": latents, "output_type": "latent"}, hf_module, sd_pipeline_call, tg_module, sd_pipeline_call, error_threshold = 1.0e-6)
