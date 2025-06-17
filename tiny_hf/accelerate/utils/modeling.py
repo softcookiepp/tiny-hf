@@ -25,9 +25,9 @@ import warnings
 from collections import OrderedDict, defaultdict
 from typing import Optional, Union
 
-import torch
-from torch import distributed as dist
-from torch import nn
+import tg_adapter as torch
+from tg_adapter import distributed as dist
+from tg_adapter import nn
 
 from ..state import AcceleratorState
 from .constants import SAFE_WEIGHTS_NAME, WEIGHTS_NAME

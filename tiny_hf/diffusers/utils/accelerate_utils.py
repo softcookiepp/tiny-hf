@@ -21,7 +21,7 @@ from .import_utils import is_accelerate_available
 
 
 if is_accelerate_available():
-    import accelerate
+    from tiny_hf import accelerate
 
 
 def apply_forward_hook(method):
