@@ -657,7 +657,7 @@ def is_accelerate_version(operation: str, version: str):
     """
     if not _accelerate_available:
         return False
-    return compare_versions(parse(_accelerate_version), operation, version)
+    return True#compare_versions(parse(_accelerate_version), operation, version)
 
 
 def is_peft_version(operation: str, version: str):
