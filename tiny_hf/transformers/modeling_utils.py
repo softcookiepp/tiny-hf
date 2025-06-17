@@ -800,6 +800,7 @@ def _load_state_dict_into_meta_model(
 	from `shard_file`, which is the actual state dict file on disk.
 	This function takes care of correctly casting dtypes, devices, and sharding tensors in case of tensor parallelism.
 	"""
+	input(list(state_dict.items() )[0][1])
 	tensor_device = "cpu"
 	if device_map is not None and device_map.get("", None) is not None:
 		tensor_device = device_map[""].index if isinstance(device_map[""], torch.device) else device_map[""]
