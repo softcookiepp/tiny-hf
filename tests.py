@@ -351,7 +351,7 @@ def test_stable_diffusion_xl_pipeline():
 	copy_state_dict(hf_module.vae, tg_module.vae)
 	copy_state_dict(hf_module.unet, tg_module.unet)
 	
-	_test_hf_reimplementation([], {"prompt": "a cute fluffy bunny"}, hf_module, "__call__", tg_module, "__call__")
+	_test_hf_reimplementation([], {"prompt": "a cute fluffy bunny", "height": 128, "width": 128}, hf_module, "__call__", tg_module, "__call__")
 	
 def test_euler_discrete_scheduler():
 	from tiny_hf.diffusers.schedulers import EulerDiscreteScheduler as tg_scheduler_class
@@ -480,7 +480,7 @@ def test_tg_state_dict():
 @torch.no_grad()
 def main():
 	#test_euler_discrete_scheduler()
-	#test_stable_diffusion_xl_pipeline()
+	test_stable_diffusion_xl_pipeline()
 	#test_stable_diffusion_img2img()
 	test_stable_diffusion_pipeline()
 	#test_stable_diffusion_xl_pipeline()
