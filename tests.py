@@ -350,8 +350,8 @@ def test_stable_diffusion_xl_pipeline():
 	# model loading is still broken :c
 	copy_state_dict(hf_module.vae, tg_module.vae)
 	copy_state_dict(hf_module.unet, tg_module.unet)
-	
-	_test_hf_reimplementation([], {"prompt": "a cute fluffy bunny", "height": 128, "width": 128}, hf_module, "__call__", tg_module, "__call__")
+	latents = make_test_data(1, 4, 8, 8)
+	_test_hf_reimplementation([], {"prompt": "a cute fluffy bunny", "num_inference_steps": 1, "latents": latents}, hf_module, "__call__", tg_module, "__call__")
 	
 def test_euler_discrete_scheduler():
 	from tiny_hf.diffusers.schedulers import EulerDiscreteScheduler as tg_scheduler_class
