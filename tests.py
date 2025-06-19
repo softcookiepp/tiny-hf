@@ -16,7 +16,6 @@ from tg_adapter.testing.testing_utils import compare_state_dicts, copy_state_dic
 	inspect_state_dict_devices, make_test_data, _test_function, \
 	_test_hf_reimplementation, mse, norm_mse, _test_key_errors, \
 	get_submodules, _test_all_submodules
-
 	
 
 def test_autoencoderkl(hf_module = None, my_module = None):
@@ -480,7 +479,8 @@ def test_tg_state_dict():
 @torch.no_grad()
 def main():
 	#test_euler_discrete_scheduler()
-	#test_stable_diffusion_xl_pipeline()
+	test_stable_diffusion_xl_pipeline()
+	
 	#test_stable_diffusion_img2img()
 	test_stable_diffusion_pipeline()
 	#test_stable_diffusion_xl_pipeline()
