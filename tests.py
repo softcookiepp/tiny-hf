@@ -474,7 +474,6 @@ def test_tg_state_dict():
 			return module.tg_state_dict()
 	_test_hf_reimplementation([], {}, hf_module, _test_state_dict, my_module, _test_state_dict)
 
-@tinygrad.Tensor.test()
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
