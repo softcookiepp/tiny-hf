@@ -481,7 +481,7 @@ def test_audioldm_pipeline():
 	tg_module = tg_class.from_pretrained("cvssp/audioldm")
 	
 	proompt = "black metal in the style of Dissection"
-	_test_hf_reimplementation([proompt], {"num_inference_steps": 10}, hf_module, "__call__", my_module, "__call__")
+	_test_hf_reimplementation([proompt], {"num_inference_steps": 10}, hf_module, "__call__", tg_module, "__call__")
 
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
