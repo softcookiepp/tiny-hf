@@ -18,7 +18,7 @@ import copy
 from typing import Any, Dict, List, Optional, Union
 
 import numpy as np
-import torch
+import tg_adapter as torch
 
 from ...audio_utils import mel_filter_bank, spectrogram, window_function
 from ...feature_extraction_sequence_utils import SequenceFeatureExtractor

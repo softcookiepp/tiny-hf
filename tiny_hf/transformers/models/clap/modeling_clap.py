@@ -19,9 +19,8 @@ import math
 from dataclasses import dataclass
 from typing import Any, List, Optional, Tuple, Union
 
-import torch
-import torch.nn.functional as F
-from torch import nn
+import tg_adapter as torch
+from tg_adapter import nn, F
 
 from ...activations import ACT2FN
 from ...modeling_outputs import (
