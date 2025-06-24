@@ -285,7 +285,7 @@ def restore_default_torch_dtype(func):
 
 def get_parameter_device(parameter: Union[nn.Module, "ModuleUtilsMixin"]):
 	try:
-		print(tinygrad.nn.state.get_state_dict(parameter) )
+		print(parameter)
 		return list(parameter.parameters())[0].device
 		return next(parameter.parameters()).device
 	except StopIteration:
