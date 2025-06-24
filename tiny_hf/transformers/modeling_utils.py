@@ -432,6 +432,7 @@ def check_support_param_buffer_assignment(model_to_load, state_dict):
 		return False
 
 	# If the model does, the incoming `state_dict` and the `model_to_load` must be the same dtype
+	input(model_to_load.state_dict().keys())
 	first_key = next(iter(model_to_load.state_dict().keys()))
 	if first_key in state_dict:
 		return state_dict[first_key].dtype == model_to_load.state_dict()[first_key].dtype
