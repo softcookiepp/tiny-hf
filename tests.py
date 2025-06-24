@@ -474,9 +474,19 @@ def test_tg_state_dict():
 			return module.tg_state_dict()
 	_test_hf_reimplementation([], {}, hf_module, _test_state_dict, my_module, _test_state_dict)
 
+def test_audioldm_pipeline():
+	from diffusers import AudioLDM as hf_class
+	from tiny_hf.diffusers import AudioLDM as tg_class
+	hf_module = hf_class.from_pretrained("cvssp/audioldm")
+	tg_module = tg_class.from_pretrained("cvssp/audioldm")
+	
+	proompt = "black metal in the style of Dissection"
+	_test_hf_reimplementation([proompt], {"num_inference_steps": 10}, hf_module, "__call__", my_module, "__call__")
+
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
+	test_audioldm_pipeline()
 	#test_euler_discrete_scheduler()
 	test_stable_diffusion_xl_pipeline()
 	

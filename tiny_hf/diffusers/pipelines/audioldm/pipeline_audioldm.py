@@ -20,7 +20,7 @@ import numpy as np
 import tg_adapter as torch
 #import torch.nn.functional as F
 from tg_adapter import F
-from ttf import ClapTextModelWithProjection, RobertaTokenizer, RobertaTokenizerFast, SpeechT5HifiGan
+from tiny_hf.transformers import ClapTextModelWithProjection, RobertaTokenizer, RobertaTokenizerFast, SpeechT5HifiGan
 
 from ...models import AutoencoderKL, UNet2DConditionModel
 from ...schedulers import KarrasDiffusionSchedulers
