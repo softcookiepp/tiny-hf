@@ -285,6 +285,7 @@ def restore_default_torch_dtype(func):
 
 def get_parameter_device(parameter: Union[nn.Module, "ModuleUtilsMixin"]):
 	try:
+		return list(parameter.parameters())[0].device
 		return next(parameter.parameters()).device
 	except StopIteration:
 		# For nn.DataParallel compatibility in PyTorch 1.5
