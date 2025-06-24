@@ -476,7 +476,7 @@ def test_tg_state_dict():
 
 def test_audioldm_pipeline():
 	from diffusers import AudioLDMPipeline as hf_class
-	from tiny_hf.diffusers import AudioLDMPipeline as tg_class
+	from tiny_hf.diffusers.pipelines import AudioLDMPipeline as tg_class
 	hf_module = hf_class.from_pretrained("cvssp/audioldm")
 	tg_module = tg_class.from_pretrained("cvssp/audioldm")
 	
