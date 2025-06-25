@@ -510,6 +510,7 @@ class AudioLDMPipeline(DiffusionPipeline, StableDiffusionMixin):
 
         # 7. Denoising loop
         num_warmup_steps = len(timesteps) - num_inference_steps * self.scheduler.order
+        input(timesteps.shape)
         with self.progress_bar(total=num_inference_steps) as progress_bar:
             for i, t in enumerate(timesteps):
                 # expand the latents if we are doing classifier free guidance
