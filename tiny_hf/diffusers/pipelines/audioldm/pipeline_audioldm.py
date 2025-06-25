@@ -491,7 +491,7 @@ class AudioLDMPipeline(DiffusionPipeline, StableDiffusionMixin):
 
         # 4. Prepare timesteps
         self.scheduler.set_timesteps(num_inference_steps, device=device)
-        timesteps = self.scheduler.timesteps
+        timesteps = self.scheduler.timesteps.to("cpu")
 
         # 5. Prepare latent variables
         num_channels_latents = self.unet.config.in_channels
