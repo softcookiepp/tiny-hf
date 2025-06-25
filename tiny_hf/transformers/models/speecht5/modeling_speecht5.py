@@ -18,10 +18,10 @@ import math
 from typing import List, Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, L1Loss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, L1Loss
 
 from ...activations import ACT2FN
 from ...integrations.deepspeed import is_deepspeed_zero3_enabled
