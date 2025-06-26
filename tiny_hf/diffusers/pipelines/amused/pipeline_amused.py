@@ -274,7 +274,7 @@ class AmusedPipeline(DiffusionPipeline):
 
         num_warmup_steps = len(self.scheduler.timesteps) - num_inference_steps * self.scheduler.order
         with self.progress_bar(total=num_inference_steps) as progress_bar:
-            for i, timestep in enumerate(self.scheduler.timesteps):
+            for i, timestep in enumerate(self.scheduler.timesteps.to("cpu") ):
                 if guidance_scale > 1.0:
                     model_input = torch.cat([latents] * 2)
                 else:
