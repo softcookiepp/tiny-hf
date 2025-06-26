@@ -483,9 +483,19 @@ def test_audioldm_pipeline():
 	proompt = "black metal in the style of Dissection"
 	_test_hf_reimplementation([proompt], {"num_inference_steps": 10}, hf_module, "__call__", tg_module, "__call__")
 
+def test_amused_pipeline():
+	from diffusers import AmusedPipeline as hf_class
+	from tiny_hf.diffusers.pipelines import AmusedPipeline as tg_class
+	hf_module = hf_class.from_pretrained("amused/amused-512")
+	tg_module = tg_class.from_pretrained("amused/amused-512")
+	
+	proompt = "a soft fluffy bunny"
+	_test_hf_reimplementation([proompt, 512, 512], {"num_inference_steps": 10}, hf_module, "__call__", tg_module, "__call__")
+
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
+	test_amused_pipeline()
 	test_audioldm_pipeline()
 	#test_euler_discrete_scheduler()
 	test_stable_diffusion_xl_pipeline()
