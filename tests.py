@@ -490,7 +490,7 @@ def test_amused_pipeline():
 	tg_module = tg_class.from_pretrained("amused/amused-512")
 	
 	proompt = "a soft fluffy bunny"
-	_test_hf_reimplementation([proompt, 512, 512], {"num_inference_steps": 10}, hf_module, "__call__", tg_module, "__call__")
+	_test_hf_reimplementation([proompt], {"num_inference_steps": 10}, hf_module, "__call__", tg_module, "__call__")
 
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
