@@ -14,8 +14,8 @@
 
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
-import torch
-from transformers import CLIPTextModelWithProjection, CLIPTokenizer
+import tg_adapter as torch
+from tiny_hf.transformers import CLIPTextModelWithProjection, CLIPTokenizer
 
 from ...image_processor import VaeImageProcessor
 from ...models import UVit2DModel, VQModel
