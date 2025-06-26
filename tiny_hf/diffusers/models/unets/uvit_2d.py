@@ -15,9 +15,6 @@
 
 from typing import Dict, Union
 
-#import torch
-#import torch.nn.functional as F
-#from torch import nn
 import tg_adapter as torch
 from tg_adapter import nn, F
 
