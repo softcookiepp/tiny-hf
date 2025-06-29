@@ -494,6 +494,7 @@ def test_amused_pipeline():
 	try:
 		_test_hf_reimplementation([proompt], {"num_inference_steps": 10}, hf_module, "__call__", tg_module, "__call__")
 	except ValueError:
+		compare_state_dicts(hf_module.transformer, tg_module.transformer)
 		_test_all_submodules(hf_module.transformer, tg_module.transformer)
 	
 	

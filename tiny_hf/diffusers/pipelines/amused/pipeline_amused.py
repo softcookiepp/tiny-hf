@@ -291,9 +291,6 @@ class AmusedPipeline(DiffusionPipeline):
                 if guidance_scale > 1.0:
                     uncond_logits, cond_logits = model_output.chunk(2)
                     model_output = uncond_logits + guidance_scale * (cond_logits - uncond_logits)
-
-                print(self.transformer.config.sample_size, width, height, latents.shape)
-                input(model_output.shape)
                 latents = self.scheduler.step(
                     model_output=model_output,
                     timestep=timestep,
