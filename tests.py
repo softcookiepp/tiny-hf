@@ -504,7 +504,7 @@ def test_uvit_2d_conv_embed():
 	hf_module = hf_class(3, 4, 100, True, 1e-4, True)
 	tg_module = tg_class(3, 4, 100, True, 1e-4, True)
 	
-	a = make_test_data(3, 100)
+	a = np.arange(16).astype(np.int32)
 	_test_hf_reimplementation([a], {}, hf_module, "__call__", tg_module, "__call__")
 	
 
