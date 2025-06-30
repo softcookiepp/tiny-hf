@@ -512,8 +512,8 @@ def test_uvit_2d_conv_embed():
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
-	test_uvit_2d_conv_embed()
-	input("did it workie?")
+	#test_uvit_2d_conv_embed()
+	#input("did it workie?")
 	test_amused_pipeline()
 	test_audioldm_pipeline()
 	#test_euler_discrete_scheduler()
