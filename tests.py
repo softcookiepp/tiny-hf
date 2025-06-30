@@ -507,6 +507,8 @@ def test_uvit_2d_conv_embed():
 	
 	a = np.arange(32).astype(np.int32).reshape(2, 4, 4)
 	_test_hf_reimplementation([a], {}, hf_module, "__call__", tg_module, "__call__")
+
+
 	
 
 @tinygrad.Tensor.train(mode = False)
@@ -514,7 +516,7 @@ def test_uvit_2d_conv_embed():
 def main():
 	#test_uvit_2d_conv_embed()
 	#input("did it workie?")
-	test_amused_pipeline()
+	#test_amused_pipeline()
 	test_audioldm_pipeline()
 	#test_euler_discrete_scheduler()
 	test_stable_diffusion_xl_pipeline()

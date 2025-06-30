@@ -16,8 +16,8 @@ import inspect
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 import numpy as np
-import torch
-from transformers import CLIPTextModel, CLIPTokenizer, LlamaModel, LlamaTokenizerFast
+import tg_adapter as torch
+from tiny_hf.transformers import CLIPTextModel, CLIPTokenizer, LlamaModel, LlamaTokenizerFast
 
 from ...callbacks import MultiPipelineCallbacks, PipelineCallback
 from ...loaders import HunyuanVideoLoraLoaderMixin
