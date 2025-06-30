@@ -280,6 +280,7 @@ class AmusedPipeline(DiffusionPipeline):
                 else:
                     model_input = latents
 
+                input(latents.shape)
                 model_output = self.transformer(
                     model_input,
                     micro_conds=micro_conds,
