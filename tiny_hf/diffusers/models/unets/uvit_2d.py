@@ -160,6 +160,7 @@ class UVit2DModel(ModelMixin, ConfigMixin, PeftAdapterMixin):
         pooled_text_emb = pooled_text_emb.to(dtype=self.dtype)
         pooled_text_emb = self.cond_embed(pooled_text_emb).to(encoder_hidden_states.dtype)
 
+        #input(input_ids)
         hidden_states = self.embed(input_ids)
 
         hidden_states = self.down_block(

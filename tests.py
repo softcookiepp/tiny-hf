@@ -496,12 +496,23 @@ def test_amused_pipeline():
 	except (ValueError, IndexError) as e:
 		compare_state_dicts(hf_module.transformer, tg_module.transformer)
 		_test_all_submodules(hf_module.transformer, tg_module.transformer)
+		
+def test_uvit_2d_conv_embed():
+	from diffusers.models.unets.uvit_2d import UVit2DConvEmbed as hf_class
+	from tiny_hf.diffusers.models.unets.uvit_2d import UVit2DConvEmbed as tg_class
 	
+	hf_module = hf_class(3, 4, 100, True, 1e-4, True)
+	tg_module = tg_class(3, 4, 100, True, 1e-4, True)
+	
+	a = make_test_data(3, 100)
+	_test_hf_reimplementation([a], {}, hf_module, "__call__", tg_module, "__call__")
 	
 
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
+	test_uvit_2d_conv_embed()
+	input("did it workie?")
 	test_amused_pipeline()
 	test_audioldm_pipeline()
 	#test_euler_discrete_scheduler()
