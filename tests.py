@@ -511,7 +511,6 @@ def test_uvit_2d_conv_embed():
 def test_quantized_weights():
 	# how do I do this?
 	ckpt_path = "https://huggingface.co/city96/FLUX.1-dev-gguf/blob/main/flux1-dev-Q2_K.gguf"
-	raise NotImplementedError
 	from diffusers import FluxPipeline, FluxTransformer2DModel, GGUFQuantizationConfig
 	transformer = FluxTransformer2DModel.from_single_file(ckpt_path,
 		quantization_config = GGUFQuantizationConfig(compute_dtype = torch.float32),
