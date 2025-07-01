@@ -508,8 +508,16 @@ def test_uvit_2d_conv_embed():
 	a = np.arange(32).astype(np.int32).reshape(2, 4, 4)
 	_test_hf_reimplementation([a], {}, hf_module, "__call__", tg_module, "__call__")
 
-
+def test_quantized_weights():
+	# how do I do this?
+	ckpt_path = "https://huggingface.co/city96/FLUX.1-dev-gguf/blob/main/flux1-dev-Q2_K.gguf"
+	raise NotImplementedError
+	from diffusers import FluxPipeline, FluxTransformer2DModel, GGUFQuantizationConfig
+	transformer = FluxTransformer2DModel.from_single_file(ckpt_path,
+		quantization_config = GGUFQuantizationConfig(compute_dtype = torch.float32),
+		torch_dtype = torch.float32)
 	
+
 
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
@@ -517,6 +525,7 @@ def main():
 	#test_uvit_2d_conv_embed()
 	#input("did it workie?")
 	#test_amused_pipeline()
+	test_quantized_weights()
 	test_audioldm_pipeline()
 	#test_euler_discrete_scheduler()
 	test_stable_diffusion_xl_pipeline()
