@@ -516,6 +516,13 @@ def test_quantized_weights():
 		quantization_config = GGUFQuantizationConfig(compute_dtype = torch.float32),
 		torch_dtype = torch.float32)
 	
+	pipe = FluxPipeline.from_pretrained(
+		"black-forest-labs/FLUX.1-dev",
+		transformer=transformer,
+		torch_dtype=torch.float32,
+	)
+	
+	out = pipe("a cute bunny")
 
 
 @tinygrad.Tensor.train(mode = False)
@@ -525,6 +532,7 @@ def main():
 	#input("did it workie?")
 	#test_amused_pipeline()
 	test_quantized_weights()
+	input("did it crash?")
 	test_audioldm_pipeline()
 	#test_euler_discrete_scheduler()
 	test_stable_diffusion_xl_pipeline()
