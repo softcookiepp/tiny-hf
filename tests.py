@@ -526,8 +526,8 @@ def test_quantized_weights():
 	
 	
 	from tiny_hf.diffusers.pipelines import FluxPipeline as tg_FluxPipeline
-	from tiny_hf.diffusers.pipelines import FluxTransformer2DModel as tg_FluxTransformer2DModel
-	from tiny_hf.diffusers.pipelines import GGUFQuantizationConfig as tg_GGUFQuantizationConfig
+	from tiny_hf.diffusers.models.transformers import FluxTransformer2DModel as tg_FluxTransformer2DModel
+	from tiny_hf.diffusers.quantizers import GGUFQuantizationConfig as tg_GGUFQuantizationConfig
 	hf_transformer = tg_FluxTransformer2DModel.from_single_file(ckpt_path,
 		quantization_config = tg_GGUFQuantizationConfig(compute_dtype = tg_adapter.float32),
 		torch_dtype = tg_adapter.float32)
