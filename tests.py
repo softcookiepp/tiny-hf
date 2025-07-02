@@ -514,17 +514,31 @@ def test_quantized_weights():
 	from diffusers import FluxPipeline as hf_FluxPipeline
 	from diffusers import FluxTransformer2DModel as hf_FluxTransformer2DModel
 	from diffusers import GGUFQuantizationConfig as hf_GGUFQuantizationConfig
-	transformer = hf_FluxTransformer2DModel.from_single_file(ckpt_path,
+	hf_transformer = hf_FluxTransformer2DModel.from_single_file(ckpt_path,
 		quantization_config = hf_GGUFQuantizationConfig(compute_dtype = torch.float32),
 		torch_dtype = torch.float32)
 	
 	hf_pipe = hf_FluxPipeline.from_pretrained(
 		"black-forest-labs/FLUX.1-dev",
-		transformer=transformer,
+		transformer=hf_transformer,
 		torch_dtype=torch.float32,
 	)
 	
-	out = hf_pipe("a cute bunny", num_inference_steps = 1)
+	
+	from tiny_hf.diffusers import FluxPipeline as tg_FluxPipeline
+	from tiny_hf.diffusers import FluxTransformer2DModel as tg_FluxTransformer2DModel
+	from tiny_hf.diffusers import GGUFQuantizationConfig as tg_GGUFQuantizationConfig
+	hf_transformer = tg_FluxTransformer2DModel.from_single_file(ckpt_path,
+		quantization_config = tg_GGUFQuantizationConfig(compute_dtype = tg_adapter.float32),
+		torch_dtype = tg_adapter.float32)
+	
+	tg_pipe = tg_FluxPipeline.from_pretrained(
+		"black-forest-labs/FLUX.1-dev",
+		transformer=hf_transformer,
+		torch_dtype=tg_adapter.float32,
+	)
+	
+	_test_hf_reimplementation(["a cute bunny"], {"num_inference_steps": 1}, hf_pipe, "__call__", tg_pipe, "__call__")
 
 
 @tinygrad.Tensor.train(mode = False)
