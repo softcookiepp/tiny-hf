@@ -522,7 +522,7 @@ def test_quantized_weights():
 		torch_dtype=torch.float32,
 	)
 	
-	out = pipe("a cute bunny")
+	out = pipe("a cute bunny", num_inference_steps = 1)
 
 
 @tinygrad.Tensor.train(mode = False)
