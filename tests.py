@@ -511,18 +511,20 @@ def test_uvit_2d_conv_embed():
 def test_quantized_weights():
 	# how do I do this?
 	ckpt_path = "https://huggingface.co/city96/FLUX.1-dev-gguf/blob/main/flux1-dev-Q2_K.gguf"
-	from diffusers import FluxPipeline, FluxTransformer2DModel, GGUFQuantizationConfig
-	transformer = FluxTransformer2DModel.from_single_file(ckpt_path,
-		quantization_config = GGUFQuantizationConfig(compute_dtype = torch.float32),
+	from diffusers import FluxPipeline as hf_FluxPipeline
+	from diffusers import FluxTransformer2DModel as hf_FluxTransformer2DModel
+	from diffusers import GGUFQuantizationConfig as hf_GGUFQuantizationConfig
+	transformer = hf_FluxTransformer2DModel.from_single_file(ckpt_path,
+		quantization_config = hf_GGUFQuantizationConfig(compute_dtype = torch.float32),
 		torch_dtype = torch.float32)
 	
-	pipe = FluxPipeline.from_pretrained(
+	hf_pipe = hf_FluxPipeline.from_pretrained(
 		"black-forest-labs/FLUX.1-dev",
 		transformer=transformer,
 		torch_dtype=torch.float32,
 	)
 	
-	out = pipe("a cute bunny", num_inference_steps = 1)
+	out = hf_pipe("a cute bunny", num_inference_steps = 1)
 
 
 @tinygrad.Tensor.train(mode = False)
