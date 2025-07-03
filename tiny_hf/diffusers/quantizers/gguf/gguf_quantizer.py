@@ -47,6 +47,7 @@ class GGUFQuantizer(DiffusersQuantizer):
             self.modules_to_not_convert = [self.modules_to_not_convert]
 
     def validate_environment(self, *args, **kwargs):
+        return # why does this require accelerate?
         if not is_accelerate_available() or is_accelerate_version("<", "0.26.0"):
             raise ImportError(
                 "Loading GGUF Parameters requires `accelerate` installed in your enviroment: `pip install 'accelerate>=0.26.0'`"
