@@ -13,8 +13,7 @@
 # limitations under the License.
 
 import tg_adapter as torch
-import tg_adapter.nn as nn
-import tg_adapter.nn.functional as F
+from tg_adapter import nn, F
 
 from ..utils import is_scipy_available, is_vision_available, requires_backends
 from .loss_for_object_detection import (
