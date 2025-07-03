@@ -17,8 +17,8 @@ import inspect
 from contextlib import nullcontext
 
 import gguf
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+from tg_adapter import nn
 
 from ...utils import is_accelerate_available
 
