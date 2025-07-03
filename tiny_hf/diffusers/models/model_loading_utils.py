@@ -536,8 +536,11 @@ def load_gguf_checkpoint(gguf_checkpoint_path, return_tensors=False):
 					"\n\nTo request support for this quantization type please open an issue here: https://github.com/huggingface/diffusers"
 				)
 			)
-
-		weights = tga.from_numpy(tensor.data.copy() )
+		data = tensor.data.copy()
+		print("data")
+		input(type(data) )
+		# lets try this
+		weights = tga.from_numpy(memoryview(data) )
 		parsed_parameters[name] = GGUFParameter(weights, quant_type=quant_type) if is_gguf_quant else weights
 
 	return parsed_parameters
