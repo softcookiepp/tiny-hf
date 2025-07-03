@@ -24,8 +24,8 @@ import tg_adapter as tga
 from huggingface_hub.utils import validate_hf_hub_args
 from typing_extensions import Self
 
-#from ..quantizers import DiffusersAutoQuantizer
-#from ..utils import deprecate, is_accelerate_available, logging
+from ..quantizers import DiffusersAutoQuantizer
+from ..utils import deprecate, is_accelerate_available, logging
 from ..utils import deprecate, is_accelerate_available, logging
 from .single_file_utils import (
 	SingleFileComponentError,
@@ -287,9 +287,10 @@ class FromOriginalModelMixin:
 		#print("checkpoint type", type(checkpoint) )
 		#input( )
 		if quantization_config is not None:
-			raise NotImplementedError
-			#hf_quantizer = DiffusersAutoQuantizer.from_config(quantization_config)
-			#hf_quantizer.validate_environment()
+			#raise NotImplementedError
+			# this is probs gonna work now
+			hf_quantizer = DiffusersAutoQuantizer.from_config(quantization_config)
+			hf_quantizer.validate_environment()
 
 		else:
 			hf_quantizer = None
