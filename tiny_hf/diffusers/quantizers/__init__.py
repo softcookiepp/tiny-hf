@@ -15,3 +15,4 @@
 from .auto import DiffusersAutoQuantizer
 from .base import DiffusersQuantizer
 from . import gguf
+from .quantization_config import *
