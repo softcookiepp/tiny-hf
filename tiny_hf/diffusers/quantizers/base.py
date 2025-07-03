@@ -28,7 +28,7 @@ if TYPE_CHECKING:
     from ..models.modeling_utils import ModelMixin
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 
 class DiffusersQuantizer(ABC):
