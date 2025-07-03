@@ -192,7 +192,6 @@ def load_state_dict(
 				#input(type(c[list(c.keys())[0]]) )
 				return tc
 		elif file_extension == GGUF_FILE_EXTENSION:
-			raise NotImplementedError
 			return load_gguf_checkpoint(checkpoint_file)
 		else:
 			extra_args = {}
