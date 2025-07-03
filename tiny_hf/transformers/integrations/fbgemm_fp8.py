@@ -16,8 +16,8 @@ from ..utils import is_accelerate_available, is_fbgemm_gpu_available, is_torch_a
 
 
 if is_torch_available():
-    import torch
-    from torch import nn
+    import tg_adapter as torch
+    from tg_adapter import nn
 
 if is_accelerate_available():
     from accelerate import init_empty_weights

@@ -14,9 +14,9 @@
 
 from typing import Optional
 
-import torch
-import torch.nn as nn
-from torch.nn import BCEWithLogitsLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.nn as nn
+from tg_adapter.nn import BCEWithLogitsLoss, MSELoss
 
 from .loss_deformable_detr import DeformableDetrForObjectDetectionLoss, DeformableDetrForSegmentationLoss
 from .loss_for_object_detection import ForObjectDetectionLoss, ForSegmentationLoss

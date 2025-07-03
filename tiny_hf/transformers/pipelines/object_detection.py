@@ -9,7 +9,7 @@ if is_vision_available():
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
     from ..models.auto.modeling_auto import (
         MODEL_FOR_OBJECT_DETECTION_MAPPING_NAMES,

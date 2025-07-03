@@ -197,7 +197,7 @@ class AudioClassificationPipeline(Pipeline):
             in_sampling_rate = inputs.pop("sampling_rate")
             inputs = _inputs
             if in_sampling_rate != self.feature_extractor.sampling_rate:
-                import torch
+                import tg_adapter as torch
 
                 if is_torchaudio_available():
                     from torchaudio import functional as F

@@ -522,7 +522,7 @@ class OnnxConfigWithPast(OnnxConfig, ABC):
             if not is_torch_available():
                 raise ValueError("Cannot generate dummy past_keys inputs without PyTorch installed.")
             else:
-                import torch
+                import tg_adapter as torch
 
             batch, seqlen = common_inputs["input_ids"].shape
             # Not using the same length for past_key_values

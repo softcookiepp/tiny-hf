@@ -110,7 +110,7 @@ if is_tf_available():
     )
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
     from ..models.auto.modeling_auto import (
         AutoModel,

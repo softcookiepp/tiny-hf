@@ -37,7 +37,7 @@ if is_tf_available():
     Dataset = None
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
     from torch.utils.data import Dataset
 
     from ..models.auto.modeling_auto import MODEL_FOR_QUESTION_ANSWERING_MAPPING_NAMES

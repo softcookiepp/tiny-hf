@@ -35,7 +35,7 @@ if is_tf_available():
     from ..models.auto.modeling_tf_auto import TF_MODEL_FOR_VISION_2_SEQ_MAPPING_NAMES
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
     from ..models.auto.modeling_auto import MODEL_FOR_VISION_2_SEQ_MAPPING_NAMES
 

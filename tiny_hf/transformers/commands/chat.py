@@ -40,9 +40,9 @@ if is_rich_available():
     from rich.markdown import Markdown
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
-    from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, TextIteratorStreamer
+    from tiny_hf.transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, TextIteratorStreamer
 
 
 HELP_STRING = """\

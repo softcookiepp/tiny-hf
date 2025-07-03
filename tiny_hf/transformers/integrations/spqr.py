@@ -17,7 +17,7 @@ from ..utils import is_accelerate_available, is_spqr_available, is_torch_availab
 
 
 if is_torch_available():
-    import torch.nn as nn
+    from tg_adapter import nn
 
 
 def replace_with_spqr_linear(

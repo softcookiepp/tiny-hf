@@ -17,7 +17,7 @@
 import re
 
 import numpy as np
-import torch
+import tg_adapter as torch
 
 from ..models.auto import AutoProcessor
 from ..models.vision_encoder_decoder import VisionEncoderDecoderModel

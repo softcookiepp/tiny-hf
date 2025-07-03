@@ -8,7 +8,7 @@ from .base import Pipeline, build_pipeline_init_args
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
     from ..models.auto.modeling_auto import MODEL_FOR_CAUSAL_LM_MAPPING_NAMES
     from .pt_utils import KeyDataset

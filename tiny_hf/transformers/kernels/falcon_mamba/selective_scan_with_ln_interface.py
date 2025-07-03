@@ -14,10 +14,10 @@
 # limitations under the License.
 # Original code from: https://github.com/state-spaces/mamba/blob/main/mamba_ssm/ops/selective_scan_interface.py
 
-import torch
-import torch.nn.functional as F
+import tg_adapter as torch
+import tg_adapter as torch.nn.functional as F
 from einops import rearrange, repeat
-from torch.cuda.amp import custom_bwd, custom_fwd
+from tg_adapter.cuda.amp import custom_bwd, custom_fwd
 
 
 try:

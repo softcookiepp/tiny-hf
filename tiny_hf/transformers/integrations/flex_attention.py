@@ -28,7 +28,7 @@ Citation:
 
 from typing import Optional, Tuple, Union
 
-import torch
+import tg_adapter as torch
 
 from ..utils import is_torch_flex_attn_available
 

@@ -63,8 +63,8 @@ if is_tf_available():
     from ..models.auto.modeling_tf_auto import TFAutoModel
 
 if is_torch_available():
-    import torch
-    from torch.utils.data import DataLoader, Dataset
+    import tg_adapter as torch
+    from tg_adapter.utils.data import DataLoader, Dataset
 
     from ..modeling_utils import PreTrainedModel
     from ..models.auto.modeling_auto import AutoModel

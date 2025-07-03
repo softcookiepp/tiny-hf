@@ -1,5 +1,5 @@
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+import tg_adapter.nn as nn
 
 from ..image_transforms import center_to_corners_format
 from ..utils import is_scipy_available

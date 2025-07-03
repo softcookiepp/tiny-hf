@@ -1,6 +1,6 @@
 from typing import Optional, Tuple
 
-import torch
+import tg_adapter as torch
 
 from ..modeling_flash_attention_utils import _flash_attention_forward
 from ..utils import is_flash_attn_greater_or_equal_2_10

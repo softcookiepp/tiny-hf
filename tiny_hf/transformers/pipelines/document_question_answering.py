@@ -35,7 +35,7 @@ if is_vision_available():
     from ..image_utils import load_image
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
     from ..models.auto.modeling_auto import MODEL_FOR_DOCUMENT_QUESTION_ANSWERING_MAPPING_NAMES
 

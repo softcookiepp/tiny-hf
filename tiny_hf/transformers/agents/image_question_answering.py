@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import torch
+import tg_adapter as torch
 from PIL import Image
 
 from ..models.auto import AutoModelForVisualQuestionAnswering, AutoProcessor

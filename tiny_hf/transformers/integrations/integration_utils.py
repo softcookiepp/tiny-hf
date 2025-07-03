@@ -49,7 +49,7 @@ from ..utils import (
 logger = logging.get_logger(__name__)
 
 if is_torch_available():
-	import torch
+	import tg_adapter as torch
 
 # comet_ml requires to be imported before any ML frameworks
 _MIN_COMET_VERSION = "3.43.2"

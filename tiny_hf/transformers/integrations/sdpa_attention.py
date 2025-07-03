@@ -1,6 +1,6 @@
 from typing import Optional, Tuple
 
-import torch
+import tg_adapter as torch
 
 
 def repeat_kv(hidden_states: torch.Tensor, n_rep: int) -> torch.Tensor:

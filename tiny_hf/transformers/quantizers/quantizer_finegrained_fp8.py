@@ -9,7 +9,7 @@ from .quantizers_utils import get_module_from_name
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 if TYPE_CHECKING:
     from ..modeling_utils import PreTrainedModel

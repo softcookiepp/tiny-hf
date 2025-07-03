@@ -23,8 +23,8 @@ from ..utils import (
 
 
 if is_torch_available():
-    import torch
-    from torch import nn
+    import tg_adapter as torch
+    from tg_adapter import nn
 
 
 if is_flute_available():

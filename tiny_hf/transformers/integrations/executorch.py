@@ -10,7 +10,7 @@
 # an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
 # specific language governing permissions and limitations under the License.
 
-import torch
+import tg_adapter as torch
 
 from ..utils.import_utils import is_torch_available
 
@@ -195,7 +195,7 @@ def convert_and_export_with_cache(
     if not is_torch_greater_or_equal_than_2_3:
         raise ImportError("torch >= 2.3 is required.")
 
-    import torch.export._trace
+    import tg_adapter.export._trace
 
     with torch.no_grad():
         # TODO: The default inputs only work for text models. We need to add support for vision/audio models.

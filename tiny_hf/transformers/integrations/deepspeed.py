@@ -26,8 +26,8 @@ from ..utils import is_accelerate_available, is_torch_available, is_torch_mlu_av
 
 
 if is_torch_available():
-    import torch
-    from torch import nn
+    import tg_adapter as torch
+    from tg_adapter import nn
 
 
 logger = logging.get_logger(__name__)

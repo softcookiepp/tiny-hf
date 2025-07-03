@@ -29,8 +29,8 @@ from ..utils.quantization_config import (
 
 
 if is_torch_available():
-    import torch
-    import torch.nn as nn
+    import tg_adapter as torch
+    from tg_adapter import nn
 
 logger = logging.get_logger(__name__)
 

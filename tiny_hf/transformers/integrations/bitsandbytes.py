@@ -19,8 +19,8 @@ from ..utils import (
 
 if is_bitsandbytes_available():
     import bitsandbytes as bnb
-    import torch
-    import torch.nn as nn
+    import tg_adapter as torch
+    import tg_adapter.nn as nn
 
     from ..pytorch_utils import Conv1D
 
@@ -527,7 +527,7 @@ def _validate_bnb_cuda_backend_availability(raise_exception):
     if not is_torch_available():
         return False
 
-    import torch
+    import tg_adapter as torch
 
     if not torch.cuda.is_available():
         log_msg = (

@@ -13,7 +13,7 @@
 # limitations under the License.
 "VPTQ (Vector Post-Training Quantization) integration file"
 
-import torch.nn as nn
+import tg_adapter.nn as nn
 from accelerate import init_empty_weights
 from vptq import VQuantLinear
 

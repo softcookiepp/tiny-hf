@@ -18,7 +18,7 @@ import os
 import warnings
 from dataclasses import dataclass, field
 
-import torch
+import tg_adapter as torch
 
 from ..training_args import TrainingArguments
 from ..utils import cached_property, is_sagemaker_dp_enabled, logging

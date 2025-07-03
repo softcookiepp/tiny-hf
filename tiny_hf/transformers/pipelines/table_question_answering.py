@@ -13,7 +13,7 @@ from .base import ArgumentHandler, Dataset, Pipeline, PipelineException, build_p
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
     from ..models.auto.modeling_auto import (
         MODEL_FOR_SEQ_TO_SEQ_CAUSAL_LM_MAPPING_NAMES,

@@ -122,8 +122,8 @@ def export_pytorch(
         preprocessor = tokenizer
 
     if issubclass(type(model), PreTrainedModel):
-        import torch
-        from torch.onnx import export as onnx_export
+        import tg_adapter torch
+        from tg_adapter.onnx import export as onnx_export
 
         logger.info(f"Using framework PyTorch: {torch.__version__}")
         with torch.no_grad():

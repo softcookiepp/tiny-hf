@@ -1,5 +1,5 @@
 import numpy as np
-import torch
+import tg_adapter as torch
 from torch.utils.data import Dataset, IterableDataset
 
 from ..utils.generic import ModelOutput

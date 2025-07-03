@@ -13,9 +13,9 @@
 # limitations under the License.
 from typing import List, Optional
 
-import torch
-import torch.nn as nn
-from torch import Tensor
+import tg_adapter as torch
+import tg_adapter.nn as nn
+from tg_adapter import Tensor
 
 from ..utils import is_accelerate_available, is_scipy_available, is_vision_available, requires_backends
 

@@ -17,8 +17,8 @@ import re
 from functools import lru_cache, partial
 from typing import List, Optional, Tuple, Union
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter import nn
 
 from ..utils import is_torch_greater_or_equal, logging
 

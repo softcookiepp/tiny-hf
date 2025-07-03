@@ -22,7 +22,7 @@ if TYPE_CHECKING:
     from ..modeling_utils import PreTrainedModel
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 
 class HfQuantizer(ABC):

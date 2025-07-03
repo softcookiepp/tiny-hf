@@ -5,9 +5,8 @@ if is_accelerate_available():
     from accelerate import init_empty_weights
 
 if is_torch_available():
-    import torch
-    import torch.nn as nn
-    import torch.nn.functional as F
+    import tg_adapter as torch
+    from tg_adapter import nn, F
 
 logger = logging.get_logger(__name__)
 

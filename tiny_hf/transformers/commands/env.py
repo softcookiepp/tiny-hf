@@ -90,7 +90,7 @@ class EnvironmentCommand(BaseTransformersCLICommand):
         pt_version = "not installed"
         pt_cuda_available = "NA"
         if is_torch_available():
-            import torch
+            import tg_adapter as torch
 
             pt_version = torch.__version__
             pt_cuda_available = torch.cuda.is_available()

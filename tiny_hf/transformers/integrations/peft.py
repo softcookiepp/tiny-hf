@@ -30,7 +30,7 @@ from ..utils import (
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 if is_accelerate_available():
     from accelerate import dispatch_model
@@ -543,7 +543,7 @@ class PeftAdapterMixin:
 
         ```py
         from diffusers import AutoPipelineForText2Image
-        import torch
+        import tg_adapter as torch
 
         pipeline = AutoPipelineForText2Image.from_pretrained(
             "stabilityai/stable-diffusion-xl-base-1.0", torch_dtype=torch.float16

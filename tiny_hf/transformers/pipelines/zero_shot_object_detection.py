@@ -10,7 +10,7 @@ if is_vision_available():
     from ..image_utils import load_image, valid_images
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
     from transformers.modeling_outputs import BaseModelOutput
 

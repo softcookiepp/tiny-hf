@@ -17,7 +17,7 @@ from ..utils import ACCELERATE_MIN_VERSION, is_accelerate_available, is_aqlm_ava
 
 
 if is_torch_available():
-    import torch.nn as nn
+    import tg_adapter.nn as nn
 
 
 def replace_with_aqlm_linear(

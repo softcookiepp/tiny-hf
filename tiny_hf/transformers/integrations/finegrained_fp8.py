@@ -19,11 +19,11 @@ from ..utils import is_accelerate_available, is_torch_available, logging
 
 
 if is_torch_available():
-    import torch
-    import torch.nn as nn
+    import tg_adapter as torch
+    import tg_adapter.nn as nn
     import triton
     import triton.language as tl
-    from torch.nn import functional as F
+    from tg_adapter.nn import functional as F
 
 if is_accelerate_available():
     from accelerate import init_empty_weights

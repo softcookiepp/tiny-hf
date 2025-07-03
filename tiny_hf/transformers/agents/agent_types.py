@@ -31,8 +31,8 @@ else:
     ImageType = object
 
 if is_torch_available():
-    import torch
-    from torch import Tensor
+    import tg_adapter as torch
+    from tg_adapter import Tensor
 else:
     Tensor = object
 

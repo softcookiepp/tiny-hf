@@ -17,7 +17,7 @@ from ..utils import is_accelerate_available, is_eetq_available, logging
 
 if is_eetq_available():
     import eetq
-    import torch.nn as nn
+    import tg_adapter.nn as nn
 
 if is_accelerate_available():
     from accelerate import init_empty_weights
