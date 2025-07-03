@@ -537,10 +537,7 @@ def load_gguf_checkpoint(gguf_checkpoint_path, return_tensors=False):
 				)
 			)
 		data = tensor.data.copy()
-		print("data")
-		input(type(data) )
-		# lets try this
-		weights = tga.from_numpy(memoryview(data) )
+		weights = tga.from_numpy(data )
 		parsed_parameters[name] = GGUFParameter(weights, quant_type=quant_type) if is_gguf_quant else weights
 
 	return parsed_parameters
