@@ -58,7 +58,8 @@ class WrappedFlexAttention:
             cls._instance = super().__new__(cls)
         return cls._instance
 
-    @torch.compiler.disable(recursive=False)
+    # well who cares
+    #@torch.compiler.disable(recursive=False)
     def __init__(self):
         """
         Initialize or update the singleton instance.
