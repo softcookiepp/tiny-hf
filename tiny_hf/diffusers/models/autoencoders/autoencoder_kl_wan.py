@@ -14,9 +14,6 @@
 
 from typing import List, Optional, Tuple, Union
 
-#import torch
-#import torch.nn.functional as F
-#from torch import nn
 import tg_adapter as torch
 from tg_adapter import nn, F
 #import torch.utils.checkpoint

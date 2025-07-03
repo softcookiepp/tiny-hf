@@ -16,9 +16,6 @@
 from typing import Dict, Optional, Tuple, Union
 
 import numpy as np
-#import torch
-#import torch.nn.functional as F
-#from torch import nn
 import tg_adapter as torch
 from tg_adapter import nn, F
 

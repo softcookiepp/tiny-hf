@@ -19,7 +19,7 @@ from ...utils import (
 
 
 if is_torch_available() and is_gguf_available():
-    import torch
+    import tg_adapter as torch
 
     from .utils import (
         GGML_QUANT_SIZES,

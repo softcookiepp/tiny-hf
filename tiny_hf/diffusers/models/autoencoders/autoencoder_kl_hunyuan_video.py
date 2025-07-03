@@ -15,12 +15,8 @@
 from typing import Optional, Tuple, Union
 
 import numpy as np
-#import torch
-#import torch.nn.functional as F
-#from torch import nn
 import tg_adapter as torch
 from tg_adapter import nn, F
-#import torch.utils.checkpoint
 
 from ...configuration_utils import ConfigMixin, register_to_config
 from ...utils import logging
