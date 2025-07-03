@@ -128,7 +128,7 @@ def make_flex_block_causal_mask(attention_mask_2d: torch.Tensor) -> "BlockMask":
     )
 
 
-@torch.compiler.disable(recursive=False)
+# @torch.compiler.disable(recursive=False)
 def compile_friendly_flex_attention(
     query: torch.Tensor,
     key: torch.Tensor,
