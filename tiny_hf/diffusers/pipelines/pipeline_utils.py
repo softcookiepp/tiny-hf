@@ -1035,7 +1035,6 @@ class DiffusionPipeline(ConfigMixin, PushToHubMixin):
 				and not _is_valid_type(arg, expected_types[kw])  # Check type
 			):
 				logger.warning(f"Expected types for {kw}: {expected_types[kw]}, got {_get_detailed_type(arg)}.")
-				input("peepeepoopoo")
 
 		# 11. Instantiate the pipeline
 		model = pipeline_class(**init_kwargs)
@@ -1634,7 +1633,6 @@ class DiffusionPipeline(ConfigMixin, PushToHubMixin):
 	def _get_signature_types(cls):
 		signature_types = {}
 		for k, v in inspect.signature(cls.__init__).parameters.items():
-			input(v.annotation)
 			if inspect.isclass(v.annotation):
 				signature_types[k] = (v.annotation,)
 			elif get_origin(v.annotation) == Union:

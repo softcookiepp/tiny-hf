@@ -20,8 +20,8 @@ import torch.nn.functional as F
 from torch import nn
 from torch.nn import LayerNorm
 from torch.nn.utils import skip_init
-from transformers import PretrainedConfig, PreTrainedModel
-from transformers.modeling_outputs import BaseModelOutputWithPast
+from tiny_hf.transformers import PretrainedConfig, PreTrainedModel
+from tiny_hf.transformers.modeling_outputs import BaseModelOutputWithPast
 
 from ...utils import logging
 
