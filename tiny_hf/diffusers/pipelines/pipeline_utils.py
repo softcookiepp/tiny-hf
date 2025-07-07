@@ -1634,6 +1634,7 @@ class DiffusionPipeline(ConfigMixin, PushToHubMixin):
 	def _get_signature_types(cls):
 		signature_types = {}
 		for k, v in inspect.signature(cls.__init__).parameters.items():
+			input(v.annotation)
 			if inspect.isclass(v.annotation):
 				signature_types[k] = (v.annotation,)
 			elif get_origin(v.annotation) == Union:
