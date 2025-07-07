@@ -1035,6 +1035,7 @@ class DiffusionPipeline(ConfigMixin, PushToHubMixin):
 				and not _is_valid_type(arg, expected_types[kw])  # Check type
 			):
 				logger.warning(f"Expected types for {kw}: {expected_types[kw]}, got {_get_detailed_type(arg)}.")
+				input("peepeepoopoo")
 
 		# 11. Instantiate the pipeline
 		model = pipeline_class(**init_kwargs)
