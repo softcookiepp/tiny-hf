@@ -15,7 +15,7 @@
 from typing import Callable, List, Optional, Union
 
 import torch
-from transformers import (
+from tiny_hf.transformers import (
     XLMRobertaTokenizer,
 )
 

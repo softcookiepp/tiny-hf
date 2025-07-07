@@ -16,8 +16,8 @@ import inspect
 from typing import Any, Callable, Dict, List, Optional, Union
 
 import numpy as np
-import torch
-from transformers import (
+import tg_adapter as torch
+from tiny_hf.transformers import (
     CLIPImageProcessor,
     CLIPTextModel,
     CLIPTokenizer,

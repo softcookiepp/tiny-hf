@@ -21,7 +21,7 @@ import torch
 import torch.nn.functional as F
 from packaging import version
 from PIL import Image
-from transformers import (
+from tiny_hf.transformers import (
     XLMRobertaTokenizer,
 )
 

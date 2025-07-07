@@ -20,10 +20,10 @@ from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 import numpy as np
-import torch
+import tg_adapter as torch
 from PIL import Image
 from tqdm.auto import tqdm
-from transformers import CLIPTextModel, CLIPTokenizer
+from tiny_hf.transformers import CLIPTextModel, CLIPTokenizer
 
 from ...image_processor import PipelineImageInput
 from ...models import (

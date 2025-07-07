@@ -19,8 +19,6 @@ from pathlib import Path
 from typing import Callable, Dict, List, Optional, Union
 
 import safetensors
-#import torch
-#import torch.nn as nn
 import tinygrad
 import tg_adapter as torch
 import tg_adapter.nn as nn
@@ -52,7 +50,7 @@ from ..utils import (
 
 
 if is_transformers_available():
-	from transformers import PreTrainedModel
+	from tiny_hf.transformers import PreTrainedModel
 
 	from ..models.lora import text_encoder_attn_modules, text_encoder_mlp_modules
 
