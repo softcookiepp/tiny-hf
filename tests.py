@@ -531,10 +531,10 @@ def test_quantized_weights():
 	tg_transformer = tg_FluxTransformer2DModel.from_single_file(ckpt_path,
 		quantization_config = tg_GGUFQuantizationConfig(compute_dtype = tg_adapter.float32),
 		torch_dtype = tg_adapter.float32)
-	
+	input(tg_transformer)
 	tg_pipe = tg_FluxPipeline.from_pretrained(
 		"black-forest-labs/FLUX.1-dev",
-		transformer=hf_transformer,
+		transformer=tg_transformer,
 		torch_dtype=tg_adapter.float32,
 	)
 	
