@@ -605,7 +605,7 @@ def load_state_dict(
 			state_dict = tinygrad.nn.state.safe_load(checkpoint_file)
 			tsd = {}
 			for k, v in state_dict.items():
-				tsd[k] = torch.Tensor(v)
+				tsd[k] = torch.Tensor(v.to("CPU") )
 			return tsd
 	try:
 		if map_location is None:
