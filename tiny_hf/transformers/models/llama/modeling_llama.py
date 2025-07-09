@@ -275,7 +275,7 @@ class LlamaAttention(nn.Module):
         hidden_shape = (*input_shape, -1, self.head_dim)
         
         print(hidden_states.tg.device, hidden_states.shape)
-        hidden_states = hidden_states.to(self.q_proj.parameters()[0].device)
+        hidden_states = hidden_states.to(list(self.q_proj.parameters())[0].device)
         input(hidden_states.numpy() )
         query_states = self.q_proj(hidden_states).view(hidden_shape).transpose(1, 2)
         key_states = self.k_proj(hidden_states).view(hidden_shape).transpose(1, 2)
