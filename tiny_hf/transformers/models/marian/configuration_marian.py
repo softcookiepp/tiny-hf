@@ -87,7 +87,7 @@ class MarianConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import MarianModel, MarianConfig
+    >>> from tiny_hf.transformers.import MarianModel, MarianConfig
 
     >>> # Initializing a Marian Helsinki-NLP/opus-mt-en-de style configuration
     >>> configuration = MarianConfig()
@@ -165,7 +165,7 @@ class MarianConfig(PretrainedConfig):
 
 class MarianOnnxConfig(OnnxSeq2SeqConfigWithPast):
     @property
-    # Copied from transformers.models.bart.configuration_bart.BartOnnxConfig.inputs
+    # Copied from tiny_hf.transformers.models.bart.configuration_bart.BartOnnxConfig.inputs
     def inputs(self) -> Mapping[str, Mapping[int, str]]:
         if self.task in ["default", "seq2seq-lm"]:
             common_inputs = OrderedDict(
@@ -210,7 +210,7 @@ class MarianOnnxConfig(OnnxSeq2SeqConfigWithPast):
         return common_inputs
 
     @property
-    # Copied from transformers.models.bart.configuration_bart.BartOnnxConfig.outputs
+    # Copied from tiny_hf.transformers.models.bart.configuration_bart.BartOnnxConfig.outputs
     def outputs(self) -> Mapping[str, Mapping[int, str]]:
         if self.task in ["default", "seq2seq-lm"]:
             common_outputs = super().outputs
@@ -247,7 +247,7 @@ class MarianOnnxConfig(OnnxSeq2SeqConfigWithPast):
             if not is_torch_available():
                 raise ValueError("Cannot generate dummy past_keys inputs without PyTorch installed.")
             else:
-                import torch
+                import tg_adapter as torch
             batch, encoder_seq_length = common_inputs["input_ids"].shape
             decoder_seq_length = common_inputs["decoder_input_ids"].shape[1]
             num_encoder_attention_heads, num_decoder_attention_heads = self.num_attention_heads
@@ -307,7 +307,7 @@ class MarianOnnxConfig(OnnxSeq2SeqConfigWithPast):
             if not is_torch_available():
                 raise ValueError("Cannot generate dummy past_keys inputs without PyTorch installed.")
             else:
-                import torch
+                import tg_adapter as torch
             batch, seqlen = common_inputs["input_ids"].shape
             # Not using the same length for past_key_values
             past_key_values_length = seqlen + 2
@@ -377,7 +377,7 @@ class MarianOnnxConfig(OnnxSeq2SeqConfigWithPast):
 
         return common_inputs
 
-    # Copied from transformers.models.bart.configuration_bart.BartOnnxConfig._flatten_past_key_values_
+    # Copied from tiny_hf.transformers.models.bart.configuration_bart.BartOnnxConfig._flatten_past_key_values_
     def _flatten_past_key_values_(self, flattened_output, name, idx, t):
         if self.task in ["default", "seq2seq-lm"]:
             flattened_output = super()._flatten_past_key_values_(flattened_output, name, idx, t)

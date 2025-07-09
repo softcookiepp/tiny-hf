@@ -53,7 +53,7 @@ class ShieldGemma2Config(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import ShieldGemma2ForConditionalGeneration, ShieldGemma2Config, SiglipVisionConfig, ShieldGemma2TextConfig
+    >>> from tiny_hf.transformers.import ShieldGemma2ForConditionalGeneration, ShieldGemma2Config, SiglipVisionConfig, ShieldGemma2TextConfig
 
     >>> # Initializing a Siglip-like vision config
     >>> vision_config = SiglipVisionConfig()

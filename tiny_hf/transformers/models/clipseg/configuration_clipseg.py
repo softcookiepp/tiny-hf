@@ -68,7 +68,7 @@ class CLIPSegTextConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import CLIPSegTextConfig, CLIPSegTextModel
+    >>> from tiny_hf.transformers.import CLIPSegTextConfig, CLIPSegTextModel
 
     >>> # Initializing a CLIPSegTextConfig with CIDAS/clipseg-rd64 style configuration
     >>> configuration = CLIPSegTextConfig()
@@ -157,7 +157,7 @@ class CLIPSegVisionConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import CLIPSegVisionConfig, CLIPSegVisionModel
+    >>> from tiny_hf.transformers.import CLIPSegVisionConfig, CLIPSegVisionModel
 
     >>> # Initializing a CLIPSegVisionConfig with CIDAS/clipseg-rd64 style configuration
     >>> configuration = CLIPSegVisionConfig()
@@ -248,7 +248,7 @@ class CLIPSegConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import CLIPSegConfig, CLIPSegModel
+    >>> from tiny_hf.transformers.import CLIPSegConfig, CLIPSegModel
 
     >>> # Initializing a CLIPSegConfig with CIDAS/clipseg-rd64 style configuration
     >>> configuration = CLIPSegConfig()

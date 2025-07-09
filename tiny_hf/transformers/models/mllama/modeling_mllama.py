@@ -17,10 +17,10 @@
 import math
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.nn.functional as F
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.nn.functional as F
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ... import PreTrainedModel
 from ...activations import ACT2FN
@@ -41,7 +41,7 @@ from .configuration_mllama import MllamaConfig, MllamaTextConfig, MllamaVisionCo
 
 
 if is_torch_flex_attn_available():
-    from torch.nn.attention.flex_attention import BlockMask
+    from tg_adapter.nn.attention.flex_attention import BlockMask
 
     from ...integrations.flex_attention import make_flex_block_causal_mask
 
@@ -164,7 +164,7 @@ class MllamaPrecomputedPositionEmbedding(nn.Module):
         return hidden_state
 
 
-# Copied from transformers.models.clip.modeling_clip.CLIPMLP with CLIP->MllamaVision
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPMLP with CLIP->MllamaVision
 class MllamaVisionMLP(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -415,7 +415,7 @@ class MllamaVisionEncoder(nn.Module):
         )
 
 
-# Copied from transformers.models.llama.modeling_llama.LlamaRMSNorm with Llama->MllamaText
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaRMSNorm with Llama->MllamaText
 class MllamaTextRMSNorm(nn.Module):
     def __init__(self, hidden_size, eps=1e-6):
         """
@@ -616,7 +616,7 @@ class MllamaTextCrossSdpaAttention(MllamaTextCrossAttention):
         return attn_output, None, past_key_value
 
 
-# Copied from transformers.models.llama.modeling_llama.rotate_half
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.rotate_half
 def rotate_half(x):
     """Rotates half the hidden dims of the input."""
     x1 = x[..., : x.shape[-1] // 2]
@@ -624,7 +624,7 @@ def rotate_half(x):
     return torch.cat((-x2, x1), dim=-1)
 
 
-# Copied from transformers.models.llama.modeling_llama.apply_rotary_pos_emb
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.apply_rotary_pos_emb
 def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
     """Applies Rotary Position Embedding to the query and key tensors.
 
@@ -652,7 +652,7 @@ def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
     return q_embed, k_embed
 
 
-# Copied from transformers.models.llama.modeling_llama.repeat_kv
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.repeat_kv
 def repeat_kv(hidden_states: torch.Tensor, n_rep: int) -> torch.Tensor:
     """
     This is the equivalent of torch.repeat_interleave(x, dim=1, repeats=n_rep). The hidden states go from (batch,
@@ -823,7 +823,7 @@ MLLAMA_TEXT_CROSS_ATTENTION_CLASSES = {"eager": MllamaTextCrossAttention, "sdpa"
 MLLAMA_TEXT_ATTENTION_CLASSES = {"eager": MllamaTextSelfAttention, "sdpa": MllamaTextSelfSdpaAttention}
 
 
-# Copied from transformers.models.gemma2.modeling_gemma2.Gemma2MLP with Gemma2->MllamaText
+# Copied from tiny_hf.transformers.models.gemma2.modeling_gemma2.Gemma2MLP with Gemma2->MllamaText
 class MllamaTextMLP(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -841,7 +841,7 @@ class MllamaTextMLP(nn.Module):
         return down_proj
 
 
-# Modified from transformers.models.llama.modeling_llama.LlamaDecoderLayer
+# Modified from tiny_hf.transformers.models.llama.modeling_llama.LlamaDecoderLayer
 class MllamaSelfAttentionDecoderLayer(nn.Module):
     def __init__(self, config: MllamaTextConfig, layer_idx: int):
         super().__init__()
@@ -1074,7 +1074,7 @@ class MllamaPreTrainedModel(PreTrainedModel):
             nn.init.normal_(module.gate_attn.data, std=std)
             nn.init.normal_(module.gate_ffn.data, std=std)
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
     def _update_causal_mask(
         self,
         attention_mask: torch.Tensor,
@@ -1146,7 +1146,7 @@ class MllamaPreTrainedModel(PreTrainedModel):
         return causal_mask
 
     @staticmethod
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel._prepare_4d_causal_attention_mask_with_cache_position
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel._prepare_4d_causal_attention_mask_with_cache_position
     def _prepare_4d_causal_attention_mask_with_cache_position(
         attention_mask: torch.Tensor,
         sequence_length: int,
@@ -1524,7 +1524,7 @@ class MllamaVisionModel(MllamaPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, MllamaVisionModel
+        >>> from tiny_hf.transformers.import AutoProcessor, MllamaVisionModel
 
         >>> checkpoint = "meta-llama/Llama-3.2-11B-Vision"
         >>> model = MllamaVisionModel.from_pretrained(checkpoint)
@@ -1722,7 +1722,7 @@ class MllamaTextModel(MllamaPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoProcessor, MllamaTextModel
+        >>> from tiny_hf.transformers.import AutoProcessor, MllamaTextModel
 
         >>> checkpoint = "meta-llama/Llama-3.2-11B-Vision"
         >>> model = MllamaTextModel.from_pretrained(checkpoint)
@@ -1929,7 +1929,7 @@ class MllamaForCausalLM(MllamaPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, MllamaForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, MllamaForCausalLM
 
         >>> model = MllamaForCausalLM.from_pretrained("Llama-3.2-11B-Vision")
         >>> tokenizer = AutoTokenizer.from_pretrained("Llama-3.2-11B-Vision")
@@ -2079,7 +2079,7 @@ class MllamaForConditionalGeneration(MllamaPreTrainedModel, GenerationMixin):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, MllamaForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoProcessor, MllamaForConditionalGeneration
 
         >>> checkpoint = "meta-llama/Llama-3.2-11B-Vision"
         >>> model = MllamaForConditionalGeneration.from_pretrained(checkpoint)

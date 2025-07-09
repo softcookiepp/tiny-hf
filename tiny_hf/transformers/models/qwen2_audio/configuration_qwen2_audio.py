@@ -67,7 +67,7 @@ class Qwen2AudioEncoderConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import Qwen2AudioEncoderConfig, Qwen2AudioEncoder
+    >>> from tiny_hf.transformers.import Qwen2AudioEncoderConfig, Qwen2AudioEncoder
 
     >>> # Initializing a Qwen2AudioEncoderConfig
     >>> configuration = Qwen2AudioEncoderConfig()
@@ -138,7 +138,7 @@ class Qwen2AudioConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import Qwen2AudioForConditionalGeneration, Qwen2AudioConfig, Qwen2AudioEncoderConfig, Qwen2Config
+    >>> from tiny_hf.transformers.import Qwen2AudioForConditionalGeneration, Qwen2AudioConfig, Qwen2AudioEncoderConfig, Qwen2Config
 
     >>> # Initializing a Qwen2AudioEncoder config
     >>> audio_config = Qwen2AudioEncoderConfig()

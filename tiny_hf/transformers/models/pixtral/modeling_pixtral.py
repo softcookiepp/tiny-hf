@@ -16,9 +16,9 @@
 
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ... import PreTrainedModel
 from ...activations import ACT2FN
@@ -117,7 +117,7 @@ class PixtralRotaryEmbedding(nn.Module):
             self.max_seq_len_cached = self.original_max_seq_len
 
 
-# Copied from transformers.models.llama.modeling_llama.rotate_half
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.rotate_half
 def rotate_half(x):
     """Rotates half the hidden dims of the input."""
     x1 = x[..., : x.shape[-1] // 2]
@@ -210,7 +210,7 @@ class PixtralAttention(nn.Module):
         return attn_output, attn_weights
 
 
-# Copied from transformers.models.mistral.modeling_mistral.MistralMLP with Mistral->Pixtral
+# Copied from tiny_hf.transformers.models.mistral.modeling_mistral.MistralMLP with Mistral->Pixtral
 class PixtralMLP(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -227,7 +227,7 @@ class PixtralMLP(nn.Module):
         return down_proj
 
 
-# Copied from transformers.models.llama.modeling_llama.LlamaRMSNorm with Llama->Pixtral
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaRMSNorm with Llama->Pixtral
 class PixtralRMSNorm(nn.Module):
     def __init__(self, hidden_size, eps=1e-6):
         """

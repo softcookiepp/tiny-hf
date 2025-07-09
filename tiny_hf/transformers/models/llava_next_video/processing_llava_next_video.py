@@ -217,7 +217,7 @@ class LlavaNextVideoProcessor(ProcessorMixin):
         text_inputs = self.tokenizer(text, **output_kwargs["text_kwargs"])
         return BatchFeature(data={**text_inputs, **image_inputs, **videos_inputs})
 
-    # Copied from transformers.models.llava_next.processing_llava_next.LlavaNextProcessor._get_number_of_features
+    # Copied from tiny_hf.transformers.models.llava_next.processing_llava_next.LlavaNextProcessor._get_number_of_features
     def _get_number_of_features(self, orig_height: int, orig_width: int, height: int, width: int) -> int:
         image_grid_pinpoints = self.image_processor.image_grid_pinpoints
 
@@ -236,7 +236,7 @@ class LlavaNextVideoProcessor(ProcessorMixin):
         num_image_tokens = unpadded_features + newline_features + base_features
         return num_image_tokens
 
-    # Copied from transformers.models.llava_next.processing_llava_next.LlavaNextProcessor._get_unpadded_features
+    # Copied from tiny_hf.transformers.models.llava_next.processing_llava_next.LlavaNextProcessor._get_unpadded_features
     def _get_unpadded_features(self, height, width, patches_height, patches_width, scale_height, scale_width):
         """
         Get number of features for a given image with height/width. LLaVA-NeXT is different from LLaVA
@@ -261,7 +261,7 @@ class LlavaNextVideoProcessor(ProcessorMixin):
         newline_features = current_height
         return (unpadded_features, newline_features)
 
-    # Copied from transformers.models.clip.processing_clip.CLIPProcessor.batch_decode with CLIP->Llama
+    # Copied from tiny_hf.transformers.models.clip.processing_clip.CLIPProcessor.batch_decode with CLIP->Llama
     def batch_decode(self, *args, **kwargs):
         """
         This method forwards all its arguments to LlamaTokenizerFast's [`~PreTrainedTokenizer.batch_decode`]. Please
@@ -269,7 +269,7 @@ class LlavaNextVideoProcessor(ProcessorMixin):
         """
         return self.tokenizer.batch_decode(*args, **kwargs)
 
-    # Copied from transformers.models.clip.processing_clip.CLIPProcessor.decode with CLIP->Llama
+    # Copied from tiny_hf.transformers.models.clip.processing_clip.CLIPProcessor.decode with CLIP->Llama
     def decode(self, *args, **kwargs):
         """
         This method forwards all its arguments to LlamaTokenizerFast's [`~PreTrainedTokenizer.decode`]. Please refer to
@@ -278,7 +278,7 @@ class LlavaNextVideoProcessor(ProcessorMixin):
         return self.tokenizer.decode(*args, **kwargs)
 
     @property
-    # Copied from transformers.models.clip.processing_clip.CLIPProcessor.model_input_names
+    # Copied from tiny_hf.transformers.models.clip.processing_clip.CLIPProcessor.model_input_names
     def model_input_names(self):
         tokenizer_input_names = self.tokenizer.model_input_names
         image_processor_input_names = self.image_processor.model_input_names

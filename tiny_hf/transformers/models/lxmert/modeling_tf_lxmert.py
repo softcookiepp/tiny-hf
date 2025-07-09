@@ -1166,7 +1166,7 @@ class TFLxmertPooler(keras.layers.Layer):
                 self.dense.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertPredictionHeadTransform with Bert->Lxmert
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertPredictionHeadTransform with Bert->Lxmert
 class TFLxmertPredictionHeadTransform(keras.layers.Layer):
     def __init__(self, config: LxmertConfig, **kwargs):
         super().__init__(**kwargs)
@@ -1204,7 +1204,7 @@ class TFLxmertPredictionHeadTransform(keras.layers.Layer):
                 self.LayerNorm.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertLMPredictionHead with Bert->Lxmert
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertLMPredictionHead with Bert->Lxmert
 class TFLxmertLMPredictionHead(keras.layers.Layer):
     def __init__(self, config: LxmertConfig, input_embeddings: keras.layers.Layer, **kwargs):
         super().__init__(**kwargs)
@@ -1253,7 +1253,7 @@ class TFLxmertLMPredictionHead(keras.layers.Layer):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertMLMHead with Bert->Lxmert
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertMLMHead with Bert->Lxmert
 class TFLxmertMLMHead(keras.layers.Layer):
     def __init__(self, config: LxmertConfig, input_embeddings: keras.layers.Layer, **kwargs):
         super().__init__(**kwargs)

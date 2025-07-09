@@ -31,7 +31,7 @@ from .utils import logging
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 if is_safetensors_available():
     from safetensors import safe_open
@@ -62,7 +62,7 @@ def load_pytorch_checkpoint_in_flax_state_dict(
                     pt_state_dict[k] = f.get_tensor(k)
         else:
             try:
-                import torch  # noqa: F401
+                import tg_adapter. # noqa: F401
             except (ImportError, ModuleNotFoundError):
                 logger.error(
                     "Loading a PyTorch model in Flax, requires both PyTorch and Flax to be installed. Please see"
@@ -242,7 +242,7 @@ def convert_pytorch_state_dict_to_flax(pt_state_dict, flax_model):
 
 
 def convert_pytorch_sharded_state_dict_to_flax(shard_filenames, flax_model):
-    import torch
+    import tg_adapter as torch
 
     # Load the index
     flax_state_dict = {}
@@ -356,7 +356,7 @@ def load_flax_weights_in_pytorch_model(pt_model, flax_state):
     """Load flax checkpoints in a PyTorch model"""
 
     try:
-        import torch  # noqa: F401
+        import tg_adapter. # noqa: F401
     except (ImportError, ModuleNotFoundError):
         logger.error(
             "Loading a Flax weights in PyTorch, requires both PyTorch and Flax to be installed. Please see"

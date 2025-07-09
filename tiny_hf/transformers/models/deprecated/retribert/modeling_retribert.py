@@ -19,9 +19,9 @@ RetriBERT model
 import math
 from typing import Optional
 
-import torch
-import torch.utils.checkpoint as checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint as checkpoint
+from tg_adapter.import nn
 
 from ....modeling_utils import PreTrainedModel
 from ....utils import add_start_docstrings, logging

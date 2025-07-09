@@ -35,7 +35,7 @@ VOCAB_FILES_NAMES = {
 
 
 @lru_cache()
-# Copied from transformers.models.gpt2.tokenization_gpt2.bytes_to_unicode
+# Copied from tiny_hf.transformers.models.gpt2.tokenization_gpt2.bytes_to_unicode
 def bytes_to_unicode():
     """
     Returns list of utf-8 byte and a mapping to unicode strings. We specifically avoids mapping to whitespace/control
@@ -60,7 +60,7 @@ def bytes_to_unicode():
     return dict(zip(bs, cs))
 
 
-# Copied from transformers.models.gpt2.tokenization_gpt2.get_pairs
+# Copied from tiny_hf.transformers.models.gpt2.tokenization_gpt2.get_pairs
 def get_pairs(word):
     """
     Return set of symbol pairs in a word.
@@ -83,7 +83,7 @@ class ClvpTokenizer(PreTrainedTokenizer):
     be encoded differently whether it is at the beginning of the sentence (without space) or not:
 
     ```python
-    >>> from transformers import ClvpTokenizer
+    >>> from tiny_hf.transformers.import ClvpTokenizer
 
     >>> tokenizer = ClvpTokenizer.from_pretrained("susnato/clvp_dev")
     >>> tokenizer("Hello world")["input_ids"]
@@ -201,7 +201,7 @@ class ClvpTokenizer(PreTrainedTokenizer):
     def get_vocab(self):
         return dict(self.encoder, **self.added_tokens_encoder)
 
-    # Copied from transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer.bpe
+    # Copied from tiny_hf.transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer.bpe
     def bpe(self, token):
         if token in self.cache:
             return self.cache[token]
@@ -244,7 +244,7 @@ class ClvpTokenizer(PreTrainedTokenizer):
         self.cache[token] = word
         return word
 
-    # Copied from transformers.models.llama.tokenization_llama.LlamaTokenizer.build_inputs_with_special_tokens
+    # Copied from tiny_hf.transformers.models.llama.tokenization_llama.LlamaTokenizer.build_inputs_with_special_tokens
     def build_inputs_with_special_tokens(self, token_ids_0, token_ids_1=None):
         bos_token_id = [self.bos_token_id] if self.add_bos_token else []
         eos_token_id = [self.eos_token_id] if self.add_eos_token else []
@@ -256,7 +256,7 @@ class ClvpTokenizer(PreTrainedTokenizer):
 
         return output
 
-    # Copied from transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer.get_special_tokens_mask
+    # Copied from tiny_hf.transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer.get_special_tokens_mask
     def get_special_tokens_mask(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None, already_has_special_tokens: bool = False
     ) -> List[int]:
@@ -306,17 +306,17 @@ class ClvpTokenizer(PreTrainedTokenizer):
 
         return bpe_tokens
 
-    # Copied from transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer._convert_token_to_id
+    # Copied from tiny_hf.transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer._convert_token_to_id
     def _convert_token_to_id(self, token):
         """Converts a token (str) in an id using the vocab."""
         return self.encoder.get(token, self.encoder.get(self.unk_token))
 
-    # Copied from transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer._convert_id_to_token
+    # Copied from tiny_hf.transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer._convert_id_to_token
     def _convert_id_to_token(self, index):
         """Converts an index (integer) in a token (str) using the vocab."""
         return self.decoder.get(index)
 
-    # Copied from transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer.convert_tokens_to_string
+    # Copied from tiny_hf.transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer.convert_tokens_to_string
     def convert_tokens_to_string(self, tokens):
         """Converts a sequence of tokens (string) in a single string."""
         text = "".join(tokens)
@@ -333,7 +333,7 @@ class ClvpTokenizer(PreTrainedTokenizer):
         text = text.replace(self.unk_token, "").replace("   ", " ").replace("  ", " ")
         return text
 
-    # Copied from transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer.save_vocabulary
+    # Copied from tiny_hf.transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer.save_vocabulary
     def save_vocabulary(self, save_directory: str, filename_prefix: Optional[str] = None) -> Tuple[str]:
         if not os.path.isdir(save_directory):
             logger.error(f"Vocabulary path ({save_directory}) should be a directory")

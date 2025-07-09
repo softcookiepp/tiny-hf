@@ -79,7 +79,7 @@ class DeiTConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import DeiTConfig, DeiTModel
+    >>> from tiny_hf.transformers.import DeiTConfig, DeiTModel
 
     >>> # Initializing a DeiT deit-base-distilled-patch16-224 style configuration
     >>> configuration = DeiTConfig()

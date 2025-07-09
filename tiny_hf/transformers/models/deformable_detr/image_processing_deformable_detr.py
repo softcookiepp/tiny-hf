@@ -67,8 +67,8 @@ from ...utils import (
 
 
 if is_torch_available():
-    import torch
-    from torch import nn
+    import tg_adapter as torch
+    from tg_adapter.import nn
 
 
 if is_vision_available():
@@ -84,7 +84,7 @@ logger = logging.get_logger(__name__)  # pylint: disable=invalid-name
 SUPPORTED_ANNOTATION_FORMATS = (AnnotationFormat.COCO_DETECTION, AnnotationFormat.COCO_PANOPTIC)
 
 
-# Copied from transformers.models.detr.image_processing_detr.get_size_with_aspect_ratio
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.get_size_with_aspect_ratio
 def get_size_with_aspect_ratio(image_size, size, max_size=None) -> Tuple[int, int]:
     """
     Computes the output image size given the input image size and the desired output size.
@@ -124,7 +124,7 @@ def get_size_with_aspect_ratio(image_size, size, max_size=None) -> Tuple[int, in
     return (oh, ow)
 
 
-# Copied from transformers.models.detr.image_processing_detr.get_resize_output_image_size
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.get_resize_output_image_size
 def get_resize_output_image_size(
     input_image: np.ndarray,
     size: Union[int, Tuple[int, int], List[int]],
@@ -153,7 +153,7 @@ def get_resize_output_image_size(
     return get_size_with_aspect_ratio(image_size, size, max_size)
 
 
-# Copied from transformers.models.detr.image_processing_detr.get_image_size_for_max_height_width
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.get_image_size_for_max_height_width
 def get_image_size_for_max_height_width(
     input_image: np.ndarray,
     max_height: int,
@@ -189,7 +189,7 @@ def get_image_size_for_max_height_width(
     return new_height, new_width
 
 
-# Copied from transformers.models.detr.image_processing_detr.get_numpy_to_framework_fn
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.get_numpy_to_framework_fn
 def get_numpy_to_framework_fn(arr) -> Callable:
     """
     Returns a function that converts a numpy array to the framework of the input array.
@@ -204,7 +204,7 @@ def get_numpy_to_framework_fn(arr) -> Callable:
 
         return tf.convert_to_tensor
     if is_torch_available() and is_torch_tensor(arr):
-        import torch
+        import tg_adapter as torch
 
         return torch.tensor
     if is_flax_available() and is_jax_tensor(arr):
@@ -214,7 +214,7 @@ def get_numpy_to_framework_fn(arr) -> Callable:
     raise ValueError(f"Cannot convert arrays of type {type(arr)}")
 
 
-# Copied from transformers.models.detr.image_processing_detr.safe_squeeze
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.safe_squeeze
 def safe_squeeze(arr: np.ndarray, axis: Optional[int] = None) -> np.ndarray:
     """
     Squeezes an array, but only if the axis specified has dim 1.
@@ -228,7 +228,7 @@ def safe_squeeze(arr: np.ndarray, axis: Optional[int] = None) -> np.ndarray:
         return arr
 
 
-# Copied from transformers.models.detr.image_processing_detr.normalize_annotation
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.normalize_annotation
 def normalize_annotation(annotation: Dict, image_size: Tuple[int, int]) -> Dict:
     image_height, image_width = image_size
     norm_annotation = {}
@@ -243,7 +243,7 @@ def normalize_annotation(annotation: Dict, image_size: Tuple[int, int]) -> Dict:
     return norm_annotation
 
 
-# Copied from transformers.models.detr.image_processing_detr.max_across_indices
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.max_across_indices
 def max_across_indices(values: Iterable[Any]) -> List[Any]:
     """
     Return the maximum value across all indices of an iterable of values.
@@ -251,7 +251,7 @@ def max_across_indices(values: Iterable[Any]) -> List[Any]:
     return [max(values_i) for values_i in zip(*values)]
 
 
-# Copied from transformers.models.detr.image_processing_detr.get_max_height_width
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.get_max_height_width
 def get_max_height_width(
     images: List[np.ndarray], input_data_format: Optional[Union[str, ChannelDimension]] = None
 ) -> List[int]:
@@ -270,7 +270,7 @@ def get_max_height_width(
     return (max_height, max_width)
 
 
-# Copied from transformers.models.detr.image_processing_detr.make_pixel_mask
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.make_pixel_mask
 def make_pixel_mask(
     image: np.ndarray, output_size: Tuple[int, int], input_data_format: Optional[Union[str, ChannelDimension]] = None
 ) -> np.ndarray:
@@ -289,7 +289,7 @@ def make_pixel_mask(
     return mask
 
 
-# Copied from transformers.models.detr.image_processing_detr.convert_coco_poly_to_mask
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.convert_coco_poly_to_mask
 def convert_coco_poly_to_mask(segmentations, height: int, width: int) -> np.ndarray:
     """
     Convert a COCO polygon annotation to a mask.
@@ -324,7 +324,7 @@ def convert_coco_poly_to_mask(segmentations, height: int, width: int) -> np.ndar
     return masks
 
 
-# Copied from transformers.models.detr.image_processing_detr.prepare_coco_detection_annotation with DETR->DeformableDetr
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.prepare_coco_detection_annotation with DETR->DeformableDetr
 def prepare_coco_detection_annotation(
     image,
     target,
@@ -385,7 +385,7 @@ def prepare_coco_detection_annotation(
     return new_target
 
 
-# Copied from transformers.models.detr.image_processing_detr.masks_to_boxes
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.masks_to_boxes
 def masks_to_boxes(masks: np.ndarray) -> np.ndarray:
     """
     Compute the bounding boxes around the provided panoptic segmentation masks.
@@ -420,7 +420,7 @@ def masks_to_boxes(masks: np.ndarray) -> np.ndarray:
     return np.stack([x_min, y_min, x_max, y_max], 1)
 
 
-# Copied from transformers.models.detr.image_processing_detr.prepare_coco_panoptic_annotation with DETR->DeformableDetr
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.prepare_coco_panoptic_annotation with DETR->DeformableDetr
 def prepare_coco_panoptic_annotation(
     image: np.ndarray,
     target: Dict,
@@ -462,7 +462,7 @@ def prepare_coco_panoptic_annotation(
     return new_target
 
 
-# Copied from transformers.models.detr.image_processing_detr.get_segmentation_image
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.get_segmentation_image
 def get_segmentation_image(
     masks: np.ndarray, input_size: Tuple, target_size: Tuple, stuff_equiv_classes, deduplicate=False
 ):
@@ -488,7 +488,7 @@ def get_segmentation_image(
     return seg_img
 
 
-# Copied from transformers.models.detr.image_processing_detr.get_mask_area
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.get_mask_area
 def get_mask_area(seg_img: np.ndarray, target_size: Tuple[int, int], n_classes: int) -> np.ndarray:
     final_h, final_w = target_size
     np_seg_img = seg_img.astype(np.uint8)
@@ -498,7 +498,7 @@ def get_mask_area(seg_img: np.ndarray, target_size: Tuple[int, int], n_classes: 
     return area
 
 
-# Copied from transformers.models.detr.image_processing_detr.score_labels_from_class_probabilities
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.score_labels_from_class_probabilities
 def score_labels_from_class_probabilities(logits: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     probs = scipy.special.softmax(logits, axis=-1)
     labels = probs.argmax(-1, keepdims=True)
@@ -507,7 +507,7 @@ def score_labels_from_class_probabilities(logits: np.ndarray) -> Tuple[np.ndarra
     return scores, labels
 
 
-# Copied from transformers.models.detr.image_processing_detr.post_process_panoptic_sample
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.post_process_panoptic_sample
 def post_process_panoptic_sample(
     out_logits: np.ndarray,
     masks: np.ndarray,
@@ -593,7 +593,7 @@ def post_process_panoptic_sample(
     return predictions
 
 
-# Copied from transformers.models.detr.image_processing_detr.resize_annotation
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.resize_annotation
 def resize_annotation(
     annotation: Dict[str, Any],
     orig_size: Tuple[int, int],
@@ -645,7 +645,7 @@ def resize_annotation(
     return new_annotation
 
 
-# Copied from transformers.models.detr.image_processing_detr.binary_mask_to_rle
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.binary_mask_to_rle
 def binary_mask_to_rle(mask):
     """
     Converts given binary mask of shape `(height, width)` to the run-length encoding (RLE) format.
@@ -668,7 +668,7 @@ def binary_mask_to_rle(mask):
     return list(runs)
 
 
-# Copied from transformers.models.detr.image_processing_detr.convert_segmentation_to_rle
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.convert_segmentation_to_rle
 def convert_segmentation_to_rle(segmentation):
     """
     Converts given segmentation map of shape `(height, width)` to the run-length encoding (RLE) format.
@@ -690,7 +690,7 @@ def convert_segmentation_to_rle(segmentation):
     return run_length_encodings
 
 
-# Copied from transformers.models.detr.image_processing_detr.remove_low_and_no_objects
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.remove_low_and_no_objects
 def remove_low_and_no_objects(masks, scores, labels, object_mask_threshold, num_labels):
     """
     Binarize the given masks using `object_mask_threshold`, it returns the associated values of `masks`, `scores` and
@@ -719,7 +719,7 @@ def remove_low_and_no_objects(masks, scores, labels, object_mask_threshold, num_
     return masks[to_keep], scores[to_keep], labels[to_keep]
 
 
-# Copied from transformers.models.detr.image_processing_detr.check_segment_validity
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.check_segment_validity
 def check_segment_validity(mask_labels, mask_probs, k, mask_threshold=0.5, overlap_mask_area_threshold=0.8):
     # Get the mask associated with the k class
     mask_k = mask_labels == k
@@ -738,7 +738,7 @@ def check_segment_validity(mask_labels, mask_probs, k, mask_threshold=0.5, overl
     return mask_exists, mask_k
 
 
-# Copied from transformers.models.detr.image_processing_detr.compute_segments
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.compute_segments
 def compute_segments(
     mask_probs,
     pred_scores,
@@ -854,7 +854,7 @@ class DeformableDetrImageProcessor(BaseImageProcessor):
 
     model_input_names = ["pixel_values", "pixel_mask"]
 
-    # Copied from transformers.models.detr.image_processing_detr.DetrImageProcessor.__init__
+    # Copied from tiny_hf.transformers.models.detr.image_processing_detr.DetrImageProcessor.__init__
     def __init__(
         self,
         format: Union[str, AnnotationFormat] = AnnotationFormat.COCO_DETECTION,
@@ -926,7 +926,7 @@ class DeformableDetrImageProcessor(BaseImageProcessor):
         ]
 
     @classmethod
-    # Copied from transformers.models.detr.image_processing_detr.DetrImageProcessor.from_dict with Detr->DeformableDetr
+    # Copied from tiny_hf.transformers.models.detr.image_processing_detr.DetrImageProcessor.from_dict with Detr->DeformableDetr
     def from_dict(cls, image_processor_dict: Dict[str, Any], **kwargs):
         """
         Overrides the `from_dict` method from the base class to make sure parameters are updated if image processor is
@@ -940,7 +940,7 @@ class DeformableDetrImageProcessor(BaseImageProcessor):
             image_processor_dict["pad_and_return_pixel_mask"] = kwargs.pop("pad_and_return_pixel_mask")
         return super().from_dict(image_processor_dict, **kwargs)
 
-    # Copied from transformers.models.detr.image_processing_detr.DetrImageProcessor.prepare_annotation with DETR->DeformableDetr
+    # Copied from tiny_hf.transformers.models.detr.image_processing_detr.DetrImageProcessor.prepare_annotation with DETR->DeformableDetr
     def prepare_annotation(
         self,
         image: np.ndarray,
@@ -973,7 +973,7 @@ class DeformableDetrImageProcessor(BaseImageProcessor):
             raise ValueError(f"Format {format} is not supported.")
         return target
 
-    # Copied from transformers.models.detr.image_processing_detr.DetrImageProcessor.resize
+    # Copied from tiny_hf.transformers.models.detr.image_processing_detr.DetrImageProcessor.resize
     def resize(
         self,
         image: np.ndarray,
@@ -1042,7 +1042,7 @@ class DeformableDetrImageProcessor(BaseImageProcessor):
         )
         return image
 
-    # Copied from transformers.models.detr.image_processing_detr.DetrImageProcessor.resize_annotation
+    # Copied from tiny_hf.transformers.models.detr.image_processing_detr.DetrImageProcessor.resize_annotation
     def resize_annotation(
         self,
         annotation,
@@ -1056,7 +1056,7 @@ class DeformableDetrImageProcessor(BaseImageProcessor):
         """
         return resize_annotation(annotation, orig_size=orig_size, target_size=size, resample=resample)
 
-    # Copied from transformers.models.detr.image_processing_detr.DetrImageProcessor.rescale
+    # Copied from tiny_hf.transformers.models.detr.image_processing_detr.DetrImageProcessor.rescale
     def rescale(
         self,
         image: np.ndarray,
@@ -1085,7 +1085,7 @@ class DeformableDetrImageProcessor(BaseImageProcessor):
         """
         return rescale(image, rescale_factor, data_format=data_format, input_data_format=input_data_format)
 
-    # Copied from transformers.models.detr.image_processing_detr.DetrImageProcessor.normalize_annotation
+    # Copied from tiny_hf.transformers.models.detr.image_processing_detr.DetrImageProcessor.normalize_annotation
     def normalize_annotation(self, annotation: Dict, image_size: Tuple[int, int]) -> Dict:
         """
         Normalize the boxes in the annotation from `[top_left_x, top_left_y, bottom_right_x, bottom_right_y]` to
@@ -1093,7 +1093,7 @@ class DeformableDetrImageProcessor(BaseImageProcessor):
         """
         return normalize_annotation(annotation, image_size=image_size)
 
-    # Copied from transformers.models.detr.image_processing_detr.DetrImageProcessor._update_annotation_for_padded_image
+    # Copied from tiny_hf.transformers.models.detr.image_processing_detr.DetrImageProcessor._update_annotation_for_padded_image
     def _update_annotation_for_padded_image(
         self,
         annotation: Dict,
@@ -1137,7 +1137,7 @@ class DeformableDetrImageProcessor(BaseImageProcessor):
                 new_annotation[key] = value
         return new_annotation
 
-    # Copied from transformers.models.detr.image_processing_detr.DetrImageProcessor._pad_image
+    # Copied from tiny_hf.transformers.models.detr.image_processing_detr.DetrImageProcessor._pad_image
     def _pad_image(
         self,
         image: np.ndarray,
@@ -1171,7 +1171,7 @@ class DeformableDetrImageProcessor(BaseImageProcessor):
             )
         return padded_image, annotation
 
-    # Copied from transformers.models.detr.image_processing_detr.DetrImageProcessor.pad
+    # Copied from tiny_hf.transformers.models.detr.image_processing_detr.DetrImageProcessor.pad
     def pad(
         self,
         images: List[np.ndarray],
@@ -1257,7 +1257,7 @@ class DeformableDetrImageProcessor(BaseImageProcessor):
 
         return encoded_inputs
 
-    # Copied from transformers.models.detr.image_processing_detr.DetrImageProcessor.preprocess
+    # Copied from tiny_hf.transformers.models.detr.image_processing_detr.DetrImageProcessor.preprocess
     def preprocess(
         self,
         images: ImageInput,

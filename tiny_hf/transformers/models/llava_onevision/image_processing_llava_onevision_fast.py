@@ -32,11 +32,11 @@ from ...utils import TensorType, add_start_docstrings, is_torch_available, is_to
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 if is_torchvision_v2_available():
-    from torchvision.transforms.v2 import functional as F
+    from tg_adapter.ision.transforms.v2 import functional as F
 else:
-    from torchvision.transforms import functional as F
+    from tg_adapter.ision.transforms import functional as F
 
 
 class LlavaOnevisionFastImageProcessorKwargs(DefaultFastImageProcessorKwargs):

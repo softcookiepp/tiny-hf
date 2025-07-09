@@ -16,7 +16,7 @@ import math
 from functools import partial
 from typing import Any, Callable, Dict, Iterable, List, Optional, Sequence, Tuple, Union
 
-import torch
+import tg_adapter as torch
 
 from .tensor_utils import tensor_tree_map, tree_map
 

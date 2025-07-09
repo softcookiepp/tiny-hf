@@ -19,10 +19,10 @@ import warnings
 from typing import Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...integrations.deepspeed import is_deepspeed_zero3_enabled
@@ -65,7 +65,7 @@ _CTC_EXPECTED_OUTPUT = "'mr quilter is the apostle of the middle classes and we 
 _CTC_EXPECTED_LOSS = 17.04
 
 
-# Copied from transformers.models.seamless_m4t_v2.modeling_seamless_m4t_v2._compute_new_attention_mask
+# Copied from tiny_hf.transformers.models.seamless_m4t_v2.modeling_seamless_m4t_v2._compute_new_attention_mask
 def _compute_new_attention_mask(hidden_states: torch.Tensor, seq_lens: torch.Tensor):
     """
     Computes an attention mask of the form `(batch, seq_len)` with an attention for each element in the batch that
@@ -91,7 +91,7 @@ def _compute_new_attention_mask(hidden_states: torch.Tensor, seq_lens: torch.Ten
     return mask
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2._compute_mask_indices
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2._compute_mask_indices
 def _compute_mask_indices(
     shape: Tuple[int, int],
     mask_prob: float,
@@ -211,7 +211,7 @@ def _compute_mask_indices(
     return spec_aug_mask
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2._sample_negative_indices
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2._sample_negative_indices
 def _sample_negative_indices(
     features_shape: Tuple, num_negatives: int, mask_time_indices: Optional[np.ndarray] = None
 ):
@@ -248,7 +248,7 @@ def _sample_negative_indices(
     return sampled_negative_indices
 
 
-# Copied from transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerRotaryPositionalEmbedding with Wav2Vec2Conformer->Wav2Vec2Bert
+# Copied from tiny_hf.transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerRotaryPositionalEmbedding with Wav2Vec2Conformer->Wav2Vec2Bert
 class Wav2Vec2BertRotaryPositionalEmbedding(nn.Module):
     """Rotary positional embedding
     Reference : https://blog.eleuther.ai/rotary-embeddings/ Paper: https://arxiv.org/pdf/2104.09864.pdf
@@ -284,7 +284,7 @@ class Wav2Vec2BertRotaryPositionalEmbedding(nn.Module):
         return self.cached_rotary_positional_embedding
 
 
-# Copied from transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerRelPositionalEmbedding with Wav2Vec2Conformer->Wav2Vec2Bert
+# Copied from tiny_hf.transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerRelPositionalEmbedding with Wav2Vec2Conformer->Wav2Vec2Bert
 class Wav2Vec2BertRelPositionalEmbedding(nn.Module):
     """Relative positional encoding module."""
 
@@ -363,7 +363,7 @@ class Wav2Vec2BertFeedForward(nn.Module):
         self.output_dense = nn.Linear(config.intermediate_size, hidden_size)
         self.output_dropout = nn.Dropout(config.hidden_dropout)
 
-    # Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2FeedForward.forward
+    # Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2FeedForward.forward
     def forward(self, hidden_states):
         hidden_states = self.intermediate_dense(hidden_states)
         hidden_states = self.intermediate_act_fn(hidden_states)
@@ -556,7 +556,7 @@ class Wav2Vec2BertSelfAttention(nn.Module):
 
         return hidden_states, probs
 
-    # Copied from transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerSelfAttention._apply_rotary_embedding
+    # Copied from tiny_hf.transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerSelfAttention._apply_rotary_embedding
     def _apply_rotary_embedding(self, hidden_states, relative_position_embeddings):
         batch_size, sequence_length, hidden_size = hidden_states.size()
         hidden_states = hidden_states.view(batch_size, sequence_length, self.num_heads, self.head_size)
@@ -576,7 +576,7 @@ class Wav2Vec2BertSelfAttention(nn.Module):
 
         return hidden_states
 
-    # Copied from transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerSelfAttention._apply_relative_embeddings
+    # Copied from tiny_hf.transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerSelfAttention._apply_relative_embeddings
     def _apply_relative_embeddings(self, query, key, relative_position_embeddings):
         # 1. project positional embeddings
         # => (batch, head, 2*time1-1, d_k)
@@ -911,7 +911,7 @@ class Wav2Vec2BertAdapterLayer(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerPreTrainedModel with Wav2Vec2Conformer->Wav2Vec2Bert,wav2vec2_conformer->wav2vec2_bert, input_values->input_features
+# Copied from tiny_hf.transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerPreTrainedModel with Wav2Vec2Conformer->Wav2Vec2Bert,wav2vec2_conformer->wav2vec2_bert, input_values->input_features
 class Wav2Vec2BertPreTrainedModel(PreTrainedModel):
     """
     An abstract class to handle weights initialization and a simple interface for downloading and loading pretrained
@@ -1064,7 +1064,7 @@ class Wav2Vec2BertModel(Wav2Vec2BertPreTrainedModel):
         # Initialize weights and apply final processing
         self.post_init()
 
-    # Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2Model._mask_hidden_states
+    # Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2Model._mask_hidden_states
     def _mask_hidden_states(
         self,
         hidden_states: torch.FloatTensor,
@@ -1172,7 +1172,7 @@ class Wav2Vec2BertModel(Wav2Vec2BertPreTrainedModel):
     WAV2VEC2_BERT_START_DOCSTRING,
 )
 class Wav2Vec2BertForCTC(Wav2Vec2BertPreTrainedModel):
-    # Copied from transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerForCTC.__init__ with Wav2Vec2Conformer->Wav2Vec2Bert,WAV2VEC2_CONFORMER->WAV2VEC2_BERT,wav2vec2_conformer->wav2vec2_bert
+    # Copied from tiny_hf.transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerForCTC.__init__ with Wav2Vec2Conformer->Wav2Vec2Bert,WAV2VEC2_CONFORMER->WAV2VEC2_BERT,wav2vec2_conformer->wav2vec2_bert
     def __init__(self, config, target_lang: Optional[str] = None):
         super().__init__(config)
 
@@ -1285,7 +1285,7 @@ class Wav2Vec2BertForCTC(Wav2Vec2BertPreTrainedModel):
     WAV2VEC2_BERT_START_DOCSTRING,
 )
 class Wav2Vec2BertForSequenceClassification(Wav2Vec2BertPreTrainedModel):
-    # Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForSequenceClassification.__init__ with Wav2Vec2->Wav2Vec2Bert,wav2vec2->wav2vec2_bert
+    # Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForSequenceClassification.__init__ with Wav2Vec2->Wav2Vec2Bert,wav2vec2->wav2vec2_bert
     def __init__(self, config):
         super().__init__(config)
 
@@ -1318,7 +1318,7 @@ class Wav2Vec2BertForSequenceClassification(Wav2Vec2BertPreTrainedModel):
         config_class=_CONFIG_FOR_DOC,
         modality="audio",
     )
-    # Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForSequenceClassification.forward with Wav2Vec2->Wav2Vec2Bert,wav2vec2->wav2vec2_bert,WAV_2_VEC_2->WAV2VEC2_BERT, input_values->input_features
+    # Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForSequenceClassification.forward with Wav2Vec2->Wav2Vec2Bert,wav2vec2->wav2vec2_bert,WAV_2_VEC_2->WAV2VEC2_BERT, input_values->input_features
     def forward(
         self,
         input_features: Optional[torch.Tensor],
@@ -1389,7 +1389,7 @@ class Wav2Vec2BertForSequenceClassification(Wav2Vec2BertPreTrainedModel):
     WAV2VEC2_BERT_START_DOCSTRING,
 )
 class Wav2Vec2BertForAudioFrameClassification(Wav2Vec2BertPreTrainedModel):
-    # Copied from transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerForAudioFrameClassification.__init__ with Wav2Vec2Conformer->Wav2Vec2Bert,WAV2VEC2_CONFORMER->WAV2VEC2_BERT,wav2vec2_conformer->wav2vec2_bert
+    # Copied from tiny_hf.transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerForAudioFrameClassification.__init__ with Wav2Vec2Conformer->Wav2Vec2Bert,WAV2VEC2_CONFORMER->WAV2VEC2_BERT,wav2vec2_conformer->wav2vec2_bert
     def __init__(self, config):
         super().__init__(config)
 
@@ -1406,7 +1406,7 @@ class Wav2Vec2BertForAudioFrameClassification(Wav2Vec2BertPreTrainedModel):
 
         self.init_weights()
 
-    # Copied from transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerForAudioFrameClassification.freeze_base_model with wav2vec2_conformer->wav2vec2_bert
+    # Copied from tiny_hf.transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerForAudioFrameClassification.freeze_base_model with wav2vec2_conformer->wav2vec2_bert
     def freeze_base_model(self):
         """
         Calling this function will disable the gradient computation for the base model so that its parameters will not
@@ -1422,7 +1422,7 @@ class Wav2Vec2BertForAudioFrameClassification(Wav2Vec2BertPreTrainedModel):
         config_class=_CONFIG_FOR_DOC,
         modality="audio",
     )
-    # Copied from transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerForAudioFrameClassification.forward with wav2vec2_conformer->wav2vec2_bert, input_values->input_features
+    # Copied from tiny_hf.transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerForAudioFrameClassification.forward with wav2vec2_conformer->wav2vec2_bert, input_values->input_features
     def forward(
         self,
         input_features: Optional[torch.Tensor],
@@ -1477,7 +1477,7 @@ class Wav2Vec2BertForAudioFrameClassification(Wav2Vec2BertPreTrainedModel):
         )
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.AMSoftmaxLoss
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.AMSoftmaxLoss
 class AMSoftmaxLoss(nn.Module):
     def __init__(self, input_dim, num_labels, scale=30.0, margin=0.4):
         super(AMSoftmaxLoss, self).__init__()
@@ -1501,7 +1501,7 @@ class AMSoftmaxLoss(nn.Module):
         return loss
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.TDNNLayer
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.TDNNLayer
 class TDNNLayer(nn.Module):
     def __init__(self, config, layer_id=0):
         super().__init__()
@@ -1540,7 +1540,7 @@ class TDNNLayer(nn.Module):
     WAV2VEC2_BERT_START_DOCSTRING,
 )
 class Wav2Vec2BertForXVector(Wav2Vec2BertPreTrainedModel):
-    # Copied from transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerForXVector.__init__ with Wav2Vec2Conformer->Wav2Vec2Bert,WAV2VEC2_CONFORMER->WAV2VEC2_BERT,wav2vec2_conformer->wav2vec2_bert
+    # Copied from tiny_hf.transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerForXVector.__init__ with Wav2Vec2Conformer->Wav2Vec2Bert,WAV2VEC2_CONFORMER->WAV2VEC2_BERT,wav2vec2_conformer->wav2vec2_bert
     def __init__(self, config):
         super().__init__(config)
 
@@ -1560,7 +1560,7 @@ class Wav2Vec2BertForXVector(Wav2Vec2BertPreTrainedModel):
 
         self.init_weights()
 
-    # Copied from transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerForXVector.freeze_base_model with wav2vec2_conformer->wav2vec2_bert
+    # Copied from tiny_hf.transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerForXVector.freeze_base_model with wav2vec2_conformer->wav2vec2_bert
     def freeze_base_model(self):
         """
         Calling this function will disable the gradient computation for the base model so that its parameters will not
@@ -1569,7 +1569,7 @@ class Wav2Vec2BertForXVector(Wav2Vec2BertPreTrainedModel):
         for param in self.wav2vec2_bert.parameters():
             param.requires_grad = False
 
-    # Copied from transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerForXVector._get_tdnn_output_lengths
+    # Copied from tiny_hf.transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerForXVector._get_tdnn_output_lengths
     def _get_tdnn_output_lengths(self, input_lengths: Union[torch.LongTensor, int]):
         """
         Computes the output length of the TDNN layers
@@ -1592,7 +1592,7 @@ class Wav2Vec2BertForXVector(Wav2Vec2BertPreTrainedModel):
         config_class=_CONFIG_FOR_DOC,
         modality="audio",
     )
-    # Copied from transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerForXVector.forward with wav2vec2_conformer->wav2vec2_bert, input_values->input_features
+    # Copied from tiny_hf.transformers.models.wav2vec2_conformer.modeling_wav2vec2_conformer.Wav2Vec2ConformerForXVector.forward with wav2vec2_conformer->wav2vec2_bert, input_values->input_features
     def forward(
         self,
         input_features: Optional[torch.Tensor],

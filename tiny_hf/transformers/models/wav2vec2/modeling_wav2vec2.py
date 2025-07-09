@@ -20,10 +20,10 @@ from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...integrations.deepspeed import is_deepspeed_zero3_enabled
@@ -491,7 +491,7 @@ class Wav2Vec2FeatureProjection(nn.Module):
         return hidden_states, norm_hidden_states
 
 
-# Copied from transformers.models.bart.modeling_bart.BartAttention with Bart->Wav2Vec2
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartAttention with Bart->Wav2Vec2
 class Wav2Vec2Attention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -650,7 +650,7 @@ class Wav2Vec2Attention(nn.Module):
         return attn_output, attn_weights_reshaped, past_key_value
 
 
-# Copied from transformers.models.bart.modeling_bart.BartFlashAttention2 with Bart->Wav2Vec2
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartFlashAttention2 with Bart->Wav2Vec2
 class Wav2Vec2FlashAttention2(Wav2Vec2Attention):
     """
     Wav2Vec2 flash attention module. This module inherits from `Wav2Vec2Attention` as the weights of the module stays
@@ -778,7 +778,7 @@ class Wav2Vec2FlashAttention2(Wav2Vec2Attention):
 
 
 class Wav2Vec2SdpaAttention(Wav2Vec2Attention):
-    # Copied from transformers.models.bart.modeling_bart.BartSdpaAttention.forward with Bart->Wav2Vec2
+    # Copied from tiny_hf.transformers.models.bart.modeling_bart.BartSdpaAttention.forward with Bart->Wav2Vec2
     def forward(
         self,
         hidden_states: torch.Tensor,
@@ -1496,7 +1496,7 @@ class Wav2Vec2PreTrainedModel(PreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import Wav2Vec2ForCTC, AutoProcessor
+        >>> from tiny_hf.transformers.import Wav2Vec2ForCTC, AutoProcessor
 
         >>> ckpt = "facebook/mms-1b-all"
         >>> processor = AutoProcessor.from_pretrained(ckpt)
@@ -1929,9 +1929,9 @@ class Wav2Vec2ForPreTraining(Wav2Vec2PreTrainedModel):
         Example:
 
         ```python
-        >>> import torch
-        >>> from transformers import AutoFeatureExtractor, Wav2Vec2ForPreTraining
-        >>> from transformers.models.wav2vec2.modeling_wav2vec2 import _compute_mask_indices, _sample_negative_indices
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoFeatureExtractor, Wav2Vec2ForPreTraining
+        >>> from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2 import _compute_mask_indices, _sample_negative_indices
         >>> from datasets import load_dataset
 
         >>> feature_extractor = AutoFeatureExtractor.from_pretrained("facebook/wav2vec2-base")

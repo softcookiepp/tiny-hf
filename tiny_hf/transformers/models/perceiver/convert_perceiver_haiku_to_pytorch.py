@@ -22,11 +22,11 @@ from pathlib import Path
 import haiku as hk
 import numpy as np
 import requests
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 from PIL import Image
 
-from transformers import (
+from tiny_hf.transformers.import (
     PerceiverConfig,
     PerceiverForImageClassificationConvProcessing,
     PerceiverForImageClassificationFourier,
@@ -37,7 +37,7 @@ from transformers import (
     PerceiverImageProcessor,
     PerceiverTokenizer,
 )
-from transformers.utils import logging
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

@@ -90,7 +90,7 @@ class TransfoXLConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import TransfoXLConfig, TransfoXLModel
+    >>> from tiny_hf.transformers.import TransfoXLConfig, TransfoXLModel
 
     >>> # Initializing a Transformer XL configuration
     >>> configuration = TransfoXLConfig()

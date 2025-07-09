@@ -17,10 +17,10 @@
 import argparse
 
 import bros  # original repo
-import torch
+import tg_adapter as torch
 
-from transformers import BrosConfig, BrosModel, BrosProcessor
-from transformers.utils import logging
+from tiny_hf.transformers.import BrosConfig, BrosModel, BrosProcessor
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

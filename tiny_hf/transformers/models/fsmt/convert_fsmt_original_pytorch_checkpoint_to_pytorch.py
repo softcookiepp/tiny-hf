@@ -27,14 +27,14 @@ from collections import OrderedDict
 from os.path import basename, dirname
 
 import fairseq
-import torch
+import tg_adapter as torch
 from fairseq import hub_utils
 from fairseq.data.dictionary import Dictionary
 
-from transformers import FSMTConfig, FSMTForConditionalGeneration
-from transformers.models.fsmt.tokenization_fsmt import VOCAB_FILES_NAMES
-from transformers.tokenization_utils_base import TOKENIZER_CONFIG_FILE
-from transformers.utils import WEIGHTS_NAME, logging
+from tiny_hf.transformers.import FSMTConfig, FSMTForConditionalGeneration
+from tiny_hf.transformers.models.fsmt.tokenization_fsmt import VOCAB_FILES_NAMES
+from tiny_hf.transformers.tokenization_utils_base import TOKENIZER_CONFIG_FILE
+from tiny_hf.transformers.utils import WEIGHTS_NAME, logging
 
 
 logging.set_verbosity_warning()

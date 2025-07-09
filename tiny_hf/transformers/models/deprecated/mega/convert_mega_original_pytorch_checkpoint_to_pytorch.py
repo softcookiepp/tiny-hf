@@ -32,10 +32,10 @@ import os
 import pickle as pkl
 
 # PyTorch + new model classes
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
-from transformers import AutoTokenizer, MegaConfig, MegaForMaskedLM
+from tiny_hf.transformers.import AutoTokenizer, MegaConfig, MegaForMaskedLM
 
 
 # import the EncoderLayer class used to pretrain

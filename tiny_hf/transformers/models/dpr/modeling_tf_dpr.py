@@ -567,7 +567,7 @@ class TFDPRContextEncoder(TFDPRPretrainedContextEncoder):
         Examples:
 
         ```python
-        >>> from transformers import TFDPRContextEncoder, DPRContextEncoderTokenizer
+        >>> from tiny_hf.transformers.import TFDPRContextEncoder, DPRContextEncoderTokenizer
 
         >>> tokenizer = DPRContextEncoderTokenizer.from_pretrained("facebook/dpr-ctx_encoder-single-nq-base")
         >>> model = TFDPRContextEncoder.from_pretrained("facebook/dpr-ctx_encoder-single-nq-base", from_pt=True)
@@ -656,7 +656,7 @@ class TFDPRQuestionEncoder(TFDPRPretrainedQuestionEncoder):
         Examples:
 
         ```python
-        >>> from transformers import TFDPRQuestionEncoder, DPRQuestionEncoderTokenizer
+        >>> from tiny_hf.transformers.import TFDPRQuestionEncoder, DPRQuestionEncoderTokenizer
 
         >>> tokenizer = DPRQuestionEncoderTokenizer.from_pretrained("facebook/dpr-question_encoder-single-nq-base")
         >>> model = TFDPRQuestionEncoder.from_pretrained("facebook/dpr-question_encoder-single-nq-base", from_pt=True)
@@ -743,7 +743,7 @@ class TFDPRReader(TFDPRPretrainedReader):
         Examples:
 
         ```python
-        >>> from transformers import TFDPRReader, DPRReaderTokenizer
+        >>> from tiny_hf.transformers.import TFDPRReader, DPRReaderTokenizer
 
         >>> tokenizer = DPRReaderTokenizer.from_pretrained("facebook/dpr-reader-single-nq-base")
         >>> model = TFDPRReader.from_pretrained("facebook/dpr-reader-single-nq-base", from_pt=True)

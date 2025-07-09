@@ -18,11 +18,11 @@ import math
 from functools import cached_property
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.nn.functional as F
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.nn.functional as F
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, StaticCache
@@ -50,7 +50,7 @@ from .configuration_chameleon import ChameleonConfig, ChameleonVQVAEConfig
 
 
 if is_torch_flex_attn_available():
-    from torch.nn.attention.flex_attention import BlockMask
+    from tg_adapter.nn.attention.flex_attention import BlockMask
 
     from ...integrations.flex_attention import make_flex_block_causal_mask
 
@@ -68,7 +68,7 @@ _SEQ_CLASS_EXPECTED_LOSS = 1.03
 _SEQ_CLASS_EXPECTED_OUTPUT = "'LABEL_0'"
 
 
-# Copied from transformers.models.llama.modeling_llama.LlamaRMSNorm with Llama->Chameleon
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaRMSNorm with Llama->Chameleon
 class ChameleonRMSNorm(nn.Module):
     def __init__(self, hidden_size, eps=1e-6):
         """
@@ -92,7 +92,7 @@ class ChameleonRMSNorm(nn.Module):
 ALL_LAYERNORM_LAYERS.append(ChameleonRMSNorm)
 
 
-# copied from transformers.models.llama.modeling_llama.LlamaRotaryEmbedding with Llama->Chameleon
+# copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaRotaryEmbedding with Llama->Chameleon
 # TODO(joao): add me back asap :)
 class ChameleonRotaryEmbedding(nn.Module):
     def __init__(self, dim, max_position_embeddings=2048, base=10000, device=None, scaling_factor=1.0):
@@ -152,7 +152,7 @@ class ChameleonDynamicNTKScalingRotaryEmbedding(ChameleonRotaryEmbedding):
         return cos, sin
 
 
-# Copied from transformers.models.llama.modeling_llama.rotate_half
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.rotate_half
 def rotate_half(x):
     """Rotates half the hidden dims of the input."""
     x1 = x[..., : x.shape[-1] // 2]
@@ -160,7 +160,7 @@ def rotate_half(x):
     return torch.cat((-x2, x1), dim=-1)
 
 
-# Copied from transformers.models.llama.modeling_llama.apply_rotary_pos_emb
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.apply_rotary_pos_emb
 def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
     """Applies Rotary Position Embedding to the query and key tensors.
 
@@ -188,7 +188,7 @@ def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
     return q_embed, k_embed
 
 
-# Copied from transformers.models.llama.modeling_llama.LlamaMLP with Llama->Chameleon
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaMLP with Llama->Chameleon
 class ChameleonMLP(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -224,7 +224,7 @@ class ChameleonLayerNorm(nn.LayerNorm):
         return hidden_states
 
 
-# Copied from transformers.models.llama.modeling_llama.repeat_kv
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.repeat_kv
 def repeat_kv(hidden_states: torch.Tensor, n_rep: int) -> torch.Tensor:
     """
     This is the equivalent of torch.repeat_interleave(x, dim=1, repeats=n_rep). The hidden states go from (batch,
@@ -276,7 +276,7 @@ class ChameleonAttention(nn.Module):
         self.k_norm = ChameleonLayerNorm((self.num_key_value_heads, self.head_dim))
         self._init_rope()
 
-    # copied from transformers.models.llama.modeling_llama.LlamaAttention._init_rope with Llama->Chameleon
+    # copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaAttention._init_rope with Llama->Chameleon
     # TODO(joao): add me back asap :)
     def _init_rope(self):
         if self.config.rope_scaling is None:
@@ -370,7 +370,7 @@ class ChameleonAttention(nn.Module):
         return attn_output, attn_weights, past_key_value
 
 
-# NO LONGER EXIST copied from transformers.models.llama.modeling_llama.LlamaFlashAttention2 with Llama->Chameleon
+# NO LONGER EXIST copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaFlashAttention2 with Llama->Chameleon
 # TODO(joao): add me back asap :)
 class ChameleonFlashAttention2(ChameleonAttention):
     """
@@ -589,7 +589,7 @@ CHAMELEON_ATTENTION_CLASSES = {
 }
 
 
-# copied from transformers.models.llama.modeling_llama.LlamaDecoderLayer with Llama->Chameleon, LLAMA->CHAMELEON
+# copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaDecoderLayer with Llama->Chameleon, LLAMA->CHAMELEON
 # TODO(joao): add me back asap :)
 class ChameleonDecoderLayer(nn.Module):
     def __init__(self, config: ChameleonConfig, layer_idx: int):
@@ -1383,7 +1383,7 @@ class ChameleonModel(ChameleonPreTrainedModel):
             attentions=all_self_attns,
         )
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
     def _update_causal_mask(
         self,
         attention_mask: torch.Tensor,
@@ -1455,7 +1455,7 @@ class ChameleonModel(ChameleonPreTrainedModel):
         return causal_mask
 
     @staticmethod
-    # Copied from transformers.models.llama.modeling_llama.LlamaPreTrainedModel._prepare_4d_causal_attention_mask_with_cache_position
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaPreTrainedModel._prepare_4d_causal_attention_mask_with_cache_position
     def _prepare_4d_causal_attention_mask_with_cache_position(
         attention_mask: torch.Tensor,
         sequence_length: int,
@@ -1576,8 +1576,8 @@ class ChameleonForConditionalGeneration(ChameleonPreTrainedModel, GenerationMixi
         Example:
 
         ```python
-        >>> from transformers import ChameleonProcessor, ChameleonForConditionalGeneration
-        >>> import torch
+        >>> from tiny_hf.transformers.import ChameleonProcessor, ChameleonForConditionalGeneration
+        >>> import tg_adapter as torch
         >>> import requests
         >>> from PIL import Image
 

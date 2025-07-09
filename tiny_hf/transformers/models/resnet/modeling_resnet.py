@@ -17,10 +17,10 @@
 import math
 from typing import Optional
 
-import torch
-import torch.utils.checkpoint
-from torch import Tensor, nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import Tensor, nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...modeling_outputs import (
@@ -468,8 +468,8 @@ class ResNetBackbone(ResNetPreTrainedModel, BackboneMixin):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, AutoBackbone
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoImageProcessor, AutoBackbone
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> import requests
 

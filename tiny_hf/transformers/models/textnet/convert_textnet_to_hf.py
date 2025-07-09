@@ -20,11 +20,11 @@ import re
 from collections import OrderedDict
 
 import requests
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 from PIL import Image
 
-from transformers import TextNetBackbone, TextNetConfig, TextNetImageProcessor
+from tiny_hf.transformers.import TextNetBackbone, TextNetConfig, TextNetImageProcessor
 
 
 tiny_config_url = "https://raw.githubusercontent.com/czczup/FAST/main/config/fast/nas-configs/fast_tiny.config"

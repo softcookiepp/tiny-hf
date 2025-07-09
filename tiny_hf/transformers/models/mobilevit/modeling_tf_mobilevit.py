@@ -1301,7 +1301,7 @@ class TFMobileViTForSemanticSegmentation(TFMobileViTPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, TFMobileViTForSemanticSegmentation
+        >>> from tiny_hf.transformers.import AutoImageProcessor, TFMobileViTForSemanticSegmentation
         >>> from PIL import Image
         >>> import requests
 

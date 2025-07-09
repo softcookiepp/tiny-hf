@@ -89,7 +89,7 @@ class DebertaV2Config(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import DebertaV2Config, DebertaV2Model
+    >>> from tiny_hf.transformers.import DebertaV2Config, DebertaV2Model
 
     >>> # Initializing a DeBERTa-v2 microsoft/deberta-v2-xlarge style configuration
     >>> configuration = DebertaV2Config()

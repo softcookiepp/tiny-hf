@@ -91,7 +91,7 @@ class TableQuestionAnsweringPipeline(Pipeline):
     Example:
 
     ```python
-    >>> from transformers import pipeline
+    >>> from tiny_hf.transformers.import pipeline
 
     >>> oracle = pipeline(model="google/tapas-base-finetuned-wtq")
     >>> table = {

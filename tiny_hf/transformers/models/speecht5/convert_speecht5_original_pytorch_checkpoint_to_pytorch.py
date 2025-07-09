@@ -16,9 +16,9 @@
 
 import argparse
 
-import torch
+import tg_adapter as torch
 
-from transformers import (
+from tiny_hf.transformers.import (
     SpeechT5Config,
     SpeechT5FeatureExtractor,
     SpeechT5ForSpeechToSpeech,
@@ -28,7 +28,7 @@ from transformers import (
     SpeechT5Tokenizer,
     logging,
 )
-from transformers.tokenization_utils import AddedToken
+from tiny_hf.transformers.tokenization_utils import AddedToken
 
 
 logging.set_verbosity_info()

@@ -19,10 +19,10 @@ import warnings
 from typing import Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...integrations.deepspeed import is_deepspeed_zero3_enabled
@@ -68,7 +68,7 @@ _SEQ_CLASS_EXPECTED_OUTPUT = "'_unknown_'"
 _SEQ_CLASS_EXPECTED_LOSS = 9.52
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2._compute_mask_indices
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2._compute_mask_indices
 def _compute_mask_indices(
     shape: Tuple[int, int],
     mask_prob: float,
@@ -188,7 +188,7 @@ def _compute_mask_indices(
     return spec_aug_mask
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2NoLayerNormConvLayer with Wav2Vec2->SEW
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2NoLayerNormConvLayer with Wav2Vec2->SEW
 class SEWNoLayerNormConvLayer(nn.Module):
     def __init__(self, config, layer_id=0):
         super().__init__()
@@ -210,7 +210,7 @@ class SEWNoLayerNormConvLayer(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2LayerNormConvLayer with Wav2Vec2->SEW
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2LayerNormConvLayer with Wav2Vec2->SEW
 class SEWLayerNormConvLayer(nn.Module):
     def __init__(self, config, layer_id=0):
         super().__init__()
@@ -238,7 +238,7 @@ class SEWLayerNormConvLayer(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2GroupNormConvLayer with Wav2Vec2->SEW
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2GroupNormConvLayer with Wav2Vec2->SEW
 class SEWGroupNormConvLayer(nn.Module):
     def __init__(self, config, layer_id=0):
         super().__init__()
@@ -306,7 +306,7 @@ class SEWPositionalConvEmbedding(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2SamePadLayer with Wav2Vec2->SEW
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2SamePadLayer with Wav2Vec2->SEW
 class SEWSamePadLayer(nn.Module):
     def __init__(self, num_conv_pos_embeddings):
         super().__init__()
@@ -340,7 +340,7 @@ class SEWUpsampling(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2FeatureEncoder with Wav2Vec2->SEW
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2FeatureEncoder with Wav2Vec2->SEW
 class SEWFeatureEncoder(nn.Module):
     """Construct the features from raw audio waveform"""
 
@@ -396,7 +396,7 @@ class SEWFeatureExtractor(SEWFeatureEncoder):
         )
 
 
-# Copied from transformers.models.bart.modeling_bart.BartAttention with Bart->SEW
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartAttention with Bart->SEW
 class SEWAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -555,7 +555,7 @@ class SEWAttention(nn.Module):
         return attn_output, attn_weights_reshaped, past_key_value
 
 
-# Copied from transformers.models.bart.modeling_bart.BartFlashAttention2 with Bart->SEW
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartFlashAttention2 with Bart->SEW
 class SEWFlashAttention2(SEWAttention):
     """
     SEW flash attention module. This module inherits from `SEWAttention` as the weights of the module stays
@@ -683,7 +683,7 @@ class SEWFlashAttention2(SEWAttention):
 
 
 class SEWSdpaAttention(SEWAttention):
-    # Copied from transformers.models.bart.modeling_bart.BartSdpaAttention.forward with Bart->SEW
+    # Copied from tiny_hf.transformers.models.bart.modeling_bart.BartSdpaAttention.forward with Bart->SEW
     def forward(
         self,
         hidden_states: torch.Tensor,
@@ -796,7 +796,7 @@ SEW_ATTENTION_CLASSES = {
 }
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2FeedForward with Wav2Vec2->SEW
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2FeedForward with Wav2Vec2->SEW
 class SEWFeedForward(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -821,7 +821,7 @@ class SEWFeedForward(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2EncoderLayer with Wav2Vec2->SEW, WAV2VEC2->SEW
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2EncoderLayer with Wav2Vec2->SEW, WAV2VEC2->SEW
 class SEWEncoderLayer(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1111,7 +1111,7 @@ class SEWModel(SEWPreTrainedModel):
         # Initialize weights and apply final processing
         self.post_init()
 
-    # Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2Model._mask_hidden_states
+    # Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2Model._mask_hidden_states
     def _mask_hidden_states(
         self,
         hidden_states: torch.FloatTensor,
@@ -1219,7 +1219,7 @@ class SEWModel(SEWPreTrainedModel):
     """SEW Model with a `language modeling` head on top for Connectionist Temporal Classification (CTC).""",
     SEW_START_DOCSTRING,
 )
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForCTC with Wav2Vec2->SEW, wav2vec2->sew, WAV_2_VEC_2->SEW
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForCTC with Wav2Vec2->SEW, wav2vec2->sew, WAV_2_VEC_2->SEW
 class SEWForCTC(SEWPreTrainedModel):
     def __init__(self, config, target_lang: Optional[str] = None):
         super().__init__(config)
@@ -1378,7 +1378,7 @@ class SEWForCTC(SEWPreTrainedModel):
     """,
     SEW_START_DOCSTRING,
 )
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForSequenceClassification with Wav2Vec2->SEW, wav2vec2->sew, WAV_2_VEC_2->SEW
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForSequenceClassification with Wav2Vec2->SEW, wav2vec2->sew, WAV_2_VEC_2->SEW
 class SEWForSequenceClassification(SEWPreTrainedModel):
     def __init__(self, config):
         super().__init__(config)

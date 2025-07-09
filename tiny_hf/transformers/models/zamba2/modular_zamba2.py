@@ -18,9 +18,9 @@ import re
 from itertools import cycle
 from typing import Callable, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...modeling_flash_attention_utils import FlashAttentionKwargs
@@ -183,7 +183,7 @@ class Zamba2Attention(ZambaAttention):
     """
     Multi-headed attention from 'Attention Is All You Need' paper.
 
-    Adapted from transformers.models.mistral.modeling_mistral.MistralAttention:
+    Adapted from tiny_hf.transformers.models.mistral.modeling_mistral.MistralAttention:
     The input dimension here is attention_hidden_size = 2 * hidden_size, and head_dim = attention_hidden_size // num_heads.
     The extra factor of 2 comes from the input being the concatenation of original_hidden_states with the output of the previous (mamba) layer
     (see fig. 2 in https://arxiv.org/pdf/2405.16712).

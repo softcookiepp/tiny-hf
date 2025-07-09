@@ -17,10 +17,10 @@
 import math
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...modeling_outputs import (
@@ -122,7 +122,7 @@ class LayoutLMEmbeddings(nn.Module):
         return embeddings
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfAttention with Bert->LayoutLM
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfAttention with Bert->LayoutLM
 class LayoutLMSelfAttention(nn.Module):
     def __init__(self, config, position_embedding_type=None):
         super().__init__()
@@ -257,7 +257,7 @@ class LayoutLMSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfOutput with Bert->LayoutLM
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfOutput with Bert->LayoutLM
 class LayoutLMSelfOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -277,7 +277,7 @@ LAYOUTLM_SELF_ATTENTION_CLASSES = {
 }
 
 
-# Copied from transformers.models.bert.modeling_bert.BertAttention with Bert->LayoutLM,BERT->LAYOUTLM
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertAttention with Bert->LayoutLM,BERT->LAYOUTLM
 class LayoutLMAttention(nn.Module):
     def __init__(self, config, position_embedding_type=None):
         super().__init__()
@@ -329,7 +329,7 @@ class LayoutLMAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate
 class LayoutLMIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -345,7 +345,7 @@ class LayoutLMIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOutput with Bert->LayoutLM
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOutput with Bert->LayoutLM
 class LayoutLMOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -360,7 +360,7 @@ class LayoutLMOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertLayer with Bert->LayoutLM
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertLayer with Bert->LayoutLM
 class LayoutLMLayer(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -447,7 +447,7 @@ class LayoutLMLayer(nn.Module):
         return layer_output
 
 
-# Copied from transformers.models.bert.modeling_bert.BertEncoder with Bert->LayoutLM
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertEncoder with Bert->LayoutLM
 class LayoutLMEncoder(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -541,7 +541,7 @@ class LayoutLMEncoder(nn.Module):
         )
 
 
-# Copied from transformers.models.bert.modeling_bert.BertPooler
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPooler
 class LayoutLMPooler(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -557,7 +557,7 @@ class LayoutLMPooler(nn.Module):
         return pooled_output
 
 
-# Copied from transformers.models.bert.modeling_bert.BertPredictionHeadTransform with Bert->LayoutLM
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPredictionHeadTransform with Bert->LayoutLM
 class LayoutLMPredictionHeadTransform(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -575,7 +575,7 @@ class LayoutLMPredictionHeadTransform(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertLMPredictionHead with Bert->LayoutLM
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertLMPredictionHead with Bert->LayoutLM
 class LayoutLMLMPredictionHead(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -599,7 +599,7 @@ class LayoutLMLMPredictionHead(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOnlyMLMHead with Bert->LayoutLM
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOnlyMLMHead with Bert->LayoutLM
 class LayoutLMOnlyMLMHead(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -752,8 +752,8 @@ class LayoutLMModel(LayoutLMPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, LayoutLMModel
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, LayoutLMModel
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("microsoft/layoutlm-base-uncased")
         >>> model = LayoutLMModel.from_pretrained("microsoft/layoutlm-base-uncased")
@@ -903,8 +903,8 @@ class LayoutLMForMaskedLM(LayoutLMPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, LayoutLMForMaskedLM
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, LayoutLMForMaskedLM
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("microsoft/layoutlm-base-uncased")
         >>> model = LayoutLMForMaskedLM.from_pretrained("microsoft/layoutlm-base-uncased")
@@ -1025,8 +1025,8 @@ class LayoutLMForSequenceClassification(LayoutLMPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, LayoutLMForSequenceClassification
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, LayoutLMForSequenceClassification
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("microsoft/layoutlm-base-uncased")
         >>> model = LayoutLMForSequenceClassification.from_pretrained("microsoft/layoutlm-base-uncased")
@@ -1160,8 +1160,8 @@ class LayoutLMForTokenClassification(LayoutLMPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, LayoutLMForTokenClassification
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, LayoutLMForTokenClassification
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("microsoft/layoutlm-base-uncased")
         >>> model = LayoutLMForTokenClassification.from_pretrained("microsoft/layoutlm-base-uncased")
@@ -1287,9 +1287,9 @@ class LayoutLMForQuestionAnswering(LayoutLMPreTrainedModel):
         of what it thinks the answer is (the span of the answer within the texts parsed from the image).
 
         ```python
-        >>> from transformers import AutoTokenizer, LayoutLMForQuestionAnswering
+        >>> from tiny_hf.transformers.import AutoTokenizer, LayoutLMForQuestionAnswering
         >>> from datasets import load_dataset
-        >>> import torch
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("impira/layoutlm-document-qa", add_prefix_space=True)
         >>> model = LayoutLMForQuestionAnswering.from_pretrained("impira/layoutlm-document-qa", revision="1e3ebac")

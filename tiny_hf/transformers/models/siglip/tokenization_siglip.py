@@ -148,17 +148,17 @@ class SiglipTokenizer(PreTrainedTokenizer):
         return tokenizer
 
     @property
-    # Copied from transformers.models.t5.tokenization_t5.T5Tokenizer.vocab_size
+    # Copied from tiny_hf.transformers.models.t5.tokenization_t5.T5Tokenizer.vocab_size
     def vocab_size(self):
         return self.sp_model.get_piece_size()
 
-    # Copied from transformers.models.t5.tokenization_t5.T5Tokenizer.get_vocab
+    # Copied from tiny_hf.transformers.models.t5.tokenization_t5.T5Tokenizer.get_vocab
     def get_vocab(self):
         vocab = {self.convert_ids_to_tokens(i): i for i in range(self.vocab_size)}
         vocab.update(self.added_tokens_encoder)
         return vocab
 
-    # Copied from transformers.models.t5.tokenization_t5.T5Tokenizer.get_special_tokens_mask
+    # Copied from tiny_hf.transformers.models.t5.tokenization_t5.T5Tokenizer.get_special_tokens_mask
     def get_special_tokens_mask(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None, already_has_special_tokens: bool = False
     ) -> List[int]:
@@ -187,7 +187,7 @@ class SiglipTokenizer(PreTrainedTokenizer):
             return ([0] * len(token_ids_0)) + [1]
         return ([0] * len(token_ids_0)) + [1] + ([0] * len(token_ids_1)) + [1]
 
-    # Copied from transformers.models.t5.tokenization_t5.T5Tokenizer._add_eos_if_not_present
+    # Copied from tiny_hf.transformers.models.t5.tokenization_t5.T5Tokenizer._add_eos_if_not_present
     def _add_eos_if_not_present(self, token_ids: List[int]) -> List[int]:
         """Do not add eos again if user already added it."""
         if len(token_ids) > 0 and token_ids[-1] == self.eos_token_id:
@@ -199,7 +199,7 @@ class SiglipTokenizer(PreTrainedTokenizer):
         else:
             return token_ids + [self.eos_token_id]
 
-    # Copied from transformers.models.t5.tokenization_t5.T5Tokenizer.create_token_type_ids_from_sequences
+    # Copied from tiny_hf.transformers.models.t5.tokenization_t5.T5Tokenizer.create_token_type_ids_from_sequences
     def create_token_type_ids_from_sequences(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
     ) -> List[int]:
@@ -222,7 +222,7 @@ class SiglipTokenizer(PreTrainedTokenizer):
             return len(token_ids_0 + eos) * [0]
         return len(token_ids_0 + eos + token_ids_1 + eos) * [0]
 
-    # Copied from transformers.models.t5.tokenization_t5.T5Tokenizer.build_inputs_with_special_tokens
+    # Copied from tiny_hf.transformers.models.t5.tokenization_t5.T5Tokenizer.build_inputs_with_special_tokens
     def build_inputs_with_special_tokens(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
     ) -> List[int]:
@@ -249,13 +249,13 @@ class SiglipTokenizer(PreTrainedTokenizer):
             token_ids_1 = self._add_eos_if_not_present(token_ids_1)
             return token_ids_0 + token_ids_1
 
-    # Copied from transformers.models.t5.tokenization_t5.T5Tokenizer.__getstate__
+    # Copied from tiny_hf.transformers.models.t5.tokenization_t5.T5Tokenizer.__getstate__
     def __getstate__(self):
         state = self.__dict__.copy()
         state["sp_model"] = None
         return state
 
-    # Copied from transformers.models.t5.tokenization_t5.T5Tokenizer.__setstate__
+    # Copied from tiny_hf.transformers.models.t5.tokenization_t5.T5Tokenizer.__setstate__
     def __setstate__(self, d):
         self.__dict__ = d
 
@@ -302,7 +302,7 @@ class SiglipTokenizer(PreTrainedTokenizer):
         return tokens
 
     @property
-    # Copied from transformers.models.t5.tokenization_t5.T5Tokenizer.unk_token_length
+    # Copied from tiny_hf.transformers.models.t5.tokenization_t5.T5Tokenizer.unk_token_length
     def unk_token_length(self):
         return len(self.sp_model.encode(str(self.unk_token)))
 
@@ -326,12 +326,12 @@ class SiglipTokenizer(PreTrainedTokenizer):
         # 2. Remove self.unk_token from ['<','unk','>', '▁Hey']
         return tokens[self.unk_token_length :] if len(tokens) >= self.unk_token_length else tokens
 
-    # Copied from transformers.models.t5.tokenization_t5.T5Tokenizer._convert_token_to_id
+    # Copied from tiny_hf.transformers.models.t5.tokenization_t5.T5Tokenizer._convert_token_to_id
     def _convert_token_to_id(self, token):
         """Converts a token (str) in an id using the vocab."""
         return self.sp_model.piece_to_id(token)
 
-    # Copied from transformers.models.t5.tokenization_t5.T5Tokenizer._convert_id_to_token
+    # Copied from tiny_hf.transformers.models.t5.tokenization_t5.T5Tokenizer._convert_id_to_token
     def _convert_id_to_token(self, index):
         """Converts an index (integer) in a token (str) using the vocab."""
         token = self.sp_model.IdToPiece(index)
@@ -356,7 +356,7 @@ class SiglipTokenizer(PreTrainedTokenizer):
         out_string += self.sp_model.decode(current_sub_tokens)
         return out_string.strip()
 
-    # Copied from transformers.models.t5.tokenization_t5.T5Tokenizer.save_vocabulary
+    # Copied from tiny_hf.transformers.models.t5.tokenization_t5.T5Tokenizer.save_vocabulary
     def save_vocabulary(self, save_directory: str, filename_prefix: Optional[str] = None) -> Tuple[str]:
         if not os.path.isdir(save_directory):
             logger.error(f"Vocabulary path ({save_directory}) should be a directory")

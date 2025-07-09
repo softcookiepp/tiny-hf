@@ -1,10 +1,10 @@
 from typing import Optional, Union
 
-import torch
-import torch.nn as nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.nn as nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
-from transformers.models.ijepa.configuration_ijepa import IJepaConfig
+from tiny_hf.transformers.models.ijepa.configuration_ijepa import IJepaConfig
 
 from ...modeling_outputs import ImageClassifierOutput
 from ...modeling_utils import PreTrainedModel

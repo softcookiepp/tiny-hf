@@ -16,10 +16,10 @@
 import argparse
 import os
 
-import torch
+import tg_adapter as torch
 
-from transformers import FlavaConfig, FlavaForPreTraining
-from transformers.models.flava.convert_dalle_to_flava_codebook import convert_dalle_checkpoint
+from tiny_hf.transformers.import FlavaConfig, FlavaForPreTraining
+from tiny_hf.transformers.models.flava.convert_dalle_to_flava_codebook import convert_dalle_checkpoint
 
 
 def count_parameters(state_dict):

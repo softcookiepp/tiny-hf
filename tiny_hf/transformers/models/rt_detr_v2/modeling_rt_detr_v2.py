@@ -24,9 +24,9 @@ from dataclasses import dataclass
 from functools import partial
 from typing import Dict, List, Optional, Tuple, Union
 
-import torch
-import torch.nn.functional as F
-from torch import Tensor, nn
+import tg_adapter as torch
+import tg_adapter.nn.functional as F
+from tg_adapter.import Tensor, nn
 
 from ...activations import ACT2CLS, ACT2FN
 from ...image_transforms import center_to_corners_format, corners_to_center_format
@@ -663,7 +663,7 @@ class RTDetrV2FrozenBatchNorm2d(nn.Module):
     """
     BatchNorm2d where the batch statistics and the affine parameters are fixed.
 
-    Copy-paste from torchvision.misc.ops with added eps before rqsrt, without which any other models than
+    Copy-paste from tg_adapter.ision.misc.ops with added eps before rqsrt, without which any other models than
     torchvision.models.resnet[18,34,50,101] produce nans.
     """
 
@@ -1670,7 +1670,7 @@ class RTDetrV2Model(RTDetrV2PreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, RTDetrV2Model
+        >>> from tiny_hf.transformers.import AutoImageProcessor, RTDetrV2Model
         >>> from PIL import Image
         >>> import requests
 
@@ -1950,10 +1950,10 @@ class RTDetrV2ForObjectDetection(RTDetrV2PreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import RTDetrV2ImageProcessor, RTDetrV2ForObjectDetection
+        >>> from tiny_hf.transformers.import RTDetrV2ImageProcessor, RTDetrV2ForObjectDetection
         >>> from PIL import Image
         >>> import requests
-        >>> import torch
+        >>> import tg_adapter as torch
 
         >>> url = "http://images.cocodataset.org/val2017/000000039769.jpg"
         >>> image = Image.open(requests.get(url, stream=True).raw)

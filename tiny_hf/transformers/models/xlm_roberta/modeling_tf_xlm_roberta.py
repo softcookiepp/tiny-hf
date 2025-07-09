@@ -154,7 +154,7 @@ XLM_ROBERTA_INPUTS_DOCSTRING = r"""
 """
 
 
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaEmbeddings with Roberta->XLMRoberta
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaEmbeddings with Roberta->XLMRoberta
 class TFXLMRobertaEmbeddings(keras.layers.Layer):
     """
     Same as BertEmbeddings with a tiny tweak for positional embeddings indexing.
@@ -260,7 +260,7 @@ class TFXLMRobertaEmbeddings(keras.layers.Layer):
         return final_embeddings
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertPooler with Bert->XLMRoberta
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertPooler with Bert->XLMRoberta
 class TFXLMRobertaPooler(keras.layers.Layer):
     def __init__(self, config: XLMRobertaConfig, **kwargs):
         super().__init__(**kwargs)
@@ -290,7 +290,7 @@ class TFXLMRobertaPooler(keras.layers.Layer):
                 self.dense.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertSelfAttention with Bert->XLMRoberta
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertSelfAttention with Bert->XLMRoberta
 class TFXLMRobertaSelfAttention(keras.layers.Layer):
     def __init__(self, config: XLMRobertaConfig, **kwargs):
         super().__init__(**kwargs)
@@ -423,7 +423,7 @@ class TFXLMRobertaSelfAttention(keras.layers.Layer):
                 self.value.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertSelfOutput with Bert->XLMRoberta
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertSelfOutput with Bert->XLMRoberta
 class TFXLMRobertaSelfOutput(keras.layers.Layer):
     def __init__(self, config: XLMRobertaConfig, **kwargs):
         super().__init__(**kwargs)
@@ -454,7 +454,7 @@ class TFXLMRobertaSelfOutput(keras.layers.Layer):
                 self.LayerNorm.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertAttention with Bert->XLMRoberta
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertAttention with Bert->XLMRoberta
 class TFXLMRobertaAttention(keras.layers.Layer):
     def __init__(self, config: XLMRobertaConfig, **kwargs):
         super().__init__(**kwargs)
@@ -506,7 +506,7 @@ class TFXLMRobertaAttention(keras.layers.Layer):
                 self.dense_output.build(None)
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertIntermediate with Bert->XLMRoberta
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertIntermediate with Bert->XLMRoberta
 class TFXLMRobertaIntermediate(keras.layers.Layer):
     def __init__(self, config: XLMRobertaConfig, **kwargs):
         super().__init__(**kwargs)
@@ -536,7 +536,7 @@ class TFXLMRobertaIntermediate(keras.layers.Layer):
                 self.dense.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertOutput with Bert->XLMRoberta
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertOutput with Bert->XLMRoberta
 class TFXLMRobertaOutput(keras.layers.Layer):
     def __init__(self, config: XLMRobertaConfig, **kwargs):
         super().__init__(**kwargs)
@@ -567,7 +567,7 @@ class TFXLMRobertaOutput(keras.layers.Layer):
                 self.LayerNorm.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertLayer with Bert->XLMRoberta
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertLayer with Bert->XLMRoberta
 class TFXLMRobertaLayer(keras.layers.Layer):
     def __init__(self, config: XLMRobertaConfig, **kwargs):
         super().__init__(**kwargs)
@@ -671,7 +671,7 @@ class TFXLMRobertaLayer(keras.layers.Layer):
                 self.crossattention.build(None)
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertEncoder with Bert->XLMRoberta
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertEncoder with Bert->XLMRoberta
 class TFXLMRobertaEncoder(keras.layers.Layer):
     def __init__(self, config: XLMRobertaConfig, **kwargs):
         super().__init__(**kwargs)
@@ -751,7 +751,7 @@ class TFXLMRobertaEncoder(keras.layers.Layer):
 
 
 @keras_serializable
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaMainLayer with Roberta->XLMRoberta
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaMainLayer with Roberta->XLMRoberta
 class TFXLMRobertaMainLayer(keras.layers.Layer):
     config_class = XLMRobertaConfig
 
@@ -771,16 +771,16 @@ class TFXLMRobertaMainLayer(keras.layers.Layer):
         # The embeddings must be the last declaration in order to follow the weights order
         self.embeddings = TFXLMRobertaEmbeddings(config, name="embeddings")
 
-    # Copied from transformers.models.bert.modeling_tf_bert.TFBertMainLayer.get_input_embeddings
+    # Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertMainLayer.get_input_embeddings
     def get_input_embeddings(self) -> keras.layers.Layer:
         return self.embeddings
 
-    # Copied from transformers.models.bert.modeling_tf_bert.TFBertMainLayer.set_input_embeddings
+    # Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertMainLayer.set_input_embeddings
     def set_input_embeddings(self, value: tf.Variable):
         self.embeddings.weight = value
         self.embeddings.vocab_size = shape_list(value)[0]
 
-    # Copied from transformers.models.bert.modeling_tf_bert.TFBertMainLayer._prune_heads
+    # Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertMainLayer._prune_heads
     def _prune_heads(self, heads_to_prune):
         """
         Prunes heads of the model. heads_to_prune: dict of {layer_num: list of heads to prune in this layer} See base
@@ -789,7 +789,7 @@ class TFXLMRobertaMainLayer(keras.layers.Layer):
         raise NotImplementedError
 
     @unpack_inputs
-    # Copied from transformers.models.bert.modeling_tf_bert.TFBertMainLayer.call
+    # Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertMainLayer.call
     def call(
         self,
         input_ids: TFModelInputType | None = None,
@@ -962,7 +962,7 @@ class TFXLMRobertaMainLayer(keras.layers.Layer):
                 self.embeddings.build(None)
 
 
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaPreTrainedModel with Roberta->XLMRoberta
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaPreTrainedModel with Roberta->XLMRoberta
 class TFXLMRobertaPreTrainedModel(TFPreTrainedModel):
     """
     An abstract class to handle weights initialization and a simple interface for downloading and loading pretrained
@@ -977,7 +977,7 @@ class TFXLMRobertaPreTrainedModel(TFPreTrainedModel):
     "The bare XLM RoBERTa Model transformer outputting raw hidden-states without any specific head on top.",
     XLM_ROBERTA_START_DOCSTRING,
 )
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaModel with Roberta->XLMRoberta, ROBERTA->XLM_ROBERTA
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaModel with Roberta->XLMRoberta, ROBERTA->XLM_ROBERTA
 class TFXLMRobertaModel(TFXLMRobertaPreTrainedModel):
     def __init__(self, config, *inputs, **kwargs):
         super().__init__(config, *inputs, **kwargs)
@@ -1055,7 +1055,7 @@ class TFXLMRobertaModel(TFXLMRobertaPreTrainedModel):
                 self.roberta.build(None)
 
 
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaLMHead with Roberta->XLMRoberta
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaLMHead with Roberta->XLMRoberta
 class TFXLMRobertaLMHead(keras.layers.Layer):
     """XLMRoberta Head for masked language modeling."""
 
@@ -1117,7 +1117,7 @@ class TFXLMRobertaLMHead(keras.layers.Layer):
 
 
 @add_start_docstrings("""XLM RoBERTa Model with a `language modeling` head on top.""", XLM_ROBERTA_START_DOCSTRING)
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaForMaskedLM with Roberta->XLMRoberta, ROBERTA->XLM_ROBERTA
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaForMaskedLM with Roberta->XLMRoberta, ROBERTA->XLM_ROBERTA
 class TFXLMRobertaForMaskedLM(TFXLMRobertaPreTrainedModel, TFMaskedLanguageModelingLoss):
     # names with a '.' represents the authorized unexpected/missing layers when a TF model is loaded from a PT model
     _keys_to_ignore_on_load_unexpected = [r"pooler", r"lm_head.decoder.weight"]
@@ -1210,7 +1210,7 @@ class TFXLMRobertaForMaskedLM(TFXLMRobertaPreTrainedModel, TFMaskedLanguageModel
     "XLM-RoBERTa Model with a `language modeling` head on top for CLM fine-tuning.",
     XLM_ROBERTA_START_DOCSTRING,
 )
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaForCausalLM with Roberta->XLMRoberta, ROBERTA->XLM_ROBERTA
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaForCausalLM with Roberta->XLMRoberta, ROBERTA->XLM_ROBERTA
 class TFXLMRobertaForCausalLM(TFXLMRobertaPreTrainedModel, TFCausalLanguageModelingLoss):
     # names with a '.' represents the authorized unexpected/missing layers when a TF model is loaded from a PT model
     _keys_to_ignore_on_load_unexpected = [r"pooler", r"lm_head.decoder.weight"]
@@ -1231,7 +1231,7 @@ class TFXLMRobertaForCausalLM(TFXLMRobertaPreTrainedModel, TFCausalLanguageModel
         warnings.warn("The method get_prefix_bias_name is deprecated. Please use `get_bias` instead.", FutureWarning)
         return self.name + "/" + self.lm_head.name
 
-    # Copied from transformers.models.bert.modeling_tf_bert.TFBertLMHeadModel.prepare_inputs_for_generation
+    # Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertLMHeadModel.prepare_inputs_for_generation
     def prepare_inputs_for_generation(self, input_ids, past_key_values=None, attention_mask=None, **model_kwargs):
         input_shape = input_ids.shape
         # if model is used as a decoder in encoder-decoder model, the decoder attention mask is created on the fly
@@ -1344,7 +1344,7 @@ class TFXLMRobertaForCausalLM(TFXLMRobertaPreTrainedModel, TFCausalLanguageModel
                 self.lm_head.build(None)
 
 
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaClassificationHead with Roberta->XLMRoberta
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaClassificationHead with Roberta->XLMRoberta
 class TFXLMRobertaClassificationHead(keras.layers.Layer):
     """Head for sentence-level classification tasks."""
 
@@ -1392,7 +1392,7 @@ class TFXLMRobertaClassificationHead(keras.layers.Layer):
     """,
     XLM_ROBERTA_START_DOCSTRING,
 )
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaForSequenceClassification with Roberta->XLMRoberta, ROBERTA->XLM_ROBERTA
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaForSequenceClassification with Roberta->XLMRoberta, ROBERTA->XLM_ROBERTA
 class TFXLMRobertaForSequenceClassification(TFXLMRobertaPreTrainedModel, TFSequenceClassificationLoss):
     # names with a '.' represents the authorized unexpected/missing layers when a TF model is loaded from a PT model
     _keys_to_ignore_on_load_unexpected = [r"pooler", r"lm_head"]
@@ -1480,7 +1480,7 @@ class TFXLMRobertaForSequenceClassification(TFXLMRobertaPreTrainedModel, TFSeque
     """,
     XLM_ROBERTA_START_DOCSTRING,
 )
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaForMultipleChoice with Roberta->XLMRoberta, ROBERTA->XLM_ROBERTA
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaForMultipleChoice with Roberta->XLMRoberta, ROBERTA->XLM_ROBERTA
 class TFXLMRobertaForMultipleChoice(TFXLMRobertaPreTrainedModel, TFMultipleChoiceLoss):
     # names with a '.' represents the authorized unexpected/missing layers when a TF model is loaded from a PT model
     _keys_to_ignore_on_load_unexpected = [r"lm_head"]
@@ -1585,7 +1585,7 @@ class TFXLMRobertaForMultipleChoice(TFXLMRobertaPreTrainedModel, TFMultipleChoic
     """,
     XLM_ROBERTA_START_DOCSTRING,
 )
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaForTokenClassification with Roberta->XLMRoberta, ROBERTA->XLM_ROBERTA
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaForTokenClassification with Roberta->XLMRoberta, ROBERTA->XLM_ROBERTA
 class TFXLMRobertaForTokenClassification(TFXLMRobertaPreTrainedModel, TFTokenClassificationLoss):
     # names with a '.' represents the authorized unexpected/missing layers when a TF model is loaded from a PT model
     _keys_to_ignore_on_load_unexpected = [r"pooler", r"lm_head"]
@@ -1681,7 +1681,7 @@ class TFXLMRobertaForTokenClassification(TFXLMRobertaPreTrainedModel, TFTokenCla
     """,
     XLM_ROBERTA_START_DOCSTRING,
 )
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaForQuestionAnswering with Roberta->XLMRoberta, ROBERTA->XLM_ROBERTA
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaForQuestionAnswering with Roberta->XLMRoberta, ROBERTA->XLM_ROBERTA
 class TFXLMRobertaForQuestionAnswering(TFXLMRobertaPreTrainedModel, TFQuestionAnsweringLoss):
     # names with a '.' represents the authorized unexpected/missing layers when a TF model is loaded from a PT model
     _keys_to_ignore_on_load_unexpected = [r"pooler", r"lm_head"]

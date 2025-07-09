@@ -68,7 +68,7 @@ class CpmAntConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import CpmAntModel, CpmAntConfig
+    >>> from tiny_hf.transformers.import CpmAntModel, CpmAntConfig
 
     >>> # Initializing a CPMAnt cpm-ant-10b style configuration
     >>> configuration = CpmAntConfig()

@@ -19,10 +19,10 @@ from collections import OrderedDict
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN, QuickGELUActivation
 from ...modeling_outputs import (
@@ -260,7 +260,7 @@ class BridgeTowerTransformer(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.clip.modeling_clip.CLIPVisionEmbeddings with CLIP->BridgeTower
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPVisionEmbeddings with CLIP->BridgeTower
 class BridgeTowerVisionEmbeddings(nn.Module):
     def __init__(self, config: BridgeTowerVisionConfig):
         super().__init__()
@@ -427,7 +427,7 @@ class BridgeTowerLinkTower(nn.Module):
             raise NotImplementedError(f"link_tower_type {self.link_tower_type} is not implemented")
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfOutput with Bert->BridgeTower
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfOutput with Bert->BridgeTower
 class BridgeTowerSelfOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -442,7 +442,7 @@ class BridgeTowerSelfOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate with Bert->BridgeTower
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate with Bert->BridgeTower
 class BridgeTowerIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -458,7 +458,7 @@ class BridgeTowerIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOutput with Bert->BridgeTower
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOutput with Bert->BridgeTower
 class BridgeTowerOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -473,7 +473,7 @@ class BridgeTowerOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertPooler with Bert->BridgeTower
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPooler with Bert->BridgeTower
 class BridgeTowerPooler(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -489,7 +489,7 @@ class BridgeTowerPooler(nn.Module):
         return pooled_output
 
 
-# Copied from transformers.models.roberta.modeling_roberta.RobertaSelfAttention with Roberta->BridgeTower
+# Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaSelfAttention with Roberta->BridgeTower
 class BridgeTowerSelfAttention(nn.Module):
     def __init__(self, config, position_embedding_type=None):
         super().__init__()
@@ -629,7 +629,7 @@ BRIDGE_TOWER_SELF_ATTENTION_CLASSES = {
 }
 
 
-# Copied from transformers.models.bert.modeling_bert.BertAttention with Bert->BridgeTower,BERT->BRIDGE_TOWER
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertAttention with Bert->BridgeTower,BERT->BRIDGE_TOWER
 class BridgeTowerAttention(nn.Module):
     def __init__(self, config, position_embedding_type=None):
         super().__init__()
@@ -829,7 +829,7 @@ class BridgeTowerTextLayer(nn.Module):
         return layer_output
 
 
-# Copied from transformers.models.roberta.modeling_roberta.RobertaEncoder with Roberta->BridgeTowerText
+# Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaEncoder with Roberta->BridgeTowerText
 class BridgeTowerTextEncoder(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -923,13 +923,13 @@ class BridgeTowerTextEncoder(nn.Module):
         )
 
 
-# Copied from transformers.models.roberta.modeling_roberta.RobertaEmbeddings with Roberta->BridgeTowerText
+# Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaEmbeddings with Roberta->BridgeTowerText
 class BridgeTowerTextEmbeddings(nn.Module):
     """
     Same as BertEmbeddings with a tiny tweak for positional embeddings indexing.
     """
 
-    # Copied from transformers.models.bert.modeling_bert.BertEmbeddings.__init__
+    # Copied from tiny_hf.transformers.models.bert.modeling_bert.BertEmbeddings.__init__
     def __init__(self, config):
         super().__init__()
         self.word_embeddings = nn.Embedding(config.vocab_size, config.hidden_size, padding_idx=config.pad_token_id)
@@ -1013,7 +1013,7 @@ class BridgeTowerTextEmbeddings(nn.Module):
         return position_ids.unsqueeze(0).expand(input_shape)
 
 
-# Copied from transformers.models.roberta.modeling_roberta.create_position_ids_from_input_ids
+# Copied from tiny_hf.transformers.models.roberta.modeling_roberta.create_position_ids_from_input_ids
 def create_position_ids_from_input_ids(input_ids, padding_idx, past_key_values_length=0):
     """
     Replace non-padding symbols with their position numbers. Position numbers begin at padding_idx+1. Padding symbols
@@ -1128,7 +1128,7 @@ class BridgeTowerTextModel(BridgeTowerPreTrainedModel):
         for layer, heads in heads_to_prune.items():
             self.encoder.layer[layer].attention.prune_heads(heads)
 
-    # Copied from transformers.models.clap.modeling_clap.ClapTextModel.forward
+    # Copied from tiny_hf.transformers.models.clap.modeling_clap.ClapTextModel.forward
     def forward(
         self,
         input_ids: Optional[torch.Tensor] = None,
@@ -1362,7 +1362,7 @@ class BridgeTowerModel(BridgeTowerPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import BridgeTowerProcessor, BridgeTowerModel
+        >>> from tiny_hf.transformers.import BridgeTowerProcessor, BridgeTowerModel
         >>> from PIL import Image
         >>> import requests
 
@@ -1568,7 +1568,7 @@ class BridgeTowerModel(BridgeTowerPreTrainedModel):
         return torch.cat([cls_features_text, cls_features_image], dim=-1)
 
 
-# Copied from transformers.models.vilt.modeling_vilt.ViltPredictionHeadTransform with Vilt->BridgeTower
+# Copied from tiny_hf.transformers.models.vilt.modeling_vilt.ViltPredictionHeadTransform with Vilt->BridgeTower
 class BridgeTowerPredictionHeadTransform(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1663,7 +1663,7 @@ class BridgeTowerForMaskedLM(BridgeTowerPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import BridgeTowerProcessor, BridgeTowerForMaskedLM
+        >>> from tiny_hf.transformers.import BridgeTowerProcessor, BridgeTowerForMaskedLM
         >>> from PIL import Image
         >>> import requests
 
@@ -1764,7 +1764,7 @@ class BridgeTowerForImageAndTextRetrieval(BridgeTowerPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import BridgeTowerProcessor, BridgeTowerForImageAndTextRetrieval
+        >>> from tiny_hf.transformers.import BridgeTowerProcessor, BridgeTowerForImageAndTextRetrieval
         >>> import requests
         >>> from PIL import Image
 
@@ -1877,10 +1877,10 @@ class BridgeTowerForContrastiveLearning(BridgeTowerPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import BridgeTowerProcessor, BridgeTowerForContrastiveLearning
+        >>> from tiny_hf.transformers.import BridgeTowerProcessor, BridgeTowerForContrastiveLearning
         >>> import requests
         >>> from PIL import Image
-        >>> import torch
+        >>> import tg_adapter as torch
 
         >>> image_urls = [
         ...     "https://farm4.staticflickr.com/3395/3428278415_81c3e27f15_z.jpg",

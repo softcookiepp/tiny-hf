@@ -46,7 +46,7 @@ from .utils import (
 
 if False:
 	if is_torch_available():
-		import torch
+		import tg_adapter as torch
 else:
 	import tg_adapter as torch
 
@@ -367,7 +367,7 @@ def is_main_process(local_rank):
 	`local_rank`.
 	"""
 	if is_torch_xla_available():
-		import torch_xla.core.xla_model as xm
+		import tg_adapter.xla.core.xla_model as xm
 
 		return xm.get_ordinal() == 0
 	return local_rank in [-1, 0]
@@ -378,11 +378,11 @@ def total_processes_number(local_rank):
 	Return the number of processes launched in parallel. Works with `torch.distributed` and TPUs.
 	"""
 	if is_torch_xla_available():
-		import torch_xla.core.xla_model as xm
+		import tg_adapter.xla.core.xla_model as xm
 
 		return xm.xrt_world_size()
 	elif local_rank != -1 and is_torch_available():
-		import torch
+		import tg_adapter as torch
 
 		return torch.distributed.get_world_size()
 	return 1
@@ -492,27 +492,27 @@ class TrainerMemoryTracker:
 		import psutil  # noqa
 
 		if is_torch_cuda_available() or is_torch_mlu_available() or is_torch_musa_available():
-			import torch
+			import tg_adapter as torch
 
 			self.torch = torch
 			self.gpu = {}
 		elif is_torch_mps_available():
-			import torch
+			import tg_adapter as torch
 
 			self.torch = torch
 			self.gpu = {}
 		elif is_torch_xpu_available():
-			import torch
+			import tg_adapter as torch
 
 			self.torch = torch
 			self.gpu = {}
 		elif is_torch_npu_available():
-			import torch
+			import tg_adapter as torch
 
 			self.torch = torch
 			self.gpu = {}
 		elif is_torch_hpu_available():
-			import torch
+			import tg_adapter as torch
 
 			self.torch = torch
 			self.gpu = {}

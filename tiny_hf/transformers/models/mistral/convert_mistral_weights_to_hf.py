@@ -16,11 +16,11 @@ import json
 import os
 import re
 
-import torch
+import tg_adapter as torch
 from safetensors.torch import load_file
 
-from transformers import AutoTokenizer, LlamaTokenizerFast, MistralConfig, MistralForCausalLM
-from transformers.integrations.mistral import convert_tekken_tokenizer
+from tiny_hf.transformers.import AutoTokenizer, LlamaTokenizerFast, MistralConfig, MistralForCausalLM
+from tiny_hf.transformers.integrations.mistral import convert_tekken_tokenizer
 
 
 # fmt: off

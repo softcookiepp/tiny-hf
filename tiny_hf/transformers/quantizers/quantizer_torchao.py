@@ -63,8 +63,8 @@ def find_parent(model, name):
 
 
 def _quantization_type(weight):
-    from torchao.dtypes import AffineQuantizedTensor
-    from torchao.quantization.linear_activation_quantized_tensor import LinearActivationQuantizedTensor
+    from tg_adapter.o.dtypes import AffineQuantizedTensor
+    from tg_adapter.o.quantization.linear_activation_quantized_tensor import LinearActivationQuantizedTensor
 
     if isinstance(weight, AffineQuantizedTensor):
         return f"{weight.__class__.__name__}({weight._quantization_type()})"
@@ -144,7 +144,7 @@ class TorchAoHfQuantizer(HfQuantizer):
 
             # Import AOBaseConfig directly since we know we have the right version
             if self.quantization_config._get_ao_version() >= version.Version("0.10.0"):
-                from torchao.core.config import AOBaseConfig
+                from tg_adapter.o.core.config import AOBaseConfig
 
                 quant_type = self.quantization_config.quant_type
                 if isinstance(quant_type, AOBaseConfig):
@@ -226,7 +226,7 @@ class TorchAoHfQuantizer(HfQuantizer):
         if self.quantization_config.quant_type == "autoquant":
             return
 
-        from torchao.quantization import quantize_
+        from tg_adapter.o.quantization import quantize_
 
         module, tensor_name = get_module_from_name(model, param_name)
         if self.pre_quantized:
@@ -241,8 +241,8 @@ class TorchAoHfQuantizer(HfQuantizer):
     def _process_model_after_weight_loading(self, model, **kwargs):
         """No process required for torchao quantized model"""
         if self.quantization_config.quant_type == "autoquant":
-            from torchao import autoquant
-            from torchao.quantization import ALL_AUTOQUANT_CLASS_LIST
+            from tg_adapter.o import autoquant
+            from tg_adapter.o.quantization import ALL_AUTOQUANT_CLASS_LIST
 
             model = torch.compile(model, mode="max-autotune")
             model = autoquant(

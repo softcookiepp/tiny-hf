@@ -29,7 +29,7 @@ logger = logging.get_logger(__name__)
 VOCAB_FILES_NAMES = {"vocab_file": "vocab.txt"}
 
 
-# Copied from transformers.models.bert.tokenization_bert_fast.BertTokenizerFast with bert-base-cased->YituTech/conv-bert-base, Bert->ConvBert, BERT->ConvBERT
+# Copied from tiny_hf.transformers.models.bert.tokenization_bert_fast.BertTokenizerFast with bert-base-cased->YituTech/conv-bert-base, Bert->ConvBert, BERT->ConvBERT
 class ConvBertTokenizerFast(PreTrainedTokenizerFast):
     r"""
     Construct a "fast" ConvBERT tokenizer (backed by HuggingFace's *tokenizers* library). Based on WordPiece.

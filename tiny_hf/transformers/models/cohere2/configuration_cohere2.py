@@ -124,7 +124,7 @@ class Cohere2Config(PretrainedConfig):
         cache_implementation (`str`, *optional*, defaults to `"hybrid"`): the cache type to be used with `generate`.
 
     ```python
-    >>> from transformers import Cohere2Model, Cohere2Config
+    >>> from tiny_hf.transformers.import Cohere2Model, Cohere2Config
 
     >>> # Initializing a Cohere Nextmodel configuration
     >>> configuration = Cohere2Config()

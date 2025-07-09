@@ -110,7 +110,7 @@ class DeiTImageProcessor(BaseImageProcessor):
         self.image_mean = image_mean if image_mean is not None else IMAGENET_STANDARD_MEAN
         self.image_std = image_std if image_std is not None else IMAGENET_STANDARD_STD
 
-    # Copied from transformers.models.vit.image_processing_vit.ViTImageProcessor.resize with PILImageResampling.BILINEAR->PILImageResampling.BICUBIC
+    # Copied from tiny_hf.transformers.models.vit.image_processing_vit.ViTImageProcessor.resize with PILImageResampling.BILINEAR->PILImageResampling.BICUBIC
     def resize(
         self,
         image: np.ndarray,

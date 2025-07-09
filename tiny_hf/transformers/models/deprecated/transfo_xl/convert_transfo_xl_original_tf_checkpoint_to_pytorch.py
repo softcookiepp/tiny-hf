@@ -19,12 +19,12 @@ import os
 import pickle
 import sys
 
-import torch
+import tg_adapter as torch
 
-from transformers import TransfoXLConfig, TransfoXLLMHeadModel, load_tf_weights_in_transfo_xl
-from transformers.models.deprecated.transfo_xl import tokenization_transfo_xl as data_utils
-from transformers.models.deprecated.transfo_xl.tokenization_transfo_xl import CORPUS_NAME, VOCAB_FILES_NAMES
-from transformers.utils import CONFIG_NAME, WEIGHTS_NAME, logging
+from tiny_hf.transformers.import TransfoXLConfig, TransfoXLLMHeadModel, load_tf_weights_in_transfo_xl
+from tiny_hf.transformers.models.deprecated.transfo_xl import tokenization_transfo_xl as data_utils
+from tiny_hf.transformers.models.deprecated.transfo_xl.tokenization_transfo_xl import CORPUS_NAME, VOCAB_FILES_NAMES
+from tiny_hf.transformers.utils import CONFIG_NAME, WEIGHTS_NAME, logging
 
 
 logging.set_verbosity_info()

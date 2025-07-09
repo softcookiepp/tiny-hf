@@ -30,7 +30,7 @@ class Text2TextGenerationPipeline(Pipeline):
     Example:
 
     ```python
-    >>> from transformers import pipeline
+    >>> from tiny_hf.transformers.import pipeline
 
     >>> generator = pipeline(model="mrm8488/t5-base-finetuned-question-generation-ap")
     >>> generator(

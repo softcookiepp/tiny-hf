@@ -26,8 +26,8 @@
 
 from typing import Callable, List, Optional, Tuple, Union
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, SlidingWindowCache, StaticCache
@@ -815,7 +815,7 @@ class Starcoder2ForCausalLM(Starcoder2PreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, Starcoder2ForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, Starcoder2ForCausalLM
 
         >>> model = Starcoder2ForCausalLM.from_pretrained("meta-starcoder2/Starcoder2-2-7b-hf")
         >>> tokenizer = AutoTokenizer.from_pretrained("meta-starcoder2/Starcoder2-2-7b-hf")

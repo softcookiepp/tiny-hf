@@ -212,7 +212,7 @@ class UdopTokenizer(PreTrainedTokenizer):
             which includes fixes to properly handle tokens that appear after special tokens. A simple example:
             - `legacy=True`:
             ```python
-            >>> from transformers import T5Tokenizer
+            >>> from tiny_hf.transformers.import T5Tokenizer
 
             >>> tokenizer = T5Tokenizer.from_pretrained("t5-base", legacy=True)
             >>> tokenizer.encode("Hello <extra_id_0>.")
@@ -220,7 +220,7 @@ class UdopTokenizer(PreTrainedTokenizer):
             ```
             - `legacy=False`:
             ```python
-            >>> from transformers import T5Tokenizer
+            >>> from tiny_hf.transformers.import T5Tokenizer
 
             >>> tokenizer = T5Tokenizer.from_pretrained("t5-base", legacy=False)
             >>> tokenizer.encode("Hello <extra_id_0>.")  # the extra space `[3]` is no longer here
@@ -298,13 +298,13 @@ class UdopTokenizer(PreTrainedTokenizer):
     def vocab_size(self):
         return len(self.sp_model)
 
-    # Copied from transformers.models.t5.tokenization_t5.T5Tokenizer.get_vocab
+    # Copied from tiny_hf.transformers.models.t5.tokenization_t5.T5Tokenizer.get_vocab
     def get_vocab(self):
         vocab = {self.convert_ids_to_tokens(i): i for i in range(self.vocab_size)}
         vocab.update(self.added_tokens_encoder)
         return vocab
 
-    # Copied from transformers.models.t5.tokenization_t5.T5Tokenizer.get_special_tokens_mask
+    # Copied from tiny_hf.transformers.models.t5.tokenization_t5.T5Tokenizer.get_special_tokens_mask
     def get_special_tokens_mask(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None, already_has_special_tokens: bool = False
     ) -> List[int]:
@@ -333,17 +333,17 @@ class UdopTokenizer(PreTrainedTokenizer):
             return ([0] * len(token_ids_0)) + [1]
         return ([0] * len(token_ids_0)) + [1] + ([0] * len(token_ids_1)) + [1]
 
-    # Copied from transformers.models.t5.tokenization_t5.T5Tokenizer.get_sentinel_tokens
+    # Copied from tiny_hf.transformers.models.t5.tokenization_t5.T5Tokenizer.get_sentinel_tokens
     def get_sentinel_tokens(self):
         return list(
             set(filter(lambda x: bool(re.search(r"<extra_id_\d+>", x)) is not None, self.additional_special_tokens))
         )
 
-    # Copied from transformers.models.t5.tokenization_t5.T5Tokenizer.get_sentinel_token_ids
+    # Copied from tiny_hf.transformers.models.t5.tokenization_t5.T5Tokenizer.get_sentinel_token_ids
     def get_sentinel_token_ids(self):
         return [self.convert_tokens_to_ids(token) for token in self.get_sentinel_tokens()]
 
-    # Copied from transformers.models.t5.tokenization_t5.T5Tokenizer._add_eos_if_not_present
+    # Copied from tiny_hf.transformers.models.t5.tokenization_t5.T5Tokenizer._add_eos_if_not_present
     def _add_eos_if_not_present(self, token_ids: List[int]) -> List[int]:
         """Do not add eos again if user already added it."""
         if len(token_ids) > 0 and token_ids[-1] == self.eos_token_id:
@@ -355,7 +355,7 @@ class UdopTokenizer(PreTrainedTokenizer):
         else:
             return token_ids + [self.eos_token_id]
 
-    # Copied from transformers.models.t5.tokenization_t5.T5Tokenizer.create_token_type_ids_from_sequences
+    # Copied from tiny_hf.transformers.models.t5.tokenization_t5.T5Tokenizer.create_token_type_ids_from_sequences
     def create_token_type_ids_from_sequences(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
     ) -> List[int]:
@@ -378,7 +378,7 @@ class UdopTokenizer(PreTrainedTokenizer):
             return len(token_ids_0 + eos) * [0]
         return len(token_ids_0 + eos + token_ids_1 + eos) * [0]
 
-    # Copied from transformers.models.t5.tokenization_t5.T5Tokenizer.build_inputs_with_special_tokens
+    # Copied from tiny_hf.transformers.models.t5.tokenization_t5.T5Tokenizer.build_inputs_with_special_tokens
     def build_inputs_with_special_tokens(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
     ) -> List[int]:
@@ -405,7 +405,7 @@ class UdopTokenizer(PreTrainedTokenizer):
             token_ids_1 = self._add_eos_if_not_present(token_ids_1)
             return token_ids_0 + token_ids_1
 
-    # Copied from transformers.models.t5.tokenization_t5.T5Tokenizer.__getstate__
+    # Copied from tiny_hf.transformers.models.t5.tokenization_t5.T5Tokenizer.__getstate__
     def __getstate__(self):
         state = self.__dict__.copy()
         state["sp_model"] = None
@@ -416,7 +416,7 @@ class UdopTokenizer(PreTrainedTokenizer):
         self.sp_model = spm.SentencePieceProcessor(**self.sp_model_kwargs)
         self.sp_model.Load(self.vocab_file)
 
-    # Copied from transformers.models.t5.tokenization_t5.T5Tokenizer.tokenize
+    # Copied from tiny_hf.transformers.models.t5.tokenization_t5.T5Tokenizer.tokenize
     def tokenize(self, text: "TextInput", **kwargs) -> List[str]:
         """
         Converts a string to a list of tokens. If `self.legacy` is set to `False`, a prefix token is added unless the
@@ -435,7 +435,7 @@ class UdopTokenizer(PreTrainedTokenizer):
             tokens = tokens[1:]
         return tokens
 
-    # Copied from transformers.models.t5.tokenization_t5.T5Tokenizer._tokenize
+    # Copied from tiny_hf.transformers.models.t5.tokenization_t5.T5Tokenizer._tokenize
     def _tokenize(self, text, **kwargs):
         """
         Returns a tokenized string.
@@ -462,7 +462,7 @@ class UdopTokenizer(PreTrainedTokenizer):
         """Converts an index (integer) in a token (str) using the vocab."""
         return self.sp_model.IdToPiece(index)
 
-    # Copied from transformers.models.t5.tokenization_t5.T5Tokenizer.convert_tokens_to_string
+    # Copied from tiny_hf.transformers.models.t5.tokenization_t5.T5Tokenizer.convert_tokens_to_string
     def convert_tokens_to_string(self, tokens):
         """Converts a sequence of tokens (string) in a single string."""
         # since we manually add the prefix space, we have to remove it when decoding
@@ -486,7 +486,7 @@ class UdopTokenizer(PreTrainedTokenizer):
         out_string += self.sp_model.decode(current_sub_tokens)
         return out_string.strip()
 
-    # Copied from transformers.models.t5.tokenization_t5.T5Tokenizer.save_vocabulary
+    # Copied from tiny_hf.transformers.models.t5.tokenization_t5.T5Tokenizer.save_vocabulary
     def save_vocabulary(self, save_directory: str, filename_prefix: Optional[str] = None) -> Tuple[str]:
         if not os.path.isdir(save_directory):
             logger.error(f"Vocabulary path ({save_directory}) should be a directory")
@@ -1268,7 +1268,7 @@ class UdopTokenizer(PreTrainedTokenizer):
 
         return batch_outputs
 
-    # Copied from transformers.models.layoutxlm.tokenization_layoutxlm.LayoutXLMTokenizer.truncate_sequences
+    # Copied from tiny_hf.transformers.models.layoutxlm.tokenization_layoutxlm.LayoutXLMTokenizer.truncate_sequences
     def truncate_sequences(
         self,
         ids: List[int],
@@ -1394,7 +1394,7 @@ class UdopTokenizer(PreTrainedTokenizer):
             overflowing_labels,
         )
 
-    # Copied from transformers.models.layoutxlm.tokenization_layoutxlm.LayoutXLMTokenizer._pad
+    # Copied from tiny_hf.transformers.models.layoutxlm.tokenization_layoutxlm.LayoutXLMTokenizer._pad
     def _pad(
         self,
         encoded_inputs: Union[Dict[str, EncodedInput], BatchEncoding],

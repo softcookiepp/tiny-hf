@@ -80,7 +80,7 @@ class CvtConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import CvtConfig, CvtModel
+    >>> from tiny_hf.transformers.import CvtConfig, CvtModel
 
     >>> # Initializing a Cvt msft/cvt style configuration
     >>> configuration = CvtConfig()

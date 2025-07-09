@@ -41,7 +41,7 @@ from .import_utils import is_auto_gptq_available
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 logger = logging.get_logger(__name__)
 
@@ -1541,7 +1541,7 @@ class TorchAoConfig(QuantizationConfigMixin):
         if isinstance(self.quant_type, str):
             self._validate_string_quant_type()
         elif ao_version >= version.parse("0.10.0"):
-            from torchao.quantization.quant_api import AOBaseConfig
+            from tg_adapter.o.quantization.quant_api import AOBaseConfig
 
             if not isinstance(self.quant_type, AOBaseConfig):
                 raise ValueError(
@@ -1581,7 +1581,7 @@ class TorchAoConfig(QuantizationConfigMixin):
 
     def _get_torchao_quant_type_to_method(self):
         """Get mapping of quant_type strings to their corresponding methods."""
-        from torchao.quantization import (
+        from tg_adapter.o.quantization import (
             autoquant,
             int4_weight_only,
             int8_dynamic_activation_int8_weight,
@@ -1606,7 +1606,7 @@ class TorchAoConfig(QuantizationConfigMixin):
                 and self.quant_type == "int4_weight_only"
                 and version.parse(importlib.metadata.version("torchao")) >= version.parse("0.8.0")
             ):
-                from torchao.dtypes import Int4CPULayout
+                from tg_adapter.o.dtypes import Int4CPULayout
 
                 quant_type_kwargs["layout"] = Int4CPULayout()
 
@@ -1624,7 +1624,7 @@ class TorchAoConfig(QuantizationConfigMixin):
                 d["quant_type_kwargs"]["layout"] = dataclasses.asdict(d["quant_type_kwargs"]["layout"])
         else:
             # Handle AOBaseConfig serialization
-            from torchao.core.config import config_to_dict
+            from tg_adapter.o.core.config import config_to_dict
 
             # For now we assume there is 1 config per Transfomer, however in the future
             # We may want to support a config per fqn.
@@ -1649,7 +1649,7 @@ class TorchAoConfig(QuantizationConfigMixin):
         quant_type = quant_type["default"]
 
         # Deserialize quant_type if needed
-        from torchao.core.config import config_from_dict
+        from tg_adapter.o.core.config import config_from_dict
 
         quant_type = config_from_dict(quant_type)
 

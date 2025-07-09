@@ -60,8 +60,8 @@ class Idefics3VisionConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers.models.idefics3.modeling_idefics3 import Idefics3VisionTransformer
-    >>> from transformers.models.idefics3.configuration_idefics3 import Idefics3VisionConfig
+    >>> from tiny_hf.transformers.models.idefics3.modeling_idefics3 import Idefics3VisionTransformer
+    >>> from tiny_hf.transformers.models.idefics3.configuration_idefics3 import Idefics3VisionConfig
 
     >>> # Initializing a Idefics3VisionConfig with google/siglip-base-patch16-224 style configuration
     >>> configuration = Idefics3VisionConfig()
@@ -135,7 +135,7 @@ class Idefics3Config(PretrainedConfig):
 
     Example:
     ```python
-    >>> from transformers import Idefics3Model, Idefics3Config
+    >>> from tiny_hf.transformers.import Idefics3Model, Idefics3Config
     >>> # Initializing configuration
     >>> configuration = Idefics3Config()
     >>> # Initializing a model from the configuration

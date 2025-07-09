@@ -85,7 +85,7 @@ class EfficientNetConfig(PretrainedConfig):
 
     Example:
     ```python
-    >>> from transformers import EfficientNetConfig, EfficientNetModel
+    >>> from tiny_hf.transformers.import EfficientNetConfig, EfficientNetModel
 
     >>> # Initializing a EfficientNet efficientnet-b7 style configuration
     >>> configuration = EfficientNetConfig()

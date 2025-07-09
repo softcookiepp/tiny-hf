@@ -129,7 +129,7 @@ class StableLmConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import StableLmModel, StableLmConfig
+    >>> from tiny_hf.transformers.import StableLmModel, StableLmConfig
 
     >>> # Initializing a StableLM stablelm-3b style configuration
     >>> configuration = StableLmConfig()

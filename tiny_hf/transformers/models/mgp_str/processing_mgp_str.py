@@ -16,15 +16,15 @@
 
 import warnings
 
-from transformers import AutoTokenizer
-from transformers.utils import is_torch_available
-from transformers.utils.generic import ExplicitEnum
+from tiny_hf.transformers.import AutoTokenizer
+from tiny_hf.transformers.utils import is_torch_available
+from tiny_hf.transformers.utils.generic import ExplicitEnum
 
 from ...processing_utils import ProcessorMixin
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 
 class DecodeType(ExplicitEnum):

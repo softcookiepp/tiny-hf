@@ -19,9 +19,9 @@ from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -192,7 +192,7 @@ class LlavaNextCausalLMOutputWithPast(ModelOutput):
     image_hidden_states: Optional[torch.FloatTensor] = None
 
 
-# Copied from transformers.models.llava.modeling_llava.LlavaMultiModalProjector with Llava->LlavaNext
+# Copied from tiny_hf.transformers.models.llava.modeling_llava.LlavaMultiModalProjector with Llava->LlavaNext
 class LlavaNextMultiModalProjector(nn.Module):
     def __init__(self, config: LlavaNextConfig):
         super().__init__()
@@ -236,7 +236,7 @@ LLAVA_NEXT_START_DOCSTRING = r"""
     "The bare LLaMA Model outputting raw hidden-states without any specific head on top.",
     LLAVA_NEXT_START_DOCSTRING,
 )
-# Copied from transformers.models.llava.modeling_llava.LlavaPreTrainedModel with Llava->LlavaNext,llava->llava_next
+# Copied from tiny_hf.transformers.models.llava.modeling_llava.LlavaPreTrainedModel with Llava->LlavaNext,llava->llava_next
 class LlavaNextPreTrainedModel(PreTrainedModel):
     config_class = LlavaNextConfig
     base_model_prefix = "model"
@@ -384,27 +384,27 @@ class LlavaNextForConditionalGeneration(LlavaNextPreTrainedModel, GenerationMixi
             raise ValueError(f"{padding_side} is not `left` or `right`.")
         self._padding_side = padding_side
 
-    # Copied from transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.get_input_embeddings
+    # Copied from tiny_hf.transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.get_input_embeddings
     def get_input_embeddings(self):
         return self.language_model.get_input_embeddings()
 
-    # Copied from transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.set_input_embeddings
+    # Copied from tiny_hf.transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.set_input_embeddings
     def set_input_embeddings(self, value):
         self.language_model.set_input_embeddings(value)
 
-    # Copied from transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.get_output_embeddings
+    # Copied from tiny_hf.transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.get_output_embeddings
     def get_output_embeddings(self):
         return self.language_model.get_output_embeddings()
 
-    # Copied from transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.set_output_embeddings
+    # Copied from tiny_hf.transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.set_output_embeddings
     def set_output_embeddings(self, new_embeddings):
         self.language_model.set_output_embeddings(new_embeddings)
 
-    # Copied from transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.set_decoder
+    # Copied from tiny_hf.transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.set_decoder
     def set_decoder(self, decoder):
         self.language_model.set_decoder(decoder)
 
-    # Copied from transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.get_decoder
+    # Copied from tiny_hf.transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.get_decoder
     def get_decoder(self):
         return self.language_model.get_decoder()
 
@@ -580,7 +580,7 @@ class LlavaNextForConditionalGeneration(LlavaNextPreTrainedModel, GenerationMixi
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, LlavaNextForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoProcessor, LlavaNextForConditionalGeneration
 
         >>> model = LlavaNextForConditionalGeneration.from_pretrained("llava-hf/llava-v1.6-mistral-7b-hf")
         >>> processor = AutoProcessor.from_pretrained("llava-hf/llava-v1.6-mistral-7b-hf")

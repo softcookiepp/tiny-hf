@@ -5,10 +5,10 @@ import os
 from dataclasses import dataclass
 from typing import Any, Dict, Iterable, List, Optional, Tuple, Union
 
-import torch
+import tg_adapter as torch
 from packaging import version
 
-#from transformers.pytorch_utils import is_torch_greater_or_equal_than_2_6
+#from tiny_hf.transformers.pytorch_utils import is_torch_greater_or_equal_than_2_6
 from .pytorch_utils import is_torch_greater_or_equal_than_2_6
 
 from .configuration_utils import PretrainedConfig
@@ -128,7 +128,7 @@ class CacheConfig:
             kwargs.pop(key, None)
         return config
 
-    # Copied from transformers.utils.quantization_config.QuantizationConfigMixin.to_json_file
+    # Copied from tiny_hf.transformers.utils.quantization_config.QuantizationConfigMixin.to_json_file
     def to_json_file(self, json_file_path: Union[str, os.PathLike]):
         """
         Save this instance to a JSON file.
@@ -146,7 +146,7 @@ class CacheConfig:
 
             writer.write(json_string)
 
-    # Copied from transformers.utils.quantization_config.QuantizationConfigMixin.to_dict
+    # Copied from tiny_hf.transformers.utils.quantization_config.QuantizationConfigMixin.to_dict
     def to_dict(self) -> Dict[str, Any]:
         """
         Serializes this instance to a Python dictionary. Returns:
@@ -154,13 +154,13 @@ class CacheConfig:
         """
         return copy.deepcopy(self.__dict__)
 
-    # Copied from transformers.utils.quantization_config.QuantizationConfigMixin.__iter__
+    # Copied from tiny_hf.transformers.utils.quantization_config.QuantizationConfigMixin.__iter__
     def __iter__(self):
         """allows `dict(obj)` for situations where obj may be a dict or QuantizationConfigMixin"""
         for attr, value in copy.deepcopy(self.__dict__).items():
             yield attr, value
 
-    # Copied from transformers.utils.quantization_config.QuantizationConfigMixin.__repr__
+    # Copied from tiny_hf.transformers.utils.quantization_config.QuantizationConfigMixin.__repr__
     def __repr__(self):
         return f"{self.__class__.__name__} {self.to_json_string()}"
 
@@ -172,7 +172,7 @@ class CacheConfig:
         """
         return json.dumps(self.__dict__, indent=2) + "\n"
 
-    # Copied from transformers.utils.quantization_config.QuantizationConfigMixin.update
+    # Copied from tiny_hf.transformers.utils.quantization_config.QuantizationConfigMixin.update
     def update(self, **kwargs):
         """
         Updates attributes of this class instance with attributes from `kwargs` if they match existing attributes,
@@ -345,7 +345,7 @@ class DynamicCache(Cache):
     Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, AutoModelForCausalLM, DynamicCache
+        >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM, DynamicCache
 
         >>> model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen2-0.5B-Instruct")
         >>> tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen2-0.5B-Instruct")
@@ -831,7 +831,7 @@ class QuantoQuantizedCache(QuantizedCache):
 
         ```python
         >>> # Run pip install quanto first if you don't have it yet
-        >>> from transformers import AutoTokenizer, AutoModelForCausalLM, QuantoQuantizedCache, QuantizedCacheConfig
+        >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM, QuantoQuantizedCache, QuantizedCacheConfig
 
         >>> model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen2-0.5B-Instruct")
         >>> tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen2-0.5B-Instruct")
@@ -897,7 +897,7 @@ class HQQQuantizedCache(QuantizedCache):
 
         ```python
         >>> # Run pip install hqq first if you don't have it yet
-        >>> from transformers import AutoTokenizer, AutoModelForCausalLM, HQQQuantizedCache, QuantizedCacheConfig
+        >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM, HQQQuantizedCache, QuantizedCacheConfig
 
         >>> model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen2-0.5B-Instruct")
         >>> tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen2-0.5B-Instruct")
@@ -965,7 +965,7 @@ class SinkCache(Cache):
     Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, AutoModelForCausalLM, SinkCache
+        >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM, SinkCache
 
         >>> model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen2-0.5B-Instruct")
         >>> tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen2-0.5B-Instruct")
@@ -1161,7 +1161,7 @@ class StaticCache(Cache):
     Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, AutoModelForCausalLM, StaticCache
+        >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM, StaticCache
 
         >>> model = AutoModelForCausalLM.from_pretrained("meta-llama/Llama-2-7b-chat-hf")
         >>> tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-2-7b-chat-hf")
@@ -1344,7 +1344,7 @@ class SlidingWindowCache(StaticCache):
     Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, AutoModelForCausalLM, SlidingWindowCache
+        >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM, SlidingWindowCache
 
         >>> model = AutoModelForCausalLM.from_pretrained("mistralai/Mistral-7B-Instruct-v0.3")
         >>> tokenizer = AutoTokenizer.from_pretrained("mistralai/Mistral-7B-Instruct-v0.3")
@@ -1459,7 +1459,7 @@ class EncoderDecoderCache(Cache):
     Example:
 
         ```python
-        >>> from transformers import AutoProcessor, AutoModelForCausalLM, DynamicCache, EncoderDecoderCache
+        >>> from tiny_hf.transformers.import AutoProcessor, AutoModelForCausalLM, DynamicCache, EncoderDecoderCache
 
         >>> model = AutoModelForCausalLM.from_pretrained("openai/whisper-small")
         >>> processor = AutoProcessor.from_pretrained("openai/whisper-small")
@@ -1650,7 +1650,7 @@ class HybridCache(Cache):
     Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, AutoModelForCausalLM, HybridCache
+        >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM, HybridCache
 
         >>> model = AutoModelForCausalLM.from_pretrained("google/gemma-2-2b")
         >>> tokenizer = AutoTokenizer.from_pretrained("google/gemma-2-2b")
@@ -1856,7 +1856,7 @@ class MambaCache:
     Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, MambaForCausalLM, MambaCache
+        >>> from tiny_hf.transformers.import AutoTokenizer, MambaForCausalLM, MambaCache
 
         >>> model = MambaForCausalLM.from_pretrained("state-spaces/mamba-130m-hf")
         >>> tokenizer = AutoTokenizer.from_pretrained("state-spaces/mamba-130m-hf")
@@ -1982,7 +1982,7 @@ class OffloadedStaticCache(StaticCache):
     Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, AutoModelForCausalLM, OffloadedStaticCache
+        >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM, OffloadedStaticCache
 
         >>> model = AutoModelForCausalLM.from_pretrained("openai-community/gpt2")
         >>> tokenizer = AutoTokenizer.from_pretrained("openai-community/gpt2")

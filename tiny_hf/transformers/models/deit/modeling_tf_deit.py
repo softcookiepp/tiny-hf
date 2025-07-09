@@ -249,7 +249,7 @@ class TFDeiTPatchEmbeddings(keras.layers.Layer):
                 self.projection.build([None, None, None, self.num_channels])
 
 
-# Copied from transformers.models.vit.modeling_tf_vit.TFViTSelfAttention with ViT->DeiT
+# Copied from tiny_hf.transformers.models.vit.modeling_tf_vit.TFViTSelfAttention with ViT->DeiT
 class TFDeiTSelfAttention(keras.layers.Layer):
     def __init__(self, config: DeiTConfig, **kwargs):
         super().__init__(**kwargs)
@@ -340,7 +340,7 @@ class TFDeiTSelfAttention(keras.layers.Layer):
                 self.value.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.vit.modeling_tf_vit.TFViTSelfOutput with ViT->DeiT
+# Copied from tiny_hf.transformers.models.vit.modeling_tf_vit.TFViTSelfOutput with ViT->DeiT
 class TFDeiTSelfOutput(keras.layers.Layer):
     """
     The residual connection is defined in TFDeiTLayer instead of here (as is the case with other models), due to the
@@ -371,7 +371,7 @@ class TFDeiTSelfOutput(keras.layers.Layer):
                 self.dense.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.vit.modeling_tf_vit.TFViTAttention with ViT->DeiT
+# Copied from tiny_hf.transformers.models.vit.modeling_tf_vit.TFViTAttention with ViT->DeiT
 class TFDeiTAttention(keras.layers.Layer):
     def __init__(self, config: DeiTConfig, **kwargs):
         super().__init__(**kwargs)
@@ -411,7 +411,7 @@ class TFDeiTAttention(keras.layers.Layer):
                 self.dense_output.build(None)
 
 
-# Copied from transformers.models.vit.modeling_tf_vit.TFViTIntermediate with ViT->DeiT
+# Copied from tiny_hf.transformers.models.vit.modeling_tf_vit.TFViTIntermediate with ViT->DeiT
 class TFDeiTIntermediate(keras.layers.Layer):
     def __init__(self, config: DeiTConfig, **kwargs):
         super().__init__(**kwargs)
@@ -441,7 +441,7 @@ class TFDeiTIntermediate(keras.layers.Layer):
                 self.dense.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.vit.modeling_tf_vit.TFViTOutput with ViT->DeiT
+# Copied from tiny_hf.transformers.models.vit.modeling_tf_vit.TFViTOutput with ViT->DeiT
 class TFDeiTOutput(keras.layers.Layer):
     def __init__(self, config: DeiTConfig, **kwargs):
         super().__init__(**kwargs)
@@ -535,7 +535,7 @@ class TFDeiTLayer(keras.layers.Layer):
                 self.layernorm_after.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.vit.modeling_tf_vit.TFViTEncoder with ViT->DeiT
+# Copied from tiny_hf.transformers.models.vit.modeling_tf_vit.TFViTEncoder with ViT->DeiT
 class TFDeiTEncoder(keras.layers.Layer):
     def __init__(self, config: DeiTConfig, **kwargs):
         super().__init__(**kwargs)
@@ -704,7 +704,7 @@ class TFDeiTMainLayer(keras.layers.Layer):
                 self.pooler.build(None)
 
 
-# Copied from transformers.models.vit.modeling_tf_vit.TFViTPreTrainedModel with ViT->DeiT all-casing
+# Copied from tiny_hf.transformers.models.vit.modeling_tf_vit.TFViTPreTrainedModel with ViT->DeiT all-casing
 class TFDeiTPreTrainedModel(TFPreTrainedModel):
     """
     An abstract class to handle weights initialization and a simple interface for downloading and loading pretrained
@@ -807,7 +807,7 @@ class TFDeiTModel(TFDeiTPreTrainedModel):
                 self.deit.build(None)
 
 
-# Copied from transformers.models.vit.modeling_tf_vit.TFViTPooler with ViT->DeiT
+# Copied from tiny_hf.transformers.models.vit.modeling_tf_vit.TFViTPooler with ViT->DeiT
 class TFDeiTPooler(keras.layers.Layer):
     def __init__(self, config: DeiTConfig, **kwargs):
         super().__init__(**kwargs)
@@ -924,7 +924,7 @@ class TFDeiTForMaskedImageModeling(TFDeiTPreTrainedModel):
 
         Examples:
         ```python
-        >>> from transformers import AutoImageProcessor, TFDeiTForMaskedImageModeling
+        >>> from tiny_hf.transformers.import AutoImageProcessor, TFDeiTForMaskedImageModeling
         >>> import tensorflow as tf
         >>> from PIL import Image
         >>> import requests
@@ -1063,7 +1063,7 @@ class TFDeiTForImageClassification(TFDeiTPreTrainedModel, TFSequenceClassificati
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, TFDeiTForImageClassification
+        >>> from tiny_hf.transformers.import AutoImageProcessor, TFDeiTForImageClassification
         >>> import tensorflow as tf
         >>> from PIL import Image
         >>> import requests

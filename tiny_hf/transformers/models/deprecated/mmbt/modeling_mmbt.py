@@ -15,9 +15,9 @@
 # limitations under the License.
 """PyTorch MMBT model."""
 
-import torch
-from torch import nn
-from torch.nn import CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss, MSELoss
 
 from ....modeling_outputs import BaseModelOutputWithPooling, SequenceClassifierOutput
 from ....modeling_utils import ModuleUtilsMixin

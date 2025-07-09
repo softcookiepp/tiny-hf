@@ -24,7 +24,7 @@ from . import ExplicitEnum, is_torch_available, is_torchdynamo_compiling
 
 # This is needed in case we deprecate a kwarg of a function/method being compiled
 if is_torch_available():
-    import torch  # noqa: F401
+    import tg_adapter # noqa: F401
 
 
 class Action(ExplicitEnum):

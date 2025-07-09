@@ -139,7 +139,7 @@ class ReformerConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import ReformerConfig, ReformerModel
+    >>> from tiny_hf.transformers.import ReformerConfig, ReformerModel
 
     >>> # Initializing a Reformer configuration
     >>> configuration = ReformerConfig()

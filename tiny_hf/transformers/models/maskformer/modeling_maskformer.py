@@ -20,8 +20,8 @@ from numbers import Number
 from typing import Dict, List, Optional, Tuple
 
 import numpy as np
-import torch
-from torch import Tensor, nn
+import tg_adapter as torch
+from tg_adapter.import Tensor, nn
 
 from ...activations import ACT2FN
 from ...modeling_attn_mask_utils import _prepare_4d_attention_mask
@@ -60,7 +60,7 @@ _CHECKPOINT_FOR_DOC = "facebook/maskformer-swin-base-ade"
 
 
 @dataclass
-# Copied from transformers.models.detr.modeling_detr.DetrDecoderOutput
+# Copied from tiny_hf.transformers.models.detr.modeling_detr.DetrDecoderOutput
 class DetrDecoderOutput(BaseModelOutputWithCrossAttentions):
     """
     Base class for outputs of the DETR decoder. This class adds one attribute to BaseModelOutputWithCrossAttentions,
@@ -406,7 +406,7 @@ def pair_wise_sigmoid_focal_loss(inputs: Tensor, labels: Tensor, alpha: float = 
     return loss / height_and_width
 
 
-# Copied from transformers.models.detr.modeling_detr.DetrAttention
+# Copied from tiny_hf.transformers.models.detr.modeling_detr.DetrAttention
 class DetrAttention(nn.Module):
     """
     Multi-headed attention from 'Attention Is All You Need' paper.
@@ -536,7 +536,7 @@ class DetrAttention(nn.Module):
         return attn_output, attn_weights_reshaped
 
 
-# Copied from transformers.models.detr.modeling_detr.DetrDecoderLayer
+# Copied from tiny_hf.transformers.models.detr.modeling_detr.DetrDecoderLayer
 class DetrDecoderLayer(nn.Module):
     def __init__(self, config: DetrConfig):
         super().__init__()
@@ -1557,7 +1557,7 @@ class MaskFormerModel(MaskFormerPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, MaskFormerModel
+        >>> from tiny_hf.transformers.import AutoImageProcessor, MaskFormerModel
         >>> from PIL import Image
         >>> import requests
 
@@ -1762,7 +1762,7 @@ class MaskFormerForInstanceSegmentation(MaskFormerPreTrainedModel):
         Semantic segmentation example:
 
         ```python
-        >>> from transformers import AutoImageProcessor, MaskFormerForInstanceSegmentation
+        >>> from tiny_hf.transformers.import AutoImageProcessor, MaskFormerForInstanceSegmentation
         >>> from PIL import Image
         >>> import requests
 
@@ -1795,7 +1795,7 @@ class MaskFormerForInstanceSegmentation(MaskFormerPreTrainedModel):
         Panoptic segmentation example:
 
         ```python
-        >>> from transformers import AutoImageProcessor, MaskFormerForInstanceSegmentation
+        >>> from tiny_hf.transformers.import AutoImageProcessor, MaskFormerForInstanceSegmentation
         >>> from PIL import Image
         >>> import requests
 

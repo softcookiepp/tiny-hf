@@ -16,10 +16,10 @@
 
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...modeling_outputs import (
@@ -54,7 +54,7 @@ _IMAGE_CLASS_CHECKPOINT = "facebook/convnextv2-tiny-1k-224"
 _IMAGE_CLASS_EXPECTED_OUTPUT = "tabby, tabby cat"
 
 
-# Copied from transformers.models.beit.modeling_beit.drop_path
+# Copied from tiny_hf.transformers.models.beit.modeling_beit.drop_path
 def drop_path(input: torch.Tensor, drop_prob: float = 0.0, training: bool = False) -> torch.Tensor:
     """
     Drop paths (Stochastic Depth) per sample (when applied in main path of residual blocks).
@@ -75,7 +75,7 @@ def drop_path(input: torch.Tensor, drop_prob: float = 0.0, training: bool = Fals
     return output
 
 
-# Copied from transformers.models.beit.modeling_beit.BeitDropPath with Beit->ConvNextV2
+# Copied from tiny_hf.transformers.models.beit.modeling_beit.BeitDropPath with Beit->ConvNextV2
 class ConvNextV2DropPath(nn.Module):
     """Drop paths (Stochastic Depth) per sample (when applied in main path of residual blocks)."""
 
@@ -107,7 +107,7 @@ class ConvNextV2GRN(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.convnext.modeling_convnext.ConvNextLayerNorm with ConvNext->ConvNextV2
+# Copied from tiny_hf.transformers.models.convnext.modeling_convnext.ConvNextLayerNorm with ConvNext->ConvNextV2
 class ConvNextV2LayerNorm(nn.Module):
     r"""LayerNorm that supports two data formats: channels_last (default) or channels_first.
     The ordering of the dimensions in the inputs. channels_last corresponds to inputs with shape (batch_size, height,
@@ -138,7 +138,7 @@ class ConvNextV2LayerNorm(nn.Module):
         return x
 
 
-# Copied from transformers.models.convnext.modeling_convnext.ConvNextEmbeddings with ConvNext->ConvNextV2
+# Copied from tiny_hf.transformers.models.convnext.modeling_convnext.ConvNextEmbeddings with ConvNext->ConvNextV2
 class ConvNextV2Embeddings(nn.Module):
     """This class is comparable to (and inspired by) the SwinEmbeddings class
     found in src/transformers/models/swin/modeling_swin.py.
@@ -206,7 +206,7 @@ class ConvNextV2Layer(nn.Module):
         return x
 
 
-# Copied from transformers.models.convnext.modeling_convnext.ConvNextStage with ConvNeXT->ConvNeXTV2, ConvNext->ConvNextV2
+# Copied from tiny_hf.transformers.models.convnext.modeling_convnext.ConvNextStage with ConvNeXT->ConvNeXTV2, ConvNext->ConvNextV2
 class ConvNextV2Stage(nn.Module):
     """ConvNeXTV2 stage, consisting of an optional downsampling layer + multiple residual blocks.
 
@@ -239,7 +239,7 @@ class ConvNextV2Stage(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.convnext.modeling_convnext.ConvNextEncoder with ConvNext->ConvNextV2
+# Copied from tiny_hf.transformers.models.convnext.modeling_convnext.ConvNextEncoder with ConvNext->ConvNextV2
 class ConvNextV2Encoder(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -287,7 +287,7 @@ class ConvNextV2Encoder(nn.Module):
         )
 
 
-# Copied from transformers.models.convnext.modeling_convnext.ConvNextPreTrainedModel with ConvNext->ConvNextV2, convnext->convnextv2
+# Copied from tiny_hf.transformers.models.convnext.modeling_convnext.ConvNextPreTrainedModel with ConvNext->ConvNextV2, convnext->convnextv2
 class ConvNextV2PreTrainedModel(PreTrainedModel):
     """
     An abstract class to handle weights initialization and a simple interface for downloading and loading pretrained
@@ -340,7 +340,7 @@ CONVNEXTV2_INPUTS_DOCSTRING = r"""
     "The bare ConvNextV2 model outputting raw features without any specific head on top.",
     CONVNEXTV2_START_DOCSTRING,
 )
-# Copied from transformers.models.convnext.modeling_convnext.ConvNextModel with CONVNEXT->CONVNEXTV2, ConvNext->ConvNextV2
+# Copied from tiny_hf.transformers.models.convnext.modeling_convnext.ConvNextModel with CONVNEXT->CONVNEXTV2, ConvNext->ConvNextV2
 class ConvNextV2Model(ConvNextV2PreTrainedModel):
     def __init__(self, config):
         super().__init__(config)
@@ -407,7 +407,7 @@ class ConvNextV2Model(ConvNextV2PreTrainedModel):
     """,
     CONVNEXTV2_START_DOCSTRING,
 )
-# Copied from transformers.models.convnext.modeling_convnext.ConvNextForImageClassification with CONVNEXT->CONVNEXTV2,ConvNext->ConvNextV2,convnext->convnextv2
+# Copied from tiny_hf.transformers.models.convnext.modeling_convnext.ConvNextForImageClassification with CONVNEXT->CONVNEXTV2,ConvNext->ConvNextV2,convnext->convnextv2
 class ConvNextV2ForImageClassification(ConvNextV2PreTrainedModel):
     def __init__(self, config):
         super().__init__(config)
@@ -490,7 +490,7 @@ class ConvNextV2ForImageClassification(ConvNextV2PreTrainedModel):
     """,
     CONVNEXTV2_START_DOCSTRING,
 )
-# Copied from transformers.models.convnext.modeling_convnext.ConvNextBackbone with CONVNEXT->CONVNEXTV2,ConvNext->ConvNextV2,facebook/convnext-tiny-224->facebook/convnextv2-tiny-1k-224
+# Copied from tiny_hf.transformers.models.convnext.modeling_convnext.ConvNextBackbone with CONVNEXT->CONVNEXTV2,ConvNext->ConvNextV2,facebook/convnext-tiny-224->facebook/convnextv2-tiny-1k-224
 class ConvNextV2Backbone(ConvNextV2PreTrainedModel, BackboneMixin):
     def __init__(self, config):
         super().__init__(config)
@@ -523,8 +523,8 @@ class ConvNextV2Backbone(ConvNextV2PreTrainedModel, BackboneMixin):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, AutoBackbone
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoImageProcessor, AutoBackbone
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> import requests
 

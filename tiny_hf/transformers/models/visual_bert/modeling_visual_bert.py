@@ -18,10 +18,10 @@ import math
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import CrossEntropyLoss, KLDivLoss, LogSoftmax
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss, KLDivLoss, LogSoftmax
 
 from ...activations import ACT2FN
 from ...modeling_outputs import (
@@ -250,7 +250,7 @@ class VisualBertSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfOutput with Bert->VisualBert
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfOutput with Bert->VisualBert
 class VisualBertSelfOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -308,7 +308,7 @@ class VisualBertAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate with Bert->VisualBert
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate with Bert->VisualBert
 class VisualBertIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -324,7 +324,7 @@ class VisualBertIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOutput with Bert->VisualBert
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOutput with Bert->VisualBert
 class VisualBertOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -436,7 +436,7 @@ class VisualBertEncoder(nn.Module):
         )
 
 
-# Copied from transformers.models.bert.modeling_bert.BertPooler with Bert->VisualBert
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPooler with Bert->VisualBert
 class VisualBertPooler(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -452,7 +452,7 @@ class VisualBertPooler(nn.Module):
         return pooled_output
 
 
-# Copied from transformers.models.bert.modeling_bert.BertPredictionHeadTransform with Bert->VisualBert
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPredictionHeadTransform with Bert->VisualBert
 class VisualBertPredictionHeadTransform(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -470,7 +470,7 @@ class VisualBertPredictionHeadTransform(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertLMPredictionHead with Bert->VisualBert
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertLMPredictionHead with Bert->VisualBert
 class VisualBertLMPredictionHead(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -494,7 +494,7 @@ class VisualBertLMPredictionHead(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertPreTrainingHeads with Bert->VisualBert
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPreTrainingHeads with Bert->VisualBert
 class VisualBertPreTrainingHeads(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -719,8 +719,8 @@ class VisualBertModel(VisualBertPreTrainedModel):
 
         ```python
         # Assumption: *get_visual_embeddings(image)* gets the visual embeddings of the image.
-        from transformers import AutoTokenizer, VisualBertModel
-        import torch
+        from tiny_hf.transformers.import AutoTokenizer, VisualBertModel
+        import tg_adapter as torch
 
         tokenizer = AutoTokenizer.from_pretrained("google-bert/bert-base-uncased")
         model = VisualBertModel.from_pretrained("uclanlp/visualbert-vqa-coco-pre")
@@ -908,7 +908,7 @@ class VisualBertForPreTraining(VisualBertPreTrainedModel):
 
         ```python
         # Assumption: *get_visual_embeddings(image)* gets the visual embeddings of the image in the batch.
-        from transformers import AutoTokenizer, VisualBertForPreTraining
+        from tiny_hf.transformers.import AutoTokenizer, VisualBertForPreTraining
 
         tokenizer = AutoTokenizer.from_pretrained("google-bert/bert-base-uncased")
         model = VisualBertForPreTraining.from_pretrained("uclanlp/visualbert-vqa-coco-pre")
@@ -1041,8 +1041,8 @@ class VisualBertForMultipleChoice(VisualBertPreTrainedModel):
 
         ```python
         # Assumption: *get_visual_embeddings(image)* gets the visual embeddings of the image in the batch.
-        from transformers import AutoTokenizer, VisualBertForMultipleChoice
-        import torch
+        from tiny_hf.transformers.import AutoTokenizer, VisualBertForMultipleChoice
+        import tg_adapter as torch
 
         tokenizer = AutoTokenizer.from_pretrained("google-bert/bert-base-uncased")
         model = VisualBertForMultipleChoice.from_pretrained("uclanlp/visualbert-vcr")
@@ -1192,8 +1192,8 @@ class VisualBertForQuestionAnswering(VisualBertPreTrainedModel):
 
         ```python
         # Assumption: *get_visual_embeddings(image)* gets the visual embeddings of the image in the batch.
-        from transformers import AutoTokenizer, VisualBertForQuestionAnswering
-        import torch
+        from tiny_hf.transformers.import AutoTokenizer, VisualBertForQuestionAnswering
+        import tg_adapter as torch
 
         tokenizer = AutoTokenizer.from_pretrained("google-bert/bert-base-uncased")
         model = VisualBertForQuestionAnswering.from_pretrained("uclanlp/visualbert-vqa")
@@ -1318,8 +1318,8 @@ class VisualBertForVisualReasoning(VisualBertPreTrainedModel):
 
         ```python
         # Assumption: *get_visual_embeddings(image)* gets the visual embeddings of the image in the batch.
-        from transformers import AutoTokenizer, VisualBertForVisualReasoning
-        import torch
+        from tiny_hf.transformers.import AutoTokenizer, VisualBertForVisualReasoning
+        import tg_adapter as torch
 
         tokenizer = AutoTokenizer.from_pretrained("google-bert/bert-base-uncased")
         model = VisualBertForVisualReasoning.from_pretrained("uclanlp/visualbert-nlvr2")
@@ -1484,8 +1484,8 @@ class VisualBertForRegionToPhraseAlignment(VisualBertPreTrainedModel):
 
         ```python
         # Assumption: *get_visual_embeddings(image)* gets the visual embeddings of the image in the batch.
-        from transformers import AutoTokenizer, VisualBertForRegionToPhraseAlignment
-        import torch
+        from tiny_hf.transformers.import AutoTokenizer, VisualBertForRegionToPhraseAlignment
+        import tg_adapter as torch
 
         tokenizer = AutoTokenizer.from_pretrained("google-bert/bert-base-uncased")
         model = VisualBertForRegionToPhraseAlignment.from_pretrained("uclanlp/visualbert-vqa-coco-pre")

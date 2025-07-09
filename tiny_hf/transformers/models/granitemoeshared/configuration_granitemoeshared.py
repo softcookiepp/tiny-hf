@@ -104,7 +104,7 @@ class GraniteMoeSharedConfig(PretrainedConfig):
             no shared experts.
 
     ```python
-    >>> from transformers import GraniteMoeSharedModel, GraniteMoeSharedConfig
+    >>> from tiny_hf.transformers.import GraniteMoeSharedModel, GraniteMoeSharedConfig
 
     >>> # Initializing a GraniteMoeShared granitemoe-3b style configuration
     >>> configuration = GraniteMoeSharedConfig()

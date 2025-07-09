@@ -239,7 +239,7 @@ class CodeLlamaTokenizer(PreTrainedTokenizer):
         """Returns vocab size"""
         return self.sp_model.get_piece_size()
 
-    # Copied from transformers.models.llama.tokenization_llama.LlamaTokenizer.get_vocab
+    # Copied from tiny_hf.transformers.models.llama.tokenization_llama.LlamaTokenizer.get_vocab
     def get_vocab(self):
         """Returns vocab as a dict"""
         vocab = {self.convert_ids_to_tokens(i): i for i in range(self.vocab_size)}
@@ -296,12 +296,12 @@ class CodeLlamaTokenizer(PreTrainedTokenizer):
         # 2. Remove self.unk_token from ['<','unk','>', '▁Hey']
         return tokens[self.unk_token_length :] if len(tokens) >= self.unk_token_length else tokens
 
-    # Copied from transformers.models.llama.tokenization_llama.LlamaTokenizer._convert_token_to_id
+    # Copied from tiny_hf.transformers.models.llama.tokenization_llama.LlamaTokenizer._convert_token_to_id
     def _convert_token_to_id(self, token):
         """Converts a token (str) in an id using the vocab."""
         return self.sp_model.piece_to_id(token)
 
-    # Copied from transformers.models.llama.tokenization_llama.LlamaTokenizer._convert_id_to_token
+    # Copied from tiny_hf.transformers.models.llama.tokenization_llama.LlamaTokenizer._convert_id_to_token
     def _convert_id_to_token(self, index):
         """Converts an index (integer) in a token (str) using the vocab."""
         token = self.sp_model.IdToPiece(index)
@@ -325,7 +325,7 @@ class CodeLlamaTokenizer(PreTrainedTokenizer):
         out_string += self.sp_model.decode(current_sub_tokens)
         return out_string
 
-    # Copied from transformers.models.llama.tokenization_llama.LlamaTokenizer.save_vocabulary
+    # Copied from tiny_hf.transformers.models.llama.tokenization_llama.LlamaTokenizer.save_vocabulary
     def save_vocabulary(self, save_directory, filename_prefix: Optional[str] = None) -> Tuple[str]:
         """
         Save the vocabulary and special tokens file to a directory.
@@ -353,7 +353,7 @@ class CodeLlamaTokenizer(PreTrainedTokenizer):
 
         return (out_vocab_file,)
 
-    # Copied from transformers.models.llama.tokenization_llama.LlamaTokenizer.build_inputs_with_special_tokens
+    # Copied from tiny_hf.transformers.models.llama.tokenization_llama.LlamaTokenizer.build_inputs_with_special_tokens
     def build_inputs_with_special_tokens(self, token_ids_0, token_ids_1=None):
         bos_token_id = [self.bos_token_id] if self.add_bos_token else []
         eos_token_id = [self.eos_token_id] if self.add_eos_token else []
@@ -365,7 +365,7 @@ class CodeLlamaTokenizer(PreTrainedTokenizer):
 
         return output
 
-    # Copied from transformers.models.llama.tokenization_llama.LlamaTokenizer.get_special_tokens_mask
+    # Copied from tiny_hf.transformers.models.llama.tokenization_llama.LlamaTokenizer.get_special_tokens_mask
     def get_special_tokens_mask(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None, already_has_special_tokens: bool = False
     ) -> List[int]:
@@ -403,7 +403,7 @@ class CodeLlamaTokenizer(PreTrainedTokenizer):
             + eos_token_id
         )
 
-    # Copied from transformers.models.llama.tokenization_llama.LlamaTokenizer.create_token_type_ids_from_sequences
+    # Copied from tiny_hf.transformers.models.llama.tokenization_llama.LlamaTokenizer.create_token_type_ids_from_sequences
     def create_token_type_ids_from_sequences(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
     ) -> List[int]:

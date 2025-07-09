@@ -19,11 +19,11 @@ import os
 import warnings
 from typing import Any, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.cuda.amp import autocast
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.cuda.amp import autocast
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -671,7 +671,7 @@ class ImageGPTModel(ImageGPTPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, ImageGPTModel
+        >>> from tiny_hf.transformers.import AutoImageProcessor, ImageGPTModel
         >>> from PIL import Image
         >>> import requests
 
@@ -929,8 +929,8 @@ class ImageGPTForCausalImageModeling(ImageGPTPreTrainedModel, GenerationMixin):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, ImageGPTForCausalImageModeling
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoImageProcessor, ImageGPTForCausalImageModeling
+        >>> import tg_adapter as torch
         >>> import matplotlib.pyplot as plt
         >>> import numpy as np
 
@@ -1079,7 +1079,7 @@ class ImageGPTForImageClassification(ImageGPTPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, ImageGPTForImageClassification
+        >>> from tiny_hf.transformers.import AutoImageProcessor, ImageGPTForImageClassification
         >>> from PIL import Image
         >>> import requests
 

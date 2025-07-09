@@ -66,7 +66,7 @@ class LlavaOnevisionConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import LlavaOnevisionForConditionalGeneration, LlavaOnevisionConfig, SiglipVisionConfig, Qwen2Config
+    >>> from tiny_hf.transformers.import LlavaOnevisionForConditionalGeneration, LlavaOnevisionConfig, SiglipVisionConfig, Qwen2Config
 
     >>> # Initializing a CLIP-vision config
     >>> vision_config = SiglipVisionConfig()

@@ -16,8 +16,8 @@
 
 import argparse
 
-from transformers import BigBirdConfig, BigBirdForPreTraining, BigBirdForQuestionAnswering, load_tf_weights_in_big_bird
-from transformers.utils import logging
+from tiny_hf.transformers.import BigBirdConfig, BigBirdForPreTraining, BigBirdForQuestionAnswering, load_tf_weights_in_big_bird
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

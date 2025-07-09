@@ -77,7 +77,7 @@ class Owlv2Processor(ProcessorMixin):
     def __init__(self, image_processor, tokenizer, **kwargs):
         super().__init__(image_processor, tokenizer)
 
-    # Copied from transformers.models.owlvit.processing_owlvit.OwlViTProcessor.__call__ with OwlViT->Owlv2
+    # Copied from tiny_hf.transformers.models.owlvit.processing_owlvit.OwlViTProcessor.__call__ with OwlViT->Owlv2
     def __call__(
         self,
         images: Optional[ImageInput] = None,
@@ -176,7 +176,7 @@ class Owlv2Processor(ProcessorMixin):
                 attention_mask = jnp.concatenate([encoding["attention_mask"] for encoding in encodings], axis=0)
 
             elif return_tensors == "pt" and is_torch_available():
-                import torch
+                import tg_adapter as torch
 
                 input_ids = torch.cat([encoding["input_ids"] for encoding in encodings], dim=0)
                 attention_mask = torch.cat([encoding["attention_mask"] for encoding in encodings], dim=0)
@@ -204,7 +204,7 @@ class Owlv2Processor(ProcessorMixin):
 
         return BatchFeature(data=data, tensor_type=return_tensors)
 
-    # Copied from transformers.models.owlvit.processing_owlvit.OwlViTProcessor.post_process_object_detection with OwlViT->Owlv2
+    # Copied from tiny_hf.transformers.models.owlvit.processing_owlvit.OwlViTProcessor.post_process_object_detection with OwlViT->Owlv2
     def post_process_object_detection(self, *args, **kwargs):
         """
         This method forwards all its arguments to [`Owlv2ImageProcessor.post_process_object_detection`]. Please refer
@@ -217,7 +217,7 @@ class Owlv2Processor(ProcessorMixin):
         )
         return self.image_processor.post_process_object_detection(*args, **kwargs)
 
-    # Copied from transformers.models.owlvit.processing_owlvit.OwlViTProcessor.post_process_grounded_object_detection with OwlViT->Owlv2
+    # Copied from tiny_hf.transformers.models.owlvit.processing_owlvit.OwlViTProcessor.post_process_grounded_object_detection with OwlViT->Owlv2
     def post_process_grounded_object_detection(
         self,
         outputs: "Owlv2ObjectDetectionOutput",
@@ -266,7 +266,7 @@ class Owlv2Processor(ProcessorMixin):
 
         return output
 
-    # Copied from transformers.models.owlvit.processing_owlvit.OwlViTProcessor.post_process_image_guided_detection with OwlViT->Owlv2
+    # Copied from tiny_hf.transformers.models.owlvit.processing_owlvit.OwlViTProcessor.post_process_image_guided_detection with OwlViT->Owlv2
     def post_process_image_guided_detection(
         self,
         outputs: "Owlv2ImageGuidedObjectDetectionOutput",
@@ -300,7 +300,7 @@ class Owlv2Processor(ProcessorMixin):
             outputs=outputs, threshold=threshold, nms_threshold=nms_threshold, target_sizes=target_sizes
         )
 
-    # Copied from transformers.models.owlvit.processing_owlvit.OwlViTProcessor.batch_decode
+    # Copied from tiny_hf.transformers.models.owlvit.processing_owlvit.OwlViTProcessor.batch_decode
     def batch_decode(self, *args, **kwargs):
         """
         This method forwards all its arguments to CLIPTokenizerFast's [`~PreTrainedTokenizer.batch_decode`]. Please
@@ -308,7 +308,7 @@ class Owlv2Processor(ProcessorMixin):
         """
         return self.tokenizer.batch_decode(*args, **kwargs)
 
-    # Copied from transformers.models.owlvit.processing_owlvit.OwlViTProcessor.decode
+    # Copied from tiny_hf.transformers.models.owlvit.processing_owlvit.OwlViTProcessor.decode
     def decode(self, *args, **kwargs):
         """
         This method forwards all its arguments to CLIPTokenizerFast's [`~PreTrainedTokenizer.decode`]. Please refer to

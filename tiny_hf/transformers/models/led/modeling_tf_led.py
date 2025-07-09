@@ -56,7 +56,7 @@ _CONFIG_FOR_DOC = "LEDConfig"
 LARGE_NEGATIVE = -1e8
 
 
-# Copied from transformers.models.bart.modeling_tf_bart.shift_tokens_right
+# Copied from tiny_hf.transformers.models.bart.modeling_tf_bart.shift_tokens_right
 def shift_tokens_right(input_ids: tf.Tensor, pad_token_id: int, decoder_start_token_id: int):
     pad_token_id = tf.cast(pad_token_id, input_ids.dtype)
     decoder_start_token_id = tf.cast(decoder_start_token_id, input_ids.dtype)
@@ -81,7 +81,7 @@ def shift_tokens_right(input_ids: tf.Tensor, pad_token_id: int, decoder_start_to
     return shifted_input_ids
 
 
-# Copied from transformers.models.bart.modeling_tf_bart._make_causal_mask
+# Copied from tiny_hf.transformers.models.bart.modeling_tf_bart._make_causal_mask
 def _make_causal_mask(input_ids_shape: tf.TensorShape, past_key_values_length: int = 0):
     """
     Make causal mask used for bi-directional self-attention.
@@ -99,7 +99,7 @@ def _make_causal_mask(input_ids_shape: tf.TensorShape, past_key_values_length: i
     return tf.tile(mask[None, None, :, :], (bsz, 1, 1, 1))
 
 
-# Copied from transformers.models.bart.modeling_tf_bart._expand_mask
+# Copied from tiny_hf.transformers.models.bart.modeling_tf_bart._expand_mask
 def _expand_mask(mask: tf.Tensor, tgt_len: Optional[int] = None):
     """
     Expands attention_mask from `[bsz, seq_len]` to `[bsz, 1, tgt_seq_len, src_seq_len]`.
@@ -130,7 +130,7 @@ class TFLEDLearnedPositionalEmbedding(keras.layers.Embedding):
         return super().call(tf.cast(position_ids, dtype=tf.int32))
 
 
-# Copied from transformers.models.longformer.modeling_tf_longformer.TFLongformerSelfAttention with TFLongformer->TFLEDEncoder
+# Copied from tiny_hf.transformers.models.longformer.modeling_tf_longformer.TFLongformerSelfAttention with TFLongformer->TFLEDEncoder
 class TFLEDEncoderSelfAttention(keras.layers.Layer):
     def __init__(self, config, layer_id, **kwargs):
         super().__init__(**kwargs)
@@ -1433,7 +1433,7 @@ class TFLEDPreTrainedModel(TFPreTrainedModel):
 
 
 @dataclass
-# Copied from transformers.models.longformer.modeling_tf_longformer.TFLongformerBaseModelOutput with TFLongformer->TFLEDEncoder
+# Copied from tiny_hf.transformers.models.longformer.modeling_tf_longformer.TFLongformerBaseModelOutput with TFLongformer->TFLEDEncoder
 class TFLEDEncoderBaseModelOutput(ModelOutput):
     """
     Base class for Longformer's outputs, with potential hidden states, local and global attentions.
@@ -2433,7 +2433,7 @@ class TFLEDModel(TFLEDPreTrainedModel):
                 self.led.build(None)
 
 
-# Copied from transformers.models.bart.modeling_tf_bart.BiasLayer
+# Copied from tiny_hf.transformers.models.bart.modeling_tf_bart.BiasLayer
 class BiasLayer(keras.layers.Layer):
     """
     Bias as a layer. It is used for serialization purposes: `keras.Model.save_weights` stores on a per-layer basis,
@@ -2525,7 +2525,7 @@ class TFLEDForConditionalGeneration(TFLEDPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, TFLEDForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, TFLEDForConditionalGeneration
         >>> import tensorflow as tf
 
         >>> mname = "allenai/led-base-16384"

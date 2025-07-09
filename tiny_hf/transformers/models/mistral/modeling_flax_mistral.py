@@ -127,7 +127,7 @@ MISTRAL_INPUTS_DOCSTRING = r"""
 """
 
 
-# Copied from transformers.models.llama.modeling_flax_llama.FlaxLlamaRMSNorm with Llama->Mistral
+# Copied from tiny_hf.transformers.models.llama.modeling_flax_llama.FlaxLlamaRMSNorm with Llama->Mistral
 class FlaxMistralRMSNorm(nn.Module):
     config: MistralConfig
     dtype: jnp.dtype = jnp.float32
@@ -146,7 +146,7 @@ class FlaxMistralRMSNorm(nn.Module):
         return self.weight * jnp.asarray(hidden_states, dtype=self.dtype)
 
 
-# Copied from transformers.models.llama.modeling_flax_llama.FlaxLlamaRotaryEmbedding with Llama->Mistral
+# Copied from tiny_hf.transformers.models.llama.modeling_flax_llama.FlaxLlamaRotaryEmbedding with Llama->Mistral
 class FlaxMistralRotaryEmbedding(nn.Module):
     config: MistralConfig
     dtype: jnp.dtype = jnp.float32
@@ -168,7 +168,7 @@ class FlaxMistralRotaryEmbedding(nn.Module):
         return key, query
 
 
-# Copied from transformers.models.llama.modeling_flax_llama.FlaxLlamaMLP with Llama->Mistral
+# Copied from tiny_hf.transformers.models.llama.modeling_flax_llama.FlaxLlamaMLP with Llama->Mistral
 class FlaxMistralMLP(nn.Module):
     config: MistralConfig
     dtype: jnp.dtype = jnp.float32
@@ -192,12 +192,12 @@ class FlaxMistralMLP(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.llama.modeling_flax_llama.apply_rotary_pos_emb
+# Copied from tiny_hf.transformers.models.llama.modeling_flax_llama.apply_rotary_pos_emb
 def apply_rotary_pos_emb(tensor, sin_pos, cos_pos):
     return (tensor * cos_pos) + (rotate_half(tensor) * sin_pos)
 
 
-# Copied from transformers.models.llama.modeling_flax_llama.create_sinusoidal_positions
+# Copied from tiny_hf.transformers.models.llama.modeling_flax_llama.create_sinusoidal_positions
 def create_sinusoidal_positions(num_pos, dim):
     inv_freq = 1.0 / (10000 ** (np.arange(0, dim, 2) / dim))
     freqs = np.einsum("i , j -> i j", np.arange(num_pos), inv_freq).astype("float32")
@@ -207,7 +207,7 @@ def create_sinusoidal_positions(num_pos, dim):
     return jnp.array(out[:, :, :num_pos])
 
 
-# Copied from transformers.models.llama.modeling_flax_llama.rotate_half
+# Copied from tiny_hf.transformers.models.llama.modeling_flax_llama.rotate_half
 def rotate_half(tensor):
     """Rotates half the hidden dims of the input."""
     rotate_half_tensor = jnp.concatenate(
@@ -250,7 +250,7 @@ class FlaxMistralAttention(nn.Module):
         return hidden_states.reshape(hidden_states.shape[:2] + (self.hidden_size,))
 
     @nn.compact
-    # Copied from transformers.models.gpt_neo.modeling_flax_gpt_neo.FlaxGPTNeoSelfAttention._concatenate_to_cache
+    # Copied from tiny_hf.transformers.models.gpt_neo.modeling_flax_gpt_neo.FlaxGPTNeoSelfAttention._concatenate_to_cache
     def _concatenate_to_cache(self, key, value, query, attention_mask):
         """
         This function takes projected key, value states from a single input token and concatenates the states to cached
@@ -350,7 +350,7 @@ class FlaxMistralAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.llama.modeling_flax_llama.FlaxLlamaDecoderLayer with Llama->Mistral
+# Copied from tiny_hf.transformers.models.llama.modeling_flax_llama.FlaxLlamaDecoderLayer with Llama->Mistral
 class FlaxMistralDecoderLayer(nn.Module):
     config: MistralConfig
     dtype: jnp.dtype = jnp.float32
@@ -393,7 +393,7 @@ class FlaxMistralDecoderLayer(nn.Module):
         return (hidden_states,) + outputs[1:]
 
 
-# Copied from transformers.models.gpt_neo.modeling_flax_gpt_neo.FlaxGPTNeoPreTrainedModel with GPTNeo->Mistral, GPT_NEO->MISTRAL, transformer->model
+# Copied from tiny_hf.transformers.models.gpt_neo.modeling_flax_gpt_neo.FlaxGPTNeoPreTrainedModel with GPTNeo->Mistral, GPT_NEO->MISTRAL, transformer->model
 class FlaxMistralPreTrainedModel(FlaxPreTrainedModel):
     """
     An abstract class to handle weights initialization and a simple interface for downloading and loading pretrained
@@ -526,7 +526,7 @@ class FlaxMistralPreTrainedModel(FlaxPreTrainedModel):
         return outputs
 
 
-# Copied from transformers.models.llama.modeling_flax_llama.FlaxLlamaLayerCollection with Llama->Mistral
+# Copied from tiny_hf.transformers.models.llama.modeling_flax_llama.FlaxLlamaLayerCollection with Llama->Mistral
 class FlaxMistralLayerCollection(nn.Module):
     config: MistralConfig
     dtype: jnp.dtype = jnp.float32
@@ -573,7 +573,7 @@ class FlaxMistralLayerCollection(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.llama.modeling_flax_llama.FlaxLlamaModule with Llama->Mistral
+# Copied from tiny_hf.transformers.models.llama.modeling_flax_llama.FlaxLlamaModule with Llama->Mistral
 class FlaxMistralModule(nn.Module):
     config: MistralConfig
     dtype: jnp.dtype = jnp.float32
@@ -650,7 +650,7 @@ append_call_sample_docstring(
 )
 
 
-# Copied from transformers.models.llama.modeling_flax_llama.FlaxLlamaForCausalLMModule with Llama->Mistral
+# Copied from tiny_hf.transformers.models.llama.modeling_flax_llama.FlaxLlamaForCausalLMModule with Llama->Mistral
 class FlaxMistralForCausalLMModule(nn.Module):
     config: MistralConfig
     dtype: jnp.dtype = jnp.float32
@@ -702,7 +702,7 @@ class FlaxMistralForCausalLMModule(nn.Module):
     MISTRAL_START_DOCSTRING,
 )
 
-# Copied from transformers.models.gptj.modeling_flax_gptj.FlaxGPTJForCausalLM with GPTJ->Mistral
+# Copied from tiny_hf.transformers.models.gptj.modeling_flax_gptj.FlaxGPTJForCausalLM with GPTJ->Mistral
 class FlaxMistralForCausalLM(FlaxMistralPreTrainedModel):
     module_class = FlaxMistralForCausalLMModule
 

@@ -97,7 +97,7 @@ class T5Tokenizer(PreTrainedTokenizer):
 
             - `legacy=True`:
             ```python
-            >>> from transformers import T5Tokenizer
+            >>> from tiny_hf.transformers.import T5Tokenizer
 
             >>> tokenizer = T5Tokenizer.from_pretrained("google-t5/t5-base", legacy=True)
             >>> tokenizer.encode("Hello <extra_id_0>.")
@@ -105,7 +105,7 @@ class T5Tokenizer(PreTrainedTokenizer):
             ```
             - `legacy=False`:
             ```python
-            >>> from transformers import T5Tokenizer
+            >>> from tiny_hf.transformers.import T5Tokenizer
 
             >>> tokenizer = T5Tokenizer.from_pretrained("google-t5/t5-base", legacy=False)
             >>> tokenizer.encode("Hello <extra_id_0>.")  # the extra space `[3]` is no longer here
@@ -198,7 +198,7 @@ class T5Tokenizer(PreTrainedTokenizer):
             **kwargs,
         )
 
-    # Copied from transformers.models.t5.tokenization_t5.T5Tokenizer.get_spm_processor
+    # Copied from tiny_hf.transformers.models.t5.tokenization_t5.T5Tokenizer.get_spm_processor
     def get_spm_processor(self, from_slow=False):
         tokenizer = spm.SentencePieceProcessor(**self.sp_model_kwargs)
         if self.legacy or from_slow:  # no dependency on protobuf

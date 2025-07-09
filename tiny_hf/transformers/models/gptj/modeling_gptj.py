@@ -17,11 +17,11 @@
 import warnings
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.fx
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.fx
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, StaticCache
@@ -49,7 +49,7 @@ from .configuration_gptj import GPTJConfig
 
 
 if is_torch_flex_attn_available():
-    from torch.nn.attention.flex_attention import BlockMask
+    from tg_adapter.nn.attention.flex_attention import BlockMask
 
     from ...integrations.flex_attention import make_flex_block_causal_mask
 
@@ -888,7 +888,7 @@ class GPTJModel(GPTJPreTrainedModel):
             attentions=all_self_attentions,
         )
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
     def _update_causal_mask(
         self,
         attention_mask: torch.Tensor,
@@ -960,7 +960,7 @@ class GPTJModel(GPTJPreTrainedModel):
         return causal_mask
 
     @staticmethod
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel._prepare_4d_causal_attention_mask_with_cache_position
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel._prepare_4d_causal_attention_mask_with_cache_position
     def _prepare_4d_causal_attention_mask_with_cache_position(
         attention_mask: torch.Tensor,
         sequence_length: int,

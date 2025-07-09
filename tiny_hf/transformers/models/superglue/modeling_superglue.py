@@ -17,11 +17,11 @@ import math
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
-from transformers import PreTrainedModel, add_start_docstrings
-from transformers.models.superglue.configuration_superglue import SuperGlueConfig
+from tiny_hf.transformers.import PreTrainedModel, add_start_docstrings
+from tiny_hf.transformers.models.superglue.configuration_superglue import SuperGlueConfig
 
 from ...pytorch_utils import find_pruneable_heads_and_indices, prune_linear_layer
 from ...utils import ModelOutput, add_start_docstrings_to_model_forward, logging
@@ -234,7 +234,7 @@ class SuperGlueKeypointEncoder(nn.Module):
         return hidden_state, all_hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfAttention with Bert->SuperGlue
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfAttention with Bert->SuperGlue
 class SuperGlueSelfAttention(nn.Module):
     def __init__(self, config, position_embedding_type=None):
         super().__init__()
@@ -384,7 +384,7 @@ SUPERGLUE_SELF_ATTENTION_CLASSES = {
 }
 
 
-# Copied from transformers.models.bert.modeling_bert.BertAttention with Bert->SuperGlue,BERT->SUPERGLUE
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertAttention with Bert->SuperGlue,BERT->SUPERGLUE
 class SuperGlueAttention(nn.Module):
     def __init__(self, config, position_embedding_type=None):
         super().__init__()
@@ -789,8 +789,8 @@ class SuperGlueForKeypointMatching(SuperGluePreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, AutoModel
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoImageProcessor, AutoModel
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> import requests
 

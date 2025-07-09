@@ -43,7 +43,7 @@ from ...utils import TensorType, filter_out_non_signature_kwargs, logging
 logger = logging.get_logger(__name__)
 
 
-# Copied from transformers.models.blip.image_processing_blip.BlipImageProcessor with Blip->InstructBlipVideo, BLIP->InstructBLIPVideo
+# Copied from tiny_hf.transformers.models.blip.image_processing_blip.BlipImageProcessor with Blip->InstructBlipVideo, BLIP->InstructBLIPVideo
 class InstructBlipVideoImageProcessor(BaseImageProcessor):
     r"""
     Constructs a InstructBLIPVideo image processor.
@@ -108,7 +108,7 @@ class InstructBlipVideoImageProcessor(BaseImageProcessor):
         self.image_std = image_std if image_std is not None else OPENAI_CLIP_STD
         self.do_convert_rgb = do_convert_rgb
 
-    # Copied from transformers.models.vit.image_processing_vit.ViTImageProcessor.resize with PILImageResampling.BILINEAR->PILImageResampling.BICUBIC
+    # Copied from tiny_hf.transformers.models.vit.image_processing_vit.ViTImageProcessor.resize with PILImageResampling.BILINEAR->PILImageResampling.BICUBIC
     def resize(
         self,
         image: np.ndarray,

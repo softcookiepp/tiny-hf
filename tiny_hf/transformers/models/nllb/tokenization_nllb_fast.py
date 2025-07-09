@@ -53,7 +53,7 @@ class NllbTokenizerFast(PreTrainedTokenizerFast):
     Examples:
 
     ```python
-    >>> from transformers import NllbTokenizerFast
+    >>> from tiny_hf.transformers.import NllbTokenizerFast
 
     >>> tokenizer = NllbTokenizerFast.from_pretrained(
     ...     "facebook/nllb-200-distilled-600M", src_lang="eng_Latn", tgt_lang="fra_Latn"

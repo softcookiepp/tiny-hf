@@ -65,7 +65,7 @@ class Phi4MultimodalVisionConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import Phi4MultimodalVisionConfig
+    >>> from tiny_hf.transformers.import Phi4MultimodalVisionConfig
 
     >>> # Initializing a Phi4MultimodalVisionConfig with microsoft/Phi-4-multimodal-instruct style configuration
     >>> configuration = Phi4MultimodalVisionConfig()
@@ -171,7 +171,7 @@ class Phi4MultimodalAudioConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import Phi4MultimodalAudioConfig
+    >>> from tiny_hf.transformers.import Phi4MultimodalAudioConfig
 
     >>> # Initializing a Phi4MultimodalAudioConfig with microsoft/Phi-4-multimodal-instruct style configuration
     >>> configuration = Phi4MultimodalAudioConfig()
@@ -322,7 +322,7 @@ class Phi4MultimodalConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import Phi4MultimodalModel, Phi4MultimodalConfig
+    >>> from tiny_hf.transformers.import Phi4MultimodalModel, Phi4MultimodalConfig
 
     >>> # Initializing a Phi4Multimodal style configuration
     >>> configuration = Phi4MultimodalConfig.from_pretrained("microsoft/Phi-4-multimodal-instruct")

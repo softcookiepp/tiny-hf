@@ -82,7 +82,7 @@ class BertConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import BertConfig, BertModel
+    >>> from tiny_hf.transformers.import BertConfig, BertModel
 
     >>> # Initializing a BERT google-bert/bert-base-uncased style configuration
     >>> configuration = BertConfig()

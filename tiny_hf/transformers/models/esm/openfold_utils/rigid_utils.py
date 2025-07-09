@@ -19,7 +19,7 @@ from functools import lru_cache
 from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
-import torch
+import tg_adapter as torch
 
 
 def rot_matmul(a: torch.Tensor, b: torch.Tensor) -> torch.Tensor:

@@ -110,7 +110,7 @@ def _create_position_ids_from_inputs_embeds(
     return tf.broadcast_to(tf.expand_dims(position_ids, axis=0), input_shape) + past_key_values_length
 
 
-# Copied from transformers.models.bart.modeling_tf_bart._make_causal_mask
+# Copied from tiny_hf.transformers.models.bart.modeling_tf_bart._make_causal_mask
 def _make_causal_mask(input_ids_shape: tf.TensorShape, past_key_values_length: int = 0):
     """
     Make causal mask used for bi-directional self-attention.
@@ -128,7 +128,7 @@ def _make_causal_mask(input_ids_shape: tf.TensorShape, past_key_values_length: i
     return tf.tile(mask[None, None, :, :], (bsz, 1, 1, 1))
 
 
-# Copied from transformers.models.bart.modeling_tf_bart._expand_mask
+# Copied from tiny_hf.transformers.models.bart.modeling_tf_bart._expand_mask
 def _expand_mask(mask: tf.Tensor, tgt_len: Optional[int] = None):
     """
     Expands attention_mask from `[bsz, seq_len]` to `[bsz, 1, tgt_seq_len, src_seq_len]`.
@@ -142,7 +142,7 @@ def _expand_mask(mask: tf.Tensor, tgt_len: Optional[int] = None):
     return (one_cst - expanded_mask) * LARGE_NEGATIVE
 
 
-# Copied from transformers.models.bart.modeling_tf_bart.TFBartAttention with Bart->XGLM
+# Copied from tiny_hf.transformers.models.bart.modeling_tf_bart.TFBartAttention with Bart->XGLM
 class TFXGLMAttention(keras.layers.Layer):
     """Multi-headed attention from "Attention Is All You Need"""
 
@@ -346,7 +346,7 @@ class TFXGLMDecoderLayer(keras.layers.Layer):
         self.final_layer_norm = keras.layers.LayerNormalization(epsilon=1e-5, name="final_layer_norm")
         self.config = config
 
-    # Copied from transformers.models.mbart.modeling_tf_mbart.TFMBartDecoderLayer.call
+    # Copied from tiny_hf.transformers.models.mbart.modeling_tf_mbart.TFMBartDecoderLayer.call
     def call(
         self,
         hidden_states: tf.Tensor,

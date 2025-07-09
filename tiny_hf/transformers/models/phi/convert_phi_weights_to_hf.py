@@ -27,10 +27,10 @@ import gc
 import os
 
 import safetensors
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 
-from transformers import PhiConfig, PhiForCausalLM
+from tiny_hf.transformers.import PhiConfig, PhiForCausalLM
 
 
 _MODELS = {

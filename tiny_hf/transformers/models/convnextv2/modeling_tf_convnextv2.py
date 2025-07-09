@@ -61,7 +61,7 @@ _IMAGE_CLASS_CHECKPOINT = "facebook/convnextv2-tiny-1k-224"
 _IMAGE_CLASS_EXPECTED_OUTPUT = "tabby, tabby cat"
 
 
-# Copied from transformers.models.convnext.modeling_tf_convnext.TFConvNextDropPath with ConvNext->ConvNextV2
+# Copied from tiny_hf.transformers.models.convnext.modeling_tf_convnext.TFConvNextDropPath with ConvNext->ConvNextV2
 class TFConvNextV2DropPath(keras.layers.Layer):
     """Drop paths (Stochastic Depth) per sample (when applied in main path of residual blocks).
     References:
@@ -110,7 +110,7 @@ class TFConvNextV2GRN(keras.layers.Layer):
         return hidden_states
 
 
-# Copied from transformers.models.convnext.modeling_tf_convnext.TFConvNextEmbeddings with ConvNext->ConvNextV2
+# Copied from tiny_hf.transformers.models.convnext.modeling_tf_convnext.TFConvNextEmbeddings with ConvNext->ConvNextV2
 class TFConvNextV2Embeddings(keras.layers.Layer):
     """This class is comparable to (and inspired by) the SwinEmbeddings class
     found in src/transformers/models/swin/modeling_swin.py.
@@ -254,7 +254,7 @@ class TFConvNextV2Layer(keras.layers.Layer):
                 self.drop_path.build(None)
 
 
-# Copied from transformers.models.convnext.modeling_tf_convnext.TFConvNextStage with ConvNext->ConvNextV2
+# Copied from tiny_hf.transformers.models.convnext.modeling_tf_convnext.TFConvNextStage with ConvNext->ConvNextV2
 class TFConvNextV2Stage(keras.layers.Layer):
     """ConvNextV2 stage, consisting of an optional downsampling layer + multiple residual blocks.
 

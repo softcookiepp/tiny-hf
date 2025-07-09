@@ -24,9 +24,9 @@ import collections
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
+import tg_adapter as torch
+import tg_adapter.nn as nn
+import tg_adapter.nn.functional as F
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -777,7 +777,7 @@ class GotOcr2ForConditionalGeneration(GotOcr2PreTrainedModel, GenerationMixin):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, GotOcr2ForConditionalGeneration, TextStreamer
+        >>> from tiny_hf.transformers.import AutoProcessor, GotOcr2ForConditionalGeneration, TextStreamer
 
         >>> model = GotOcr2ForConditionalGeneration.from_pretrained("stepfun-ai/GOT-OCR-2.0-hf").to("cuda")
         >>> processor = AutoProcessor.from_pretrained("stepfun-ai/GOT-OCR-2.0-hf")

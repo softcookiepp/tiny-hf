@@ -43,7 +43,7 @@ if is_vision_available():
 logger = logging.get_logger(__name__)
 
 
-# Copied from transformers.models.vilt.image_processing_vilt.max_across_indices
+# Copied from tiny_hf.transformers.models.vilt.image_processing_vilt.max_across_indices
 def max_across_indices(values: Iterable[Any]) -> List[Any]:
     """
     Return the maximum value across all indices of an iterable of values.
@@ -51,7 +51,7 @@ def max_across_indices(values: Iterable[Any]) -> List[Any]:
     return [max(values_i) for values_i in zip(*values)]
 
 
-# Copied from transformers.models.vilt.image_processing_vilt.make_pixel_mask
+# Copied from tiny_hf.transformers.models.vilt.image_processing_vilt.make_pixel_mask
 def make_pixel_mask(
     image: np.ndarray, output_size: Tuple[int, int], input_data_format: Optional[Union[str, ChannelDimension]] = None
 ) -> np.ndarray:
@@ -70,7 +70,7 @@ def make_pixel_mask(
     return mask
 
 
-# Copied from transformers.models.vilt.image_processing_vilt.get_max_height_width
+# Copied from tiny_hf.transformers.models.vilt.image_processing_vilt.get_max_height_width
 def get_max_height_width(
     images: List[np.ndarray], input_data_format: Optional[Union[str, ChannelDimension]] = None
 ) -> List[int]:
@@ -89,7 +89,7 @@ def get_max_height_width(
     return (max_height, max_width)
 
 
-# Copied from transformers.models.vilt.image_processing_vilt.get_resize_output_image_size
+# Copied from tiny_hf.transformers.models.vilt.image_processing_vilt.get_resize_output_image_size
 def get_resize_output_image_size(
     input_image: np.ndarray,
     shorter: int = 800,
@@ -205,7 +205,7 @@ class BridgeTowerImageProcessor(BaseImageProcessor):
         self.do_center_crop = do_center_crop
         self.crop_size = crop_size
 
-    # Copied from transformers.models.vilt.image_processing_vilt.ViltImageProcessor.resize
+    # Copied from tiny_hf.transformers.models.vilt.image_processing_vilt.ViltImageProcessor.resize
     def resize(
         self,
         image: np.ndarray,
@@ -286,7 +286,7 @@ class BridgeTowerImageProcessor(BaseImageProcessor):
             **kwargs,
         )
 
-    # Copied from transformers.models.vilt.image_processing_vilt.ViltImageProcessor._pad_image
+    # Copied from tiny_hf.transformers.models.vilt.image_processing_vilt.ViltImageProcessor._pad_image
     def _pad_image(
         self,
         image: np.ndarray,
@@ -314,7 +314,7 @@ class BridgeTowerImageProcessor(BaseImageProcessor):
         )
         return padded_image
 
-    # Copied from transformers.models.vilt.image_processing_vilt.ViltImageProcessor.pad
+    # Copied from tiny_hf.transformers.models.vilt.image_processing_vilt.ViltImageProcessor.pad
     def pad(
         self,
         images: List[np.ndarray],

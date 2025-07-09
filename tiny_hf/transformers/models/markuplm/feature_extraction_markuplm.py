@@ -113,7 +113,7 @@ class MarkupLMFeatureExtractor(FeatureExtractionMixin):
         Examples:
 
         ```python
-        >>> from transformers import MarkupLMFeatureExtractor
+        >>> from tiny_hf.transformers.import MarkupLMFeatureExtractor
 
         >>> page_name_1 = "page1.html"
         >>> page_name_2 = "page2.html"

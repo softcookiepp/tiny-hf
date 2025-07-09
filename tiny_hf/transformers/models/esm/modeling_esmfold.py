@@ -19,9 +19,9 @@ from functools import partial
 from typing import Callable, Dict, List, Optional, Sequence, Tuple, Union
 
 import numpy as np
-import torch
-import torch.nn as nn
-from torch.nn import LayerNorm
+import tg_adapter as torch
+import tg_adapter.nn as nn
+from tg_adapter.nn import LayerNorm
 
 from ...integrations.deepspeed import is_deepspeed_available
 from ...modeling_outputs import ModelOutput
@@ -2097,7 +2097,7 @@ class EsmForProteinFolding(EsmPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, EsmForProteinFolding
+        >>> from tiny_hf.transformers.import AutoTokenizer, EsmForProteinFolding
 
         >>> model = EsmForProteinFolding.from_pretrained("facebook/esmfold_v1")
         >>> tokenizer = AutoTokenizer.from_pretrained("facebook/esmfold_v1")

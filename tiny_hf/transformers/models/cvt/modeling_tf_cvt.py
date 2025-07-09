@@ -939,7 +939,7 @@ class TFCvtModel(TFCvtPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, TFCvtModel
+        >>> from tiny_hf.transformers.import AutoImageProcessor, TFCvtModel
         >>> from PIL import Image
         >>> import requests
 
@@ -1030,7 +1030,7 @@ class TFCvtForImageClassification(TFCvtPreTrainedModel, TFSequenceClassification
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, TFCvtForImageClassification
+        >>> from tiny_hf.transformers.import AutoImageProcessor, TFCvtForImageClassification
         >>> import tensorflow as tf
         >>> from PIL import Image
         >>> import requests

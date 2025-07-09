@@ -18,9 +18,9 @@
 import math
 from typing import Optional, Tuple, Union
 
-import torch
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN, gelu
 from ...modeling_outputs import (
@@ -243,7 +243,7 @@ class MPNetAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate
 class MPNetIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -259,7 +259,7 @@ class MPNetIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOutput
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOutput
 class MPNetOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -395,7 +395,7 @@ class MPNetEncoder(nn.Module):
         return ret
 
 
-# Copied from transformers.models.bert.modeling_bert.BertPooler
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPooler
 class MPNetPooler(nn.Module):
     def __init__(self, config):
         super().__init__()

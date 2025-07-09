@@ -32,8 +32,8 @@ MULTI_SEP_TOKENS_TOKENIZERS_SET = {"roberta", "camembert", "bart", "mpnet"}
 
 
 if is_torch_available():
-    import torch
-    from torch.utils.data import TensorDataset
+    import tg_adapter as torch
+    from tg_adapter.utils.data import TensorDataset
 
 if is_tf_available():
     import tensorflow as tf

@@ -20,9 +20,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...generation import GenerationMixin
 from ...modeling_utils import PreTrainedModel
@@ -49,7 +49,7 @@ rwkv_cuda_kernel = None
 
 
 def load_wkv_cuda_kernel(context_length):
-    from torch.utils.cpp_extension import load as load_kernel
+    from tg_adapter.utils.cpp_extension import load as load_kernel
 
     global rwkv_cuda_kernel
 

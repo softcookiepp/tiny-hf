@@ -16,12 +16,12 @@ import math
 from typing import Callable, List, Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.nn.functional as F
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.nn.functional as F
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
-from transformers.modeling_attn_mask_utils import _prepare_4d_attention_mask
+from tiny_hf.transformers.modeling_attn_mask_utils import _prepare_4d_attention_mask
 
 from ...activations import ACT2FN
 from ...cache_utils import DynamicCache
@@ -97,7 +97,7 @@ class Phi4MultimodalVisionConfig(SiglipVisionConfig):
     Example:
 
     ```python
-    >>> from transformers import Phi4MultimodalVisionConfig
+    >>> from tiny_hf.transformers.import Phi4MultimodalVisionConfig
 
     >>> # Initializing a Phi4MultimodalVisionConfig with microsoft/Phi-4-multimodal-instruct style configuration
     >>> configuration = Phi4MultimodalVisionConfig()
@@ -203,7 +203,7 @@ class Phi4MultimodalAudioConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import Phi4MultimodalAudioConfig
+    >>> from tiny_hf.transformers.import Phi4MultimodalAudioConfig
 
     >>> # Initializing a Phi4MultimodalAudioConfig with microsoft/Phi-4-multimodal-instruct style configuration
     >>> configuration = Phi4MultimodalAudioConfig()
@@ -354,7 +354,7 @@ class Phi4MultimodalConfig(Phi3Config):
     Example:
 
     ```python
-    >>> from transformers import Phi4MultimodalModel, Phi4MultimodalConfig
+    >>> from tiny_hf.transformers.import Phi4MultimodalModel, Phi4MultimodalConfig
 
     >>> # Initializing a Phi4Multimodal style configuration
     >>> configuration = Phi4MultimodalConfig.from_pretrained("microsoft/Phi-4-multimodal-instruct")
@@ -1726,7 +1726,7 @@ class Phi4MultimodalForCausalLM(Phi3ForCausalLM, nn.Module):
 
         Example:
         ```python
-        >>> from transformers import AutoTokenizer, Phi4MultimodalForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, Phi4MultimodalForCausalLM
         >>> model = Phi4MultimodalForCausalLM.from_pretrained("TBA")
         >>> tokenizer = AutoTokenizer.from_pretrained("TBA")
         >>> prompt = "This is an example script ."

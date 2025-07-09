@@ -20,10 +20,10 @@ import os
 import warnings
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -53,7 +53,7 @@ _CONFIG_FOR_DOC = "BlenderbotConfig"
 _CHECKPOINT_FOR_DOC = "facebook/blenderbot-400M-distill"
 
 
-# Copied from transformers.models.bart.modeling_bart.shift_tokens_right
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.shift_tokens_right
 def shift_tokens_right(input_ids: torch.Tensor, pad_token_id: int, decoder_start_token_id: int):
     """
     Shift input ids one token to the right.
@@ -87,7 +87,7 @@ class BlenderbotLearnedPositionalEmbedding(nn.Embedding):
         return super().forward(positions)
 
 
-# Copied from transformers.models.bart.modeling_bart.BartScaledWordEmbedding with Bart->Blenderbot
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartScaledWordEmbedding with Bart->Blenderbot
 class BlenderbotScaledWordEmbedding(nn.Embedding):
     """
     This module overrides nn.Embeddings' forward by multiplying with embeddings scale.
@@ -101,7 +101,7 @@ class BlenderbotScaledWordEmbedding(nn.Embedding):
         return super().forward(input_ids) * self.embed_scale
 
 
-# Copied from transformers.models.bart.modeling_bart.BartAttention with Bart->Blenderbot
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartAttention with Bart->Blenderbot
 class BlenderbotAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -263,7 +263,7 @@ class BlenderbotAttention(nn.Module):
 BLENDERBOT_ATTENTION_CLASSES = {"eager": BlenderbotAttention}
 
 
-# Copied from transformers.models.mbart.modeling_mbart.MBartEncoderLayer with MBart->Blenderbot, MBART->BLENDERBOT
+# Copied from tiny_hf.transformers.models.mbart.modeling_mbart.MBartEncoderLayer with MBart->Blenderbot, MBART->BLENDERBOT
 class BlenderbotEncoderLayer(nn.Module):
     def __init__(self, config: BlenderbotConfig):
         super().__init__()
@@ -334,7 +334,7 @@ class BlenderbotEncoderLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.mbart.modeling_mbart.MBartDecoderLayer with MBart->Blenderbot, MBART->BLENDERBOT
+# Copied from tiny_hf.transformers.models.mbart.modeling_mbart.MBartDecoderLayer with MBart->Blenderbot, MBART->BLENDERBOT
 class BlenderbotDecoderLayer(nn.Module):
     def __init__(self, config: BlenderbotConfig):
         super().__init__()
@@ -503,7 +503,7 @@ BLENDERBOT_GENERATION_EXAMPLE = r"""
     Conversation example:
 
     ```python
-    >>> from transformers import AutoTokenizer, BlenderbotForConditionalGeneration
+    >>> from tiny_hf.transformers.import AutoTokenizer, BlenderbotForConditionalGeneration
 
     >>> mname = "facebook/blenderbot-400M-distill"
     >>> model = BlenderbotForConditionalGeneration.from_pretrained(mname)
@@ -1125,7 +1125,7 @@ class BlenderbotModel(BlenderbotPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, BlenderbotModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, BlenderbotModel
 
         >>> model = BlenderbotModel.from_pretrained("facebook/blenderbot-400M-distill")
         >>> tokenizer = AutoTokenizer.from_pretrained("facebook/blenderbot-400M-distill")
@@ -1347,7 +1347,7 @@ class BlenderbotForConditionalGeneration(BlenderbotPreTrainedModel, GenerationMi
         return reordered_past
 
 
-# Copied from transformers.models.bart.modeling_bart.BartDecoderWrapper with Bart->Blenderbot
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartDecoderWrapper with Bart->Blenderbot
 class BlenderbotDecoderWrapper(BlenderbotPreTrainedModel):
     """
     This wrapper class is a helper class to correctly load pretrained checkpoints when the causal language model is
@@ -1362,7 +1362,7 @@ class BlenderbotDecoderWrapper(BlenderbotPreTrainedModel):
         return self.decoder(*args, **kwargs)
 
 
-# Copied from transformers.models.bart.modeling_bart.BartForCausalLM with Bart->Blenderbot, facebook/bart-base->facebook/blenderbot-400M-distill
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartForCausalLM with Bart->Blenderbot, facebook/bart-base->facebook/blenderbot-400M-distill
 class BlenderbotForCausalLM(BlenderbotPreTrainedModel, GenerationMixin):
     _tied_weights_keys = ["lm_head.weight"]
 
@@ -1484,7 +1484,7 @@ class BlenderbotForCausalLM(BlenderbotPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, BlenderbotForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, BlenderbotForCausalLM
 
         >>> tokenizer = AutoTokenizer.from_pretrained("facebook/blenderbot-400M-distill")
         >>> model = BlenderbotForCausalLM.from_pretrained("facebook/blenderbot-400M-distill", add_cross_attention=False)

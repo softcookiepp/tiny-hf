@@ -36,7 +36,7 @@ class DebertaTokenizerFast(PreTrainedTokenizerFast):
     be encoded differently whether it is at the beginning of the sentence (without space) or not:
 
     ```python
-    >>> from transformers import DebertaTokenizerFast
+    >>> from tiny_hf.transformers.import DebertaTokenizerFast
 
     >>> tokenizer = DebertaTokenizerFast.from_pretrained("microsoft/deberta-base")
     >>> tokenizer("Hello world")["input_ids"]
@@ -209,7 +209,7 @@ class DebertaTokenizerFast(PreTrainedTokenizerFast):
             return len(cls + token_ids_0 + sep) * [0]
         return len(cls + token_ids_0 + sep) * [0] + len(token_ids_1 + sep) * [1]
 
-    # Copied from transformers.models.gpt2.tokenization_gpt2_fast.GPT2TokenizerFast._batch_encode_plus
+    # Copied from tiny_hf.transformers.models.gpt2.tokenization_gpt2_fast.GPT2TokenizerFast._batch_encode_plus
     def _batch_encode_plus(self, *args, **kwargs) -> BatchEncoding:
         is_split_into_words = kwargs.get("is_split_into_words", False)
         assert self.add_prefix_space or not is_split_into_words, (
@@ -219,7 +219,7 @@ class DebertaTokenizerFast(PreTrainedTokenizerFast):
 
         return super()._batch_encode_plus(*args, **kwargs)
 
-    # Copied from transformers.models.gpt2.tokenization_gpt2_fast.GPT2TokenizerFast._encode_plus
+    # Copied from tiny_hf.transformers.models.gpt2.tokenization_gpt2_fast.GPT2TokenizerFast._encode_plus
     def _encode_plus(self, *args, **kwargs) -> BatchEncoding:
         is_split_into_words = kwargs.get("is_split_into_words", False)
 
@@ -230,7 +230,7 @@ class DebertaTokenizerFast(PreTrainedTokenizerFast):
 
         return super()._encode_plus(*args, **kwargs)
 
-    # Copied from transformers.models.gpt2.tokenization_gpt2_fast.GPT2TokenizerFast.save_vocabulary
+    # Copied from tiny_hf.transformers.models.gpt2.tokenization_gpt2_fast.GPT2TokenizerFast.save_vocabulary
     def save_vocabulary(self, save_directory: str, filename_prefix: Optional[str] = None) -> Tuple[str]:
         files = self._tokenizer.model.save(save_directory, name=filename_prefix)
         return tuple(files)

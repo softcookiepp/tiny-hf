@@ -388,7 +388,7 @@ def deepspeed_optim_sched(trainer, hf_deepspeed_config, args, num_training_steps
                 " custom optimizer has both CPU and GPU implementation (except LAMB)"
             )
 
-        # ds supports Adam, OneBitAdam, and Lamb optimizers and can import other optimizers from torch.
+        # ds supports Adam, OneBitAdam, and Lamb optimizers and can import other optimizers from tg_adapter.
         # But trainer uses AdamW by default.
         optimizer = trainer.create_optimizer()
         # To use other optimizers requires voiding warranty with: `zero_allow_untested_optimizer`

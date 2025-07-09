@@ -20,9 +20,9 @@ from dataclasses import dataclass
 from typing import Dict, Optional, Tuple, Union
 
 import numpy as np
-import torch
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import gelu
 from ...generation import GenerationMixin
@@ -53,7 +53,7 @@ _CHECKPOINT_FOR_DOC = "flaubert/flaubert_base_cased"
 _CONFIG_FOR_DOC = "FlaubertConfig"
 
 
-# Copied from transformers.models.xlm.modeling_xlm.create_sinusoidal_embeddings
+# Copied from tiny_hf.transformers.models.xlm.modeling_xlm.create_sinusoidal_embeddings
 def create_sinusoidal_embeddings(n_pos, dim, out):
     position_enc = np.array([[pos / np.power(10000, 2 * (j // 2) / dim) for j in range(dim)] for pos in range(n_pos)])
     out.requires_grad = False
@@ -62,7 +62,7 @@ def create_sinusoidal_embeddings(n_pos, dim, out):
     out.detach_()
 
 
-# Copied from transformers.models.xlm.modeling_xlm.get_masks
+# Copied from tiny_hf.transformers.models.xlm.modeling_xlm.get_masks
 def get_masks(slen, lengths, causal, padding_mask=None):
     """
     Generate hidden states mask, and optionally an attention mask.
@@ -88,7 +88,7 @@ def get_masks(slen, lengths, causal, padding_mask=None):
     return mask, attn_mask
 
 
-# Copied from transformers.models.xlm.modeling_xlm.MultiHeadAttention
+# Copied from tiny_hf.transformers.models.xlm.modeling_xlm.MultiHeadAttention
 class MultiHeadAttention(nn.Module):
     NEW_ID = itertools.count()
 
@@ -185,7 +185,7 @@ class MultiHeadAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.xlm.modeling_xlm.TransformerFFN
+# Copied from tiny_hf.transformers.models.xlm.modeling_xlm.TransformerFFN
 class TransformerFFN(nn.Module):
     def __init__(self, in_dim, dim_hidden, out_dim, config):
         super().__init__()
@@ -286,7 +286,7 @@ FLAUBERT_INPUTS_DOCSTRING = r"""
     "The bare Flaubert Model transformer outputting raw hidden-states without any specific head on top.",
     FLAUBERT_START_DOCSTRING,
 )
-# Copied from transformers.models.xlm.modeling_xlm.XLMPredLayer with XLM->Flaubert
+# Copied from tiny_hf.transformers.models.xlm.modeling_xlm.XLMPredLayer with XLM->Flaubert
 class FlaubertPredLayer(nn.Module):
     """
     Prediction layer (cross_entropy or adaptive_softmax).
@@ -329,7 +329,7 @@ class FlaubertPredLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.xlm.modeling_xlm.XLMPreTrainedModel with XLM->Flaubert
+# Copied from tiny_hf.transformers.models.xlm.modeling_xlm.XLMPreTrainedModel with XLM->Flaubert
 class FlaubertPreTrainedModel(PreTrainedModel):
     """
     An abstract class to handle weights initialization and a simple interface for downloading and loading pretrained
@@ -448,15 +448,15 @@ class FlaubertModel(FlaubertPreTrainedModel):
             "position_ids", torch.arange(config.max_position_embeddings).expand((1, -1)), persistent=False
         )
 
-    # Copied from transformers.models.xlm.modeling_xlm.XLMModel.get_input_embeddings
+    # Copied from tiny_hf.transformers.models.xlm.modeling_xlm.XLMModel.get_input_embeddings
     def get_input_embeddings(self):
         return self.embeddings
 
-    # Copied from transformers.models.xlm.modeling_xlm.XLMModel.set_input_embeddings
+    # Copied from tiny_hf.transformers.models.xlm.modeling_xlm.XLMModel.set_input_embeddings
     def set_input_embeddings(self, new_embeddings):
         self.embeddings = new_embeddings
 
-    # Copied from transformers.models.xlm.modeling_xlm.XLMModel._prune_heads
+    # Copied from tiny_hf.transformers.models.xlm.modeling_xlm.XLMModel._prune_heads
     def _prune_heads(self, heads_to_prune):
         """
         Prunes heads of the model. heads_to_prune: dict of {layer_num: list of heads to prune in this layer} See base
@@ -847,7 +847,7 @@ class FlaubertForSequenceClassification(FlaubertPreTrainedModel):
     """,
     FLAUBERT_START_DOCSTRING,
 )
-# Copied from transformers.models.xlm.modeling_xlm.XLMForTokenClassification with XLM_INPUTS->FLAUBERT_INPUTS,XLM->Flaubert
+# Copied from tiny_hf.transformers.models.xlm.modeling_xlm.XLMForTokenClassification with XLM_INPUTS->FLAUBERT_INPUTS,XLM->Flaubert
 class FlaubertForTokenClassification(FlaubertPreTrainedModel):
     def __init__(self, config):
         super().__init__(config)
@@ -932,7 +932,7 @@ class FlaubertForTokenClassification(FlaubertPreTrainedModel):
     """,
     FLAUBERT_START_DOCSTRING,
 )
-# Copied from transformers.models.xlm.modeling_xlm.XLMForQuestionAnsweringSimple with XLM_INPUTS->FLAUBERT_INPUTS,XLM->Flaubert
+# Copied from tiny_hf.transformers.models.xlm.modeling_xlm.XLMForQuestionAnsweringSimple with XLM_INPUTS->FLAUBERT_INPUTS,XLM->Flaubert
 class FlaubertForQuestionAnsweringSimple(FlaubertPreTrainedModel):
     def __init__(self, config):
         super().__init__(config)
@@ -1137,8 +1137,8 @@ class FlaubertForQuestionAnswering(FlaubertPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import XLMTokenizer, XLMForQuestionAnswering
-        >>> import torch
+        >>> from tiny_hf.transformers.import XLMTokenizer, XLMForQuestionAnswering
+        >>> import tg_adapter as torch
 
         >>> tokenizer = XLMTokenizer.from_pretrained("FacebookAI/xlm-mlm-en-2048")
         >>> model = XLMForQuestionAnswering.from_pretrained("FacebookAI/xlm-mlm-en-2048")

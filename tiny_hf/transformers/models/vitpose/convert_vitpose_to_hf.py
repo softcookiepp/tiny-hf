@@ -24,11 +24,11 @@ import os
 import re
 
 import requests
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 from PIL import Image
 
-from transformers import VitPoseBackboneConfig, VitPoseConfig, VitPoseForPoseEstimation, VitPoseImageProcessor
+from tiny_hf.transformers.import VitPoseBackboneConfig, VitPoseConfig, VitPoseForPoseEstimation, VitPoseImageProcessor
 
 
 ORIGINAL_TO_CONVERTED_KEY_MAPPING = {

@@ -68,7 +68,7 @@ class RwkvConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import RwkvConfig, RwkvModel
+    >>> from tiny_hf.transformers.import RwkvConfig, RwkvModel
 
     >>> # Initializing a Rwkv configuration
     >>> configuration = RwkvConfig()

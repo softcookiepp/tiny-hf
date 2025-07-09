@@ -14,10 +14,10 @@
 
 import argparse
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
-from transformers import Speech2TextConfig, Speech2TextForConditionalGeneration
+from tiny_hf.transformers.import Speech2TextConfig, Speech2TextForConditionalGeneration
 
 
 def remove_ignore_keys_(state_dict):

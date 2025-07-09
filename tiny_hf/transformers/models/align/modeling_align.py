@@ -18,9 +18,9 @@ import math
 from dataclasses import dataclass
 from typing import Any, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...modeling_outputs import (
@@ -280,7 +280,7 @@ def align_loss(similarity: torch.Tensor) -> torch.Tensor:
     return (caption_loss + image_loss) / 2.0
 
 
-# Copied from transformers.models.efficientnet.modeling_efficientnet.round_filters with EfficientNet->AlignVision
+# Copied from tiny_hf.transformers.models.efficientnet.modeling_efficientnet.round_filters with EfficientNet->AlignVision
 def round_filters(config: AlignVisionConfig, num_channels: int):
     r"""
     Round number of filters based on depth multiplier.
@@ -296,7 +296,7 @@ def round_filters(config: AlignVisionConfig, num_channels: int):
     return int(new_dim)
 
 
-# Copied from transformers.models.efficientnet.modeling_efficientnet.correct_pad
+# Copied from tiny_hf.transformers.models.efficientnet.modeling_efficientnet.correct_pad
 def correct_pad(kernel_size: Union[int, Tuple], adjust: bool = True):
     r"""
     Utility function to get the tuple padding value for the depthwise convolution.
@@ -317,7 +317,7 @@ def correct_pad(kernel_size: Union[int, Tuple], adjust: bool = True):
         return (correct[1], correct[1], correct[0], correct[0])
 
 
-# Copied from transformers.models.efficientnet.modeling_efficientnet.EfficientNetEmbeddings with EfficientNet->AlignVision
+# Copied from tiny_hf.transformers.models.efficientnet.modeling_efficientnet.EfficientNetEmbeddings with EfficientNet->AlignVision
 class AlignVisionEmbeddings(nn.Module):
     r"""
     A module that corresponds to the stem module of the original work.
@@ -343,7 +343,7 @@ class AlignVisionEmbeddings(nn.Module):
         return features
 
 
-# Copied from transformers.models.efficientnet.modeling_efficientnet.EfficientNetDepthwiseConv2d with EfficientNet->AlignVision
+# Copied from tiny_hf.transformers.models.efficientnet.modeling_efficientnet.EfficientNetDepthwiseConv2d with EfficientNet->AlignVision
 class AlignVisionDepthwiseConv2d(nn.Conv2d):
     def __init__(
         self,
@@ -370,7 +370,7 @@ class AlignVisionDepthwiseConv2d(nn.Conv2d):
         )
 
 
-# Copied from transformers.models.efficientnet.modeling_efficientnet.EfficientNetExpansionLayer with EfficientNet->AlignVision
+# Copied from tiny_hf.transformers.models.efficientnet.modeling_efficientnet.EfficientNetExpansionLayer with EfficientNet->AlignVision
 class AlignVisionExpansionLayer(nn.Module):
     r"""
     This corresponds to the expansion phase of each block in the original implementation.
@@ -397,7 +397,7 @@ class AlignVisionExpansionLayer(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.efficientnet.modeling_efficientnet.EfficientNetDepthwiseLayer with EfficientNet->AlignVision
+# Copied from tiny_hf.transformers.models.efficientnet.modeling_efficientnet.EfficientNetDepthwiseLayer with EfficientNet->AlignVision
 class AlignVisionDepthwiseLayer(nn.Module):
     r"""
     This corresponds to the depthwise convolution phase of each block in the original implementation.
@@ -437,7 +437,7 @@ class AlignVisionDepthwiseLayer(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.efficientnet.modeling_efficientnet.EfficientNetSqueezeExciteLayer with EfficientNet->AlignVision
+# Copied from tiny_hf.transformers.models.efficientnet.modeling_efficientnet.EfficientNetSqueezeExciteLayer with EfficientNet->AlignVision
 class AlignVisionSqueezeExciteLayer(nn.Module):
     r"""
     This corresponds to the Squeeze and Excitement phase of each block in the original implementation.
@@ -665,7 +665,7 @@ class AlignVisionEncoder(nn.Module):
         )
 
 
-# Copied from transformers.models.bert.modeling_bert.BertEmbeddings with Bert->AlignText
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertEmbeddings with Bert->AlignText
 class AlignTextEmbeddings(nn.Module):
     """Construct the embeddings from word, position and token_type embeddings."""
 
@@ -730,7 +730,7 @@ class AlignTextEmbeddings(nn.Module):
         return embeddings
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfAttention with Bert->AlignText
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfAttention with Bert->AlignText
 class AlignTextSelfAttention(nn.Module):
     def __init__(self, config, position_embedding_type=None):
         super().__init__()
@@ -865,7 +865,7 @@ class AlignTextSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfOutput with Bert->AlignText
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfOutput with Bert->AlignText
 class AlignTextSelfOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -885,7 +885,7 @@ ALIGN_TEXT_SELF_ATTENTION_CLASSES = {
 }
 
 
-# Copied from transformers.models.bert.modeling_bert.BertAttention with Bert->AlignText,BERT->ALIGN_TEXT
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertAttention with Bert->AlignText,BERT->ALIGN_TEXT
 class AlignTextAttention(nn.Module):
     def __init__(self, config, position_embedding_type=None):
         super().__init__()
@@ -937,7 +937,7 @@ class AlignTextAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate with Bert->AlignText
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate with Bert->AlignText
 class AlignTextIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -953,7 +953,7 @@ class AlignTextIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOutput with Bert->AlignText
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOutput with Bert->AlignText
 class AlignTextOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -968,7 +968,7 @@ class AlignTextOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertLayer with Bert->AlignText
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertLayer with Bert->AlignText
 class AlignTextLayer(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1055,7 +1055,7 @@ class AlignTextLayer(nn.Module):
         return layer_output
 
 
-# Copied from transformers.models.bert.modeling_bert.BertEncoder with Bert->AlignText
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertEncoder with Bert->AlignText
 class AlignTextEncoder(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1149,7 +1149,7 @@ class AlignTextEncoder(nn.Module):
         )
 
 
-# Copied from transformers.models.bert.modeling_bert.BertPooler with Bert -> AlignText
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPooler with Bert -> AlignText
 class AlignTextPooler(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1240,7 +1240,7 @@ class AlignTextModel(AlignPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, AlignTextModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, AlignTextModel
 
         >>> model = AlignTextModel.from_pretrained("kakaobrain/align-base")
         >>> tokenizer = AutoTokenizer.from_pretrained("kakaobrain/align-base")
@@ -1366,7 +1366,7 @@ class AlignVisionModel(AlignPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, AlignVisionModel
+        >>> from tiny_hf.transformers.import AutoProcessor, AlignVisionModel
 
         >>> model = AlignVisionModel.from_pretrained("kakaobrain/align-base")
         >>> processor = AutoProcessor.from_pretrained("kakaobrain/align-base")
@@ -1465,7 +1465,7 @@ class AlignModel(AlignPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, AlignModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, AlignModel
 
         >>> model = AlignModel.from_pretrained("kakaobrain/align-base")
         >>> tokenizer = AutoTokenizer.from_pretrained("kakaobrain/align-base")
@@ -1514,7 +1514,7 @@ class AlignModel(AlignPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, AlignModel
+        >>> from tiny_hf.transformers.import AutoProcessor, AlignModel
 
         >>> model = AlignModel.from_pretrained("kakaobrain/align-base")
         >>> processor = AutoProcessor.from_pretrained("kakaobrain/align-base")
@@ -1566,7 +1566,7 @@ class AlignModel(AlignPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, AlignModel
+        >>> from tiny_hf.transformers.import AutoProcessor, AlignModel
 
         >>> model = AlignModel.from_pretrained("kakaobrain/align-base")
         >>> processor = AutoProcessor.from_pretrained("kakaobrain/align-base")

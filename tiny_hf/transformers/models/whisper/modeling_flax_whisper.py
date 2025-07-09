@@ -348,7 +348,7 @@ class FlaxWhisperAttention(nn.Module):
         return key, value, attention_mask
 
 
-# Copied from transformers.models.mbart.modeling_flax_mbart.FlaxMBartEncoderLayer with MBart->Whisper
+# Copied from tiny_hf.transformers.models.mbart.modeling_flax_mbart.FlaxMBartEncoderLayer with MBart->Whisper
 class FlaxWhisperEncoderLayer(nn.Module):
     config: WhisperConfig
     dtype: jnp.dtype = jnp.float32
@@ -467,7 +467,7 @@ class FlaxWhisperEncoderLayerCollection(nn.Module):
         )
 
 
-# Copied from transformers.models.mbart.modeling_flax_mbart.FlaxMBartDecoderLayer with MBart->Whisper
+# Copied from tiny_hf.transformers.models.mbart.modeling_flax_mbart.FlaxMBartDecoderLayer with MBart->Whisper
 class FlaxWhisperDecoderLayer(nn.Module):
     config: WhisperConfig
     dtype: jnp.dtype = jnp.float32
@@ -918,7 +918,7 @@ class FlaxWhisperPreTrainedModel(FlaxPreTrainedModel):
         else:
             return random_params
 
-    # Copied from transformers.models.bart.modeling_flax_bart.FlaxBartPreTrainedModel.init_cache with Bart->Whisper
+    # Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartPreTrainedModel.init_cache with Bart->Whisper
     def init_cache(self, batch_size, max_length, encoder_outputs):
         r"""
         Args:
@@ -980,7 +980,7 @@ class FlaxWhisperPreTrainedModel(FlaxPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import WhisperProcessor, FlaxWhisperForConditionalGeneration
+        >>> from tiny_hf.transformers.import WhisperProcessor, FlaxWhisperForConditionalGeneration
         >>> from datasets import load_dataset
 
         >>> processor = WhisperProcessor.from_pretrained("openai/whisper-tiny.en")
@@ -1039,7 +1039,7 @@ class FlaxWhisperPreTrainedModel(FlaxPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import WhisperProcessor, FlaxWhisperForConditionalGeneration
+        >>> from tiny_hf.transformers.import WhisperProcessor, FlaxWhisperForConditionalGeneration
         >>> from datasets import load_dataset
         >>> import jax.numpy as jnp
 
@@ -1292,7 +1292,7 @@ class FlaxWhisperForConditionalGeneration(FlaxWhisperPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import WhisperProcessor, FlaxWhisperForConditionalGeneration
+        >>> from tiny_hf.transformers.import WhisperProcessor, FlaxWhisperForConditionalGeneration
         >>> from datasets import load_dataset
 
         >>> processor = WhisperProcessor.from_pretrained("openai/whisper-tiny.en")
@@ -1511,7 +1511,7 @@ FLAX_WHISPER_CONDITIONAL_GENERATION_DOCSTRING = r"""
     Transcription example:
 
     ```python
-    >>> from transformers import WhisperProcessor, FlaxWhisperForConditionalGeneration
+    >>> from tiny_hf.transformers.import WhisperProcessor, FlaxWhisperForConditionalGeneration
     >>> from datasets import load_dataset
 
     >>> processor = WhisperProcessor.from_pretrained("openai/whisper-tiny.en")
@@ -1663,7 +1663,7 @@ FLAX_WHISPER_AUDIO_CLASSIFICATION_DOCSTRING = r"""
 
     ```python
     >>> import jax.numpy as jnp
-    >>> from transformers import AutoFeatureExtractor, FlaxWhisperForAudioClassification
+    >>> from tiny_hf.transformers.import AutoFeatureExtractor, FlaxWhisperForAudioClassification
     >>> from datasets import load_dataset
 
     >>> feature_extractor = AutoFeatureExtractor.from_pretrained("sanchit-gandhi/whisper-medium-fleurs-lang-id")

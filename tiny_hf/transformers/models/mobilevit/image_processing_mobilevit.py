@@ -45,7 +45,7 @@ if is_vision_available():
     import PIL
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 
 logger = logging.get_logger(__name__)
@@ -112,7 +112,7 @@ class MobileViTImageProcessor(BaseImageProcessor):
         self.crop_size = crop_size
         self.do_flip_channel_order = do_flip_channel_order
 
-    # Copied from transformers.models.mobilenet_v1.image_processing_mobilenet_v1.MobileNetV1ImageProcessor.resize with PILImageResampling.BICUBIC->PILImageResampling.BILINEAR
+    # Copied from tiny_hf.transformers.models.mobilenet_v1.image_processing_mobilenet_v1.MobileNetV1ImageProcessor.resize with PILImageResampling.BICUBIC->PILImageResampling.BILINEAR
     def resize(
         self,
         image: np.ndarray,
@@ -437,7 +437,7 @@ class MobileViTImageProcessor(BaseImageProcessor):
 
         return BatchFeature(data=data, tensor_type=return_tensors)
 
-    # Copied from transformers.models.beit.image_processing_beit.BeitImageProcessor.post_process_semantic_segmentation with Beit->MobileViT
+    # Copied from tiny_hf.transformers.models.beit.image_processing_beit.BeitImageProcessor.post_process_semantic_segmentation with Beit->MobileViT
     def post_process_semantic_segmentation(self, outputs, target_sizes: List[Tuple] = None):
         """
         Converts the output of [`MobileViTForSemanticSegmentation`] into semantic segmentation maps. Only supports PyTorch.

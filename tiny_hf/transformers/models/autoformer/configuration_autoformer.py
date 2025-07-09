@@ -116,7 +116,7 @@ class AutoformerConfig(PretrainedConfig):
         Example:
 
     ```python
-    >>> from transformers import AutoformerConfig, AutoformerModel
+    >>> from tiny_hf.transformers.import AutoformerConfig, AutoformerModel
 
     >>> # Initializing a default Autoformer configuration
     >>> configuration = AutoformerConfig()

@@ -20,13 +20,13 @@ URL: https://github.com/microsoft/table-transformer
 import argparse
 from pathlib import Path
 
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 from PIL import Image
-from torchvision.transforms import functional as F
+from tg_adapter.ision.transforms import functional as F
 
-from transformers import DetrImageProcessor, ResNetConfig, TableTransformerConfig, TableTransformerForObjectDetection
-from transformers.utils import logging
+from tiny_hf.transformers.import DetrImageProcessor, ResNetConfig, TableTransformerConfig, TableTransformerForObjectDetection
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

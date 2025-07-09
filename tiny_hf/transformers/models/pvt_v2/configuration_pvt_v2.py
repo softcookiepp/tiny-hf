@@ -87,7 +87,7 @@ class PvtV2Config(BackboneConfigMixin, PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import PvtV2Model, PvtV2Config
+    >>> from tiny_hf.transformers.import PvtV2Model, PvtV2Config
 
     >>> # Initializing a pvt_v2_b0 style configuration
     >>> configuration = PvtV2Config()

@@ -19,9 +19,9 @@ import math
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...modeling_outputs import BaseModelOutput, ImageSuperResolutionOutput
@@ -74,7 +74,7 @@ class Swin2SREncoderOutput(ModelOutput):
     attentions: Optional[Tuple[torch.FloatTensor]] = None
 
 
-# Copied from transformers.models.swin.modeling_swin.window_partition
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.window_partition
 def window_partition(input_feature, window_size):
     """
     Partitions the given input into windows.
@@ -87,7 +87,7 @@ def window_partition(input_feature, window_size):
     return windows
 
 
-# Copied from transformers.models.swin.modeling_swin.window_reverse
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.window_reverse
 def window_reverse(windows, window_size, height, width):
     """
     Merges windows to produce higher resolution features.
@@ -98,7 +98,7 @@ def window_reverse(windows, window_size, height, width):
     return windows
 
 
-# Copied from transformers.models.beit.modeling_beit.drop_path
+# Copied from tiny_hf.transformers.models.beit.modeling_beit.drop_path
 def drop_path(input: torch.Tensor, drop_prob: float = 0.0, training: bool = False) -> torch.Tensor:
     """
     Drop paths (Stochastic Depth) per sample (when applied in main path of residual blocks).
@@ -119,7 +119,7 @@ def drop_path(input: torch.Tensor, drop_prob: float = 0.0, training: bool = Fals
     return output
 
 
-# Copied from transformers.models.swin.modeling_swin.SwinDropPath with Swin->Swin2SR
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinDropPath with Swin->Swin2SR
 class Swin2SRDropPath(nn.Module):
     """Drop paths (Stochastic Depth) per sample (when applied in main path of residual blocks)."""
 
@@ -205,7 +205,7 @@ class Swin2SRPatchUnEmbeddings(nn.Module):
         return embeddings
 
 
-# Copied from transformers.models.swinv2.modeling_swinv2.Swinv2PatchMerging with Swinv2->Swin2SR
+# Copied from tiny_hf.transformers.models.swinv2.modeling_swinv2.Swinv2PatchMerging with Swinv2->Swin2SR
 class Swin2SRPatchMerging(nn.Module):
     """
     Patch Merging Layer.
@@ -260,7 +260,7 @@ class Swin2SRPatchMerging(nn.Module):
         return input_feature
 
 
-# Copied from transformers.models.swinv2.modeling_swinv2.Swinv2SelfAttention with Swinv2->Swin2SR
+# Copied from tiny_hf.transformers.models.swinv2.modeling_swinv2.Swinv2SelfAttention with Swinv2->Swin2SR
 class Swin2SRSelfAttention(nn.Module):
     def __init__(self, config, dim, num_heads, window_size, pretrained_window_size=[0, 0]):
         super().__init__()
@@ -390,7 +390,7 @@ class Swin2SRSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.swin.modeling_swin.SwinSelfOutput with Swin->Swin2SR
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinSelfOutput with Swin->Swin2SR
 class Swin2SRSelfOutput(nn.Module):
     def __init__(self, config, dim):
         super().__init__()
@@ -404,7 +404,7 @@ class Swin2SRSelfOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.swinv2.modeling_swinv2.Swinv2Attention with Swinv2->Swin2SR
+# Copied from tiny_hf.transformers.models.swinv2.modeling_swinv2.Swinv2Attention with Swinv2->Swin2SR
 class Swin2SRAttention(nn.Module):
     def __init__(self, config, dim, num_heads, window_size, pretrained_window_size=0):
         super().__init__()
@@ -451,7 +451,7 @@ class Swin2SRAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.swin.modeling_swin.SwinIntermediate with Swin->Swin2SR
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinIntermediate with Swin->Swin2SR
 class Swin2SRIntermediate(nn.Module):
     def __init__(self, config, dim):
         super().__init__()
@@ -467,7 +467,7 @@ class Swin2SRIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.swin.modeling_swin.SwinOutput with Swin->Swin2SR
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinOutput with Swin->Swin2SR
 class Swin2SROutput(nn.Module):
     def __init__(self, config, dim):
         super().__init__()
@@ -480,7 +480,7 @@ class Swin2SROutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.swinv2.modeling_swinv2.Swinv2Layer with Swinv2->Swin2SR
+# Copied from tiny_hf.transformers.models.swinv2.modeling_swinv2.Swinv2Layer with Swinv2->Swin2SR
 class Swin2SRLayer(nn.Module):
     def __init__(
         self, config, dim, input_resolution, num_heads, drop_path_rate=0.0, shift_size=0, pretrained_window_size=0
@@ -1107,12 +1107,12 @@ class Swin2SRForImageSuperResolution(Swin2SRPreTrainedModel):
 
         Example:
          ```python
-         >>> import torch
+         >>> import tg_adapter as torch
          >>> import numpy as np
          >>> from PIL import Image
          >>> import requests
 
-         >>> from transformers import AutoImageProcessor, Swin2SRForImageSuperResolution
+         >>> from tiny_hf.transformers.import AutoImageProcessor, Swin2SRForImageSuperResolution
 
          >>> processor = AutoImageProcessor.from_pretrained("caidas/swin2SR-classical-sr-x2-64")
          >>> model = Swin2SRForImageSuperResolution.from_pretrained("caidas/swin2SR-classical-sr-x2-64")

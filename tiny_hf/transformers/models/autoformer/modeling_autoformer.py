@@ -21,9 +21,9 @@ from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...modeling_attn_mask_utils import _prepare_4d_attention_mask
@@ -167,7 +167,7 @@ class AutoformerModelOutput(ModelOutput):
     static_features: Optional[torch.FloatTensor] = None
 
 
-# Copied from transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesFeatureEmbedder with TimeSeries->Autoformer
+# Copied from tiny_hf.transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesFeatureEmbedder with TimeSeries->Autoformer
 class AutoformerFeatureEmbedder(nn.Module):
     """
     Embed a sequence of categorical features.
@@ -202,7 +202,7 @@ class AutoformerFeatureEmbedder(nn.Module):
         )
 
 
-# Copied from transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesStdScaler with TimeSeriesTransformer->Autoformer,TimeSeries->Autoformer
+# Copied from tiny_hf.transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesStdScaler with TimeSeriesTransformer->Autoformer,TimeSeries->Autoformer
 class AutoformerStdScaler(nn.Module):
     """
     Standardize features by calculating the mean and scaling along the first dimension, and then normalizes it by
@@ -238,7 +238,7 @@ class AutoformerStdScaler(nn.Module):
         return (data - loc) / scale, loc, scale
 
 
-# Copied from transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesMeanScaler with TimeSeriesTransformer->Autoformer,TimeSeries->Autoformer
+# Copied from tiny_hf.transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesMeanScaler with TimeSeriesTransformer->Autoformer,TimeSeries->Autoformer
 class AutoformerMeanScaler(nn.Module):
     """
     Computes a scaling factor as the weighted average absolute value along the first dimension, and scales the data
@@ -293,7 +293,7 @@ class AutoformerMeanScaler(nn.Module):
         return scaled_data, torch.zeros_like(scale), scale
 
 
-# Copied from transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesNOPScaler with TimeSeriesTransformer->Autoformer,TimeSeries->Autoformer
+# Copied from tiny_hf.transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesNOPScaler with TimeSeriesTransformer->Autoformer,TimeSeries->Autoformer
 class AutoformerNOPScaler(nn.Module):
     """
     Assigns a scaling factor equal to 1 along the first dimension, and therefore applies no scaling to the input data.
@@ -321,7 +321,7 @@ class AutoformerNOPScaler(nn.Module):
         return data, loc, scale
 
 
-# Copied from transformers.models.time_series_transformer.modeling_time_series_transformer.weighted_average
+# Copied from tiny_hf.transformers.models.time_series_transformer.modeling_time_series_transformer.weighted_average
 def weighted_average(input_tensor: torch.Tensor, weights: Optional[torch.Tensor] = None, dim=None) -> torch.Tensor:
     """
     Computes the weighted average of a given tensor across a given `dim`, masking values associated with weight zero,
@@ -346,7 +346,7 @@ def weighted_average(input_tensor: torch.Tensor, weights: Optional[torch.Tensor]
         return input_tensor.mean(dim=dim)
 
 
-# Copied from transformers.models.time_series_transformer.modeling_time_series_transformer.nll
+# Copied from tiny_hf.transformers.models.time_series_transformer.modeling_time_series_transformer.nll
 def nll(input: torch.distributions.Distribution, target: torch.Tensor) -> torch.Tensor:
     """
     Computes the negative log likelihood loss from input distribution with respect to target.
@@ -354,7 +354,7 @@ def nll(input: torch.distributions.Distribution, target: torch.Tensor) -> torch.
     return -input.log_prob(target)
 
 
-# Copied from transformers.models.marian.modeling_marian.MarianSinusoidalPositionalEmbedding with Marian->Autoformer
+# Copied from tiny_hf.transformers.models.marian.modeling_marian.MarianSinusoidalPositionalEmbedding with Marian->Autoformer
 class AutoformerSinusoidalPositionalEmbedding(nn.Embedding):
     """This module produces sinusoidal positional embeddings of any length."""
 
@@ -389,7 +389,7 @@ class AutoformerSinusoidalPositionalEmbedding(nn.Embedding):
         return super().forward(positions)
 
 
-# Copied from transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesValueEmbedding with TimeSeries->Autoformer
+# Copied from tiny_hf.transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesValueEmbedding with TimeSeries->Autoformer
 class AutoformerValueEmbedding(nn.Module):
     def __init__(self, feature_size, d_model):
         super().__init__()
@@ -1059,7 +1059,7 @@ AUTOFORMER_INPUTS_DOCSTRING = r"""
 """
 
 
-# Copied from transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesTransformerEncoder with TimeSeriesTransformer->Autoformer,TimeSeries->Autoformer
+# Copied from tiny_hf.transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesTransformerEncoder with TimeSeriesTransformer->Autoformer,TimeSeries->Autoformer
 class AutoformerEncoder(AutoformerPreTrainedModel):
     """
     Transformer encoder consisting of *config.encoder_layers* self attention layers. Each layer is a
@@ -1627,8 +1627,8 @@ class AutoformerModel(AutoformerPreTrainedModel):
 
         ```python
         >>> from huggingface_hub import hf_hub_download
-        >>> import torch
-        >>> from transformers import AutoformerModel
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoformerModel
 
         >>> file = hf_hub_download(
         ...     repo_id="hf-internal-testing/tourism-monthly-batch", filename="train-batch.pt", repo_type="dataset"
@@ -1830,8 +1830,8 @@ class AutoformerForPrediction(AutoformerPreTrainedModel):
 
         ```python
         >>> from huggingface_hub import hf_hub_download
-        >>> import torch
-        >>> from transformers import AutoformerForPrediction
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoformerForPrediction
 
         >>> file = hf_hub_download(
         ...     repo_id="hf-internal-testing/tourism-monthly-batch", filename="train-batch.pt", repo_type="dataset"
@@ -1876,8 +1876,8 @@ class AutoformerForPrediction(AutoformerPreTrainedModel):
 
         ```
         >>> from huggingface_hub import hf_hub_download
-        >>> import torch
-        >>> from transformers import AutoformerConfig, AutoformerForPrediction
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoformerConfig, AutoformerForPrediction
 
         >>> file = hf_hub_download(
         ...     repo_id="hf-internal-testing/tourism-monthly-batch", filename="train-batch.pt", repo_type="dataset"

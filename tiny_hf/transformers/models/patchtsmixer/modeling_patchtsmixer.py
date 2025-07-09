@@ -18,11 +18,11 @@ import math
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+import tg_adapter.nn as nn
 
-from transformers.modeling_utils import PreTrainedModel
-from transformers.utils import ModelOutput
+from tiny_hf.transformers.modeling_utils import PreTrainedModel
+from tiny_hf.transformers.utils import ModelOutput
 
 from ...time_series_utils import NegativeBinomialOutput, NormalOutput, StudentTOutput
 from ...utils import (
@@ -96,7 +96,7 @@ class PatchTSMixerGatedAttention(nn.Module):
         return inputs
 
 
-# Copied from transformers.models.patchtst.modeling_patchtst.PatchTSTBatchNorm with PatchTST->PatchTSMixer
+# Copied from tiny_hf.transformers.models.patchtst.modeling_patchtst.PatchTSTBatchNorm with PatchTST->PatchTSMixer
 class PatchTSMixerBatchNorm(nn.Module):
     """
     Compute batch normalization over the sequence length (time) dimension.
@@ -278,7 +278,7 @@ class PatchTSMixerChannelFeatureMixerBlock(nn.Module):
         return out
 
 
-# Copied from transformers.models.bart.modeling_bart.BartAttention with Bart->PatchTSMixer
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartAttention with Bart->PatchTSMixer
 class PatchTSMixerAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -812,7 +812,7 @@ class PatchTSMixerPretrainHead(nn.Module):
         return forecast
 
 
-# Copied from transformers.models.patchtst.modeling_patchtst.random_masking
+# Copied from tiny_hf.transformers.models.patchtst.modeling_patchtst.random_masking
 def random_masking(
     inputs: torch.Tensor,
     mask_ratio: float,
@@ -871,7 +871,7 @@ def random_masking(
     return inputs_mask, mask[..., 0]
 
 
-# Copied from transformers.models.patchtst.modeling_patchtst.forecast_masking
+# Copied from tiny_hf.transformers.models.patchtst.modeling_patchtst.forecast_masking
 def forecast_masking(
     inputs: torch.Tensor,
     num_forecast_mask_patches: Union[list, int],
@@ -940,7 +940,7 @@ def forecast_masking(
     return inputs_mask, mask[..., 0]
 
 
-# Copied from transformers.models.patchtst.modeling_patchtst.PatchTSTPatchify with PatchTST->PatchTSMixer
+# Copied from tiny_hf.transformers.models.patchtst.modeling_patchtst.PatchTSTPatchify with PatchTST->PatchTSMixer
 class PatchTSMixerPatchify(nn.Module):
     """
     A class to patchify the time series sequence into different patches
@@ -989,7 +989,7 @@ class PatchTSMixerPatchify(nn.Module):
         return output
 
 
-# Copied from transformers.models.patchtst.modeling_patchtst.PatchTSTMasking with PatchTST->PatchTSMixer
+# Copied from tiny_hf.transformers.models.patchtst.modeling_patchtst.PatchTSTMasking with PatchTST->PatchTSMixer
 class PatchTSMixerMasking(nn.Module):
     """
     Class to perform random or forecast masking.
@@ -1050,7 +1050,7 @@ class PatchTSMixerMasking(nn.Module):
         return masked_input, mask
 
 
-# Copied from transformers.models.patchtst.modeling_patchtst.PatchTSTStdScaler with PatchTST->PatchTSMixer
+# Copied from tiny_hf.transformers.models.patchtst.modeling_patchtst.PatchTSTStdScaler with PatchTST->PatchTSMixer
 class PatchTSMixerStdScaler(nn.Module):
     """
     Standardize features by calculating the mean and scaling along the first dimension, and then normalizes it by
@@ -1086,7 +1086,7 @@ class PatchTSMixerStdScaler(nn.Module):
         return (data - loc) / scale, loc, scale
 
 
-# Copied from transformers.models.patchtst.modeling_patchtst.PatchTSTMeanScaler with PatchTST->PatchTSMixer
+# Copied from tiny_hf.transformers.models.patchtst.modeling_patchtst.PatchTSTMeanScaler with PatchTST->PatchTSMixer
 class PatchTSMixerMeanScaler(nn.Module):
     """
     Computes a scaling factor as the weighted average absolute value along the first dimension, and scales the data
@@ -1141,7 +1141,7 @@ class PatchTSMixerMeanScaler(nn.Module):
         return scaled_data, torch.zeros_like(scale), scale
 
 
-# Copied from transformers.models.patchtst.modeling_patchtst.PatchTSTNOPScaler with PatchTST->PatchTSMixer
+# Copied from tiny_hf.transformers.models.patchtst.modeling_patchtst.PatchTSTNOPScaler with PatchTST->PatchTSMixer
 class PatchTSMixerNOPScaler(nn.Module):
     """
     Assigns a scaling factor equal to 1 along the first dimension, and therefore applies no scaling to the input data.
@@ -1556,7 +1556,7 @@ class SamplePatchTSMixerRegressionOutput(ModelOutput):
     sequences: torch.FloatTensor = None
 
 
-# Copied from transformers.models.time_series_transformer.modeling_time_series_transformer.nll
+# Copied from tiny_hf.transformers.models.time_series_transformer.modeling_time_series_transformer.nll
 def nll(input: torch.distributions.Distribution, target: torch.Tensor) -> torch.Tensor:
     """
     Computes the negative log likelihood loss from input distribution with respect to target.
@@ -1564,7 +1564,7 @@ def nll(input: torch.distributions.Distribution, target: torch.Tensor) -> torch.
     return -input.log_prob(target)
 
 
-# Copied from transformers.models.time_series_transformer.modeling_time_series_transformer.weighted_average
+# Copied from tiny_hf.transformers.models.time_series_transformer.modeling_time_series_transformer.weighted_average
 def weighted_average(input_tensor: torch.Tensor, weights: Optional[torch.Tensor] = None, dim=None) -> torch.Tensor:
     """
     Computes the weighted average of a given tensor across a given `dim`, masking values associated with weight zero,

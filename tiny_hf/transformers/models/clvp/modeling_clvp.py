@@ -20,10 +20,10 @@ import math
 from dataclasses import dataclass
 from typing import Dict, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationConfig, GenerationMixin
@@ -55,19 +55,19 @@ logger = logging.get_logger(__name__)
 _CHECKPOINT_FOR_DOC = "susnato/clvp_dev"
 
 
-# Copied from transformers.models.clip.modeling_clip.contrastive_loss
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.contrastive_loss
 def contrastive_loss(logits: torch.Tensor) -> torch.Tensor:
     return nn.functional.cross_entropy(logits, torch.arange(len(logits), device=logits.device))
 
 
-# Copied from transformers.models.clip.modeling_clip.clip_loss with clip->clvp, image_loss->speech_loss
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.clip_loss with clip->clvp, image_loss->speech_loss
 def clvp_loss(similarity: torch.Tensor) -> torch.Tensor:
     caption_loss = contrastive_loss(similarity)
     speech_loss = contrastive_loss(similarity.t())
     return (caption_loss + speech_loss) / 2.0
 
 
-# Copied from transformers.models.llama.modeling_llama.rotate_half
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.rotate_half
 def rotate_half(x):
     """Rotates half the hidden dims of the input."""
     x1 = x[..., : x.shape[-1] // 2]
@@ -222,7 +222,7 @@ class ClvpOutput(ModelOutput):
     speech_encoder_hidden_states: torch.FloatTensor = None
 
 
-# Copied from transformers.models.llama.modeling_llama.LlamaRMSNorm with Llama->Clvp
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaRMSNorm with Llama->Clvp
 class ClvpRMSNorm(nn.Module):
     def __init__(self, hidden_size, eps=1e-6):
         """
@@ -303,7 +303,7 @@ class ClvpSelfAttention(nn.Module):
         self.q_proj = nn.Linear(self.embed_dim, self.embed_dim, bias=config.use_attention_bias)
         self.out_proj = nn.Linear(self.embed_dim, self.embed_dim)
 
-    # Copied from transformers.models.clip.modeling_clip.CLIPAttention._shape
+    # Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPAttention._shape
     def _shape(self, tensor: torch.Tensor, seq_len: int, bsz: int):
         return tensor.view(bsz, seq_len, self.num_heads, self.head_dim).transpose(1, 2).contiguous()
 
@@ -500,7 +500,7 @@ class ClvpEncoderLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.gpt2.modeling_gpt2.GPT2MLP with GPT2->ClvpDecoderMLP
+# Copied from tiny_hf.transformers.models.gpt2.modeling_gpt2.GPT2MLP with GPT2->ClvpDecoderMLP
 class ClvpDecoderMLP(nn.Module):
     def __init__(self, intermediate_size, config):
         super().__init__()
@@ -1490,7 +1490,7 @@ class ClvpForCausalLM(ClvpPreTrainedModel, GenerationMixin):
         )
 
     @staticmethod
-    # Copied from transformers.models.gpt2.modeling_gpt2.GPT2LMHeadModel._reorder_cache
+    # Copied from tiny_hf.transformers.models.gpt2.modeling_gpt2.GPT2LMHeadModel._reorder_cache
     def _reorder_cache(
         past_key_values: Tuple[Tuple[torch.Tensor]], beam_idx: torch.Tensor
     ) -> Tuple[Tuple[torch.Tensor]]:
@@ -1613,7 +1613,7 @@ class ClvpModelForConditionalGeneration(ClvpPreTrainedModel, GenerationMixin):
         Examples:
 
         ```python
-        >>> from transformers import ClvpProcessor, ClvpModelForConditionalGeneration
+        >>> from tiny_hf.transformers.import ClvpProcessor, ClvpModelForConditionalGeneration
 
         >>> # Define the Text
         >>> text = "This is an example text."
@@ -1682,7 +1682,7 @@ class ClvpModelForConditionalGeneration(ClvpPreTrainedModel, GenerationMixin):
 
         ```python
         >>> import datasets
-        >>> from transformers import ClvpProcessor, ClvpModelForConditionalGeneration
+        >>> from tiny_hf.transformers.import ClvpProcessor, ClvpModelForConditionalGeneration
 
         >>> # Define the Text and Load the Audio (We are taking an audio example from HuggingFace Hub using `datasets` library)
         >>> text = "This is an example text."
@@ -1754,7 +1754,7 @@ class ClvpModelForConditionalGeneration(ClvpPreTrainedModel, GenerationMixin):
 
         ```python
         >>> import datasets
-        >>> from transformers import ClvpProcessor, ClvpModelForConditionalGeneration
+        >>> from tiny_hf.transformers.import ClvpProcessor, ClvpModelForConditionalGeneration
 
         >>> # Define the Text and Load the Audio (We are taking an audio example from HuggingFace Hub using `datasets` library)
         >>> text = "This is an example text."

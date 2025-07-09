@@ -17,11 +17,11 @@
 import math
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.nn.functional as F
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.nn.functional as F
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ....activations import ACT2FN
 from ....modeling_outputs import (
@@ -1312,7 +1312,7 @@ class MegaBlock(nn.Module):
         return outs
 
 
-# copied from transformers.models.roberta.modeling_roberta.RobertaPooler with Roberta->Mega
+# copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaPooler with Roberta->Mega
 class MegaPooler(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1720,8 +1720,8 @@ class MegaForCausalLM(MegaPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, MegaForCausalLM, AutoConfig
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, MegaForCausalLM, AutoConfig
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("mnaylor/mega-base-wikitext")
         >>> config = AutoConfig.from_pretrained("mnaylor/mega-base-wikitext")
@@ -2155,7 +2155,7 @@ class MegaForTokenClassification(MegaPreTrainedModel):
         )
 
 
-# copied from transformers.models.roberta.modeling_roberta.RobertaClassificationHead with Roberta->Mega
+# copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaClassificationHead with Roberta->Mega
 class MegaClassificationHead(nn.Module):
     """Head for sentence-level classification tasks."""
 

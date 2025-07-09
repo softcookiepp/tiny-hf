@@ -176,7 +176,7 @@ class WavLMConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import WavLMConfig, WavLMModel
+    >>> from tiny_hf.transformers.import WavLMConfig, WavLMModel
 
     >>> # Initializing a WavLM facebook/wavlm-base-960h style configuration
     >>> configuration = WavLMConfig()

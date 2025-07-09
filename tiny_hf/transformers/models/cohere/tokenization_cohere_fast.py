@@ -54,7 +54,7 @@ class CohereTokenizerFast(PreTrainedTokenizerFast):
     This uses notably ByteFallback and NFC normalization.
 
     ```python
-    >>> from transformers import AutoTokenizer
+    >>> from tiny_hf.transformers.import AutoTokenizer
 
     >>> tokenizer = AutoTokenizer.from_pretrained("CohereForAI/c4ai-command-r-v01")
     >>> tokenizer.encode("Hello this is a test")

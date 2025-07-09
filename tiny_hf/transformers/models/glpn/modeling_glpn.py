@@ -17,9 +17,9 @@
 import math
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...modeling_outputs import BaseModelOutput, DepthEstimatorOutput
@@ -46,7 +46,7 @@ _CHECKPOINT_FOR_DOC = "vinvino02/glpn-kitti"
 _EXPECTED_OUTPUT_SHAPE = [1, 512, 15, 20]
 
 
-# Copied from transformers.models.beit.modeling_beit.drop_path
+# Copied from tiny_hf.transformers.models.beit.modeling_beit.drop_path
 def drop_path(input: torch.Tensor, drop_prob: float = 0.0, training: bool = False) -> torch.Tensor:
     """
     Drop paths (Stochastic Depth) per sample (when applied in main path of residual blocks).
@@ -67,7 +67,7 @@ def drop_path(input: torch.Tensor, drop_prob: float = 0.0, training: bool = Fals
     return output
 
 
-# Copied from transformers.models.segformer.modeling_segformer.SegformerDropPath
+# Copied from tiny_hf.transformers.models.segformer.modeling_segformer.SegformerDropPath
 class GLPNDropPath(nn.Module):
     """Drop paths (Stochastic Depth) per sample (when applied in main path of residual blocks)."""
 
@@ -82,7 +82,7 @@ class GLPNDropPath(nn.Module):
         return "p={}".format(self.drop_prob)
 
 
-# Copied from transformers.models.segformer.modeling_segformer.SegformerOverlapPatchEmbeddings
+# Copied from tiny_hf.transformers.models.segformer.modeling_segformer.SegformerOverlapPatchEmbeddings
 class GLPNOverlapPatchEmbeddings(nn.Module):
     """Construct the overlapping patch embeddings."""
 
@@ -108,7 +108,7 @@ class GLPNOverlapPatchEmbeddings(nn.Module):
         return embeddings, height, width
 
 
-# Copied from transformers.models.segformer.modeling_segformer.SegformerEfficientSelfAttention
+# Copied from tiny_hf.transformers.models.segformer.modeling_segformer.SegformerEfficientSelfAttention
 class GLPNEfficientSelfAttention(nn.Module):
     """SegFormer's efficient self-attention mechanism. Employs the sequence reduction process introduced in the [PvT
     paper](https://arxiv.org/abs/2102.12122)."""
@@ -190,7 +190,7 @@ class GLPNEfficientSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.segformer.modeling_segformer.SegformerSelfOutput
+# Copied from tiny_hf.transformers.models.segformer.modeling_segformer.SegformerSelfOutput
 class GLPNSelfOutput(nn.Module):
     def __init__(self, config, hidden_size):
         super().__init__()
@@ -203,7 +203,7 @@ class GLPNSelfOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.segformer.modeling_segformer.SegformerAttention with Segformer->GLPN
+# Copied from tiny_hf.transformers.models.segformer.modeling_segformer.SegformerAttention with Segformer->GLPN
 class GLPNAttention(nn.Module):
     def __init__(self, config, hidden_size, num_attention_heads, sequence_reduction_ratio):
         super().__init__()
@@ -242,7 +242,7 @@ class GLPNAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.segformer.modeling_segformer.SegformerDWConv
+# Copied from tiny_hf.transformers.models.segformer.modeling_segformer.SegformerDWConv
 class GLPNDWConv(nn.Module):
     def __init__(self, dim=768):
         super().__init__()
@@ -257,7 +257,7 @@ class GLPNDWConv(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.segformer.modeling_segformer.SegformerMixFFN with Segformer->GLPN
+# Copied from tiny_hf.transformers.models.segformer.modeling_segformer.SegformerMixFFN with Segformer->GLPN
 class GLPNMixFFN(nn.Module):
     def __init__(self, config, in_features, hidden_features=None, out_features=None):
         super().__init__()
@@ -281,7 +281,7 @@ class GLPNMixFFN(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.segformer.modeling_segformer.SegformerLayer with Segformer->GLPN
+# Copied from tiny_hf.transformers.models.segformer.modeling_segformer.SegformerLayer with Segformer->GLPN
 class GLPNLayer(nn.Module):
     """This corresponds to the Block class in the original implementation."""
 
@@ -424,7 +424,7 @@ class GLPNPreTrainedModel(PreTrainedModel):
     main_input_name = "pixel_values"
     _no_split_modules = []
 
-    # Copied from transformers.models.segformer.modeling_segformer.SegformerPreTrainedModel._init_weights
+    # Copied from tiny_hf.transformers.models.segformer.modeling_segformer.SegformerPreTrainedModel._init_weights
     def _init_weights(self, module):
         """Initialize the weights"""
         if isinstance(module, (nn.Linear, nn.Conv2d)):
@@ -476,7 +476,7 @@ GLPN_INPUTS_DOCSTRING = r"""
     GLPN_START_DOCSTRING,
 )
 class GLPNModel(GLPNPreTrainedModel):
-    # Copied from transformers.models.segformer.modeling_segformer.SegformerModel.__init__ with Segformer->GLPN
+    # Copied from tiny_hf.transformers.models.segformer.modeling_segformer.SegformerModel.__init__ with Segformer->GLPN
     def __init__(self, config):
         super().__init__(config)
         self.config = config
@@ -503,7 +503,7 @@ class GLPNModel(GLPNPreTrainedModel):
         modality="vision",
         expected_output=_EXPECTED_OUTPUT_SHAPE,
     )
-    # Copied from transformers.models.segformer.modeling_segformer.SegformerModel.forward
+    # Copied from tiny_hf.transformers.models.segformer.modeling_segformer.SegformerModel.forward
     def forward(
         self,
         pixel_values: torch.FloatTensor,
@@ -706,8 +706,8 @@ class GLPNForDepthEstimation(GLPNPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, GLPNForDepthEstimation
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoImageProcessor, GLPNForDepthEstimation
+        >>> import tg_adapter as torch
         >>> import numpy as np
         >>> from PIL import Image
         >>> import requests

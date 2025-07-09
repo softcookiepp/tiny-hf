@@ -1,7 +1,7 @@
 import pathlib
 from typing import Dict, List, Optional, Tuple, Union
 
-from transformers.models.detr.image_processing_detr_fast import (
+from tiny_hf.transformers.models.detr.image_processing_detr_fast import (
     DetrFastImageProcessorKwargs,
     DetrImageProcessorFast,
 )
@@ -38,13 +38,13 @@ from ...utils import (
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 
 if is_torchvision_v2_available():
-    from torchvision.transforms.v2 import functional as F
+    from tg_adapter.ision.transforms.v2 import functional as F
 elif is_torchvision_available():
-    from torchvision.transforms import functional as F
+    from tg_adapter.ision.transforms import functional as F
 
 
 logger = logging.get_logger(__name__)

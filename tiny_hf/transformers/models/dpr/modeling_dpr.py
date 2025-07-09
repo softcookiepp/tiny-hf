@@ -17,8 +17,8 @@
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-from torch import Tensor, nn
+import tg_adapter as torch
+from tg_adapter.import Tensor, nn
 
 from ...modeling_outputs import BaseModelOutputWithPooling
 from ...modeling_utils import PreTrainedModel
@@ -448,7 +448,7 @@ class DPRContextEncoder(DPRPretrainedContextEncoder):
         Examples:
 
         ```python
-        >>> from transformers import DPRContextEncoder, DPRContextEncoderTokenizer
+        >>> from tiny_hf.transformers.import DPRContextEncoder, DPRContextEncoderTokenizer
 
         >>> tokenizer = DPRContextEncoderTokenizer.from_pretrained("facebook/dpr-ctx_encoder-single-nq-base")
         >>> model = DPRContextEncoder.from_pretrained("facebook/dpr-ctx_encoder-single-nq-base")
@@ -529,7 +529,7 @@ class DPRQuestionEncoder(DPRPretrainedQuestionEncoder):
         Examples:
 
         ```python
-        >>> from transformers import DPRQuestionEncoder, DPRQuestionEncoderTokenizer
+        >>> from tiny_hf.transformers.import DPRQuestionEncoder, DPRQuestionEncoderTokenizer
 
         >>> tokenizer = DPRQuestionEncoderTokenizer.from_pretrained("facebook/dpr-question_encoder-single-nq-base")
         >>> model = DPRQuestionEncoder.from_pretrained("facebook/dpr-question_encoder-single-nq-base")
@@ -610,7 +610,7 @@ class DPRReader(DPRPretrainedReader):
         Examples:
 
         ```python
-        >>> from transformers import DPRReader, DPRReaderTokenizer
+        >>> from tiny_hf.transformers.import DPRReader, DPRReaderTokenizer
 
         >>> tokenizer = DPRReaderTokenizer.from_pretrained("facebook/dpr-reader-single-nq-base")
         >>> model = DPRReader.from_pretrained("facebook/dpr-reader-single-nq-base")

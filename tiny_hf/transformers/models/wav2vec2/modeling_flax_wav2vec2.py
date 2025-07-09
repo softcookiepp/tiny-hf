@@ -1062,7 +1062,7 @@ FLAX_WAV2VEC2_MODEL_DOCSTRING = """
     Example:
 
     ```python
-    >>> from transformers import AutoProcessor, FlaxWav2Vec2Model
+    >>> from tiny_hf.transformers.import AutoProcessor, FlaxWav2Vec2Model
     >>> from datasets import load_dataset
     >>> import soundfile as sf
 
@@ -1181,7 +1181,7 @@ FLAX_WAV2VEC2_FOR_CTC_DOCSTRING = """
 
     ```python
     >>> import jax.numpy as jnp
-    >>> from transformers import AutoProcessor, FlaxWav2Vec2ForCTC
+    >>> from tiny_hf.transformers.import AutoProcessor, FlaxWav2Vec2ForCTC
     >>> from datasets import load_dataset
     >>> import soundfile as sf
 
@@ -1381,8 +1381,8 @@ FLAX_WAV2VEC2_FOR_PRETRAINING_DOCSTRING = """
     >>> import optax
     >>> import numpy as np
     >>> import jax.numpy as jnp
-    >>> from transformers import AutoFeatureExtractor, FlaxWav2Vec2ForPreTraining
-    >>> from transformers.models.wav2vec2.modeling_flax_wav2vec2 import _compute_mask_indices
+    >>> from tiny_hf.transformers.import AutoFeatureExtractor, FlaxWav2Vec2ForPreTraining
+    >>> from tiny_hf.transformers.models.wav2vec2.modeling_flax_wav2vec2 import _compute_mask_indices
     >>> from datasets import load_dataset
     >>> import soundfile as sf
 

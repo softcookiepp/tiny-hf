@@ -18,12 +18,12 @@ import argparse
 import json
 
 import requests
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 from PIL import Image
 
-from transformers import ViTImageProcessor, ViTMSNConfig, ViTMSNModel
-from transformers.image_utils import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD
+from tiny_hf.transformers.import ViTImageProcessor, ViTMSNConfig, ViTMSNModel
+from tiny_hf.transformers.image_utils import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD
 
 
 torch.set_grad_enabled(False)

@@ -21,12 +21,12 @@ import math
 from pathlib import Path
 
 import requests
-import torch
+import tg_adapter as torch
 from PIL import Image
-from torchvision import transforms
+from tg_adapter.ision import transforms
 
-from transformers import Dinov2Config, DPTConfig, DPTForDepthEstimation, DPTImageProcessor
-from transformers.utils import logging
+from tiny_hf.transformers.import Dinov2Config, DPTConfig, DPTForDepthEstimation, DPTImageProcessor
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

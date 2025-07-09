@@ -48,7 +48,7 @@ VOCAB_FILES_NAMES = {
 }
 
 
-# Copied from transformers.models.bert.tokenization_bert.load_vocab
+# Copied from tiny_hf.transformers.models.bert.tokenization_bert.load_vocab
 def load_vocab(vocab_file):
     """Loads a vocabulary file into a dictionary."""
     vocab = collections.OrderedDict()
@@ -60,7 +60,7 @@ def load_vocab(vocab_file):
     return vocab
 
 
-# Copied from transformers.models.bert.tokenization_bert.whitespace_tokenize
+# Copied from tiny_hf.transformers.models.bert.tokenization_bert.whitespace_tokenize
 def whitespace_tokenize(text):
     """Runs basic whitespace cleaning and splitting on a piece of text."""
     text = text.strip()
@@ -179,11 +179,11 @@ class RoCBertTokenizer(PreTrainedTokenizer):
     def vocab_size(self):
         return len(self.vocab)
 
-    # Copied from transformers.models.bert.tokenization_bert.BertTokenizer.get_vocab
+    # Copied from tiny_hf.transformers.models.bert.tokenization_bert.BertTokenizer.get_vocab
     def get_vocab(self):
         return dict(self.vocab, **self.added_tokens_encoder)
 
-    # Copied from transformers.models.bert.tokenization_bert.BertTokenizer._tokenize
+    # Copied from tiny_hf.transformers.models.bert.tokenization_bert.BertTokenizer._tokenize
     def _tokenize(self, text, split_special_tokens=False):
         split_tokens = []
         if self.do_basic_tokenize:
@@ -724,7 +724,7 @@ class RoCBertTokenizer(PreTrainedTokenizer):
 
         return batch_outputs
 
-    # Copied from transformers.models.bert.tokenization_bert.BertTokenizer._convert_token_to_id
+    # Copied from tiny_hf.transformers.models.bert.tokenization_bert.BertTokenizer._convert_token_to_id
     def _convert_token_to_id(self, token):
         """Converts a token (str) in an id using the vocab."""
         return self.vocab.get(token, self.vocab.get(self.unk_token))
@@ -755,12 +755,12 @@ class RoCBertTokenizer(PreTrainedTokenizer):
             ids.append(self._convert_token_to_pronunciation_id(token))
         return ids
 
-    # Copied from transformers.models.bert.tokenization_bert.BertTokenizer._convert_id_to_token
+    # Copied from tiny_hf.transformers.models.bert.tokenization_bert.BertTokenizer._convert_id_to_token
     def _convert_id_to_token(self, index):
         """Converts an index (integer) in a token (str) using the vocab."""
         return self.ids_to_tokens.get(index, self.unk_token)
 
-    # Copied from transformers.models.bert.tokenization_bert.BertTokenizer.convert_tokens_to_string
+    # Copied from tiny_hf.transformers.models.bert.tokenization_bert.BertTokenizer.convert_tokens_to_string
     def convert_tokens_to_string(self, tokens):
         """Converts a sequence of tokens (string) in a single string."""
         out_string = " ".join(tokens).replace(" ##", "").strip()
@@ -795,7 +795,7 @@ class RoCBertTokenizer(PreTrainedTokenizer):
             return cls + token_ids_0 + sep
         return cls + token_ids_0 + sep + token_ids_1 + sep
 
-    # Copied from transformers.models.bert.tokenization_bert.BertTokenizer.get_special_tokens_mask
+    # Copied from tiny_hf.transformers.models.bert.tokenization_bert.BertTokenizer.get_special_tokens_mask
     def get_special_tokens_mask(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None, already_has_special_tokens: bool = False
     ) -> List[int]:
@@ -824,7 +824,7 @@ class RoCBertTokenizer(PreTrainedTokenizer):
             return [1] + ([0] * len(token_ids_0)) + [1] + ([0] * len(token_ids_1)) + [1]
         return [1] + ([0] * len(token_ids_0)) + [1]
 
-    # Copied from transformers.models.bert.tokenization_bert.BertTokenizer.create_token_type_ids_from_sequences
+    # Copied from tiny_hf.transformers.models.bert.tokenization_bert.BertTokenizer.create_token_type_ids_from_sequences
     def create_token_type_ids_from_sequences(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
     ) -> List[int]:

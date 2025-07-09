@@ -15,10 +15,10 @@
 
 import argparse
 
-import torch
+import tg_adapter as torch
 from clip import load
 
-from transformers import CLIPConfig, CLIPModel
+from tiny_hf.transformers.import CLIPConfig, CLIPModel
 
 
 def copy_attn_layer(hf_attn_layer, pt_attn_layer):

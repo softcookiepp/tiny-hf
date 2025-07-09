@@ -61,7 +61,7 @@ class MobileNetV1Config(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import MobileNetV1Config, MobileNetV1Model
+    >>> from tiny_hf.transformers.import MobileNetV1Config, MobileNetV1Model
 
     >>> # Initializing a "mobilenet_v1_1.0_224" style configuration
     >>> configuration = MobileNetV1Config()

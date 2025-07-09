@@ -296,7 +296,7 @@ class TFFlaubertModel(TFFlaubertPreTrainedModel):
                 self.transformer.build(None)
 
 
-# Copied from transformers.models.xlm.modeling_tf_xlm.TFXLMMultiHeadAttention with XLM->Flaubert
+# Copied from tiny_hf.transformers.models.xlm.modeling_tf_xlm.TFXLMMultiHeadAttention with XLM->Flaubert
 class TFFlaubertMultiHeadAttention(keras.layers.Layer):
     NEW_ID = itertools.count()
 
@@ -407,7 +407,7 @@ class TFFlaubertMultiHeadAttention(keras.layers.Layer):
                 self.out_lin.build([None, None, self.dim])
 
 
-# Copied from transformers.models.xlm.modeling_tf_xlm.TFXLMTransformerFFN
+# Copied from tiny_hf.transformers.models.xlm.modeling_tf_xlm.TFXLMTransformerFFN
 class TFFlaubertTransformerFFN(keras.layers.Layer):
     def __init__(self, in_dim, dim_hidden, out_dim, config, **kwargs):
         super().__init__(**kwargs)
@@ -735,7 +735,7 @@ class TFFlaubertMainLayer(keras.layers.Layer):
         return TFBaseModelOutput(last_hidden_state=tensor, hidden_states=hidden_states, attentions=attentions)
 
 
-# Copied from transformers.models.xlm.modeling_tf_xlm.TFXLMPredLayer
+# Copied from tiny_hf.transformers.models.xlm.modeling_tf_xlm.TFXLMPredLayer
 class TFFlaubertPredLayer(keras.layers.Layer):
     """
     Prediction layer (cross_entropy or adaptive_softmax).
@@ -916,7 +916,7 @@ class TFFlaubertWithLMHeadModel(TFFlaubertPreTrainedModel):
     """,
     FLAUBERT_START_DOCSTRING,
 )
-# Copied from transformers.models.xlm.modeling_tf_xlm.TFXLMForSequenceClassification with XLM_INPUTS->FLAUBERT_INPUTS,XLM->Flaubert
+# Copied from tiny_hf.transformers.models.xlm.modeling_tf_xlm.TFXLMForSequenceClassification with XLM_INPUTS->FLAUBERT_INPUTS,XLM->Flaubert
 class TFFlaubertForSequenceClassification(TFFlaubertPreTrainedModel, TFSequenceClassificationLoss):
     def __init__(self, config, *inputs, **kwargs):
         super().__init__(config, *inputs, **kwargs)
@@ -1006,7 +1006,7 @@ class TFFlaubertForSequenceClassification(TFFlaubertPreTrainedModel, TFSequenceC
     """,
     FLAUBERT_START_DOCSTRING,
 )
-# Copied from transformers.models.xlm.modeling_tf_xlm.TFXLMForQuestionAnsweringSimple with XLM_INPUTS->FLAUBERT_INPUTS,XLM->Flaubert
+# Copied from tiny_hf.transformers.models.xlm.modeling_tf_xlm.TFXLMForQuestionAnsweringSimple with XLM_INPUTS->FLAUBERT_INPUTS,XLM->Flaubert
 class TFFlaubertForQuestionAnsweringSimple(TFFlaubertPreTrainedModel, TFQuestionAnsweringLoss):
     def __init__(self, config, *inputs, **kwargs):
         super().__init__(config, *inputs, **kwargs)
@@ -1110,7 +1110,7 @@ class TFFlaubertForQuestionAnsweringSimple(TFFlaubertPreTrainedModel, TFQuestion
     """,
     FLAUBERT_START_DOCSTRING,
 )
-# Copied from transformers.models.xlm.modeling_tf_xlm.TFXLMForTokenClassification with XLM_INPUTS->FLAUBERT_INPUTS,XLM->Flaubert
+# Copied from tiny_hf.transformers.models.xlm.modeling_tf_xlm.TFXLMForTokenClassification with XLM_INPUTS->FLAUBERT_INPUTS,XLM->Flaubert
 class TFFlaubertForTokenClassification(TFFlaubertPreTrainedModel, TFTokenClassificationLoss):
     def __init__(self, config, *inputs, **kwargs):
         super().__init__(config, *inputs, **kwargs)
@@ -1203,7 +1203,7 @@ class TFFlaubertForTokenClassification(TFFlaubertPreTrainedModel, TFTokenClassif
     """,
     FLAUBERT_START_DOCSTRING,
 )
-# Copied from transformers.models.xlm.modeling_tf_xlm.TFXLMForMultipleChoice with XLM_INPUTS->FLAUBERT_INPUTS,XLM->Flaubert
+# Copied from tiny_hf.transformers.models.xlm.modeling_tf_xlm.TFXLMForMultipleChoice with XLM_INPUTS->FLAUBERT_INPUTS,XLM->Flaubert
 class TFFlaubertForMultipleChoice(TFFlaubertPreTrainedModel, TFMultipleChoiceLoss):
     def __init__(self, config, *inputs, **kwargs):
         super().__init__(config, *inputs, **kwargs)

@@ -86,7 +86,7 @@ class GPTNeoConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import GPTNeoConfig, GPTNeoModel
+    >>> from tiny_hf.transformers.import GPTNeoConfig, GPTNeoModel
 
     >>> # Initializing a GPTNeo EleutherAI/gpt-neo-1.3B style configuration
     >>> configuration = GPTNeoConfig()
@@ -169,7 +169,7 @@ class GPTNeoConfig(PretrainedConfig):
 
 def custom_unfold(input, dimension, size, step):
     """Custom torch.Tensor.unfold implementation to enable the export to ONNX."""
-    import torch
+    import tg_adapter as torch
 
     shape = input.size()
     rank = len(shape)
@@ -194,7 +194,7 @@ def custom_get_block_length_and_num_blocks(seq_length, window_size):
     Custom implementation for GPTNeoAttentionMixin._get_block_length_and_num_blocks to enable the export to ONNX as
     original implementation uses Python variables and control flow.
     """
-    import torch
+    import tg_adapter as torch
 
     candidates = torch.arange(1, window_size)
     remainders = torch.remainder(seq_length, candidates)
@@ -240,7 +240,7 @@ class GPTNeoOnnxConfig(OnnxConfigWithPast):
             if not is_torch_available():
                 raise ValueError("Cannot generate dummy past_keys inputs without PyTorch installed.")
             else:
-                import torch
+                import tg_adapter as torch
 
                 batch, seqlen = common_inputs["input_ids"].shape
                 # Not using the same length for past_key_values

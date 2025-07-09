@@ -18,11 +18,11 @@ import collections
 import math
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import torch.utils.checkpoint
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.nn as nn
+import tg_adapter.nn.functional as F
+import tg_adapter.utils.checkpoint
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...modeling_outputs import (
@@ -466,7 +466,7 @@ class LayoutLMv3SelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.roberta.modeling_roberta.RobertaSelfOutput
+# Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaSelfOutput
 class LayoutLMv3SelfOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -481,7 +481,7 @@ class LayoutLMv3SelfOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.layoutlmv2.modeling_layoutlmv2.LayoutLMv2Attention with LayoutLMv2->LayoutLMv3
+# Copied from tiny_hf.transformers.models.layoutlmv2.modeling_layoutlmv2.LayoutLMv2Attention with LayoutLMv2->LayoutLMv3
 class LayoutLMv3Attention(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -510,7 +510,7 @@ class LayoutLMv3Attention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.layoutlmv2.modeling_layoutlmv2.LayoutLMv2Layer with LayoutLMv2->LayoutLMv3
+# Copied from tiny_hf.transformers.models.layoutlmv2.modeling_layoutlmv2.LayoutLMv2Layer with LayoutLMv2->LayoutLMv3
 class LayoutLMv3Layer(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -711,7 +711,7 @@ class LayoutLMv3Encoder(nn.Module):
         )
 
 
-# Copied from transformers.models.roberta.modeling_roberta.RobertaIntermediate
+# Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaIntermediate
 class LayoutLMv3Intermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -727,7 +727,7 @@ class LayoutLMv3Intermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.roberta.modeling_roberta.RobertaOutput
+# Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaOutput
 class LayoutLMv3Output(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -859,7 +859,7 @@ class LayoutLMv3Model(LayoutLMv3PreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoProcessor, AutoModel
+        >>> from tiny_hf.transformers.import AutoProcessor, AutoModel
         >>> from datasets import load_dataset
 
         >>> processor = AutoProcessor.from_pretrained("microsoft/layoutlmv3-base", apply_ocr=False)
@@ -1075,7 +1075,7 @@ class LayoutLMv3ForTokenClassification(LayoutLMv3PreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoProcessor, AutoModelForTokenClassification
+        >>> from tiny_hf.transformers.import AutoProcessor, AutoModelForTokenClassification
         >>> from datasets import load_dataset
 
         >>> processor = AutoProcessor.from_pretrained("microsoft/layoutlmv3-base", apply_ocr=False)
@@ -1190,9 +1190,9 @@ class LayoutLMv3ForQuestionAnswering(LayoutLMv3PreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoProcessor, AutoModelForQuestionAnswering
+        >>> from tiny_hf.transformers.import AutoProcessor, AutoModelForQuestionAnswering
         >>> from datasets import load_dataset
-        >>> import torch
+        >>> import tg_adapter as torch
 
         >>> processor = AutoProcessor.from_pretrained("microsoft/layoutlmv3-base", apply_ocr=False)
         >>> model = AutoModelForQuestionAnswering.from_pretrained("microsoft/layoutlmv3-base")
@@ -1310,9 +1310,9 @@ class LayoutLMv3ForSequenceClassification(LayoutLMv3PreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoProcessor, AutoModelForSequenceClassification
+        >>> from tiny_hf.transformers.import AutoProcessor, AutoModelForSequenceClassification
         >>> from datasets import load_dataset
-        >>> import torch
+        >>> import tg_adapter as torch
 
         >>> processor = AutoProcessor.from_pretrained("microsoft/layoutlmv3-base", apply_ocr=False)
         >>> model = AutoModelForSequenceClassification.from_pretrained("microsoft/layoutlmv3-base")

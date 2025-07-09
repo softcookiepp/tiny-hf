@@ -79,7 +79,7 @@ class CanineConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import CanineConfig, CanineModel
+    >>> from tiny_hf.transformers.import CanineConfig, CanineModel
 
     >>> # Initializing a CANINE google/canine-s style configuration
     >>> configuration = CanineConfig()

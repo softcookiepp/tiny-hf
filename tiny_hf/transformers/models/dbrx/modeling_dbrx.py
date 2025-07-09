@@ -17,9 +17,9 @@
 import math
 from typing import Any, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, StaticCache
@@ -41,7 +41,7 @@ from .configuration_dbrx import DbrxConfig
 
 
 if is_torch_flex_attn_available():
-    from torch.nn.attention.flex_attention import BlockMask
+    from tg_adapter.nn.attention.flex_attention import BlockMask
 
     from ...integrations.flex_attention import make_flex_block_causal_mask
 
@@ -83,7 +83,7 @@ class DbrxRotaryEmbedding(nn.Module):
         return cos.to(dtype=x.dtype), sin.to(dtype=x.dtype)
 
 
-# Copied from transformers.models.llama.modeling_llama.rotate_half
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.rotate_half
 def rotate_half(x):
     """Rotates half the hidden dims of the input."""
     x1 = x[..., : x.shape[-1] // 2]
@@ -91,7 +91,7 @@ def rotate_half(x):
     return torch.cat((-x2, x1), dim=-1)
 
 
-# Copied from transformers.models.llama.modeling_llama.apply_rotary_pos_emb
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.apply_rotary_pos_emb
 def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
     """Applies Rotary Position Embedding to the query and key tensors.
 
@@ -119,7 +119,7 @@ def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
     return q_embed, k_embed
 
 
-# Copied from transformers.models.llama.modeling_llama.repeat_kv
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.repeat_kv
 def repeat_kv(hidden_states: torch.Tensor, n_rep: int) -> torch.Tensor:
     """
     This is the equivalent of torch.repeat_interleave(x, dim=1, repeats=n_rep). The hidden states go from (batch,
@@ -1112,7 +1112,7 @@ class DbrxModel(DbrxPreTrainedModel):
             router_logits=all_router_logits,
         )
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
     def _update_causal_mask(
         self,
         attention_mask: torch.Tensor,
@@ -1184,7 +1184,7 @@ class DbrxModel(DbrxPreTrainedModel):
         return causal_mask
 
     @staticmethod
-    # Copied from transformers.models.llama.modeling_llama.LlamaPreTrainedModel._prepare_4d_causal_attention_mask_with_cache_position
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaPreTrainedModel._prepare_4d_causal_attention_mask_with_cache_position
     def _prepare_4d_causal_attention_mask_with_cache_position(
         attention_mask: torch.Tensor,
         sequence_length: int,
@@ -1313,7 +1313,7 @@ class DbrxForCausalLM(DbrxPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >> from transformers import AutoTokenizer, DbrxForCausalLM
+        >> from tiny_hf.transformers.import AutoTokenizer, DbrxForCausalLM
 
         >> model = DbrxForCausalLM.from_pretrained("databricks/dbrx-instruct")
         >> tokenizer = AutoTokenizer.from_pretrained("databricks/dbrx-instruct")

@@ -64,7 +64,7 @@ class ViTMSNConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import ViTMSNModel, ViTMSNConfig
+    >>> from tiny_hf.transformers.import ViTMSNModel, ViTMSNConfig
 
     >>> # Initializing a ViT MSN vit-msn-base style configuration
     >>> configuration = ViTConfig()

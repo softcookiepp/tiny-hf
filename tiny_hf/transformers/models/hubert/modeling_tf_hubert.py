@@ -49,7 +49,7 @@ _CONFIG_FOR_DOC = "HubertConfig"
 LARGE_NEGATIVE = -1e8
 
 
-# Copied from transformers.models.wav2vec2.modeling_tf_wav2vec2._sample_without_replacement
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_tf_wav2vec2._sample_without_replacement
 def _sample_without_replacement(distribution, num_samples):
     """
     Categorical sampling without replacement is currently not implemented. The gumbel-max trick will do for now - see
@@ -60,7 +60,7 @@ def _sample_without_replacement(distribution, num_samples):
     return indices
 
 
-# Copied from transformers.models.wav2vec2.modeling_tf_wav2vec2._scatter_values_on_batch_indices
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_tf_wav2vec2._scatter_values_on_batch_indices
 def _scatter_values_on_batch_indices(values, batch_indices, output_shape):
     """
     Scatter function as in PyTorch with indices in format (batch_dim, indixes)
@@ -76,7 +76,7 @@ def _scatter_values_on_batch_indices(values, batch_indices, output_shape):
     return tf.scatter_nd(pair_indices, tf.reshape(values, [-1]), output_shape)
 
 
-# Copied from transformers.models.wav2vec2.modeling_tf_wav2vec2._compute_mask_indices
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_tf_wav2vec2._compute_mask_indices
 def _compute_mask_indices(
     shape: Tuple[int, int],
     mask_prob: float,
@@ -151,7 +151,7 @@ def _compute_mask_indices(
     return spec_aug_mask
 
 
-# Copied from transformers.models.bart.modeling_tf_bart._expand_mask
+# Copied from tiny_hf.transformers.models.bart.modeling_tf_bart._expand_mask
 def _expand_mask(mask: tf.Tensor, tgt_len: Optional[int] = None):
     """
     Expands attention_mask from `[bsz, seq_len]` to `[bsz, 1, tgt_seq_len, src_seq_len]`.
@@ -165,7 +165,7 @@ def _expand_mask(mask: tf.Tensor, tgt_len: Optional[int] = None):
     return (one_cst - expanded_mask) * LARGE_NEGATIVE
 
 
-# Copied from transformers.models.wav2vec2.modeling_tf_wav2vec2.TFWav2Vec2GroupNorm with Wav2Vec2->Hubert
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_tf_wav2vec2.TFWav2Vec2GroupNorm with Wav2Vec2->Hubert
 class TFHubertGroupNorm(keras.layers.Layer):
     """
     From tensorflow-addons https://www.tensorflow.org/addons/api_docs/python/tfa/layers/GroupNormalization
@@ -382,7 +382,7 @@ class TFHubertGroupNorm(keras.layers.Layer):
         return broadcast_shape
 
 
-# Copied from transformers.models.wav2vec2.modeling_tf_wav2vec2.TFWav2Vec2WeightNormConv1D with Wav2Vec2->Hubert
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_tf_wav2vec2.TFWav2Vec2WeightNormConv1D with Wav2Vec2->Hubert
 class TFHubertWeightNormConv1D(keras.layers.Conv1D):
     """Adapted from https://www.tensorflow.org/probability/api_docs/python/tfp/layers/weight_norm/WeightNorm"""
 
@@ -439,7 +439,7 @@ class TFHubertWeightNormConv1D(keras.layers.Conv1D):
         return output
 
 
-# Copied from transformers.models.wav2vec2.modeling_tf_wav2vec2.TFWav2Vec2NoLayerNormConvLayer with Wav2Vec2->Hubert
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_tf_wav2vec2.TFWav2Vec2NoLayerNormConvLayer with Wav2Vec2->Hubert
 class TFHubertNoLayerNormConvLayer(keras.layers.Layer):
     def __init__(self, config: HubertConfig, layer_id: int = 0, **kwargs: Any) -> None:
         super().__init__(**kwargs)
@@ -469,7 +469,7 @@ class TFHubertNoLayerNormConvLayer(keras.layers.Layer):
                 self.conv.build([None, None, self.in_conv_dim])
 
 
-# Copied from transformers.models.wav2vec2.modeling_tf_wav2vec2.TFWav2Vec2LayerNormConvLayer with Wav2Vec2->Hubert
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_tf_wav2vec2.TFWav2Vec2LayerNormConvLayer with Wav2Vec2->Hubert
 class TFHubertLayerNormConvLayer(keras.layers.Layer):
     def __init__(self, config: HubertConfig, layer_id: int = 0, **kwargs: Any) -> None:
         super().__init__(**kwargs)
@@ -504,7 +504,7 @@ class TFHubertLayerNormConvLayer(keras.layers.Layer):
                 self.layer_norm.build([None, None, self.out_conv_dim])
 
 
-# Copied from transformers.models.wav2vec2.modeling_tf_wav2vec2.TFWav2Vec2GroupNormConvLayer with Wav2Vec2->Hubert
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_tf_wav2vec2.TFWav2Vec2GroupNormConvLayer with Wav2Vec2->Hubert
 class TFHubertGroupNormConvLayer(keras.layers.Layer):
     def __init__(self, config: HubertConfig, layer_id: int = 0, **kwargs: Any) -> None:
         super().__init__(**kwargs)
@@ -539,7 +539,7 @@ class TFHubertGroupNormConvLayer(keras.layers.Layer):
                 self.layer_norm.build([None, None, self.out_conv_dim])
 
 
-# Copied from transformers.models.wav2vec2.modeling_tf_wav2vec2.TFWav2Vec2PositionalConvEmbedding with Wav2Vec2->Hubert
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_tf_wav2vec2.TFWav2Vec2PositionalConvEmbedding with Wav2Vec2->Hubert
 class TFHubertPositionalConvEmbedding(keras.layers.Layer):
     def __init__(self, config: HubertConfig, **kwargs: Any) -> None:
         super().__init__(**kwargs)
@@ -569,7 +569,7 @@ class TFHubertPositionalConvEmbedding(keras.layers.Layer):
                 self.conv.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.wav2vec2.modeling_tf_wav2vec2.TFWav2Vec2SamePadLayer with Wav2Vec2->Hubert
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_tf_wav2vec2.TFWav2Vec2SamePadLayer with Wav2Vec2->Hubert
 class TFHubertSamePadLayer(keras.layers.Layer):
     def __init__(self, num_conv_pos_embeddings, **kwargs):
         super().__init__(**kwargs)
@@ -659,7 +659,7 @@ class TFHubertFeatureProjection(keras.layers.Layer):
                 self.projection.build([None, None, self.config.conv_dim[-1]])
 
 
-# Copied from transformers.models.bart.modeling_tf_bart.TFBartAttention with TFBart->TFHubert
+# Copied from tiny_hf.transformers.models.bart.modeling_tf_bart.TFBartAttention with TFBart->TFHubert
 class TFHubertAttention(keras.layers.Layer):
     """Multi-headed attention from "Attention Is All You Need"""
 
@@ -830,7 +830,7 @@ class TFHubertAttention(keras.layers.Layer):
                 self.out_proj.build([None, None, self.embed_dim])
 
 
-# Copied from transformers.models.wav2vec2.modeling_tf_wav2vec2.TFWav2Vec2FeedForward with Wav2Vec2->Hubert
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_tf_wav2vec2.TFWav2Vec2FeedForward with Wav2Vec2->Hubert
 class TFHubertFeedForward(keras.layers.Layer):
     def __init__(self, config: HubertConfig, **kwargs):
         super().__init__(**kwargs)
@@ -875,7 +875,7 @@ class TFHubertFeedForward(keras.layers.Layer):
                 self.output_dense.build([None, None, self.config.intermediate_size])
 
 
-# Copied from transformers.models.wav2vec2.modeling_tf_wav2vec2.TFWav2Vec2EncoderLayer with Wav2Vec2->Hubert
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_tf_wav2vec2.TFWav2Vec2EncoderLayer with Wav2Vec2->Hubert
 class TFHubertEncoderLayer(keras.layers.Layer):
     def __init__(self, config: HubertConfig, **kwargs):
         super().__init__(**kwargs)
@@ -935,7 +935,7 @@ class TFHubertEncoderLayer(keras.layers.Layer):
                 self.final_layer_norm.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.wav2vec2.modeling_tf_wav2vec2.TFWav2Vec2EncoderLayerStableLayerNorm with Wav2Vec2->Hubert
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_tf_wav2vec2.TFWav2Vec2EncoderLayerStableLayerNorm with Wav2Vec2->Hubert
 class TFHubertEncoderLayerStableLayerNorm(keras.layers.Layer):
     def __init__(self, config: HubertConfig, **kwargs):
         super().__init__(**kwargs)
@@ -993,7 +993,7 @@ class TFHubertEncoderLayerStableLayerNorm(keras.layers.Layer):
                 self.final_layer_norm.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.wav2vec2.modeling_tf_wav2vec2.TFWav2Vec2Encoder with Wav2Vec2->Hubert
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_tf_wav2vec2.TFWav2Vec2Encoder with Wav2Vec2->Hubert
 class TFHubertEncoder(keras.layers.Layer):
     def __init__(self, config: HubertConfig, **kwargs):
         super().__init__(**kwargs)
@@ -1074,7 +1074,7 @@ class TFHubertEncoder(keras.layers.Layer):
                     layer.build(None)
 
 
-# Copied from transformers.models.wav2vec2.modeling_tf_wav2vec2.TFWav2Vec2EncoderStableLayerNorm with Wav2Vec2->Hubert
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_tf_wav2vec2.TFWav2Vec2EncoderStableLayerNorm with Wav2Vec2->Hubert
 class TFHubertEncoderStableLayerNorm(keras.layers.Layer):
     def __init__(self, config: HubertConfig, **kwargs):
         super().__init__(**kwargs)
@@ -1457,7 +1457,7 @@ class TFHubertModel(TFHubertPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoProcessor, TFHubertModel
+        >>> from tiny_hf.transformers.import AutoProcessor, TFHubertModel
         >>> from datasets import load_dataset
         >>> import soundfile as sf
 
@@ -1569,7 +1569,7 @@ class TFHubertForCTC(TFHubertPreTrainedModel):
 
         ```python
         >>> import tensorflow as tf
-        >>> from transformers import AutoProcessor, TFHubertForCTC
+        >>> from tiny_hf.transformers.import AutoProcessor, TFHubertForCTC
         >>> from datasets import load_dataset
         >>> import soundfile as sf
 

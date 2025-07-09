@@ -18,10 +18,10 @@
 import math
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN, gelu
 from ...generation import GenerationMixin
@@ -53,13 +53,13 @@ _CHECKPOINT_FOR_DOC = "andreasmadsen/efficient_mlm_m0.40"
 _CONFIG_FOR_DOC = "RobertaPreLayerNormConfig"
 
 
-# Copied from transformers.models.roberta.modeling_roberta.RobertaEmbeddings with Roberta->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaEmbeddings with Roberta->RobertaPreLayerNorm
 class RobertaPreLayerNormEmbeddings(nn.Module):
     """
     Same as BertEmbeddings with a tiny tweak for positional embeddings indexing.
     """
 
-    # Copied from transformers.models.bert.modeling_bert.BertEmbeddings.__init__
+    # Copied from tiny_hf.transformers.models.bert.modeling_bert.BertEmbeddings.__init__
     def __init__(self, config):
         super().__init__()
         self.word_embeddings = nn.Embedding(config.vocab_size, config.hidden_size, padding_idx=config.pad_token_id)
@@ -143,7 +143,7 @@ class RobertaPreLayerNormEmbeddings(nn.Module):
         return position_ids.unsqueeze(0).expand(input_shape)
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfAttention with Bert->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfAttention with Bert->RobertaPreLayerNorm
 class RobertaPreLayerNormSelfAttention(nn.Module):
     def __init__(self, config, position_embedding_type=None):
         super().__init__()
@@ -299,7 +299,7 @@ class RobertaPreLayerNormAttention(nn.Module):
         self.LayerNorm = nn.LayerNorm(config.hidden_size, eps=config.layer_norm_eps)
         self.pruned_heads = set()
 
-    # Copied from transformers.models.bert.modeling_bert.BertAttention.prune_heads
+    # Copied from tiny_hf.transformers.models.bert.modeling_bert.BertAttention.prune_heads
     def prune_heads(self, heads):
         if len(heads) == 0:
             return
@@ -373,7 +373,7 @@ class RobertaPreLayerNormOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertLayer with Bert->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertLayer with Bert->RobertaPreLayerNorm
 class RobertaPreLayerNormLayer(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -460,7 +460,7 @@ class RobertaPreLayerNormLayer(nn.Module):
         return layer_output
 
 
-# Copied from transformers.models.bert.modeling_bert.BertEncoder with Bert->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertEncoder with Bert->RobertaPreLayerNorm
 class RobertaPreLayerNormEncoder(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -554,7 +554,7 @@ class RobertaPreLayerNormEncoder(nn.Module):
         )
 
 
-# Copied from transformers.models.bert.modeling_bert.BertPooler
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPooler
 class RobertaPreLayerNormPooler(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -581,7 +581,7 @@ class RobertaPreLayerNormPreTrainedModel(PreTrainedModel):
     supports_gradient_checkpointing = True
     _no_split_modules = ["RobertaPreLayerNormEmbeddings", "RobertaPreLayerNormSelfAttention"]
 
-    # Copied from transformers.models.bert.modeling_bert.BertPreTrainedModel._init_weights
+    # Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPreTrainedModel._init_weights
     def _init_weights(self, module):
         """Initialize the weights"""
         if isinstance(module, nn.Linear):
@@ -855,7 +855,7 @@ class RobertaPreLayerNormModel(RobertaPreLayerNormPreTrainedModel):
     """RoBERTa-PreLayerNorm Model with a `language modeling` head on top for CLM fine-tuning.""",
     ROBERTA_PRELAYERNORM_START_DOCSTRING,
 )
-# Copied from transformers.models.roberta.modeling_roberta.RobertaForCausalLM with FacebookAI/roberta-base->andreasmadsen/efficient_mlm_m0.40,ROBERTA->ROBERTA_PRELAYERNORM,Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm, RobertaPreLayerNormTokenizer->RobertaTokenizer
+# Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaForCausalLM with FacebookAI/roberta-base->andreasmadsen/efficient_mlm_m0.40,ROBERTA->ROBERTA_PRELAYERNORM,Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm, RobertaPreLayerNormTokenizer->RobertaTokenizer
 class RobertaPreLayerNormForCausalLM(RobertaPreLayerNormPreTrainedModel, GenerationMixin):
     _tied_weights_keys = ["lm_head.decoder.weight", "lm_head.decoder.bias"]
 
@@ -929,8 +929,8 @@ class RobertaPreLayerNormForCausalLM(RobertaPreLayerNormPreTrainedModel, Generat
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, RobertaPreLayerNormForCausalLM, AutoConfig
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, RobertaPreLayerNormForCausalLM, AutoConfig
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("andreasmadsen/efficient_mlm_m0.40")
         >>> config = AutoConfig.from_pretrained("andreasmadsen/efficient_mlm_m0.40")
@@ -1004,7 +1004,7 @@ class RobertaPreLayerNormForCausalLM(RobertaPreLayerNormPreTrainedModel, Generat
 class RobertaPreLayerNormForMaskedLM(RobertaPreLayerNormPreTrainedModel):
     _tied_weights_keys = ["lm_head.decoder.weight", "lm_head.decoder.bias"]
 
-    # Copied from transformers.models.roberta.modeling_roberta.RobertaForMaskedLM.__init__ with ROBERTA->ROBERTA_PRELAYERNORM,Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
+    # Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaForMaskedLM.__init__ with ROBERTA->ROBERTA_PRELAYERNORM,Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
     def __init__(self, config):
         super().__init__(config)
 
@@ -1035,7 +1035,7 @@ class RobertaPreLayerNormForMaskedLM(RobertaPreLayerNormPreTrainedModel):
         expected_output="' Paris'",
         expected_loss=0.69,
     )
-    # Copied from transformers.models.roberta.modeling_roberta.RobertaForMaskedLM.forward with ROBERTA->ROBERTA_PRELAYERNORM,Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
+    # Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaForMaskedLM.forward with ROBERTA->ROBERTA_PRELAYERNORM,Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
     def forward(
         self,
         input_ids: Optional[torch.LongTensor] = None,
@@ -1096,7 +1096,7 @@ class RobertaPreLayerNormForMaskedLM(RobertaPreLayerNormPreTrainedModel):
         )
 
 
-# Copied from transformers.models.roberta.modeling_roberta.RobertaLMHead with Roberta->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaLMHead with Roberta->RobertaPreLayerNorm
 class RobertaPreLayerNormLMHead(nn.Module):
     """RobertaPreLayerNorm Head for masked language modeling."""
 
@@ -1153,7 +1153,7 @@ class RobertaPreLayerNormForSequenceClassification(RobertaPreLayerNormPreTrained
         output_type=SequenceClassifierOutput,
         config_class=_CONFIG_FOR_DOC,
     )
-    # Copied from transformers.models.roberta.modeling_roberta.RobertaForSequenceClassification.forward with roberta->roberta_prelayernorm
+    # Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaForSequenceClassification.forward with roberta->roberta_prelayernorm
     def forward(
         self,
         input_ids: Optional[torch.LongTensor] = None,
@@ -1233,7 +1233,7 @@ class RobertaPreLayerNormForSequenceClassification(RobertaPreLayerNormPreTrained
     """,
     ROBERTA_PRELAYERNORM_START_DOCSTRING,
 )
-# Copied from transformers.models.roberta.modeling_roberta.RobertaForMultipleChoice with ROBERTA->ROBERTA_PRELAYERNORM,Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
+# Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaForMultipleChoice with ROBERTA->ROBERTA_PRELAYERNORM,Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
 class RobertaPreLayerNormForMultipleChoice(RobertaPreLayerNormPreTrainedModel):
     def __init__(self, config):
         super().__init__(config)
@@ -1349,7 +1349,7 @@ class RobertaPreLayerNormForTokenClassification(RobertaPreLayerNormPreTrainedMod
         output_type=TokenClassifierOutput,
         config_class=_CONFIG_FOR_DOC,
     )
-    # Copied from transformers.models.roberta.modeling_roberta.RobertaForTokenClassification.forward with roberta->roberta_prelayernorm
+    # Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaForTokenClassification.forward with roberta->roberta_prelayernorm
     def forward(
         self,
         input_ids: Optional[torch.LongTensor] = None,
@@ -1405,7 +1405,7 @@ class RobertaPreLayerNormForTokenClassification(RobertaPreLayerNormPreTrainedMod
         )
 
 
-# Copied from transformers.models.roberta.modeling_roberta.RobertaClassificationHead with Roberta->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaClassificationHead with Roberta->RobertaPreLayerNorm
 class RobertaPreLayerNormClassificationHead(nn.Module):
     """Head for sentence-level classification tasks."""
 
@@ -1452,7 +1452,7 @@ class RobertaPreLayerNormForQuestionAnswering(RobertaPreLayerNormPreTrainedModel
         output_type=QuestionAnsweringModelOutput,
         config_class=_CONFIG_FOR_DOC,
     )
-    # Copied from transformers.models.roberta.modeling_roberta.RobertaForQuestionAnswering.forward with roberta->roberta_prelayernorm
+    # Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaForQuestionAnswering.forward with roberta->roberta_prelayernorm
     def forward(
         self,
         input_ids: Optional[torch.LongTensor] = None,

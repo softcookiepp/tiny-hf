@@ -18,10 +18,10 @@ import argparse
 from pathlib import Path
 from typing import Dict, OrderedDict, Tuple
 
-import torch
+import tg_adapter as torch
 from audiocraft.models import MusicGen
 
-from transformers import (
+from tiny_hf.transformers.import (
     AutoFeatureExtractor,
     AutoTokenizer,
     EncodecModel,
@@ -30,8 +30,8 @@ from transformers import (
     MusicgenProcessor,
     T5EncoderModel,
 )
-from transformers.models.musicgen.modeling_musicgen import MusicgenForCausalLM
-from transformers.utils import logging
+from tiny_hf.transformers.models.musicgen.modeling_musicgen import MusicgenForCausalLM
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

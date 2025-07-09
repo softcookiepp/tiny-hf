@@ -32,7 +32,7 @@ class ObjectDetectionPipeline(Pipeline):
     Example:
 
     ```python
-    >>> from transformers import pipeline
+    >>> from tiny_hf.transformers.import pipeline
 
     >>> detector = pipeline(model="facebook/detr-resnet-50")
     >>> detector("https://huggingface.co/datasets/Narsil/image_dummy/raw/main/parrots.png")

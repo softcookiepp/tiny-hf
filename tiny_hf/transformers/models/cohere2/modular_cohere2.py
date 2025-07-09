@@ -15,9 +15,9 @@
 # limitations under the License.
 from typing import Callable, Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
-import torch.utils.checkpoint
+import tg_adapter as torch
+import tg_adapter.nn as nn
+import tg_adapter.utils.checkpoint
 
 from ...cache_utils import Cache, HybridCache
 from ...configuration_utils import PretrainedConfig
@@ -148,7 +148,7 @@ class Cohere2Config(PretrainedConfig):
         cache_implementation (`str`, *optional*, defaults to `"hybrid"`): the cache type to be used with `generate`.
 
     ```python
-    >>> from transformers import Cohere2Model, Cohere2Config
+    >>> from tiny_hf.transformers.import Cohere2Model, Cohere2Config
 
     >>> # Initializing a Cohere Nextmodel configuration
     >>> configuration = Cohere2Config()

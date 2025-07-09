@@ -17,10 +17,10 @@
 import math
 from typing import Optional
 
-import torch
-import torch.utils.checkpoint
-from torch import Tensor, nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import Tensor, nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...file_utils import add_code_sample_docstrings, add_start_docstrings, add_start_docstrings_to_model_forward
@@ -100,7 +100,7 @@ class RegNetEmbeddings(nn.Module):
         return hidden_state
 
 
-# Copied from transformers.models.resnet.modeling_resnet.ResNetShortCut with ResNet->RegNet
+# Copied from tiny_hf.transformers.models.resnet.modeling_resnet.ResNetShortCut with ResNet->RegNet
 class RegNetShortCut(nn.Module):
     """
     RegNet shortcut, used to project the residual features to the correct size. If needed, it is also used to
@@ -281,7 +281,7 @@ class RegNetPreTrainedModel(PreTrainedModel):
     main_input_name = "pixel_values"
     _no_split_modules = ["RegNetYLayer"]
 
-    # Copied from transformers.models.resnet.modeling_resnet.ResNetPreTrainedModel._init_weights
+    # Copied from tiny_hf.transformers.models.resnet.modeling_resnet.ResNetPreTrainedModel._init_weights
     def _init_weights(self, module):
         if isinstance(module, nn.Conv2d):
             nn.init.kaiming_normal_(module.weight, mode="fan_out", nonlinearity="relu")
@@ -326,7 +326,7 @@ REGNET_INPUTS_DOCSTRING = r"""
     "The bare RegNet model outputting raw features without any specific head on top.",
     REGNET_START_DOCSTRING,
 )
-# Copied from transformers.models.resnet.modeling_resnet.ResNetModel with RESNET->REGNET,ResNet->RegNet
+# Copied from tiny_hf.transformers.models.resnet.modeling_resnet.ResNetModel with RESNET->REGNET,ResNet->RegNet
 class RegNetModel(RegNetPreTrainedModel):
     def __init__(self, config):
         super().__init__(config)
@@ -380,7 +380,7 @@ class RegNetModel(RegNetPreTrainedModel):
     """,
     REGNET_START_DOCSTRING,
 )
-# Copied from transformers.models.resnet.modeling_resnet.ResNetForImageClassification with RESNET->REGNET,ResNet->RegNet,resnet->regnet
+# Copied from tiny_hf.transformers.models.resnet.modeling_resnet.ResNetForImageClassification with RESNET->REGNET,ResNet->RegNet,resnet->regnet
 class RegNetForImageClassification(RegNetPreTrainedModel):
     def __init__(self, config):
         super().__init__(config)

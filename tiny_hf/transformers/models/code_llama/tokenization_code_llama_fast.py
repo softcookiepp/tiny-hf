@@ -56,7 +56,7 @@ class CodeLlamaTokenizerFast(PreTrainedTokenizerFast):
     This uses notably ByteFallback and no normalization.
 
     ```python
-    >>> from transformers import CodeLlamaTokenizerFast
+    >>> from tiny_hf.transformers.import CodeLlamaTokenizerFast
 
     >>> tokenizer = CodeLlamaTokenizerFast.from_pretrained("hf-internal-testing/llama-tokenizer")
     >>> tokenizer.encode("Hello this is a test")
@@ -175,7 +175,7 @@ class CodeLlamaTokenizerFast(PreTrainedTokenizerFast):
     def can_save_slow_tokenizer(self) -> bool:
         return os.path.isfile(self.vocab_file) if self.vocab_file else False
 
-    # Copied from transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast.update_post_processor
+    # Copied from tiny_hf.transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast.update_post_processor
     def update_post_processor(self):
         """
         Updates the underlying post processor with the current `bos_token` and `eos_token`.
@@ -329,7 +329,7 @@ class CodeLlamaTokenizerFast(PreTrainedTokenizerFast):
         self.set_infilling_processor(True)
         return tokens
 
-    # Copied from transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast.save_vocabulary
+    # Copied from tiny_hf.transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast.save_vocabulary
     def save_vocabulary(self, save_directory: str, filename_prefix: Optional[str] = None) -> Tuple[str]:
         if not self.can_save_slow_tokenizer:
             raise ValueError(

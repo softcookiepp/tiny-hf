@@ -53,8 +53,8 @@ if is_vision_available():
     import PIL
 
 if is_torch_available():
-    import torch
-    from torch import nn
+    import tg_adapter as torch
+    from tg_adapter.import nn
 
 
 logger = logging.get_logger(__name__)

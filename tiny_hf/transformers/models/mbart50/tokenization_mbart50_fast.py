@@ -74,7 +74,7 @@ class MBart50TokenizerFast(PreTrainedTokenizerFast):
     Examples:
 
     ```python
-    >>> from transformers import MBart50TokenizerFast
+    >>> from tiny_hf.transformers.import MBart50TokenizerFast
 
     >>> tokenizer = MBart50TokenizerFast.from_pretrained("facebook/mbart-large-50", src_lang="en_XX", tgt_lang="ro_RO")
     >>> src_text = " UN Chief Says There Is No Military Solution in Syria"

@@ -59,7 +59,7 @@ class VitPoseConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import VitPoseConfig, VitPoseForPoseEstimation
+    >>> from tiny_hf.transformers.import VitPoseConfig, VitPoseForPoseEstimation
 
     >>> # Initializing a VitPose configuration
     >>> configuration = VitPoseConfig()

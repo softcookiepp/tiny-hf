@@ -16,9 +16,9 @@
 
 from typing import Optional
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ....transformers.models.dinov2.modeling_dinov2 import (
     Dinov2Backbone,
@@ -103,7 +103,7 @@ class Dinov2WithRegistersConfig(BackboneConfigMixin, PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import Dinov2WithRegistersConfig, Dinov2WithRegistersModel
+    >>> from tiny_hf.transformers.import Dinov2WithRegistersConfig, Dinov2WithRegistersModel
 
     >>> # Initializing a Dinov2WithRegisters base style configuration
     >>> configuration = Dinov2WithRegistersConfig()
@@ -319,8 +319,8 @@ class Dinov2WithRegistersBackbone(Dinov2Backbone):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, AutoBackbone
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoImageProcessor, AutoBackbone
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> import requests
 

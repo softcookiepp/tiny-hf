@@ -47,7 +47,7 @@ from ...utils import (
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 
 logger = logging.get_logger(__name__)
@@ -458,7 +458,7 @@ class PromptDepthAnythingImageProcessor(BaseImageProcessor):
             data["prompt_depth"] = prompt_depths
         return BatchFeature(data=data, tensor_type=return_tensors)
 
-    # Copied from transformers.models.dpt.image_processing_dpt.DPTImageProcessor.post_process_depth_estimation with DPT->PromptDepthAnything
+    # Copied from tiny_hf.transformers.models.dpt.image_processing_dpt.DPTImageProcessor.post_process_depth_estimation with DPT->PromptDepthAnything
     def post_process_depth_estimation(
         self,
         outputs: "DepthEstimatorOutput",

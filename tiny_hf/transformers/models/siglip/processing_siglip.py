@@ -135,7 +135,7 @@ class SiglipProcessor(ProcessorMixin):
         return self.tokenizer.batch_decode(*args, **kwargs)
 
     @property
-    # Copied from transformers.models.clip.processing_clip.CLIPProcessor.model_input_names with CLIP->Siglip, T5->Siglip
+    # Copied from tiny_hf.transformers.models.clip.processing_clip.CLIPProcessor.model_input_names with CLIP->Siglip, T5->Siglip
     def model_input_names(self):
         tokenizer_input_names = self.tokenizer.model_input_names
         image_processor_input_names = self.image_processor.model_input_names

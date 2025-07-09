@@ -51,7 +51,7 @@ class VisionEncoderDecoderConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import BertConfig, ViTConfig, VisionEncoderDecoderConfig, VisionEncoderDecoderModel
+    >>> from tiny_hf.transformers.import BertConfig, ViTConfig, VisionEncoderDecoderConfig, VisionEncoderDecoderModel
 
     >>> # Initializing a ViT & BERT style configuration
     >>> config_encoder = ViTConfig()
@@ -154,7 +154,7 @@ class VisionEncoderDecoderDecoderOnnxConfig(OnnxConfig):
         is_pair: bool = False,
         framework: Optional["TensorType"] = None,
     ) -> Mapping[str, Any]:
-        import torch
+        import tg_adapter as torch
 
         common_inputs = OrderedDict()
 

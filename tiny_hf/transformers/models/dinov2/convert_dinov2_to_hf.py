@@ -22,15 +22,15 @@ import json
 from pathlib import Path
 
 import requests
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+import tg_adapter.nn as nn
 from huggingface_hub import hf_hub_download
 from PIL import Image
-from torchvision import transforms
+from tg_adapter.ision import transforms
 
-from transformers import BitImageProcessor, Dinov2Config, Dinov2ForImageClassification, Dinov2Model
-from transformers.image_utils import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD, PILImageResampling
-from transformers.utils import logging
+from tiny_hf.transformers.import BitImageProcessor, Dinov2Config, Dinov2ForImageClassification, Dinov2Model
+from tiny_hf.transformers.image_utils import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD, PILImageResampling
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()
@@ -152,7 +152,7 @@ def convert_dinov2_checkpoint(model_name, pytorch_dump_folder_path, push_to_hub=
     image_classifier = "1layer" in model_name
     config = get_dinov2_config(model_name, image_classifier=image_classifier)
 
-    # load original model from torch hub
+    # load original model from tg_adapter.hub
     original_model = torch.hub.load("facebookresearch/dinov2", model_name.replace("_1layer", ""))
     original_model.eval()
 

@@ -17,9 +17,9 @@
 import argparse
 
 import safetensors
-import torch
+import tg_adapter as torch
 
-from transformers import (
+from tiny_hf.transformers.import (
     EncodecFeatureExtractor,
     MimiConfig,
     MimiModel,

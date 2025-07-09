@@ -144,7 +144,7 @@ VISION_ENCODER_DECODER_INPUTS_DOCSTRING = r"""
 """
 
 
-# Copied from transformers.models.encoder_decoder.modeling_tf_encoder_decoder.shift_tokens_right
+# Copied from tiny_hf.transformers.models.encoder_decoder.modeling_tf_encoder_decoder.shift_tokens_right
 def shift_tokens_right(input_ids: tf.Tensor, pad_token_id: int, decoder_start_token_id: int):
     if pad_token_id is None:
         raise ValueError("Make sure to set the pad_token_id attribute of the model's configuration.")
@@ -355,7 +355,7 @@ class TFVisionEncoderDecoderModel(TFPreTrainedModel, TFCausalLanguageModelingLos
         Example:
 
         ```python
-        >>> from transformers import TFVisionEncoderDecoderModel
+        >>> from tiny_hf.transformers.import TFVisionEncoderDecoderModel
 
         >>> # initialize a vit-bert from a pretrained ViT and a pretrained BERT model. Note that the cross-attention layers will be randomly initialized
         >>> model = TFVisionEncoderDecoderModel.from_encoder_decoder_pretrained(
@@ -479,7 +479,7 @@ class TFVisionEncoderDecoderModel(TFPreTrainedModel, TFCausalLanguageModelingLos
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, AutoTokenizer, TFVisionEncoderDecoderModel
+        >>> from tiny_hf.transformers.import AutoImageProcessor, AutoTokenizer, TFVisionEncoderDecoderModel
         >>> from PIL import Image
         >>> import requests
 

@@ -20,10 +20,10 @@ Weights conversion script for CLVP
 import argparse
 import os
 
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 
-from transformers import ClvpConfig, ClvpModelForConditionalGeneration
+from tiny_hf.transformers.import ClvpConfig, ClvpModelForConditionalGeneration
 
 
 _MODELS = {

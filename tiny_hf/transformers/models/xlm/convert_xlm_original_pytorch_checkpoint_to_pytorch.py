@@ -18,10 +18,10 @@ import argparse
 import json
 
 import numpy
-import torch
+import tg_adapter as torch
 
-from transformers.models.xlm.tokenization_xlm import VOCAB_FILES_NAMES
-from transformers.utils import CONFIG_NAME, WEIGHTS_NAME, logging
+from tiny_hf.transformers.models.xlm.tokenization_xlm import VOCAB_FILES_NAMES
+from tiny_hf.transformers.utils import CONFIG_NAME, WEIGHTS_NAME, logging
 
 
 logging.set_verbosity_info()

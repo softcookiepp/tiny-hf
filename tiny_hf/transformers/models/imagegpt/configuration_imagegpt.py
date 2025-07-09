@@ -80,7 +80,7 @@ class ImageGPTConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import ImageGPTConfig, ImageGPTModel
+    >>> from tiny_hf.transformers.import ImageGPTConfig, ImageGPTModel
 
     >>> # Initializing a ImageGPT configuration
     >>> configuration = ImageGPTConfig()

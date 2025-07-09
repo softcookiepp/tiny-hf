@@ -16,8 +16,8 @@
 
 from typing import Optional, Tuple, Union
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
 from ...modeling_utils import PreTrainedModel
 from ...utils import add_start_docstrings, add_start_docstrings_to_model_forward, logging, replace_return_docstrings
@@ -145,12 +145,12 @@ VISION_TEXT_DUAL_ENCODER_INPUTS_DOCSTRING = r"""
 """
 
 
-# Copied from transformers.models.clip.modeling_clip.contrastive_loss
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.contrastive_loss
 def contrastive_loss(logits: torch.Tensor) -> torch.Tensor:
     return nn.functional.cross_entropy(logits, torch.arange(len(logits), device=logits.device))
 
 
-# Copied from transformers.models.clip.modeling_clip.clip_loss
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.clip_loss
 def clip_loss(similarity: torch.Tensor) -> torch.Tensor:
     caption_loss = contrastive_loss(similarity)
     image_loss = contrastive_loss(similarity.t())
@@ -228,7 +228,7 @@ class VisionTextDualEncoderModel(PreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import VisionTextDualEncoderModel, AutoTokenizer
+        >>> from tiny_hf.transformers.import VisionTextDualEncoderModel, AutoTokenizer
 
         >>> model = VisionTextDualEncoderModel.from_pretrained("clip-italian/clip-italian")
         >>> tokenizer = AutoTokenizer.from_pretrained("clip-italian/clip-italian")
@@ -269,7 +269,7 @@ class VisionTextDualEncoderModel(PreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import VisionTextDualEncoderModel, AutoImageProcessor
+        >>> from tiny_hf.transformers.import VisionTextDualEncoderModel, AutoImageProcessor
 
         >>> model = VisionTextDualEncoderModel.from_pretrained("clip-italian/clip-italian")
         >>> image_processor = AutoImageProcessor.from_pretrained("google/vit-base-patch16-224")
@@ -315,7 +315,7 @@ class VisionTextDualEncoderModel(PreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import (
+        >>> from tiny_hf.transformers.import (
         ...     VisionTextDualEncoderModel,
         ...     VisionTextDualEncoderProcessor,
         ...     AutoImageProcessor,
@@ -462,7 +462,7 @@ class VisionTextDualEncoderModel(PreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import VisionTextDualEncoderModel
+        >>> from tiny_hf.transformers.import VisionTextDualEncoderModel
 
         >>> # initialize a model from pretrained ViT and BERT models. Note that the projection layers will be randomly initialized.
         >>> model = VisionTextDualEncoderModel.from_vision_text_pretrained(

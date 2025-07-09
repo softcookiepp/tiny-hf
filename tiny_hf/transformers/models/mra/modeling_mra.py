@@ -18,11 +18,11 @@ import math
 from pathlib import Path
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
-from torch.utils.cpp_extension import load
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+from tg_adapter.utils.cpp_extension import load
 
 from ...activations import ACT2FN
 from ...modeling_outputs import (
@@ -622,7 +622,7 @@ class MraSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfOutput
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfOutput
 class MraSelfOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -669,7 +669,7 @@ class MraAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate
 class MraIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -685,7 +685,7 @@ class MraIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOutput
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOutput
 class MraOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -772,7 +772,7 @@ class MraEncoder(nn.Module):
         )
 
 
-# Copied from transformers.models.bert.modeling_bert.BertPredictionHeadTransform
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPredictionHeadTransform
 class MraPredictionHeadTransform(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -790,7 +790,7 @@ class MraPredictionHeadTransform(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertLMPredictionHead with Bert->Mra
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertLMPredictionHead with Bert->Mra
 class MraLMPredictionHead(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -814,7 +814,7 @@ class MraLMPredictionHead(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOnlyMLMHead with Bert->Mra
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOnlyMLMHead with Bert->Mra
 class MraOnlyMLMHead(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -825,7 +825,7 @@ class MraOnlyMLMHead(nn.Module):
         return prediction_scores
 
 
-# Copied from transformers.models.yoso.modeling_yoso.YosoPreTrainedModel with Yoso->Mra,yoso->mra
+# Copied from tiny_hf.transformers.models.yoso.modeling_yoso.YosoPreTrainedModel with Yoso->Mra,yoso->mra
 class MraPreTrainedModel(PreTrainedModel):
     """
     An abstract class to handle weights initialization and a simple interface for downloading and loading pretrained
@@ -1100,7 +1100,7 @@ class MraForMaskedLM(MraPreTrainedModel):
         )
 
 
-# Copied from transformers.models.yoso.modeling_yoso.YosoClassificationHead with Yoso->Mra
+# Copied from tiny_hf.transformers.models.yoso.modeling_yoso.YosoClassificationHead with Yoso->Mra
 class MraClassificationHead(nn.Module):
     """Head for sentence-level classification tasks."""
 

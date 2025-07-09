@@ -20,11 +20,11 @@ import json
 import os
 import re
 
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download, split_torch_state_dict_into_shards
 
-from transformers import AutoModelForCausalLM, AutoTokenizer, PreTrainedTokenizerFast, RwkvConfig
-from transformers.modeling_utils import WEIGHTS_INDEX_NAME
+from tiny_hf.transformers.import AutoModelForCausalLM, AutoTokenizer, PreTrainedTokenizerFast, RwkvConfig
+from tiny_hf.transformers.modeling_utils import WEIGHTS_INDEX_NAME
 
 
 NUM_HIDDEN_LAYERS_MAPPING = {

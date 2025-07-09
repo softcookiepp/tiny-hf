@@ -46,12 +46,12 @@ from .integrations import (
 
 import huggingface_hub.utils as hf_hub_utils
 import numpy as np
-import torch
-import torch.distributed as dist
+import tg_adapter as torch
+import tg_adapter.distributed as dist
 from huggingface_hub import ModelCard, create_repo, upload_folder
 from packaging import version
-from torch import nn
-from torch.utils.data import DataLoader, Dataset, IterableDataset, RandomSampler, SequentialSampler
+from tg_adapter.import nn
+from tg_adapter.utils.data import DataLoader, Dataset, IterableDataset, RandomSampler, SequentialSampler
 
 from . import __version__
 from .configuration_utils import PretrainedConfig
@@ -196,14 +196,14 @@ if is_datasets_available():
     import datasets
 
 if is_torch_xla_available():
-    import torch_xla.core.xla_model as xm
-    import torch_xla.debug.metrics as met
-    from torch_xla import __version__ as XLA_VERSION
+    import tg_adapter.xla.core.xla_model as xm
+    import tg_adapter.xla.debug.metrics as met
+    from tg_adapter.xla import __version__ as XLA_VERSION
 
     IS_XLA_FSDPV2_POST_2_2 = version.parse(XLA_VERSION) >= version.parse(XLA_FSDPV2_MIN_VERSION)
     if IS_XLA_FSDPV2_POST_2_2:
-        import torch_xla.distributed.spmd as xs
-        import torch_xla.runtime as xr
+        import tg_adapter.xla.distributed.spmd as xs
+        import tg_adapter.xla.runtime as xr
 else:
     IS_XLA_FSDPV2_POST_2_2 = False
 
@@ -664,7 +664,7 @@ class Trainer:
                 raise ValueError(
                     "The model and the optimizer parameters are not on the same device, which probably means you"
                     " created an optimizer around your model **before** putting on the device and passing it to the"
-                    " `Trainer`. Make sure the lines `import torch_xla.core.xla_model as xm` and"
+                    " `Trainer`. Make sure the lines `import tg_adapter.xla.core.xla_model as xm` and"
                     " `model.to(xm.xla_device())` is performed before the optimizer creation in your script."
                 )
         if (self.is_fsdp_xla_enabled or self.is_fsdp_enabled) and (
@@ -1421,7 +1421,7 @@ class Trainer:
             optimizer_cls = Adafactor
             optimizer_kwargs.update({"scale_parameter": False, "relative_step": False})
         elif args.optim in [OptimizerNames.ADAMW_TORCH, OptimizerNames.ADAMW_TORCH_FUSED]:
-            from torch.optim import AdamW
+            from tg_adapter.optim import AdamW
 
             optimizer_cls = AdamW
             optimizer_kwargs.update(adam_kwargs)
@@ -1429,20 +1429,20 @@ class Trainer:
                 optimizer_kwargs.update({"fused": True})
         elif args.optim == OptimizerNames.ADAMW_TORCH_XLA:
             try:
-                from torch_xla.amp.syncfree import AdamW
+                from tg_adapter.xla.amp.syncfree import AdamW
 
                 optimizer_cls = AdamW
                 optimizer_kwargs.update(adam_kwargs)
             except ImportError:
-                raise ValueError("Trainer failed to import syncfree AdamW from torch_xla.")
+                raise ValueError("Trainer failed to import syncfree AdamW from tg_adapter.xla.")
         elif args.optim == OptimizerNames.ADAMW_TORCH_NPU_FUSED:
             try:
-                from torch_npu.optim import NpuFusedAdamW
+                from tg_adapter.npu.optim import NpuFusedAdamW
 
                 optimizer_cls = NpuFusedAdamW
                 optimizer_kwargs.update(adam_kwargs)
             except ImportError:
-                raise ValueError("Trainer failed to import FusedAdamW from torch_npu.")
+                raise ValueError("Trainer failed to import FusedAdamW from tg_adapter.npu.")
         elif args.optim == OptimizerNames.ADAMW_APEX_FUSED:
             try:
                 from apex.optimizers import FusedAdam
@@ -1534,7 +1534,7 @@ class Trainer:
                 )
         elif args.optim == OptimizerNames.ADAMW_ANYPRECISION:
             try:
-                from torchdistx.optimizers import AnyPrecisionAdamW
+                from tg_adapter.istx.optimizers import AnyPrecisionAdamW
 
                 optimizer_cls = AnyPrecisionAdamW
                 optimizer_kwargs.update(adam_kwargs)
@@ -1674,7 +1674,7 @@ class Trainer:
                     "You need to have `torch>2.4` in order to use torch 4-bit optimizers. "
                     "Install it with `pip install --upgrade torch` it is available on pipy. Otherwise, you need to install torch nightly."
                 )
-            from torchao.prototype.low_bit_optim import AdamW4bit, AdamW8bit
+            from tg_adapter.o.prototype.low_bit_optim import AdamW4bit, AdamW8bit
 
             if args.optim == OptimizerNames.ADAMW_TORCH_4BIT:
                 optimizer_cls = AdamW4bit
@@ -1826,7 +1826,7 @@ class Trainer:
             # Rebuild the deepspeed config to reflect the updated training parameters
             from accelerate.utils import DeepSpeedPlugin
 
-            #from transformers.integrations.deepspeed import HfTrainerDeepSpeedConfig
+            #from tiny_hf.transformers.integrations.deepspeed import HfTrainerDeepSpeedConfig
             from .integrations.deepspeed import HfTrainerDeepSpeedConfig
 
             self.args.hf_deepspeed_config = HfTrainerDeepSpeedConfig(self.args.deepspeed)
@@ -2018,15 +2018,15 @@ class Trainer:
         # Distributed training using PyTorch FSDP
         if self.is_fsdp_xla_enabled:
             try:
-                from torch_xla.distributed.fsdp import XlaFullyShardedDataParallel as FSDP
-                from torch_xla.distributed.fsdp import checkpoint_module
-                from torch_xla.distributed.fsdp.wrap import (
+                from tg_adapter.xla.distributed.fsdp import XlaFullyShardedDataParallel as FSDP
+                from tg_adapter.xla.distributed.fsdp import checkpoint_module
+                from tg_adapter.xla.distributed.fsdp.wrap import (
                     size_based_auto_wrap_policy,
                     transformer_auto_wrap_policy,
                 )
 
                 if self.is_fsdp_xla_v2_enabled:
-                    from torch_xla.experimental.spmd_fully_sharded_data_parallel import (
+                    from tg_adapter.xla.experimental.spmd_fully_sharded_data_parallel import (
                         SpmdFullyShardedDataParallel as FSDPv2,
                     )
             except ImportError:
@@ -3000,7 +3000,7 @@ class Trainer:
                                 else:
                                     raise
                             # Load_adapter has no return value present, modify it when appropriate.
-                            from torch.nn.modules.module import _IncompatibleKeys
+                            from tg_adapter.nn.modules.module import _IncompatibleKeys
 
                             load_result = _IncompatibleKeys([], [])
                         else:
@@ -3935,7 +3935,7 @@ class Trainer:
             xm.rendezvous("save_full_checkpoints")
             # Master save full checkpoint
             if self.args.should_save:
-                from torch_xla.distributed.fsdp import consolidate_sharded_model_checkpoints
+                from tg_adapter.xla.distributed.fsdp import consolidate_sharded_model_checkpoints
 
                 full_state_dict, _ = consolidate_sharded_model_checkpoints(
                     ckpt_prefix=os.path.join(output_dir, ""),
@@ -5211,7 +5211,7 @@ class Trainer:
         """
         Sets values in the deepspeed plugin based on the Trainer args
         """
-        #from transformers.integrations.deepspeed import HfTrainerDeepSpeedConfig
+        #from tiny_hf.transformers.integrations.deepspeed import HfTrainerDeepSpeedConfig
         from .integrations.deepspeed import HfTrainerDeepSpeedConfig
 
         ds_plugin = self.accelerator.state.deepspeed_plugin

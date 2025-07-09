@@ -17,8 +17,8 @@
 import copy
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+import tg_adapter.nn as nn
 
 from ....activations import ACT2FN
 from ....modeling_outputs import MoECausalLMOutputWithPast, MoEModelOutputWithPastAndCrossAttentions
@@ -1136,7 +1136,7 @@ class GPTSanJapaneseForConditionalGeneration(GPTSanJapanesePreTrainedModel):
 
         Text Generation with regular LM Model
         ```python
-        >>> from transformers import AutoModel, AutoTokenizer, trainer_utils
+        >>> from tiny_hf.transformers.import AutoModel, AutoTokenizer, trainer_utils
 
         >>> device = "cuda"
         >>> model = AutoModel.from_pretrained("Tanrei/GPTSAN-japanese").to(device)
@@ -1151,7 +1151,7 @@ class GPTSanJapaneseForConditionalGeneration(GPTSanJapanesePreTrainedModel):
 
         Text Generation with Prefix-LM Model
         ```python
-        >>> from transformers import AutoModel, AutoTokenizer, trainer_utils
+        >>> from tiny_hf.transformers.import AutoModel, AutoTokenizer, trainer_utils
 
         >>> device = "cuda"
         >>> model = AutoModel.from_pretrained("Tanrei/GPTSAN-japanese").to(device)
@@ -1167,7 +1167,7 @@ class GPTSanJapaneseForConditionalGeneration(GPTSanJapanesePreTrainedModel):
 
         Simultaneously Text Generation And Masked Language Model
         ```python
-        >>> from transformers import AutoModel, AutoTokenizer, trainer_utils
+        >>> from tiny_hf.transformers.import AutoModel, AutoTokenizer, trainer_utils
 
         >>> device = "cuda"
         >>> model = AutoModel.from_pretrained("Tanrei/GPTSAN-japanese").to(device)

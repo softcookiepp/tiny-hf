@@ -18,7 +18,7 @@ from collections import UserDict
 from typing import Dict, List, Optional, Tuple, Union
 
 import numpy as np
-import torch
+import tg_adapter as torch
 
 from ..utils import add_start_docstrings
 from .beam_constraints import Constraint, ConstraintListState

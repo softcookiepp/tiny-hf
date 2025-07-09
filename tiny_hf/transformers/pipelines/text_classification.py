@@ -54,7 +54,7 @@ class TextClassificationPipeline(Pipeline):
     Example:
 
     ```python
-    >>> from transformers import pipeline
+    >>> from tiny_hf.transformers.import pipeline
 
     >>> classifier = pipeline(model="distilbert/distilbert-base-uncased-finetuned-sst-2-english")
     >>> classifier("This movie is disgustingly good !")

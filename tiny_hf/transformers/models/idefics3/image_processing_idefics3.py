@@ -141,7 +141,7 @@ def get_resize_output_image_size(
     return height, width
 
 
-# Copied from transformers.models.detr.image_processing_detr.max_across_indices
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.max_across_indices
 def max_across_indices(values: Iterable[Any]) -> List[Any]:
     """
     Return the maximum value across all indices of an iterable of values.
@@ -167,7 +167,7 @@ def get_max_height_width(
     return (max_height, max_width)
 
 
-# Copied from transformers.models.detr.image_processing_detr.make_pixel_mask
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.make_pixel_mask
 def make_pixel_mask(
     image: np.ndarray, output_size: Tuple[int, int], input_data_format: Optional[Union[str, ChannelDimension]] = None
 ) -> np.ndarray:

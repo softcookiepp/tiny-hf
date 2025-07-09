@@ -98,7 +98,7 @@ class LayoutLMv2Config(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import LayoutLMv2Config, LayoutLMv2Model
+    >>> from tiny_hf.transformers.import LayoutLMv2Config, LayoutLMv2Model
 
     >>> # Initializing a LayoutLMv2 microsoft/layoutlmv2-base-uncased style configuration
     >>> configuration = LayoutLMv2Config()

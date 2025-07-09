@@ -37,7 +37,7 @@ if is_vision_available():
     from PIL.Image import Image
 
 if is_torch_available():
-    from torch import Tensor
+    from tg_adapter import Tensor
 
 
 BASIC_TYPES = (int, float, str, bool, Any, type(None), ...)
@@ -254,8 +254,8 @@ def get_json_schema(func: Callable) -> Dict:
     support them, like so:
 
     ```python
-    >>> from transformers import AutoTokenizer
-    >>> from transformers.utils import get_json_schema
+    >>> from tiny_hf.transformers.import AutoTokenizer
+    >>> from tiny_hf.transformers.utils import get_json_schema
     >>>
     >>> def multiply(x: float, y: float):
     >>>    '''

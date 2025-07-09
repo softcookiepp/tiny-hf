@@ -88,7 +88,7 @@ class BlenderbotSmallConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import BlenderbotSmallConfig, BlenderbotSmallModel
+    >>> from tiny_hf.transformers.import BlenderbotSmallConfig, BlenderbotSmallModel
 
     >>> # Initializing a BlenderbotSmall facebook/blenderbot_small-90M style configuration
     >>> configuration = BlenderbotSmallConfig()
@@ -163,7 +163,7 @@ class BlenderbotSmallConfig(PretrainedConfig):
         )
 
 
-# Copied from transformers.models.bart.configuration_bart.BartOnnxConfig
+# Copied from tiny_hf.transformers.models.bart.configuration_bart.BartOnnxConfig
 class BlenderbotSmallOnnxConfig(OnnxSeq2SeqConfigWithPast):
     @property
     def inputs(self) -> Mapping[str, Mapping[int, str]]:
@@ -246,7 +246,7 @@ class BlenderbotSmallOnnxConfig(OnnxSeq2SeqConfigWithPast):
             if not is_torch_available():
                 raise ValueError("Cannot generate dummy past_keys inputs without PyTorch installed.")
             else:
-                import torch
+                import tg_adapter as torch
             batch, encoder_seq_length = common_inputs["input_ids"].shape
             decoder_seq_length = common_inputs["decoder_input_ids"].shape[1]
             num_encoder_attention_heads, num_decoder_attention_heads = self.num_attention_heads
@@ -306,7 +306,7 @@ class BlenderbotSmallOnnxConfig(OnnxSeq2SeqConfigWithPast):
             if not is_torch_available():
                 raise ValueError("Cannot generate dummy past_keys inputs without PyTorch installed.")
             else:
-                import torch
+                import tg_adapter as torch
             batch, seqlen = common_inputs["input_ids"].shape
             # Not using the same length for past_key_values
             past_key_values_length = seqlen + 2

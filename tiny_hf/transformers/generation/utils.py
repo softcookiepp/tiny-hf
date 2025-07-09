@@ -21,13 +21,13 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.distributed as dist
+import tg_adapter as torch
+import tg_adapter.distributed as dist
 from packaging import version
-from torch import nn
-from torch.nn import functional as F
+from tg_adapter import nn
+from tg_adapter.nn import functional as F
 
-#from transformers.generation.candidate_generator import AssistantVocabTranslatorCache
+#from tiny_hf.transformers.generation.candidate_generator import AssistantVocabTranslatorCache
 from .candidate_generator import AssistantVocabTranslatorCache
 
 from ..cache_utils import (
@@ -1258,7 +1258,7 @@ class GenerationMixin:
         Examples:
 
         ```python
-        >>> from transformers import GPT2Tokenizer, AutoModelForCausalLM
+        >>> from tiny_hf.transformers.import GPT2Tokenizer, AutoModelForCausalLM
         >>> import numpy as np
 
         >>> tokenizer = GPT2Tokenizer.from_pretrained("gpt2")

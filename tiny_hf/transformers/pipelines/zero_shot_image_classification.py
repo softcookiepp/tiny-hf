@@ -39,7 +39,7 @@ class ZeroShotImageClassificationPipeline(Pipeline):
     Example:
 
     ```python
-    >>> from transformers import pipeline
+    >>> from tiny_hf.transformers.import pipeline
 
     >>> classifier = pipeline(model="google/siglip-so400m-patch14-384")
     >>> classifier(

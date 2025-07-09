@@ -16,9 +16,9 @@
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...modeling_utils import ModelOutput, PreTrainedModel
 from ...utils import add_start_docstrings, add_start_docstrings_to_model_forward, logging, replace_return_docstrings
@@ -535,7 +535,7 @@ class UnivNetModel(PreTrainedModel):
         Example:
 
          ```python
-         >>> from transformers import UnivNetFeatureExtractor, UnivNetModel
+         >>> from tiny_hf.transformers.import UnivNetFeatureExtractor, UnivNetModel
          >>> from datasets import load_dataset, Audio
 
          >>> model = UnivNetModel.from_pretrained("dg845/univnet-dev")

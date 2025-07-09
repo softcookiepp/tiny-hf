@@ -85,7 +85,7 @@ class NemotronConfig(PretrainedConfig):
             Whether to use a bias in up_proj and down_proj layers in the MLP layers.
 
     ```python
-    >>> from transformers import NemotronModel, NemotronConfig
+    >>> from tiny_hf.transformers.import NemotronModel, NemotronConfig
 
     >>> # Initializing a Nemotron nemotron-15b style configuration
     >>> configuration = NemotronConfig()

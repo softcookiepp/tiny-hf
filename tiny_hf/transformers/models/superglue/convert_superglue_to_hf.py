@@ -17,10 +17,10 @@ import os
 import re
 from typing import List
 
-import torch
+import tg_adapter as torch
 from datasets import load_dataset
 
-from transformers import (
+from tiny_hf.transformers.import (
     AutoModelForKeypointDetection,
     SuperGlueConfig,
     SuperGlueForKeypointMatching,

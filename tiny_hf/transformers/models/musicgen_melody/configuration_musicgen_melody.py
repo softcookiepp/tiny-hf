@@ -161,7 +161,7 @@ class MusicgenMelodyConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import (
+    >>> from tiny_hf.transformers.import (
     ...     MusicgenMelodyConfig,
     ...     MusicgenMelodyDecoderConfig,
     ...     T5Config,

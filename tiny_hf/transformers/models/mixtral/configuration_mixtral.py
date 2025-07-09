@@ -95,7 +95,7 @@ class MixtralConfig(PretrainedConfig):
             Amount of noise to add to the router.
 
     ```python
-    >>> from transformers import MixtralModel, MixtralConfig
+    >>> from tiny_hf.transformers.import MixtralModel, MixtralConfig
 
     >>> # Initializing a Mixtral 7B style configuration
     >>> configuration = MixtralConfig()

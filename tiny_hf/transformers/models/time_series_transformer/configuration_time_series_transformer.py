@@ -109,7 +109,7 @@ class TimeSeriesTransformerConfig(PretrainedConfig):
         Example:
 
     ```python
-    >>> from transformers import TimeSeriesTransformerConfig, TimeSeriesTransformerModel
+    >>> from tiny_hf.transformers.import TimeSeriesTransformerConfig, TimeSeriesTransformerModel
 
     >>> # Initializing a Time Series Transformer configuration with 12 time steps for prediction
     >>> configuration = TimeSeriesTransformerConfig(prediction_length=12)

@@ -163,7 +163,7 @@ CAMEMBERT_INPUTS_DOCSTRING = r"""
 """
 
 
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaEmbeddings
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaEmbeddings
 class TFCamembertEmbeddings(keras.layers.Layer):
     """
     Same as BertEmbeddings with a tiny tweak for positional embeddings indexing.
@@ -269,7 +269,7 @@ class TFCamembertEmbeddings(keras.layers.Layer):
         return final_embeddings
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertPooler with Bert->Camembert
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertPooler with Bert->Camembert
 class TFCamembertPooler(keras.layers.Layer):
     def __init__(self, config: CamembertConfig, **kwargs):
         super().__init__(**kwargs)
@@ -299,7 +299,7 @@ class TFCamembertPooler(keras.layers.Layer):
                 self.dense.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertSelfAttention with Bert->Camembert
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertSelfAttention with Bert->Camembert
 class TFCamembertSelfAttention(keras.layers.Layer):
     def __init__(self, config: CamembertConfig, **kwargs):
         super().__init__(**kwargs)
@@ -432,7 +432,7 @@ class TFCamembertSelfAttention(keras.layers.Layer):
                 self.value.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertSelfOutput with Bert->Camembert
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertSelfOutput with Bert->Camembert
 class TFCamembertSelfOutput(keras.layers.Layer):
     def __init__(self, config: CamembertConfig, **kwargs):
         super().__init__(**kwargs)
@@ -463,7 +463,7 @@ class TFCamembertSelfOutput(keras.layers.Layer):
                 self.LayerNorm.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertAttention with Bert->Camembert
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertAttention with Bert->Camembert
 class TFCamembertAttention(keras.layers.Layer):
     def __init__(self, config: CamembertConfig, **kwargs):
         super().__init__(**kwargs)
@@ -515,7 +515,7 @@ class TFCamembertAttention(keras.layers.Layer):
                 self.dense_output.build(None)
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertIntermediate with Bert->Camembert
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertIntermediate with Bert->Camembert
 class TFCamembertIntermediate(keras.layers.Layer):
     def __init__(self, config: CamembertConfig, **kwargs):
         super().__init__(**kwargs)
@@ -545,7 +545,7 @@ class TFCamembertIntermediate(keras.layers.Layer):
                 self.dense.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertOutput with Bert->Camembert
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertOutput with Bert->Camembert
 class TFCamembertOutput(keras.layers.Layer):
     def __init__(self, config: CamembertConfig, **kwargs):
         super().__init__(**kwargs)
@@ -576,7 +576,7 @@ class TFCamembertOutput(keras.layers.Layer):
                 self.LayerNorm.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertLayer with Bert->Camembert
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertLayer with Bert->Camembert
 class TFCamembertLayer(keras.layers.Layer):
     def __init__(self, config: CamembertConfig, **kwargs):
         super().__init__(**kwargs)
@@ -680,7 +680,7 @@ class TFCamembertLayer(keras.layers.Layer):
                 self.crossattention.build(None)
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertEncoder with Bert->Camembert
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertEncoder with Bert->Camembert
 class TFCamembertEncoder(keras.layers.Layer):
     def __init__(self, config: CamembertConfig, **kwargs):
         super().__init__(**kwargs)
@@ -760,7 +760,7 @@ class TFCamembertEncoder(keras.layers.Layer):
 
 
 @keras_serializable
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaMainLayer with Roberta->Camembert
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaMainLayer with Roberta->Camembert
 class TFCamembertMainLayer(keras.layers.Layer):
     config_class = CamembertConfig
 
@@ -780,16 +780,16 @@ class TFCamembertMainLayer(keras.layers.Layer):
         # The embeddings must be the last declaration in order to follow the weights order
         self.embeddings = TFCamembertEmbeddings(config, name="embeddings")
 
-    # Copied from transformers.models.bert.modeling_tf_bert.TFBertMainLayer.get_input_embeddings
+    # Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertMainLayer.get_input_embeddings
     def get_input_embeddings(self) -> keras.layers.Layer:
         return self.embeddings
 
-    # Copied from transformers.models.bert.modeling_tf_bert.TFBertMainLayer.set_input_embeddings
+    # Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertMainLayer.set_input_embeddings
     def set_input_embeddings(self, value: tf.Variable):
         self.embeddings.weight = value
         self.embeddings.vocab_size = shape_list(value)[0]
 
-    # Copied from transformers.models.bert.modeling_tf_bert.TFBertMainLayer._prune_heads
+    # Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertMainLayer._prune_heads
     def _prune_heads(self, heads_to_prune):
         """
         Prunes heads of the model. heads_to_prune: dict of {layer_num: list of heads to prune in this layer} See base
@@ -798,7 +798,7 @@ class TFCamembertMainLayer(keras.layers.Layer):
         raise NotImplementedError
 
     @unpack_inputs
-    # Copied from transformers.models.bert.modeling_tf_bert.TFBertMainLayer.call
+    # Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertMainLayer.call
     def call(
         self,
         input_ids: TFModelInputType | None = None,
@@ -985,7 +985,7 @@ class TFCamembertPreTrainedModel(TFPreTrainedModel):
     "The bare CamemBERT Model transformer outputting raw hidden-states without any specific head on top.",
     CAMEMBERT_START_DOCSTRING,
 )
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaModel with Roberta->Camembert, ROBERTA->CAMEMBERT
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaModel with Roberta->Camembert, ROBERTA->CAMEMBERT
 class TFCamembertModel(TFCamembertPreTrainedModel):
     def __init__(self, config, *inputs, **kwargs):
         super().__init__(config, *inputs, **kwargs)
@@ -1063,7 +1063,7 @@ class TFCamembertModel(TFCamembertPreTrainedModel):
                 self.roberta.build(None)
 
 
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaLMHead with Roberta->Camembert
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaLMHead with Roberta->Camembert
 class TFCamembertLMHead(keras.layers.Layer):
     """Camembert Head for masked language modeling."""
 
@@ -1128,7 +1128,7 @@ class TFCamembertLMHead(keras.layers.Layer):
     """CamemBERT Model with a `language modeling` head on top.""",
     CAMEMBERT_START_DOCSTRING,
 )
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaForMaskedLM with Roberta->Camembert, ROBERTA->CAMEMBERT
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaForMaskedLM with Roberta->Camembert, ROBERTA->CAMEMBERT
 class TFCamembertForMaskedLM(TFCamembertPreTrainedModel, TFMaskedLanguageModelingLoss):
     # names with a '.' represents the authorized unexpected/missing layers when a TF model is loaded from a PT model
     _keys_to_ignore_on_load_unexpected = [r"pooler", r"lm_head.decoder.weight"]
@@ -1217,7 +1217,7 @@ class TFCamembertForMaskedLM(TFCamembertPreTrainedModel, TFMaskedLanguageModelin
                 self.lm_head.build(None)
 
 
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaClassificationHead
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaClassificationHead
 class TFCamembertClassificationHead(keras.layers.Layer):
     """Head for sentence-level classification tasks."""
 
@@ -1265,7 +1265,7 @@ class TFCamembertClassificationHead(keras.layers.Layer):
     """,
     CAMEMBERT_START_DOCSTRING,
 )
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaForSequenceClassification with Roberta->Camembert, ROBERTA->CAMEMBERT
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaForSequenceClassification with Roberta->Camembert, ROBERTA->CAMEMBERT
 class TFCamembertForSequenceClassification(TFCamembertPreTrainedModel, TFSequenceClassificationLoss):
     # names with a '.' represents the authorized unexpected/missing layers when a TF model is loaded from a PT model
     _keys_to_ignore_on_load_unexpected = [r"pooler", r"lm_head"]
@@ -1353,7 +1353,7 @@ class TFCamembertForSequenceClassification(TFCamembertPreTrainedModel, TFSequenc
     """,
     CAMEMBERT_START_DOCSTRING,
 )
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaForTokenClassification with Roberta->Camembert, ROBERTA->CAMEMBERT
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaForTokenClassification with Roberta->Camembert, ROBERTA->CAMEMBERT
 class TFCamembertForTokenClassification(TFCamembertPreTrainedModel, TFTokenClassificationLoss):
     # names with a '.' represents the authorized unexpected/missing layers when a TF model is loaded from a PT model
     _keys_to_ignore_on_load_unexpected = [r"pooler", r"lm_head"]
@@ -1449,7 +1449,7 @@ class TFCamembertForTokenClassification(TFCamembertPreTrainedModel, TFTokenClass
     """,
     CAMEMBERT_START_DOCSTRING,
 )
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaForMultipleChoice with Roberta->Camembert, ROBERTA->CAMEMBERT
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaForMultipleChoice with Roberta->Camembert, ROBERTA->CAMEMBERT
 class TFCamembertForMultipleChoice(TFCamembertPreTrainedModel, TFMultipleChoiceLoss):
     # names with a '.' represents the authorized unexpected/missing layers when a TF model is loaded from a PT model
     _keys_to_ignore_on_load_unexpected = [r"lm_head"]
@@ -1554,7 +1554,7 @@ class TFCamembertForMultipleChoice(TFCamembertPreTrainedModel, TFMultipleChoiceL
     """,
     CAMEMBERT_START_DOCSTRING,
 )
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaForQuestionAnswering with Roberta->Camembert, ROBERTA->CAMEMBERT
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaForQuestionAnswering with Roberta->Camembert, ROBERTA->CAMEMBERT
 class TFCamembertForQuestionAnswering(TFCamembertPreTrainedModel, TFQuestionAnsweringLoss):
     # names with a '.' represents the authorized unexpected/missing layers when a TF model is loaded from a PT model
     _keys_to_ignore_on_load_unexpected = [r"pooler", r"lm_head"]
@@ -1655,7 +1655,7 @@ class TFCamembertForQuestionAnswering(TFCamembertPreTrainedModel, TFQuestionAnsw
 @add_start_docstrings(
     """CamemBERT Model with a `language modeling` head on top for CLM fine-tuning.""", CAMEMBERT_START_DOCSTRING
 )
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaForCausalLM with Roberta->Camembert, ROBERTA->CAMEMBERT
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaForCausalLM with Roberta->Camembert, ROBERTA->CAMEMBERT
 class TFCamembertForCausalLM(TFCamembertPreTrainedModel, TFCausalLanguageModelingLoss):
     # names with a '.' represents the authorized unexpected/missing layers when a TF model is loaded from a PT model
     _keys_to_ignore_on_load_unexpected = [r"pooler", r"lm_head.decoder.weight"]
@@ -1676,7 +1676,7 @@ class TFCamembertForCausalLM(TFCamembertPreTrainedModel, TFCausalLanguageModelin
         warnings.warn("The method get_prefix_bias_name is deprecated. Please use `get_bias` instead.", FutureWarning)
         return self.name + "/" + self.lm_head.name
 
-    # Copied from transformers.models.bert.modeling_tf_bert.TFBertLMHeadModel.prepare_inputs_for_generation
+    # Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertLMHeadModel.prepare_inputs_for_generation
     def prepare_inputs_for_generation(self, input_ids, past_key_values=None, attention_mask=None, **model_kwargs):
         input_shape = input_ids.shape
         # if model is used as a decoder in encoder-decoder model, the decoder attention mask is created on the fly

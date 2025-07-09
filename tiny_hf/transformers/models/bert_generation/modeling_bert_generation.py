@@ -17,9 +17,9 @@
 import math
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -42,7 +42,7 @@ _CHECKPOINT_FOR_DOC = "google/bert_for_seq_generation_L-24_bbc_encoder"
 _CONFIG_FOR_DOC = "BertGenerationConfig"
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfOutput with Bert->BertGeneration
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfOutput with Bert->BertGeneration
 class BertGenerationSelfOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -57,7 +57,7 @@ class BertGenerationSelfOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfAttention with Bert->BertGeneration
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfAttention with Bert->BertGeneration
 class BertGenerationSelfAttention(nn.Module):
     def __init__(self, config, position_embedding_type=None):
         super().__init__()
@@ -197,7 +197,7 @@ BERT_GENERATION_SELF_ATTENTION_CLASSES = {
 }
 
 
-# Copied from transformers.models.bert.modeling_bert.BertAttention with Bert->BertGeneration,BERT->BERT_GENERATION
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertAttention with Bert->BertGeneration,BERT->BERT_GENERATION
 class BertGenerationAttention(nn.Module):
     def __init__(self, config, position_embedding_type=None):
         super().__init__()
@@ -249,7 +249,7 @@ class BertGenerationAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate with Bert->BertGeneration
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate with Bert->BertGeneration
 class BertGenerationIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -265,7 +265,7 @@ class BertGenerationIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOutput with Bert->BertGeneration
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOutput with Bert->BertGeneration
 class BertGenerationOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -280,7 +280,7 @@ class BertGenerationOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertLayer with Bert->BertGeneration
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertLayer with Bert->BertGeneration
 class BertGenerationLayer(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -367,7 +367,7 @@ class BertGenerationLayer(nn.Module):
         return layer_output
 
 
-# Copied from transformers.models.bert.modeling_bert.BertEncoder with Bert->BertGeneration
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertEncoder with Bert->BertGeneration
 class BertEncoder(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -932,8 +932,8 @@ class BertGenerationDecoder(BertGenerationPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, BertGenerationDecoder, BertGenerationConfig
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, BertGenerationDecoder, BertGenerationConfig
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/bert_for_seq_generation_L-24_bbc_encoder")
         >>> config = BertGenerationConfig.from_pretrained("google/bert_for_seq_generation_L-24_bbc_encoder")

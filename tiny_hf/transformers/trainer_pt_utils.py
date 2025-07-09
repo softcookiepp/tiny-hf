@@ -31,11 +31,11 @@ from logging import StreamHandler
 from typing import Any, Optional, Union
 
 import numpy as np
-import torch
-import torch.distributed as dist
-from torch import nn
-from torch.utils.data import Dataset, IterableDataset, RandomSampler, Sampler
-from torch.utils.data.distributed import DistributedSampler
+import tg_adapter as torch
+import tg_adapter.distributed as dist
+from tg_adapter.import nn
+from tg_adapter.utils.data import Dataset, IterableDataset, RandomSampler, Sampler
+from tg_adapter.utils.data.distributed import DistributedSampler
 
 from .integrations.deepspeed import is_deepspeed_zero3_enabled
 from .tokenization_utils_base import BatchEncoding
@@ -52,10 +52,10 @@ if is_training_run_on_sagemaker():
     logging.add_handler(StreamHandler(sys.stdout))
 
 if is_torch_xla_available():
-    import torch_xla.core.xla_model as xm
+    import tg_adapter.xla.core.xla_model as xm
 
 if is_torch_available():
-    from torch.optim.lr_scheduler import LRScheduler
+    from tg_adapter.optim.lr_scheduler import LRScheduler
 
 
 logger = logging.get_logger(__name__)
@@ -185,7 +185,7 @@ def nested_detach(tensors):
 
 def nested_xla_mesh_reduce(tensors, name):
     if is_torch_xla_available():
-        import torch_xla.core.xla_model as xm
+        import tg_adapter.xla.core.xla_model as xm
 
         if isinstance(tensors, (list, tuple)):
             return type(tensors)(nested_xla_mesh_reduce(t, f"{name}_{i}") for i, t in enumerate(tensors))

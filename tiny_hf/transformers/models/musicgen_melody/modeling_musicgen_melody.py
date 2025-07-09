@@ -21,9 +21,9 @@ import random
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.nn as nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...generation import (
@@ -105,7 +105,7 @@ class MusicgenMelodyOutputWithPast(ModelOutput):
     encoder_hidden_states: Optional[torch.FloatTensor] = None
 
 
-# Copied from transformers.models.musicgen.modeling_musicgen.shift_tokens_right
+# Copied from tiny_hf.transformers.models.musicgen.modeling_musicgen.shift_tokens_right
 def shift_tokens_right(input_ids: torch.Tensor, pad_token_id: int, decoder_start_token_id: int):
     """
     Shift input ids one token to the right.
@@ -126,7 +126,7 @@ def shift_tokens_right(input_ids: torch.Tensor, pad_token_id: int, decoder_start
     return shifted_input_ids
 
 
-# Copied from transformers.models.musicgen.modeling_musicgen.MusicgenSinusoidalPositionalEmbedding with Musicgen->MusicgenMelody
+# Copied from tiny_hf.transformers.models.musicgen.modeling_musicgen.MusicgenSinusoidalPositionalEmbedding with Musicgen->MusicgenMelody
 class MusicgenMelodySinusoidalPositionalEmbedding(nn.Module):
     """This module produces sinusoidal positional embeddings of any length."""
 
@@ -173,7 +173,7 @@ class MusicgenMelodySinusoidalPositionalEmbedding(nn.Module):
         return self.weights.index_select(0, position_ids.view(-1)).detach()
 
 
-# Copied from transformers.models.bart.modeling_bart.BartAttention with Bart->MusicgenMelody
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartAttention with Bart->MusicgenMelody
 class MusicgenMelodyAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -332,7 +332,7 @@ class MusicgenMelodyAttention(nn.Module):
         return attn_output, attn_weights_reshaped, past_key_value
 
 
-# Copied from transformers.models.bart.modeling_bart.BartFlashAttention2 with Bart->MusicgenMelody
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartFlashAttention2 with Bart->MusicgenMelody
 class MusicgenMelodyFlashAttention2(MusicgenMelodyAttention):
     """
     MusicgenMelody flash attention module. This module inherits from `MusicgenMelodyAttention` as the weights of the module stays
@@ -459,7 +459,7 @@ class MusicgenMelodyFlashAttention2(MusicgenMelodyAttention):
         return attn_output, attn_weights, past_key_value
 
 
-# Copied from transformers.models.bart.modeling_bart.BartSdpaAttention with Bart->MusicgenMelody
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartSdpaAttention with Bart->MusicgenMelody
 class MusicgenMelodySdpaAttention(MusicgenMelodyAttention):
     def forward(
         self,
@@ -654,7 +654,7 @@ class MusicgenMelodyDecoderLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.musicgen.modeling_musicgen.MusicgenPreTrainedModel with Musicgen->MusicgenMelody
+# Copied from tiny_hf.transformers.models.musicgen.modeling_musicgen.MusicgenPreTrainedModel with Musicgen->MusicgenMelody
 class MusicgenMelodyPreTrainedModel(PreTrainedModel):
     """
     An abstract class to handle weights initialization and a simple interface for downloading and loading pretrained
@@ -852,7 +852,7 @@ MUSICGEN_MELODY_DECODER_INPUTS_DOCSTRING = r"""
 """
 
 
-# Copied from transformers.models.musicgen.modeling_musicgen.MusicgenDecoder with MUSICGEN->MUSICGEN_MELODY,Musicgen->MusicgenMelody
+# Copied from tiny_hf.transformers.models.musicgen.modeling_musicgen.MusicgenDecoder with MUSICGEN->MUSICGEN_MELODY,Musicgen->MusicgenMelody
 class MusicgenMelodyDecoder(MusicgenMelodyPreTrainedModel):
     """
     Transformer decoder consisting of *config.num_hidden_layers* layers. Each layer is a [`MusicgenMelodyDecoderLayer`]
@@ -1050,7 +1050,7 @@ class MusicgenMelodyDecoder(MusicgenMelodyPreTrainedModel):
     "The bare MusicgenMelody decoder model outputting raw hidden-states without any specific head on top.",
     MUSICGEN_MELODY_START_DOCSTRING,
 )
-# Copied from transformers.models.musicgen.modeling_musicgen.MusicgenModel with MUSICGEN->MUSICGEN_MELODY,Musicgen->MusicgenMelody
+# Copied from tiny_hf.transformers.models.musicgen.modeling_musicgen.MusicgenModel with MUSICGEN->MUSICGEN_MELODY,Musicgen->MusicgenMelody
 class MusicgenMelodyModel(MusicgenMelodyPreTrainedModel):
     def __init__(self, config: MusicgenMelodyDecoderConfig):
         super().__init__(config)
@@ -1120,7 +1120,7 @@ class MusicgenMelodyModel(MusicgenMelodyPreTrainedModel):
     "The Musicgen Melody decoder model with a language modelling head on top.",
     MUSICGEN_MELODY_START_DOCSTRING,
 )
-# Copied from transformers.models.musicgen.modeling_musicgen.MusicgenForCausalLM with MUSICGEN->MUSICGEN_MELODY,Musicgen->MusicgenMelody,MusicGen->Musicgen Melody
+# Copied from tiny_hf.transformers.models.musicgen.modeling_musicgen.MusicgenForCausalLM with MUSICGEN->MUSICGEN_MELODY,Musicgen->MusicgenMelody,MusicGen->Musicgen Melody
 class MusicgenMelodyForCausalLM(MusicgenMelodyPreTrainedModel, GenerationMixin):
     def __init__(self, config: MusicgenMelodyDecoderConfig):
         super().__init__(config)
@@ -1703,7 +1703,7 @@ class MusicgenMelodyForConditionalGeneration(PreTrainedModel, GenerationMixin):
         return self.decoder.set_output_embeddings(new_embeddings)
 
     @classmethod
-    # Copied from transformers.models.musicgen.modeling_musicgen.MusicgenForConditionalGeneration.from_sub_models_pretrained with Musicgen->MusicgenMelody, musicgen-small->musicgen-melody
+    # Copied from tiny_hf.transformers.models.musicgen.modeling_musicgen.MusicgenForConditionalGeneration.from_sub_models_pretrained with Musicgen->MusicgenMelody, musicgen-small->musicgen-melody
     def from_sub_models_pretrained(
         cls,
         text_encoder_pretrained_model_name_or_path: str = None,
@@ -1761,7 +1761,7 @@ class MusicgenMelodyForConditionalGeneration(PreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import MusicgenMelodyForConditionalGeneration
+        >>> from tiny_hf.transformers.import MusicgenMelodyForConditionalGeneration
 
         >>> # initialize a musicgen model from a t5 text encoder, encodec audio encoder, and musicgen decoder
         >>> model = MusicgenMelodyForConditionalGeneration.from_sub_models_pretrained(
@@ -1927,8 +1927,8 @@ class MusicgenMelodyForConditionalGeneration(PreTrainedModel, GenerationMixin):
 
         Examples:
         ```python
-        >>> from transformers import AutoProcessor, MusicgenMelodyForConditionalGeneration
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoProcessor, MusicgenMelodyForConditionalGeneration
+        >>> import tg_adapter as torch
 
         >>> processor = AutoProcessor.from_pretrained("facebook/musicgen-melody")
         >>> model = MusicgenMelodyForConditionalGeneration.from_pretrained("facebook/musicgen-melody")
@@ -2106,7 +2106,7 @@ class MusicgenMelodyForConditionalGeneration(PreTrainedModel, GenerationMixin):
             "use_cache": use_cache,
         }
 
-    # Copied from transformers.models.musicgen.modeling_musicgen.MusicgenForConditionalGeneration._prepare_decoder_input_ids_for_generation
+    # Copied from tiny_hf.transformers.models.musicgen.modeling_musicgen.MusicgenForConditionalGeneration._prepare_decoder_input_ids_for_generation
     def _prepare_decoder_input_ids_for_generation(
         self,
         batch_size: int,
@@ -2302,7 +2302,7 @@ class MusicgenMelodyForConditionalGeneration(PreTrainedModel, GenerationMixin):
             param.requires_grad = False
         self.text_encoder._requires_grad = False
 
-    # Copied from transformers.models.musicgen.modeling_musicgen.MusicgenForConditionalGeneration._get_decoder_start_token_id
+    # Copied from tiny_hf.transformers.models.musicgen.modeling_musicgen.MusicgenForConditionalGeneration._get_decoder_start_token_id
     def _get_decoder_start_token_id(
         self, decoder_start_token_id: Union[int, List[int]] = None, bos_token_id: int = None
     ) -> int:

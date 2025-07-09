@@ -75,7 +75,7 @@ class PoolFormerConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import PoolFormerConfig, PoolFormerModel
+    >>> from tiny_hf.transformers.import PoolFormerConfig, PoolFormerModel
 
     >>> # Initializing a PoolFormer sail/poolformer_s12 style configuration
     >>> configuration = PoolFormerConfig()

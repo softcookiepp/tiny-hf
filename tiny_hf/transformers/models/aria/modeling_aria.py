@@ -45,12 +45,12 @@ from .configuration_aria import AriaConfig, AriaTextConfig
 
 
 if is_torch_available():
-    import torch
-    from torch import nn
+    import tg_adapter as torch
+    from tg_adapter.import nn
 
 
 if is_torch_flex_attn_available():
-    from torch.nn.attention.flex_attention import BlockMask
+    from tg_adapter.nn.attention.flex_attention import BlockMask
 
     from ...integrations.flex_attention import make_flex_block_causal_mask
 
@@ -1222,7 +1222,7 @@ class AriaTextForCausalLM(AriaTextPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, AriaTextForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, AriaTextForCausalLM
 
         >>> model = AriaTextForCausalLM.from_pretrained("meta-aria_text/AriaText-2-7b-hf")
         >>> tokenizer = AutoTokenizer.from_pretrained("meta-aria_text/AriaText-2-7b-hf")
@@ -1481,12 +1481,12 @@ class AriaForConditionalGeneration(AriaPreTrainedModel, GenerationMixin):
 
         ```python
         >>> import requests
-        >>> import torch
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> from io import BytesIO
 
-        >>> from transformers import AutoProcessor, AutoModel
-        >>> from transformers.image_utils import load_image
+        >>> from tiny_hf.transformers.import AutoProcessor, AutoModel
+        >>> from tiny_hf.transformers.image_utils import load_image
 
         >>> # Note that passing the image urls (instead of the actual pil images) to the processor is also possible
         >>> image1 = load_image("https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg")

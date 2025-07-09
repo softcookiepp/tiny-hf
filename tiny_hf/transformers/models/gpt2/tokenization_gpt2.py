@@ -80,7 +80,7 @@ class GPT2Tokenizer(PreTrainedTokenizer):
     be encoded differently whether it is at the beginning of the sentence (without space) or not:
 
     ```python
-    >>> from transformers import GPT2Tokenizer
+    >>> from tiny_hf.transformers.import GPT2Tokenizer
 
     >>> tokenizer = GPT2Tokenizer.from_pretrained("openai-community/gpt2")
     >>> tokenizer("Hello world")["input_ids"]

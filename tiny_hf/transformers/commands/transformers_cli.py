@@ -13,15 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from transformers import HfArgumentParser
-from transformers.commands.add_fast_image_processor import AddFastImageProcessorCommand
-from transformers.commands.add_new_model_like import AddNewModelLikeCommand
-from transformers.commands.chat import ChatCommand
-from transformers.commands.convert import ConvertCommand
-from transformers.commands.download import DownloadCommand
-from transformers.commands.env import EnvironmentCommand
-from transformers.commands.run import RunCommand
-from transformers.commands.serving import ServeCommand
+from tiny_hf.transformers.import HfArgumentParser
+from tiny_hf.transformers.commands.add_fast_image_processor import AddFastImageProcessorCommand
+from tiny_hf.transformers.commands.add_new_model_like import AddNewModelLikeCommand
+from tiny_hf.transformers.commands.chat import ChatCommand
+from tiny_hf.transformers.commands.convert import ConvertCommand
+from tiny_hf.transformers.commands.download import DownloadCommand
+from tiny_hf.transformers.commands.env import EnvironmentCommand
+from tiny_hf.transformers.commands.run import RunCommand
+from tiny_hf.transformers.commands.serving import ServeCommand
 
 
 def main():

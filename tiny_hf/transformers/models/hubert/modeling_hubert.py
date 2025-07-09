@@ -18,10 +18,10 @@ import warnings
 from typing import Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...integrations.deepspeed import is_deepspeed_zero3_enabled
@@ -65,7 +65,7 @@ _SEQ_CLASS_EXPECTED_OUTPUT = "'_unknown_'"
 _SEQ_CLASS_EXPECTED_LOSS = 8.53
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2._compute_mask_indices
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2._compute_mask_indices
 def _compute_mask_indices(
     shape: Tuple[int, int],
     mask_prob: float,
@@ -185,7 +185,7 @@ def _compute_mask_indices(
     return spec_aug_mask
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2NoLayerNormConvLayer with Wav2Vec2->Hubert
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2NoLayerNormConvLayer with Wav2Vec2->Hubert
 class HubertNoLayerNormConvLayer(nn.Module):
     def __init__(self, config, layer_id=0):
         super().__init__()
@@ -207,7 +207,7 @@ class HubertNoLayerNormConvLayer(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2LayerNormConvLayer with Wav2Vec2->Hubert
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2LayerNormConvLayer with Wav2Vec2->Hubert
 class HubertLayerNormConvLayer(nn.Module):
     def __init__(self, config, layer_id=0):
         super().__init__()
@@ -235,7 +235,7 @@ class HubertLayerNormConvLayer(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2GroupNormConvLayer with Wav2Vec2->Hubert
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2GroupNormConvLayer with Wav2Vec2->Hubert
 class HubertGroupNormConvLayer(nn.Module):
     def __init__(self, config, layer_id=0):
         super().__init__()
@@ -310,7 +310,7 @@ class HubertPositionalConvEmbedding(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2SamePadLayer with Wav2Vec2->Hubert
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2SamePadLayer with Wav2Vec2->Hubert
 class HubertSamePadLayer(nn.Module):
     def __init__(self, num_conv_pos_embeddings):
         super().__init__()
@@ -322,7 +322,7 @@ class HubertSamePadLayer(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2FeatureEncoder with Wav2Vec2->Hubert
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2FeatureEncoder with Wav2Vec2->Hubert
 class HubertFeatureEncoder(nn.Module):
     """Construct the features from raw audio waveform"""
 
@@ -396,7 +396,7 @@ class HubertFeatureProjection(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bart.modeling_bart.BartAttention with Bart->Hubert
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartAttention with Bart->Hubert
 class HubertAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -555,7 +555,7 @@ class HubertAttention(nn.Module):
         return attn_output, attn_weights_reshaped, past_key_value
 
 
-# Copied from transformers.models.bart.modeling_bart.BartFlashAttention2 with Bart->Hubert
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartFlashAttention2 with Bart->Hubert
 class HubertFlashAttention2(HubertAttention):
     """
     Hubert flash attention module. This module inherits from `HubertAttention` as the weights of the module stays
@@ -683,7 +683,7 @@ class HubertFlashAttention2(HubertAttention):
 
 
 class HubertSdpaAttention(HubertAttention):
-    # Copied from transformers.models.bart.modeling_bart.BartSdpaAttention.forward with Bart->Hubert
+    # Copied from tiny_hf.transformers.models.bart.modeling_bart.BartSdpaAttention.forward with Bart->Hubert
     def forward(
         self,
         hidden_states: torch.Tensor,
@@ -796,7 +796,7 @@ HUBERT_ATTENTION_CLASSES = {
 }
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2FeedForward with Wav2Vec2->Hubert
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2FeedForward with Wav2Vec2->Hubert
 class HubertFeedForward(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -821,7 +821,7 @@ class HubertFeedForward(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2EncoderLayer with Wav2Vec2->Hubert, WAV2VEC2->HUBERT
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2EncoderLayer with Wav2Vec2->Hubert, WAV2VEC2->HUBERT
 class HubertEncoderLayer(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -857,7 +857,7 @@ class HubertEncoderLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2AttnAdapterLayer with Wav2Vec2->Hubert
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2AttnAdapterLayer with Wav2Vec2->Hubert
 class HubertAttnAdapterLayer(nn.Module):
     def __init__(self, config):
         """
@@ -883,7 +883,7 @@ class HubertAttnAdapterLayer(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2EncoderLayerStableLayerNorm with Wav2Vec2->Hubert, WAV2VEC2->HUBERT
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2EncoderLayerStableLayerNorm with Wav2Vec2->Hubert, WAV2VEC2->HUBERT
 class HubertEncoderLayerStableLayerNorm(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -929,7 +929,7 @@ class HubertEncoderLayerStableLayerNorm(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2Encoder with Wav2Vec2->Hubert
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2Encoder with Wav2Vec2->Hubert
 class HubertEncoder(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1015,7 +1015,7 @@ class HubertEncoder(nn.Module):
         )
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2EncoderStableLayerNorm with Wav2Vec2->Hubert
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2EncoderStableLayerNorm with Wav2Vec2->Hubert
 class HubertEncoderStableLayerNorm(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1250,7 +1250,7 @@ class HubertModel(HubertPreTrainedModel):
         # Initialize weights and apply final processing
         self.post_init()
 
-    # Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2Model._mask_hidden_states
+    # Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2Model._mask_hidden_states
     def _mask_hidden_states(
         self,
         hidden_states: torch.FloatTensor,
@@ -1315,7 +1315,7 @@ class HubertModel(HubertPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoProcessor, HubertModel
+        >>> from tiny_hf.transformers.import AutoProcessor, HubertModel
         >>> from datasets import load_dataset
         >>> import soundfile as sf
 
@@ -1375,7 +1375,7 @@ class HubertModel(HubertPreTrainedModel):
     """Hubert Model with a `language modeling` head on top for Connectionist Temporal Classification (CTC).""",
     HUBERT_START_DOCSTRING,
 )
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForCTC with Wav2Vec2->Hubert, wav2vec2->hubert, WAV_2_VEC_2->HUBERT
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForCTC with Wav2Vec2->Hubert, wav2vec2->hubert, WAV_2_VEC_2->HUBERT
 class HubertForCTC(HubertPreTrainedModel):
     def __init__(self, config, target_lang: Optional[str] = None):
         super().__init__(config)
@@ -1534,7 +1534,7 @@ class HubertForCTC(HubertPreTrainedModel):
     """,
     HUBERT_START_DOCSTRING,
 )
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForSequenceClassification with Wav2Vec2->Hubert, wav2vec2->hubert, WAV_2_VEC_2->HUBERT
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForSequenceClassification with Wav2Vec2->Hubert, wav2vec2->hubert, WAV_2_VEC_2->HUBERT
 class HubertForSequenceClassification(HubertPreTrainedModel):
     def __init__(self, config):
         super().__init__(config)

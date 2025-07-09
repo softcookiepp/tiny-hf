@@ -18,10 +18,10 @@ import math
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache
@@ -91,7 +91,7 @@ class Idefics2BaseModelOutputWithPast(ModelOutput):
 
 
 @dataclass
-# Copied from transformers.models.idefics.modeling_idefics.IdeficsCausalLMOutputWithPast with Idefics->Idefics2
+# Copied from tiny_hf.transformers.models.idefics.modeling_idefics.IdeficsCausalLMOutputWithPast with Idefics->Idefics2
 class Idefics2CausalLMOutputWithPast(ModelOutput):
     """
     Base class for Idefics2 causal language model (or autoregressive) outputs.
@@ -186,11 +186,11 @@ class Idefics2VisionEmbeddings(nn.Module):
         return embeddings
 
 
-# Copied from transformers.models.siglip.modeling_siglip.SiglipAttention with Siglip->Idefics2Vision
+# Copied from tiny_hf.transformers.models.siglip.modeling_siglip.SiglipAttention with Siglip->Idefics2Vision
 class Idefics2VisionAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
-    # Copied from transformers.models.clip.modeling_clip.CLIPAttention.__init__
+    # Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPAttention.__init__
     def __init__(self, config):
         super().__init__()
         self.config = config
@@ -369,7 +369,7 @@ IDEFICS_VISION_ATTENTION_CLASSES = {
 }
 
 
-# Copied from transformers.models.siglip.modeling_siglip.SiglipMLP with Siglip->Idefics2Vision
+# Copied from tiny_hf.transformers.models.siglip.modeling_siglip.SiglipMLP with Siglip->Idefics2Vision
 class Idefics2VisionMLP(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -403,7 +403,7 @@ class Idefics2MLP(nn.Module):
         return self.down_proj(self.act_fn(self.gate_proj(x)) * self.up_proj(x))
 
 
-# Copied from transformers.models.siglip.modeling_siglip.SiglipMultiheadAttentionPoolingHead with Siglip->Idefics2
+# Copied from tiny_hf.transformers.models.siglip.modeling_siglip.SiglipMultiheadAttentionPoolingHead with Siglip->Idefics2
 class Idefics2MultiheadAttentionPoolingHead(nn.Module):
     """Multihead Attention Pooling."""
 
@@ -443,7 +443,7 @@ class Idefics2EncoderLayer(nn.Module):
         self.mlp = Idefics2VisionMLP(config)
         self.layer_norm2 = nn.LayerNorm(self.embed_dim, eps=config.layer_norm_eps)
 
-    # Copied from transformers.models.siglip.modeling_siglip.SiglipEncoderLayer.forward
+    # Copied from tiny_hf.transformers.models.siglip.modeling_siglip.SiglipEncoderLayer.forward
     def forward(
         self,
         hidden_states: torch.Tensor,
@@ -483,7 +483,7 @@ class Idefics2EncoderLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.siglip.modeling_siglip.SiglipEncoder with Siglip->Idefics2
+# Copied from tiny_hf.transformers.models.siglip.modeling_siglip.SiglipEncoder with Siglip->Idefics2
 class Idefics2Encoder(nn.Module):
     """
     Transformer encoder consisting of `config.num_hidden_layers` self attention layers. Each layer is a
@@ -724,7 +724,7 @@ class Idefics2VisionTransformer(Idefics2PreTrainedModel):
         )
 
 
-# Copied from transformers.models.llama.modeling_llama.repeat_kv
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.repeat_kv
 def repeat_kv(hidden_states: torch.Tensor, n_rep: int) -> torch.Tensor:
     """
     This is the equivalent of torch.repeat_interleave(x, dim=1, repeats=n_rep). The hidden states go from (batch,
@@ -737,7 +737,7 @@ def repeat_kv(hidden_states: torch.Tensor, n_rep: int) -> torch.Tensor:
     return hidden_states.reshape(batch, num_key_value_heads * n_rep, slen, head_dim)
 
 
-# Copied from transformers.models.llama.modeling_llama.LlamaRMSNorm with Llama->Idefics2
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaRMSNorm with Llama->Idefics2
 class Idefics2RMSNorm(nn.Module):
     def __init__(self, hidden_size, eps=1e-6):
         """
@@ -859,7 +859,7 @@ class Idefics2PerceiverAttention(nn.Module):
         return attn_output, attn_weights, past_key_value
 
 
-# NO LONGER EXIST Copied from transformers.models.mistral.modeling_mistral.MistralFlashAttention2 with MistralAttention->Idefics2PerceiverAttention,MistralFlashAttention->Idefics2PerceiverFlashAttention,Mistral->Idefics2
+# NO LONGER EXIST Copied from tiny_hf.transformers.models.mistral.modeling_mistral.MistralFlashAttention2 with MistralAttention->Idefics2PerceiverAttention,MistralFlashAttention->Idefics2PerceiverFlashAttention,Mistral->Idefics2
 # TODO cyril: modular
 class Idefics2PerceiverFlashAttention2(Idefics2PerceiverAttention):
     """
@@ -1556,12 +1556,12 @@ class Idefics2ForConditionalGeneration(Idefics2PreTrainedModel, GenerationMixin)
 
         ```python
         >>> import requests
-        >>> import torch
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> from io import BytesIO
 
-        >>> from transformers import AutoProcessor, AutoModelForVision2Seq
-        >>> from transformers.image_utils import load_image
+        >>> from tiny_hf.transformers.import AutoProcessor, AutoModelForVision2Seq
+        >>> from tiny_hf.transformers.image_utils import load_image
 
         >>> # Note that passing the image urls (instead of the actual pil images) to the processor is also possible
         >>> image1 = load_image("https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg")
@@ -1702,7 +1702,7 @@ class Idefics2ForConditionalGeneration(Idefics2PreTrainedModel, GenerationMixin)
         return model_kwargs
 
     @staticmethod
-    # Copied from transformers.models.opt.modeling_opt.OPTForCausalLM._reorder_cache
+    # Copied from tiny_hf.transformers.models.opt.modeling_opt.OPTForCausalLM._reorder_cache
     def _reorder_cache(past_key_values, beam_idx):
         reordered_past = ()
         for layer_past in past_key_values:

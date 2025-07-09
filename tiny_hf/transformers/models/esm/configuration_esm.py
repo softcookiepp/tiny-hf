@@ -85,7 +85,7 @@ class EsmConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import EsmModel, EsmConfig
+    >>> from tiny_hf.transformers.import EsmModel, EsmConfig
 
     >>> # Initializing a ESM facebook/esm-1b style configuration
     >>> configuration = EsmConfig(vocab_size=33)

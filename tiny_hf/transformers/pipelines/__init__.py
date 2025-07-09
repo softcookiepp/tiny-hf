@@ -739,7 +739,7 @@ def pipeline(
     Examples:
 
     ```python
-    >>> from transformers import pipeline, AutoModelForTokenClassification, AutoTokenizer
+    >>> from tiny_hf.transformers.import pipeline, AutoModelForTokenClassification, AutoTokenizer
 
     >>> # Sentiment analysis pipeline
     >>> analyzer = pipeline("sentiment-analysis")

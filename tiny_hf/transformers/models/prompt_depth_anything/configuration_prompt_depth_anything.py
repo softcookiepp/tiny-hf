@@ -79,7 +79,7 @@ class PromptDepthAnythingConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import PromptDepthAnythingConfig, PromptDepthAnythingForDepthEstimation
+    >>> from tiny_hf.transformers.import PromptDepthAnythingConfig, PromptDepthAnythingForDepthEstimation
 
     >>> # Initializing a PromptDepthAnything small style configuration
     >>> configuration = PromptDepthAnythingConfig()

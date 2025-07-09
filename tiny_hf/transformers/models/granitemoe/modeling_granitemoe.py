@@ -15,10 +15,10 @@
 # limitations under the License.
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.nn.functional as F
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.nn.functional as F
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, StaticCache
@@ -45,7 +45,7 @@ from .configuration_granitemoe import GraniteMoeConfig
 
 
 if is_torch_flex_attn_available():
-    from torch.nn.attention.flex_attention import BlockMask
+    from tg_adapter.nn.attention.flex_attention import BlockMask
 
     from ...integrations.flex_attention import make_flex_block_causal_mask
 
@@ -55,7 +55,7 @@ logger = logging.get_logger(__name__)
 _CONFIG_FOR_DOC = "GraniteMoeConfig"
 
 
-# Copied from transformers.models.jetmoe.modeling_jetmoe.load_balancing_loss_func
+# Copied from tiny_hf.transformers.models.jetmoe.modeling_jetmoe.load_balancing_loss_func
 def load_balancing_loss_func(
     gate_logits: Union[torch.Tensor, Tuple[torch.Tensor], None],
     num_experts: Optional[int] = None,
@@ -138,7 +138,7 @@ def load_balancing_loss_func(
     return overall_loss * num_experts
 
 
-# Copied from transformers.models.granite.modeling_granite.GraniteRMSNorm with Granite->GraniteMoe
+# Copied from tiny_hf.transformers.models.granite.modeling_granite.GraniteRMSNorm with Granite->GraniteMoe
 class GraniteMoeRMSNorm(nn.Module):
     def __init__(self, hidden_size, eps=1e-6):
         """
@@ -162,7 +162,7 @@ class GraniteMoeRMSNorm(nn.Module):
 ALL_LAYERNORM_LAYERS.append(GraniteMoeRMSNorm)
 
 
-# Copied from transformers.models.granite.modeling_granite.GraniteRotaryEmbedding with Granite->GraniteMoe
+# Copied from tiny_hf.transformers.models.granite.modeling_granite.GraniteRotaryEmbedding with Granite->GraniteMoe
 class GraniteMoeRotaryEmbedding(nn.Module):
     def __init__(self, config: GraniteMoeConfig, device=None):
         super().__init__()
@@ -224,7 +224,7 @@ class GraniteMoeRotaryEmbedding(nn.Module):
         return cos.to(dtype=x.dtype), sin.to(dtype=x.dtype)
 
 
-# Copied from transformers.models.granite.modeling_granite.rotate_half with Granite->GraniteMoe
+# Copied from tiny_hf.transformers.models.granite.modeling_granite.rotate_half with Granite->GraniteMoe
 def rotate_half(x):
     """Rotates half the hidden dims of the input."""
     x1 = x[..., : x.shape[-1] // 2]
@@ -232,7 +232,7 @@ def rotate_half(x):
     return torch.cat((-x2, x1), dim=-1)
 
 
-# Copied from transformers.models.granite.modeling_granite.apply_rotary_pos_emb with Granite->GraniteMoe
+# Copied from tiny_hf.transformers.models.granite.modeling_granite.apply_rotary_pos_emb with Granite->GraniteMoe
 def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
     """Applies Rotary Position Embedding to the query and key tensors.
 
@@ -260,7 +260,7 @@ def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
     return q_embed, k_embed
 
 
-# Copied from transformers.models.jetmoe.modeling_jetmoe.JetMoeParallelExperts with JetMoe->GraniteMoe
+# Copied from tiny_hf.transformers.models.jetmoe.modeling_jetmoe.JetMoeParallelExperts with JetMoe->GraniteMoe
 class GraniteMoeParallelExperts(nn.Module):
     def __init__(self, num_experts: int, input_size: int, output_size: int) -> None:
         """
@@ -303,7 +303,7 @@ class GraniteMoeParallelExperts(nn.Module):
         return results
 
 
-# Copied from transformers.models.jetmoe.modeling_jetmoe.JetMoeTopKGating with JetMoe->GraniteMoe
+# Copied from tiny_hf.transformers.models.jetmoe.modeling_jetmoe.JetMoeTopKGating with JetMoe->GraniteMoe
 class GraniteMoeTopKGating(nn.Module):
     def __init__(self, input_size: int, num_experts: int, top_k: int):
         """
@@ -408,7 +408,7 @@ class GraniteMoeMoE(nn.Module):
         return layer_output, router_logits
 
 
-# Copied from transformers.models.granite.modeling_granite.repeat_kv with Granite->GraniteMoe
+# Copied from tiny_hf.transformers.models.granite.modeling_granite.repeat_kv with Granite->GraniteMoe
 def repeat_kv(hidden_states: torch.Tensor, n_rep: int) -> torch.Tensor:
     """
     This is the equivalent of torch.repeat_interleave(x, dim=1, repeats=n_rep). The hidden states go from (batch,
@@ -421,7 +421,7 @@ def repeat_kv(hidden_states: torch.Tensor, n_rep: int) -> torch.Tensor:
     return hidden_states.reshape(batch, num_key_value_heads * n_rep, slen, head_dim)
 
 
-# copied from transformers.models.granite.modeling_granite.GraniteAttention with Granite->GraniteMoe
+# copied from tiny_hf.transformers.models.granite.modeling_granite.GraniteAttention with Granite->GraniteMoe
 # no longer copied after attention refactors
 class GraniteMoeAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
@@ -519,7 +519,7 @@ class GraniteMoeAttention(nn.Module):
         return attn_output, attn_weights, past_key_value
 
 
-# NO LONGER EXIST Copied from transformers.models.granite.modeling_granite.GraniteFlashAttention2 with Granite->GraniteMoe
+# NO LONGER EXIST Copied from tiny_hf.transformers.models.granite.modeling_granite.GraniteFlashAttention2 with Granite->GraniteMoe
 # TODO cyril: modular
 class GraniteMoeFlashAttention2(GraniteMoeAttention):
     """
@@ -627,7 +627,7 @@ class GraniteMoeFlashAttention2(GraniteMoeAttention):
         return attn_output, attn_weights, past_key_value
 
 
-# NO LONGER EXIST Copied from transformers.models.granite.modeling_granite.GraniteSdpaAttention with Granite->GraniteMoe
+# NO LONGER EXIST Copied from tiny_hf.transformers.models.granite.modeling_granite.GraniteSdpaAttention with Granite->GraniteMoe
 # TODO cyril: modular
 class GraniteMoeSdpaAttention(GraniteMoeAttention):
     """
@@ -1115,7 +1115,7 @@ class GraniteMoeModel(GraniteMoePreTrainedModel):
             router_logits=all_router_logits,
         )
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
     def _update_causal_mask(
         self,
         attention_mask: torch.Tensor,
@@ -1187,7 +1187,7 @@ class GraniteMoeModel(GraniteMoePreTrainedModel):
         return causal_mask
 
     @staticmethod
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel._prepare_4d_causal_attention_mask_with_cache_position
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel._prepare_4d_causal_attention_mask_with_cache_position
     def _prepare_4d_causal_attention_mask_with_cache_position(
         attention_mask: torch.Tensor,
         sequence_length: int,
@@ -1309,7 +1309,7 @@ class GraniteMoeForCausalLM(GraniteMoePreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, GraniteMoeForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, GraniteMoeForCausalLM
 
         >>> model = GraniteMoeForCausalLM.from_pretrained("ibm/PowerMoE-3b")
         >>> tokenizer = AutoTokenizer.from_pretrained("ibm/PowerMoE-3b")

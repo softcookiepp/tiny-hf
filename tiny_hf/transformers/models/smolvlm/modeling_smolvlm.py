@@ -22,9 +22,9 @@
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
-import torch
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache
@@ -1104,12 +1104,12 @@ class SmolVLMForConditionalGeneration(SmolVLMPreTrainedModel, GenerationMixin):
 
         ```python
         >>> import requests
-        >>> import torch
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> from io import BytesIO
 
-        >>> from transformers import AutoProcessor, AutoModelForImageTextToText
-        >>> from transformers.image_utils import load_image
+        >>> from tiny_hf.transformers.import AutoProcessor, AutoModelForImageTextToText
+        >>> from tiny_hf.transformers.image_utils import load_image
 
         >>> # Note that passing the image urls (instead of the actual pil images) to the processor is also possible
         >>> image1 = load_image("https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg")

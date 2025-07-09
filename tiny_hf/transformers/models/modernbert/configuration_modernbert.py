@@ -116,7 +116,7 @@ class ModernBertConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import ModernBertModel, ModernBertConfig
+    >>> from tiny_hf.transformers.import ModernBertModel, ModernBertConfig
 
     >>> # Initializing a ModernBert style configuration
     >>> configuration = ModernBertConfig()

@@ -36,7 +36,7 @@ from ...utils import TensorType, is_torch_available, is_vision_available, loggin
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 if is_vision_available():
     pass
@@ -194,7 +194,7 @@ class SegGptImageProcessor(BaseImageProcessor):
         """
         return mask_to_rgb(image, palette=palette, data_format=data_format)
 
-    # Copied from transformers.models.vit.image_processing_vit.ViTImageProcessor.resize with PILImageResampling.BILINEAR->PILImageResampling.BICUBIC
+    # Copied from tiny_hf.transformers.models.vit.image_processing_vit.ViTImageProcessor.resize with PILImageResampling.BILINEAR->PILImageResampling.BICUBIC
     def resize(
         self,
         image: np.ndarray,

@@ -16,9 +16,9 @@
 
 import argparse
 
-import torch
+import tg_adapter as torch
 
-from transformers import (
+from tiny_hf.transformers.import (
     FastSpeech2ConformerConfig,
     FastSpeech2ConformerHifiGan,
     FastSpeech2ConformerHifiGanConfig,

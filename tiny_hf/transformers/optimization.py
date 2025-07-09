@@ -18,9 +18,9 @@ import warnings
 from functools import partial
 from typing import Optional, Union
 
-import torch
-from torch.optim import Optimizer
-from torch.optim.lr_scheduler import LambdaLR, ReduceLROnPlateau
+import tg_adapter as torch
+from tg_adapter.optim import Optimizer
+from tg_adapter.optim.lr_scheduler import LambdaLR, ReduceLROnPlateau
 
 from .trainer_pt_utils import LayerWiseDummyOptimizer, LayerWiseDummyScheduler
 from .trainer_utils import SchedulerType
@@ -662,7 +662,7 @@ class Adafactor(Optimizer):
     scheduler as following:
 
     ```python
-    from transformers.optimization import Adafactor, AdafactorSchedule
+    from tiny_hf.transformers.optimization import Adafactor, AdafactorSchedule
 
     optimizer = Adafactor(model.parameters(), scale_parameter=True, relative_step=True, warmup_init=True, lr=None)
     lr_scheduler = AdafactorSchedule(optimizer)

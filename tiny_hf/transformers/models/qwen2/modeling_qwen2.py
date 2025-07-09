@@ -6,8 +6,8 @@
 #                🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨
 from typing import Callable, List, Optional, Tuple, Union
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, SlidingWindowCache, StaticCache
@@ -832,7 +832,7 @@ class Qwen2ForCausalLM(Qwen2PreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, Qwen2ForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, Qwen2ForCausalLM
 
         >>> model = Qwen2ForCausalLM.from_pretrained("meta-qwen2/Qwen2-2-7b-hf")
         >>> tokenizer = AutoTokenizer.from_pretrained("meta-qwen2/Qwen2-2-7b-hf")

@@ -19,9 +19,9 @@ import math
 from dataclasses import dataclass
 from typing import Any, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...modeling_attn_mask_utils import _create_4d_causal_attention_mask, _prepare_4d_attention_mask
@@ -50,7 +50,7 @@ def contrastive_loss(logits: torch.Tensor) -> torch.Tensor:
     return nn.functional.cross_entropy(logits, torch.arange(len(logits), device=logits.device))
 
 
-# Copied from transformers.models.clip.modeling_clip.clip_loss with clip->clipseg
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.clip_loss with clip->clipseg
 def clipseg_loss(similarity: torch.Tensor) -> torch.Tensor:
     caption_loss = contrastive_loss(similarity)
     image_loss = contrastive_loss(similarity.t())
@@ -58,7 +58,7 @@ def clipseg_loss(similarity: torch.Tensor) -> torch.Tensor:
 
 
 @dataclass
-# Copied from transformers.models.clip.modeling_clip.CLIPOutput with CLIP->CLIPSeg
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPOutput with CLIP->CLIPSeg
 class CLIPSegOutput(ModelOutput):
     """
     Args:
@@ -141,7 +141,7 @@ class CLIPSegImageSegmentationOutput(ModelOutput):
 
 
 class CLIPSegVisionEmbeddings(nn.Module):
-    # Copied from transformers.models.clip.modeling_clip.CLIPVisionEmbeddings.__init__ with CLIP->CLIPSeg
+    # Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPVisionEmbeddings.__init__ with CLIP->CLIPSeg
     def __init__(self, config: CLIPSegVisionConfig):
         super().__init__()
         self.config = config
@@ -223,7 +223,7 @@ class CLIPSegVisionEmbeddings(nn.Module):
         return embeddings
 
 
-# Copied from transformers.models.clip.modeling_clip.CLIPTextEmbeddings with CLIP->CLIPSeg
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPTextEmbeddings with CLIP->CLIPSeg
 class CLIPSegTextEmbeddings(nn.Module):
     def __init__(self, config: CLIPSegTextConfig):
         super().__init__()
@@ -264,7 +264,7 @@ class CLIPSegTextEmbeddings(nn.Module):
         return embeddings
 
 
-# Copied from transformers.models.clip.modeling_clip.CLIPAttention with CLIP->CLIPSeg
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPAttention with CLIP->CLIPSeg
 class CLIPSegAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -369,7 +369,7 @@ class CLIPSegAttention(nn.Module):
         return attn_output, attn_weights_reshaped
 
 
-# Copied from transformers.models.clip.modeling_clip.CLIPMLP with CLIP->CLIPSeg
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPMLP with CLIP->CLIPSeg
 class CLIPSegMLP(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -385,7 +385,7 @@ class CLIPSegMLP(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.altclip.modeling_altclip.AltCLIPEncoderLayer with AltCLIP->CLIPSeg
+# Copied from tiny_hf.transformers.models.altclip.modeling_altclip.AltCLIPEncoderLayer with AltCLIP->CLIPSeg
 class CLIPSegEncoderLayer(nn.Module):
     def __init__(self, config: CLIPSegConfig):
         super().__init__()
@@ -588,7 +588,7 @@ CLIPSEG_INPUTS_DOCSTRING = r"""
 """
 
 
-# Copied from transformers.models.altclip.modeling_altclip.AltCLIPEncoder with AltCLIP->CLIPSeg
+# Copied from tiny_hf.transformers.models.altclip.modeling_altclip.AltCLIPEncoder with AltCLIP->CLIPSeg
 class CLIPSegEncoder(nn.Module):
     """
     Transformer encoder consisting of `config.num_hidden_layers` self attention layers. Each layer is a
@@ -700,7 +700,7 @@ class CLIPSegTextTransformer(nn.Module):
 
     @add_start_docstrings_to_model_forward(CLIPSEG_TEXT_INPUTS_DOCSTRING)
     @replace_return_docstrings(output_type=BaseModelOutputWithPooling, config_class=CLIPSegTextConfig)
-    # Adapted from transformers.models.clip.modeling_clip.CLIPTextTransformer.forward with clip->clipseg, CLIP->CLIPSeg
+    # Adapted from tiny_hf.transformers.models.clip.modeling_clip.CLIPTextTransformer.forward with clip->clipseg, CLIP->CLIPSeg
     def forward(
         self,
         input_ids: Optional[torch.Tensor] = None,
@@ -817,7 +817,7 @@ class CLIPSegTextModel(CLIPSegPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, CLIPSegTextModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, CLIPSegTextModel
 
         >>> tokenizer = AutoTokenizer.from_pretrained("CIDAS/clipseg-rd64-refined")
         >>> model = CLIPSegTextModel.from_pretrained("CIDAS/clipseg-rd64-refined")
@@ -839,7 +839,7 @@ class CLIPSegTextModel(CLIPSegPreTrainedModel):
 
 
 class CLIPSegVisionTransformer(nn.Module):
-    # Copied from transformers.models.altclip.modeling_altclip.AltCLIPVisionTransformer.__init__ with AltCLIP->CLIPSeg
+    # Copied from tiny_hf.transformers.models.altclip.modeling_altclip.AltCLIPVisionTransformer.__init__ with AltCLIP->CLIPSeg
     def __init__(self, config: CLIPSegVisionConfig):
         super().__init__()
         self.config = config
@@ -926,7 +926,7 @@ class CLIPSegVisionModel(CLIPSegPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, CLIPSegVisionModel
+        >>> from tiny_hf.transformers.import AutoProcessor, CLIPSegVisionModel
 
         >>> processor = AutoProcessor.from_pretrained("CIDAS/clipseg-rd64-refined")
         >>> model = CLIPSegVisionModel.from_pretrained("CIDAS/clipseg-rd64-refined")
@@ -1003,7 +1003,7 @@ class CLIPSegModel(CLIPSegPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, CLIPSegModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, CLIPSegModel
 
         >>> tokenizer = AutoTokenizer.from_pretrained("CIDAS/clipseg-rd64-refined")
         >>> model = CLIPSegModel.from_pretrained("CIDAS/clipseg-rd64-refined")
@@ -1051,7 +1051,7 @@ class CLIPSegModel(CLIPSegPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, CLIPSegModel
+        >>> from tiny_hf.transformers.import AutoProcessor, CLIPSegModel
 
         >>> processor = AutoProcessor.from_pretrained("CIDAS/clipseg-rd64-refined")
         >>> model = CLIPSegModel.from_pretrained("CIDAS/clipseg-rd64-refined")
@@ -1105,7 +1105,7 @@ class CLIPSegModel(CLIPSegPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, CLIPSegModel
+        >>> from tiny_hf.transformers.import AutoProcessor, CLIPSegModel
 
         >>> processor = AutoProcessor.from_pretrained("CIDAS/clipseg-rd64-refined")
         >>> model = CLIPSegModel.from_pretrained("CIDAS/clipseg-rd64-refined")
@@ -1185,7 +1185,7 @@ class CLIPSegDecoderLayer(nn.Module):
     self-attention/MLP, rather than before.
     """
 
-    # Copied from transformers.models.altclip.modeling_altclip.AltCLIPEncoderLayer.__init__ with AltCLIP->CLIPSeg
+    # Copied from tiny_hf.transformers.models.altclip.modeling_altclip.AltCLIPEncoderLayer.__init__ with AltCLIP->CLIPSeg
     def __init__(self, config: CLIPSegConfig):
         super().__init__()
         self.embed_dim = config.hidden_size
@@ -1414,7 +1414,7 @@ class CLIPSegForImageSegmentation(CLIPSegPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoProcessor, CLIPSegForImageSegmentation
+        >>> from tiny_hf.transformers.import AutoProcessor, CLIPSegForImageSegmentation
         >>> from PIL import Image
         >>> import requests
 

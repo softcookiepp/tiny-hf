@@ -81,7 +81,7 @@ class RemBertConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import RemBertModel, RemBertConfig
+    >>> from tiny_hf.transformers.import RemBertModel, RemBertConfig
 
     >>> # Initializing a RemBERT rembert style configuration
     >>> configuration = RemBertConfig()

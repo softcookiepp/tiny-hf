@@ -94,7 +94,7 @@ class OpenAIGPTConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import OpenAIGPTConfig, OpenAIGPTModel
+    >>> from tiny_hf.transformers.import OpenAIGPTConfig, OpenAIGPTModel
 
     >>> # Initializing a GPT configuration
     >>> configuration = OpenAIGPTConfig()

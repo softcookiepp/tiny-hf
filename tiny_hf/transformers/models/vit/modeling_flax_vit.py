@@ -564,7 +564,7 @@ FLAX_VISION_MODEL_DOCSTRING = """
     Examples:
 
     ```python
-    >>> from transformers import AutoImageProcessor, FlaxViTModel
+    >>> from tiny_hf.transformers.import AutoImageProcessor, FlaxViTModel
     >>> from PIL import Image
     >>> import requests
 
@@ -647,7 +647,7 @@ FLAX_VISION_CLASSIF_DOCSTRING = """
     Example:
 
     ```python
-    >>> from transformers import AutoImageProcessor, FlaxViTForImageClassification
+    >>> from tiny_hf.transformers.import AutoImageProcessor, FlaxViTForImageClassification
     >>> from PIL import Image
     >>> import jax
     >>> import requests

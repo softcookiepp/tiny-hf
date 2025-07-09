@@ -22,8 +22,8 @@
 import math
 from typing import Callable, List, Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+import tg_adapter.nn as nn
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, StaticCache
@@ -53,7 +53,7 @@ from .configuration_helium import HeliumConfig
 
 
 if is_torch_flex_attn_available():
-    from torch.nn.attention.flex_attention import BlockMask
+    from tg_adapter.nn.attention.flex_attention import BlockMask
 
     from ...integrations.flex_attention import make_flex_block_causal_mask
 
@@ -828,7 +828,7 @@ class HeliumForCausalLM(HeliumPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, HeliumForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, HeliumForCausalLM
 
         >>> model = HeliumForCausalLM.from_pretrained("google/helium-7b")
         >>> tokenizer = AutoTokenizer.from_pretrained("google/helium-7b")

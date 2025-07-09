@@ -16,10 +16,10 @@
 
 from typing import List, Optional, Tuple, Union
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
-from transformers.models.llava.modeling_llava import (
+from tiny_hf.transformers.models.llava.modeling_llava import (
     LlavaCausalLMOutputWithPast,
     LlavaForConditionalGeneration,
     LlavaPreTrainedModel,
@@ -249,8 +249,8 @@ class AyaVisionForConditionalGeneration(LlavaForConditionalGeneration):
         Example:
 
         ```python
-        >>> from transformers import AutoProcessor, AyaVisionForConditionalGeneration
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoProcessor, AyaVisionForConditionalGeneration
+        >>> import tg_adapter as torch
 
         >>> torch_device = "cuda:0"
         >>> processor = AutoProcessor.from_pretrained("CohereForAI/aya-vision-8b", use_fast=True)

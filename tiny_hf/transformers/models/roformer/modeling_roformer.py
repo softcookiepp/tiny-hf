@@ -19,10 +19,10 @@ import os
 from typing import Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -53,7 +53,7 @@ _CHECKPOINT_FOR_DOC = "junnyu/roformer_chinese_base"
 _CONFIG_FOR_DOC = "RoFormerConfig"
 
 
-# Copied from transformers.models.marian.modeling_marian.MarianSinusoidalPositionalEmbedding with Marian->RoFormer
+# Copied from tiny_hf.transformers.models.marian.modeling_marian.MarianSinusoidalPositionalEmbedding with Marian->RoFormer
 class RoFormerSinusoidalPositionalEmbedding(nn.Embedding):
     """This module produces sinusoidal positional embeddings of any length."""
 
@@ -333,7 +333,7 @@ class RoFormerSelfAttention(nn.Module):
         return query_layer, key_layer
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfOutput with Bert->RoFormer
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfOutput with Bert->RoFormer
 class RoFormerSelfOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -355,7 +355,7 @@ class RoFormerAttention(nn.Module):
         self.output = RoFormerSelfOutput(config)
         self.pruned_heads = set()
 
-    # Copied from transformers.models.bert.modeling_bert.BertAttention.prune_heads
+    # Copied from tiny_hf.transformers.models.bert.modeling_bert.BertAttention.prune_heads
     def prune_heads(self, heads):
         if len(heads) == 0:
             return
@@ -401,7 +401,7 @@ class RoFormerAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate with Bert->RoFormer
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate with Bert->RoFormer
 class RoFormerIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -417,7 +417,7 @@ class RoFormerIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOutput with Bert->RoFormer
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOutput with Bert->RoFormer
 class RoFormerOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -663,7 +663,7 @@ class RoFormerLMPredictionHead(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOnlyMLMHead with Bert->RoFormer
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOnlyMLMHead with Bert->RoFormer
 class RoFormerOnlyMLMHead(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1104,8 +1104,8 @@ class RoFormerForCausalLM(RoFormerPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, RoFormerForCausalLM, RoFormerConfig
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, RoFormerForCausalLM, RoFormerConfig
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("junnyu/roformer_chinese_base")
         >>> config = RoFormerConfig.from_pretrained("junnyu/roformer_chinese_base")

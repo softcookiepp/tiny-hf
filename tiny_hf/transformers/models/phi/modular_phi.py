@@ -1,7 +1,7 @@
 from typing import Callable, Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+import tg_adapter.nn as nn
 
 from ...cache_utils import Cache, DynamicCache
 from ...modeling_flash_attention_utils import FlashAttentionKwargs

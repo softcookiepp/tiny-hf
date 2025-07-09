@@ -406,7 +406,7 @@ class Kosmos2Processor(ProcessorMixin):
 
         return result
 
-    # Copied from transformers.models.blip.processing_blip.BlipProcessor.batch_decode with BertTokenizerFast->PreTrainedTokenizer
+    # Copied from tiny_hf.transformers.models.blip.processing_blip.BlipProcessor.batch_decode with BertTokenizerFast->PreTrainedTokenizer
     def batch_decode(self, *args, **kwargs):
         """
         This method forwards all its arguments to PreTrainedTokenizer's [`~PreTrainedTokenizer.batch_decode`]. Please
@@ -414,7 +414,7 @@ class Kosmos2Processor(ProcessorMixin):
         """
         return self.tokenizer.batch_decode(*args, **kwargs)
 
-    # Copied from transformers.models.blip.processing_blip.BlipProcessor.decode with BertTokenizerFast->PreTrainedTokenizer
+    # Copied from tiny_hf.transformers.models.blip.processing_blip.BlipProcessor.decode with BertTokenizerFast->PreTrainedTokenizer
     def decode(self, *args, **kwargs):
         """
         This method forwards all its arguments to PreTrainedTokenizer's [`~PreTrainedTokenizer.decode`]. Please refer to
@@ -448,7 +448,7 @@ class Kosmos2Processor(ProcessorMixin):
         return [self.post_process_generation(text, cleanup_and_extract=False) for text in generated_texts]
 
     @property
-    # Copied from transformers.models.blip.processing_blip.BlipProcessor.model_input_names
+    # Copied from tiny_hf.transformers.models.blip.processing_blip.BlipProcessor.model_input_names
     def model_input_names(self):
         tokenizer_input_names = self.tokenizer.model_input_names
         image_processor_input_names = self.image_processor.model_input_names

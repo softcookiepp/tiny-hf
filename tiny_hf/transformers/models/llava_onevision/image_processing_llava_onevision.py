@@ -51,7 +51,7 @@ if is_vision_available():
     from PIL import Image
 
 
-# Copied from transformers.models.llava_next.image_processing_llava_next.divide_to_patches
+# Copied from tiny_hf.transformers.models.llava_next.image_processing_llava_next.divide_to_patches
 def divide_to_patches(image: np.array, patch_size: int, input_data_format) -> List[np.array]:
     """
     Divides an image into patches of a specified size.
@@ -80,7 +80,7 @@ def divide_to_patches(image: np.array, patch_size: int, input_data_format) -> Li
     return patches
 
 
-# Copied from transformers.models.llava_next.image_processing_llava_next.expand_to_square
+# Copied from tiny_hf.transformers.models.llava_next.image_processing_llava_next.expand_to_square
 def expand_to_square(image: np.array, background_color, input_data_format) -> np.array:
     """
     Expands an image to a square by adding a background color.
@@ -99,7 +99,7 @@ def expand_to_square(image: np.array, background_color, input_data_format) -> np
         return result
 
 
-# Copied from transformers.models.llava_next.image_processing_llava_next._get_patch_output_size
+# Copied from tiny_hf.transformers.models.llava_next.image_processing_llava_next._get_patch_output_size
 def _get_patch_output_size(image, target_resolution, input_data_format):
     original_height, original_width = get_image_size(image, channel_dim=input_data_format)
     target_height, target_width = target_resolution
@@ -232,7 +232,7 @@ class LlavaOnevisionImageProcessor(BaseImageProcessor):
         self.do_pad = do_pad
         self.do_convert_rgb = do_convert_rgb
 
-    # Copied from transformers.models.llava_next.image_processing_llava_next.LlavaNextImageProcessor.pad
+    # Copied from tiny_hf.transformers.models.llava_next.image_processing_llava_next.LlavaNextImageProcessor.pad
     def pad(
         self,
         image: np.ndarray,
@@ -301,7 +301,7 @@ class LlavaOnevisionImageProcessor(BaseImageProcessor):
         )
         return image
 
-    # Copied from transformers.models.llava_next.image_processing_llava_next.LlavaNextImageProcessor._resize_for_patching
+    # Copied from tiny_hf.transformers.models.llava_next.image_processing_llava_next.LlavaNextImageProcessor._resize_for_patching
     def _resize_for_patching(
         self, image: np.array, target_resolution: tuple, resample, input_data_format: ChannelDimension
     ) -> np.array:
@@ -328,7 +328,7 @@ class LlavaOnevisionImageProcessor(BaseImageProcessor):
 
         return resized_image
 
-    # Copied from transformers.models.llava_next.image_processing_llava_next.LlavaNextImageProcessor._pad_for_patching
+    # Copied from tiny_hf.transformers.models.llava_next.image_processing_llava_next.LlavaNextImageProcessor._pad_for_patching
     def _pad_for_patching(
         self, image: np.array, target_resolution: tuple, input_data_format: ChannelDimension
     ) -> np.array:
@@ -345,7 +345,7 @@ class LlavaOnevisionImageProcessor(BaseImageProcessor):
 
         return padded_image
 
-    # Copied from transformers.models.llava_next.image_processing_llava_next.LlavaNextImageProcessor.get_image_patches
+    # Copied from tiny_hf.transformers.models.llava_next.image_processing_llava_next.LlavaNextImageProcessor.get_image_patches
     def get_image_patches(
         self,
         image: np.array,
@@ -410,7 +410,7 @@ class LlavaOnevisionImageProcessor(BaseImageProcessor):
 
         return image_patches
 
-    # Copied from transformers.models.llava_next.image_processing_llava_next.LlavaNextImageProcessor._pad_for_batching
+    # Copied from tiny_hf.transformers.models.llava_next.image_processing_llava_next.LlavaNextImageProcessor._pad_for_batching
     def _pad_for_batching(
         self,
         pixel_values: List[np.ndarray],

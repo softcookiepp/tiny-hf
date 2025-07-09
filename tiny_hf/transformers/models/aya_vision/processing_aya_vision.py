@@ -16,13 +16,13 @@
 
 from typing import List, Optional, Union
 
-from transformers.processing_utils import (
+from tiny_hf.transformers.processing_utils import (
     ImagesKwargs,
     ProcessingKwargs,
     ProcessorMixin,
     Unpack,
 )
-from transformers.tokenization_utils_base import PreTokenizedInput, TextInput
+from tiny_hf.transformers.tokenization_utils_base import PreTokenizedInput, TextInput
 
 from ...image_processing_utils import BatchFeature
 from ...image_utils import (

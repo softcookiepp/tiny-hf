@@ -115,7 +115,7 @@ class DistilBertTokenizerFast(PreTrainedTokenizerFast):
 
         self.do_lower_case = do_lower_case
 
-    # Copied from transformers.models.bert.tokenization_bert_fast.BertTokenizerFast.build_inputs_with_special_tokens
+    # Copied from tiny_hf.transformers.models.bert.tokenization_bert_fast.BertTokenizerFast.build_inputs_with_special_tokens
     def build_inputs_with_special_tokens(self, token_ids_0, token_ids_1=None):
         """
         Build model inputs from a sequence or a pair of sequence for sequence classification tasks by concatenating and
@@ -140,7 +140,7 @@ class DistilBertTokenizerFast(PreTrainedTokenizerFast):
 
         return output
 
-    # Copied from transformers.models.bert.tokenization_bert_fast.BertTokenizerFast.create_token_type_ids_from_sequences
+    # Copied from tiny_hf.transformers.models.bert.tokenization_bert_fast.BertTokenizerFast.create_token_type_ids_from_sequences
     def create_token_type_ids_from_sequences(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
     ) -> List[int]:
@@ -170,7 +170,7 @@ class DistilBertTokenizerFast(PreTrainedTokenizerFast):
             return len(cls + token_ids_0 + sep) * [0]
         return len(cls + token_ids_0 + sep) * [0] + len(token_ids_1 + sep) * [1]
 
-    # Copied from transformers.models.bert.tokenization_bert_fast.BertTokenizerFast.save_vocabulary
+    # Copied from tiny_hf.transformers.models.bert.tokenization_bert_fast.BertTokenizerFast.save_vocabulary
     def save_vocabulary(self, save_directory: str, filename_prefix: Optional[str] = None) -> Tuple[str]:
         files = self._tokenizer.model.save(save_directory, name=filename_prefix)
         return tuple(files)

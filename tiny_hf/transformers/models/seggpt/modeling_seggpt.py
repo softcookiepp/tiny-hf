@@ -18,10 +18,10 @@ import collections.abc
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import functional as F
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import functional as F
 
 from ...activations import ACT2FN
 from ...modeling_utils import PreTrainedModel
@@ -95,7 +95,7 @@ class SegGptImageSegmentationOutput(ModelOutput):
     attentions: Optional[Tuple[torch.FloatTensor]] = None
 
 
-# Copied from transformers.models.sam.modeling_sam.SamPatchEmbeddings with Sam->SegGpt
+# Copied from tiny_hf.transformers.models.sam.modeling_sam.SamPatchEmbeddings with Sam->SegGpt
 class SegGptPatchEmbeddings(nn.Module):
     """
     This class turns `pixel_values` of shape `(batch_size, num_channels, height, width)` into the initial
@@ -358,7 +358,7 @@ class SegGptAttention(nn.Module):
         return (attn_output, attn_weights_reshaped)
 
 
-# Copied from transformers.models.sam.modeling_sam.SamMLPBlock with SamMLPBlock->SegGptMlp
+# Copied from tiny_hf.transformers.models.sam.modeling_sam.SamMLPBlock with SamMLPBlock->SegGptMlp
 class SegGptMlp(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -373,7 +373,7 @@ class SegGptMlp(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.beit.modeling_beit.drop_path
+# Copied from tiny_hf.transformers.models.beit.modeling_beit.drop_path
 def drop_path(input: torch.Tensor, drop_prob: float = 0.0, training: bool = False) -> torch.Tensor:
     """
     Drop paths (Stochastic Depth) per sample (when applied in main path of residual blocks).
@@ -394,7 +394,7 @@ def drop_path(input: torch.Tensor, drop_prob: float = 0.0, training: bool = Fals
     return output
 
 
-# Copied from transformers.models.beit.modeling_beit.BeitDropPath with Beit->SegGpt
+# Copied from tiny_hf.transformers.models.beit.modeling_beit.BeitDropPath with Beit->SegGpt
 class SegGptDropPath(nn.Module):
     """Drop paths (Stochastic Depth) per sample (when applied in main path of residual blocks)."""
 
@@ -525,7 +525,7 @@ class SegGptEncoder(nn.Module):
         )
 
 
-# Copied from transformers.models.convnext.modeling_convnext.ConvNextLayerNorm with ConvNext->SegGpt
+# Copied from tiny_hf.transformers.models.convnext.modeling_convnext.ConvNextLayerNorm with ConvNext->SegGpt
 class SegGptLayerNorm(nn.Module):
     r"""LayerNorm that supports two data formats: channels_last (default) or channels_first.
     The ordering of the dimensions in the inputs. channels_last corresponds to inputs with shape (batch_size, height,
@@ -764,7 +764,7 @@ class SegGptModel(SegGptPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import SegGptImageProcessor, SegGptModel
+        >>> from tiny_hf.transformers.import SegGptImageProcessor, SegGptModel
         >>> from PIL import Image
         >>> import requests
 
@@ -947,7 +947,7 @@ class SegGptForImageSegmentation(SegGptPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import SegGptImageProcessor, SegGptForImageSegmentation
+        >>> from tiny_hf.transformers.import SegGptImageProcessor, SegGptForImageSegmentation
         >>> from PIL import Image
         >>> import requests
 

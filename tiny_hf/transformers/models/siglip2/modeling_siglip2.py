@@ -24,11 +24,11 @@ from dataclasses import dataclass
 from typing import Any, Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
-from torch.nn.init import _calculate_fan_in_and_fan_out
+import tg_adapter as torch
+import tg_adapter.nn as nn
+import tg_adapter.nn.functional as F
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+from tg_adapter.nn.init import _calculate_fan_in_and_fan_out
 
 from ...activations import ACT2FN
 from ...modeling_attn_mask_utils import _prepare_4d_attention_mask
@@ -344,7 +344,7 @@ class Siglip2FlashAttention2(Siglip2Attention):
         # Beware that with flash_attn<2.1, using q_seqlen != k_seqlen (except for the case q_seqlen == 1) produces a wrong mask (top-left).
         self._flash_attn_uses_top_left_mask = not is_flash_attn_greater_or_equal_2_10()
 
-    # Adapted from transformers.models.llama.modeling_llama.LlamaFlashAttention2.forward
+    # Adapted from tiny_hf.transformers.models.llama.modeling_llama.LlamaFlashAttention2.forward
     def forward(
         self,
         hidden_states: torch.Tensor,
@@ -1122,7 +1122,7 @@ class Siglip2TextModel(Siglip2PreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, Siglip2TextModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, Siglip2TextModel
 
         >>> model = Siglip2TextModel.from_pretrained("google/siglip2-base-patch16-224")
         >>> tokenizer = AutoTokenizer.from_pretrained("google/siglip2-base-patch16-224")
@@ -1215,7 +1215,7 @@ class Siglip2VisionModel(Siglip2PreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, Siglip2VisionModel
+        >>> from tiny_hf.transformers.import AutoProcessor, Siglip2VisionModel
 
         >>> model = Siglip2VisionModel.from_pretrained("google/siglip2-base-patch16-224")
         >>> processor = AutoProcessor.from_pretrained("google/siglip2-base-patch16-224")
@@ -1295,8 +1295,8 @@ class Siglip2Model(Siglip2PreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, AutoModel
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, AutoModel
+        >>> import tg_adapter as torch
 
         >>> model = AutoModel.from_pretrained("google/siglip2-base-patch16-224")
         >>> tokenizer = AutoTokenizer.from_pretrained("google/siglip2-base-patch16-224")
@@ -1346,8 +1346,8 @@ class Siglip2Model(Siglip2PreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, AutoModel
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoProcessor, AutoModel
+        >>> import tg_adapter as torch
 
         >>> model = AutoModel.from_pretrained("google/siglip2-base-patch16-224")
         >>> processor = AutoProcessor.from_pretrained("google/siglip2-base-patch16-224")
@@ -1403,8 +1403,8 @@ class Siglip2Model(Siglip2PreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, AutoModel
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoProcessor, AutoModel
+        >>> import tg_adapter as torch
 
         >>> model = AutoModel.from_pretrained("google/siglip2-base-patch16-224")
         >>> processor = AutoProcessor.from_pretrained("google/siglip2-base-patch16-224")
@@ -1539,8 +1539,8 @@ class Siglip2ForImageClassification(Siglip2PreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, Siglip2ForImageClassification
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoImageProcessor, Siglip2ForImageClassification
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> import requests
 

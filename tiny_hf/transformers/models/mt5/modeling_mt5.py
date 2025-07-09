@@ -20,9 +20,9 @@ import os
 import warnings
 from typing import List, Optional, Tuple, Union
 
-import torch
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, EncoderDecoderCache, StaticCache
@@ -55,7 +55,7 @@ from .configuration_mt5 import MT5Config
 
 
 if is_torch_flex_attn_available():
-    from torch.nn.attention.flex_attention import BlockMask
+    from tg_adapter.nn.attention.flex_attention import BlockMask
 
     from ...integrations.flex_attention import make_flex_block_causal_mask
 
@@ -123,7 +123,7 @@ DEPARALLELIZE_DOCSTRING = r"""
 """
 
 
-# Copied from transformers.models.t5.modeling_t5.T5LayerNorm with T5->MT5
+# Copied from tiny_hf.transformers.models.t5.modeling_t5.T5LayerNorm with T5->MT5
 class MT5LayerNorm(nn.Module):
     def __init__(self, hidden_size, eps=1e-6):
         """
@@ -149,7 +149,7 @@ class MT5LayerNorm(nn.Module):
         return self.weight * hidden_states
 
 
-# Copied from transformers.models.t5.modeling_t5.T5DenseActDense with T5->MT5
+# Copied from tiny_hf.transformers.models.t5.modeling_t5.T5DenseActDense with T5->MT5
 class MT5DenseActDense(nn.Module):
     def __init__(self, config: MT5Config):
         super().__init__()
@@ -172,7 +172,7 @@ class MT5DenseActDense(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.t5.modeling_t5.T5DenseGatedActDense with T5->MT5
+# Copied from tiny_hf.transformers.models.t5.modeling_t5.T5DenseGatedActDense with T5->MT5
 class MT5DenseGatedActDense(nn.Module):
     def __init__(self, config: MT5Config):
         super().__init__()
@@ -202,7 +202,7 @@ class MT5DenseGatedActDense(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.t5.modeling_t5.T5LayerFF with T5->MT5
+# Copied from tiny_hf.transformers.models.t5.modeling_t5.T5LayerFF with T5->MT5
 class MT5LayerFF(nn.Module):
     def __init__(self, config: MT5Config):
         super().__init__()
@@ -221,7 +221,7 @@ class MT5LayerFF(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.t5.modeling_t5.T5Attention with T5->MT5
+# Copied from tiny_hf.transformers.models.t5.modeling_t5.T5Attention with T5->MT5
 class MT5Attention(nn.Module):
     def __init__(
         self,
@@ -450,7 +450,7 @@ class MT5Attention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.t5.modeling_t5.T5LayerSelfAttention with T5->MT5
+# Copied from tiny_hf.transformers.models.t5.modeling_t5.T5LayerSelfAttention with T5->MT5
 class MT5LayerSelfAttention(nn.Module):
     def __init__(self, config, has_relative_attention_bias=False, layer_idx: Optional[int] = None):
         super().__init__()
@@ -487,7 +487,7 @@ class MT5LayerSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.t5.modeling_t5.T5LayerCrossAttention with T5->MT5
+# Copied from tiny_hf.transformers.models.t5.modeling_t5.T5LayerCrossAttention with T5->MT5
 class MT5LayerCrossAttention(nn.Module):
     def __init__(self, config, layer_idx: Optional[int] = None):
         super().__init__()
@@ -526,7 +526,7 @@ class MT5LayerCrossAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.t5.modeling_t5.T5Block with T5->MT5
+# Copied from tiny_hf.transformers.models.t5.modeling_t5.T5Block with T5->MT5
 class MT5Block(nn.Module):
     def __init__(self, config, has_relative_attention_bias=False, layer_idx: Optional[int] = None):
         super().__init__()
@@ -733,7 +733,7 @@ def load_tf_weights_in_mt5(model, config, tf_checkpoint_path):
     return model
 
 
-# Copied from transformers.models.t5.modeling_t5.T5ClassificationHead with T5->MT5
+# Copied from tiny_hf.transformers.models.t5.modeling_t5.T5ClassificationHead with T5->MT5
 class MT5ClassificationHead(nn.Module):
     """Head for sentence-level classification tasks."""
 
@@ -752,7 +752,7 @@ class MT5ClassificationHead(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.t5.modeling_t5.T5PreTrainedModel with T5->MT5, t5->mt5
+# Copied from tiny_hf.transformers.models.t5.modeling_t5.T5PreTrainedModel with T5->MT5, t5->mt5
 class MT5PreTrainedModel(PreTrainedModel):
     """
     An abstract class to handle weights initialization and a simple interface for downloading and loading pretrained
@@ -870,7 +870,7 @@ class MT5PreTrainedModel(PreTrainedModel):
         return shifted_input_ids
 
 
-# Copied from transformers.models.t5.modeling_t5.T5Stack with T5->MT5
+# Copied from tiny_hf.transformers.models.t5.modeling_t5.T5Stack with T5->MT5
 class MT5Stack(MT5PreTrainedModel):
     def __init__(self, config, embed_tokens=None):
         super().__init__(config)
@@ -1188,7 +1188,7 @@ class MT5Stack(MT5PreTrainedModel):
             cross_attentions=all_cross_attentions,
         )
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
     def _update_causal_mask(
         self,
         attention_mask: torch.Tensor,
@@ -1260,7 +1260,7 @@ class MT5Stack(MT5PreTrainedModel):
         return causal_mask
 
     @staticmethod
-    # Copied from transformers.models.llama.modeling_llama.LlamaPreTrainedModel._prepare_4d_causal_attention_mask_with_cache_position
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaPreTrainedModel._prepare_4d_causal_attention_mask_with_cache_position
     def _prepare_4d_causal_attention_mask_with_cache_position(
         attention_mask: torch.Tensor,
         sequence_length: int,
@@ -1488,7 +1488,7 @@ class MT5Model(MT5PreTrainedModel):
     Examples:
 
     ```python
-    >>> from transformers import MT5Model, AutoTokenizer
+    >>> from tiny_hf.transformers.import MT5Model, AutoTokenizer
 
     >>> model = MT5Model.from_pretrained("google/mt5-small")
     >>> tokenizer = AutoTokenizer.from_pretrained("google/mt5-small")
@@ -1506,7 +1506,7 @@ class MT5Model(MT5PreTrainedModel):
     _keys_to_ignore_on_load_unexpected = ["decoder.block.0.layer.1.EncDecAttention.relative_attention_bias.weight"]
     _tied_weights_keys = ["encoder.embed_tokens.weight", "decoder.embed_tokens.weight"]
 
-    # Copied from transformers.models.t5.modeling_t5.T5Model.__init__ with T5->MT5
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5Model.__init__ with T5->MT5
     def __init__(self, config: MT5Config):
         super().__init__(config)
         self.shared = nn.Embedding(config.vocab_size, config.d_model)
@@ -1531,7 +1531,7 @@ class MT5Model(MT5PreTrainedModel):
         self.device_map = None
 
     @add_start_docstrings(PARALLELIZE_DOCSTRING)
-    # Copied from transformers.models.t5.modeling_t5.T5Model.parallelize
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5Model.parallelize
     def parallelize(self, device_map=None):
         warnings.warn(
             "`T5Model.parallelize` is deprecated and will be removed in v5 of Transformers, you should load your model"
@@ -1551,7 +1551,7 @@ class MT5Model(MT5PreTrainedModel):
         self.model_parallel = True
 
     @add_start_docstrings(DEPARALLELIZE_DOCSTRING)
-    # Copied from transformers.models.t5.modeling_t5.T5Model.deparallelize
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5Model.deparallelize
     def deparallelize(self):
         warnings.warn(
             "Like `parallelize`, `deparallelize` is deprecated and will be removed in v5 of Transformers.",
@@ -1565,25 +1565,25 @@ class MT5Model(MT5PreTrainedModel):
         self.device_map = None
         torch.cuda.empty_cache()
 
-    # Copied from transformers.models.t5.modeling_t5.T5Model.get_input_embeddings
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5Model.get_input_embeddings
     def get_input_embeddings(self):
         return self.shared
 
-    # Copied from transformers.models.t5.modeling_t5.T5Model.set_input_embeddings
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5Model.set_input_embeddings
     def set_input_embeddings(self, new_embeddings):
         self.shared = new_embeddings
         self.encoder.set_input_embeddings(new_embeddings)
         self.decoder.set_input_embeddings(new_embeddings)
 
-    # Copied from transformers.models.t5.modeling_t5.T5Model.get_encoder
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5Model.get_encoder
     def get_encoder(self):
         return self.encoder
 
-    # Copied from transformers.models.t5.modeling_t5.T5Model.get_decoder
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5Model.get_decoder
     def get_decoder(self):
         return self.decoder
 
-    # Copied from transformers.models.t5.modeling_t5.T5Model._prune_heads
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5Model._prune_heads
     def _prune_heads(self, heads_to_prune):
         """
         Prunes heads of the model. heads_to_prune: dict of {layer_num: list of heads to prune in this layer} See base
@@ -1594,7 +1594,7 @@ class MT5Model(MT5PreTrainedModel):
 
     @add_start_docstrings_to_model_forward(MT5_INPUTS_DOCSTRING)
     @replace_return_docstrings(output_type=Seq2SeqModelOutput, config_class=_CONFIG_FOR_DOC)
-    # Copied from transformers.models.t5.modeling_t5.T5Model.forward with google-t5/->google/, T5->MT5, t5->mt5
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5Model.forward with google-t5/->google/, T5->MT5, t5->mt5
     def forward(
         self,
         input_ids: Optional[torch.LongTensor] = None,
@@ -1620,7 +1620,7 @@ class MT5Model(MT5PreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, MT5Model
+        >>> from tiny_hf.transformers.import AutoTokenizer, MT5Model
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/mt5-small")
         >>> model = MT5Model.from_pretrained("google/mt5-small")
@@ -1716,7 +1716,7 @@ class MT5ForConditionalGeneration(MT5PreTrainedModel, GenerationMixin):
     Examples:
 
     ```python
-    >>> from transformers import MT5ForConditionalGeneration, AutoTokenizer
+    >>> from tiny_hf.transformers.import MT5ForConditionalGeneration, AutoTokenizer
 
     >>> model = MT5ForConditionalGeneration.from_pretrained("google/mt5-small")
     >>> tokenizer = AutoTokenizer.from_pretrained("google/mt5-small")
@@ -1733,7 +1733,7 @@ class MT5ForConditionalGeneration(MT5PreTrainedModel, GenerationMixin):
     _keys_to_ignore_on_load_unexpected = ["decoder.block.0.layer.1.EncDecAttention.relative_attention_bias.weight"]
     _tied_weights_keys = ["encoder.embed_tokens.weight", "decoder.embed_tokens.weight", "lm_head.weight"]
 
-    # Copied from transformers.models.t5.modeling_t5.T5ForConditionalGeneration.__init__ with T5->MT5
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5ForConditionalGeneration.__init__ with T5->MT5
     def __init__(self, config: MT5Config):
         super().__init__(config)
         self.model_dim = config.d_model
@@ -1762,7 +1762,7 @@ class MT5ForConditionalGeneration(MT5PreTrainedModel, GenerationMixin):
         self.device_map = None
 
     @add_start_docstrings(PARALLELIZE_DOCSTRING)
-    # Copied from transformers.models.t5.modeling_t5.T5ForConditionalGeneration.parallelize
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5ForConditionalGeneration.parallelize
     def parallelize(self, device_map=None):
         warnings.warn(
             "`T5ForConditionalGeneration.parallelize` is deprecated and will be removed in v5 of Transformers, you"
@@ -1783,7 +1783,7 @@ class MT5ForConditionalGeneration(MT5PreTrainedModel, GenerationMixin):
         self.model_parallel = True
 
     @add_start_docstrings(DEPARALLELIZE_DOCSTRING)
-    # Copied from transformers.models.t5.modeling_t5.T5ForConditionalGeneration.deparallelize
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5ForConditionalGeneration.deparallelize
     def deparallelize(self):
         warnings.warn(
             "Like `parallelize`, `deparallelize` is deprecated and will be removed in v5 of Transformers.",
@@ -1798,35 +1798,35 @@ class MT5ForConditionalGeneration(MT5PreTrainedModel, GenerationMixin):
         self.device_map = None
         torch.cuda.empty_cache()
 
-    # Copied from transformers.models.t5.modeling_t5.T5ForConditionalGeneration.get_input_embeddings
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5ForConditionalGeneration.get_input_embeddings
     def get_input_embeddings(self):
         return self.shared
 
-    # Copied from transformers.models.t5.modeling_t5.T5ForConditionalGeneration.set_input_embeddings
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5ForConditionalGeneration.set_input_embeddings
     def set_input_embeddings(self, new_embeddings):
         self.shared = new_embeddings
         self.encoder.set_input_embeddings(new_embeddings)
         self.decoder.set_input_embeddings(new_embeddings)
 
-    # Copied from transformers.models.t5.modeling_t5.T5ForConditionalGeneration.set_output_embeddings
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5ForConditionalGeneration.set_output_embeddings
     def set_output_embeddings(self, new_embeddings):
         self.lm_head = new_embeddings
 
-    # Copied from transformers.models.t5.modeling_t5.T5ForConditionalGeneration.get_output_embeddings
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5ForConditionalGeneration.get_output_embeddings
     def get_output_embeddings(self):
         return self.lm_head
 
-    # Copied from transformers.models.t5.modeling_t5.T5ForConditionalGeneration.get_encoder
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5ForConditionalGeneration.get_encoder
     def get_encoder(self):
         return self.encoder
 
-    # Copied from transformers.models.t5.modeling_t5.T5ForConditionalGeneration.get_decoder
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5ForConditionalGeneration.get_decoder
     def get_decoder(self):
         return self.decoder
 
     @add_start_docstrings_to_model_forward(MT5_INPUTS_DOCSTRING)
     @replace_return_docstrings(output_type=Seq2SeqLMOutput, config_class=_CONFIG_FOR_DOC)
-    # Copied from transformers.models.t5.modeling_t5.T5ForConditionalGeneration.forward with google-t5/->google/, T5->MT5, t5->mt5
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5ForConditionalGeneration.forward with google-t5/->google/, T5->MT5, t5->mt5
     def forward(
         self,
         input_ids: Optional[torch.LongTensor] = None,
@@ -1858,7 +1858,7 @@ class MT5ForConditionalGeneration(MT5PreTrainedModel, GenerationMixin):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, MT5ForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, MT5ForConditionalGeneration
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/mt5-small")
         >>> model = MT5ForConditionalGeneration.from_pretrained("google/mt5-small")
@@ -1982,11 +1982,11 @@ class MT5ForConditionalGeneration(MT5PreTrainedModel, GenerationMixin):
             encoder_attentions=encoder_outputs.attentions,
         )
 
-    # Copied from transformers.models.t5.modeling_t5.T5ForConditionalGeneration.prepare_decoder_input_ids_from_labels
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5ForConditionalGeneration.prepare_decoder_input_ids_from_labels
     def prepare_decoder_input_ids_from_labels(self, labels: torch.Tensor):
         return self._shift_right(labels)
 
-    # Copied from transformers.models.t5.modeling_t5.T5ForConditionalGeneration._reorder_cache
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5ForConditionalGeneration._reorder_cache
     def _reorder_cache(self, past_key_values, beam_idx):
         # if decoder past is not included in output
         # speedy decoding is disabled and no need to reorder
@@ -2027,7 +2027,7 @@ class MT5EncoderModel(MT5PreTrainedModel):
     Examples:
 
     ```python
-    >>> from transformers import MT5EncoderModel, AutoTokenizer
+    >>> from tiny_hf.transformers.import MT5EncoderModel, AutoTokenizer
 
     >>> model = MT5EncoderModel.from_pretrained("google/mt5-small")
     >>> tokenizer = AutoTokenizer.from_pretrained("google/mt5-small")
@@ -2041,7 +2041,7 @@ class MT5EncoderModel(MT5PreTrainedModel):
     config_class = MT5Config
     _tied_weights_keys = ["encoder.embed_tokens.weight"]
 
-    # Copied from transformers.models.t5.modeling_t5.T5EncoderModel.__init__ with T5->MT5
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5EncoderModel.__init__ with T5->MT5
     def __init__(self, config: MT5Config):
         super().__init__(config)
         self.shared = nn.Embedding(config.vocab_size, config.d_model)
@@ -2059,7 +2059,7 @@ class MT5EncoderModel(MT5PreTrainedModel):
         self.device_map = None
 
     @add_start_docstrings(PARALLELIZE_DOCSTRING)
-    # Copied from transformers.models.t5.modeling_t5.T5EncoderModel.parallelize
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5EncoderModel.parallelize
     def parallelize(self, device_map=None):
         warnings.warn(
             "`T5EncoderModel.parallelize` is deprecated and will be removed in v5 of Transformers, you should load"
@@ -2078,7 +2078,7 @@ class MT5EncoderModel(MT5PreTrainedModel):
         self.model_parallel = True
 
     @add_start_docstrings(DEPARALLELIZE_DOCSTRING)
-    # Copied from transformers.models.t5.modeling_t5.T5EncoderModel.deparallelize
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5EncoderModel.deparallelize
     def deparallelize(self):
         warnings.warn(
             "Like `parallelize`, `deparallelize` is deprecated and will be removed in v5 of Transformers.",
@@ -2090,20 +2090,20 @@ class MT5EncoderModel(MT5PreTrainedModel):
         self.device_map = None
         torch.cuda.empty_cache()
 
-    # Copied from transformers.models.t5.modeling_t5.T5EncoderModel.get_input_embeddings
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5EncoderModel.get_input_embeddings
     def get_input_embeddings(self):
         return self.shared
 
-    # Copied from transformers.models.t5.modeling_t5.T5EncoderModel.set_input_embeddings
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5EncoderModel.set_input_embeddings
     def set_input_embeddings(self, new_embeddings):
         self.shared = new_embeddings
         self.encoder.set_input_embeddings(new_embeddings)
 
-    # Copied from transformers.models.t5.modeling_t5.T5EncoderModel.get_encoder
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5EncoderModel.get_encoder
     def get_encoder(self):
         return self.encoder
 
-    # Copied from transformers.models.t5.modeling_t5.T5EncoderModel._prune_heads
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5EncoderModel._prune_heads
     def _prune_heads(self, heads_to_prune):
         """
         Prunes heads of the model. heads_to_prune: dict of {layer_num: list of heads to prune in this layer} See base
@@ -2114,7 +2114,7 @@ class MT5EncoderModel(MT5PreTrainedModel):
 
     @add_start_docstrings_to_model_forward(MT5_ENCODER_INPUTS_DOCSTRING)
     @replace_return_docstrings(output_type=BaseModelOutput, config_class=_CONFIG_FOR_DOC)
-    # Copied from transformers.models.t5.modeling_t5.T5EncoderModel.forward with google-t5/->google/, T5->MT5, t5->mt5
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5EncoderModel.forward with google-t5/->google/, T5->MT5, t5->mt5
     def forward(
         self,
         input_ids: Optional[torch.LongTensor] = None,
@@ -2131,7 +2131,7 @@ class MT5EncoderModel(MT5PreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, MT5EncoderModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, MT5EncoderModel
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/mt5-small")
         >>> model = MT5EncoderModel.from_pretrained("google/mt5-small")
@@ -2167,7 +2167,7 @@ class MT5ForSequenceClassification(MT5PreTrainedModel):
     _keys_to_ignore_on_load_unexpected = ["decoder.block.0.layer.1.EncDecAttention.relative_attention_bias.weight"]
     _tied_weights_keys = ["encoder.embed_tokens.weight", "decoder.embed_tokens.weight"]
 
-    # Copied from transformers.models.t5.modeling_t5.T5ForSequenceClassification.__init__ with T5->MT5
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5ForSequenceClassification.__init__ with T5->MT5
     def __init__(self, config: MT5Config):
         super().__init__(config)
         self.transformer = MT5Model(config)
@@ -2180,7 +2180,7 @@ class MT5ForSequenceClassification(MT5PreTrainedModel):
 
     @add_start_docstrings_to_model_forward(MT5_INPUTS_DOCSTRING)
     @replace_return_docstrings(output_type=Seq2SeqSequenceClassifierOutput, config_class=_CONFIG_FOR_DOC)
-    # Copied from transformers.models.t5.modeling_t5.T5ForSequenceClassification.forward
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5ForSequenceClassification.forward
     def forward(
         self,
         input_ids: torch.LongTensor = None,
@@ -2301,7 +2301,7 @@ class MT5ForSequenceClassification(MT5PreTrainedModel):
 class MT5ForTokenClassification(MT5PreTrainedModel):
     _tied_weights_keys = ["transformer.encoder.embed_tokens.weight"]
 
-    # Copied from transformers.models.t5.modeling_t5.T5ForTokenClassification.__init__ with T5->MT5
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5ForTokenClassification.__init__ with T5->MT5
     def __init__(self, config: MT5Config):
         super().__init__(config)
         self.num_labels = config.num_labels
@@ -2315,7 +2315,7 @@ class MT5ForTokenClassification(MT5PreTrainedModel):
 
     @add_start_docstrings_to_model_forward(MT5_INPUTS_DOCSTRING)
     @replace_return_docstrings(output_type=TokenClassifierOutput, config_class=_CONFIG_FOR_DOC)
-    # Copied from transformers.models.t5.modeling_t5.T5ForTokenClassification.forward with T5->MT5
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5ForTokenClassification.forward with T5->MT5
     def forward(
         self,
         input_ids: Optional[torch.Tensor] = None,
@@ -2376,7 +2376,7 @@ class MT5ForQuestionAnswering(MT5PreTrainedModel):
     _keys_to_ignore_on_load_unexpected = ["decoder.block.0.layer.1.EncDecAttention.relative_attention_bias.weight"]
     _tied_weights_keys = ["encoder.embed_tokens.weight", "decoder.embed_tokens.weight"]
 
-    # Copied from transformers.models.t5.modeling_t5.T5ForQuestionAnswering.__init__ with T5->MT5
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5ForQuestionAnswering.__init__ with T5->MT5
     def __init__(self, config: MT5Config):
         super().__init__(config)
         self.model_dim = config.d_model
@@ -2403,27 +2403,27 @@ class MT5ForQuestionAnswering(MT5PreTrainedModel):
 
         self.model_parallel = False
 
-    # Copied from transformers.models.t5.modeling_t5.T5ForQuestionAnswering.get_input_embeddings
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5ForQuestionAnswering.get_input_embeddings
     def get_input_embeddings(self):
         return self.shared
 
-    # Copied from transformers.models.t5.modeling_t5.T5ForQuestionAnswering.set_input_embeddings
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5ForQuestionAnswering.set_input_embeddings
     def set_input_embeddings(self, new_embeddings):
         self.shared = new_embeddings
         self.encoder.set_input_embeddings(new_embeddings)
         self.decoder.set_input_embeddings(new_embeddings)
 
-    # Copied from transformers.models.t5.modeling_t5.T5ForQuestionAnswering.get_encoder
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5ForQuestionAnswering.get_encoder
     def get_encoder(self):
         return self.encoder
 
-    # Copied from transformers.models.t5.modeling_t5.T5ForQuestionAnswering.get_decoder
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5ForQuestionAnswering.get_decoder
     def get_decoder(self):
         return self.decoder
 
     @add_start_docstrings_to_model_forward(MT5_INPUTS_DOCSTRING)
     @replace_return_docstrings(output_type=Seq2SeqQuestionAnsweringModelOutput, config_class=_CONFIG_FOR_DOC)
-    # Copied from transformers.models.t5.modeling_t5.T5ForQuestionAnswering.forward
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5ForQuestionAnswering.forward
     def forward(
         self,
         input_ids: Optional[torch.LongTensor] = None,

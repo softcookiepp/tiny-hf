@@ -232,7 +232,7 @@ class OnnxConfig(ABC):
             `bool`: Whether the installed version of PyTorch is compatible with the model.
         """
         if is_torch_available():
-            from transformers.utils import get_torch_version
+            from tiny_hf.transformers.utils import get_torch_version
 
             return version.parse(get_torch_version()) >= self.torch_onnx_minimum_version
         else:
@@ -661,7 +661,7 @@ class OnnxSeq2SeqConfigWithPast(OnnxConfigWithPast):
             if not is_torch_available():
                 raise ValueError("Cannot generate dummy past_keys inputs without PyTorch installed.")
             else:
-                import torch
+                import tg_adapter as torch
             batch = common_inputs["input_ids"].shape[0]
             encoder_seq_length = common_inputs["input_ids"].shape[1]
             decoder_seq_length = common_inputs["decoder_input_ids"].shape[1]

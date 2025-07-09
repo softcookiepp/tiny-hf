@@ -18,10 +18,10 @@ import collections.abc
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.nn.functional as F
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.nn.functional as F
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...modeling_outputs import BaseModelOutput
 from ...modeling_utils import PreTrainedModel
@@ -45,7 +45,7 @@ _TOKENIZER_FOR_DOC = "MgpstrTokenizer"
 _CHECKPOINT_FOR_DOC = "alibaba-damo/mgp-str-base"
 
 
-# Copied from transformers.models.beit.modeling_beit.drop_path
+# Copied from tiny_hf.transformers.models.beit.modeling_beit.drop_path
 def drop_path(input: torch.Tensor, drop_prob: float = 0.0, training: bool = False) -> torch.Tensor:
     """
     Drop paths (Stochastic Depth) per sample (when applied in main path of residual blocks).
@@ -66,7 +66,7 @@ def drop_path(input: torch.Tensor, drop_prob: float = 0.0, training: bool = Fals
     return output
 
 
-# Copied from transformers.models.beit.modeling_beit.BeitDropPath with Beit->Mgpstr
+# Copied from tiny_hf.transformers.models.beit.modeling_beit.BeitDropPath with Beit->Mgpstr
 class MgpstrDropPath(nn.Module):
     """Drop paths (Stochastic Depth) per sample (when applied in main path of residual blocks)."""
 
@@ -451,7 +451,7 @@ class MgpstrForSceneTextRecognition(MgpstrPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import (
+        >>> from tiny_hf.transformers.import (
         ...     MgpstrProcessor,
         ...     MgpstrForSceneTextRecognition,
         ... )

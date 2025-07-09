@@ -16,10 +16,10 @@
 
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...modeling_outputs import (
@@ -475,7 +475,7 @@ class DebertaAttention(nn.Module):
             return (attention_output, None)
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate with Bert->Deberta
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate with Bert->Deberta
 class DebertaIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -876,7 +876,7 @@ class LegacyDebertaLMPredictionHead(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOnlyMLMHead with Bert->LegacyDeberta
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOnlyMLMHead with Bert->LegacyDeberta
 class LegacyDebertaOnlyMLMHead(nn.Module):
     def __init__(self, config):
         super().__init__()

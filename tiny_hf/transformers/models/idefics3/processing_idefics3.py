@@ -188,8 +188,8 @@ class Idefics3Processor(ProcessorMixin):
 
         ```python
         >>> import requests
-        >>> from transformers import Idefics3Processor
-        >>> from transformers.image_utils import load_image
+        >>> from tiny_hf.transformers.import Idefics3Processor
+        >>> from tiny_hf.transformers.image_utils import load_image
 
         >>> processor = Idefics3Processor.from_pretrained("HuggingFaceM4/Idefics3-8B-Llama3")
         >>> processor.image_processor.do_image_splitting = False  # Force as False to simplify the example

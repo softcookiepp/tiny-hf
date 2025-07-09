@@ -6,8 +6,8 @@
 #                🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨
 from typing import Callable, Optional, Tuple, Union
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, StaticCache
@@ -37,7 +37,7 @@ from .configuration_gpt_neox import GPTNeoXConfig
 
 
 if is_torch_flex_attn_available():
-    from torch.nn.attention.flex_attention import BlockMask
+    from tg_adapter.nn.attention.flex_attention import BlockMask
 
     from ...integrations.flex_attention import make_flex_block_causal_mask
 
@@ -822,8 +822,8 @@ class GPTNeoXForCausalLM(GPTNeoXPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, GPTNeoXForCausalLM, GPTNeoXConfig
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, GPTNeoXForCausalLM, GPTNeoXConfig
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neox-20b")
         >>> config = GPTNeoXConfig.from_pretrained("EleutherAI/gpt-neox-20b")

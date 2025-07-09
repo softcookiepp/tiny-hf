@@ -17,10 +17,10 @@
 import argparse
 
 import requests
-import torch
+import tg_adapter as torch
 from PIL import Image
 
-from transformers import ViTMAEConfig, ViTMAEForPreTraining, ViTMAEImageProcessor
+from tiny_hf.transformers.import ViTMAEConfig, ViTMAEForPreTraining, ViTMAEImageProcessor
 
 
 def rename_key(name):

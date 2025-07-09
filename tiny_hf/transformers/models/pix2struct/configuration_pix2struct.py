@@ -70,7 +70,7 @@ class Pix2StructTextConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import Pix2StructTextConfig, Pix2StructTextModel
+    >>> from tiny_hf.transformers.import Pix2StructTextConfig, Pix2StructTextModel
 
     >>> # Initializing a Pix2StructTextConfig with google/pix2struct-base style configuration
     >>> configuration = Pix2StructTextConfig()
@@ -192,7 +192,7 @@ class Pix2StructVisionConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import Pix2StructVisionConfig, Pix2StructVisionModel
+    >>> from tiny_hf.transformers.import Pix2StructVisionConfig, Pix2StructVisionModel
 
     >>> # Initializing a Pix2StructVisionConfig with google/pix2struct-base style configuration
     >>> configuration = Pix2StructVisionConfig()
@@ -272,7 +272,7 @@ class Pix2StructConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import Pix2StructConfig, Pix2StructForConditionalGeneration
+    >>> from tiny_hf.transformers.import Pix2StructConfig, Pix2StructForConditionalGeneration
 
     >>> # Initializing a Pix2StructConfig with google/pix2struct-base style configuration
     >>> configuration = Pix2StructConfig()

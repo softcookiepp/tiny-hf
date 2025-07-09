@@ -14,10 +14,10 @@
 import math
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.nn.functional as F
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.nn.functional as F
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, StaticCache
@@ -51,7 +51,7 @@ logger = logging.get_logger(__name__)
 _CONFIG_FOR_DOC = "OlmoeConfig"
 
 
-# Copied from transformers.models.mixtral.modeling_mixtral.load_balancing_loss_func
+# Copied from tiny_hf.transformers.models.mixtral.modeling_mixtral.load_balancing_loss_func
 def load_balancing_loss_func(
     gate_logits: Union[torch.Tensor, Tuple[torch.Tensor], None],
     num_experts: Optional[int] = None,
@@ -157,7 +157,7 @@ class OlmoeRMSNorm(nn.Module):
 ALL_LAYERNORM_LAYERS.append(OlmoeRMSNorm)
 
 
-# Copied from transformers.models.llama.modeling_llama.LlamaRotaryEmbedding with Llama->Olmoe
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaRotaryEmbedding with Llama->Olmoe
 class OlmoeRotaryEmbedding(nn.Module):
     def __init__(self, config: OlmoeConfig, device=None):
         super().__init__()
@@ -219,7 +219,7 @@ class OlmoeRotaryEmbedding(nn.Module):
         return cos.to(dtype=x.dtype), sin.to(dtype=x.dtype)
 
 
-# Copied from transformers.models.llama.modeling_llama.rotate_half
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.rotate_half
 def rotate_half(x):
     """Rotates half the hidden dims of the input."""
     x1 = x[..., : x.shape[-1] // 2]
@@ -227,7 +227,7 @@ def rotate_half(x):
     return torch.cat((-x2, x1), dim=-1)
 
 
-# Copied from transformers.models.llama.modeling_llama.apply_rotary_pos_emb
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.apply_rotary_pos_emb
 def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
     """Applies Rotary Position Embedding to the query and key tensors.
 
@@ -255,7 +255,7 @@ def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
     return q_embed, k_embed
 
 
-# Copied from transformers.models.olmo.modeling_olmo.OlmoMLP with Olmo->Olmoe
+# Copied from tiny_hf.transformers.models.olmo.modeling_olmo.OlmoMLP with Olmo->Olmoe
 class OlmoeMLP(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -272,7 +272,7 @@ class OlmoeMLP(nn.Module):
         return down_proj
 
 
-# Copied from transformers.models.llama.modeling_llama.repeat_kv
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.repeat_kv
 def repeat_kv(hidden_states: torch.Tensor, n_rep: int) -> torch.Tensor:
     """
     This is the equivalent of torch.repeat_interleave(x, dim=1, repeats=n_rep). The hidden states go from (batch,
@@ -862,7 +862,7 @@ OLMOE_INPUTS_DOCSTRING = r"""
     "The bare Olmoe Model outputting raw hidden-states without any specific head on top.",
     OLMOE_START_DOCSTRING,
 )
-# TODO: re-enable check: Copied from transformers.models.llama.modeling_llama.LlamaModel with Llama->Olmoe
+# TODO: re-enable check: Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel with Llama->Olmoe
 class OlmoeModel(OlmoePreTrainedModel):
     """
     Transformer decoder consisting of *config.num_hidden_layers* layers. Each layer is a [`OlmoeDecoderLayer`]
@@ -1223,7 +1223,7 @@ class OlmoeForCausalLM(OlmoePreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, OlmoeForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, OlmoeForCausalLM
 
         >>> model = OlmoeForCausalLM.from_pretrained("allenai/OLMoE-1B-7B-0924")
         >>> tokenizer = AutoTokenizer.from_pretrained("allenai/OLMoE-1B-7B-0924")

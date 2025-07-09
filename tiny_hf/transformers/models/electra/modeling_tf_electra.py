@@ -65,7 +65,7 @@ _CHECKPOINT_FOR_DOC = "google/electra-small-discriminator"
 _CONFIG_FOR_DOC = "ElectraConfig"
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertSelfAttention with Bert->Electra
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertSelfAttention with Bert->Electra
 class TFElectraSelfAttention(keras.layers.Layer):
     def __init__(self, config: ElectraConfig, **kwargs):
         super().__init__(**kwargs)
@@ -198,7 +198,7 @@ class TFElectraSelfAttention(keras.layers.Layer):
                 self.value.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertSelfOutput with Bert->Electra
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertSelfOutput with Bert->Electra
 class TFElectraSelfOutput(keras.layers.Layer):
     def __init__(self, config: ElectraConfig, **kwargs):
         super().__init__(**kwargs)
@@ -229,7 +229,7 @@ class TFElectraSelfOutput(keras.layers.Layer):
                 self.LayerNorm.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertAttention with Bert->Electra
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertAttention with Bert->Electra
 class TFElectraAttention(keras.layers.Layer):
     def __init__(self, config: ElectraConfig, **kwargs):
         super().__init__(**kwargs)
@@ -281,7 +281,7 @@ class TFElectraAttention(keras.layers.Layer):
                 self.dense_output.build(None)
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertIntermediate with Bert->Electra
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertIntermediate with Bert->Electra
 class TFElectraIntermediate(keras.layers.Layer):
     def __init__(self, config: ElectraConfig, **kwargs):
         super().__init__(**kwargs)
@@ -311,7 +311,7 @@ class TFElectraIntermediate(keras.layers.Layer):
                 self.dense.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertOutput with Bert->Electra
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertOutput with Bert->Electra
 class TFElectraOutput(keras.layers.Layer):
     def __init__(self, config: ElectraConfig, **kwargs):
         super().__init__(**kwargs)
@@ -342,7 +342,7 @@ class TFElectraOutput(keras.layers.Layer):
                 self.LayerNorm.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertLayer with Bert->Electra
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertLayer with Bert->Electra
 class TFElectraLayer(keras.layers.Layer):
     def __init__(self, config: ElectraConfig, **kwargs):
         super().__init__(**kwargs)
@@ -446,7 +446,7 @@ class TFElectraLayer(keras.layers.Layer):
                 self.crossattention.build(None)
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertEncoder with Bert->Electra
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertEncoder with Bert->Electra
 class TFElectraEncoder(keras.layers.Layer):
     def __init__(self, config: ElectraConfig, **kwargs):
         super().__init__(**kwargs)
@@ -525,7 +525,7 @@ class TFElectraEncoder(keras.layers.Layer):
                     layer.build(None)
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertPooler with Bert->Electra
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertPooler with Bert->Electra
 class TFElectraPooler(keras.layers.Layer):
     def __init__(self, config: ElectraConfig, **kwargs):
         super().__init__(**kwargs)
@@ -555,7 +555,7 @@ class TFElectraPooler(keras.layers.Layer):
                 self.dense.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.albert.modeling_tf_albert.TFAlbertEmbeddings with Albert->Electra
+# Copied from tiny_hf.transformers.models.albert.modeling_tf_albert.TFAlbertEmbeddings with Albert->Electra
 class TFElectraEmbeddings(keras.layers.Layer):
     """Construct the embeddings from word, position and token_type embeddings."""
 
@@ -598,7 +598,7 @@ class TFElectraEmbeddings(keras.layers.Layer):
             with tf.name_scope(self.LayerNorm.name):
                 self.LayerNorm.build([None, None, self.config.embedding_size])
 
-    # Copied from transformers.models.bert.modeling_tf_bert.TFBertEmbeddings.call
+    # Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertEmbeddings.call
     def call(
         self,
         input_ids: tf.Tensor = None,
@@ -1151,7 +1151,7 @@ class TFElectraForPreTraining(TFElectraPreTrainedModel):
 
         ```python
         >>> import tensorflow as tf
-        >>> from transformers import AutoTokenizer, TFElectraForPreTraining
+        >>> from tiny_hf.transformers.import AutoTokenizer, TFElectraForPreTraining
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/electra-small-discriminator")
         >>> model = TFElectraForPreTraining.from_pretrained("google/electra-small-discriminator")

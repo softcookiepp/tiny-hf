@@ -114,7 +114,7 @@ class Qwen2Config(PretrainedConfig):
             The dropout ratio for the attention probabilities.
 
     ```python
-    >>> from transformers import Qwen2Model, Qwen2Config
+    >>> from tiny_hf.transformers.import Qwen2Model, Qwen2Config
 
     >>> # Initializing a Qwen2 style configuration
     >>> configuration = Qwen2Config()

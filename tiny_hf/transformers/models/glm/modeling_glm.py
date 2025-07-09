@@ -21,8 +21,8 @@
 # limitations under the License.
 from typing import Callable, List, Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+import tg_adapter.nn as nn
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, StaticCache
@@ -52,7 +52,7 @@ from .configuration_glm import GlmConfig
 
 
 if is_torch_flex_attn_available():
-    from torch.nn.attention.flex_attention import BlockMask
+    from tg_adapter.nn.attention.flex_attention import BlockMask
 
     from ...integrations.flex_attention import make_flex_block_causal_mask
 
@@ -841,7 +841,7 @@ class GlmForCausalLM(GlmPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, GlmForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, GlmForCausalLM
 
         >>> model = GlmForCausalLM.from_pretrained("meta-glm/Glm-2-7b-hf")
         >>> tokenizer = AutoTokenizer.from_pretrained("meta-glm/Glm-2-7b-hf")

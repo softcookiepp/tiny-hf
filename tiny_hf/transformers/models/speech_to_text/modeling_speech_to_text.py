@@ -17,9 +17,9 @@
 import math
 from typing import Optional, Tuple, Union
 
-import torch
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -45,7 +45,7 @@ logger = logging.get_logger(__name__)
 _CONFIG_FOR_DOC = "Speech2TextConfig"
 
 
-# Copied from transformers.models.bart.modeling_bart.shift_tokens_right
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.shift_tokens_right
 def shift_tokens_right(input_ids: torch.Tensor, pad_token_id: int, decoder_start_token_id: int):
     """
     Shift input ids one token to the right.
@@ -167,7 +167,7 @@ class Speech2TextSinusoidalPositionalEmbedding(nn.Module):
         return incremental_indices.long() + padding_idx
 
 
-# Copied from transformers.models.bart.modeling_bart.BartAttention with Bart->Speech2Text
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartAttention with Bart->Speech2Text
 class Speech2TextAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -329,7 +329,7 @@ class Speech2TextAttention(nn.Module):
 SPEECH_TO_TEXT_ATTENTION_CLASSES = {"eager": Speech2TextAttention}
 
 
-# Copied from transformers.models.mbart.modeling_mbart.MBartEncoderLayer with MBart->Speech2Text, MBART->SPEECH_TO_TEXT
+# Copied from tiny_hf.transformers.models.mbart.modeling_mbart.MBartEncoderLayer with MBart->Speech2Text, MBART->SPEECH_TO_TEXT
 class Speech2TextEncoderLayer(nn.Module):
     def __init__(self, config: Speech2TextConfig):
         super().__init__()
@@ -400,7 +400,7 @@ class Speech2TextEncoderLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.mbart.modeling_mbart.MBartDecoderLayer with MBart->Speech2Text, MBART->SPEECH_TO_TEXT
+# Copied from tiny_hf.transformers.models.mbart.modeling_mbart.MBartDecoderLayer with MBart->Speech2Text, MBART->SPEECH_TO_TEXT
 class Speech2TextDecoderLayer(nn.Module):
     def __init__(self, config: Speech2TextConfig):
         super().__init__()
@@ -1124,8 +1124,8 @@ class Speech2TextModel(Speech2TextPreTrainedModel):
         Example:
 
          ```python
-         >>> import torch
-         >>> from transformers import Speech2TextModel, AutoFeatureExtractor
+         >>> import tg_adapter as torch
+         >>> from tiny_hf.transformers.import Speech2TextModel, AutoFeatureExtractor
          >>> from datasets import load_dataset
 
          >>> model = Speech2TextModel.from_pretrained("facebook/s2t-small-librispeech-asr")
@@ -1263,8 +1263,8 @@ class Speech2TextForConditionalGeneration(Speech2TextPreTrainedModel, Generation
         Example:
 
         ```python
-        >>> import torch
-        >>> from transformers import Speech2TextProcessor, Speech2TextForConditionalGeneration
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import Speech2TextProcessor, Speech2TextForConditionalGeneration
         >>> from datasets import load_dataset
 
         >>> model = Speech2TextForConditionalGeneration.from_pretrained("facebook/s2t-small-librispeech-asr")

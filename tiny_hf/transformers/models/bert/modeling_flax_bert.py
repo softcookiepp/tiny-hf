@@ -259,7 +259,7 @@ class FlaxBertSelfAttention(nn.Module):
         return hidden_states.reshape(hidden_states.shape[:2] + (self.config.hidden_size,))
 
     @nn.compact
-    # Copied from transformers.models.bart.modeling_flax_bart.FlaxBartAttention._concatenate_to_cache
+    # Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartAttention._concatenate_to_cache
     def _concatenate_to_cache(self, key, value, query, attention_mask):
         """
         This function takes projected key, value states from a single input token and concatenates the states to cached
@@ -834,7 +834,7 @@ class FlaxBertPreTrainedModel(FlaxPreTrainedModel):
         else:
             return random_params
 
-    # Copied from transformers.models.bart.modeling_flax_bart.FlaxBartDecoderPreTrainedModel.init_cache
+    # Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartDecoderPreTrainedModel.init_cache
     def init_cache(self, batch_size, max_length):
         r"""
         Args:
@@ -1112,7 +1112,7 @@ FLAX_BERT_FOR_PRETRAINING_DOCSTRING = """
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, FlaxBertForPreTraining
+    >>> from tiny_hf.transformers.import AutoTokenizer, FlaxBertForPreTraining
 
     >>> tokenizer = AutoTokenizer.from_pretrained("google-bert/bert-base-uncased")
     >>> model = FlaxBertForPreTraining.from_pretrained("google-bert/bert-base-uncased")
@@ -1267,7 +1267,7 @@ FLAX_BERT_FOR_NEXT_SENT_PRED_DOCSTRING = """
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, FlaxBertForNextSentencePrediction
+    >>> from tiny_hf.transformers.import AutoTokenizer, FlaxBertForNextSentencePrediction
 
     >>> tokenizer = AutoTokenizer.from_pretrained("google-bert/bert-base-uncased")
     >>> model = FlaxBertForNextSentencePrediction.from_pretrained("google-bert/bert-base-uncased")

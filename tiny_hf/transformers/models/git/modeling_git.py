@@ -19,9 +19,9 @@ import math
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache
@@ -53,7 +53,7 @@ _CONFIG_FOR_DOC = "GitConfig"
 
 
 @dataclass
-# Copied from transformers.models.clip.modeling_clip.CLIPVisionModelOutput with CLIP->Git
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPVisionModelOutput with CLIP->Git
 class GitVisionModelOutput(ModelOutput):
     """
     Base class for vision model's outputs that also contains image embeddings of the pooling of the last hidden states.
@@ -247,7 +247,7 @@ class GitSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfOutput
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfOutput
 class GitSelfOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -276,7 +276,7 @@ class GitAttention(nn.Module):
         self.output = GitSelfOutput(config)
         self.pruned_heads = set()
 
-    # Copied from transformers.models.bert.modeling_bert.BertAttention.prune_heads
+    # Copied from tiny_hf.transformers.models.bert.modeling_bert.BertAttention.prune_heads
     def prune_heads(self, heads):
         if len(heads) == 0:
             return
@@ -317,7 +317,7 @@ class GitAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate
 class GitIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -333,7 +333,7 @@ class GitIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOutput
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOutput
 class GitOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -614,7 +614,7 @@ GIT_INPUTS_DOCSTRING = r"""
 """
 
 
-# Copied from transformers.models.clip.modeling_clip.CLIPVisionEmbeddings with CLIP->Git
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPVisionEmbeddings with CLIP->Git
 class GitVisionEmbeddings(nn.Module):
     def __init__(self, config: GitVisionConfig):
         super().__init__()
@@ -698,7 +698,7 @@ class GitVisionEmbeddings(nn.Module):
         return embeddings
 
 
-# Copied from transformers.models.clip.modeling_clip.CLIPMLP
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPMLP
 class GitVisionMLP(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -714,7 +714,7 @@ class GitVisionMLP(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.clip.modeling_clip.CLIPAttention with CLIP->GitVision
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPAttention with CLIP->GitVision
 class GitVisionAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -819,7 +819,7 @@ class GitVisionAttention(nn.Module):
         return attn_output, attn_weights_reshaped
 
 
-# Copied from transformers.models.altclip.modeling_altclip.AltCLIPEncoderLayer with AltCLIP->GitVision
+# Copied from tiny_hf.transformers.models.altclip.modeling_altclip.AltCLIPEncoderLayer with AltCLIP->GitVision
 class GitVisionEncoderLayer(nn.Module):
     def __init__(self, config: GitVisionConfig):
         super().__init__()
@@ -870,7 +870,7 @@ class GitVisionEncoderLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.altclip.modeling_altclip.AltCLIPEncoder with AltCLIP->GitVision, CLIPConfig
+# Copied from tiny_hf.transformers.models.altclip.modeling_altclip.AltCLIPEncoder with AltCLIP->GitVision, CLIPConfig
 class GitVisionEncoder(nn.Module):
     """
     Transformer encoder consisting of `config.num_hidden_layers` self attention layers. Each layer is a
@@ -987,7 +987,7 @@ GIT_VISION_INPUTS_DOCSTRING = r"""
 
 
 class GitVisionTransformer(nn.Module):
-    # Copied from transformers.models.altclip.modeling_altclip.AltCLIPVisionTransformer.__init__ with AltCLIPEncoder->GitVisionEncoder, AltCLIP->Git
+    # Copied from tiny_hf.transformers.models.altclip.modeling_altclip.AltCLIPVisionTransformer.__init__ with AltCLIPEncoder->GitVisionEncoder, AltCLIP->Git
     def __init__(self, config: GitVisionConfig):
         super().__init__()
         self.config = config
@@ -1053,7 +1053,7 @@ class GitVisionModel(GitPreTrainedModel):
     config_class = GitVisionConfig
     main_input_name = "pixel_values"
 
-    # Copied from transformers.models.clip.modeling_clip.CLIPVisionModel.__init__ with CLIP->Git
+    # Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPVisionModel.__init__ with CLIP->Git
     def __init__(self, config: GitVisionConfig):
         super().__init__(config)
         self.vision_model = GitVisionTransformer(config)
@@ -1081,7 +1081,7 @@ class GitVisionModel(GitPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, GitVisionModel
+        >>> from tiny_hf.transformers.import AutoProcessor, GitVisionModel
 
         >>> processor = AutoProcessor.from_pretrained("microsoft/git-base")
         >>> model = GitVisionModel.from_pretrained("microsoft/git-base")
@@ -1240,7 +1240,7 @@ class GitModel(GitPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoProcessor, AutoModel
+        >>> from tiny_hf.transformers.import AutoProcessor, AutoModel
         >>> import requests
         >>> from PIL import Image
 
@@ -1443,7 +1443,7 @@ class GitForCausalLM(GitPreTrainedModel, GenerationMixin):
         Image captioning example:
 
         ```python
-        >>> from transformers import AutoProcessor, AutoModelForCausalLM
+        >>> from tiny_hf.transformers.import AutoProcessor, AutoModelForCausalLM
         >>> import requests
         >>> from PIL import Image
 
@@ -1464,7 +1464,7 @@ class GitForCausalLM(GitPreTrainedModel, GenerationMixin):
         Visual question answering (VQA) example:
 
         ```python
-        >>> from transformers import AutoProcessor, AutoModelForCausalLM
+        >>> from tiny_hf.transformers.import AutoProcessor, AutoModelForCausalLM
         >>> from huggingface_hub import hf_hub_download
         >>> from PIL import Image
 
@@ -1494,7 +1494,7 @@ class GitForCausalLM(GitPreTrainedModel, GenerationMixin):
         >>> import numpy as np
         >>> from PIL import Image
         >>> from huggingface_hub import hf_hub_download
-        >>> from transformers import AutoProcessor, AutoModelForCausalLM
+        >>> from tiny_hf.transformers.import AutoProcessor, AutoModelForCausalLM
 
         >>> processor = AutoProcessor.from_pretrained("microsoft/git-base-vatex")
         >>> model = AutoModelForCausalLM.from_pretrained("microsoft/git-base-vatex")

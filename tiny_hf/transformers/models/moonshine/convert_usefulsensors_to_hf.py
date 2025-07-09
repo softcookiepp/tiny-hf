@@ -17,10 +17,10 @@ import re
 
 import h5py
 import numpy as np
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 
-from transformers.models.moonshine.modeling_moonshine import MoonshineConfig, MoonshineForConditionalGeneration
+from tiny_hf.transformers.models.moonshine.modeling_moonshine import MoonshineConfig, MoonshineForConditionalGeneration
 
 
 # Copied from https://github.com/usefulsensors/moonshine/blob/a1d77cc573b0471ac4602b86f67b3f48d67df1a9/moonshine/model.py

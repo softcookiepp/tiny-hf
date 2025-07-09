@@ -125,7 +125,7 @@ class CohereConfig(PretrainedConfig):
             Whether to use query-key normalization in the attention
 
     ```python
-    >>> from transformers import CohereModel, CohereConfig
+    >>> from tiny_hf.transformers.import CohereModel, CohereConfig
 
     >>> # Initializing a Cohere model configuration
     >>> configuration = CohereConfig()

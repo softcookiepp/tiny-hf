@@ -193,8 +193,8 @@ PT_TOKEN_CLASSIFICATION_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, {model_class}
-    >>> import torch
+    >>> from tiny_hf.transformers.import AutoTokenizer, {model_class}
+    >>> import tg_adapter as torch
 
     >>> tokenizer = AutoTokenizer.from_pretrained("{checkpoint}")
     >>> model = {model_class}.from_pretrained("{checkpoint}")
@@ -226,8 +226,8 @@ PT_QUESTION_ANSWERING_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, {model_class}
-    >>> import torch
+    >>> from tiny_hf.transformers.import AutoTokenizer, {model_class}
+    >>> import tg_adapter as torch
 
     >>> tokenizer = AutoTokenizer.from_pretrained("{checkpoint}")
     >>> model = {model_class}.from_pretrained("{checkpoint}")
@@ -260,8 +260,8 @@ PT_SEQUENCE_CLASSIFICATION_SAMPLE = r"""
     Example of single-label classification:
 
     ```python
-    >>> import torch
-    >>> from transformers import AutoTokenizer, {model_class}
+    >>> import tg_adapter as torch
+    >>> from tiny_hf.transformers.import AutoTokenizer, {model_class}
 
     >>> tokenizer = AutoTokenizer.from_pretrained("{checkpoint}")
     >>> model = {model_class}.from_pretrained("{checkpoint}")
@@ -288,8 +288,8 @@ PT_SEQUENCE_CLASSIFICATION_SAMPLE = r"""
     Example of multi-label classification:
 
     ```python
-    >>> import torch
-    >>> from transformers import AutoTokenizer, {model_class}
+    >>> import tg_adapter as torch
+    >>> from tiny_hf.transformers.import AutoTokenizer, {model_class}
 
     >>> tokenizer = AutoTokenizer.from_pretrained("{checkpoint}")
     >>> model = {model_class}.from_pretrained("{checkpoint}", problem_type="multi_label_classification")
@@ -318,8 +318,8 @@ PT_MASKED_LM_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, {model_class}
-    >>> import torch
+    >>> from tiny_hf.transformers.import AutoTokenizer, {model_class}
+    >>> import tg_adapter as torch
 
     >>> tokenizer = AutoTokenizer.from_pretrained("{checkpoint}")
     >>> model = {model_class}.from_pretrained("{checkpoint}")
@@ -350,8 +350,8 @@ PT_BASE_MODEL_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, {model_class}
-    >>> import torch
+    >>> from tiny_hf.transformers.import AutoTokenizer, {model_class}
+    >>> import tg_adapter as torch
 
     >>> tokenizer = AutoTokenizer.from_pretrained("{checkpoint}")
     >>> model = {model_class}.from_pretrained("{checkpoint}")
@@ -367,8 +367,8 @@ PT_MULTIPLE_CHOICE_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, {model_class}
-    >>> import torch
+    >>> from tiny_hf.transformers.import AutoTokenizer, {model_class}
+    >>> import tg_adapter as torch
 
     >>> tokenizer = AutoTokenizer.from_pretrained("{checkpoint}")
     >>> model = {model_class}.from_pretrained("{checkpoint}")
@@ -391,8 +391,8 @@ PT_CAUSAL_LM_SAMPLE = r"""
     Example:
 
     ```python
-    >>> import torch
-    >>> from transformers import AutoTokenizer, {model_class}
+    >>> import tg_adapter as torch
+    >>> from tiny_hf.transformers.import AutoTokenizer, {model_class}
 
     >>> tokenizer = AutoTokenizer.from_pretrained("{checkpoint}")
     >>> model = {model_class}.from_pretrained("{checkpoint}")
@@ -408,8 +408,8 @@ PT_SPEECH_BASE_MODEL_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoProcessor, {model_class}
-    >>> import torch
+    >>> from tiny_hf.transformers.import AutoProcessor, {model_class}
+    >>> import tg_adapter as torch
     >>> from datasets import load_dataset
 
     >>> dataset = load_dataset("hf-internal-testing/librispeech_asr_demo", "clean", split="validation", trust_remote_code=True)
@@ -434,9 +434,9 @@ PT_SPEECH_CTC_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoProcessor, {model_class}
+    >>> from tiny_hf.transformers.import AutoProcessor, {model_class}
     >>> from datasets import load_dataset
-    >>> import torch
+    >>> import tg_adapter as torch
 
     >>> dataset = load_dataset("hf-internal-testing/librispeech_asr_demo", "clean", split="validation", trust_remote_code=True)
     >>> dataset = dataset.sort("id")
@@ -469,9 +469,9 @@ PT_SPEECH_SEQ_CLASS_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoFeatureExtractor, {model_class}
+    >>> from tiny_hf.transformers.import AutoFeatureExtractor, {model_class}
     >>> from datasets import load_dataset
-    >>> import torch
+    >>> import tg_adapter as torch
 
     >>> dataset = load_dataset("hf-internal-testing/librispeech_asr_demo", "clean", split="validation", trust_remote_code=True)
     >>> dataset = dataset.sort("id")
@@ -505,9 +505,9 @@ PT_SPEECH_FRAME_CLASS_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoFeatureExtractor, {model_class}
+    >>> from tiny_hf.transformers.import AutoFeatureExtractor, {model_class}
     >>> from datasets import load_dataset
-    >>> import torch
+    >>> import tg_adapter as torch
 
     >>> dataset = load_dataset("hf-internal-testing/librispeech_asr_demo", "clean", split="validation", trust_remote_code=True)
     >>> dataset = dataset.sort("id")
@@ -534,9 +534,9 @@ PT_SPEECH_XVECTOR_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoFeatureExtractor, {model_class}
+    >>> from tiny_hf.transformers.import AutoFeatureExtractor, {model_class}
     >>> from datasets import load_dataset
-    >>> import torch
+    >>> import tg_adapter as torch
 
     >>> dataset = load_dataset("hf-internal-testing/librispeech_asr_demo", "clean", split="validation", trust_remote_code=True)
     >>> dataset = dataset.sort("id")
@@ -569,8 +569,8 @@ PT_VISION_BASE_MODEL_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoImageProcessor, {model_class}
-    >>> import torch
+    >>> from tiny_hf.transformers.import AutoImageProcessor, {model_class}
+    >>> import tg_adapter as torch
     >>> from datasets import load_dataset
 
     >>> dataset = load_dataset("huggingface/cats-image", trust_remote_code=True)
@@ -594,8 +594,8 @@ PT_VISION_SEQ_CLASS_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoImageProcessor, {model_class}
-    >>> import torch
+    >>> from tiny_hf.transformers.import AutoImageProcessor, {model_class}
+    >>> import tg_adapter as torch
     >>> from datasets import load_dataset
 
     >>> dataset = load_dataset("huggingface/cats-image", trust_remote_code=True)
@@ -639,7 +639,7 @@ TF_TOKEN_CLASSIFICATION_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, {model_class}
+    >>> from tiny_hf.transformers.import AutoTokenizer, {model_class}
     >>> import tensorflow as tf
 
     >>> tokenizer = AutoTokenizer.from_pretrained("{checkpoint}")
@@ -672,7 +672,7 @@ TF_QUESTION_ANSWERING_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, {model_class}
+    >>> from tiny_hf.transformers.import AutoTokenizer, {model_class}
     >>> import tensorflow as tf
 
     >>> tokenizer = AutoTokenizer.from_pretrained("{checkpoint}")
@@ -707,7 +707,7 @@ TF_SEQUENCE_CLASSIFICATION_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, {model_class}
+    >>> from tiny_hf.transformers.import AutoTokenizer, {model_class}
     >>> import tensorflow as tf
 
     >>> tokenizer = AutoTokenizer.from_pretrained("{checkpoint}")
@@ -738,7 +738,7 @@ TF_MASKED_LM_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, {model_class}
+    >>> from tiny_hf.transformers.import AutoTokenizer, {model_class}
     >>> import tensorflow as tf
 
     >>> tokenizer = AutoTokenizer.from_pretrained("{checkpoint}")
@@ -771,7 +771,7 @@ TF_BASE_MODEL_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, {model_class}
+    >>> from tiny_hf.transformers.import AutoTokenizer, {model_class}
     >>> import tensorflow as tf
 
     >>> tokenizer = AutoTokenizer.from_pretrained("{checkpoint}")
@@ -788,7 +788,7 @@ TF_MULTIPLE_CHOICE_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, {model_class}
+    >>> from tiny_hf.transformers.import AutoTokenizer, {model_class}
     >>> import tensorflow as tf
 
     >>> tokenizer = AutoTokenizer.from_pretrained("{checkpoint}")
@@ -811,7 +811,7 @@ TF_CAUSAL_LM_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, {model_class}
+    >>> from tiny_hf.transformers.import AutoTokenizer, {model_class}
     >>> import tensorflow as tf
 
     >>> tokenizer = AutoTokenizer.from_pretrained("{checkpoint}")
@@ -827,7 +827,7 @@ TF_SPEECH_BASE_MODEL_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoProcessor, {model_class}
+    >>> from tiny_hf.transformers.import AutoProcessor, {model_class}
     >>> from datasets import load_dataset
 
     >>> dataset = load_dataset("hf-internal-testing/librispeech_asr_demo", "clean", split="validation", trust_remote_code=True)
@@ -851,7 +851,7 @@ TF_SPEECH_CTC_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoProcessor, {model_class}
+    >>> from tiny_hf.transformers.import AutoProcessor, {model_class}
     >>> from datasets import load_dataset
     >>> import tensorflow as tf
 
@@ -887,7 +887,7 @@ TF_VISION_BASE_MODEL_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoImageProcessor, {model_class}
+    >>> from tiny_hf.transformers.import AutoImageProcessor, {model_class}
     >>> from datasets import load_dataset
 
     >>> dataset = load_dataset("huggingface/cats-image", trust_remote_code=True)
@@ -909,7 +909,7 @@ TF_VISION_SEQ_CLASS_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoImageProcessor, {model_class}
+    >>> from tiny_hf.transformers.import AutoImageProcessor, {model_class}
     >>> import tensorflow as tf
     >>> from datasets import load_dataset
 
@@ -948,7 +948,7 @@ FLAX_TOKEN_CLASSIFICATION_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, {model_class}
+    >>> from tiny_hf.transformers.import AutoTokenizer, {model_class}
 
     >>> tokenizer = AutoTokenizer.from_pretrained("{checkpoint}")
     >>> model = {model_class}.from_pretrained("{checkpoint}")
@@ -964,7 +964,7 @@ FLAX_QUESTION_ANSWERING_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, {model_class}
+    >>> from tiny_hf.transformers.import AutoTokenizer, {model_class}
 
     >>> tokenizer = AutoTokenizer.from_pretrained("{checkpoint}")
     >>> model = {model_class}.from_pretrained("{checkpoint}")
@@ -982,7 +982,7 @@ FLAX_SEQUENCE_CLASSIFICATION_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, {model_class}
+    >>> from tiny_hf.transformers.import AutoTokenizer, {model_class}
 
     >>> tokenizer = AutoTokenizer.from_pretrained("{checkpoint}")
     >>> model = {model_class}.from_pretrained("{checkpoint}")
@@ -998,7 +998,7 @@ FLAX_MASKED_LM_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, {model_class}
+    >>> from tiny_hf.transformers.import AutoTokenizer, {model_class}
 
     >>> tokenizer = AutoTokenizer.from_pretrained("{checkpoint}")
     >>> model = {model_class}.from_pretrained("{checkpoint}")
@@ -1014,7 +1014,7 @@ FLAX_BASE_MODEL_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, {model_class}
+    >>> from tiny_hf.transformers.import AutoTokenizer, {model_class}
 
     >>> tokenizer = AutoTokenizer.from_pretrained("{checkpoint}")
     >>> model = {model_class}.from_pretrained("{checkpoint}")
@@ -1030,7 +1030,7 @@ FLAX_MULTIPLE_CHOICE_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, {model_class}
+    >>> from tiny_hf.transformers.import AutoTokenizer, {model_class}
 
     >>> tokenizer = AutoTokenizer.from_pretrained("{checkpoint}")
     >>> model = {model_class}.from_pretrained("{checkpoint}")
@@ -1050,7 +1050,7 @@ FLAX_CAUSAL_LM_SAMPLE = r"""
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, {model_class}
+    >>> from tiny_hf.transformers.import AutoTokenizer, {model_class}
 
     >>> tokenizer = AutoTokenizer.from_pretrained("{checkpoint}")
     >>> model = {model_class}.from_pretrained("{checkpoint}")

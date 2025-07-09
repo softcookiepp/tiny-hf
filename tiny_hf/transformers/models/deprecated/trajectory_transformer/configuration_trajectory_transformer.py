@@ -82,7 +82,7 @@ class TrajectoryTransformerConfig(PretrainedConfig):
         Example:
 
     ```python
-    >>> from transformers import TrajectoryTransformerConfig, TrajectoryTransformerModel
+    >>> from tiny_hf.transformers.import TrajectoryTransformerConfig, TrajectoryTransformerModel
 
     >>> # Initializing a TrajectoryTransformer CarlCochet/trajectory-transformer-halfcheetah-medium-v2 style configuration
     >>> configuration = TrajectoryTransformerConfig()

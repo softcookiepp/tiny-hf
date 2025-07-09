@@ -22,9 +22,9 @@ This code is the same as the original Vision Transformer (ViT) with 2 modificati
 import collections.abc
 from typing import Callable, Optional, Set, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...modeling_outputs import BackboneOutput, BaseModelOutput
@@ -102,7 +102,7 @@ class VitPoseBackboneEmbeddings(nn.Module):
         return embeddings
 
 
-# Copied from transformers.models.vit.modeling_vit.eager_attention_forward
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.eager_attention_forward
 def eager_attention_forward(
     module: nn.Module,
     query: torch.Tensor,
@@ -133,7 +133,7 @@ def eager_attention_forward(
     return attn_output, attn_weights
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTSelfAttention with ViT->VitPoseBackbone
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTSelfAttention with ViT->VitPoseBackbone
 class VitPoseBackboneSelfAttention(nn.Module):
     def __init__(self, config: VitPoseBackboneConfig) -> None:
         super().__init__()
@@ -196,7 +196,7 @@ class VitPoseBackboneSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTSelfOutput with ViT->VitPoseBackbone
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTSelfOutput with ViT->VitPoseBackbone
 class VitPoseBackboneSelfOutput(nn.Module):
     """
     The residual connection is defined in VitPoseBackboneLayer instead of here (as is the case with other models), due to the
@@ -215,7 +215,7 @@ class VitPoseBackboneSelfOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTAttention with ViT->VitPoseBackbone
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTAttention with ViT->VitPoseBackbone
 class VitPoseBackboneAttention(nn.Module):
     def __init__(self, config: VitPoseBackboneConfig) -> None:
         super().__init__()
@@ -358,7 +358,7 @@ class VitPoseBackboneLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTEncoder with ViT->VitPoseBackbone
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTEncoder with ViT->VitPoseBackbone
 class VitPoseBackboneEncoder(nn.Module):
     def __init__(self, config: VitPoseBackboneConfig) -> None:
         super().__init__()
@@ -521,8 +521,8 @@ class VitPoseBackbone(VitPoseBackbonePreTrainedModel, BackboneMixin):
         Examples:
 
         ```python
-        >>> from transformers import VitPoseBackboneConfig, VitPoseBackbone
-        >>> import torch
+        >>> from tiny_hf.transformers.import VitPoseBackboneConfig, VitPoseBackbone
+        >>> import tg_adapter as torch
 
         >>> config = VitPoseBackboneConfig(out_indices=[-1])
         >>> model = VitPoseBackbone(config)

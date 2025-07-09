@@ -18,10 +18,10 @@ import math
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN, gelu
 from ...modeling_utils import PreTrainedModel
@@ -1120,7 +1120,7 @@ class LongformerSelfAttention(nn.Module):
         return global_attn_output, global_attn_probs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfOutput
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfOutput
 class LongformerSelfOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1184,7 +1184,7 @@ class LongformerAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate
 class LongformerIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1200,7 +1200,7 @@ class LongformerIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOutput
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOutput
 class LongformerOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1350,7 +1350,7 @@ class LongformerEncoder(nn.Module):
         )
 
 
-# Copied from transformers.models.bert.modeling_bert.BertPooler
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPooler
 class LongformerPooler(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1366,7 +1366,7 @@ class LongformerPooler(nn.Module):
         return pooled_output
 
 
-# Copied from transformers.models.roberta.modeling_roberta.RobertaLMHead with Roberta->Longformer
+# Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaLMHead with Roberta->Longformer
 class LongformerLMHead(nn.Module):
     """Longformer Head for masked language modeling."""
 
@@ -1647,8 +1647,8 @@ class LongformerModel(LongformerPreTrainedModel):
         Examples:
 
         ```python
-        >>> import torch
-        >>> from transformers import LongformerModel, AutoTokenizer
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import LongformerModel, AutoTokenizer
 
         >>> model = LongformerModel.from_pretrained("allenai/longformer-base-4096")
         >>> tokenizer = AutoTokenizer.from_pretrained("allenai/longformer-base-4096")
@@ -1797,7 +1797,7 @@ class LongformerForMaskedLM(LongformerPreTrainedModel):
         Mask filling example:
 
         ```python
-        >>> from transformers import AutoTokenizer, LongformerForMaskedLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, LongformerForMaskedLM
 
         >>> tokenizer = AutoTokenizer.from_pretrained("allenai/longformer-base-4096")
         >>> model = LongformerForMaskedLM.from_pretrained("allenai/longformer-base-4096")
@@ -2034,8 +2034,8 @@ class LongformerForQuestionAnswering(LongformerPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, LongformerForQuestionAnswering
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, LongformerForQuestionAnswering
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("allenai/longformer-large-4096-finetuned-triviaqa")
         >>> model = LongformerForQuestionAnswering.from_pretrained("allenai/longformer-large-4096-finetuned-triviaqa")

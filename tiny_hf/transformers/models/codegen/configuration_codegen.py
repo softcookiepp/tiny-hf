@@ -79,7 +79,7 @@ class CodeGenConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import CodeGenConfig, CodeGenModel
+    >>> from tiny_hf.transformers.import CodeGenConfig, CodeGenModel
 
     >>> # Initializing a CodeGen 6B configuration
     >>> configuration = CodeGenConfig()
@@ -145,7 +145,7 @@ class CodeGenConfig(PretrainedConfig):
         )
 
 
-# Copied from transformers.models.gpt2.configuration_gpt2.GPT2OnnxConfig
+# Copied from tiny_hf.transformers.models.gpt2.configuration_gpt2.GPT2OnnxConfig
 class CodeGenOnnxConfig(OnnxConfigWithPast):
     def __init__(
         self,
@@ -198,7 +198,7 @@ class CodeGenOnnxConfig(OnnxConfigWithPast):
             if not is_torch_available():
                 raise ValueError("Cannot generate dummy past_keys inputs without PyTorch installed.")
             else:
-                import torch
+                import tg_adapter as torch
 
                 batch, seqlen = common_inputs["input_ids"].shape
                 # Not using the same length for past_key_values

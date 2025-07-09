@@ -18,8 +18,8 @@ import copy
 from dataclasses import dataclass
 from typing import Callable, List, Optional, Tuple, Union
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
 from ...configuration_utils import PretrainedConfig
 from ...generation import GenerationConfig, LogitsProcessorList, StoppingCriteriaList
@@ -298,7 +298,7 @@ class RagPreTrainedModel(PreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import RagModel
+        >>> from tiny_hf.transformers.import RagModel
 
         >>> # initialize a RAG from two pretrained models.
         >>> model = RagModel.from_pretrained_question_encoder_generator(
@@ -553,8 +553,8 @@ class RagModel(RagPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, RagRetriever, RagModel
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, RagRetriever, RagModel
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("facebook/rag-token-base")
         >>> retriever = RagRetriever.from_pretrained(
@@ -798,8 +798,8 @@ class RagSequenceForGeneration(RagPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, RagRetriever, RagSequenceForGeneration
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, RagRetriever, RagSequenceForGeneration
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("facebook/rag-sequence-nq")
         >>> retriever = RagRetriever.from_pretrained(
@@ -1269,8 +1269,8 @@ class RagTokenForGeneration(RagPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, RagRetriever, RagTokenForGeneration
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, RagRetriever, RagTokenForGeneration
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("facebook/rag-token-nq")
         >>> retriever = RagRetriever.from_pretrained(

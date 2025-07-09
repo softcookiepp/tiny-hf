@@ -121,7 +121,7 @@ class XLNetConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import XLNetConfig, XLNetModel
+    >>> from tiny_hf.transformers.import XLNetConfig, XLNetModel
 
     >>> # Initializing a XLNet configuration
     >>> configuration = XLNetConfig()

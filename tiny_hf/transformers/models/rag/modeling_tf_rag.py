@@ -285,7 +285,7 @@ class TFRagPreTrainedModel(TFPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import RagRetriever, TFRagModel
+        >>> from tiny_hf.transformers.import RagRetriever, TFRagModel
 
         >>> # initialize a RAG from two pretrained models.
         >>> model = TFRagModel.from_pretrained_question_encoder_generator(
@@ -573,8 +573,8 @@ class TFRagModel(TFRagPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, RagRetriever, TFRagModel
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, RagRetriever, TFRagModel
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("facebook/rag-token-base")
         >>> retriever = RagRetriever.from_pretrained(
@@ -895,7 +895,7 @@ class TFRagTokenForGeneration(TFRagPreTrainedModel, TFCausalLanguageModelingLoss
 
         ```python
         >>> import tensorflow as tf
-        >>> from transformers import AutoTokenizer, RagRetriever, TFRagTokenForGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, RagRetriever, TFRagTokenForGeneration
 
         >>> tokenizer = AutoTokenizer.from_pretrained("facebook/rag-token-nq")
         >>> retriever = RagRetriever.from_pretrained(
@@ -1408,7 +1408,7 @@ class TFRagSequenceForGeneration(TFRagPreTrainedModel, TFCausalLanguageModelingL
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, RagRetriever, TFRagSequenceForGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, RagRetriever, TFRagSequenceForGeneration
 
         >>> tokenizer = AutoTokenizer.from_pretrained("facebook/rag-sequence-nq")
         >>> retriever = RagRetriever.from_pretrained(

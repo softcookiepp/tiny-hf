@@ -23,11 +23,11 @@ import math
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import torch.utils.checkpoint
-from torch.nn import CrossEntropyLoss, LayerNorm
+import tg_adapter as torch
+import tg_adapter.nn as nn
+import tg_adapter.nn.functional as F
+import tg_adapter.utils.checkpoint
+from tg_adapter.nn import CrossEntropyLoss, LayerNorm
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, SlidingWindowCache, StaticCache
@@ -160,7 +160,7 @@ class Qwen2VLRotaryEmbedding(nn.Module):
         return cos.to(dtype=x.dtype), sin.to(dtype=x.dtype)
 
 
-# Copied from transformers.models.llama.modeling_llama.rotate_half
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.rotate_half
 def rotate_half(x):
     """Rotates half the hidden dims of the input."""
     x1 = x[..., : x.shape[-1] // 2]
@@ -459,7 +459,7 @@ class Qwen2VLVisionBlock(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.qwen2.modeling_qwen2.Qwen2RMSNorm
+# Copied from tiny_hf.transformers.models.qwen2.modeling_qwen2.Qwen2RMSNorm
 class Qwen2RMSNorm(nn.Module):
     def __init__(self, hidden_size, eps=1e-6):
         """
@@ -480,7 +480,7 @@ class Qwen2RMSNorm(nn.Module):
         return f"{tuple(self.weight.shape)}, eps={self.variance_epsilon}"
 
 
-# Copied from transformers.models.qwen2.modeling_qwen2.Qwen2MLP
+# Copied from tiny_hf.transformers.models.qwen2.modeling_qwen2.Qwen2MLP
 class Qwen2MLP(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -497,7 +497,7 @@ class Qwen2MLP(nn.Module):
         return down_proj
 
 
-# Copied from transformers.models.llama.modeling_llama.repeat_kv
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.repeat_kv
 def repeat_kv(hidden_states: torch.Tensor, n_rep: int) -> torch.Tensor:
     """
     This is the equivalent of torch.repeat_interleave(x, dim=1, repeats=n_rep). The hidden states go from (batch,
@@ -1185,7 +1185,7 @@ class Qwen2VLModel(Qwen2VLPreTrainedModel):
             attentions=all_self_attns,
         )
 
-    # Copied from transformers.models.phi3.modeling_phi3.Phi3Model._update_causal_mask with Phi3->Qwen2VL
+    # Copied from tiny_hf.transformers.models.phi3.modeling_phi3.Phi3Model._update_causal_mask with Phi3->Qwen2VL
     def _update_causal_mask(
         self,
         attention_mask: torch.Tensor,
@@ -1270,7 +1270,7 @@ class Qwen2VLModel(Qwen2VLPreTrainedModel):
         return causal_mask
 
     @staticmethod
-    # Copied from transformers.models.mistral.modeling_mistral.MistralModel._prepare_4d_causal_attention_mask_with_cache_position with Mistral->Qwen2VL
+    # Copied from tiny_hf.transformers.models.mistral.modeling_mistral.MistralModel._prepare_4d_causal_attention_mask_with_cache_position with Mistral->Qwen2VL
     def _prepare_4d_causal_attention_mask_with_cache_position(
         attention_mask: torch.Tensor,
         sequence_length: int,
@@ -1631,7 +1631,7 @@ class Qwen2VLForConditionalGeneration(Qwen2VLPreTrainedModel, GenerationMixin):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, Qwen2VLForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoProcessor, Qwen2VLForConditionalGeneration
 
         >>> model = Qwen2VLForConditionalGeneration.from_pretrained("Qwen/Qwen2-VL-7B-Instruct")
         >>> processor = AutoProcessor.from_pretrained("Qwen/Qwen2-VL-7B-Instruct")

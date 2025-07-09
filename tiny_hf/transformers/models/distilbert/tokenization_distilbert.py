@@ -28,7 +28,7 @@ logger = logging.get_logger(__name__)
 VOCAB_FILES_NAMES = {"vocab_file": "vocab.txt"}
 
 
-# Copied from transformers.models.bert.tokenization_bert.load_vocab
+# Copied from tiny_hf.transformers.models.bert.tokenization_bert.load_vocab
 def load_vocab(vocab_file):
     """Loads a vocabulary file into a dictionary."""
     vocab = collections.OrderedDict()
@@ -40,7 +40,7 @@ def load_vocab(vocab_file):
     return vocab
 
 
-# Copied from transformers.models.bert.tokenization_bert.whitespace_tokenize
+# Copied from tiny_hf.transformers.models.bert.tokenization_bert.whitespace_tokenize
 def whitespace_tokenize(text):
     """Runs basic whitespace cleaning and splitting on a piece of text."""
     text = text.strip()
@@ -147,20 +147,20 @@ class DistilBertTokenizer(PreTrainedTokenizer):
         )
 
     @property
-    # Copied from transformers.models.bert.tokenization_bert.BertTokenizer.do_lower_case
+    # Copied from tiny_hf.transformers.models.bert.tokenization_bert.BertTokenizer.do_lower_case
     def do_lower_case(self):
         return self.basic_tokenizer.do_lower_case
 
     @property
-    # Copied from transformers.models.bert.tokenization_bert.BertTokenizer.vocab_size
+    # Copied from tiny_hf.transformers.models.bert.tokenization_bert.BertTokenizer.vocab_size
     def vocab_size(self):
         return len(self.vocab)
 
-    # Copied from transformers.models.bert.tokenization_bert.BertTokenizer.get_vocab
+    # Copied from tiny_hf.transformers.models.bert.tokenization_bert.BertTokenizer.get_vocab
     def get_vocab(self):
         return dict(self.vocab, **self.added_tokens_encoder)
 
-    # Copied from transformers.models.bert.tokenization_bert.BertTokenizer._tokenize
+    # Copied from tiny_hf.transformers.models.bert.tokenization_bert.BertTokenizer._tokenize
     def _tokenize(self, text, split_special_tokens=False):
         split_tokens = []
         if self.do_basic_tokenize:
@@ -176,23 +176,23 @@ class DistilBertTokenizer(PreTrainedTokenizer):
             split_tokens = self.wordpiece_tokenizer.tokenize(text)
         return split_tokens
 
-    # Copied from transformers.models.bert.tokenization_bert.BertTokenizer._convert_token_to_id
+    # Copied from tiny_hf.transformers.models.bert.tokenization_bert.BertTokenizer._convert_token_to_id
     def _convert_token_to_id(self, token):
         """Converts a token (str) in an id using the vocab."""
         return self.vocab.get(token, self.vocab.get(self.unk_token))
 
-    # Copied from transformers.models.bert.tokenization_bert.BertTokenizer._convert_id_to_token
+    # Copied from tiny_hf.transformers.models.bert.tokenization_bert.BertTokenizer._convert_id_to_token
     def _convert_id_to_token(self, index):
         """Converts an index (integer) in a token (str) using the vocab."""
         return self.ids_to_tokens.get(index, self.unk_token)
 
-    # Copied from transformers.models.bert.tokenization_bert.BertTokenizer.convert_tokens_to_string
+    # Copied from tiny_hf.transformers.models.bert.tokenization_bert.BertTokenizer.convert_tokens_to_string
     def convert_tokens_to_string(self, tokens):
         """Converts a sequence of tokens (string) in a single string."""
         out_string = " ".join(tokens).replace(" ##", "").strip()
         return out_string
 
-    # Copied from transformers.models.bert.tokenization_bert.BertTokenizer.build_inputs_with_special_tokens
+    # Copied from tiny_hf.transformers.models.bert.tokenization_bert.BertTokenizer.build_inputs_with_special_tokens
     def build_inputs_with_special_tokens(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
     ) -> List[int]:
@@ -218,7 +218,7 @@ class DistilBertTokenizer(PreTrainedTokenizer):
         sep = [self.sep_token_id]
         return cls + token_ids_0 + sep + token_ids_1 + sep
 
-    # Copied from transformers.models.bert.tokenization_bert.BertTokenizer.get_special_tokens_mask
+    # Copied from tiny_hf.transformers.models.bert.tokenization_bert.BertTokenizer.get_special_tokens_mask
     def get_special_tokens_mask(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None, already_has_special_tokens: bool = False
     ) -> List[int]:
@@ -247,7 +247,7 @@ class DistilBertTokenizer(PreTrainedTokenizer):
             return [1] + ([0] * len(token_ids_0)) + [1] + ([0] * len(token_ids_1)) + [1]
         return [1] + ([0] * len(token_ids_0)) + [1]
 
-    # Copied from transformers.models.bert.tokenization_bert.BertTokenizer.create_token_type_ids_from_sequences
+    # Copied from tiny_hf.transformers.models.bert.tokenization_bert.BertTokenizer.create_token_type_ids_from_sequences
     def create_token_type_ids_from_sequences(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
     ) -> List[int]:
@@ -277,7 +277,7 @@ class DistilBertTokenizer(PreTrainedTokenizer):
             return len(cls + token_ids_0 + sep) * [0]
         return len(cls + token_ids_0 + sep) * [0] + len(token_ids_1 + sep) * [1]
 
-    # Copied from transformers.models.bert.tokenization_bert.BertTokenizer.save_vocabulary
+    # Copied from tiny_hf.transformers.models.bert.tokenization_bert.BertTokenizer.save_vocabulary
     def save_vocabulary(self, save_directory: str, filename_prefix: Optional[str] = None) -> Tuple[str]:
         index = 0
         if os.path.isdir(save_directory):
@@ -299,7 +299,7 @@ class DistilBertTokenizer(PreTrainedTokenizer):
         return (vocab_file,)
 
 
-# Copied from transformers.models.bert.tokenization_bert.BasicTokenizer
+# Copied from tiny_hf.transformers.models.bert.tokenization_bert.BasicTokenizer
 class BasicTokenizer:
     """
     Constructs a BasicTokenizer that will run basic tokenization (punctuation splitting, lower casing, etc.).
@@ -461,7 +461,7 @@ class BasicTokenizer:
         return "".join(output)
 
 
-# Copied from transformers.models.bert.tokenization_bert.WordpieceTokenizer
+# Copied from tiny_hf.transformers.models.bert.tokenization_bert.WordpieceTokenizer
 class WordpieceTokenizer:
     """Runs WordPiece tokenization."""
 

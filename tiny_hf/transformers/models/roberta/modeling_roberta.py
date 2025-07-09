@@ -18,11 +18,11 @@
 import math
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
 from packaging import version
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN, gelu
 from ...generation import GenerationMixin
@@ -64,7 +64,7 @@ class RobertaEmbeddings(nn.Module):
     Same as BertEmbeddings with a tiny tweak for positional embeddings indexing.
     """
 
-    # Copied from transformers.models.bert.modeling_bert.BertEmbeddings.__init__
+    # Copied from tiny_hf.transformers.models.bert.modeling_bert.BertEmbeddings.__init__
     def __init__(self, config):
         super().__init__()
         self.word_embeddings = nn.Embedding(config.vocab_size, config.hidden_size, padding_idx=config.pad_token_id)
@@ -148,7 +148,7 @@ class RobertaEmbeddings(nn.Module):
         return position_ids.unsqueeze(0).expand(input_shape)
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfAttention with Bert->Roberta
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfAttention with Bert->Roberta
 class RobertaSelfAttention(nn.Module):
     def __init__(self, config, position_embedding_type=None):
         super().__init__()
@@ -283,7 +283,7 @@ class RobertaSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSdpaSelfAttention with Bert->Roberta
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSdpaSelfAttention with Bert->Roberta
 class RobertaSdpaSelfAttention(RobertaSelfAttention):
     def __init__(self, config, position_embedding_type=None):
         super().__init__(config, position_embedding_type=position_embedding_type)
@@ -385,7 +385,7 @@ class RobertaSdpaSelfAttention(RobertaSelfAttention):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfOutput
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfOutput
 class RobertaSelfOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -406,7 +406,7 @@ ROBERTA_SELF_ATTENTION_CLASSES = {
 }
 
 
-# Copied from transformers.models.bert.modeling_bert.BertAttention with Bert->Roberta,BERT->ROBERTA
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertAttention with Bert->Roberta,BERT->ROBERTA
 class RobertaAttention(nn.Module):
     def __init__(self, config, position_embedding_type=None):
         super().__init__()
@@ -458,7 +458,7 @@ class RobertaAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate
 class RobertaIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -474,7 +474,7 @@ class RobertaIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOutput
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOutput
 class RobertaOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -489,7 +489,7 @@ class RobertaOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertLayer with Bert->Roberta
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertLayer with Bert->Roberta
 class RobertaLayer(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -576,7 +576,7 @@ class RobertaLayer(nn.Module):
         return layer_output
 
 
-# Copied from transformers.models.bert.modeling_bert.BertEncoder with Bert->Roberta
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertEncoder with Bert->Roberta
 class RobertaEncoder(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -670,7 +670,7 @@ class RobertaEncoder(nn.Module):
         )
 
 
-# Copied from transformers.models.bert.modeling_bert.BertPooler
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPooler
 class RobertaPooler(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -698,7 +698,7 @@ class RobertaPreTrainedModel(PreTrainedModel):
     _no_split_modules = ["RobertaEmbeddings", "RobertaSelfAttention", "RobertaSdpaSelfAttention"]
     _supports_sdpa = True
 
-    # Copied from transformers.models.bert.modeling_bert.BertPreTrainedModel._init_weights
+    # Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPreTrainedModel._init_weights
     def _init_weights(self, module):
         """Initialize the weights"""
         if isinstance(module, nn.Linear):
@@ -787,7 +787,7 @@ ROBERTA_INPUTS_DOCSTRING = r"""
     "The bare RoBERTa Model transformer outputting raw hidden-states without any specific head on top.",
     ROBERTA_START_DOCSTRING,
 )
-# Copied from transformers.models.bert.modeling_bert.BertModel with Bert->Roberta, BERT->ROBERTA
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertModel with Bert->Roberta, BERT->ROBERTA
 class RobertaModel(RobertaPreTrainedModel):
     """
 
@@ -1075,8 +1075,8 @@ class RobertaForCausalLM(RobertaPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, RobertaForCausalLM, AutoConfig
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, RobertaForCausalLM, AutoConfig
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("FacebookAI/roberta-base")
         >>> config = AutoConfig.from_pretrained("FacebookAI/roberta-base")

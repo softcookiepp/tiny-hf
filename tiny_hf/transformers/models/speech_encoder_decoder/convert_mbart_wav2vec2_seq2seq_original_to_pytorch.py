@@ -17,10 +17,10 @@
 import argparse
 
 import fairseq
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
-from transformers import (
+from tiny_hf.transformers.import (
     MBart50Tokenizer,
     MBartConfig,
     MBartForCausalLM,

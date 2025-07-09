@@ -22,10 +22,10 @@ from operator import __add__
 from typing import Any, Callable, Dict, List, Mapping, Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...modeling_outputs import BaseModelOutputWithCrossAttentions
@@ -775,13 +775,13 @@ class PerceiverModel(PerceiverPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import PerceiverConfig, PerceiverTokenizer, PerceiverImageProcessor, PerceiverModel
-        >>> from transformers.models.perceiver.modeling_perceiver import (
+        >>> from tiny_hf.transformers.import PerceiverConfig, PerceiverTokenizer, PerceiverImageProcessor, PerceiverModel
+        >>> from tiny_hf.transformers.models.perceiver.modeling_perceiver import (
         ...     PerceiverTextPreprocessor,
         ...     PerceiverImagePreprocessor,
         ...     PerceiverClassificationDecoder,
         ... )
-        >>> import torch
+        >>> import tg_adapter as torch
         >>> import requests
         >>> from PIL import Image
 
@@ -1017,8 +1017,8 @@ class PerceiverForMaskedLM(PerceiverPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, PerceiverForMaskedLM
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, PerceiverForMaskedLM
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("deepmind/language-perceiver")
         >>> model = PerceiverForMaskedLM.from_pretrained("deepmind/language-perceiver")
@@ -1141,7 +1141,7 @@ class PerceiverForSequenceClassification(PerceiverPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, PerceiverForSequenceClassification
+        >>> from tiny_hf.transformers.import AutoTokenizer, PerceiverForSequenceClassification
 
         >>> tokenizer = AutoTokenizer.from_pretrained("deepmind/language-perceiver")
         >>> model = PerceiverForSequenceClassification.from_pretrained("deepmind/language-perceiver")
@@ -1277,7 +1277,7 @@ class PerceiverForImageClassificationLearned(PerceiverPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, PerceiverForImageClassificationLearned
+        >>> from tiny_hf.transformers.import AutoImageProcessor, PerceiverForImageClassificationLearned
         >>> from PIL import Image
         >>> import requests
 
@@ -1422,7 +1422,7 @@ class PerceiverForImageClassificationFourier(PerceiverPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, PerceiverForImageClassificationFourier
+        >>> from tiny_hf.transformers.import AutoImageProcessor, PerceiverForImageClassificationFourier
         >>> from PIL import Image
         >>> import requests
 
@@ -1566,7 +1566,7 @@ class PerceiverForImageClassificationConvProcessing(PerceiverPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, PerceiverForImageClassificationConvProcessing
+        >>> from tiny_hf.transformers.import AutoImageProcessor, PerceiverForImageClassificationConvProcessing
         >>> from PIL import Image
         >>> import requests
 
@@ -1724,8 +1724,8 @@ class PerceiverForOpticalFlow(PerceiverPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import PerceiverForOpticalFlow
-        >>> import torch
+        >>> from tiny_hf.transformers.import PerceiverForOpticalFlow
+        >>> import tg_adapter as torch
 
         >>> model = PerceiverForOpticalFlow.from_pretrained("deepmind/optical-flow-perceiver")
 
@@ -1938,8 +1938,8 @@ class PerceiverForMultimodalAutoencoding(PerceiverPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import PerceiverForMultimodalAutoencoding
-        >>> import torch
+        >>> from tiny_hf.transformers.import PerceiverForMultimodalAutoencoding
+        >>> import tg_adapter as torch
         >>> import numpy as np
 
         >>> # create multimodal inputs

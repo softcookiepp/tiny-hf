@@ -21,7 +21,7 @@ URL: https://github.com/salesforce/LAVIS/tree/main/projects/blip2
 import argparse
 
 import requests
-import torch
+import tg_adapter as torch
 
 # pip3 install salesforce-lavis
 # I'm actually installing a slightly modified version: pip3 install -U git+https://github.com/nielsrogge/LAVIS.git@blip2_float32
@@ -29,7 +29,7 @@ import torch
 from lavis.models import load_model_and_preprocess
 from PIL import Image
 
-from transformers import (
+from tiny_hf.transformers.import (
     AutoTokenizer,
     BertTokenizer,
     Blip2Config,
@@ -43,7 +43,7 @@ from transformers import (
     T5Config,
     set_seed,
 )
-from transformers.utils.constants import OPENAI_CLIP_MEAN, OPENAI_CLIP_STD
+from tiny_hf.transformers.utils.constants import OPENAI_CLIP_MEAN, OPENAI_CLIP_STD
 
 
 def load_demo_image():

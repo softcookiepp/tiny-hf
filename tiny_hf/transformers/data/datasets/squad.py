@@ -18,9 +18,9 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Dict, List, Optional, Union
 
-import torch
+import tg_adapter as torch
 from filelock import FileLock
-from torch.utils.data import Dataset
+from tg_adapter.utils.data import Dataset
 
 from ...models.auto.modeling_auto import MODEL_FOR_QUESTION_ANSWERING_MAPPING
 from ...tokenization_utils import PreTrainedTokenizer

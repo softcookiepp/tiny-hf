@@ -65,7 +65,7 @@ if TYPE_CHECKING:
     except OptionalDependencyNotAvailable:
         pass
     else:
-        from transformers import LlamaTokenizer
+        from tiny_hf.transformers import LlamaTokenizer
 
     try:
         if not is_tokenizers_available():
@@ -73,7 +73,7 @@ if TYPE_CHECKING:
     except OptionalDependencyNotAvailable:
         pass
     else:
-        from transformers import LlamaTokenizerFast
+        from tiny_hf.transformers import LlamaTokenizerFast
 
     try:
         if not is_torch_available():

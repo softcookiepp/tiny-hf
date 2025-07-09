@@ -41,11 +41,11 @@ class OmDetTurboTextKwargs(TextKwargs, total=False):
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 
 if is_torchvision_available():
-    from torchvision.ops.boxes import batched_nms
+    from tg_adapter.ision.ops.boxes import batched_nms
 
 
 class OmDetTurboProcessorKwargs(ProcessingKwargs, total=False):
@@ -288,7 +288,7 @@ class OmDetTurboProcessor(ProcessorMixin):
 
         return encoding
 
-    # Copied from transformers.models.blip.processing_blip.BlipProcessor.batch_decode with BertTokenizerFast->PreTrainedTokenizer
+    # Copied from tiny_hf.transformers.models.blip.processing_blip.BlipProcessor.batch_decode with BertTokenizerFast->PreTrainedTokenizer
     def batch_decode(self, *args, **kwargs):
         """
         This method forwards all its arguments to PreTrainedTokenizer's [`~PreTrainedTokenizer.batch_decode`]. Please
@@ -296,7 +296,7 @@ class OmDetTurboProcessor(ProcessorMixin):
         """
         return self.tokenizer.batch_decode(*args, **kwargs)
 
-    # Copied from transformers.models.blip.processing_blip.BlipProcessor.decode with BertTokenizerFast->PreTrainedTokenizer
+    # Copied from tiny_hf.transformers.models.blip.processing_blip.BlipProcessor.decode with BertTokenizerFast->PreTrainedTokenizer
     def decode(self, *args, **kwargs):
         """
         This method forwards all its arguments to PreTrainedTokenizer's [`~PreTrainedTokenizer.decode`]. Please refer to

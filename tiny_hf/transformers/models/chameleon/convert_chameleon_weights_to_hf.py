@@ -17,12 +17,12 @@ import json
 import os
 
 import requests
-import torch
+import tg_adapter as torch
 import yaml
 from accelerate import init_empty_weights
 from PIL import Image
 
-from transformers import (
+from tiny_hf.transformers.import (
     ChameleonConfig,
     ChameleonForConditionalGeneration,
     ChameleonImageProcessor,
@@ -31,7 +31,7 @@ from transformers import (
 
 
 try:
-    from transformers import LlamaTokenizerFast
+    from tiny_hf.transformers.import LlamaTokenizerFast
 except ImportError:
     raise ValueError(
         "Chameleon conversion supports only FastTokenizer and LlamaTokenizerFast can't be imported! "
@@ -49,7 +49,7 @@ python src/transformers/models/chameleon/convert_chameleon_weights_to_hf.py \
 Thereafter, models can be loaded via:
 
 ```py
-from transformers import ChameleonForConditionalGeneration, LlamaTokenizerFast
+from tiny_hf.transformers.import ChameleonForConditionalGeneration, LlamaTokenizerFast
 
 model = ChameleonForConditionalGeneration.from_pretrained("/output/path")
 tokenizer = LlamaTokenizerFast.from_pretrained("/output/path")

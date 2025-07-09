@@ -17,11 +17,11 @@
 import math
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
 from packaging import version
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN, gelu
 from ...generation import GenerationMixin
@@ -127,7 +127,7 @@ class XLMRobertaXLEmbeddings(nn.Module):
         embeddings = self.dropout(embeddings)
         return embeddings
 
-    # Copied from transformers.models.roberta.modeling_roberta.RobertaEmbeddings.create_position_ids_from_inputs_embeds
+    # Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaEmbeddings.create_position_ids_from_inputs_embeds
     def create_position_ids_from_inputs_embeds(self, inputs_embeds):
         """
         We are provided embeddings directly. We cannot infer which are padded so just generate sequential position ids.
@@ -146,7 +146,7 @@ class XLMRobertaXLEmbeddings(nn.Module):
         return position_ids.unsqueeze(0).expand(input_shape)
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfAttention with Bert->XLMRobertaXL
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfAttention with Bert->XLMRobertaXL
 class XLMRobertaXLSelfAttention(nn.Module):
     def __init__(self, config, position_embedding_type=None):
         super().__init__()
@@ -281,7 +281,7 @@ class XLMRobertaXLSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSdpaSelfAttention with Bert->XLMRobertaXL
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSdpaSelfAttention with Bert->XLMRobertaXL
 class XLMRobertaXLSdpaSelfAttention(XLMRobertaXLSelfAttention):
     def __init__(self, config, position_embedding_type=None):
         super().__init__(config, position_embedding_type=position_embedding_type)
@@ -455,7 +455,7 @@ class XLMRobertaXLAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate
 class XLMRobertaXLIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -665,7 +665,7 @@ class XLMRobertaXLEncoder(nn.Module):
         )
 
 
-# Copied from transformers.models.bert.modeling_bert.BertPooler
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPooler
 class XLMRobertaXLPooler(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -692,7 +692,7 @@ class XLMRobertaXLPreTrainedModel(PreTrainedModel):
     _no_split_modules = ["XLMRobertaXLEmbeddings", "XLMRobertaXLLayer"]
     _supports_sdpa = True
 
-    # Copied from transformers.models.bert.modeling_bert.BertPreTrainedModel._init_weights
+    # Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPreTrainedModel._init_weights
     def _init_weights(self, module):
         """Initialize the weights"""
         if isinstance(module, nn.Linear):
@@ -769,7 +769,7 @@ XLM_ROBERTA_XL_INPUTS_DOCSTRING = r"""
     "The bare XLM-RoBERTa-XL Model transformer outputting raw hidden-states without any specific head on top.",
     XLM_ROBERTA_XL_START_DOCSTRING,
 )
-# Copied from transformers.models.bert.modeling_bert.BertModel with Bert->XLMRobertaXL, BERT->XLM_ROBERTA_XL
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertModel with Bert->XLMRobertaXL, BERT->XLM_ROBERTA_XL
 class XLMRobertaXLModel(XLMRobertaXLPreTrainedModel):
     """
 
@@ -1056,8 +1056,8 @@ class XLMRobertaXLForCausalLM(XLMRobertaXLPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, RobertaForCausalLM, RobertaConfig
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, RobertaForCausalLM, RobertaConfig
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("FacebookAI/roberta-base")
         >>> config = RobertaConfig.from_pretrained("FacebookAI/roberta-base")
@@ -1676,7 +1676,7 @@ class XLMRobertaXLForQuestionAnswering(XLMRobertaXLPreTrainedModel):
         )
 
 
-# Copied from transformers.models.roberta.modeling_roberta.create_position_ids_from_input_ids
+# Copied from tiny_hf.transformers.models.roberta.modeling_roberta.create_position_ids_from_input_ids
 def create_position_ids_from_input_ids(input_ids, padding_idx, past_key_values_length=0):
     """
     Replace non-padding symbols with their position numbers. Position numbers begin at padding_idx+1. Padding symbols

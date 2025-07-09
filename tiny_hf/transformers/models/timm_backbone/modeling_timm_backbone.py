@@ -15,7 +15,7 @@
 
 from typing import Optional, Tuple, Union
 
-import torch
+import tg_adapter as torch
 
 from ...modeling_outputs import BackboneOutput
 from ...modeling_utils import PreTrainedModel
@@ -29,7 +29,7 @@ if is_timm_available():
 
 
 if is_torch_available():
-    from torch import Tensor
+    from tg_adapter.import Tensor
 
 
 class TimmBackbone(PreTrainedModel, BackboneMixin):

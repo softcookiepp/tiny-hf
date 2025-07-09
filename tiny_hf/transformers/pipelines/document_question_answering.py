@@ -109,7 +109,7 @@ class DocumentQuestionAnsweringPipeline(ChunkPipeline):
     Example:
 
     ```python
-    >>> from transformers import pipeline
+    >>> from tiny_hf.transformers.import pipeline
 
     >>> document_qa = pipeline(model="impira/layoutlm-document-qa")
     >>> document_qa(

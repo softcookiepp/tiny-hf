@@ -95,7 +95,7 @@ class Phi3Config(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import Phi3Model, Phi3Config
+    >>> from tiny_hf.transformers.import Phi3Model, Phi3Config
 
     >>> # Initializing a Phi-3 style configuration
     >>> configuration = Phi3Config.from_pretrained("microsoft/Phi-3-mini-4k-instruct")

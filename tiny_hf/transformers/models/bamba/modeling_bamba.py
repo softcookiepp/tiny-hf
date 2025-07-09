@@ -26,11 +26,11 @@
 
 from typing import Callable, Optional, Tuple, Union
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
 import transformers.models.jamba.modeling_jamba as modeling_jamba
-from transformers.activations import ACT2FN
+from tiny_hf.transformers.activations import ACT2FN
 
 from ...cache_utils import Cache  # we need __iter__ and __len__ of pkv
 from ...generation import GenerationMixin
@@ -71,7 +71,7 @@ logger = logging.get_logger(__name__)
 _CONFIG_FOR_DOC = "BambaConfig"
 
 
-# Adapted from transformers.models.jamba.modeling_jamba.HybridMambaAttentionDynamicCache for the v2 mixer
+# Adapted from tiny_hf.transformers.models.jamba.modeling_jamba.HybridMambaAttentionDynamicCache for the v2 mixer
 class HybridMambaAttentionDynamicCache(modeling_jamba.HybridMambaAttentionDynamicCache):
     """
     A dynamic cache that can handle both the attention cache (which has a seq_len dimension) and the mamba cache
@@ -232,7 +232,7 @@ def eager_attention_forward(
     return attn_output, attn_weights
 
 
-# Adapted from transformers.models.glm.modular_glm.apply_rotary_pos_emb
+# Adapted from tiny_hf.transformers.models.glm.modular_glm.apply_rotary_pos_emb
 def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
     """Applies Rotary Position Embedding to the query and key tensors.
 
@@ -435,7 +435,7 @@ def apply_mask_to_padding_states(hidden_states, attention_mask):
     return hidden_states
 
 
-# Adapted from transformers.models.mamba2.modeling_mamba2.Mamba2Mixer
+# Adapted from tiny_hf.transformers.models.mamba2.modeling_mamba2.Mamba2Mixer
 class BambaMixer(nn.Module):
     """
     Compute ∆, A, B, C, and D the state space parameters and compute the `contextualized_states`.
@@ -1160,7 +1160,7 @@ BAMBA_INPUTS_DOCSTRING = r"""
     "The bare Bamba Model outputting raw hidden-states without any specific head on top.",
     BAMBA_START_DOCSTRING,
 )
-# Adapted from transformers.models.jamba.modeling_jamba.JambaModel
+# Adapted from tiny_hf.transformers.models.jamba.modeling_jamba.JambaModel
 class BambaModel(BambaPreTrainedModel):
     """
     Transformer decoder consisting of *config.num_hidden_layers* layers. Each layer is a [`BambaDecoderLayer`]
@@ -1511,7 +1511,7 @@ class BambaForCausalLM(BambaPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, BambaForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, BambaForCausalLM
 
         >>> model = BambaForCausalLM.from_pretrained("...")
         >>> tokenizer = AutoTokenizer.from_pretrained("...")

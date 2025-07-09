@@ -14,11 +14,11 @@
 import argparse
 import glob
 
-import torch
+import tg_adapter as torch
 from huggingface_hub import file_exists, hf_hub_download, snapshot_download
 from safetensors import safe_open
 
-from transformers import (
+from tiny_hf.transformers.import (
     AddedToken,
     AutoConfig,
     AutoImageProcessor,
@@ -35,7 +35,7 @@ EPILOG_TXT = """Example:
 
 Example for creating the old state dict file with Python:
 
-    import torch
+    import tg_adapter as torch
     from llava.model.language_model.llava_llama import LlavaLlamaForCausalLM
 
     # load model

@@ -19,9 +19,9 @@ import math
 import warnings
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.nn as nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, EncoderDecoderCache, StaticCache
@@ -50,7 +50,7 @@ from .configuration_switch_transformers import SwitchTransformersConfig
 
 
 if is_torch_flex_attn_available():
-    from torch.nn.attention.flex_attention import BlockMask
+    from tg_adapter.nn.attention.flex_attention import BlockMask
 
     from ...integrations.flex_attention import make_flex_block_causal_mask
 
@@ -218,7 +218,7 @@ class SwitchTransformersTop1Router(nn.Module):
         return expert_index, router_probs, router_logits
 
 
-# Copied from transformers.models.t5.modeling_t5.T5LayerNorm with T5->SwitchTransformers
+# Copied from tiny_hf.transformers.models.t5.modeling_t5.T5LayerNorm with T5->SwitchTransformers
 class SwitchTransformersLayerNorm(nn.Module):
     def __init__(self, hidden_size, eps=1e-6):
         """
@@ -247,7 +247,7 @@ class SwitchTransformersLayerNorm(nn.Module):
 ALL_LAYERNORM_LAYERS.append(SwitchTransformersLayerNorm)
 
 
-# Copied from transformers.models.t5.modeling_t5.T5DenseActDense with T5->SwitchTransformers
+# Copied from tiny_hf.transformers.models.t5.modeling_t5.T5DenseActDense with T5->SwitchTransformers
 class SwitchTransformersDenseActDense(nn.Module):
     def __init__(self, config: SwitchTransformersConfig):
         super().__init__()
@@ -363,7 +363,7 @@ class SwitchTransformersLayerFF(nn.Module):
         return output
 
 
-# Copied from transformers.models.t5.modeling_t5.T5Attention with T5->SwitchTransformers
+# Copied from tiny_hf.transformers.models.t5.modeling_t5.T5Attention with T5->SwitchTransformers
 class SwitchTransformersAttention(nn.Module):
     def __init__(
         self,
@@ -592,7 +592,7 @@ class SwitchTransformersAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.t5.modeling_t5.T5LayerSelfAttention with T5->SwitchTransformers
+# Copied from tiny_hf.transformers.models.t5.modeling_t5.T5LayerSelfAttention with T5->SwitchTransformers
 class SwitchTransformersLayerSelfAttention(nn.Module):
     def __init__(self, config, has_relative_attention_bias=False, layer_idx: Optional[int] = None):
         super().__init__()
@@ -629,7 +629,7 @@ class SwitchTransformersLayerSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.t5.modeling_t5.T5LayerCrossAttention with T5->SwitchTransformers
+# Copied from tiny_hf.transformers.models.t5.modeling_t5.T5LayerCrossAttention with T5->SwitchTransformers
 class SwitchTransformersLayerCrossAttention(nn.Module):
     def __init__(self, config, layer_idx: Optional[int] = None):
         super().__init__()
@@ -1133,7 +1133,7 @@ class SwitchTransformersStack(SwitchTransformersPreTrainedModel):
             router_probs=all_router_probs,
         )
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
     def _update_causal_mask(
         self,
         attention_mask: torch.Tensor,
@@ -1205,7 +1205,7 @@ class SwitchTransformersStack(SwitchTransformersPreTrainedModel):
         return causal_mask
 
     @staticmethod
-    # Copied from transformers.models.llama.modeling_llama.LlamaPreTrainedModel._prepare_4d_causal_attention_mask_with_cache_position
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaPreTrainedModel._prepare_4d_causal_attention_mask_with_cache_position
     def _prepare_4d_causal_attention_mask_with_cache_position(
         attention_mask: torch.Tensor,
         sequence_length: int,
@@ -1521,7 +1521,7 @@ class SwitchTransformersModel(SwitchTransformersPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, SwitchTransformersModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, SwitchTransformersModel
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/switch-base-8")
         >>> model = SwitchTransformersModel.from_pretrained("google/switch-base-8")
@@ -1708,7 +1708,7 @@ class SwitchTransformersForConditionalGeneration(SwitchTransformersPreTrainedMod
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, SwitchTransformersForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, SwitchTransformersForConditionalGeneration
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/switch-base-8")
         >>> model = SwitchTransformersForConditionalGeneration.from_pretrained("google/switch-base-8")
@@ -1964,7 +1964,7 @@ class SwitchTransformersEncoderModel(SwitchTransformersPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, SwitchTransformersEncoderModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, SwitchTransformersEncoderModel
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/switch-base-8")
         >>> model = SwitchTransformersEncoderModel.from_pretrained("google/switch-base-8")

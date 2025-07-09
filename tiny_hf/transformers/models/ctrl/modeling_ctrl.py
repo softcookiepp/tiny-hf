@@ -18,9 +18,9 @@
 from typing import Optional, Tuple, Union
 
 import numpy as np
-import torch
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...generation import GenerationMixin
 from ...modeling_outputs import BaseModelOutputWithPast, CausalLMOutputWithPast, SequenceClassifierOutput
@@ -368,8 +368,8 @@ class CTRLModel(CTRLPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, CTRLModel
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, CTRLModel
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("Salesforce/ctrl")
         >>> model = CTRLModel.from_pretrained("Salesforce/ctrl")
@@ -551,8 +551,8 @@ class CTRLLMHeadModel(CTRLPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> import torch
-        >>> from transformers import AutoTokenizer, CTRLLMHeadModel
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, CTRLLMHeadModel
 
         >>> tokenizer = AutoTokenizer.from_pretrained("Salesforce/ctrl")
         >>> model = CTRLLMHeadModel.from_pretrained("Salesforce/ctrl")
@@ -697,8 +697,8 @@ class CTRLForSequenceClassification(CTRLPreTrainedModel):
         Example of single-label classification:
 
         ```python
-        >>> import torch
-        >>> from transformers import AutoTokenizer, CTRLForSequenceClassification
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, CTRLForSequenceClassification
 
         >>> tokenizer = AutoTokenizer.from_pretrained("Salesforce/ctrl")
         >>> model = CTRLForSequenceClassification.from_pretrained("Salesforce/ctrl")
@@ -716,7 +716,7 @@ class CTRLForSequenceClassification(CTRLPreTrainedModel):
         ```
 
         ```python
-        >>> import torch
+        >>> import tg_adapter as torch
 
         >>> torch.manual_seed(42)  # doctest: +IGNORE_RESULT
         >>> # To train a model on `num_labels` classes, you can pass `num_labels=num_labels` to `.from_pretrained(...)`
@@ -732,8 +732,8 @@ class CTRLForSequenceClassification(CTRLPreTrainedModel):
         Example of multi-label classification:
 
         ```python
-        >>> import torch
-        >>> from transformers import AutoTokenizer, CTRLForSequenceClassification
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, CTRLForSequenceClassification
 
         >>> tokenizer = AutoTokenizer.from_pretrained("Salesforce/ctrl")
         >>> model = CTRLForSequenceClassification.from_pretrained(

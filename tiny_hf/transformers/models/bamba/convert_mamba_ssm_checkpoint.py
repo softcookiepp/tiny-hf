@@ -21,12 +21,12 @@ import re
 from os import path
 from typing import Dict, Union
 
-import torch
+import tg_adapter as torch
 from huggingface_hub import split_torch_state_dict_into_shards
 from safetensors.torch import save_file
 
-from transformers import AutoTokenizer
-from transformers.utils import SAFE_WEIGHTS_INDEX_NAME, SAFE_WEIGHTS_NAME
+from tiny_hf.transformers.import AutoTokenizer
+from tiny_hf.transformers.utils import SAFE_WEIGHTS_INDEX_NAME, SAFE_WEIGHTS_NAME
 
 from .configuration_bamba import BambaConfig
 
@@ -83,7 +83,7 @@ def convert_state_dict_from_mamba_ssm(original_sd: Dict) -> Dict[str, torch.Tens
     return state_dict
 
 
-# Adapted from transformers.models.mamba.convert_mamba_ssm_checkpoint_to_pytorch.py
+# Adapted from tiny_hf.transformers.models.mamba.convert_mamba_ssm_checkpoint_to_pytorch.py
 def convert_ssm_config_to_hf_config(
     config_ssm: Dict,
     **kwargs,
@@ -167,7 +167,7 @@ def save_sharded_safetensors(
         save_file(shard, os.path.join(save_directory, shard_file), metadata=metadata)
 
 
-# Adapted from transformers.models.mamba.convert_mamba_ssm_checkpoint_to_pytorch.py
+# Adapted from tiny_hf.transformers.models.mamba.convert_mamba_ssm_checkpoint_to_pytorch.py
 def convert_mamba_ssm_checkpoint_file_to_huggingface_model_file(
     mamba_ssm_checkpoint_path: str,
     precision: str,

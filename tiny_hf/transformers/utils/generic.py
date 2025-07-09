@@ -461,7 +461,7 @@ class ModelOutput(OrderedDict):
 
 
 if is_torch_available():
-    import torch.utils._pytree as _torch_pytree
+    import tg_adapter.utils._pytree as _torch_pytree
 
     def _model_output_flatten(output: ModelOutput) -> Tuple[List[Any], "_torch_pytree.Context"]:
         return list(output.values()), list(output.keys())

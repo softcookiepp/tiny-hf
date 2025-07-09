@@ -16,10 +16,10 @@
 
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, StaticCache
@@ -48,7 +48,7 @@ from .configuration_opt import OPTConfig
 
 
 if is_torch_flex_attn_available():
-    from torch.nn.attention.flex_attention import BlockMask
+    from tg_adapter.nn.attention.flex_attention import BlockMask
 
     from ...integrations.flex_attention import make_flex_block_causal_mask
 
@@ -636,7 +636,7 @@ class OPTDecoder(OPTPreTrainedModel):
     def set_input_embeddings(self, value):
         self.embed_tokens = value
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
     def _update_causal_mask(
         self,
         attention_mask: torch.Tensor,
@@ -708,7 +708,7 @@ class OPTDecoder(OPTPreTrainedModel):
         return causal_mask
 
     @staticmethod
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel._prepare_4d_causal_attention_mask_with_cache_position
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel._prepare_4d_causal_attention_mask_with_cache_position
     def _prepare_4d_causal_attention_mask_with_cache_position(
         attention_mask: torch.Tensor,
         sequence_length: int,
@@ -1170,7 +1170,7 @@ class OPTForCausalLM(OPTPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, OPTForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, OPTForCausalLM
 
         >>> model = OPTForCausalLM.from_pretrained("facebook/opt-350m")
         >>> tokenizer = AutoTokenizer.from_pretrained("facebook/opt-350m")
@@ -1422,8 +1422,8 @@ class OPTForQuestionAnswering(OPTPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, OPTForQuestionAnswering
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, OPTForQuestionAnswering
+        >>> import tg_adapter as torch
 
         >>> torch.manual_seed(4)  # doctest: +IGNORE_RESULT
         >>> tokenizer = AutoTokenizer.from_pretrained("facebook/opt-350m")

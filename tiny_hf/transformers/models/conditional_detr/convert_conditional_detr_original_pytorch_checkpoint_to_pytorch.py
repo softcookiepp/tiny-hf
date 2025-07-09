@@ -20,17 +20,17 @@ from collections import OrderedDict
 from pathlib import Path
 
 import requests
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 from PIL import Image
 
-from transformers import (
+from tiny_hf.transformers.import (
     ConditionalDetrConfig,
     ConditionalDetrForObjectDetection,
     ConditionalDetrForSegmentation,
     ConditionalDetrImageProcessor,
 )
-from transformers.utils import logging
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()
@@ -254,7 +254,7 @@ def convert_conditional_detr_checkpoint(model_name, pytorch_dump_folder_path):
 
     logger.info(f"Converting model {model_name}...")
 
-    # load original model from torch hub
+    # load original model from tg_adapter.hub
     conditional_detr = torch.hub.load("DeppMeng/ConditionalDETR", model_name, pretrained=True).eval()
     state_dict = conditional_detr.state_dict()
     # rename keys

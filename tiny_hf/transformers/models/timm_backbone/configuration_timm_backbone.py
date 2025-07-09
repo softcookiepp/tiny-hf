@@ -48,7 +48,7 @@ class TimmBackboneConfig(PretrainedConfig):
 
     Example:
     ```python
-    >>> from transformers import TimmBackboneConfig, TimmBackbone
+    >>> from tiny_hf.transformers.import TimmBackboneConfig, TimmBackbone
 
     >>> # Initializing a timm backbone
     >>> configuration = TimmBackboneConfig("resnet50")

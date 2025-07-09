@@ -30,7 +30,7 @@ logger = logging.get_logger(__name__)
 VOCAB_FILES_NAMES = {"vocab_file": "vocab.json", "merges_file": "merges.txt", "tokenizer_file": "tokenizer.json"}
 
 
-# Copied from transformers.models.roberta.tokenization_roberta_fast.RobertaTokenizerFast with FacebookAI/roberta-base->allenai/longformer-base-4096, RoBERTa->Longformer all-casing, Roberta->Longformer
+# Copied from tiny_hf.transformers.models.roberta.tokenization_roberta_fast.RobertaTokenizerFast with FacebookAI/roberta-base->allenai/longformer-base-4096, RoBERTa->Longformer all-casing, Roberta->Longformer
 class LongformerTokenizerFast(PreTrainedTokenizerFast):
     """
     Construct a "fast" Longformer tokenizer (backed by HuggingFace's *tokenizers* library), derived from the GPT-2
@@ -40,7 +40,7 @@ class LongformerTokenizerFast(PreTrainedTokenizerFast):
     be encoded differently whether it is at the beginning of the sentence (without space) or not:
 
     ```python
-    >>> from transformers import LongformerTokenizerFast
+    >>> from tiny_hf.transformers.import LongformerTokenizerFast
 
     >>> tokenizer = LongformerTokenizerFast.from_pretrained("allenai/longformer-base-4096")
     >>> tokenizer("Hello world")["input_ids"]

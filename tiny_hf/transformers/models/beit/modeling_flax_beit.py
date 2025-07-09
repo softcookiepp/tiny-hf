@@ -752,7 +752,7 @@ FLAX_BEIT_MODEL_DOCSTRING = """
     Examples:
 
     ```python
-    >>> from transformers import AutoImageProcessor, FlaxBeitModel
+    >>> from tiny_hf.transformers.import AutoImageProcessor, FlaxBeitModel
     >>> from PIL import Image
     >>> import requests
 
@@ -839,7 +839,7 @@ FLAX_BEIT_MLM_DOCSTRING = """
     Examples:
 
     ```python
-    >>> from transformers import AutoImageProcessor, BeitForMaskedImageModeling
+    >>> from tiny_hf.transformers.import AutoImageProcessor, BeitForMaskedImageModeling
     >>> from PIL import Image
     >>> import requests
 
@@ -923,7 +923,7 @@ FLAX_BEIT_CLASSIF_DOCSTRING = """
     Example:
 
     ```python
-    >>> from transformers import AutoImageProcessor, FlaxBeitForImageClassification
+    >>> from tiny_hf.transformers.import AutoImageProcessor, FlaxBeitForImageClassification
     >>> from PIL import Image
     >>> import requests
 

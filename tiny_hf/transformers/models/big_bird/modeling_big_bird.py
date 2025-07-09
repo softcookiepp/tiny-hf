@@ -20,10 +20,10 @@ from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -238,7 +238,7 @@ def load_tf_weights_in_big_bird(model, tf_checkpoint_path, is_trivia_qa=False):
 class BigBirdEmbeddings(nn.Module):
     """Construct the embeddings from word, position and token_type embeddings."""
 
-    # Copied from transformers.models.bert.modeling_bert.BertEmbeddings.__init__
+    # Copied from tiny_hf.transformers.models.bert.modeling_bert.BertEmbeddings.__init__
     def __init__(self, config):
         super().__init__()
         self.word_embeddings = nn.Embedding(config.vocab_size, config.hidden_size, padding_idx=config.pad_token_id)
@@ -1296,7 +1296,7 @@ class BigBirdBlockSparseAttention(nn.Module):
         return np.array(selected_random_blokcs, dtype=np.int32)
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfOutput with Bert->BigBird
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfOutput with Bert->BigBird
 class BigBirdSelfOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1399,7 +1399,7 @@ class BigBirdAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate with Bert->BigBird
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate with Bert->BigBird
 class BigBirdIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1415,7 +1415,7 @@ class BigBirdIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOutput with Bert->BigBird
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOutput with Bert->BigBird
 class BigBirdOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1666,7 +1666,7 @@ class BigBirdEncoder(nn.Module):
         )
 
 
-# Copied from transformers.models.bert.modeling_bert.BertPredictionHeadTransform with Bert->BigBird
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPredictionHeadTransform with Bert->BigBird
 class BigBirdPredictionHeadTransform(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1684,7 +1684,7 @@ class BigBirdPredictionHeadTransform(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertLMPredictionHead with Bert->BigBird
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertLMPredictionHead with Bert->BigBird
 class BigBirdLMPredictionHead(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1708,7 +1708,7 @@ class BigBirdLMPredictionHead(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOnlyMLMHead with Bert->BigBird
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOnlyMLMHead with Bert->BigBird
 class BigBirdOnlyMLMHead(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1719,7 +1719,7 @@ class BigBirdOnlyMLMHead(nn.Module):
         return prediction_scores
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOnlyNSPHead with Bert->BigBird
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOnlyNSPHead with Bert->BigBird
 class BigBirdOnlyNSPHead(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1730,7 +1730,7 @@ class BigBirdOnlyNSPHead(nn.Module):
         return seq_relationship_score
 
 
-# Copied from transformers.models.bert.modeling_bert.BertPreTrainingHeads with Bert->BigBird
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPreTrainingHeads with Bert->BigBird
 class BigBirdPreTrainingHeads(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -2300,8 +2300,8 @@ class BigBirdForPreTraining(BigBirdPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, BigBirdForPreTraining
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, BigBirdForPreTraining
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/bigbird-roberta-base")
         >>> model = BigBirdForPreTraining.from_pretrained("google/bigbird-roberta-base")
@@ -2405,8 +2405,8 @@ class BigBirdForMaskedLM(BigBirdPreTrainedModel):
         Example:
 
         ```python
-        >>> import torch
-        >>> from transformers import AutoTokenizer, BigBirdForMaskedLM
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, BigBirdForMaskedLM
         >>> from datasets import load_dataset
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/bigbird-roberta-base")
@@ -2688,8 +2688,8 @@ class BigBirdForSequenceClassification(BigBirdPreTrainedModel):
         Example:
 
         ```python
-        >>> import torch
-        >>> from transformers import AutoTokenizer, BigBirdForSequenceClassification
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, BigBirdForSequenceClassification
         >>> from datasets import load_dataset
 
         >>> tokenizer = AutoTokenizer.from_pretrained("l-yohai/bigbird-roberta-base-mnli")
@@ -3017,8 +3017,8 @@ class BigBirdForQuestionAnswering(BigBirdPreTrainedModel):
         Example:
 
         ```python
-        >>> import torch
-        >>> from transformers import AutoTokenizer, BigBirdForQuestionAnswering
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, BigBirdForQuestionAnswering
         >>> from datasets import load_dataset
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/bigbird-roberta-base")

@@ -24,17 +24,17 @@ import numpy as np
 import PIL
 import requests
 import tensorflow.keras.applications.efficientnet as efficientnet
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 from PIL import Image
 from tensorflow.keras.preprocessing import image
 
-from transformers import (
+from tiny_hf.transformers.import (
     EfficientNetConfig,
     EfficientNetForImageClassification,
     EfficientNetImageProcessor,
 )
-from transformers.utils import logging
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

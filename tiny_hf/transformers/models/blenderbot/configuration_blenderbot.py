@@ -88,7 +88,7 @@ class BlenderbotConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import BlenderbotConfig, BlenderbotModel
+    >>> from tiny_hf.transformers.import BlenderbotConfig, BlenderbotModel
 
     >>> # Initializing a Blenderbot facebook/blenderbot-3B style configuration
     >>> configuration = BlenderbotConfig()
@@ -208,7 +208,7 @@ class BlenderbotOnnxConfig(OnnxSeq2SeqConfigWithPast):
         return common_inputs
 
     @property
-    # Copied from transformers.models.bart.configuration_bart.BartOnnxConfig.outputs
+    # Copied from tiny_hf.transformers.models.bart.configuration_bart.BartOnnxConfig.outputs
     def outputs(self) -> Mapping[str, Mapping[int, str]]:
         if self.task in ["default", "seq2seq-lm"]:
             common_outputs = super().outputs
@@ -244,7 +244,7 @@ class BlenderbotOnnxConfig(OnnxSeq2SeqConfigWithPast):
             if not is_torch_available():
                 raise ValueError("Cannot generate dummy past_keys inputs without PyTorch installed.")
             else:
-                import torch
+                import tg_adapter as torch
             batch, encoder_seq_length = common_inputs["input_ids"].shape
             decoder_seq_length = common_inputs["decoder_input_ids"].shape[1]
             num_encoder_attention_heads, num_decoder_attention_heads = self.num_attention_heads
@@ -294,7 +294,7 @@ class BlenderbotOnnxConfig(OnnxSeq2SeqConfigWithPast):
             if not is_torch_available():
                 raise ValueError("Cannot generate dummy past_keys inputs without PyTorch installed.")
             else:
-                import torch
+                import tg_adapter as torch
             batch, seqlen = common_inputs["input_ids"].shape
             past_key_values_length = seqlen
             _, num_decoder_layers = self.num_layers
@@ -314,7 +314,7 @@ class BlenderbotOnnxConfig(OnnxSeq2SeqConfigWithPast):
             ]
         return common_inputs
 
-    # Copied from transformers.models.bart.configuration_bart.BartOnnxConfig._generate_dummy_inputs_for_sequence_classification_and_question_answering
+    # Copied from tiny_hf.transformers.models.bart.configuration_bart.BartOnnxConfig._generate_dummy_inputs_for_sequence_classification_and_question_answering
     def _generate_dummy_inputs_for_sequence_classification_and_question_answering(
         self,
         tokenizer: PreTrainedTokenizer,
@@ -341,7 +341,7 @@ class BlenderbotOnnxConfig(OnnxSeq2SeqConfigWithPast):
         common_inputs = dict(tokenizer(dummy_input, return_tensors=framework))
         return common_inputs
 
-    # Copied from transformers.models.bart.configuration_bart.BartOnnxConfig.generate_dummy_inputs
+    # Copied from tiny_hf.transformers.models.bart.configuration_bart.BartOnnxConfig.generate_dummy_inputs
     def generate_dummy_inputs(
         self,
         tokenizer: PreTrainedTokenizer,
@@ -366,7 +366,7 @@ class BlenderbotOnnxConfig(OnnxSeq2SeqConfigWithPast):
 
         return common_inputs
 
-    # Copied from transformers.models.bart.configuration_bart.BartOnnxConfig._flatten_past_key_values_
+    # Copied from tiny_hf.transformers.models.bart.configuration_bart.BartOnnxConfig._flatten_past_key_values_
     def _flatten_past_key_values_(self, flattened_output, name, idx, t):
         if self.task in ["default", "seq2seq-lm"]:
             flattened_output = super()._flatten_past_key_values_(flattened_output, name, idx, t)

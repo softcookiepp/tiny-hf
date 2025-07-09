@@ -1697,7 +1697,7 @@ class TFIdeficsForVisionText2Text(TFPreTrainedModel, TFCausalLanguageModelingLos
         Example:
 
         ```python
-        >> from transformers import AutoTokenizer, TFIdeficsForVisionText2Text
+        >> from tiny_hf.transformers.import AutoTokenizer, TFIdeficsForVisionText2Text
 
         >> model = TFIdeficsForVisionText2Text.from_pretrained("HuggingFaceM4/idefics-9b")
         >> tokenizer = AutoTokenizer.from_pretrained("HuggingFaceM4/idefics-9b")

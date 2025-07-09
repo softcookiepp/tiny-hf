@@ -24,8 +24,8 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+import tg_adapter.nn as nn
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, HybridCache, StaticCache
@@ -950,7 +950,7 @@ class Gemma3ForCausalLM(Gemma3PreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, Gemma3ForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, Gemma3ForCausalLM
 
         >>> model = Gemma3ForCausalLM.from_pretrained("google/gemma-2-9b")
         >>> tokenizer = AutoTokenizer.from_pretrained("google/gemma-2-9b")
@@ -1270,7 +1270,7 @@ class Gemma3ForConditionalGeneration(Gemma3PreTrainedModel, GenerationMixin):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, Gemma3ForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoProcessor, Gemma3ForConditionalGeneration
 
         >>> model = Gemma3ForConditionalGeneration.from_pretrained("google/gemma-3-4b-it")
         >>> processor = AutoProcessor.from_pretrained("google/gemma-3-4b-it")

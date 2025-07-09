@@ -22,10 +22,10 @@
 import math
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ....activations import ACT2FN
 from ....modeling_attn_mask_utils import _prepare_4d_causal_attention_mask
@@ -726,7 +726,7 @@ class OpenLlamaForCausalLM(OpenLlamaPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, OpenLlamaForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, OpenLlamaForCausalLM
 
         >>> model = OpenLlamaForCausalLM.from_pretrained("openlm-research/open_llama_7b")
         >>> tokenizer = AutoTokenizer.from_pretrained("openlm-research/open_llama_7b")

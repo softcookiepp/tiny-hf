@@ -19,11 +19,11 @@ import zlib
 from typing import Callable, Iterator, List, Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.nn.functional as F
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.nn.functional as F
+from tg_adapter.import nn
 
-from transformers.cache_utils import EncoderDecoderCache
+from tiny_hf.transformers.cache_utils import EncoderDecoderCache
 
 from ...generation import GenerationConfig, GenerationMixin
 from ...generation.logits_process import (
@@ -514,8 +514,8 @@ class WhisperGenerationMixin(GenerationMixin):
         Indeed, long-form transcription uses a sequential algorithm based on timestamps predictions, with heuristics like compression ratio threshold, log probability threshold and temperature fallback. This algorithm is described in the [the Whisper original paper](https://cdn.openai.com/papers/whisper.pdf), section *3.8. Long-form Transcription*.
 
         ```python
-        >>> import torch
-        >>> from transformers import AutoProcessor, WhisperForConditionalGeneration
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoProcessor, WhisperForConditionalGeneration
         >>> from datasets import load_dataset, Audio
 
         >>> processor = AutoProcessor.from_pretrained("openai/whisper-tiny.en")
@@ -547,8 +547,8 @@ class WhisperGenerationMixin(GenerationMixin):
             - `return_timestamps=True`: the audio will be transcribed using the same logic as long-form transcription.
 
         ```python
-        >>> import torch
-        >>> from transformers import AutoProcessor, WhisperForConditionalGeneration
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoProcessor, WhisperForConditionalGeneration
         >>> from datasets import load_dataset
 
         >>> processor = AutoProcessor.from_pretrained("openai/whisper-tiny.en")

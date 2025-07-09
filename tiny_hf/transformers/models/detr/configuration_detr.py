@@ -120,7 +120,7 @@ class DetrConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import DetrConfig, DetrModel
+    >>> from tiny_hf.transformers.import DetrConfig, DetrModel
 
     >>> # Initializing a DETR facebook/detr-resnet-50 style configuration
     >>> configuration = DetrConfig()

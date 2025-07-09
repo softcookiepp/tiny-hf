@@ -44,7 +44,7 @@ class SpeechEncoderDecoderConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import BertConfig, Wav2Vec2Config, SpeechEncoderDecoderConfig, SpeechEncoderDecoderModel
+    >>> from tiny_hf.transformers.import BertConfig, Wav2Vec2Config, SpeechEncoderDecoderConfig, SpeechEncoderDecoderModel
 
     >>> # Initializing a Wav2Vec2 & BERT style configuration
     >>> config_encoder = Wav2Vec2Config()

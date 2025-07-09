@@ -78,7 +78,7 @@ class ClapTextConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import ClapTextConfig, ClapTextModel
+    >>> from tiny_hf.transformers.import ClapTextConfig, ClapTextModel
 
     >>> # Initializing a CLAP text configuration
     >>> configuration = ClapTextConfig()
@@ -212,7 +212,7 @@ class ClapAudioConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import ClapAudioConfig, ClapAudioModel
+    >>> from tiny_hf.transformers.import ClapAudioConfig, ClapAudioModel
 
     >>> # Initializing a ClapAudioConfig with laion/clap-htsat-fused style configuration
     >>> configuration = ClapAudioConfig()
@@ -318,7 +318,7 @@ class ClapConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import ClapConfig, ClapModel
+    >>> from tiny_hf.transformers.import ClapConfig, ClapModel
 
     >>> # Initializing a ClapConfig with laion-ai/base style configuration
     >>> configuration = ClapConfig()
@@ -330,7 +330,7 @@ class ClapConfig(PretrainedConfig):
     >>> configuration = model.config
 
     >>> # We can also initialize a ClapConfig from a ClapTextConfig and a ClapAudioConfig
-    >>> from transformers import ClapTextConfig, ClapAudioConfig
+    >>> from tiny_hf.transformers.import ClapTextConfig, ClapAudioConfig
 
     >>> # Initializing a ClapText and ClapAudioConfig configuration
     >>> config_text = ClapTextConfig()

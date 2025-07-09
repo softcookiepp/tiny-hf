@@ -19,12 +19,12 @@ import json
 from pathlib import Path
 
 import requests
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 from PIL import Image
 
-from transformers import DetrConfig, DetrForObjectDetection, DetrForSegmentation, DetrImageProcessor, ResNetConfig
-from transformers.utils import logging
+from tiny_hf.transformers.import DetrConfig, DetrForObjectDetection, DetrForSegmentation, DetrImageProcessor, ResNetConfig
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()
@@ -293,7 +293,7 @@ def convert_detr_checkpoint(model_name, pytorch_dump_folder_path=None, push_to_h
     # load default config
     config, is_panoptic = get_detr_config(model_name)
 
-    # load original model from torch hub
+    # load original model from tg_adapter.hub
     model_name_to_original_name = {
         "detr-resnet-50": "detr_resnet50",
         "detr-resnet-101": "detr_resnet101",

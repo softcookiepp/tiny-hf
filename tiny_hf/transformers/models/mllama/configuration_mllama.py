@@ -74,7 +74,7 @@ class MllamaVisionConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import MllamaVisionConfig, MllamaVisionModel
+    >>> from tiny_hf.transformers.import MllamaVisionConfig, MllamaVisionModel
 
     >>> # Initializing a Llama config
     >>> config = MllamaVisionConfig()
@@ -229,7 +229,7 @@ class MllamaTextConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import MllamaTextModel, MllamaTextConfig
+    >>> from tiny_hf.transformers.import MllamaTextModel, MllamaTextConfig
 
     >>> # Initializing a Mllama text config
     >>> config = MllamaTextConfig()
@@ -318,7 +318,7 @@ class MllamaConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import MllamaForConditionalGeneration, MllamaConfig, MllamaVisionConfig, MllamaTextConfig
+    >>> from tiny_hf.transformers.import MllamaForConditionalGeneration, MllamaConfig, MllamaVisionConfig, MllamaTextConfig
 
     >>> # Initializing a CLIP-vision config
     >>> vision_config = MllamaVisionConfig()

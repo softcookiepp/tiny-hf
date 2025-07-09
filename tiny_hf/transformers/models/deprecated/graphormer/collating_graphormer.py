@@ -4,7 +4,7 @@
 from typing import Any, Dict, List, Mapping
 
 import numpy as np
-import torch
+import tg_adapter as torch
 
 from ....utils import is_cython_available, requires_backends
 

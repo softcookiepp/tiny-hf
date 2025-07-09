@@ -80,7 +80,7 @@ class JetMoeConfig(PretrainedConfig):
             The dropout ratio for the attention probabilities.
 
     ```python
-    >>> from transformers import JetMoeModel, JetMoeConfig
+    >>> from tiny_hf.transformers.import JetMoeModel, JetMoeConfig
 
     >>> # Initializing a JetMoe 4B style configuration
     >>> configuration = JetMoeConfig()

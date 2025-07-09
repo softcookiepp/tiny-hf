@@ -55,7 +55,7 @@ from .configuration_t5 import T5Config
 
 
 if is_torch_flex_attn_available():
-    from torch.nn.attention.flex_attention import BlockMask
+    from tg_adapter.nn.attention.flex_attention import BlockMask
 
     from ...integrations.flex_attention import make_flex_block_causal_mask
 
@@ -1202,7 +1202,7 @@ class T5Stack(T5PreTrainedModel):
             cross_attentions=all_cross_attentions,
         )
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
     def _update_causal_mask(
         self,
         attention_mask: torch.Tensor,
@@ -1274,7 +1274,7 @@ class T5Stack(T5PreTrainedModel):
         return causal_mask
 
     @staticmethod
-    # Copied from transformers.models.llama.modeling_llama.LlamaPreTrainedModel._prepare_4d_causal_attention_mask_with_cache_position
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaPreTrainedModel._prepare_4d_causal_attention_mask_with_cache_position
     def _prepare_4d_causal_attention_mask_with_cache_position(
         attention_mask: torch.Tensor,
         sequence_length: int,
@@ -1616,7 +1616,7 @@ class T5Model(T5PreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, T5Model
+        >>> from tiny_hf.transformers.import AutoTokenizer, T5Model
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google-t5/t5-small")
         >>> model = T5Model.from_pretrained("google-t5/t5-small")
@@ -1833,7 +1833,7 @@ class T5ForConditionalGeneration(T5PreTrainedModel, GenerationMixin):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, T5ForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, T5ForConditionalGeneration
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google-t5/t5-small")
         >>> model = T5ForConditionalGeneration.from_pretrained("google-t5/t5-small")
@@ -2085,7 +2085,7 @@ class T5EncoderModel(T5PreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, T5EncoderModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, T5EncoderModel
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google-t5/t5-small")
         >>> model = T5EncoderModel.from_pretrained("google-t5/t5-small")

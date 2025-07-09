@@ -20,11 +20,11 @@ import json
 import re
 from pathlib import Path
 
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 
-from transformers import ConditionalDetrImageProcessor, DabDetrConfig, DabDetrForObjectDetection
-from transformers.utils import logging
+from tiny_hf.transformers.import ConditionalDetrImageProcessor, DabDetrConfig, DabDetrForObjectDetection
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()
@@ -86,7 +86,7 @@ ORIGINAL_TO_CONVERTED_KEY_MAPPING = {
 }
 
 
-# Copied from transformers.models.mllama.convert_mllama_weights_to_hf.convert_old_keys_to_new_keys
+# Copied from tiny_hf.transformers.models.mllama.convert_mllama_weights_to_hf.convert_old_keys_to_new_keys
 def convert_old_keys_to_new_keys(state_dict_keys: dict = None):
     """
     This function should be applied only once, on the concatenated keys to efficiently rename using

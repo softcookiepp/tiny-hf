@@ -23,7 +23,7 @@ logger = logging.get_logger(__name__)
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 
 def _compute_default_rope_parameters(

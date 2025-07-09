@@ -77,7 +77,7 @@ class ViTMAEConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import ViTMAEConfig, ViTMAEModel
+    >>> from tiny_hf.transformers.import ViTMAEConfig, ViTMAEModel
 
     >>> # Initializing a ViT MAE vit-mae-base style configuration
     >>> configuration = ViTMAEConfig()

@@ -18,9 +18,9 @@ import argparse
 
 import safetensors
 import sentencepiece
-import torch
+import tg_adapter as torch
 
-from transformers import (
+from tiny_hf.transformers.import (
     AutoFeatureExtractor,
     GenerationConfig,
     MimiModel,  # initial audio encoder
@@ -29,7 +29,7 @@ from transformers import (
     PreTrainedTokenizerFast,
     logging,
 )
-from transformers.convert_slow_tokenizer import MoshiConverter
+from tiny_hf.transformers.convert_slow_tokenizer import MoshiConverter
 
 
 logging.set_verbosity_info()

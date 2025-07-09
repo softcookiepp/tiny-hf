@@ -101,7 +101,7 @@ class PhimoeConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import PhimoeModel, PhimoeConfig
+    >>> from tiny_hf.transformers.import PhimoeModel, PhimoeConfig
     >>> # Initializing a Phi-3 style configuration
     >>> configuration = PhimoeConfig.from_pretrained("microsoft/Phi-3.5-MoE-instruct")
     >>> # Initializing a model from the configuration

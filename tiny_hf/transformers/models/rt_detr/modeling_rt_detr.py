@@ -20,9 +20,9 @@ from dataclasses import dataclass
 from functools import partial
 from typing import Dict, List, Optional, Tuple, Union
 
-import torch
-import torch.nn.functional as F
-from torch import Tensor, nn
+import tg_adapter as torch
+import tg_adapter.nn.functional as F
+from tg_adapter.import Tensor, nn
 
 from ...activations import ACT2CLS, ACT2FN
 from ...image_transforms import center_to_corners_format, corners_to_center_format
@@ -51,7 +51,7 @@ _CHECKPOINT_FOR_DOC = "PekingU/rtdetr_r50vd"
 
 
 @use_kernel_forward_from_hub("MultiScaleDeformableAttention")
-# Copied from transformers.models.deformable_detr.modeling_deformable_detr.MultiScaleDeformableAttention
+# Copied from tiny_hf.transformers.models.deformable_detr.modeling_deformable_detr.MultiScaleDeformableAttention
 class MultiScaleDeformableAttention(nn.Module):
     def forward(
         self,
@@ -314,7 +314,7 @@ def _get_clones(partial_module, N):
     return nn.ModuleList([partial_module() for i in range(N)])
 
 
-# Copied from transformers.models.conditional_detr.modeling_conditional_detr.inverse_sigmoid
+# Copied from tiny_hf.transformers.models.conditional_detr.modeling_conditional_detr.inverse_sigmoid
 def inverse_sigmoid(x, eps=1e-5):
     x = x.clamp(min=0, max=1)
     x1 = x.clamp(min=eps)
@@ -322,12 +322,12 @@ def inverse_sigmoid(x, eps=1e-5):
     return torch.log(x1 / x2)
 
 
-# Copied from transformers.models.detr.modeling_detr.DetrFrozenBatchNorm2d with Detr->RTDetr
+# Copied from tiny_hf.transformers.models.detr.modeling_detr.DetrFrozenBatchNorm2d with Detr->RTDetr
 class RTDetrFrozenBatchNorm2d(nn.Module):
     """
     BatchNorm2d where the batch statistics and the affine parameters are fixed.
 
-    Copy-paste from torchvision.misc.ops with added eps before rqsrt, without which any other models than
+    Copy-paste from tg_adapter.ision.misc.ops with added eps before rqsrt, without which any other models than
     torchvision.models.resnet[18,34,50,101] produce nans.
     """
 
@@ -362,7 +362,7 @@ class RTDetrFrozenBatchNorm2d(nn.Module):
         return x * scale + bias
 
 
-# Copied from transformers.models.detr.modeling_detr.replace_batch_norm with Detr->RTDetr
+# Copied from tiny_hf.transformers.models.detr.modeling_detr.replace_batch_norm with Detr->RTDetr
 def replace_batch_norm(model):
     r"""
     Recursively replace all `torch.nn.BatchNorm2d` with `RTDetrFrozenBatchNorm2d`.
@@ -694,7 +694,7 @@ class RTDetrCSPRepLayer(nn.Module):
         return self.conv3(hidden_state_1 + hidden_state_2)
 
 
-# Copied from transformers.models.deformable_detr.modeling_deformable_detr.DeformableDetrMultiscaleDeformableAttention with DeformableDetr->RTDetr
+# Copied from tiny_hf.transformers.models.deformable_detr.modeling_deformable_detr.DeformableDetrMultiscaleDeformableAttention with DeformableDetr->RTDetr
 class RTDetrMultiscaleDeformableAttention(nn.Module):
     """
     Multiscale deformable attention as proposed in Deformable DETR.
@@ -1686,7 +1686,7 @@ class RTDetrModel(RTDetrPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, RTDetrModel
+        >>> from tiny_hf.transformers.import AutoImageProcessor, RTDetrModel
         >>> from PIL import Image
         >>> import requests
 
@@ -1951,10 +1951,10 @@ class RTDetrForObjectDetection(RTDetrPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import RTDetrImageProcessor, RTDetrForObjectDetection
+        >>> from tiny_hf.transformers.import RTDetrImageProcessor, RTDetrForObjectDetection
         >>> from PIL import Image
         >>> import requests
-        >>> import torch
+        >>> import tg_adapter as torch
 
         >>> url = "http://images.cocodataset.org/val2017/000000039769.jpg"
         >>> image = Image.open(requests.get(url, stream=True).raw)

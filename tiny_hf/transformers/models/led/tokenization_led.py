@@ -35,7 +35,7 @@ VOCAB_FILES_NAMES = {"vocab_file": "vocab.json", "merges_file": "merges.txt"}
 
 
 @lru_cache()
-# Copied from transformers.models.bart.tokenization_bart.bytes_to_unicode
+# Copied from tiny_hf.transformers.models.bart.tokenization_bart.bytes_to_unicode
 def bytes_to_unicode():
     """
     Returns list of utf-8 byte and a mapping to unicode strings. We specifically avoids mapping to whitespace/control
@@ -60,7 +60,7 @@ def bytes_to_unicode():
     return dict(zip(bs, cs))
 
 
-# Copied from transformers.models.bart.tokenization_bart.get_pairs
+# Copied from tiny_hf.transformers.models.bart.tokenization_bart.get_pairs
 def get_pairs(word):
     """
     Return set of symbol pairs in a word.
@@ -83,7 +83,7 @@ class LEDTokenizer(PreTrainedTokenizer):
     be encoded differently whether it is at the beginning of the sentence (without space) or not:
 
     ```python
-    >>> from transformers import LEDTokenizer
+    >>> from tiny_hf.transformers.import LEDTokenizer
 
     >>> tokenizer = LEDTokenizer.from_pretrained("allenai/led-base-16384")
     >>> tokenizer("Hello world")["input_ids"]
@@ -156,7 +156,7 @@ class LEDTokenizer(PreTrainedTokenizer):
     vocab_files_names = VOCAB_FILES_NAMES
     model_input_names = ["input_ids", "attention_mask"]
 
-    # Copied from transformers.models.bart.tokenization_bart.BartTokenizer.__init__
+    # Copied from tiny_hf.transformers.models.bart.tokenization_bart.BartTokenizer.__init__
     def __init__(
         self,
         vocab_file,
@@ -212,15 +212,15 @@ class LEDTokenizer(PreTrainedTokenizer):
         )
 
     @property
-    # Copied from transformers.models.bart.tokenization_bart.BartTokenizer.vocab_size
+    # Copied from tiny_hf.transformers.models.bart.tokenization_bart.BartTokenizer.vocab_size
     def vocab_size(self):
         return len(self.encoder)
 
-    # Copied from transformers.models.bart.tokenization_bart.BartTokenizer.get_vocab
+    # Copied from tiny_hf.transformers.models.bart.tokenization_bart.BartTokenizer.get_vocab
     def get_vocab(self):
         return dict(self.encoder, **self.added_tokens_encoder)
 
-    # Copied from transformers.models.bart.tokenization_bart.BartTokenizer.bpe
+    # Copied from tiny_hf.transformers.models.bart.tokenization_bart.BartTokenizer.bpe
     def bpe(self, token):
         if token in self.cache:
             return self.cache[token]
@@ -263,7 +263,7 @@ class LEDTokenizer(PreTrainedTokenizer):
         self.cache[token] = word
         return word
 
-    # Copied from transformers.models.bart.tokenization_bart.BartTokenizer._tokenize
+    # Copied from tiny_hf.transformers.models.bart.tokenization_bart.BartTokenizer._tokenize
     def _tokenize(self, text):
         """Tokenize a string."""
         bpe_tokens = []
@@ -274,24 +274,24 @@ class LEDTokenizer(PreTrainedTokenizer):
             bpe_tokens.extend(bpe_token for bpe_token in self.bpe(token).split(" "))
         return bpe_tokens
 
-    # Copied from transformers.models.bart.tokenization_bart.BartTokenizer._convert_token_to_id
+    # Copied from tiny_hf.transformers.models.bart.tokenization_bart.BartTokenizer._convert_token_to_id
     def _convert_token_to_id(self, token):
         """Converts a token (str) in an id using the vocab."""
         return self.encoder.get(token, self.encoder.get(self.unk_token))
 
-    # Copied from transformers.models.bart.tokenization_bart.BartTokenizer._convert_id_to_token
+    # Copied from tiny_hf.transformers.models.bart.tokenization_bart.BartTokenizer._convert_id_to_token
     def _convert_id_to_token(self, index):
         """Converts an index (integer) in a token (str) using the vocab."""
         return self.decoder.get(index)
 
-    # Copied from transformers.models.bart.tokenization_bart.BartTokenizer.convert_tokens_to_string
+    # Copied from tiny_hf.transformers.models.bart.tokenization_bart.BartTokenizer.convert_tokens_to_string
     def convert_tokens_to_string(self, tokens):
         """Converts a sequence of tokens (string) in a single string."""
         text = "".join(tokens)
         text = bytearray([self.byte_decoder[c] for c in text]).decode("utf-8", errors=self.errors)
         return text
 
-    # Copied from transformers.models.bart.tokenization_bart.BartTokenizer.save_vocabulary
+    # Copied from tiny_hf.transformers.models.bart.tokenization_bart.BartTokenizer.save_vocabulary
     def save_vocabulary(self, save_directory: str, filename_prefix: Optional[str] = None) -> Tuple[str]:
         if not os.path.isdir(save_directory):
             logger.error(f"Vocabulary path ({save_directory}) should be a directory")
@@ -321,7 +321,7 @@ class LEDTokenizer(PreTrainedTokenizer):
 
         return vocab_file, merge_file
 
-    # Copied from transformers.models.bart.tokenization_bart.BartTokenizer.build_inputs_with_special_tokens with BART->LED
+    # Copied from tiny_hf.transformers.models.bart.tokenization_bart.BartTokenizer.build_inputs_with_special_tokens with BART->LED
     def build_inputs_with_special_tokens(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
     ) -> List[int]:
@@ -347,7 +347,7 @@ class LEDTokenizer(PreTrainedTokenizer):
         sep = [self.sep_token_id]
         return cls + token_ids_0 + sep + sep + token_ids_1 + sep
 
-    # Copied from transformers.models.bart.tokenization_bart.BartTokenizer.get_special_tokens_mask
+    # Copied from tiny_hf.transformers.models.bart.tokenization_bart.BartTokenizer.get_special_tokens_mask
     def get_special_tokens_mask(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None, already_has_special_tokens: bool = False
     ) -> List[int]:
@@ -375,7 +375,7 @@ class LEDTokenizer(PreTrainedTokenizer):
             return [1] + ([0] * len(token_ids_0)) + [1]
         return [1] + ([0] * len(token_ids_0)) + [1, 1] + ([0] * len(token_ids_1)) + [1]
 
-    # Copied from transformers.models.bart.tokenization_bart.BartTokenizer.create_token_type_ids_from_sequences with BART->LED
+    # Copied from tiny_hf.transformers.models.bart.tokenization_bart.BartTokenizer.create_token_type_ids_from_sequences with BART->LED
     def create_token_type_ids_from_sequences(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
     ) -> List[int]:
@@ -399,7 +399,7 @@ class LEDTokenizer(PreTrainedTokenizer):
             return len(cls + token_ids_0 + sep) * [0]
         return len(cls + token_ids_0 + sep + sep + token_ids_1 + sep) * [0]
 
-    # Copied from transformers.models.bart.tokenization_bart.BartTokenizer.prepare_for_tokenization
+    # Copied from tiny_hf.transformers.models.bart.tokenization_bart.BartTokenizer.prepare_for_tokenization
     def prepare_for_tokenization(self, text, is_split_into_words=False, **kwargs):
         add_prefix_space = kwargs.pop("add_prefix_space", self.add_prefix_space)
         if (is_split_into_words or add_prefix_space) and (len(text) > 0 and not text[0].isspace()):

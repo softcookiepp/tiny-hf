@@ -134,7 +134,7 @@ class VitsConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import VitsModel, VitsConfig
+    >>> from tiny_hf.transformers.import VitsModel, VitsConfig
 
     >>> # Initializing a "facebook/mms-tts-eng" style configuration
     >>> configuration = VitsConfig()

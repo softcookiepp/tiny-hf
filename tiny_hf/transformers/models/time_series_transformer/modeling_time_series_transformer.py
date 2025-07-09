@@ -18,8 +18,8 @@
 from typing import List, Optional, Tuple, Union
 
 import numpy as np
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...modeling_attn_mask_utils import _prepare_4d_attention_mask, _prepare_4d_causal_attention_mask
@@ -227,7 +227,7 @@ def weighted_average(input_tensor: torch.Tensor, weights: Optional[torch.Tensor]
         return input_tensor.mean(dim=dim)
 
 
-# Copied from transformers.models.marian.modeling_marian.MarianSinusoidalPositionalEmbedding with Marian->TimeSeries
+# Copied from tiny_hf.transformers.models.marian.modeling_marian.MarianSinusoidalPositionalEmbedding with Marian->TimeSeries
 class TimeSeriesSinusoidalPositionalEmbedding(nn.Embedding):
     """This module produces sinusoidal positional embeddings of any length."""
 
@@ -271,7 +271,7 @@ class TimeSeriesValueEmbedding(nn.Module):
         return self.value_projection(x)
 
 
-# Copied from transformers.models.bart.modeling_bart.BartAttention with Bart->TimeSeriesTransformer
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartAttention with Bart->TimeSeriesTransformer
 class TimeSeriesTransformerAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -430,7 +430,7 @@ class TimeSeriesTransformerAttention(nn.Module):
         return attn_output, attn_weights_reshaped, past_key_value
 
 
-# Copied from transformers.models.bart.modeling_bart.BartEncoderLayer with Bart->TimeSeriesTransformer, BART->TIME_SERIES_TRANSFORMER
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartEncoderLayer with Bart->TimeSeriesTransformer, BART->TIME_SERIES_TRANSFORMER
 class TimeSeriesTransformerEncoderLayer(nn.Module):
     def __init__(self, config: TimeSeriesTransformerConfig):
         super().__init__()
@@ -507,7 +507,7 @@ TIME_SERIES_TRANSFORMER_ATTENTION_CLASSES = {
 }
 
 
-# Copied from transformers.models.bart.modeling_bart.BartDecoderLayer with Bart->TimeSeriesTransformer, with BART->TIME_SERIES_TRANSFORMER
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartDecoderLayer with Bart->TimeSeriesTransformer, with BART->TIME_SERIES_TRANSFORMER
 class TimeSeriesTransformerDecoderLayer(nn.Module):
     def __init__(self, config: TimeSeriesTransformerConfig):
         super().__init__()
@@ -1344,8 +1344,8 @@ class TimeSeriesTransformerModel(TimeSeriesTransformerPreTrainedModel):
 
         ```python
         >>> from huggingface_hub import hf_hub_download
-        >>> import torch
-        >>> from transformers import TimeSeriesTransformerModel
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import TimeSeriesTransformerModel
 
         >>> file = hf_hub_download(
         ...     repo_id="hf-internal-testing/tourism-monthly-batch", filename="train-batch.pt", repo_type="dataset"
@@ -1508,8 +1508,8 @@ class TimeSeriesTransformerForPrediction(TimeSeriesTransformerPreTrainedModel):
 
         ```python
         >>> from huggingface_hub import hf_hub_download
-        >>> import torch
-        >>> from transformers import TimeSeriesTransformerForPrediction
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import TimeSeriesTransformerForPrediction
 
         >>> file = hf_hub_download(
         ...     repo_id="hf-internal-testing/tourism-monthly-batch", filename="train-batch.pt", repo_type="dataset"

@@ -20,9 +20,9 @@ import time
 import warnings
 from typing import Dict, List, Optional
 
-import torch
+import tg_adapter as torch
 from filelock import FileLock
-from torch.utils.data import Dataset
+from tg_adapter.utils.data import Dataset
 
 from ...tokenization_utils import PreTrainedTokenizer
 from ...utils import logging

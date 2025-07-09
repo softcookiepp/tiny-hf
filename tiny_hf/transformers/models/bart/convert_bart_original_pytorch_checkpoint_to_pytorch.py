@@ -19,18 +19,18 @@ import os
 from pathlib import Path
 
 import fairseq
-import torch
+import tg_adapter as torch
 from packaging import version
-from torch import nn
+from tg_adapter.import nn
 
-from transformers import (
+from tiny_hf.transformers.import (
     BartConfig,
     BartForConditionalGeneration,
     BartForSequenceClassification,
     BartModel,
     BartTokenizer,
 )
-from transformers.utils import logging
+from tiny_hf.transformers.utils import logging
 
 
 FAIRSEQ_MODELS = ["bart.large", "bart.large.mnli", "bart.large.cnn", "bart_xsum/model.pt"]

@@ -16,10 +16,10 @@
 
 import argparse
 
-import torch
+import tg_adapter as torch
 
-from transformers import RoFormerConfig, RoFormerForMaskedLM, load_tf_weights_in_roformer
-from transformers.utils import logging
+from tiny_hf.transformers.import RoFormerConfig, RoFormerForMaskedLM, load_tf_weights_in_roformer
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

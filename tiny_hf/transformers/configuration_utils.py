@@ -264,7 +264,7 @@ class PretrainedConfig(PushToHubMixin):
             # we will start using self.torch_dtype in v5, but to be consistent with
             # from_pretrained's torch_dtype arg convert it to an actual torch.dtype object
             if is_torch_available():
-                import torch
+                import tg_adapter as torch
 
                 self.torch_dtype = getattr(torch, self.torch_dtype)
 

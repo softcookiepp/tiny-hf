@@ -272,7 +272,7 @@ class PushToHubCallback(keras.callbacks.Callback):
     as with the `from_pretrained` method.
 
     ```py
-    from transformers.keras_callbacks import PushToHubCallback
+    from tiny_hf.transformers.keras_callbacks import PushToHubCallback
 
     push_to_hub_callback = PushToHubCallback(
         output_dir="./model_save",

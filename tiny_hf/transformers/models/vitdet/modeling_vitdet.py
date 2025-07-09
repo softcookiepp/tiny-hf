@@ -18,9 +18,9 @@ import collections.abc
 import math
 from typing import Dict, List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...modeling_outputs import BackboneOutput, BaseModelOutput
@@ -269,7 +269,7 @@ class VitDetAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.beit.modeling_beit.drop_path
+# Copied from tiny_hf.transformers.models.beit.modeling_beit.drop_path
 def drop_path(input: torch.Tensor, drop_prob: float = 0.0, training: bool = False) -> torch.Tensor:
     """
     Drop paths (Stochastic Depth) per sample (when applied in main path of residual blocks).
@@ -290,7 +290,7 @@ def drop_path(input: torch.Tensor, drop_prob: float = 0.0, training: bool = Fals
     return output
 
 
-# Copied from transformers.models.beit.modeling_beit.BeitDropPath
+# Copied from tiny_hf.transformers.models.beit.modeling_beit.BeitDropPath
 class VitDetDropPath(nn.Module):
     """Drop paths (Stochastic Depth) per sample (when applied in main path of residual blocks)."""
 
@@ -741,8 +741,8 @@ class VitDetModel(VitDetPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import VitDetConfig, VitDetModel
-        >>> import torch
+        >>> from tiny_hf.transformers.import VitDetConfig, VitDetModel
+        >>> import tg_adapter as torch
 
         >>> config = VitDetConfig()
         >>> model = VitDetModel(config)
@@ -829,8 +829,8 @@ class VitDetBackbone(VitDetPreTrainedModel, BackboneMixin):
         Examples:
 
         ```python
-        >>> from transformers import VitDetConfig, VitDetBackbone
-        >>> import torch
+        >>> from tiny_hf.transformers.import VitDetConfig, VitDetBackbone
+        >>> import tg_adapter as torch
 
         >>> config = VitDetConfig()
         >>> model = VitDetBackbone(config)

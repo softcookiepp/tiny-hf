@@ -16,9 +16,9 @@
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple, Union
 
 import sentencepiece as spm
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...cache_utils import Cache, DynamicCache
 from ...configuration_utils import PretrainedConfig
@@ -106,7 +106,7 @@ class GemmaConfig(PretrainedConfig):
         attention_dropout (`float`, *optional*, defaults to 0.0):
             The dropout ratio for the attention probabilities.
     ```python
-    >>> from transformers import GemmaModel, GemmaConfig
+    >>> from tiny_hf.transformers.import GemmaModel, GemmaConfig
     >>> # Initializing a Gemma gemma-7b style configuration
     >>> configuration = GemmaConfig()
     >>> # Initializing a model from the gemma-7b style configuration
@@ -500,7 +500,7 @@ class GemmaForCausalLM(LlamaForCausalLM):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, GemmaForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, GemmaForCausalLM
 
         >>> model = GemmaForCausalLM.from_pretrained("google/gemma-7b")
         >>> tokenizer = AutoTokenizer.from_pretrained("google/gemma-7b")

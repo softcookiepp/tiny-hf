@@ -73,7 +73,7 @@ class TrOCRConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import TrOCRConfig, TrOCRForCausalLM
+    >>> from tiny_hf.transformers.import TrOCRConfig, TrOCRForCausalLM
 
     >>> # Initializing a TrOCR-base style configuration
     >>> configuration = TrOCRConfig()

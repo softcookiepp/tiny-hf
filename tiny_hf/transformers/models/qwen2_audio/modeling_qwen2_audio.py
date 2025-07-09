@@ -18,9 +18,9 @@ import math
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache
@@ -94,7 +94,7 @@ class Qwen2AudioCausalLMOutputWithPast(ModelOutput):
 class Qwen2AudioAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
-    # Copied from transformers.models.whisper.modeling_whisper.WhisperAttention.__init__ with Whisper->Qwen2Audio
+    # Copied from tiny_hf.transformers.models.whisper.modeling_whisper.WhisperAttention.__init__ with Whisper->Qwen2Audio
     def __init__(
         self,
         embed_dim: int,
@@ -135,7 +135,7 @@ class Qwen2AudioAttention(nn.Module):
         self.q_proj = nn.Linear(embed_dim, embed_dim, bias=bias)
         self.out_proj = nn.Linear(embed_dim, embed_dim, bias=bias)
 
-    # Copied from transformers.models.bart.modeling_bart.BartAttention._shape with BART->whisper
+    # Copied from tiny_hf.transformers.models.bart.modeling_bart.BartAttention._shape with BART->whisper
     def _shape(self, tensor: torch.Tensor, seq_len: int, bsz: int):
         return tensor.view(bsz, seq_len, self.num_heads, self.head_dim).transpose(1, 2).contiguous()
 
@@ -203,7 +203,7 @@ class Qwen2AudioFlashAttention2(Qwen2AudioAttention):
     flash attention and deal with padding tokens in case the input contains any of them.
     """
 
-    # Copied from transformers.models.whisper.modeling_whisper.WhisperFlashAttention2.__init__ with Whisper->Qwen2Audio
+    # Copied from tiny_hf.transformers.models.whisper.modeling_whisper.WhisperFlashAttention2.__init__ with Whisper->Qwen2Audio
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -370,7 +370,7 @@ QWEN2AUDIO_ATTENTION_CLASSES = {
 }
 
 
-# Copied from transformers.models.whisper.modeling_whisper.WhisperEncoderLayer with Whisper->Qwen2Audio, WHISPER->QWEN2AUDIO
+# Copied from tiny_hf.transformers.models.whisper.modeling_whisper.WhisperEncoderLayer with Whisper->Qwen2Audio, WHISPER->QWEN2AUDIO
 class Qwen2AudioEncoderLayer(nn.Module):
     def __init__(self, config: Qwen2AudioConfig):
         super().__init__()
@@ -507,7 +507,7 @@ QWEN2AUDIOENCODER_START_DOCSTRING = r"""
     """The audio model from Qwen2Audio without any head or projection on top.""",
     QWEN2AUDIOENCODER_START_DOCSTRING,
 )
-# Copied from transformers.models.whisper.modeling_whisper.WhisperEncoder with Whisper->Qwen2Audio
+# Copied from tiny_hf.transformers.models.whisper.modeling_whisper.WhisperEncoder with Whisper->Qwen2Audio
 class Qwen2AudioEncoder(Qwen2AudioPreTrainedModel):
     """
     Transformer encoder consisting of *config.encoder_layers* self attention layers. Each layer is a
@@ -798,27 +798,27 @@ class Qwen2AudioForConditionalGeneration(Qwen2AudioPreTrainedModel, GenerationMi
             raise ValueError(f"{padding_side} is not `left` or `right`.")
         self._padding_side = padding_side
 
-    # Copied from transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.get_input_embeddings
+    # Copied from tiny_hf.transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.get_input_embeddings
     def get_input_embeddings(self):
         return self.language_model.get_input_embeddings()
 
-    # Copied from transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.set_input_embeddings
+    # Copied from tiny_hf.transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.set_input_embeddings
     def set_input_embeddings(self, value):
         self.language_model.set_input_embeddings(value)
 
-    # Copied from transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.get_output_embeddings
+    # Copied from tiny_hf.transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.get_output_embeddings
     def get_output_embeddings(self):
         return self.language_model.get_output_embeddings()
 
-    # Copied from transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.set_output_embeddings
+    # Copied from tiny_hf.transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.set_output_embeddings
     def set_output_embeddings(self, new_embeddings):
         self.language_model.set_output_embeddings(new_embeddings)
 
-    # Copied from transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.set_decoder
+    # Copied from tiny_hf.transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.set_decoder
     def set_decoder(self, decoder):
         self.language_model.set_decoder(decoder)
 
-    # Copied from transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.get_decoder
+    # Copied from tiny_hf.transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.get_decoder
     def get_decoder(self):
         return self.language_model.get_decoder()
 
@@ -1050,7 +1050,7 @@ class Qwen2AudioForConditionalGeneration(Qwen2AudioPreTrainedModel, GenerationMi
         >>> from io import BytesIO
         >>> from urllib.request import urlopen
         >>> import librosa
-        >>> from transformers import AutoProcessor, Qwen2AudioForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoProcessor, Qwen2AudioForConditionalGeneration
 
         >>> model = Qwen2AudioForConditionalGeneration.from_pretrained("Qwen/Qwen2-Audio-7B")
         >>> processor = AutoProcessor.from_pretrained("Qwen/Qwen2-Audio-7B")

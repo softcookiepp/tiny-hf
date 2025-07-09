@@ -60,7 +60,7 @@ _CHECKPOINT_FOR_DOC = "YituTech/conv-bert-base"
 _CONFIG_FOR_DOC = "ConvBertConfig"
 
 
-# Copied from transformers.models.albert.modeling_tf_albert.TFAlbertEmbeddings with Albert->ConvBert
+# Copied from tiny_hf.transformers.models.albert.modeling_tf_albert.TFAlbertEmbeddings with Albert->ConvBert
 class TFConvBertEmbeddings(keras.layers.Layer):
     """Construct the embeddings from word, position and token_type embeddings."""
 
@@ -103,7 +103,7 @@ class TFConvBertEmbeddings(keras.layers.Layer):
             with tf.name_scope(self.LayerNorm.name):
                 self.LayerNorm.build([None, None, self.config.embedding_size])
 
-    # Copied from transformers.models.bert.modeling_tf_bert.TFBertEmbeddings.call
+    # Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertEmbeddings.call
     def call(
         self,
         input_ids: tf.Tensor = None,

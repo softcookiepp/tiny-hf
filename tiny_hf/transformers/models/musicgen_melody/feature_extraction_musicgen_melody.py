@@ -28,10 +28,10 @@ from ...utils import TensorType, is_torch_available, is_torchaudio_available, lo
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 if is_torchaudio_available():
-    import torchaudio
+    import tg_adapter.udio
 
 logger = logging.get_logger(__name__)
 

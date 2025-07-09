@@ -134,7 +134,7 @@ class AutomaticSpeechRecognitionPipeline(ChunkPipeline):
     Example:
 
     ```python
-    >>> from transformers import pipeline
+    >>> from tiny_hf.transformers.import pipeline
 
     >>> transcriber = pipeline(model="openai/whisper-base")
     >>> transcriber("https://huggingface.co/datasets/Narsil/asr_dummy/resolve/main/1.flac")
@@ -392,7 +392,7 @@ class AutomaticSpeechRecognitionPipeline(ChunkPipeline):
             inputs = _inputs
             if in_sampling_rate != self.feature_extractor.sampling_rate:
                 if is_torchaudio_available():
-                    from torchaudio import functional as F
+                    from tg_adapter.udio import functional as F
                 else:
                     raise ImportError(
                         "torchaudio is required to resample audio samples in AutomaticSpeechRecognitionPipeline. "

@@ -19,10 +19,10 @@ import json
 import os
 
 import fairseq
-import torch
+import tg_adapter as torch
 from fairseq.data import Dictionary
 
-from transformers import (
+from tiny_hf.transformers.import (
     Wav2Vec2ConformerConfig,
     Wav2Vec2ConformerForCTC,
     Wav2Vec2ConformerForPreTraining,
@@ -171,7 +171,7 @@ def recursively_load_weights(fairseq_model, hf_model, is_headless):
     logger.warning(f"Unused weights: {unused_weights}")
 
 
-# Copied from transformers.models.wav2vec2.convert_wav2vec2_original_pytorch_checkpoint_to_pytorch.load_conv_layer
+# Copied from tiny_hf.transformers.models.wav2vec2.convert_wav2vec2_original_pytorch_checkpoint_to_pytorch.load_conv_layer
 def load_conv_layer(full_name, value, feature_extractor, unused_weights, use_group_norm):
     name = full_name.split("conv_layers.")[-1]
     items = name.split(".")

@@ -90,7 +90,7 @@ class MobileBertConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import MobileBertConfig, MobileBertModel
+    >>> from tiny_hf.transformers.import MobileBertConfig, MobileBertModel
 
     >>> # Initializing a MobileBERT configuration
     >>> configuration = MobileBertConfig()
@@ -164,7 +164,7 @@ class MobileBertConfig(PretrainedConfig):
         self.classifier_dropout = classifier_dropout
 
 
-# Copied from transformers.models.bert.configuration_bert.BertOnnxConfig with Bert->MobileBert
+# Copied from tiny_hf.transformers.models.bert.configuration_bert.BertOnnxConfig with Bert->MobileBert
 class MobileBertOnnxConfig(OnnxConfig):
     @property
     def inputs(self) -> Mapping[str, Mapping[int, str]]:

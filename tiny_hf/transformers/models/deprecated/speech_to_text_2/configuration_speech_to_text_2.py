@@ -68,7 +68,7 @@ class Speech2Text2Config(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import Speech2Text2Config, Speech2Text2ForCausalLM
+    >>> from tiny_hf.transformers.import Speech2Text2Config, Speech2Text2ForCausalLM
 
     >>> # Initializing a Speech2Text2 s2t_transformer_s style configuration
     >>> configuration = Speech2Text2Config()

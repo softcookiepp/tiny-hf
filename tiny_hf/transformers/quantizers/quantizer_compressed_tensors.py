@@ -131,7 +131,7 @@ class CompressedTensorsHfQuantizer(HfQuantizer):
             cache_path = config._name_or_path
 
             if not os.path.exists(cache_path):
-                from transformers.utils import cached_file
+                from tiny_hf.transformers.utils import cached_file
 
                 config_file_path = cached_file(cache_path, "config.json")
                 cache_path = os.path.sep.join(config_file_path.split(os.path.sep)[:-1])

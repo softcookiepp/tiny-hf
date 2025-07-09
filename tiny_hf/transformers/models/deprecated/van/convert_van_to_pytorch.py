@@ -24,14 +24,14 @@ from functools import partial
 from pathlib import Path
 from typing import List
 
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+import tg_adapter.nn as nn
 from huggingface_hub import cached_download, hf_hub_download
-from torch import Tensor
+from tg_adapter.import Tensor
 
-from transformers import AutoImageProcessor, VanConfig, VanForImageClassification
-from transformers.models.deprecated.van.modeling_van import VanLayerScaling
-from transformers.utils import logging
+from tiny_hf.transformers.import AutoImageProcessor, VanConfig, VanForImageClassification
+from tiny_hf.transformers.models.deprecated.van.modeling_van import VanLayerScaling
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

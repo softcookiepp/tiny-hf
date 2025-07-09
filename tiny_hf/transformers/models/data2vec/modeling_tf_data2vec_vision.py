@@ -445,7 +445,7 @@ class TFData2VecVisionAttention(keras.layers.Layer):
                 self.dense_output.build(None)
 
 
-# Copied from transformers.models.vit.modeling_tf_vit.TFViTIntermediate with ViT->Data2VecVision
+# Copied from tiny_hf.transformers.models.vit.modeling_tf_vit.TFViTIntermediate with ViT->Data2VecVision
 class TFData2VecVisionIntermediate(keras.layers.Layer):
     def __init__(self, config: Data2VecVisionConfig, **kwargs):
         super().__init__(**kwargs)
@@ -1613,7 +1613,7 @@ class TFData2VecVisionForSemanticSegmentation(TFData2VecVisionPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, TFData2VecVisionForSemanticSegmentation
+        >>> from tiny_hf.transformers.import AutoImageProcessor, TFData2VecVisionForSemanticSegmentation
         >>> from PIL import Image
         >>> import requests
 

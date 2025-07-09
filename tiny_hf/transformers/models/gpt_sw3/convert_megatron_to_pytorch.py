@@ -17,9 +17,9 @@ import argparse
 import os
 from os.path import isfile
 
-import torch
+import tg_adapter as torch
 
-from transformers import GPT2Config
+from tiny_hf.transformers.import GPT2Config
 
 
 def recursive_print(name, val, spaces=0):

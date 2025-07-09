@@ -23,10 +23,10 @@ import collections.abc
 from dataclasses import dataclass
 from typing import Callable, List, Optional, Set, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...file_utils import (
@@ -294,7 +294,7 @@ class DPTViTPatchEmbeddings(nn.Module):
         return embeddings
 
 
-# Copied from transformers.models.vit.modeling_vit.eager_attention_forward
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.eager_attention_forward
 def eager_attention_forward(
     module: nn.Module,
     query: torch.Tensor,
@@ -325,7 +325,7 @@ def eager_attention_forward(
     return attn_output, attn_weights
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTSelfAttention with ViT->DPT
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTSelfAttention with ViT->DPT
 class DPTSelfAttention(nn.Module):
     def __init__(self, config: DPTConfig) -> None:
         super().__init__()
@@ -388,7 +388,7 @@ class DPTSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTSelfOutput with ViT->DPT
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTSelfOutput with ViT->DPT
 class DPTViTSelfOutput(nn.Module):
     """
     The residual connection is defined in DPTLayer instead of here (as is the case with other models), due to the
@@ -414,7 +414,7 @@ class DPTViTAttention(nn.Module):
         self.output = DPTViTSelfOutput(config)
         self.pruned_heads = set()
 
-    # Copied from transformers.models.vit.modeling_vit.ViTAttention.prune_heads
+    # Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTAttention.prune_heads
     def prune_heads(self, heads: Set[int]) -> None:
         if len(heads) == 0:
             return
@@ -433,7 +433,7 @@ class DPTViTAttention(nn.Module):
         self.attention.all_head_size = self.attention.attention_head_size * self.attention.num_attention_heads
         self.pruned_heads = self.pruned_heads.union(heads)
 
-    # Copied from transformers.models.vit.modeling_vit.ViTAttention.forward
+    # Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTAttention.forward
     def forward(
         self,
         hidden_states: torch.Tensor,
@@ -448,7 +448,7 @@ class DPTViTAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTIntermediate with ViT->DPT
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTIntermediate with ViT->DPT
 class DPTViTIntermediate(nn.Module):
     def __init__(self, config: DPTConfig) -> None:
         super().__init__()
@@ -465,7 +465,7 @@ class DPTViTIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTOutput with ViT->DPT
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTOutput with ViT->DPT
 class DPTViTOutput(nn.Module):
     def __init__(self, config: DPTConfig) -> None:
         super().__init__()
@@ -481,7 +481,7 @@ class DPTViTOutput(nn.Module):
         return hidden_states
 
 
-# copied from transformers.models.vit.modeling_vit.ViTLayer with ViTConfig->DPTConfig, ViTAttention->DPTViTAttention, ViTIntermediate->DPTViTIntermediate, ViTOutput->DPTViTOutput
+# copied from tiny_hf.transformers.models.vit.modeling_vit.ViTLayer with ViTConfig->DPTConfig, ViTAttention->DPTViTAttention, ViTIntermediate->DPTViTIntermediate, ViTOutput->DPTViTOutput
 class DPTViTLayer(nn.Module):
     """This corresponds to the Block class in the timm implementation."""
 
@@ -524,7 +524,7 @@ class DPTViTLayer(nn.Module):
         return outputs
 
 
-# copied from transformers.models.vit.modeling_vit.ViTEncoder with ViTConfig -> DPTConfig, ViTLayer->DPTViTLayer
+# copied from tiny_hf.transformers.models.vit.modeling_vit.ViTEncoder with ViTConfig -> DPTConfig, ViTLayer->DPTViTLayer
 class DPTViTEncoder(nn.Module):
     def __init__(self, config: DPTConfig) -> None:
         super().__init__()
@@ -985,7 +985,7 @@ class DPTModel(DPTPreTrainedModel):
         )
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTPooler with ViT->DPT
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTPooler with ViT->DPT
 class DPTViTPooler(nn.Module):
     def __init__(self, config: DPTConfig):
         super().__init__()
@@ -1139,8 +1139,8 @@ class DPTForDepthEstimation(DPTPreTrainedModel):
 
         Examples:
         ```python
-        >>> from transformers import AutoImageProcessor, DPTForDepthEstimation
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoImageProcessor, DPTForDepthEstimation
+        >>> import tg_adapter as torch
         >>> import numpy as np
         >>> from PIL import Image
         >>> import requests
@@ -1321,7 +1321,7 @@ class DPTForSemanticSegmentation(DPTPreTrainedModel):
 
         Examples:
         ```python
-        >>> from transformers import AutoImageProcessor, DPTForSemanticSegmentation
+        >>> from tiny_hf.transformers.import AutoImageProcessor, DPTForSemanticSegmentation
         >>> from PIL import Image
         >>> import requests
 

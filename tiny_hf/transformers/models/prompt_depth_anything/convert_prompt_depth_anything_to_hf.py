@@ -20,17 +20,17 @@ import re
 from pathlib import Path
 
 import requests
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 from PIL import Image
 
-from transformers import (
+from tiny_hf.transformers.import (
     Dinov2Config,
     PromptDepthAnythingConfig,
     PromptDepthAnythingForDepthEstimation,
     PromptDepthAnythingImageProcessor,
 )
-from transformers.utils import logging
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

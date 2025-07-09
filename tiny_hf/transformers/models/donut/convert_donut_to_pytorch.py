@@ -16,11 +16,11 @@
 
 import argparse
 
-import torch
+import tg_adapter as torch
 from datasets import load_dataset
 from donut import DonutModel
 
-from transformers import (
+from tiny_hf.transformers.import (
     DonutImageProcessor,
     DonutProcessor,
     DonutSwinConfig,

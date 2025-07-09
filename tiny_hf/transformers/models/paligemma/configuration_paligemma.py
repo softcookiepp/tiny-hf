@@ -54,7 +54,7 @@ class PaliGemmaConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import PaliGemmaForConditionalGeneration, PaliGemmaConfig, SiglipVisionConfig, GemmaConfig
+    >>> from tiny_hf.transformers.import PaliGemmaForConditionalGeneration, PaliGemmaConfig, SiglipVisionConfig, GemmaConfig
 
     >>> # Initializing a Siglip-like vision config
     >>> vision_config = SiglipVisionConfig()

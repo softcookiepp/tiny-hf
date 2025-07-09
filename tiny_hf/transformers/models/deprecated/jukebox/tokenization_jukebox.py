@@ -52,7 +52,7 @@ class JukeboxTokenizer(PreTrainedTokenizer):
 
     Depending on the number of genres on which the model should be conditioned (`n_genres`).
     ```python
-    >>> from transformers import JukeboxTokenizer
+    >>> from tiny_hf.transformers.import JukeboxTokenizer
 
     >>> tokenizer = JukeboxTokenizer.from_pretrained("openai/jukebox-1b-lyrics")
     >>> tokenizer("Alan Jackson", "Country Rock", "old town road")["input_ids"]
@@ -292,7 +292,7 @@ class JukeboxTokenizer(PreTrainedTokenizer):
         elif tensor_type == TensorType.PYTORCH:
             if not is_torch_available():
                 raise ImportError("Unable to convert output to PyTorch tensors format, PyTorch is not installed.")
-            import torch
+            import tg_adapter as torch
 
             as_tensor = torch.tensor
             is_tensor = torch.is_tensor

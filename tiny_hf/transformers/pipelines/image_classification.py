@@ -43,19 +43,19 @@ if is_torch_available():
 logger = logging.get_logger(__name__)
 
 
-# Copied from transformers.pipelines.text_classification.sigmoid
+# Copied from tiny_hf.transformers.pipelines.text_classification.sigmoid
 def sigmoid(_outputs):
     return 1.0 / (1.0 + np.exp(-_outputs))
 
 
-# Copied from transformers.pipelines.text_classification.softmax
+# Copied from tiny_hf.transformers.pipelines.text_classification.softmax
 def softmax(_outputs):
     maxes = np.max(_outputs, axis=-1, keepdims=True)
     shifted_exp = np.exp(_outputs - maxes)
     return shifted_exp / shifted_exp.sum(axis=-1, keepdims=True)
 
 
-# Copied from transformers.pipelines.text_classification.ClassificationFunction
+# Copied from tiny_hf.transformers.pipelines.text_classification.ClassificationFunction
 class ClassificationFunction(ExplicitEnum):
     SIGMOID = "sigmoid"
     SOFTMAX = "softmax"
@@ -82,7 +82,7 @@ class ImageClassificationPipeline(Pipeline):
     Example:
 
     ```python
-    >>> from transformers import pipeline
+    >>> from tiny_hf.transformers.import pipeline
 
     >>> classifier = pipeline(model="microsoft/beit-base-patch16-224-pt22k-ft22k")
     >>> classifier("https://huggingface.co/datasets/Narsil/image_dummy/raw/main/parrots.png")

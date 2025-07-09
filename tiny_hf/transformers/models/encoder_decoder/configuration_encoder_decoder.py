@@ -44,7 +44,7 @@ class EncoderDecoderConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import BertConfig, EncoderDecoderConfig, EncoderDecoderModel
+    >>> from tiny_hf.transformers.import BertConfig, EncoderDecoderConfig, EncoderDecoderModel
 
     >>> # Initializing a BERT google-bert/bert-base-uncased style configuration
     >>> config_encoder = BertConfig()

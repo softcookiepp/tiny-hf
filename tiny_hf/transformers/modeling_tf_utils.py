@@ -2662,7 +2662,7 @@ class TFPreTrainedModel(keras.Model, TFModelUtilsMixin, TFGenerationMixin, PushT
         Examples:
 
         ```python
-        >>> from transformers import BertConfig, TFBertModel
+        >>> from tiny_hf.transformers.import BertConfig, TFBertModel
 
         >>> # Download model and configuration from huggingface.co and cache.
         >>> model = TFBertModel.from_pretrained("google-bert/bert-base-uncased")
@@ -3175,7 +3175,7 @@ class TFPreTrainedModel(keras.Model, TFModelUtilsMixin, TFGenerationMixin, PushT
         Examples:
 
         ```python
-        from transformers import TFAutoModel
+        from tiny_hf.transformers.import TFAutoModel
 
         model = TFAutoModel.from_pretrained("google-bert/bert-base-cased")
 

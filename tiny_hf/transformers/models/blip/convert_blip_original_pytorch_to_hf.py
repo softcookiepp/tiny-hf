@@ -17,17 +17,17 @@ import argparse
 import re
 
 import requests
-import torch
+import tg_adapter as torch
 
 # git clone https://github.com/salesforce/BLIP.git
 from models.blip import blip_decoder
 from models.blip_itm import blip_itm
 from models.blip_vqa import blip_vqa
 from PIL import Image
-from torchvision import transforms
-from torchvision.transforms.functional import InterpolationMode
+from tg_adapter.ision import transforms
+from tg_adapter.ision.transforms.functional import InterpolationMode
 
-from transformers import (
+from tiny_hf.transformers.import (
     BertTokenizer,
     BlipConfig,
     BlipForConditionalGeneration,

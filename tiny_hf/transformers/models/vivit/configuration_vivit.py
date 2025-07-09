@@ -65,7 +65,7 @@ class VivitConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import VivitConfig, VivitModel
+    >>> from tiny_hf.transformers.import VivitConfig, VivitModel
 
     >>> # Initializing a ViViT google/vivit-b-16x2-kinetics400 style configuration
     >>> configuration = VivitConfig()

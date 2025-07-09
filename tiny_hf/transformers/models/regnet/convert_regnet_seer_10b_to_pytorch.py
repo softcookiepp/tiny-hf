@@ -27,16 +27,16 @@ from pathlib import Path
 from pprint import pprint
 from typing import Dict, List, Tuple
 
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+import tg_adapter.nn as nn
 from classy_vision.models.regnet import RegNet, RegNetParams
 from huggingface_hub import hf_hub_download
-from torch import Tensor
+from tg_adapter.import Tensor
 from vissl.models.model_helpers import get_trunk_forward_outputs
 
-from transformers import AutoImageProcessor, RegNetConfig, RegNetForImageClassification, RegNetModel
-from transformers.modeling_utils import _load_state_dict_into_meta_model, load_state_dict
-from transformers.utils import logging
+from tiny_hf.transformers.import AutoImageProcessor, RegNetConfig, RegNetForImageClassification, RegNetModel
+from tiny_hf.transformers.modeling_utils import _load_state_dict_into_meta_model, load_state_dict
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

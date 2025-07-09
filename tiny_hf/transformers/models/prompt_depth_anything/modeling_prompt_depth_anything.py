@@ -18,10 +18,10 @@
 # limitations under the License.
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+import tg_adapter.nn as nn
 
-from transformers.utils.generic import torch_int
+from tiny_hf.transformers.utils.generic import tg_adapter.int
 
 from ...file_utils import add_start_docstrings, add_start_docstrings_to_model_forward, replace_return_docstrings
 from ...modeling_outputs import DepthEstimatorOutput
@@ -456,8 +456,8 @@ class PromptDepthAnythingForDepthEstimation(PromptDepthAnythingPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, AutoModelForDepthEstimation
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoImageProcessor, AutoModelForDepthEstimation
+        >>> import tg_adapter as torch
         >>> import numpy as np
         >>> from PIL import Image
         >>> import requests

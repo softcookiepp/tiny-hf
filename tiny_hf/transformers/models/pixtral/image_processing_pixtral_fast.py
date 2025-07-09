@@ -48,16 +48,16 @@ from .image_processing_pixtral import (
 logger = logging.get_logger(__name__)
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 if is_torchvision_available():
     if is_vision_available():
         pass
 
     if is_torchvision_v2_available():
-        from torchvision.transforms.v2 import functional as F
+        from tg_adapter.ision.transforms.v2 import functional as F
     else:
-        from torchvision.transforms import functional as F
+        from tg_adapter.ision.transforms import functional as F
 
 
 class PixtralFastImageProcessorKwargs(DefaultFastImageProcessorKwargs):
@@ -136,7 +136,7 @@ class PixtralImageProcessorFast(BaseImageProcessorFast):
         output_size = get_resize_output_image_size(image, size=size, patch_size=patch_size)
         return F.resize(image, size=output_size, interpolation=interpolation, **kwargs)
 
-    # Adapted from transformers.models.pixtral.image_processing_pixtral.PixtralImageProcessor._pad_for_batching
+    # Adapted from tiny_hf.transformers.models.pixtral.image_processing_pixtral.PixtralImageProcessor._pad_for_batching
     def _pad_for_batching(
         self,
         pixel_values: List[torch.Tensor],

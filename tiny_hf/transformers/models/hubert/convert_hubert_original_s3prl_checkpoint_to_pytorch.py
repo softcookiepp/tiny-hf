@@ -16,9 +16,9 @@
 
 import argparse
 
-import torch
+import tg_adapter as torch
 
-from transformers import HubertConfig, HubertForSequenceClassification, Wav2Vec2FeatureExtractor, logging
+from tiny_hf.transformers.import HubertConfig, HubertForSequenceClassification, Wav2Vec2FeatureExtractor, logging
 
 
 logging.set_verbosity_info()

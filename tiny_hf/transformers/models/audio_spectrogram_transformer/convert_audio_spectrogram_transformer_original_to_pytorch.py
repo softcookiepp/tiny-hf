@@ -18,13 +18,13 @@ import argparse
 import json
 from pathlib import Path
 
-import torch
-import torchaudio
+import tg_adapter as torch
+import tg_adapter.udio
 from datasets import load_dataset
 from huggingface_hub import hf_hub_download
 
-from transformers import ASTConfig, ASTFeatureExtractor, ASTForAudioClassification
-from transformers.utils import logging
+from tiny_hf.transformers.import ASTConfig, ASTFeatureExtractor, ASTForAudioClassification
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

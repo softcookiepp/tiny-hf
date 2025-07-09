@@ -16,16 +16,16 @@
 
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
-import torch.utils.checkpoint
+import tg_adapter as torch
+import tg_adapter.nn as nn
+import tg_adapter.utils.checkpoint
 
-from transformers.models.llava.modeling_llava import (
+from tiny_hf.transformers.models.llava.modeling_llava import (
     LlavaCausalLMOutputWithPast,
     LlavaForConditionalGeneration,
     LlavaPreTrainedModel,
 )
-from transformers.models.sam.modeling_sam import SamMLPBlock, SamVisionAttention, SamVisionEncoder, SamVisionLayer
+from tiny_hf.transformers.models.sam.modeling_sam import SamMLPBlock, SamVisionAttention, SamVisionEncoder, SamVisionLayer
 
 from ...configuration_utils import PretrainedConfig
 from ...utils import (
@@ -161,7 +161,7 @@ class GotOcr2Config(PretrainedConfig):
             Padding token id.
 
     ```python
-    >>> from transformers import GotOcr2ForConditionalGeneration, GotOcr2Config
+    >>> from tiny_hf.transformers.import GotOcr2ForConditionalGeneration, GotOcr2Config
 
     >>> # Initializing a GotOcr2 style configuration
     >>> configuration = GotOcr2Config()
@@ -420,7 +420,7 @@ class GotOcr2ForConditionalGeneration(LlavaForConditionalGeneration):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, GotOcr2ForConditionalGeneration, TextStreamer
+        >>> from tiny_hf.transformers.import AutoProcessor, GotOcr2ForConditionalGeneration, TextStreamer
 
         >>> model = GotOcr2ForConditionalGeneration.from_pretrained("stepfun-ai/GOT-OCR-2.0-hf").to("cuda")
         >>> processor = AutoProcessor.from_pretrained("stepfun-ai/GOT-OCR-2.0-hf")

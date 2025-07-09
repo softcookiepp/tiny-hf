@@ -851,7 +851,7 @@ PIPELINE_INIT_ARGS = build_pipeline_init_args(
 
 
 if is_torch_available():
-    from transformers.pipelines.pt_utils import (
+    from tiny_hf.transformers.pipelines.pt_utils import (
         PipelineChunkIterator,
         PipelineDataset,
         PipelineIterator,

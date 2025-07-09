@@ -297,7 +297,7 @@ def run_hp_search_ray(trainer, n_trials: int, direction: str, **kwargs) -> BestR
 
 	def _objective(trial: dict, local_trainer):
 		try:
-			#from transformers.utils.notebook import NotebookProgressCallback
+			#from tiny_hf.transformers.utils.notebook import NotebookProgressCallback
 			from ..utils.notebook import NotebookProgressCallback
 
 			if local_trainer.pop_callback(NotebookProgressCallback):
@@ -662,7 +662,7 @@ class TensorBoardCallback(TrainerCallback):
 			)
 		if has_tensorboard:
 			try:
-				from torch.utils.tensorboard import SummaryWriter  # noqa: F401
+				from tg_adapter.utils.tensorboard import SummaryWriter  # noqa: F401
 
 				self._SummaryWriter = SummaryWriter
 			except ImportError:
@@ -2140,7 +2140,7 @@ class DVCLiveCallback(TrainerCallback):
 
 	def on_train_end(self, args, state, control, **kwargs):
 		if self._initialized and state.is_world_process_zero:
-			#from transformers.trainer import Trainer
+			#from tiny_hf.transformers.trainer import Trainer
 			from ..trainer import Trainer
 
 			if self._log_model is True:

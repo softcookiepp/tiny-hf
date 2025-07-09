@@ -651,7 +651,7 @@ class CodeAgent(Agent):
         Example:
 
         ```py
-        from transformers.agents import CodeAgent
+        from tiny_hf.transformers.agents import CodeAgent
 
         agent = CodeAgent(tools=[])
         agent.run("What is the result of 2 power 3.7384?")
@@ -793,7 +793,7 @@ class ReactAgent(Agent):
 
         Example:
         ```py
-        from transformers.agents import ReactCodeAgent
+        from tiny_hf.transformers.agents import ReactCodeAgent
         agent = ReactCodeAgent(tools=[])
         agent.run("What is the result of 2 power 3.7384?")
         ```

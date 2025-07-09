@@ -158,7 +158,7 @@ class DbrxConfig(PretrainedConfig):
 
     Example:
     ```python
-    >>> from transformers import DbrxConfig, DbrxModel
+    >>> from tiny_hf.transformers.import DbrxConfig, DbrxModel
 
     >>> # Initializing a Dbrx configuration
     >>> configuration = DbrxConfig(n_layers=2, d_model=256, n_heads=8, vocab_size=128)

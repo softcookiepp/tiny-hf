@@ -15,14 +15,14 @@ import argparse
 import os
 import warnings
 
-import torch
+import tg_adapter as torch
 from accelerate import init_empty_weights
 
-from transformers import GemmaConfig, GemmaForCausalLM, GemmaTokenizer
+from tiny_hf.transformers.import GemmaConfig, GemmaForCausalLM, GemmaTokenizer
 
 
 try:
-    from transformers import GemmaTokenizerFast
+    from tiny_hf.transformers.import GemmaTokenizerFast
 except ImportError as e:
     warnings.warn(e)
     warnings.warn(
@@ -41,7 +41,7 @@ python src/transformers/models/gemma/convert_gemma_weights_to_hf.py \
 Thereafter, models can be loaded via:
 
 ```py
-from transformers import GemmaForCausalLM, GemmaTokenizerFast
+from tiny_hf.transformers.import GemmaForCausalLM, GemmaTokenizerFast
 
 model = GemmaForCausalLM.from_pretrained("/output/path")
 tokenizer = GemmaTokenizerFast.from_pretrained("/output/path")

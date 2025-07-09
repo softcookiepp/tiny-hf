@@ -86,7 +86,7 @@ class Gemma2Config(PretrainedConfig):
         cache_implementation (`str`, *optional*, defaults to `"hybrid"`): the cache type to be used with `generate`.
 
     ```python
-    >>> from transformers import Gemma2Model, Gemma2Config
+    >>> from tiny_hf.transformers.import Gemma2Model, Gemma2Config
     >>> # Initializing a Gemma2 gemma2-7b style configuration
     >>> configuration = Gemma2Config()
     >>> # Initializing a model from the gemma2-7b style configuration

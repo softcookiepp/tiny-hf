@@ -80,7 +80,7 @@ class RobertaTokenizer(PreTrainedTokenizer):
     be encoded differently whether it is at the beginning of the sentence (without space) or not:
 
     ```python
-    >>> from transformers import RobertaTokenizer
+    >>> from tiny_hf.transformers.import RobertaTokenizer
 
     >>> tokenizer = RobertaTokenizer.from_pretrained("FacebookAI/roberta-base")
     >>> tokenizer("Hello world")["input_ids"]

@@ -150,7 +150,7 @@ class IdeficsImageProcessor(BaseImageProcessor):
         if transform is not None:
             if not is_torch_available():
                 raise ImportError("To pass in `transform` torch must be installed")
-            import torch
+            import tg_adapter as torch
 
             images = [transform(x) for x in images]
             return torch.stack(images)

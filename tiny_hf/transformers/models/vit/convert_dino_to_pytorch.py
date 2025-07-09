@@ -19,12 +19,12 @@ import json
 from pathlib import Path
 
 import requests
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 from PIL import Image
 
-from transformers import ViTConfig, ViTForImageClassification, ViTImageProcessor, ViTModel
-from transformers.utils import logging
+from tiny_hf.transformers.import ViTConfig, ViTForImageClassification, ViTImageProcessor, ViTModel
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()
@@ -154,7 +154,7 @@ def convert_vit_checkpoint(model_name, pytorch_dump_folder_path, base_model=True
         config.num_hidden_layers = 12
         config.num_attention_heads = 6
 
-    # load original model from torch hub
+    # load original model from tg_adapter.hub
     original_model = torch.hub.load("facebookresearch/dino:main", model_name)
     original_model.eval()
 

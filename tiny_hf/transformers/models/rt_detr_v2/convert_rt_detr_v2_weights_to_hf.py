@@ -20,13 +20,13 @@ import re
 from pathlib import Path
 
 import requests
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 from PIL import Image
-from torchvision import transforms
+from tg_adapter.ision import transforms
 
-from transformers import RTDetrImageProcessor, RTDetrV2Config, RTDetrV2ForObjectDetection
-from transformers.utils import logging
+from tiny_hf.transformers.import RTDetrImageProcessor, RTDetrV2Config, RTDetrV2ForObjectDetection
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()
@@ -225,7 +225,7 @@ def write_model_and_image_processor(model_name, output_dir, push_to_hub, repo_id
     # load default config
     config = get_rt_detr_v2_config(model_name)
 
-    # load original model from torch hub
+    # load original model from tg_adapter.hub
     model_name_to_checkpoint_url = {
         "rtdetr_v2_r18vd": "https://github.com/lyuwenyu/storage/releases/download/v0.2/rtdetrv2_r18vd_120e_coco_rerun_48.1.pth",
         "rtdetr_v2_r34vd": "https://github.com/lyuwenyu/storage/releases/download/v0.1/rtdetrv2_r34vd_120e_coco_ema.pth",

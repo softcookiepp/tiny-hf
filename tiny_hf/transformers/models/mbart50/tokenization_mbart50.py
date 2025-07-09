@@ -83,7 +83,7 @@ class MBart50Tokenizer(PreTrainedTokenizer):
     Examples:
 
     ```python
-    >>> from transformers import MBart50Tokenizer
+    >>> from tiny_hf.transformers.import MBart50Tokenizer
 
     >>> tokenizer = MBart50Tokenizer.from_pretrained("facebook/mbart-large-50", src_lang="en_XX", tgt_lang="ro_RO")
     >>> src_text = " UN Chief Says There Is No Military Solution in Syria"
@@ -217,7 +217,7 @@ class MBart50Tokenizer(PreTrainedTokenizer):
             return self.fairseq_ids_to_tokens[index]
         return self.sp_model.IdToPiece(index - self.fairseq_offset)
 
-    # Copied from transformers.models.albert.tokenization_albert.AlbertTokenizer.convert_tokens_to_string
+    # Copied from tiny_hf.transformers.models.albert.tokenization_albert.AlbertTokenizer.convert_tokens_to_string
     def convert_tokens_to_string(self, tokens):
         """Converts a sequence of tokens (string) in a single string."""
         current_sub_tokens = []

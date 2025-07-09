@@ -145,7 +145,7 @@ class HubertConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import HubertModel, HubertConfig
+    >>> from tiny_hf.transformers.import HubertModel, HubertConfig
 
     >>> # Initializing a Hubert facebook/hubert-base-ls960 style configuration
     >>> configuration = HubertConfig()

@@ -28,7 +28,7 @@ from ...utils import TensorType, logging
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 logger = logging.get_logger(__name__)
 
@@ -167,7 +167,7 @@ class WhisperFeatureExtractor(SequenceFeatureExtractor):
         return log_spec.numpy()
 
     @staticmethod
-    # Copied from transformers.models.wav2vec2.feature_extraction_wav2vec2.Wav2Vec2FeatureExtractor.zero_mean_unit_var_norm
+    # Copied from tiny_hf.transformers.models.wav2vec2.feature_extraction_wav2vec2.Wav2Vec2FeatureExtractor.zero_mean_unit_var_norm
     def zero_mean_unit_var_norm(
         input_values: List[np.ndarray], attention_mask: List[np.ndarray], padding_value: float = 0.0
     ) -> List[np.ndarray]:

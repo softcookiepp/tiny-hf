@@ -17,10 +17,10 @@ import argparse
 
 import gdown
 import numpy as np
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 
-from transformers import (
+from tiny_hf.transformers.import (
     CLIPTokenizer,
     CLIPTokenizerFast,
     VideoMAEImageProcessor,

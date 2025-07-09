@@ -35,7 +35,7 @@ logger = logging.get_logger(__name__)
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 
 TEXT_REPR_BBOX_OPEN = "<box>"

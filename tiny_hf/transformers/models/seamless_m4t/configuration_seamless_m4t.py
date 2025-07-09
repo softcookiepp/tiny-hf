@@ -223,7 +223,7 @@ class SeamlessM4TConfig(PretrainedConfig):
             Offset the unit token ids by this number to account for symbol tokens. Applies to the vocoder only.
 
     ```python
-    >>> from transformers import SeamlessM4TModel, SeamlessM4TConfig
+    >>> from tiny_hf.transformers.import SeamlessM4TModel, SeamlessM4TConfig
 
     >>> # Initializing a SeamlessM4T "facebook/hf-seamless-m4t-medium" style configuration
     >>> configuration = SeamlessM4TConfig()

@@ -18,10 +18,10 @@ import math
 from typing import Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, EncoderDecoderCache, StaticCache
@@ -50,7 +50,7 @@ from .generation_whisper import WhisperGenerationMixin
 
 
 if is_torch_flex_attn_available():
-    from torch.nn.attention.flex_attention import BlockMask
+    from tg_adapter.nn.attention.flex_attention import BlockMask
 
     from ...integrations.flex_attention import make_flex_block_causal_mask
 
@@ -78,7 +78,7 @@ def sinusoids(length: int, channels: int, max_timescale: float = 10000) -> torch
     return torch.cat([scaled_time.sin(), scaled_time.cos()], dim=1)
 
 
-# Copied from transformers.models.bart.modeling_bart.shift_tokens_right
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.shift_tokens_right
 def shift_tokens_right(input_ids: torch.Tensor, pad_token_id: int, decoder_start_token_id: int):
     """
     Shift input ids one token to the right.
@@ -95,7 +95,7 @@ def shift_tokens_right(input_ids: torch.Tensor, pad_token_id: int, decoder_start
     return shifted_input_ids
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2._compute_mask_indices
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2._compute_mask_indices
 def _compute_mask_indices(
     shape: Tuple[int, int],
     mask_prob: float,
@@ -269,7 +269,7 @@ class WhisperAttention(nn.Module):
         self.q_proj = nn.Linear(embed_dim, embed_dim, bias=bias)
         self.out_proj = nn.Linear(embed_dim, embed_dim, bias=bias)
 
-    # Copied from transformers.models.bart.modeling_bart.BartAttention._shape with BART->whisper
+    # Copied from tiny_hf.transformers.models.bart.modeling_bart.BartAttention._shape with BART->whisper
     def _shape(self, tensor: torch.Tensor, seq_len: int, bsz: int):
         return tensor.view(bsz, seq_len, self.num_heads, self.head_dim).transpose(1, 2).contiguous()
 
@@ -580,7 +580,7 @@ WHISPER_ATTENTION_CLASSES = {
 }
 
 
-# Copied from transformers.models.mbart.modeling_mbart.MBartEncoderLayer with MBart->Whisper, MBART->WHISPER
+# Copied from tiny_hf.transformers.models.mbart.modeling_mbart.MBartEncoderLayer with MBart->Whisper, MBART->WHISPER
 class WhisperEncoderLayer(nn.Module):
     def __init__(self, config: WhisperConfig):
         super().__init__()
@@ -1371,7 +1371,7 @@ class WhisperDecoder(WhisperPreTrainedModel):
             cross_attentions=all_cross_attentions,
         )
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
     def _update_causal_mask(
         self,
         attention_mask: torch.Tensor,
@@ -1443,7 +1443,7 @@ class WhisperDecoder(WhisperPreTrainedModel):
         return causal_mask
 
     @staticmethod
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel._prepare_4d_causal_attention_mask_with_cache_position
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel._prepare_4d_causal_attention_mask_with_cache_position
     def _prepare_4d_causal_attention_mask_with_cache_position(
         attention_mask: torch.Tensor,
         sequence_length: int,
@@ -1603,8 +1603,8 @@ class WhisperModel(WhisperPreTrainedModel):
 
         Example:
          ```python
-         >>> import torch
-         >>> from transformers import AutoFeatureExtractor, WhisperModel
+         >>> import tg_adapter as torch
+         >>> from tiny_hf.transformers.import AutoFeatureExtractor, WhisperModel
          >>> from datasets import load_dataset
 
          >>> model = WhisperModel.from_pretrained("openai/whisper-base")
@@ -1746,8 +1746,8 @@ class WhisperForConditionalGeneration(WhisperGenerationMixin, WhisperPreTrainedM
         Example:
 
         ```python
-        >>> import torch
-        >>> from transformers import AutoProcessor, WhisperForConditionalGeneration
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoProcessor, WhisperForConditionalGeneration
         >>> from datasets import load_dataset
 
         >>> processor = AutoProcessor.from_pretrained("openai/whisper-tiny.en")
@@ -1958,8 +1958,8 @@ class WhisperForCausalLM(WhisperPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import WhisperForCausalLM, WhisperForConditionalGeneration, WhisperProcessor
-        >>> import torch
+        >>> from tiny_hf.transformers.import WhisperForCausalLM, WhisperForConditionalGeneration, WhisperProcessor
+        >>> import tg_adapter as torch
         >>> from datasets import load_dataset
 
         >>> processor = WhisperProcessor.from_pretrained("openai/whisper-large-v2")
@@ -2094,8 +2094,8 @@ class WhisperForAudioClassification(WhisperPreTrainedModel):
         Example:
 
         ```python
-        >>> import torch
-        >>> from transformers import AutoFeatureExtractor, WhisperForAudioClassification
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoFeatureExtractor, WhisperForAudioClassification
         >>> from datasets import load_dataset
 
         >>> feature_extractor = AutoFeatureExtractor.from_pretrained("sanchit-gandhi/whisper-medium-fleurs-lang-id")

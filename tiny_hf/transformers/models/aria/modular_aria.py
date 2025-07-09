@@ -65,8 +65,8 @@ from ..llava_next.image_processing_llava_next import divide_to_patches
 logger = logging.get_logger(__name__)
 
 if is_torch_available():
-    import torch
-    from torch import nn
+    import tg_adapter as torch
+    from tg_adapter.import nn
 
 
 def sequential_experts_gemm(token_states, expert_weights, tokens_per_expert):
@@ -1449,12 +1449,12 @@ class AriaForConditionalGeneration(AriaPreTrainedModel, GenerationMixin):
 
         ```python
         >>> import requests
-        >>> import torch
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> from io import BytesIO
 
-        >>> from transformers import AutoProcessor, AutoModel
-        >>> from transformers.image_utils import load_image
+        >>> from tiny_hf.transformers.import AutoProcessor, AutoModel
+        >>> from tiny_hf.transformers.image_utils import load_image
 
         >>> # Note that passing the image urls (instead of the actual pil images) to the processor is also possible
         >>> image1 = load_image("https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg")

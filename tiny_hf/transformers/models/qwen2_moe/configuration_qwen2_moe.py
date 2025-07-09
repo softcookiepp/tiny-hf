@@ -136,7 +136,7 @@ class Qwen2MoeConfig(PretrainedConfig):
         qkv_bias (`bool`, *optional*, defaults to `True`):
             Whether to add a bias to the queries, keys and values.
     ```python
-    >>> from transformers import Qwen2MoeModel, Qwen2MoeConfig
+    >>> from tiny_hf.transformers.import Qwen2MoeModel, Qwen2MoeConfig
 
     >>> # Initializing a Qwen2MoE style configuration
     >>> configuration = Qwen2MoeConfig()

@@ -75,7 +75,7 @@ from .utils import CONFIG_NAME, WEIGHTS_NAME, cached_file, logging
 
 if is_torch_available():
     import numpy as np
-    import torch
+    import tg_adapter as torch
 
     from . import (
         AlbertForPreTraining,

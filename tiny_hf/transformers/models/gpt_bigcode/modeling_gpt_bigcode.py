@@ -16,10 +16,10 @@
 import math
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -549,7 +549,7 @@ class GPTBigCodeMLP(nn.Module):
         self.act = ACT2FN[config.activation_function]
         self.dropout = nn.Dropout(config.resid_pdrop)
 
-    # Copied from transformers.models.gpt2.modeling_gpt2.GPT2MLP.forward
+    # Copied from tiny_hf.transformers.models.gpt2.modeling_gpt2.GPT2MLP.forward
     def forward(self, hidden_states: Optional[Tuple[torch.FloatTensor]]) -> torch.FloatTensor:
         hidden_states = self.c_fc(hidden_states)
         hidden_states = self.act(hidden_states)

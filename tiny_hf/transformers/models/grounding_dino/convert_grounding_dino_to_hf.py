@@ -19,11 +19,11 @@ URL: https://github.com/IDEA-Research/GroundingDINO"""
 import argparse
 
 import requests
-import torch
+import tg_adapter as torch
 from PIL import Image
-from torchvision import transforms as T
+from tg_adapter.ision import transforms as T
 
-from transformers import (
+from tiny_hf.transformers.import (
     AutoTokenizer,
     GroundingDinoConfig,
     GroundingDinoForObjectDetection,

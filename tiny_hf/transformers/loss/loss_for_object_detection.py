@@ -29,7 +29,7 @@ if is_scipy_available():
 
 
 if is_vision_available():
-	#from transformers.image_transforms import center_to_corners_format
+	#from tiny_hf.transformers.image_transforms import center_to_corners_format
 	from ..image_transforms import center_to_corners_format
 
 
@@ -389,7 +389,7 @@ def box_area(boxes: Tensor) -> Tensor:
 	return (boxes[:, 2] - boxes[:, 0]) * (boxes[:, 3] - boxes[:, 1])
 
 
-# modified from torchvision to also return the union
+# modified from tg_adapter.ision to also return the union
 def box_iou(boxes1, boxes2):
 	area1 = box_area(boxes1)
 	area2 = box_area(boxes2)

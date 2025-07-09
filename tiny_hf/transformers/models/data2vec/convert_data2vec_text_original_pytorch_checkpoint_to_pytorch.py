@@ -19,17 +19,17 @@ import os
 import pathlib
 
 import fairseq
-import torch
+import tg_adapter as torch
 from fairseq.modules import TransformerSentenceEncoderLayer
 from packaging import version
 
-from transformers import (
+from tiny_hf.transformers.import (
     Data2VecTextConfig,
     Data2VecTextForMaskedLM,
     Data2VecTextForSequenceClassification,
     Data2VecTextModel,
 )
-from transformers.models.bert.modeling_bert import (
+from tiny_hf.transformers.models.bert.modeling_bert import (
     BertIntermediate,
     BertLayer,
     BertOutput,
@@ -39,7 +39,7 @@ from transformers.models.bert.modeling_bert import (
 
 # IMPORTANT: In order for this script to run, please make sure to download the dictionary: `dict.txt` from wget https://dl.fbaipublicfiles.com/fairseq/models/roberta.large.tar.gz
 # File copied from https://github.com/pytorch/fairseq/blob/main/examples/data2vec/models/data2vec_text.py
-from transformers.utils import logging
+from tiny_hf.transformers.utils import logging
 
 
 if version.parse(fairseq.__version__) < version.parse("0.9.0"):

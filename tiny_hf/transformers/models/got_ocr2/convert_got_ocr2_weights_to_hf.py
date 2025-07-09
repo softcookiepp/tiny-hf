@@ -19,11 +19,11 @@ import os
 from typing import List, Optional
 
 import regex as re
-import torch
+import tg_adapter as torch
 from huggingface_hub import snapshot_download
 from safetensors import safe_open
 
-from transformers import (
+from tiny_hf.transformers.import (
     GotOcr2Config,
     GotOcr2ForConditionalGeneration,
     GotOcr2ImageProcessor,
@@ -31,12 +31,12 @@ from transformers import (
     PreTrainedTokenizerFast,
     is_vision_available,
 )
-from transformers.convert_slow_tokenizer import TikTokenConverter
-from transformers.tokenization_utils import AddedToken
+from tiny_hf.transformers.convert_slow_tokenizer import TikTokenConverter
+from tiny_hf.transformers.tokenization_utils import AddedToken
 
 
 if is_vision_available():
-    from transformers.image_utils import load_image
+    from tiny_hf.transformers.image_utils import load_image
 
 
 # fmt: off

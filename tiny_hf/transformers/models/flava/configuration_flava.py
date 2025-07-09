@@ -72,7 +72,7 @@ class FlavaImageConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import FlavaImageConfig, FlavaImageModel
+    >>> from tiny_hf.transformers.import FlavaImageConfig, FlavaImageModel
 
     >>> # Initializing a FlavaImageModel with  style configuration
     >>> configuration = FlavaImageConfig()
@@ -185,7 +185,7 @@ class FlavaTextConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import FlavaTextConfig, FlavaTextModel
+    >>> from tiny_hf.transformers.import FlavaTextConfig, FlavaTextModel
 
     >>> # Initializing a FlavaTextModel with  style configuration
     >>> configuration = FlavaTextConfig()
@@ -279,7 +279,7 @@ class FlavaMultimodalConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import FlavaMultimodalConfig, FlavaMultimodalModel
+    >>> from tiny_hf.transformers.import FlavaMultimodalConfig, FlavaMultimodalModel
 
     >>> # Initializing a FlavaMultimodalModel with  style configuration
     >>> configuration = FlavaMultimodalConfig()
@@ -359,7 +359,7 @@ class FlavaImageCodebookConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import FlavaImageCodebookConfig, FlavaImageCodebook
+    >>> from tiny_hf.transformers.import FlavaImageCodebookConfig, FlavaImageCodebook
 
     >>> # Initializing a FlavaImageCodebook with style configuration
     >>> configuration = FlavaImageCodebookConfig()
@@ -447,7 +447,7 @@ class FlavaConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import FlavaConfig, FlavaModel, FlavaForPreTraining
+    >>> from tiny_hf.transformers.import FlavaConfig, FlavaModel, FlavaForPreTraining
 
     >>> # Initializing a FlavaConfig with style configuration
     >>> configuration = FlavaConfig()

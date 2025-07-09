@@ -101,7 +101,7 @@ class PerceiverConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import PerceiverModel, PerceiverConfig
+    >>> from tiny_hf.transformers.import PerceiverModel, PerceiverConfig
 
     >>> # Initializing a Perceiver deepmind/language-perceiver style configuration
     >>> configuration = PerceiverConfig()

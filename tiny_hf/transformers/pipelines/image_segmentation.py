@@ -36,7 +36,7 @@ class ImageSegmentationPipeline(Pipeline):
     Example:
 
     ```python
-    >>> from transformers import pipeline
+    >>> from tiny_hf.transformers.import pipeline
 
     >>> segmenter = pipeline(model="facebook/detr-resnet-50-panoptic")
     >>> segments = segmenter("https://huggingface.co/datasets/Narsil/image_dummy/raw/main/parrots.png")

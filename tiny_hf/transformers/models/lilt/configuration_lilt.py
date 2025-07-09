@@ -75,7 +75,7 @@ class LiltConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import LiltConfig, LiltModel
+    >>> from tiny_hf.transformers.import LiltConfig, LiltModel
 
     >>> # Initializing a LiLT SCUT-DLVCLab/lilt-roberta-en-base style configuration
     >>> configuration = LiltConfig()

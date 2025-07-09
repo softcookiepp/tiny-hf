@@ -16,10 +16,10 @@ import argparse
 import collections
 from pathlib import Path
 
-import torch
-from torch.serialization import default_restore_location
+import tg_adapter as torch
+from tg_adapter.serialization import default_restore_location
 
-from transformers import BertConfig, DPRConfig, DPRContextEncoder, DPRQuestionEncoder, DPRReader
+from tiny_hf.transformers.import BertConfig, DPRConfig, DPRContextEncoder, DPRQuestionEncoder, DPRReader
 
 
 CheckpointState = collections.namedtuple(

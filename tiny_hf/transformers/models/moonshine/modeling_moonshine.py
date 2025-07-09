@@ -21,8 +21,8 @@
 from typing import Callable, Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+import tg_adapter.nn as nn
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, EncoderDecoderCache, StaticCache
@@ -54,7 +54,7 @@ from .configuration_moonshine import MoonshineConfig
 
 
 if is_torch_flex_attn_available():
-    from torch.nn.attention.flex_attention import BlockMask
+    from tg_adapter.nn.attention.flex_attention import BlockMask
 
     from ...integrations.flex_attention import make_flex_block_causal_mask
 
@@ -1430,8 +1430,8 @@ class MoonshineModel(MoonshinePreTrainedModel):
         Example:
 
         ```python
-        >>> import torch
-        >>> from transformers import AutoFeatureExtractor, MoonshineModel
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoFeatureExtractor, MoonshineModel
         >>> from datasets import load_dataset
 
         >>> model = MoonshineModel.from_pretrained("UsefulSensors/moonshine-tiny")
@@ -1574,8 +1574,8 @@ class MoonshineForConditionalGeneration(MoonshinePreTrainedModel, GenerationMixi
         Example:
 
         ```python
-        >>> import torch
-        >>> from transformers import AutoProcessor, MoonshineForConditionalGeneration
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoProcessor, MoonshineForConditionalGeneration
         >>> from datasets import load_dataset
 
         >>> processor = AutoProcessor.from_pretrained("UsefulSensors/moonshine-tiny")

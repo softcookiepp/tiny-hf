@@ -80,7 +80,7 @@ class DinatConfig(BackboneConfigMixin, PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import DinatConfig, DinatModel
+    >>> from tiny_hf.transformers.import DinatConfig, DinatModel
 
     >>> # Initializing a Dinat shi-labs/dinat-mini-in1k-224 style configuration
     >>> configuration = DinatConfig()

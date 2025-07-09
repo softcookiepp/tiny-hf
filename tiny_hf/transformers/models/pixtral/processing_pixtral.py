@@ -40,12 +40,12 @@ class PixtralProcessorKwargs(ProcessingKwargs, total=False):
     }
 
 
-# Copied from transformers.models.idefics2.processing_idefics2.is_url
+# Copied from tiny_hf.transformers.models.idefics2.processing_idefics2.is_url
 def is_url(val) -> bool:
     return isinstance(val, str) and val.startswith("http")
 
 
-# Copied from transformers.models.idefics2.processing_idefics2.is_image_or_image_url
+# Copied from tiny_hf.transformers.models.idefics2.processing_idefics2.is_image_or_image_url
 def is_image_or_image_url(elem):
     return is_url(elem) or is_valid_image(elem)
 
@@ -214,7 +214,7 @@ class PixtralProcessor(ProcessorMixin):
             data={**text_inputs, **image_inputs}, tensor_type=output_kwargs["common_kwargs"]["return_tensors"]
         )
 
-    # Copied from transformers.models.clip.processing_clip.CLIPProcessor.batch_decode with CLIP->Llama
+    # Copied from tiny_hf.transformers.models.clip.processing_clip.CLIPProcessor.batch_decode with CLIP->Llama
     def batch_decode(self, *args, **kwargs):
         """
         This method forwards all its arguments to LlamaTokenizerFast's [`~PreTrainedTokenizer.batch_decode`]. Please
@@ -222,7 +222,7 @@ class PixtralProcessor(ProcessorMixin):
         """
         return self.tokenizer.batch_decode(*args, **kwargs)
 
-    # Copied from transformers.models.clip.processing_clip.CLIPProcessor.decode with CLIP->Llama
+    # Copied from tiny_hf.transformers.models.clip.processing_clip.CLIPProcessor.decode with CLIP->Llama
     def decode(self, *args, **kwargs):
         """
         This method forwards all its arguments to LlamaTokenizerFast's [`~PreTrainedTokenizer.decode`]. Please refer to
@@ -231,7 +231,7 @@ class PixtralProcessor(ProcessorMixin):
         return self.tokenizer.decode(*args, **kwargs)
 
     @property
-    # Copied from transformers.models.clip.processing_clip.CLIPProcessor.model_input_names
+    # Copied from tiny_hf.transformers.models.clip.processing_clip.CLIPProcessor.model_input_names
     def model_input_names(self):
         tokenizer_input_names = self.tokenizer.model_input_names
         image_processor_input_names = self.image_processor.model_input_names

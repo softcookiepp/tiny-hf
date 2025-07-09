@@ -47,7 +47,7 @@ if TYPE_CHECKING:
     from .modeling_owlvit import OwlViTObjectDetectionOutput
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 
 logger = logging.get_logger(__name__)
@@ -270,7 +270,7 @@ class OwlViTImageProcessor(BaseImageProcessor):
             **kwargs,
         )
 
-    # Copied from transformers.models.detr.image_processing_detr.DetrImageProcessor.rescale
+    # Copied from tiny_hf.transformers.models.detr.image_processing_detr.DetrImageProcessor.rescale
     def rescale(
         self,
         image: np.ndarray,

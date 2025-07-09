@@ -25,7 +25,7 @@ class VisualQuestionAnsweringPipeline(Pipeline):
     Example:
 
     ```python
-    >>> from transformers import pipeline
+    >>> from tiny_hf.transformers.import pipeline
 
     >>> oracle = pipeline(model="dandelin/vilt-b32-finetuned-vqa")
     >>> image_url = "https://huggingface.co/datasets/Narsil/image_dummy/raw/main/lena.png"
@@ -104,7 +104,7 @@ class VisualQuestionAnsweringPipeline(Pipeline):
                 For dataset: the passed in dataset must be of type `transformers.pipelines.pt_utils.KeyDataset`
                 Example:
                 ```python
-                >>> from transformers.pipelines.pt_utils import KeyDataset
+                >>> from tiny_hf.transformers.pipelines.pt_utils import KeyDataset
                 >>> from datasets import load_dataset
 
                 >>> dataset = load_dataset("detection-datasets/coco")

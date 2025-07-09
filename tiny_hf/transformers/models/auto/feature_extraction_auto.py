@@ -205,7 +205,7 @@ def get_feature_extractor_config(
     tokenizer_config = get_tokenizer_config("FacebookAI/xlm-roberta-base")
 
     # Save a pretrained tokenizer locally and you can reload its config
-    from transformers import AutoTokenizer
+    from tiny_hf.transformers.import AutoTokenizer
 
     tokenizer = AutoTokenizer.from_pretrained("google-bert/bert-base-cased")
     tokenizer.save_pretrained("tokenizer-test")
@@ -324,7 +324,7 @@ class AutoFeatureExtractor:
         Examples:
 
         ```python
-        >>> from transformers import AutoFeatureExtractor
+        >>> from tiny_hf.transformers.import AutoFeatureExtractor
 
         >>> # Download feature extractor from huggingface.co and cache.
         >>> feature_extractor = AutoFeatureExtractor.from_pretrained("facebook/wav2vec2-base-960h")

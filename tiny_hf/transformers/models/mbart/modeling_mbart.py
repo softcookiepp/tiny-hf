@@ -18,10 +18,10 @@ import copy
 import math
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -87,7 +87,7 @@ def shift_tokens_right(input_ids: torch.Tensor, pad_token_id: int):
     return prev_output_tokens
 
 
-# Copied from transformers.models.bart.modeling_bart.BartLearnedPositionalEmbedding with Bart->MBart
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartLearnedPositionalEmbedding with Bart->MBart
 class MBartLearnedPositionalEmbedding(nn.Embedding):
     """
     This module learns positional embeddings up to a fixed maximum size.
@@ -110,7 +110,7 @@ class MBartLearnedPositionalEmbedding(nn.Embedding):
         return super().forward(positions + self.offset)
 
 
-# Copied from transformers.models.bart.modeling_bart.BartScaledWordEmbedding with Bart->MBart
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartScaledWordEmbedding with Bart->MBart
 class MBartScaledWordEmbedding(nn.Embedding):
     """
     This module overrides nn.Embeddings' forward by multiplying with embeddings scale.
@@ -124,7 +124,7 @@ class MBartScaledWordEmbedding(nn.Embedding):
         return super().forward(input_ids) * self.embed_scale
 
 
-# Copied from transformers.models.bart.modeling_bart.BartAttention with Bart->MBart
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartAttention with Bart->MBart
 class MBartAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -283,7 +283,7 @@ class MBartAttention(nn.Module):
         return attn_output, attn_weights_reshaped, past_key_value
 
 
-# Copied from transformers.models.bart.modeling_bart.BartFlashAttention2 with Bart->MBart
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartFlashAttention2 with Bart->MBart
 class MBartFlashAttention2(MBartAttention):
     """
     MBart flash attention module. This module inherits from `MBartAttention` as the weights of the module stays
@@ -410,7 +410,7 @@ class MBartFlashAttention2(MBartAttention):
         return attn_output, attn_weights, past_key_value
 
 
-# Copied from transformers.models.bart.modeling_bart.BartSdpaAttention with Bart->MBart
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartSdpaAttention with Bart->MBart
 class MBartSdpaAttention(MBartAttention):
     def forward(
         self,
@@ -714,7 +714,7 @@ class MBartDecoderLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bart.modeling_bart.BartClassificationHead with Bart->MBart
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartClassificationHead with Bart->MBart
 class MBartClassificationHead(nn.Module):
     """Head for sentence-level classification tasks."""
 
@@ -789,7 +789,7 @@ MBART_GENERATION_EXAMPLE = r"""
     Translation example:
 
     ```python
-    >>> from transformers import AutoTokenizer, MBartForConditionalGeneration
+    >>> from tiny_hf.transformers.import AutoTokenizer, MBartForConditionalGeneration
 
     >>> model = MBartForConditionalGeneration.from_pretrained("facebook/mbart-large-en-ro")
     >>> tokenizer = AutoTokenizer.from_pretrained("facebook/mbart-large-en-ro")
@@ -806,7 +806,7 @@ MBART_GENERATION_EXAMPLE = r"""
     Mask filling example:
 
     ```python
-    >>> from transformers import AutoTokenizer, MBartForConditionalGeneration
+    >>> from tiny_hf.transformers.import AutoTokenizer, MBartForConditionalGeneration
 
     >>> model = MBartForConditionalGeneration.from_pretrained("facebook/mbart-large-cc25")
     >>> tokenizer = AutoTokenizer.from_pretrained("facebook/mbart-large-cc25")
@@ -1692,7 +1692,7 @@ class MBartForSequenceClassification(MBartPreTrainedModel):
         output_type=Seq2SeqSequenceClassifierOutput,
         config_class=_CONFIG_FOR_DOC,
     )
-    # Copied from transformers.models.bart.modeling_bart.BartForSequenceClassification.forward
+    # Copied from tiny_hf.transformers.models.bart.modeling_bart.BartForSequenceClassification.forward
     def forward(
         self,
         input_ids: torch.LongTensor = None,
@@ -1820,7 +1820,7 @@ class MBartForQuestionAnswering(MBartPreTrainedModel):
         output_type=Seq2SeqQuestionAnsweringModelOutput,
         config_class=_CONFIG_FOR_DOC,
     )
-    # Copied from transformers.models.bart.modeling_bart.BartForQuestionAnswering.forward
+    # Copied from tiny_hf.transformers.models.bart.modeling_bart.BartForQuestionAnswering.forward
     def forward(
         self,
         input_ids: torch.Tensor = None,
@@ -1916,7 +1916,7 @@ class MBartForQuestionAnswering(MBartPreTrainedModel):
         )
 
 
-# Copied from transformers.models.bart.modeling_bart.BartDecoderWrapper with Bart->MBart
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartDecoderWrapper with Bart->MBart
 class MBartDecoderWrapper(MBartPreTrainedModel):
     """
     This wrapper class is a helper class to correctly load pretrained checkpoints when the causal language model is
@@ -1931,7 +1931,7 @@ class MBartDecoderWrapper(MBartPreTrainedModel):
         return self.decoder(*args, **kwargs)
 
 
-# Copied from transformers.models.bart.modeling_bart.BartForCausalLM with Bart->MBart, facebook/bart-base->facebook/mbart-large-cc25
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartForCausalLM with Bart->MBart, facebook/bart-base->facebook/mbart-large-cc25
 class MBartForCausalLM(MBartPreTrainedModel, GenerationMixin):
     _tied_weights_keys = ["lm_head.weight"]
 
@@ -2053,7 +2053,7 @@ class MBartForCausalLM(MBartPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, MBartForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, MBartForCausalLM
 
         >>> tokenizer = AutoTokenizer.from_pretrained("facebook/mbart-large-cc25")
         >>> model = MBartForCausalLM.from_pretrained("facebook/mbart-large-cc25", add_cross_attention=False)

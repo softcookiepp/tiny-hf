@@ -18,9 +18,9 @@ import math
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...modeling_utils import PreTrainedModel
 from ...utils import (
@@ -779,7 +779,7 @@ class EncodecModel(EncodecPreTrainedModel):
 
         ```python
         >>> from datasets import load_dataset
-        >>> from transformers import AutoProcessor, EncodecModel
+        >>> from tiny_hf.transformers.import AutoProcessor, EncodecModel
 
         >>> dataset = load_dataset("hf-internal-testing/ashraq-esc50-1-dog-example")
         >>> audio_sample = dataset["train"]["audio"][0]["array"]

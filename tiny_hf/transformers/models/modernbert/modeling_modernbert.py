@@ -23,10 +23,10 @@ import math
 from contextlib import nullcontext
 from typing import Dict, Optional, Tuple, Union
 
-import torch
-import torch.nn.functional as F
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.nn.functional as F
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...modeling_attn_mask_utils import _prepare_4d_attention_mask

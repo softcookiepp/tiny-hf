@@ -81,7 +81,7 @@ class ViTHybridConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import ViTHybridConfig, ViTHybridModel
+    >>> from tiny_hf.transformers.import ViTHybridConfig, ViTHybridModel
 
     >>> # Initializing a ViT Hybrid vit-hybrid-base-bit-384 style configuration
     >>> configuration = ViTHybridConfig()

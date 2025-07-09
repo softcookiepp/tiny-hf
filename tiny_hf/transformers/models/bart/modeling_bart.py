@@ -19,10 +19,10 @@ import math
 import warnings
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -808,7 +808,7 @@ BART_GENERATION_EXAMPLE = r"""
     Summarization example:
 
     ```python
-    >>> from transformers import AutoTokenizer, BartForConditionalGeneration
+    >>> from tiny_hf.transformers.import AutoTokenizer, BartForConditionalGeneration
 
     >>> model = BartForConditionalGeneration.from_pretrained("facebook/bart-large-cnn")
     >>> tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-cnn")
@@ -829,7 +829,7 @@ BART_GENERATION_EXAMPLE = r"""
     Mask filling example:
 
     ```python
-    >>> from transformers import AutoTokenizer, BartForConditionalGeneration
+    >>> from tiny_hf.transformers.import AutoTokenizer, BartForConditionalGeneration
 
     >>> tokenizer = AutoTokenizer.from_pretrained("facebook/bart-base")
     >>> model = BartForConditionalGeneration.from_pretrained("facebook/bart-base")
@@ -2106,7 +2106,7 @@ class BartForCausalLM(BartPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, BartForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, BartForCausalLM
 
         >>> tokenizer = AutoTokenizer.from_pretrained("facebook/bart-base")
         >>> model = BartForCausalLM.from_pretrained("facebook/bart-base", add_cross_attention=False)

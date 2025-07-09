@@ -22,8 +22,8 @@
 
 from typing import Callable, List, Optional, Tuple, Union
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, SlidingWindowCache, StaticCache
@@ -894,7 +894,7 @@ class Phi3ForCausalLM(Phi3PreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, Phi3ForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, Phi3ForCausalLM
 
         >>> model = Phi3ForCausalLM.from_pretrained("meta-phi3/Phi3-2-7b-hf")
         >>> tokenizer = AutoTokenizer.from_pretrained("meta-phi3/Phi3-2-7b-hf")

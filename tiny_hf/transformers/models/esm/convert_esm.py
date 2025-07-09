@@ -20,12 +20,12 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 
 import esm as esm_module
-import torch
+import tg_adapter as torch
 from esm.esmfold.v1.misc import batch_encode_sequences as esmfold_encode_sequences
 from esm.esmfold.v1.pretrained import esmfold_v1
 
-from transformers.models.esm.configuration_esm import EsmConfig, EsmFoldConfig
-from transformers.models.esm.modeling_esm import (
+from tiny_hf.transformers.models.esm.configuration_esm import EsmConfig, EsmFoldConfig
+from tiny_hf.transformers.models.esm.modeling_esm import (
     EsmForMaskedLM,
     EsmForSequenceClassification,
     EsmIntermediate,
@@ -34,9 +34,9 @@ from transformers.models.esm.modeling_esm import (
     EsmSelfAttention,
     EsmSelfOutput,
 )
-from transformers.models.esm.modeling_esmfold import EsmForProteinFolding
-from transformers.models.esm.tokenization_esm import EsmTokenizer
-from transformers.utils import logging
+from tiny_hf.transformers.models.esm.modeling_esmfold import EsmForProteinFolding
+from tiny_hf.transformers.models.esm.tokenization_esm import EsmTokenizer
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

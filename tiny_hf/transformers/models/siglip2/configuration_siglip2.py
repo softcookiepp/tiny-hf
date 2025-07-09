@@ -70,7 +70,7 @@ class Siglip2TextConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import Siglip2TextConfig, Siglip2TextModel
+    >>> from tiny_hf.transformers.import Siglip2TextConfig, Siglip2TextModel
 
     >>> # Initializing a Siglip2TextConfig with google/siglip2-base-patch16-224 style configuration
     >>> configuration = Siglip2TextConfig()
@@ -157,7 +157,7 @@ class Siglip2VisionConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import Siglip2VisionConfig, Siglip2VisionModel
+    >>> from tiny_hf.transformers.import Siglip2VisionConfig, Siglip2VisionModel
 
     >>> # Initializing a Siglip2VisionConfig with google/siglip2-base-patch16-naflex style configuration
     >>> configuration = Siglip2VisionConfig()
@@ -221,7 +221,7 @@ class Siglip2Config(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import Siglip2Config, Siglip2Model
+    >>> from tiny_hf.transformers.import Siglip2Config, Siglip2Model
 
     >>> # Initializing a Siglip2Config with google/siglip2-base-patch16-224 style configuration
     >>> configuration = Siglip2Config()
@@ -233,7 +233,7 @@ class Siglip2Config(PretrainedConfig):
     >>> configuration = model.config
 
     >>> # We can also initialize a Siglip2Config from a Siglip2TextConfig and a Siglip2VisionConfig
-    >>> from transformers import Siglip2TextConfig, Siglip2VisionConfig
+    >>> from tiny_hf.transformers.import Siglip2TextConfig, Siglip2VisionConfig
 
     >>> # Initializing a Siglip2Text and Siglip2Vision configuration
     >>> config_text = Siglip2TextConfig()

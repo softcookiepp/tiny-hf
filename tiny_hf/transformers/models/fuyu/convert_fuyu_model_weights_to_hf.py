@@ -17,13 +17,13 @@ import sys
 import warnings
 
 import flatdict
-import torch
+import tg_adapter as torch
 
-from transformers import FuyuConfig, FuyuForCausalLM, LlamaTokenizer
+from tiny_hf.transformers.import FuyuConfig, FuyuForCausalLM, LlamaTokenizer
 
 
 try:
-    from transformers import LlamaTokenizerFast
+    from tiny_hf.transformers.import LlamaTokenizerFast
 
     tokenizer_class = LlamaTokenizerFast
 except ImportError as e:
@@ -45,7 +45,7 @@ python src/transformers/models/fuyu/convert_fuyu_weights_to_hf.py  --input_dir /
 Thereafter, models can be loaded via:
 
 ```py
-from transformers import FuyuForCausalLM, FuyuTokenizer
+from tiny_hf.transformers.import FuyuForCausalLM, FuyuTokenizer
 
 model = FuyuForCausalLM.from_pretrained("/output/path")
 tokenizer = FuyuTokenizer.from_pretrained("/output/path")

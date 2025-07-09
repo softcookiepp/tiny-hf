@@ -43,13 +43,13 @@ from .image_processing_rt_detr import get_size_with_aspect_ratio
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 
 if is_torchvision_v2_available():
-    from torchvision.transforms.v2 import functional as F
+    from tg_adapter.ision.transforms.v2 import functional as F
 elif is_torchvision_available():
-    from torchvision.transforms import functional as F
+    from tg_adapter.ision.transforms import functional as F
 
 
 class RTDetrFastImageProcessorKwargs(DefaultFastImageProcessorKwargs):

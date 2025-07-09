@@ -20,11 +20,11 @@ URL: https://github.com/hustvl/ViTMatte
 import argparse
 
 import requests
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 from PIL import Image
 
-from transformers import VitDetConfig, VitMatteConfig, VitMatteForImageMatting, VitMatteImageProcessor
+from tiny_hf.transformers.import VitDetConfig, VitMatteConfig, VitMatteForImageMatting, VitMatteImageProcessor
 
 
 def get_config(model_name):

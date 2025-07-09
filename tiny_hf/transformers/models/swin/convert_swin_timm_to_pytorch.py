@@ -3,11 +3,11 @@ import json
 
 import requests
 import timm
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 from PIL import Image
 
-from transformers import AutoImageProcessor, SwinConfig, SwinForImageClassification
+from tiny_hf.transformers.import AutoImageProcessor, SwinConfig, SwinForImageClassification
 
 
 def get_swin_config(swin_name):

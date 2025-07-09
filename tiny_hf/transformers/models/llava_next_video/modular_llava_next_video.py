@@ -17,11 +17,11 @@ import math
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
-from transformers.models.llava_next.modeling_llava_next import (
+from tiny_hf.transformers.models.llava_next.modeling_llava_next import (
     LlavaNextCausalLMOutputWithPast,
     LlavaNextForConditionalGeneration,
     LlavaNextPreTrainedModel,
@@ -86,7 +86,7 @@ class LlavaNextVideoConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import LlavaNextVideoForConditionalGeneration, LlavaNextVideoConfig, CLIPVisionConfig, LlamaConfig
+    >>> from tiny_hf.transformers.import LlavaNextVideoForConditionalGeneration, LlavaNextVideoConfig, CLIPVisionConfig, LlamaConfig
 
     >>> # Initializing a CLIP-vision config
     >>> vision_config = CLIPVisionConfig()
@@ -383,7 +383,7 @@ class LlavaNextVideoForConditionalGeneration(LlavaNextForConditionalGeneration):
         >>> from PIL import Image
         >>> import requests
         >>> import av
-        >>> from transformers import AutoProcessor, LlavaNextVideoForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoProcessor, LlavaNextVideoForConditionalGeneration
 
         >>> def read_video_pyav(container, indices):
         ...     '''

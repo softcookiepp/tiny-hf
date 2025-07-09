@@ -19,9 +19,9 @@ from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -43,7 +43,7 @@ logger = logging.get_logger(__name__)
 _CONFIG_FOR_DOC = "LlavaNextConfig"
 
 
-# Copied from transformers.models.llava_next.modeling_llava_next.get_anyres_image_grid_shape
+# Copied from tiny_hf.transformers.models.llava_next.modeling_llava_next.get_anyres_image_grid_shape
 def get_anyres_image_grid_shape(image_size, grid_pinpoints, patch_size):
     """
     Calculate the shape of the image patch grid after the preprocessing for images of any resolution.
@@ -75,7 +75,7 @@ def get_anyres_image_grid_shape(image_size, grid_pinpoints, patch_size):
     return height // patch_size, width // patch_size
 
 
-# Copied from transformers.models.llava_next.modeling_llava_next.image_size_to_num_patches
+# Copied from tiny_hf.transformers.models.llava_next.modeling_llava_next.image_size_to_num_patches
 def image_size_to_num_patches(image_size, grid_pinpoints, patch_size: int):
     """
     Calculate the number of patches after the preprocessing for images of any resolution.
@@ -113,7 +113,7 @@ def image_size_to_num_patches(image_size, grid_pinpoints, patch_size: int):
     return num_patches
 
 
-# Copied from transformers.models.llava_next.modeling_llava_next.unpad_image
+# Copied from tiny_hf.transformers.models.llava_next.modeling_llava_next.unpad_image
 def unpad_image(tensor, original_size):
     """
     Unpads a PyTorch tensor of a padded and resized image.
@@ -154,7 +154,7 @@ def unpad_image(tensor, original_size):
 
 
 @dataclass
-# Copied from transformers.models.llava_next_video.modeling_llava_next_video.LlavaNextVideoCausalLMOutputWithPast with LlavaNextVideo->LlavaOnevision
+# Copied from tiny_hf.transformers.models.llava_next_video.modeling_llava_next_video.LlavaNextVideoCausalLMOutputWithPast with LlavaNextVideo->LlavaOnevision
 class LlavaOnevisionCausalLMOutputWithPast(ModelOutput):
     """
     Base class for LlavaOnevision causal language model (or autoregressive) outputs.
@@ -199,7 +199,7 @@ class LlavaOnevisionCausalLMOutputWithPast(ModelOutput):
     video_hidden_states: Optional[torch.FloatTensor] = None
 
 
-# Copied from transformers.models.llava.modeling_llava.LlavaMultiModalProjector with Llava->LlavaOnevision
+# Copied from tiny_hf.transformers.models.llava.modeling_llava.LlavaMultiModalProjector with Llava->LlavaOnevision
 class LlavaOnevisionMultiModalProjector(nn.Module):
     def __init__(self, config: LlavaOnevisionConfig):
         super().__init__()
@@ -255,7 +255,7 @@ class LlavaOnevisionPreTrainedModel(PreTrainedModel):
     _supports_quantized_cache = True
     _supports_sdpa = True
 
-    # Copied from transformers.models.llava_next.modeling_llava_next.LlavaNextPreTrainedModel._init_weights
+    # Copied from tiny_hf.transformers.models.llava_next.modeling_llava_next.LlavaNextPreTrainedModel._init_weights
     def _init_weights(self, module):
         # important: this ported version of LlavaNext isn't meant for training from scratch - only
         # inference and fine-tuning - so the proper init weights code has been removed - the original codebase
@@ -387,27 +387,27 @@ class LlavaOnevisionForConditionalGeneration(LlavaOnevisionPreTrainedModel, Gene
 
         self.post_init()
 
-    # Copied from transformers.models.llava_next.modeling_llava_next.LlavaNextForConditionalGeneration.get_input_embeddings
+    # Copied from tiny_hf.transformers.models.llava_next.modeling_llava_next.LlavaNextForConditionalGeneration.get_input_embeddings
     def get_input_embeddings(self):
         return self.language_model.get_input_embeddings()
 
-    # Copied from transformers.models.llava_next.modeling_llava_next.LlavaNextForConditionalGeneration.set_input_embeddings
+    # Copied from tiny_hf.transformers.models.llava_next.modeling_llava_next.LlavaNextForConditionalGeneration.set_input_embeddings
     def set_input_embeddings(self, value):
         self.language_model.set_input_embeddings(value)
 
-    # Copied from transformers.models.llava_next.modeling_llava_next.LlavaNextForConditionalGeneration.get_output_embeddings
+    # Copied from tiny_hf.transformers.models.llava_next.modeling_llava_next.LlavaNextForConditionalGeneration.get_output_embeddings
     def get_output_embeddings(self):
         return self.language_model.get_output_embeddings()
 
-    # Copied from transformers.models.llava_next.modeling_llava_next.LlavaNextForConditionalGeneration.set_output_embeddings
+    # Copied from tiny_hf.transformers.models.llava_next.modeling_llava_next.LlavaNextForConditionalGeneration.set_output_embeddings
     def set_output_embeddings(self, new_embeddings):
         self.language_model.set_output_embeddings(new_embeddings)
 
-    # Copied from transformers.models.llava_next.modeling_llava_next.LlavaNextForConditionalGeneration.set_decoder
+    # Copied from tiny_hf.transformers.models.llava_next.modeling_llava_next.LlavaNextForConditionalGeneration.set_decoder
     def set_decoder(self, decoder):
         self.language_model.set_decoder(decoder)
 
-    # Copied from transformers.models.llava_next.modeling_llava_next.LlavaNextForConditionalGeneration.get_decoder
+    # Copied from tiny_hf.transformers.models.llava_next.modeling_llava_next.LlavaNextForConditionalGeneration.get_decoder
     def get_decoder(self):
         return self.language_model.get_decoder()
 
@@ -644,8 +644,8 @@ class LlavaOnevisionForConditionalGeneration(LlavaOnevisionPreTrainedModel, Gene
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> import torch
-        >>> from transformers import LlavaOnevisionProcessor, LlavaOnevisionForConditionalGeneration
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import LlavaOnevisionProcessor, LlavaOnevisionForConditionalGeneration
 
         >>> model = LlavaOnevisionForConditionalGeneration.from_pretrained("llava-hf/llava-onevision-qwen2-7b-ov-hf", torch_dtype="float16", device_map="cuda:0")
         >>> processor = LlavaOnevisionProcessor.from_pretrained("llava-hf/llava-onevision-qwen2-7b-ov-hf")

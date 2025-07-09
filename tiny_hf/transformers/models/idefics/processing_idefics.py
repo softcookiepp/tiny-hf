@@ -35,7 +35,7 @@ from ...utils.deprecation import deprecate_kwarg
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 if is_tf_available():
     import tensorflow as tf

@@ -26,8 +26,8 @@ from .import_utils import is_torch_available
 
 
 if is_torch_available():
-    import torch
-    import torch.nn as nn
+    import tg_adapter as torch
+    import tg_adapter.nn as nn
 
 # Print the matrix with words as row labels
 GREEN = "\033[92m"

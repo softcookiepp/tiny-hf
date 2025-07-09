@@ -18,16 +18,16 @@ import argparse
 from collections import OrderedDict
 from pathlib import Path
 
-import torch
+import tg_adapter as torch
 
-from transformers import (
+from tiny_hf.transformers.import (
     VisualBertConfig,
     VisualBertForMultipleChoice,
     VisualBertForPreTraining,
     VisualBertForQuestionAnswering,
     VisualBertForVisualReasoning,
 )
-from transformers.utils import logging
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

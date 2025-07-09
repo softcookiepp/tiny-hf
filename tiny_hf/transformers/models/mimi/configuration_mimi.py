@@ -124,7 +124,7 @@ class MimiConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import MimiModel, MimiConfig
+    >>> from tiny_hf.transformers.import MimiModel, MimiConfig
 
     >>> # Initializing a "kyutai/mimi" style configuration
     >>> configuration = MimiConfig()

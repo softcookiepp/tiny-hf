@@ -17,11 +17,11 @@
 import math
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, LayerNorm, MSELoss
-from torch.nn import functional as F
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, LayerNorm, MSELoss
+from tg_adapter.nn import functional as F
 
 from ...file_utils import add_code_sample_docstrings, add_start_docstrings, add_start_docstrings_to_model_forward
 from ...generation import GenerationMixin

@@ -110,7 +110,7 @@ class BeitConfig(BackboneConfigMixin, PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import BeitConfig, BeitModel
+    >>> from tiny_hf.transformers.import BeitConfig, BeitModel
 
     >>> # Initializing a BEiT beit-base-patch16-224-pt22k style configuration
     >>> configuration = BeitConfig()
@@ -209,7 +209,7 @@ class BeitConfig(BackboneConfigMixin, PretrainedConfig):
         self.reshape_hidden_states = reshape_hidden_states
 
 
-# Copied from transformers.models.vit.configuration_vit.ViTOnnxConfig
+# Copied from tiny_hf.transformers.models.vit.configuration_vit.ViTOnnxConfig
 class BeitOnnxConfig(OnnxConfig):
     torch_onnx_minimum_version = version.parse("1.11")
 

@@ -69,7 +69,7 @@ FROM_CONFIG_DOCSTRING = """
         Examples:
 
         ```python
-        >>> from transformers import AutoConfig, BaseAutoModelClass
+        >>> from tiny_hf.transformers.import AutoConfig, BaseAutoModelClass
 
         >>> # Download configuration from huggingface.co and cache.
         >>> config = AutoConfig.from_pretrained("checkpoint_placeholder")
@@ -167,7 +167,7 @@ FROM_PRETRAINED_TORCH_DOCSTRING = """
         Examples:
 
         ```python
-        >>> from transformers import AutoConfig, BaseAutoModelClass
+        >>> from tiny_hf.transformers.import AutoConfig, BaseAutoModelClass
 
         >>> # Download model and configuration from huggingface.co and cache.
         >>> model = BaseAutoModelClass.from_pretrained("checkpoint_placeholder")
@@ -266,7 +266,7 @@ FROM_PRETRAINED_TF_DOCSTRING = """
         Examples:
 
         ```python
-        >>> from transformers import AutoConfig, BaseAutoModelClass
+        >>> from tiny_hf.transformers.import AutoConfig, BaseAutoModelClass
 
         >>> # Download model and configuration from huggingface.co and cache.
         >>> model = BaseAutoModelClass.from_pretrained("checkpoint_placeholder")
@@ -365,7 +365,7 @@ FROM_PRETRAINED_FLAX_DOCSTRING = """
         Examples:
 
         ```python
-        >>> from transformers import AutoConfig, BaseAutoModelClass
+        >>> from tiny_hf.transformers.import AutoConfig, BaseAutoModelClass
 
         >>> # Download model and configuration from huggingface.co and cache.
         >>> model = BaseAutoModelClass.from_pretrained("checkpoint_placeholder")
@@ -782,7 +782,7 @@ class _LazyAutoMapping(OrderedDict):
     def _load_attr_from_module(self, model_type, attr):
         module_name = model_type_to_module_name(model_type)
         if module_name not in self._modules:
-            self._modules[module_name] = importlib.import_module(f".{module_name}", "transformers.models")
+            self._modules[module_name] = importlib.import_module(f".{module_name}", "tiny_hf.transformers.models")
         return getattribute_from_module(self._modules[module_name], attr)
 
     def keys(self):

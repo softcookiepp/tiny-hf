@@ -21,10 +21,10 @@ import warnings
 from dataclasses import dataclass
 from typing import Callable, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -1223,8 +1223,8 @@ class GPT2DoubleHeadsModel(GPT2PreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> import torch
-        >>> from transformers import AutoTokenizer, GPT2DoubleHeadsModel
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, GPT2DoubleHeadsModel
 
         >>> tokenizer = AutoTokenizer.from_pretrained("openai-community/gpt2")
         >>> model = GPT2DoubleHeadsModel.from_pretrained("openai-community/gpt2")

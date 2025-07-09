@@ -19,10 +19,10 @@ from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.nn.functional as F
-import torch.utils.checkpoint
-from torch import Tensor, nn
+import tg_adapter as torch
+import tg_adapter.nn.functional as F
+import tg_adapter.utils.checkpoint
+from tg_adapter.import Tensor, nn
 
 from ...activations import ACT2FN
 from ...modeling_outputs import BaseModelOutput
@@ -152,7 +152,7 @@ class SamMLPBlock(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.convnext.modeling_convnext.ConvNextLayerNorm with ConvNext->Sam
+# Copied from tiny_hf.transformers.models.convnext.modeling_convnext.ConvNextLayerNorm with ConvNext->Sam
 class SamLayerNorm(nn.Module):
     r"""LayerNorm that supports two data formats: channels_last (default) or channels_first.
     The ordering of the dimensions in the inputs. channels_last corresponds to inputs with shape (batch_size, height,
@@ -1401,7 +1401,7 @@ class SamModel(SamPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoModel, AutoProcessor
+        >>> from tiny_hf.transformers.import AutoModel, AutoProcessor
 
         >>> model = AutoModel.from_pretrained("facebook/sam-vit-base")
         >>> processor = AutoProcessor.from_pretrained("facebook/sam-vit-base")

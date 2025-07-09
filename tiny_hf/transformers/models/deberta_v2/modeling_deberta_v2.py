@@ -17,10 +17,10 @@
 from collections.abc import Sequence
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, LayerNorm, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, LayerNorm, MSELoss
 
 from ...activations import ACT2FN
 from ...modeling_outputs import (
@@ -44,7 +44,7 @@ _QA_TARGET_START_INDEX = 2
 _QA_TARGET_END_INDEX = 9
 
 
-# Copied from transformers.models.deberta.modeling_deberta.DebertaSelfOutput with DebertaLayerNorm->LayerNorm
+# Copied from tiny_hf.transformers.models.deberta.modeling_deberta.DebertaSelfOutput with DebertaLayerNorm->LayerNorm
 class DebertaV2SelfOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -108,19 +108,19 @@ def build_relative_position(query_layer, key_layer, bucket_size: int = -1, max_p
 
 
 @torch.jit.script
-# Copied from transformers.models.deberta.modeling_deberta.c2p_dynamic_expand
+# Copied from tiny_hf.transformers.models.deberta.modeling_deberta.c2p_dynamic_expand
 def c2p_dynamic_expand(c2p_pos, query_layer, relative_pos):
     return c2p_pos.expand([query_layer.size(0), query_layer.size(1), query_layer.size(2), relative_pos.size(-1)])
 
 
 @torch.jit.script
-# Copied from transformers.models.deberta.modeling_deberta.p2c_dynamic_expand
+# Copied from tiny_hf.transformers.models.deberta.modeling_deberta.p2c_dynamic_expand
 def p2c_dynamic_expand(c2p_pos, query_layer, key_layer):
     return c2p_pos.expand([query_layer.size(0), query_layer.size(1), key_layer.size(-2), key_layer.size(-2)])
 
 
 @torch.jit.script
-# Copied from transformers.models.deberta.modeling_deberta.pos_dynamic_expand
+# Copied from tiny_hf.transformers.models.deberta.modeling_deberta.pos_dynamic_expand
 def pos_dynamic_expand(pos_index, p2c_att, key_layer):
     return pos_index.expand(p2c_att.size()[:2] + (pos_index.size(-2), key_layer.size(-2)))
 
@@ -355,7 +355,7 @@ class DisentangledSelfAttention(nn.Module):
         return score
 
 
-# Copied from transformers.models.deberta.modeling_deberta.DebertaAttention with Deberta->DebertaV2
+# Copied from tiny_hf.transformers.models.deberta.modeling_deberta.DebertaAttention with Deberta->DebertaV2
 class DebertaV2Attention(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -390,7 +390,7 @@ class DebertaV2Attention(nn.Module):
             return (attention_output, None)
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate with Bert->DebertaV2
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate with Bert->DebertaV2
 class DebertaV2Intermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -406,7 +406,7 @@ class DebertaV2Intermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.deberta.modeling_deberta.DebertaOutput with DebertaLayerNorm->LayerNorm
+# Copied from tiny_hf.transformers.models.deberta.modeling_deberta.DebertaOutput with DebertaLayerNorm->LayerNorm
 class DebertaV2Output(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -422,7 +422,7 @@ class DebertaV2Output(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.deberta.modeling_deberta.DebertaLayer with Deberta->DebertaV2
+# Copied from tiny_hf.transformers.models.deberta.modeling_deberta.DebertaLayer with Deberta->DebertaV2
 class DebertaV2Layer(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -492,7 +492,7 @@ class ConvLayer(nn.Module):
         return output_states
 
 
-# Copied from transformers.models.deberta.modeling_deberta.DebertaEmbeddings with DebertaLayerNorm->LayerNorm,Deberta->DebertaV2
+# Copied from tiny_hf.transformers.models.deberta.modeling_deberta.DebertaEmbeddings with DebertaLayerNorm->LayerNorm,Deberta->DebertaV2
 class DebertaV2Embeddings(nn.Module):
     """Construct the embeddings from word, position and token_type embeddings."""
 
@@ -703,7 +703,7 @@ class DebertaV2Encoder(nn.Module):
         )
 
 
-# Copied from transformers.models.deberta.modeling_deberta.DebertaPreTrainedModel with Deberta->DebertaV2
+# Copied from tiny_hf.transformers.models.deberta.modeling_deberta.DebertaPreTrainedModel with Deberta->DebertaV2
 class DebertaV2PreTrainedModel(PreTrainedModel):
     """
     An abstract class to handle weights initialization and a simple interface for downloading and loading pretrained
@@ -794,7 +794,7 @@ DEBERTA_INPUTS_DOCSTRING = r"""
     "The bare DeBERTa Model transformer outputting raw hidden-states without any specific head on top.",
     DEBERTA_START_DOCSTRING,
 )
-# Copied from transformers.models.deberta.modeling_deberta.DebertaModel with Deberta->DebertaV2
+# Copied from tiny_hf.transformers.models.deberta.modeling_deberta.DebertaModel with Deberta->DebertaV2
 class DebertaV2Model(DebertaV2PreTrainedModel):
     def __init__(self, config):
         super().__init__(config)
@@ -906,7 +906,7 @@ class DebertaV2Model(DebertaV2PreTrainedModel):
         )
 
 
-# Copied from transformers.models.deberta.modeling_deberta.LegacyDebertaPredictionHeadTransform with Deberta->DebertaV2
+# Copied from tiny_hf.transformers.models.deberta.modeling_deberta.LegacyDebertaPredictionHeadTransform with Deberta->DebertaV2
 class LegacyDebertaV2PredictionHeadTransform(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1034,7 +1034,7 @@ class DebertaV2ForMaskedLM(DebertaV2PreTrainedModel):
         config_class=_CONFIG_FOR_DOC,
         mask="[MASK]",
     )
-    # Copied from transformers.models.deberta.modeling_deberta.DebertaForMaskedLM.forward with Deberta->DebertaV2
+    # Copied from tiny_hf.transformers.models.deberta.modeling_deberta.DebertaForMaskedLM.forward with Deberta->DebertaV2
     def forward(
         self,
         input_ids: Optional[torch.Tensor] = None,
@@ -1090,7 +1090,7 @@ class DebertaV2ForMaskedLM(DebertaV2PreTrainedModel):
         )
 
 
-# Copied from transformers.models.deberta.modeling_deberta.ContextPooler
+# Copied from tiny_hf.transformers.models.deberta.modeling_deberta.ContextPooler
 class ContextPooler(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1151,7 +1151,7 @@ class DebertaV2ForSequenceClassification(DebertaV2PreTrainedModel):
         output_type=SequenceClassifierOutput,
         config_class=_CONFIG_FOR_DOC,
     )
-    # Copied from transformers.models.deberta.modeling_deberta.DebertaForSequenceClassification.forward with Deberta->DebertaV2
+    # Copied from tiny_hf.transformers.models.deberta.modeling_deberta.DebertaForSequenceClassification.forward with Deberta->DebertaV2
     def forward(
         self,
         input_ids: Optional[torch.Tensor] = None,
@@ -1239,7 +1239,7 @@ class DebertaV2ForSequenceClassification(DebertaV2PreTrainedModel):
     """,
     DEBERTA_START_DOCSTRING,
 )
-# Copied from transformers.models.deberta.modeling_deberta.DebertaForTokenClassification with Deberta->DebertaV2
+# Copied from tiny_hf.transformers.models.deberta.modeling_deberta.DebertaForTokenClassification with Deberta->DebertaV2
 class DebertaV2ForTokenClassification(DebertaV2PreTrainedModel):
     def __init__(self, config):
         super().__init__(config)
@@ -1332,7 +1332,7 @@ class DebertaV2ForQuestionAnswering(DebertaV2PreTrainedModel):
         qa_target_start_index=_QA_TARGET_START_INDEX,
         qa_target_end_index=_QA_TARGET_END_INDEX,
     )
-    # Copied from transformers.models.deberta.modeling_deberta.DebertaForQuestionAnswering.forward with Deberta->DebertaV2
+    # Copied from tiny_hf.transformers.models.deberta.modeling_deberta.DebertaForQuestionAnswering.forward with Deberta->DebertaV2
     def forward(
         self,
         input_ids: Optional[torch.Tensor] = None,

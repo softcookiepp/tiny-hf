@@ -24,12 +24,12 @@ from typing import Tuple
 
 import numpy as np
 import requests
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 from numpy import load
 from PIL import Image
 
-from transformers import (
+from tiny_hf.transformers.import (
     GemmaTokenizerFast,
     SiglipConfig,
     SiglipImageProcessor,
@@ -37,7 +37,7 @@ from transformers import (
     SiglipProcessor,
     SiglipTokenizer,
 )
-from transformers.utils import logging
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

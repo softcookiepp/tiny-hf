@@ -14,10 +14,10 @@
 
 import argparse
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
-from transformers import PLBartConfig, PLBartForConditionalGeneration, PLBartForSequenceClassification
+from tiny_hf.transformers.import PLBartConfig, PLBartForConditionalGeneration, PLBartForSequenceClassification
 
 
 def remove_ignore_keys_(state_dict):

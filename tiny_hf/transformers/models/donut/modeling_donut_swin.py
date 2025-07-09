@@ -22,9 +22,9 @@ import math
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...modeling_utils import PreTrainedModel
@@ -51,7 +51,7 @@ _EXPECTED_OUTPUT_SHAPE = [1, 49, 768]
 
 
 @dataclass
-# Copied from transformers.models.swin.modeling_swin.SwinEncoderOutput with Swin->DonutSwin
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinEncoderOutput with Swin->DonutSwin
 class DonutSwinEncoderOutput(ModelOutput):
     """
     DonutSwin encoder's outputs, with potential hidden states and attentions.
@@ -85,7 +85,7 @@ class DonutSwinEncoderOutput(ModelOutput):
 
 
 @dataclass
-# Copied from transformers.models.swin.modeling_swin.SwinModelOutput with Swin->DonutSwin
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinModelOutput with Swin->DonutSwin
 class DonutSwinModelOutput(ModelOutput):
     """
     DonutSwin model's outputs that also contains a pooling of the last hidden states.
@@ -121,7 +121,7 @@ class DonutSwinModelOutput(ModelOutput):
     reshaped_hidden_states: Optional[Tuple[torch.FloatTensor, ...]] = None
 
 
-# Copied from transformers.models.swin.modeling_swin.window_partition
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.window_partition
 def window_partition(input_feature, window_size):
     """
     Partitions the given input into windows.
@@ -134,7 +134,7 @@ def window_partition(input_feature, window_size):
     return windows
 
 
-# Copied from transformers.models.swin.modeling_swin.window_reverse
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.window_reverse
 def window_reverse(windows, window_size, height, width):
     """
     Merges windows to produce higher resolution features.
@@ -145,7 +145,7 @@ def window_reverse(windows, window_size, height, width):
     return windows
 
 
-# Copied from transformers.models.swin.modeling_swin.SwinEmbeddings with Swin->DonutSwin
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinEmbeddings with Swin->DonutSwin
 class DonutSwinEmbeddings(nn.Module):
     """
     Construct the patch and position embeddings. Optionally, also the mask token.
@@ -169,7 +169,7 @@ class DonutSwinEmbeddings(nn.Module):
         self.patch_size = config.patch_size
         self.config = config
 
-    # Copied from transformers.models.vit.modeling_vit.ViTEmbeddings.interpolate_pos_encoding
+    # Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTEmbeddings.interpolate_pos_encoding
     def interpolate_pos_encoding(self, embeddings: torch.Tensor, height: int, width: int) -> torch.Tensor:
         """
         This method allows to interpolate the pre-trained position encodings, to be able to use the model on higher resolution
@@ -238,7 +238,7 @@ class DonutSwinEmbeddings(nn.Module):
         return embeddings, output_dimensions
 
 
-# Copied from transformers.models.swin.modeling_swin.SwinPatchEmbeddings with Swin->DonutSwin
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinPatchEmbeddings with Swin->DonutSwin
 class DonutSwinPatchEmbeddings(nn.Module):
     """
     This class turns `pixel_values` of shape `(batch_size, num_channels, height, width)` into the initial
@@ -282,7 +282,7 @@ class DonutSwinPatchEmbeddings(nn.Module):
         return embeddings, output_dimensions
 
 
-# Copied from transformers.models.swin.modeling_swin.SwinPatchMerging
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinPatchMerging
 class DonutSwinPatchMerging(nn.Module):
     """
     Patch Merging Layer.
@@ -337,7 +337,7 @@ class DonutSwinPatchMerging(nn.Module):
         return input_feature
 
 
-# Copied from transformers.models.beit.modeling_beit.drop_path
+# Copied from tiny_hf.transformers.models.beit.modeling_beit.drop_path
 def drop_path(input: torch.Tensor, drop_prob: float = 0.0, training: bool = False) -> torch.Tensor:
     """
     Drop paths (Stochastic Depth) per sample (when applied in main path of residual blocks).
@@ -358,7 +358,7 @@ def drop_path(input: torch.Tensor, drop_prob: float = 0.0, training: bool = Fals
     return output
 
 
-# Copied from transformers.models.swin.modeling_swin.SwinDropPath
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinDropPath
 class DonutSwinDropPath(nn.Module):
     """Drop paths (Stochastic Depth) per sample (when applied in main path of residual blocks)."""
 
@@ -373,7 +373,7 @@ class DonutSwinDropPath(nn.Module):
         return "p={}".format(self.drop_prob)
 
 
-# Copied from transformers.models.swin.modeling_swin.SwinSelfAttention with Swin->DonutSwin
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinSelfAttention with Swin->DonutSwin
 class DonutSwinSelfAttention(nn.Module):
     def __init__(self, config, dim, num_heads, window_size):
         super().__init__()
@@ -474,7 +474,7 @@ class DonutSwinSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.swin.modeling_swin.SwinSelfOutput
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinSelfOutput
 class DonutSwinSelfOutput(nn.Module):
     def __init__(self, config, dim):
         super().__init__()
@@ -488,7 +488,7 @@ class DonutSwinSelfOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.swin.modeling_swin.SwinAttention with Swin->DonutSwin
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinAttention with Swin->DonutSwin
 class DonutSwinAttention(nn.Module):
     def __init__(self, config, dim, num_heads, window_size):
         super().__init__()
@@ -527,7 +527,7 @@ class DonutSwinAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.swin.modeling_swin.SwinIntermediate
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinIntermediate
 class DonutSwinIntermediate(nn.Module):
     def __init__(self, config, dim):
         super().__init__()
@@ -543,7 +543,7 @@ class DonutSwinIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.swin.modeling_swin.SwinOutput
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinOutput
 class DonutSwinOutput(nn.Module):
     def __init__(self, config, dim):
         super().__init__()
@@ -556,7 +556,7 @@ class DonutSwinOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.swin.modeling_swin.SwinLayer with Swin->DonutSwin
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinLayer with Swin->DonutSwin
 class DonutSwinLayer(nn.Module):
     def __init__(self, config, dim, input_resolution, num_heads, drop_path_rate=0.0, shift_size=0):
         super().__init__()
@@ -682,7 +682,7 @@ class DonutSwinLayer(nn.Module):
         return layer_outputs
 
 
-# Copied from transformers.models.swin.modeling_swin.SwinStage with Swin->DonutSwin
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinStage with Swin->DonutSwin
 class DonutSwinStage(nn.Module):
     def __init__(self, config, dim, input_resolution, depth, num_heads, drop_path, downsample):
         super().__init__()
@@ -743,7 +743,7 @@ class DonutSwinStage(nn.Module):
         return stage_outputs
 
 
-# Copied from transformers.models.swin.modeling_swin.SwinEncoder with Swin->DonutSwin
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinEncoder with Swin->DonutSwin
 class DonutSwinEncoder(nn.Module):
     def __init__(self, config, grid_size):
         super().__init__()
@@ -845,7 +845,7 @@ class DonutSwinEncoder(nn.Module):
         )
 
 
-# Copied from transformers.models.swin.modeling_swin.SwinPreTrainedModel with Swin->DonutSwin
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinPreTrainedModel with Swin->DonutSwin
 class DonutSwinPreTrainedModel(PreTrainedModel):
     """
     An abstract class to handle weights initialization and a simple interface for downloading and loading pretrained

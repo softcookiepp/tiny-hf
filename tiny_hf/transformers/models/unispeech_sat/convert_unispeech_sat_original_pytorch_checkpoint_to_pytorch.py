@@ -17,9 +17,9 @@
 import argparse
 
 import fairseq
-import torch
+import tg_adapter as torch
 
-from transformers import UniSpeechSatConfig, UniSpeechSatForCTC, UniSpeechSatForPreTraining, logging
+from tiny_hf.transformers.import UniSpeechSatConfig, UniSpeechSatForCTC, UniSpeechSatForPreTraining, logging
 
 
 logging.set_verbosity_info()

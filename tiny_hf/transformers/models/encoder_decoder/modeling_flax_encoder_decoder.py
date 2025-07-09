@@ -445,7 +445,7 @@ class FlaxEncoderDecoderModel(FlaxPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import FlaxEncoderDecoderModel, BertTokenizer
+        >>> from tiny_hf.transformers.import FlaxEncoderDecoderModel, BertTokenizer
 
         >>> # initialize a bert2gpt2 from pretrained BERT and GPT2 models. Note that the cross-attention layers will be randomly initialized
         >>> model = FlaxEncoderDecoderModel.from_encoder_decoder_pretrained("google-bert/bert-base-cased", "openai-community/gpt2")
@@ -522,7 +522,7 @@ class FlaxEncoderDecoderModel(FlaxPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import FlaxEncoderDecoderModel, BertTokenizer
+        >>> from tiny_hf.transformers.import FlaxEncoderDecoderModel, BertTokenizer
         >>> import jax.numpy as jnp
 
         >>> # initialize a bert2gpt2 from pretrained BERT and GPT2 models. Note that the cross-attention layers will be randomly initialized
@@ -647,7 +647,7 @@ class FlaxEncoderDecoderModel(FlaxPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import FlaxEncoderDecoderModel, BertTokenizer, GPT2Tokenizer
+        >>> from tiny_hf.transformers.import FlaxEncoderDecoderModel, BertTokenizer, GPT2Tokenizer
 
         >>> # load a fine-tuned bert2gpt2 model
         >>> model = FlaxEncoderDecoderModel.from_pretrained("patrickvonplaten/bert2gpt2-cnn_dailymail-fp16")
@@ -799,7 +799,7 @@ class FlaxEncoderDecoderModel(FlaxPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import FlaxEncoderDecoderModel
+        >>> from tiny_hf.transformers.import FlaxEncoderDecoderModel
 
         >>> # initialize a bert2gpt2 from pretrained BERT and GPT2 models. Note that the cross-attention layers will be randomly initialized
         >>> model = FlaxEncoderDecoderModel.from_encoder_decoder_pretrained("google-bert/bert-base-cased", "openai-community/gpt2")

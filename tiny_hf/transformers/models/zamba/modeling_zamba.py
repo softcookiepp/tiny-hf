@@ -22,10 +22,10 @@
 import math
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache
@@ -77,7 +77,7 @@ logger = logging.get_logger(__name__)
 _CONFIG_FOR_DOC = "ZambaConfig"
 
 
-# Copied from transformers.models.llama.modeling_llama.LlamaRMSNorm with Llama->Zamba
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaRMSNorm with Llama->Zamba
 class ZambaRMSNorm(nn.Module):
     def __init__(self, hidden_size, eps=1e-6):
         """
@@ -101,7 +101,7 @@ class ZambaRMSNorm(nn.Module):
 ALL_LAYERNORM_LAYERS.append(ZambaRMSNorm)
 
 
-# Copied from transformers.models.llama.modeling_llama.repeat_kv
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.repeat_kv
 def repeat_kv(hidden_states: torch.Tensor, n_rep: int) -> torch.Tensor:
     """
     This is the equivalent of torch.repeat_interleave(x, dim=1, repeats=n_rep). The hidden states go from (batch,
@@ -159,7 +159,7 @@ class ZambaHybridDynamicCache(DynamicCache):
         self.key_cache = [torch.tensor([[]] * batch_size, device=device) for _ in range(config.num_hidden_layers)]
         self.value_cache = [torch.tensor([[]] * batch_size, device=device) for _ in range(config.num_hidden_layers)]
 
-    # Copied from transformers.models.jamba.modeling_jamba.HybridMambaAttentionDynamicCache.update
+    # Copied from tiny_hf.transformers.models.jamba.modeling_jamba.HybridMambaAttentionDynamicCache.update
     def update(
         self,
         key_states: torch.Tensor,
@@ -177,7 +177,7 @@ class ZambaHybridDynamicCache(DynamicCache):
 
         return self.key_cache[layer_idx], self.value_cache[layer_idx]
 
-    # Copied from transformers.models.jamba.modeling_jamba.HybridMambaAttentionDynamicCache.reorder_cache
+    # Copied from tiny_hf.transformers.models.jamba.modeling_jamba.HybridMambaAttentionDynamicCache.reorder_cache
     def reorder_cache(self, beam_idx: torch.LongTensor):
         """Reorders the cache for beam search, given the selected beam indices."""
         for layer_idx in range(len(self.key_cache)):
@@ -191,7 +191,7 @@ class ZambaHybridDynamicCache(DynamicCache):
             device = self.ssm_states[layer_idx].device
             self.ssm_states[layer_idx] = self.ssm_states[layer_idx].index_select(0, beam_idx.to(device))
 
-    # Copied from transformers.models.jamba.modeling_jamba.HybridMambaAttentionDynamicCache.get_seq_length
+    # Copied from tiny_hf.transformers.models.jamba.modeling_jamba.HybridMambaAttentionDynamicCache.get_seq_length
     def get_seq_length(self, layer_idx: Optional[int] = 0) -> int:
         """Returns the sequence length of the cached states. A layer index can be optionally passed."""
         # take any layer that contains cache and not empty tensor
@@ -239,7 +239,7 @@ class ZambaAttention(nn.Module):
     Multi-headed attention from 'Attention Is All You Need' paper. Modified to use sliding window attention: Longformer
     and "Generating Long Sequences with Sparse Transformers".
 
-    Adapted from transformers.models.mistral.modeling_mistral.MistralAttention:
+    Adapted from tiny_hf.transformers.models.mistral.modeling_mistral.MistralAttention:
     The input dimension here is attention_hidden_size = 2 * hidden_size, and head_dim = attention_hidden_size // num_heads.
     The extra factor of 2 comes from the input being the concatenation of original_hidden_states with the output of the previous (mamba) layer
     (see fig. 2 in https://arxiv.org/pdf/2405.16712).
@@ -588,7 +588,7 @@ class ZambaMambaMixer(nn.Module):
         return self.slow_forward(hidden_states, cache_params, attention_mask=attention_mask)
 
 
-# Copied from transformers.models.mistral.modeling_mistral.MistralMLP with Mistral->Zamba
+# Copied from tiny_hf.transformers.models.mistral.modeling_mistral.MistralMLP with Mistral->Zamba
 class ZambaMLP(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1140,7 +1140,7 @@ class ZambaModel(ZambaPreTrainedModel):
         )
         return output if return_dict else output.to_tuple()
 
-    # Copied from transformers.models.jamba.modeling_jamba.JambaModel._update_causal_mask
+    # Copied from tiny_hf.transformers.models.jamba.modeling_jamba.JambaModel._update_causal_mask
     def _update_causal_mask(self, attention_mask, input_tensor, cache_position):
         if self.config._attn_implementation == "flash_attention_2":
             if attention_mask is not None and 0.0 in attention_mask:
@@ -1177,7 +1177,7 @@ class ZambaModel(ZambaPreTrainedModel):
         return causal_mask
 
 
-# Adapted from transformers.models.jamba.modeling_jamba.JambaForCausalLM with Jamba->Zamba, JAMBA->ZAMBA
+# Adapted from tiny_hf.transformers.models.jamba.modeling_jamba.JambaForCausalLM with Jamba->Zamba, JAMBA->ZAMBA
 class ZambaForCausalLM(ZambaPreTrainedModel, GenerationMixin):
     def __init__(self, config: ZambaConfig):
         super().__init__(config)
@@ -1244,7 +1244,7 @@ class ZambaForCausalLM(ZambaPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, ZambaForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, ZambaForCausalLM
 
         >>> model = ZambaForCausalLM.from_pretrained("Zyphra/Zamba-7B-v1")
         >>> tokenizer = AutoTokenizer.from_pretrained("Zyphra/Zamba-7B-v1")

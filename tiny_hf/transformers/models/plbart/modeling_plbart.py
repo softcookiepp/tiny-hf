@@ -18,10 +18,10 @@ import copy
 import math
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -57,7 +57,7 @@ _CHECKPOINT_FOR_DOC = "uclanlp/plbart-base"
 _CONFIG_FOR_DOC = "PLBartConfig"
 
 
-# Copied from transformers.models.mbart.modeling_mbart.shift_tokens_right
+# Copied from tiny_hf.transformers.models.mbart.modeling_mbart.shift_tokens_right
 def shift_tokens_right(input_ids: torch.Tensor, pad_token_id: int):
     """
     Shift input ids one token to the right, and wrap the last non pad token (the <LID> token) Note that MBart does not
@@ -78,7 +78,7 @@ def shift_tokens_right(input_ids: torch.Tensor, pad_token_id: int):
     return prev_output_tokens
 
 
-# Copied from transformers.models.bart.modeling_bart.BartLearnedPositionalEmbedding with Bart->PLBart
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartLearnedPositionalEmbedding with Bart->PLBart
 class PLBartLearnedPositionalEmbedding(nn.Embedding):
     """
     This module learns positional embeddings up to a fixed maximum size.
@@ -101,7 +101,7 @@ class PLBartLearnedPositionalEmbedding(nn.Embedding):
         return super().forward(positions + self.offset)
 
 
-# Copied from transformers.models.bart.modeling_bart.BartScaledWordEmbedding with Bart->PLBart
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartScaledWordEmbedding with Bart->PLBart
 class PLBartScaledWordEmbedding(nn.Embedding):
     """
     This module overrides nn.Embeddings' forward by multiplying with embeddings scale.
@@ -115,7 +115,7 @@ class PLBartScaledWordEmbedding(nn.Embedding):
         return super().forward(input_ids) * self.embed_scale
 
 
-# Copied from transformers.models.bart.modeling_bart.BartAttention with Bart->PLBart
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartAttention with Bart->PLBart
 class PLBartAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -274,7 +274,7 @@ class PLBartAttention(nn.Module):
         return attn_output, attn_weights_reshaped, past_key_value
 
 
-# Copied from transformers.models.bart.modeling_bart.BartEncoderLayer with Bart->PLBart, BART->PLBART
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartEncoderLayer with Bart->PLBart, BART->PLBART
 class PLBartEncoderLayer(nn.Module):
     def __init__(self, config: PLBartConfig):
         super().__init__()
@@ -349,7 +349,7 @@ class PLBartEncoderLayer(nn.Module):
 PLBART_ATTENTION_CLASSES = {"eager": PLBartAttention}
 
 
-# Copied from transformers.models.bart.modeling_bart.BartDecoderLayer with Bart->PLBart, BART->PLBART
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartDecoderLayer with Bart->PLBart, BART->PLBART
 class PLBartDecoderLayer(nn.Module):
     def __init__(self, config: PLBartConfig):
         super().__init__()
@@ -470,7 +470,7 @@ class PLBartDecoderLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bart.modeling_bart.BartClassificationHead with Bart->PLBart
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartClassificationHead with Bart->PLBart
 class PLBartClassificationHead(nn.Module):
     """Head for sentence-level classification tasks."""
 
@@ -533,7 +533,7 @@ PLBART_GENERATION_EXAMPLE = r"""
     Mask-filling example:
 
     ```python
-    >>> from transformers import AutoTokenizer, PLBartForConditionalGeneration
+    >>> from tiny_hf.transformers.import AutoTokenizer, PLBartForConditionalGeneration
 
     >>> model = PLBartForConditionalGeneration.from_pretrained("uclanlp/plbart-base")
     >>> tokenizer = AutoTokenizer.from_pretrained("uclanlp/plbart-base")
@@ -651,7 +651,7 @@ PLBART_INPUTS_DOCSTRING = r"""
 """
 
 
-# Copied from transformers.models.bart.modeling_bart.BartEncoder with Bart->PLBart
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartEncoder with Bart->PLBart
 class PLBartEncoder(PLBartPreTrainedModel):
     """
     Transformer encoder consisting of *config.encoder_layers* self attention layers. Each layer is a
@@ -840,7 +840,7 @@ class PLBartEncoder(PLBartPreTrainedModel):
         )
 
 
-# Copied from transformers.models.bart.modeling_bart.BartDecoder with Bart->PLBart
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartDecoder with Bart->PLBart
 class PLBartDecoder(PLBartPreTrainedModel):
     """
     Transformer decoder consisting of *config.decoder_layers* layers. Each layer is a [`PLBartDecoderLayer`]
@@ -1418,7 +1418,7 @@ class PLBartForSequenceClassification(PLBartPreTrainedModel):
         output_type=Seq2SeqSequenceClassifierOutput,
         config_class=_CONFIG_FOR_DOC,
     )
-    # Copied from transformers.models.bart.modeling_bart.BartForSequenceClassification.forward
+    # Copied from tiny_hf.transformers.models.bart.modeling_bart.BartForSequenceClassification.forward
     def forward(
         self,
         input_ids: torch.LongTensor = None,
@@ -1518,7 +1518,7 @@ class PLBartForSequenceClassification(PLBartPreTrainedModel):
         )
 
 
-# Copied from transformers.models.bart.modeling_bart.BartDecoderWrapper with Bart->PLBart
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartDecoderWrapper with Bart->PLBart
 class PLBartDecoderWrapper(PLBartPreTrainedModel):
     """
     This wrapper class is a helper class to correctly load pretrained checkpoints when the causal language model is
@@ -1533,7 +1533,7 @@ class PLBartDecoderWrapper(PLBartPreTrainedModel):
         return self.decoder(*args, **kwargs)
 
 
-# Copied from transformers.models.bart.modeling_bart.BartForCausalLM with Bart->PLBart, facebook/bart-base->uclanlp/plbart-base
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartForCausalLM with Bart->PLBart, facebook/bart-base->uclanlp/plbart-base
 class PLBartForCausalLM(PLBartPreTrainedModel, GenerationMixin):
     _tied_weights_keys = ["lm_head.weight"]
 
@@ -1655,7 +1655,7 @@ class PLBartForCausalLM(PLBartPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, PLBartForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, PLBartForCausalLM
 
         >>> tokenizer = AutoTokenizer.from_pretrained("uclanlp/plbart-base")
         >>> model = PLBartForCausalLM.from_pretrained("uclanlp/plbart-base", add_cross_attention=False)

@@ -20,9 +20,9 @@ import os
 
 import numpy as np
 import tensorflow as tf
-import torch
+import tg_adapter as torch
 
-from transformers import BertModel
+from tiny_hf.transformers.import BertModel
 
 
 def convert_pytorch_checkpoint_to_tf(model: BertModel, ckpt_dir: str, model_name: str):

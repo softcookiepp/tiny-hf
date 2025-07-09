@@ -30,7 +30,7 @@ from ...utils.deprecation import deprecate_kwarg
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 if TYPE_CHECKING:
     from .modeling_grounding_dino import GroundingDinoObjectDetectionOutput
@@ -216,7 +216,7 @@ class GroundingDinoProcessor(ProcessorMixin):
 
         return text
 
-    # Copied from transformers.models.blip.processing_blip.BlipProcessor.batch_decode with BertTokenizerFast->PreTrainedTokenizer
+    # Copied from tiny_hf.transformers.models.blip.processing_blip.BlipProcessor.batch_decode with BertTokenizerFast->PreTrainedTokenizer
     def batch_decode(self, *args, **kwargs):
         """
         This method forwards all its arguments to PreTrainedTokenizer's [`~PreTrainedTokenizer.batch_decode`]. Please
@@ -224,7 +224,7 @@ class GroundingDinoProcessor(ProcessorMixin):
         """
         return self.tokenizer.batch_decode(*args, **kwargs)
 
-    # Copied from transformers.models.blip.processing_blip.BlipProcessor.decode with BertTokenizerFast->PreTrainedTokenizer
+    # Copied from tiny_hf.transformers.models.blip.processing_blip.BlipProcessor.decode with BertTokenizerFast->PreTrainedTokenizer
     def decode(self, *args, **kwargs):
         """
         This method forwards all its arguments to PreTrainedTokenizer's [`~PreTrainedTokenizer.decode`]. Please refer to
@@ -233,7 +233,7 @@ class GroundingDinoProcessor(ProcessorMixin):
         return self.tokenizer.decode(*args, **kwargs)
 
     @property
-    # Copied from transformers.models.blip.processing_blip.BlipProcessor.model_input_names
+    # Copied from tiny_hf.transformers.models.blip.processing_blip.BlipProcessor.model_input_names
     def model_input_names(self):
         tokenizer_input_names = self.tokenizer.model_input_names
         image_processor_input_names = self.image_processor.model_input_names

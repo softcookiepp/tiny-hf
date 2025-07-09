@@ -83,7 +83,7 @@ class XLMRobertaConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import XLMRobertaConfig, XLMRobertaModel
+    >>> from tiny_hf.transformers.import XLMRobertaConfig, XLMRobertaModel
 
     >>> # Initializing a XLM-RoBERTa FacebookAI/xlm-roberta-base style configuration
     >>> configuration = XLMRobertaConfig()
@@ -138,7 +138,7 @@ class XLMRobertaConfig(PretrainedConfig):
         self.classifier_dropout = classifier_dropout
 
 
-# Copied from transformers.models.roberta.configuration_roberta.RobertaOnnxConfig with Roberta->XLMRoberta
+# Copied from tiny_hf.transformers.models.roberta.configuration_roberta.RobertaOnnxConfig with Roberta->XLMRoberta
 class XLMRobertaOnnxConfig(OnnxConfig):
     @property
     def inputs(self) -> Mapping[str, Mapping[int, str]]:

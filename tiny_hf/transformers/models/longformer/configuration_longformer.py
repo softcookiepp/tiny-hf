@@ -80,7 +80,7 @@ class LongformerConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import LongformerConfig, LongformerModel
+    >>> from tiny_hf.transformers.import LongformerConfig, LongformerModel
 
     >>> # Initializing a Longformer configuration
     >>> configuration = LongformerConfig()
@@ -190,7 +190,7 @@ class LongformerOnnxConfig(OnnxConfig):
         inputs = super().generate_dummy_inputs(
             preprocessor=tokenizer, batch_size=batch_size, seq_length=seq_length, is_pair=is_pair, framework=framework
         )
-        import torch
+        import tg_adapter as torch
 
         # for some reason, replacing this code by inputs["global_attention_mask"] = torch.randint(2, inputs["input_ids"].shape, dtype=torch.int64)
         # makes the export fail randomly

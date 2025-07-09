@@ -104,7 +104,7 @@ OPT_INPUTS_DOCSTRING = r"""
 """
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartAttention with Bart->OPT
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartAttention with Bart->OPT
 class FlaxOPTAttention(nn.Module):
     config: OPTConfig
     embed_dim: int
@@ -686,7 +686,7 @@ class FlaxOPTModule(nn.Module):
         )
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartModel with Bart->OPT
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartModel with Bart->OPT
 class FlaxOPTModel(FlaxOPTPreTrainedModel):
     config: OPTConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation

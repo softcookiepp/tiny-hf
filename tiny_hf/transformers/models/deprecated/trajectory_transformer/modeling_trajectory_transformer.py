@@ -20,10 +20,10 @@ from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import functional as F
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import functional as F
 
 from ....modeling_utils import PreTrainedModel
 from ....utils import (
@@ -477,8 +477,8 @@ class TrajectoryTransformerModel(TrajectoryTransformerPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import TrajectoryTransformerModel
-        >>> import torch
+        >>> from tiny_hf.transformers.import TrajectoryTransformerModel
+        >>> import tg_adapter as torch
 
         >>> model = TrajectoryTransformerModel.from_pretrained(
         ...     "CarlCochet/trajectory-transformer-halfcheetah-medium-v2"

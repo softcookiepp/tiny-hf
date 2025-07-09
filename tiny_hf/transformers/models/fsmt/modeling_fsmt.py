@@ -30,9 +30,9 @@
 import math
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-import torch
-from torch import Tensor, nn
-from torch.nn import CrossEntropyLoss, LayerNorm
+import tg_adapter as torch
+from tg_adapter.import Tensor, nn
+from tg_adapter.nn import CrossEntropyLoss, LayerNorm
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -199,7 +199,7 @@ FSMT_GENERATION_EXAMPLE = r"""
     Translation example::
 
     ```python
-    >>> from transformers import AutoTokenizer, FSMTForConditionalGeneration
+    >>> from tiny_hf.transformers.import AutoTokenizer, FSMTForConditionalGeneration
 
     >>> mname = "facebook/wmt19-ru-en"
     >>> model = FSMTForConditionalGeneration.from_pretrained(mname)

@@ -20,7 +20,7 @@ See https://github.com/lyuwenyu/RT-DETR/blob/5b628eaa0a2fc25bdafec7e6148d5296b14
 import math
 from typing import Optional
 
-from torch import Tensor, nn
+from tg_adapter.import Tensor, nn
 
 from ...activations import ACT2FN
 from ...modeling_outputs import (
@@ -48,7 +48,7 @@ _CHECKPOINT_FOR_DOC = "microsoft/resnet-50"
 _EXPECTED_OUTPUT_SHAPE = [1, 2048, 7, 7]
 
 
-# Copied from transformers.models.resnet.modeling_resnet.ResNetConvLayer -> RTDetrResNetConvLayer
+# Copied from tiny_hf.transformers.models.resnet.modeling_resnet.ResNetConvLayer -> RTDetrResNetConvLayer
 class RTDetrResNetConvLayer(nn.Module):
     def __init__(
         self, in_channels: int, out_channels: int, kernel_size: int = 3, stride: int = 1, activation: str = "relu"
@@ -113,7 +113,7 @@ class RTDetrResNetEmbeddings(nn.Module):
         return embedding
 
 
-# Copied from transformers.models.resnet.modeling_resnet.ResNetShortCut -> RTDetrResNetChortCut
+# Copied from tiny_hf.transformers.models.resnet.modeling_resnet.ResNetShortCut -> RTDetrResNetChortCut
 class RTDetrResNetShortCut(nn.Module):
     """
     ResNet shortcut, used to project the residual features to the correct size. If needed, it is also used to
@@ -267,7 +267,7 @@ class RTDetrResNetStage(nn.Module):
         return hidden_state
 
 
-# Copied from transformers.models.resnet.modeling_resnet.ResNetEncoder with ResNet->RTDetrResNet
+# Copied from tiny_hf.transformers.models.resnet.modeling_resnet.ResNetEncoder with ResNet->RTDetrResNet
 class RTDetrResNetEncoder(nn.Module):
     def __init__(self, config: RTDetrResNetConfig):
         super().__init__()
@@ -309,7 +309,7 @@ class RTDetrResNetEncoder(nn.Module):
         )
 
 
-# Copied from transformers.models.resnet.modeling_resnet.ResNetPreTrainedModel with ResNet->RTDetrResNet
+# Copied from tiny_hf.transformers.models.resnet.modeling_resnet.ResNetPreTrainedModel with ResNet->RTDetrResNet
 class RTDetrResNetPreTrainedModel(PreTrainedModel):
     """
     An abstract class to handle weights initialization and a simple interface for downloading and loading pretrained
@@ -390,8 +390,8 @@ class RTDetrResNetBackbone(RTDetrResNetPreTrainedModel, BackboneMixin):
         Examples:
 
         ```python
-        >>> from transformers import RTDetrResNetConfig, RTDetrResNetBackbone
-        >>> import torch
+        >>> from tiny_hf.transformers.import RTDetrResNetConfig, RTDetrResNetBackbone
+        >>> import tg_adapter as torch
 
         >>> config = RTDetrResNetConfig()
         >>> model = RTDetrResNetBackbone(config)

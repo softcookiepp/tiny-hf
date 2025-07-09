@@ -51,7 +51,7 @@ from ...utils import (
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 if is_vision_available():
     import PIL
@@ -282,7 +282,7 @@ class DPTImageProcessor(BaseImageProcessor):
 
         return pad(image, ((pad_size_left, pad_size_right), (pad_size_top, pad_size_bottom)), data_format=data_format)
 
-    # Copied from transformers.models.beit.image_processing_beit.BeitImageProcessor.reduce_label
+    # Copied from tiny_hf.transformers.models.beit.image_processing_beit.BeitImageProcessor.reduce_label
     def reduce_label(self, label: ImageInput) -> np.ndarray:
         label = to_numpy_array(label)
         # Avoid using underflow conversion
@@ -425,7 +425,7 @@ class DPTImageProcessor(BaseImageProcessor):
         segmentation_map = segmentation_map.astype(np.int64)
         return segmentation_map
 
-    # Copied from transformers.models.beit.image_processing_beit.BeitImageProcessor.__call__
+    # Copied from tiny_hf.transformers.models.beit.image_processing_beit.BeitImageProcessor.__call__
     def __call__(self, images, segmentation_maps=None, **kwargs):
         # Overrides the `__call__` method of the `Preprocessor` class such that the images and segmentation maps can both
         # be passed in as positional arguments.
@@ -588,7 +588,7 @@ class DPTImageProcessor(BaseImageProcessor):
 
         return BatchFeature(data=data, tensor_type=return_tensors)
 
-    # Copied from transformers.models.beit.image_processing_beit.BeitImageProcessor.post_process_semantic_segmentation with Beit->DPT
+    # Copied from tiny_hf.transformers.models.beit.image_processing_beit.BeitImageProcessor.post_process_semantic_segmentation with Beit->DPT
     def post_process_semantic_segmentation(self, outputs, target_sizes: List[Tuple] = None):
         """
         Converts the output of [`DPTForSemanticSegmentation`] into semantic segmentation maps. Only supports PyTorch.

@@ -2,12 +2,12 @@
 import argparse
 import json
 
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 from PIL import Image
 from timm.models import create_model
 
-from transformers import (
+from tiny_hf.transformers.import (
     BeitImageProcessor,
     Data2VecVisionConfig,
     Data2VecVisionForImageClassification,

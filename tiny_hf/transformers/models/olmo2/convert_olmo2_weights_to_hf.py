@@ -21,12 +21,12 @@ import shutil
 from pathlib import Path
 from typing import Any, Dict
 
-import torch
+import tg_adapter as torch
 import yaml
 from tokenizers import Tokenizer
 
-from transformers import Olmo2Config, Olmo2ForCausalLM
-from transformers.models.gpt2.tokenization_gpt2_fast import GPT2TokenizerFast
+from tiny_hf.transformers.import Olmo2Config, Olmo2ForCausalLM
+from tiny_hf.transformers.models.gpt2.tokenization_gpt2_fast import GPT2TokenizerFast
 
 
 """
@@ -40,7 +40,7 @@ python src/transformers/models/olmo2/convert_olmo2_weights_to_hf.py \
 Thereafter, models can be loaded via:
 
 ```py
-from transformers import Olmo2ForCausalLM, AutoTokenizer
+from tiny_hf.transformers.import Olmo2ForCausalLM, AutoTokenizer
 
 model = Olmo2ForCausalLM.from_pretrained("/output/path")
 tokenizer = AutoTokenizer.from_pretrained("/output/path")

@@ -77,7 +77,7 @@ class OpenLlamaConfig(PretrainedConfig):
         Example:
 
     ```python
-    >>> from transformers import OpenLlamaModel, OpenLlamaConfig
+    >>> from tiny_hf.transformers.import OpenLlamaModel, OpenLlamaConfig
 
     >>> # Initializing a Open-Llama open_llama-7b style configuration
     >>> configuration = OpenLlamaConfig()

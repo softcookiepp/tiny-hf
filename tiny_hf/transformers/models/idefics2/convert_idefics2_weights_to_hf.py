@@ -15,10 +15,10 @@
 import argparse
 import copy
 
-import torch
+import tg_adapter as torch
 from accelerate import init_empty_weights
 
-from transformers import (
+from tiny_hf.transformers.import (
     AutoConfig,
     AutoModelForCausalLM,
     AutoTokenizer,

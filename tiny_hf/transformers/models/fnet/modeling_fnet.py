@@ -19,10 +19,10 @@ from dataclasses import dataclass
 from functools import partial
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...utils import is_scipy_available
 
@@ -213,7 +213,7 @@ class FNetFourierTransform(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate with Bert->FNet
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate with Bert->FNet
 class FNetIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -229,7 +229,7 @@ class FNetIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOutput with Bert->FNet
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOutput with Bert->FNet
 class FNetOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -301,7 +301,7 @@ class FNetEncoder(nn.Module):
         return BaseModelOutput(last_hidden_state=hidden_states, hidden_states=all_hidden_states)
 
 
-# Copied from transformers.models.bert.modeling_bert.BertPooler with Bert->FNet
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPooler with Bert->FNet
 class FNetPooler(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -317,7 +317,7 @@ class FNetPooler(nn.Module):
         return pooled_output
 
 
-# Copied from transformers.models.bert.modeling_bert.BertPredictionHeadTransform with Bert->FNet
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPredictionHeadTransform with Bert->FNet
 class FNetPredictionHeadTransform(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -371,7 +371,7 @@ class FNetOnlyMLMHead(nn.Module):
         return prediction_scores
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOnlyNSPHead with Bert->FNet
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOnlyNSPHead with Bert->FNet
 class FNetOnlyNSPHead(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -382,7 +382,7 @@ class FNetOnlyNSPHead(nn.Module):
         return seq_relationship_score
 
 
-# Copied from transformers.models.bert.modeling_bert.BertPreTrainingHeads with Bert->FNet
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPreTrainingHeads with Bert->FNet
 class FNetPreTrainingHeads(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -659,8 +659,8 @@ class FNetForPreTraining(FNetPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, FNetForPreTraining
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, FNetForPreTraining
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/fnet-base")
         >>> model = FNetForPreTraining.from_pretrained("google/fnet-base")
@@ -810,8 +810,8 @@ class FNetForNextSentencePrediction(FNetPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, FNetForNextSentencePrediction
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, FNetForNextSentencePrediction
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/fnet-base")
         >>> model = FNetForNextSentencePrediction.from_pretrained("google/fnet-base")

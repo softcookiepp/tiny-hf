@@ -44,7 +44,7 @@ class BlenderbotTokenizerFast(PreTrainedTokenizerFast):
     be encoded differently whether it is at the beginning of the sentence (without space) or not:
 
     ```python
-    >>> from transformers import BlenderbotTokenizerFast
+    >>> from tiny_hf.transformers.import BlenderbotTokenizerFast
 
     >>> tokenizer = BlenderbotTokenizerFast.from_pretrained("facebook/blenderbot-3B")
     >>> tokenizer("Hello world")["input_ids"]
@@ -120,7 +120,7 @@ class BlenderbotTokenizerFast(PreTrainedTokenizerFast):
     model_input_names = ["input_ids", "attention_mask"]
     slow_tokenizer_class = BlenderbotTokenizer
 
-    # Copied from transformers.models.roberta.tokenization_roberta_fast.RobertaTokenizerFast.__init__ with Roberta->Blenderbot, RoBERTa->Blenderbot
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta_fast.RobertaTokenizerFast.__init__ with Roberta->Blenderbot, RoBERTa->Blenderbot
     def __init__(
         self,
         vocab_file=None,
@@ -187,7 +187,7 @@ class BlenderbotTokenizerFast(PreTrainedTokenizerFast):
                 setattr(self.backend_tokenizer, tokenizer_component, new_value)
 
     @property
-    # Copied from transformers.models.roberta.tokenization_roberta_fast.RobertaTokenizerFast.mask_token with Roberta->Blenderbot, RoBERTa->Blenderbot
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta_fast.RobertaTokenizerFast.mask_token with Roberta->Blenderbot, RoBERTa->Blenderbot
     def mask_token(self) -> str:
         """
         `str`: Mask token, to use when training a model with masked-language modeling. Log an error if used while not
@@ -214,7 +214,7 @@ class BlenderbotTokenizerFast(PreTrainedTokenizerFast):
         value = AddedToken(value, lstrip=True, rstrip=False) if isinstance(value, str) else value
         self._mask_token = value
 
-    # Copied from transformers.models.roberta.tokenization_roberta_fast.RobertaTokenizerFast._batch_encode_plus with Roberta->Blenderbot, RoBERTa->Blenderbot
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta_fast.RobertaTokenizerFast._batch_encode_plus with Roberta->Blenderbot, RoBERTa->Blenderbot
     def _batch_encode_plus(self, *args, **kwargs) -> BatchEncoding:
         is_split_into_words = kwargs.get("is_split_into_words", False)
         assert self.add_prefix_space or not is_split_into_words, (
@@ -224,7 +224,7 @@ class BlenderbotTokenizerFast(PreTrainedTokenizerFast):
 
         return super()._batch_encode_plus(*args, **kwargs)
 
-    # Copied from transformers.models.roberta.tokenization_roberta_fast.RobertaTokenizerFast._encode_plus with Roberta->Blenderbot, RoBERTa->Blenderbot
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta_fast.RobertaTokenizerFast._encode_plus with Roberta->Blenderbot, RoBERTa->Blenderbot
     def _encode_plus(self, *args, **kwargs) -> BatchEncoding:
         is_split_into_words = kwargs.get("is_split_into_words", False)
 
@@ -235,12 +235,12 @@ class BlenderbotTokenizerFast(PreTrainedTokenizerFast):
 
         return super()._encode_plus(*args, **kwargs)
 
-    # Copied from transformers.models.roberta.tokenization_roberta_fast.RobertaTokenizerFast.save_vocabulary with Roberta->Blenderbot, RoBERTa->Blenderbot
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta_fast.RobertaTokenizerFast.save_vocabulary with Roberta->Blenderbot, RoBERTa->Blenderbot
     def save_vocabulary(self, save_directory: str, filename_prefix: Optional[str] = None) -> Tuple[str]:
         files = self._tokenizer.model.save(save_directory, name=filename_prefix)
         return tuple(files)
 
-    # Copied from transformers.models.roberta.tokenization_roberta_fast.RobertaTokenizerFast.create_token_type_ids_from_sequences with Roberta->Blenderbot, RoBERTa->Blenderbot
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta_fast.RobertaTokenizerFast.create_token_type_ids_from_sequences with Roberta->Blenderbot, RoBERTa->Blenderbot
     def create_token_type_ids_from_sequences(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
     ) -> List[int]:

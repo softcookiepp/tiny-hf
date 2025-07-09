@@ -18,7 +18,7 @@ import weakref
 from typing import TYPE_CHECKING, Any, Dict, Optional, Tuple
 
 import numpy as np
-import torch
+import tg_adapter as torch
 
 from ..utils import is_sklearn_available
 

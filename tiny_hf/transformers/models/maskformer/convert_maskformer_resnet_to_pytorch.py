@@ -21,12 +21,12 @@ import pickle
 from pathlib import Path
 
 import requests
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 from PIL import Image
 
-from transformers import MaskFormerConfig, MaskFormerForInstanceSegmentation, MaskFormerImageProcessor, ResNetConfig
-from transformers.utils import logging
+from tiny_hf.transformers.import MaskFormerConfig, MaskFormerForInstanceSegmentation, MaskFormerImageProcessor, ResNetConfig
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

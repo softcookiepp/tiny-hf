@@ -20,10 +20,10 @@ import os
 import warnings
 from typing import Dict, List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ....activations import ACT2FN
 from ....modeling_outputs import (
@@ -1067,8 +1067,8 @@ class QDQBertLMHeadModel(QDQBertPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, QDQBertLMHeadModel, QDQBertConfig
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, QDQBertLMHeadModel, QDQBertConfig
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google-bert/bert-base-cased")
         >>> config = QDQBertConfig.from_pretrained("google-bert/bert-base-cased")
@@ -1311,8 +1311,8 @@ class QDQBertForNextSentencePrediction(QDQBertPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, QDQBertForNextSentencePrediction
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, QDQBertForNextSentencePrediction
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google-bert/bert-base-uncased")
         >>> model = QDQBertForNextSentencePrediction.from_pretrained("google-bert/bert-base-uncased")

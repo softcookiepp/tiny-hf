@@ -20,24 +20,24 @@ from pprint import pformat
 from typing import Any, Dict, Iterator, List, Set, Tuple
 
 import requests
-import torch
-import torchvision.transforms as T
+import tg_adapter as torch
+import tg_adapter.ision.transforms as T
 from detectron2.checkpoint import DetectionCheckpointer
 from detectron2.config import get_cfg
 from detectron2.data import MetadataCatalog
 from detectron2.projects.deeplab import add_deeplab_config
 from PIL import Image
-from torch import Tensor, nn
+from tg_adapter.import Tensor, nn
 
-from transformers.models.maskformer.feature_extraction_maskformer import MaskFormerImageProcessor
-from transformers.models.maskformer.modeling_maskformer import (
+from tiny_hf.transformers.models.maskformer.feature_extraction_maskformer import MaskFormerImageProcessor
+from tiny_hf.transformers.models.maskformer.modeling_maskformer import (
     MaskFormerConfig,
     MaskFormerForInstanceSegmentation,
     MaskFormerForInstanceSegmentationOutput,
     MaskFormerModel,
     MaskFormerModelOutput,
 )
-from transformers.utils import logging
+from tiny_hf.transformers.utils import logging
 
 
 StateDict = Dict[str, Tensor]

@@ -226,7 +226,7 @@ def create_sinusoidal_positions(n_pos, dim):
     return jnp.array(out)
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.shift_tokens_right
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.shift_tokens_right
 def shift_tokens_right(input_ids: jnp.ndarray, pad_token_id: int, decoder_start_token_id: int) -> jnp.ndarray:
     """
     Shift input ids one token to the right.
@@ -239,7 +239,7 @@ def shift_tokens_right(input_ids: jnp.ndarray, pad_token_id: int, decoder_start_
     return shifted_input_ids
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartAttention with Bart->Marian
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartAttention with Bart->Marian
 class FlaxMarianAttention(nn.Module):
     config: MarianConfig
     embed_dim: int
@@ -407,7 +407,7 @@ class FlaxMarianAttention(nn.Module):
         return attn_output, attn_weights
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartEncoderLayer with Bart->Marian
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartEncoderLayer with Bart->Marian
 class FlaxMarianEncoderLayer(nn.Module):
     config: MarianConfig
     dtype: jnp.dtype = jnp.float32
@@ -465,7 +465,7 @@ class FlaxMarianEncoderLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartEncoderLayerCollection with Bart->Marian
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartEncoderLayerCollection with Bart->Marian
 class FlaxMarianEncoderLayerCollection(nn.Module):
     config: MarianConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -520,7 +520,7 @@ class FlaxMarianEncoderLayerCollection(nn.Module):
         )
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartDecoderLayer with Bart->Marian
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartDecoderLayer with Bart->Marian
 class FlaxMarianDecoderLayer(nn.Module):
     config: MarianConfig
     dtype: jnp.dtype = jnp.float32
@@ -609,7 +609,7 @@ class FlaxMarianDecoderLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartDecoderLayerCollection with Bart->Marian
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartDecoderLayerCollection with Bart->Marian
 class FlaxMarianDecoderLayerCollection(nn.Module):
     config: MarianConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -979,7 +979,7 @@ class FlaxMarianPreTrainedModel(FlaxPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, FlaxMarianMTModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, FlaxMarianMTModel
 
         >>> tokenizer = AutoTokenizer.from_pretrained("Helsinki-NLP/opus-mt-en-de")
         >>> model = FlaxMarianMTModel.from_pretrained("Helsinki-NLP/opus-mt-en-de")
@@ -1047,7 +1047,7 @@ class FlaxMarianPreTrainedModel(FlaxPreTrainedModel):
 
         ```python
         >>> import jax.numpy as jnp
-        >>> from transformers import AutoTokenizer, FlaxMarianMTModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, FlaxMarianMTModel
 
         >>> tokenizer = AutoTokenizer.from_pretrained("Helsinki-NLP/opus-mt-en-de")
         >>> model = FlaxMarianMTModel.from_pretrained("Helsinki-NLP/opus-mt-en-de")
@@ -1314,7 +1314,7 @@ class FlaxMarianMTModel(FlaxMarianPreTrainedModel):
 
         ```python
         >>> import jax.numpy as jnp
-        >>> from transformers import AutoTokenizer, FlaxMarianMTModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, FlaxMarianMTModel
 
         >>> model = FlaxMarianMTModel.from_pretrained("Helsinki-NLP/opus-mt-en-de")
         >>> tokenizer = AutoTokenizer.from_pretrained("Helsinki-NLP/opus-mt-en-de")
@@ -1475,7 +1475,7 @@ FLAX_MARIAN_MT_DOCSTRING = """
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, FlaxMarianMTModel
+    >>> from tiny_hf.transformers.import AutoTokenizer, FlaxMarianMTModel
 
     >>> model = FlaxMarianMTModel.from_pretrained("Helsinki-NLP/opus-mt-en-de")
     >>> tokenizer = AutoTokenizer.from_pretrained("Helsinki-NLP/opus-mt-en-de")

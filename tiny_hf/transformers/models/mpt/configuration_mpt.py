@@ -159,7 +159,7 @@ class MptConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import MptConfig, MptModel
+    >>> from tiny_hf.transformers.import MptConfig, MptModel
 
     >>> # Initializing a Mpt configuration
     >>> configuration = MptConfig()

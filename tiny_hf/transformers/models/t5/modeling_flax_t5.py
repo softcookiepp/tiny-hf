@@ -54,7 +54,7 @@ _CONFIG_FOR_DOC = "T5Config"
 remat = nn_partitioning.remat
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.shift_tokens_right
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.shift_tokens_right
 def shift_tokens_right(input_ids: jnp.ndarray, pad_token_id: int, decoder_start_token_id: int) -> jnp.ndarray:
     """
     Shift input ids one token to the right.
@@ -1087,7 +1087,7 @@ class FlaxT5PreTrainedModel(FlaxPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, FlaxT5ForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, FlaxT5ForConditionalGeneration
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google-t5/t5-small")
         >>> model = FlaxT5ForConditionalGeneration.from_pretrained("google-t5/t5-small")
@@ -1148,7 +1148,7 @@ class FlaxT5PreTrainedModel(FlaxPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, FlaxT5ForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, FlaxT5ForConditionalGeneration
         >>> import jax.numpy as jnp
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google-t5/t5-small")
@@ -1375,7 +1375,7 @@ FLAX_T5_MODEL_DOCSTRING = """
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, FlaxT5Model
+    >>> from tiny_hf.transformers.import AutoTokenizer, FlaxT5Model
 
     >>> tokenizer = AutoTokenizer.from_pretrained("google-t5/t5-small")
     >>> model = FlaxT5Model.from_pretrained("google-t5/t5-small")
@@ -1626,7 +1626,7 @@ class FlaxT5ForConditionalGeneration(FlaxT5PreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, FlaxT5ForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, FlaxT5ForConditionalGeneration
         >>> import jax.numpy as jnp
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google-t5/t5-small")
@@ -1775,7 +1775,7 @@ FLAX_T5_CONDITIONAL_GENERATION_DOCSTRING = """
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, FlaxT5ForConditionalGeneration
+    >>> from tiny_hf.transformers.import AutoTokenizer, FlaxT5ForConditionalGeneration
 
     >>> tokenizer = AutoTokenizer.from_pretrained("google-t5/t5-small")
     >>> model = FlaxT5ForConditionalGeneration.from_pretrained("google-t5/t5-small")

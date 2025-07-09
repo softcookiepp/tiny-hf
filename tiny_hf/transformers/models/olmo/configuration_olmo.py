@@ -92,7 +92,7 @@ class OlmoConfig(PretrainedConfig):
             absolute value does not exceed this value.
 
     ```python
-    >>> from transformers import OlmoModel, OlmoConfig
+    >>> from tiny_hf.transformers.import OlmoModel, OlmoConfig
 
     >>> # Initializing a OLMo 7B style configuration
     >>> configuration = OlmoConfig()

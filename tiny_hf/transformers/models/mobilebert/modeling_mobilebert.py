@@ -26,9 +26,9 @@ import warnings
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...modeling_outputs import (
@@ -983,8 +983,8 @@ class MobileBertForPreTraining(MobileBertPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, MobileBertForPreTraining
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, MobileBertForPreTraining
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/mobilebert-uncased")
         >>> model = MobileBertForPreTraining.from_pretrained("google/mobilebert-uncased")
@@ -1173,8 +1173,8 @@ class MobileBertForNextSentencePrediction(MobileBertPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, MobileBertForNextSentencePrediction
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, MobileBertForNextSentencePrediction
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/mobilebert-uncased")
         >>> model = MobileBertForNextSentencePrediction.from_pretrained("google/mobilebert-uncased")
@@ -1237,7 +1237,7 @@ class MobileBertForNextSentencePrediction(MobileBertPreTrainedModel):
     """,
     MOBILEBERT_START_DOCSTRING,
 )
-# Copied from transformers.models.bert.modeling_bert.BertForSequenceClassification with Bert->MobileBert all-casing
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertForSequenceClassification with Bert->MobileBert all-casing
 class MobileBertForSequenceClassification(MobileBertPreTrainedModel):
     def __init__(self, config):
         super().__init__(config)
@@ -1341,7 +1341,7 @@ class MobileBertForSequenceClassification(MobileBertPreTrainedModel):
     """,
     MOBILEBERT_START_DOCSTRING,
 )
-# Copied from transformers.models.bert.modeling_bert.BertForQuestionAnswering with Bert->MobileBert all-casing
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertForQuestionAnswering with Bert->MobileBert all-casing
 class MobileBertForQuestionAnswering(MobileBertPreTrainedModel):
     def __init__(self, config):
         super().__init__(config)
@@ -1445,7 +1445,7 @@ class MobileBertForQuestionAnswering(MobileBertPreTrainedModel):
     """,
     MOBILEBERT_START_DOCSTRING,
 )
-# Copied from transformers.models.bert.modeling_bert.BertForMultipleChoice with Bert->MobileBert all-casing
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertForMultipleChoice with Bert->MobileBert all-casing
 class MobileBertForMultipleChoice(MobileBertPreTrainedModel):
     def __init__(self, config):
         super().__init__(config)
@@ -1542,7 +1542,7 @@ class MobileBertForMultipleChoice(MobileBertPreTrainedModel):
     """,
     MOBILEBERT_START_DOCSTRING,
 )
-# Copied from transformers.models.bert.modeling_bert.BertForTokenClassification with Bert->MobileBert all-casing
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertForTokenClassification with Bert->MobileBert all-casing
 class MobileBertForTokenClassification(MobileBertPreTrainedModel):
     def __init__(self, config):
         super().__init__(config)

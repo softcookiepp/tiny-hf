@@ -18,11 +18,11 @@ import argparse
 import pickle
 
 import numpy as np
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
-from transformers import ReformerConfig, ReformerModelWithLMHead
-from transformers.utils import logging
+from tiny_hf.transformers.import ReformerConfig, ReformerModelWithLMHead
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

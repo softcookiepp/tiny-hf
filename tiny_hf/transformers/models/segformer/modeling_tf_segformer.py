@@ -55,7 +55,7 @@ _IMAGE_CLASS_CHECKPOINT = "nvidia/mit-b0"
 _IMAGE_CLASS_EXPECTED_OUTPUT = "tabby, tabby cat"
 
 
-# Copied from transformers.models.convnext.modeling_tf_convnext.TFConvNextDropPath with ConvNext->Segformer
+# Copied from tiny_hf.transformers.models.convnext.modeling_tf_convnext.TFConvNextDropPath with ConvNext->Segformer
 class TFSegformerDropPath(keras.layers.Layer):
     """Drop paths (Stochastic Depth) per sample (when applied in main path of residual blocks).
     References:
@@ -966,7 +966,7 @@ class TFSegformerForSemanticSegmentation(TFSegformerPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, TFSegformerForSemanticSegmentation
+        >>> from tiny_hf.transformers.import AutoImageProcessor, TFSegformerForSemanticSegmentation
         >>> from PIL import Image
         >>> import requests
 

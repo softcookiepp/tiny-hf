@@ -76,7 +76,7 @@ class ConvBertConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import ConvBertConfig, ConvBertModel
+    >>> from tiny_hf.transformers.import ConvBertConfig, ConvBertModel
 
     >>> # Initializing a ConvBERT convbert-base-uncased style configuration
     >>> configuration = ConvBertConfig()
@@ -140,7 +140,7 @@ class ConvBertConfig(PretrainedConfig):
         self.classifier_dropout = classifier_dropout
 
 
-# Copied from transformers.models.bert.configuration_bert.BertOnnxConfig
+# Copied from tiny_hf.transformers.models.bert.configuration_bert.BertOnnxConfig
 class ConvBertOnnxConfig(OnnxConfig):
     @property
     def inputs(self) -> Mapping[str, Mapping[int, str]]:

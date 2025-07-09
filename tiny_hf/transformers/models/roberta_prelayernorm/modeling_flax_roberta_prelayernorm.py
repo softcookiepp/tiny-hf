@@ -51,7 +51,7 @@ _CONFIG_FOR_DOC = "RobertaPreLayerNormConfig"
 remat = nn_partitioning.remat
 
 
-# Copied from transformers.models.roberta.modeling_flax_roberta.create_position_ids_from_input_ids
+# Copied from tiny_hf.transformers.models.roberta.modeling_flax_roberta.create_position_ids_from_input_ids
 def create_position_ids_from_input_ids(input_ids, padding_idx):
     """
     Replace non-padding symbols with their position numbers. Position numbers begin at padding_idx+1. Padding symbols
@@ -137,7 +137,7 @@ ROBERTA_PRELAYERNORM_INPUTS_DOCSTRING = r"""
 """
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertEmbeddings with Bert->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertEmbeddings with Bert->RobertaPreLayerNorm
 class FlaxRobertaPreLayerNormEmbeddings(nn.Module):
     """Construct the embeddings from word, position and token_type embeddings."""
 
@@ -181,7 +181,7 @@ class FlaxRobertaPreLayerNormEmbeddings(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertSelfAttention with Bert->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertSelfAttention with Bert->RobertaPreLayerNorm
 class FlaxRobertaPreLayerNormSelfAttention(nn.Module):
     config: RobertaPreLayerNormConfig
     causal: bool = False
@@ -223,7 +223,7 @@ class FlaxRobertaPreLayerNormSelfAttention(nn.Module):
         return hidden_states.reshape(hidden_states.shape[:2] + (self.config.hidden_size,))
 
     @nn.compact
-    # Copied from transformers.models.bart.modeling_flax_bart.FlaxBartAttention._concatenate_to_cache
+    # Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartAttention._concatenate_to_cache
     def _concatenate_to_cache(self, key, value, query, attention_mask):
         """
         This function takes projected key, value states from a single input token and concatenates the states to cached
@@ -455,7 +455,7 @@ class FlaxRobertaPreLayerNormOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertLayer with Bert->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertLayer with Bert->RobertaPreLayerNorm
 class FlaxRobertaPreLayerNormLayer(nn.Module):
     config: RobertaPreLayerNormConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -513,7 +513,7 @@ class FlaxRobertaPreLayerNormLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertLayerCollection with Bert->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertLayerCollection with Bert->RobertaPreLayerNorm
 class FlaxRobertaPreLayerNormLayerCollection(nn.Module):
     config: RobertaPreLayerNormConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -596,7 +596,7 @@ class FlaxRobertaPreLayerNormLayerCollection(nn.Module):
         )
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertEncoder with Bert->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertEncoder with Bert->RobertaPreLayerNorm
 class FlaxRobertaPreLayerNormEncoder(nn.Module):
     config: RobertaPreLayerNormConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -636,7 +636,7 @@ class FlaxRobertaPreLayerNormEncoder(nn.Module):
         )
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertPooler with Bert->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertPooler with Bert->RobertaPreLayerNorm
 class FlaxRobertaPreLayerNormPooler(nn.Module):
     config: RobertaPreLayerNormConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -654,7 +654,7 @@ class FlaxRobertaPreLayerNormPooler(nn.Module):
         return nn.tanh(cls_hidden_state)
 
 
-# Copied from transformers.models.roberta.modeling_flax_roberta.FlaxRobertaLMHead with Roberta->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.roberta.modeling_flax_roberta.FlaxRobertaLMHead with Roberta->RobertaPreLayerNorm
 class FlaxRobertaPreLayerNormLMHead(nn.Module):
     config: RobertaPreLayerNormConfig
     dtype: jnp.dtype = jnp.float32
@@ -690,7 +690,7 @@ class FlaxRobertaPreLayerNormLMHead(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.roberta.modeling_flax_roberta.FlaxRobertaClassificationHead with Roberta->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.roberta.modeling_flax_roberta.FlaxRobertaClassificationHead with Roberta->RobertaPreLayerNorm
 class FlaxRobertaPreLayerNormClassificationHead(nn.Module):
     config: RobertaPreLayerNormConfig
     dtype: jnp.dtype = jnp.float32
@@ -723,7 +723,7 @@ class FlaxRobertaPreLayerNormClassificationHead(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.roberta.modeling_flax_roberta.FlaxRobertaPreTrainedModel with ROBERTA->ROBERTA_PRELAYERNORM,Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
+# Copied from tiny_hf.transformers.models.roberta.modeling_flax_roberta.FlaxRobertaPreTrainedModel with ROBERTA->ROBERTA_PRELAYERNORM,Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
 class FlaxRobertaPreLayerNormPreTrainedModel(FlaxPreTrainedModel):
     """
     An abstract class to handle weights initialization and a simple interface for downloading and loading pretrained
@@ -748,7 +748,7 @@ class FlaxRobertaPreLayerNormPreTrainedModel(FlaxPreTrainedModel):
         module = self.module_class(config=config, dtype=dtype, gradient_checkpointing=gradient_checkpointing, **kwargs)
         super().__init__(config, module, input_shape=input_shape, seed=seed, dtype=dtype, _do_init=_do_init)
 
-    # Copied from transformers.models.bert.modeling_flax_bert.FlaxBertPreTrainedModel.enable_gradient_checkpointing
+    # Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertPreTrainedModel.enable_gradient_checkpointing
     def enable_gradient_checkpointing(self):
         self._module = self.module_class(
             config=self.config,
@@ -798,7 +798,7 @@ class FlaxRobertaPreLayerNormPreTrainedModel(FlaxPreTrainedModel):
         else:
             return random_params
 
-    # Copied from transformers.models.bart.modeling_flax_bart.FlaxBartDecoderPreTrainedModel.init_cache
+    # Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartDecoderPreTrainedModel.init_cache
     def init_cache(self, batch_size, max_length):
         r"""
         Args:
@@ -993,7 +993,7 @@ class FlaxRobertaPreLayerNormModule(nn.Module):
     "The bare RoBERTa-PreLayerNorm Model transformer outputting raw hidden-states without any specific head on top.",
     ROBERTA_PRELAYERNORM_START_DOCSTRING,
 )
-# Copied from transformers.models.roberta.modeling_flax_roberta.FlaxRobertaModel with Roberta->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.roberta.modeling_flax_roberta.FlaxRobertaModel with Roberta->RobertaPreLayerNorm
 class FlaxRobertaPreLayerNormModel(FlaxRobertaPreLayerNormPreTrainedModel):
     module_class = FlaxRobertaPreLayerNormModule
 
@@ -1006,7 +1006,7 @@ append_call_sample_docstring(
 )
 
 
-# Copied from transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForMaskedLMModule with Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
+# Copied from tiny_hf.transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForMaskedLMModule with Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
 class FlaxRobertaPreLayerNormForMaskedLMModule(nn.Module):
     config: RobertaPreLayerNormConfig
     dtype: jnp.dtype = jnp.float32
@@ -1070,7 +1070,7 @@ class FlaxRobertaPreLayerNormForMaskedLMModule(nn.Module):
 @add_start_docstrings(
     """RoBERTa-PreLayerNorm Model with a `language modeling` head on top.""", ROBERTA_PRELAYERNORM_START_DOCSTRING
 )
-# Copied from transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForMaskedLM with Roberta->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForMaskedLM with Roberta->RobertaPreLayerNorm
 class FlaxRobertaPreLayerNormForMaskedLM(FlaxRobertaPreLayerNormPreTrainedModel):
     module_class = FlaxRobertaPreLayerNormForMaskedLMModule
 
@@ -1084,7 +1084,7 @@ append_call_sample_docstring(
 )
 
 
-# Copied from transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForSequenceClassificationModule with Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
+# Copied from tiny_hf.transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForSequenceClassificationModule with Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
 class FlaxRobertaPreLayerNormForSequenceClassificationModule(nn.Module):
     config: RobertaPreLayerNormConfig
     dtype: jnp.dtype = jnp.float32
@@ -1144,7 +1144,7 @@ class FlaxRobertaPreLayerNormForSequenceClassificationModule(nn.Module):
     """,
     ROBERTA_PRELAYERNORM_START_DOCSTRING,
 )
-# Copied from transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForSequenceClassification with Roberta->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForSequenceClassification with Roberta->RobertaPreLayerNorm
 class FlaxRobertaPreLayerNormForSequenceClassification(FlaxRobertaPreLayerNormPreTrainedModel):
     module_class = FlaxRobertaPreLayerNormForSequenceClassificationModule
 
@@ -1157,7 +1157,7 @@ append_call_sample_docstring(
 )
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertForMultipleChoiceModule with Bert->RobertaPreLayerNorm, with self.bert->self.roberta_prelayernorm
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertForMultipleChoiceModule with Bert->RobertaPreLayerNorm, with self.bert->self.roberta_prelayernorm
 class FlaxRobertaPreLayerNormForMultipleChoiceModule(nn.Module):
     config: RobertaPreLayerNormConfig
     dtype: jnp.dtype = jnp.float32
@@ -1226,7 +1226,7 @@ class FlaxRobertaPreLayerNormForMultipleChoiceModule(nn.Module):
     """,
     ROBERTA_PRELAYERNORM_START_DOCSTRING,
 )
-# Copied from transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForMultipleChoice with Roberta->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForMultipleChoice with Roberta->RobertaPreLayerNorm
 class FlaxRobertaPreLayerNormForMultipleChoice(FlaxRobertaPreLayerNormPreTrainedModel):
     module_class = FlaxRobertaPreLayerNormForMultipleChoiceModule
 
@@ -1243,7 +1243,7 @@ append_call_sample_docstring(
 )
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertForTokenClassificationModule with Bert->RobertaPreLayerNorm, with self.bert->self.roberta_prelayernorm
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertForTokenClassificationModule with Bert->RobertaPreLayerNorm, with self.bert->self.roberta_prelayernorm
 class FlaxRobertaPreLayerNormForTokenClassificationModule(nn.Module):
     config: RobertaPreLayerNormConfig
     dtype: jnp.dtype = jnp.float32
@@ -1310,7 +1310,7 @@ class FlaxRobertaPreLayerNormForTokenClassificationModule(nn.Module):
     """,
     ROBERTA_PRELAYERNORM_START_DOCSTRING,
 )
-# Copied from transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForTokenClassification with Roberta->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForTokenClassification with Roberta->RobertaPreLayerNorm
 class FlaxRobertaPreLayerNormForTokenClassification(FlaxRobertaPreLayerNormPreTrainedModel):
     module_class = FlaxRobertaPreLayerNormForTokenClassificationModule
 
@@ -1323,7 +1323,7 @@ append_call_sample_docstring(
 )
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertForQuestionAnsweringModule with Bert->RobertaPreLayerNorm, with self.bert->self.roberta_prelayernorm
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertForQuestionAnsweringModule with Bert->RobertaPreLayerNorm, with self.bert->self.roberta_prelayernorm
 class FlaxRobertaPreLayerNormForQuestionAnsweringModule(nn.Module):
     config: RobertaPreLayerNormConfig
     dtype: jnp.dtype = jnp.float32
@@ -1388,7 +1388,7 @@ class FlaxRobertaPreLayerNormForQuestionAnsweringModule(nn.Module):
     """,
     ROBERTA_PRELAYERNORM_START_DOCSTRING,
 )
-# Copied from transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForQuestionAnswering with Roberta->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForQuestionAnswering with Roberta->RobertaPreLayerNorm
 class FlaxRobertaPreLayerNormForQuestionAnswering(FlaxRobertaPreLayerNormPreTrainedModel):
     module_class = FlaxRobertaPreLayerNormForQuestionAnsweringModule
 
@@ -1401,7 +1401,7 @@ append_call_sample_docstring(
 )
 
 
-# Copied from transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForCausalLMModule with Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
+# Copied from tiny_hf.transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForCausalLMModule with Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
 class FlaxRobertaPreLayerNormForCausalLMModule(nn.Module):
     config: RobertaPreLayerNormConfig
     dtype: jnp.dtype = jnp.float32
@@ -1476,7 +1476,7 @@ class FlaxRobertaPreLayerNormForCausalLMModule(nn.Module):
     """,
     ROBERTA_PRELAYERNORM_START_DOCSTRING,
 )
-# Copied from transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForCausalLM with Roberta->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForCausalLM with Roberta->RobertaPreLayerNorm
 class FlaxRobertaPreLayerNormForCausalLM(FlaxRobertaPreLayerNormPreTrainedModel):
     module_class = FlaxRobertaPreLayerNormForCausalLMModule
 

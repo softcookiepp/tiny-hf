@@ -14,10 +14,10 @@
 
 import argparse
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
-from transformers import M2M100Config, M2M100ForConditionalGeneration
+from tiny_hf.transformers.import M2M100Config, M2M100ForConditionalGeneration
 
 
 def remove_ignore_keys_(state_dict):

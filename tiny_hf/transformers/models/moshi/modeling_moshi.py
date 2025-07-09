@@ -18,10 +18,10 @@ import math
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
-import torch.utils.checkpoint
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.nn as nn
+import tg_adapter.utils.checkpoint
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, SlidingWindowCache, StaticCache
@@ -227,7 +227,7 @@ class MoshiUnconditionalInput(ModelOutput):
     attention_mask: torch.LongTensor = None
 
 
-# Copied from transformers.models.gemma.modeling_gemma.GemmaRMSNorm with Gemma->Moshi
+# Copied from tiny_hf.transformers.models.gemma.modeling_gemma.GemmaRMSNorm with Gemma->Moshi
 class MoshiRMSNorm(nn.Module):
     def __init__(self, dim: int, eps: float = 1e-6):
         super().__init__()
@@ -307,7 +307,7 @@ class MoshiLinear(nn.Module):
             return self.linear(x)
 
 
-# Copied from transformers.models.mistral.modeling_mistral.MistralRotaryEmbedding with Mistral->Moshi
+# Copied from tiny_hf.transformers.models.mistral.modeling_mistral.MistralRotaryEmbedding with Mistral->Moshi
 class MoshiRotaryEmbedding(nn.Module):
     def __init__(self, config: MoshiConfig, device=None):
         super().__init__()
@@ -369,7 +369,7 @@ class MoshiRotaryEmbedding(nn.Module):
         return cos.to(dtype=x.dtype), sin.to(dtype=x.dtype)
 
 
-# Copied from transformers.models.llama.modeling_llama.rotate_half
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.rotate_half
 def rotate_half(x):
     """Rotates half the hidden dims of the input."""
     x1 = x[..., : x.shape[-1] // 2]
@@ -377,7 +377,7 @@ def rotate_half(x):
     return torch.cat((-x2, x1), dim=-1)
 
 
-# Copied from transformers.models.llama.modeling_llama.apply_rotary_pos_emb
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.apply_rotary_pos_emb
 def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
     """Applies Rotary Position Embedding to the query and key tensors.
 
@@ -430,7 +430,7 @@ class MoshiGatingMLP(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.llama.modeling_llama.repeat_kv
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.repeat_kv
 def repeat_kv(hidden_states: torch.Tensor, n_rep: int) -> torch.Tensor:
     """
     This is the equivalent of torch.repeat_interleave(x, dim=1, repeats=n_rep). The hidden states go from (batch,
@@ -492,7 +492,7 @@ class MoshiAttention(nn.Module):
             self.rope_theta = config.rope_theta
             self.rotary_emb = MoshiRotaryEmbedding(config)
 
-    # copied from transformers.models.gemma.modeling_gemma.GemmaAttention.forward
+    # copied from tiny_hf.transformers.models.gemma.modeling_gemma.GemmaAttention.forward
     # no longer copied after attention refactors
     def forward(
         self,
@@ -558,7 +558,7 @@ class MoshiAttention(nn.Module):
         return attn_output, attn_weights, past_key_value
 
 
-# NO LONGER EXIST Copied from transformers.models.gemma.modeling_gemma.GemmaFlashAttention2 with Gemma->Moshi
+# NO LONGER EXIST Copied from tiny_hf.transformers.models.gemma.modeling_gemma.GemmaFlashAttention2 with Gemma->Moshi
 # TODO cyril: modular
 class MoshiFlashAttention2(MoshiAttention):
     """
@@ -675,7 +675,7 @@ class MoshiFlashAttention2(MoshiAttention):
         return attn_output, attn_weights, past_key_value
 
 
-# NO LONGER EXIST Copied from transformers.models.gemma.modeling_gemma.GemmaSdpaAttention with Gemma->Moshi
+# NO LONGER EXIST Copied from tiny_hf.transformers.models.gemma.modeling_gemma.GemmaSdpaAttention with Gemma->Moshi
 # TODO cyril: modular
 class MoshiSdpaAttention(MoshiAttention):
     """
@@ -1289,7 +1289,7 @@ class MoshiDepthDecoder(MoshiPreTrainedModel, GenerationMixin):
             attentions=all_self_attns,
         )
 
-    # Copied from transformers.models.phi3.modeling_phi3.Phi3Model._update_causal_mask with Phi3->Moshi
+    # Copied from tiny_hf.transformers.models.phi3.modeling_phi3.Phi3Model._update_causal_mask with Phi3->Moshi
     def _update_causal_mask(
         self,
         attention_mask: torch.Tensor,
@@ -1374,7 +1374,7 @@ class MoshiDepthDecoder(MoshiPreTrainedModel, GenerationMixin):
         return causal_mask
 
     @staticmethod
-    # Copied from transformers.models.mistral.modeling_mistral.MistralModel._prepare_4d_causal_attention_mask_with_cache_position with Mistral->MoshiDepth
+    # Copied from tiny_hf.transformers.models.mistral.modeling_mistral.MistralModel._prepare_4d_causal_attention_mask_with_cache_position with Mistral->MoshiDepth
     def _prepare_4d_causal_attention_mask_with_cache_position(
         attention_mask: torch.Tensor,
         sequence_length: int,
@@ -1603,7 +1603,7 @@ class MoshiModel(MoshiPreTrainedModel):
             attentions=all_self_attns,
         )
 
-    # Copied from transformers.models.phi3.modeling_phi3.Phi3Model._update_causal_mask with Phi3->Moshi
+    # Copied from tiny_hf.transformers.models.phi3.modeling_phi3.Phi3Model._update_causal_mask with Phi3->Moshi
     def _update_causal_mask(
         self,
         attention_mask: torch.Tensor,
@@ -1688,7 +1688,7 @@ class MoshiModel(MoshiPreTrainedModel):
         return causal_mask
 
     @staticmethod
-    # Copied from transformers.models.mistral.modeling_mistral.MistralModel._prepare_4d_causal_attention_mask_with_cache_position with Mistral->Moshi
+    # Copied from tiny_hf.transformers.models.mistral.modeling_mistral.MistralModel._prepare_4d_causal_attention_mask_with_cache_position with Mistral->Moshi
     def _prepare_4d_causal_attention_mask_with_cache_position(
         attention_mask: torch.Tensor,
         sequence_length: int,
@@ -1765,7 +1765,7 @@ class MoshiModel(MoshiPreTrainedModel):
 class MoshiForCausalLM(MoshiPreTrainedModel, GenerationMixin):
     _tied_weights_keys = ["model.embed_tokens.weight", "lm_head.weight"]
 
-    # Copied from transformers.models.gemma.modeling_gemma.GemmaForCausalLM.__init__ with Gemma->Moshi
+    # Copied from tiny_hf.transformers.models.gemma.modeling_gemma.GemmaForCausalLM.__init__ with Gemma->Moshi
     def __init__(self, config):
         super().__init__(config)
         self.model = MoshiModel(config)
@@ -1830,7 +1830,7 @@ class MoshiForCausalLM(MoshiPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, MoshiForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, MoshiForCausalLM
 
         >>> model = MoshiForCausalLM.from_pretrained("kmhf/hf-moshiko")
         >>> tokenizer = AutoTokenizer.from_pretrained("kmhf/hf-moshiko")
@@ -1968,8 +1968,8 @@ class MoshiForConditionalGeneration(MoshiPreTrainedModel, GenerationMixin):
 
         Examples:
         ```python
-        >>> from transformers import MoshiForConditionalGeneration
-        >>> import torch
+        >>> from tiny_hf.transformers.import MoshiForConditionalGeneration
+        >>> import tg_adapter as torch
 
         >>> model = MoshiForConditionalGeneration.from_pretrained("kmhf/hf-moshiko")
         >>> inputs = moshi.get_unconditional_inputs()
@@ -2634,7 +2634,7 @@ class MoshiForConditionalGeneration(MoshiPreTrainedModel, GenerationMixin):
         self.depth_decoder._requires_grad = False
 
     @staticmethod
-    # Copied from transformers.models.musicgen.modeling_musicgen.MusicgenForCausalLM.apply_delay_pattern_mask
+    # Copied from tiny_hf.transformers.models.musicgen.modeling_musicgen.MusicgenForCausalLM.apply_delay_pattern_mask
     def apply_delay_pattern_mask(input_ids, decoder_pad_token_mask):
         """Apply a delay pattern mask to the decoder input ids, only preserving predictions where
         the mask is set to -1, and otherwise setting to the value detailed in the mask."""
@@ -2702,7 +2702,7 @@ class MoshiForConditionalGeneration(MoshiPreTrainedModel, GenerationMixin):
 
         Example:
         ```python
-        >>> from transformers import MoshiForConditionalGeneration
+        >>> from tiny_hf.transformers.import MoshiForConditionalGeneration
 
         >>> model = MoshiForConditionalGeneration.from_pretrained("kmhf/hf-moshiko-pytorch-bf16")
 

@@ -48,7 +48,7 @@ class TextGenerationPipeline(Pipeline):
     Examples:
 
     ```python
-    >>> from transformers import pipeline
+    >>> from tiny_hf.transformers.import pipeline
 
     >>> generator = pipeline(model="openai-community/gpt2")
     >>> generator("I can't believe you did such a ", do_sample=False)
@@ -59,7 +59,7 @@ class TextGenerationPipeline(Pipeline):
     ```
 
     ```python
-    >>> from transformers import pipeline
+    >>> from tiny_hf.transformers.import pipeline
 
     >>> generator = pipeline(model="HuggingFaceH4/zephyr-7b-beta")
     >>> # Zephyr-beta is a conversational model, so let's pass it a chat instead of a single string

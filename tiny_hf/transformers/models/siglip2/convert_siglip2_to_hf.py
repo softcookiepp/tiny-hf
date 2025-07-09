@@ -23,12 +23,12 @@ import os
 import re
 
 import numpy as np
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 from PIL import Image, ImageDraw
 
-from transformers import GemmaTokenizerFast, Siglip2Config, Siglip2ImageProcessorFast, Siglip2Model, Siglip2Processor
-from transformers.utils import logging
+from tiny_hf.transformers.import GemmaTokenizerFast, Siglip2Config, Siglip2ImageProcessorFast, Siglip2Model, Siglip2Processor
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

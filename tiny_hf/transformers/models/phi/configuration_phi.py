@@ -124,7 +124,7 @@ class PhiConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import PhiModel, PhiConfig
+    >>> from tiny_hf.transformers.import PhiModel, PhiConfig
 
     >>> # Initializing a Phi-1 style configuration
     >>> configuration = PhiConfig.from_pretrained("microsoft/phi-1")

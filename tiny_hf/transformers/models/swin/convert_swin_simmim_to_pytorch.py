@@ -19,10 +19,10 @@ URL: https://github.com/microsoft/Swin-Transformer/blob/main/MODELHUB.md#simmim-
 import argparse
 
 import requests
-import torch
+import tg_adapter as torch
 from PIL import Image
 
-from transformers import SwinConfig, SwinForMaskedImageModeling, ViTImageProcessor
+from tiny_hf.transformers.import SwinConfig, SwinForMaskedImageModeling, ViTImageProcessor
 
 
 def get_swin_config(model_name):

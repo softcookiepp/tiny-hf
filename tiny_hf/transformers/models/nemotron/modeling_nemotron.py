@@ -18,10 +18,10 @@
 import math
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.nn.functional as F
-import torch.utils.checkpoint
-from torch import Size, Tensor, nn
+import tg_adapter as torch
+import tg_adapter.nn.functional as F
+import tg_adapter.utils.checkpoint
+from tg_adapter.import Size, Tensor, nn
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, StaticCache
@@ -52,7 +52,7 @@ from .configuration_nemotron import NemotronConfig
 
 
 if is_torch_flex_attn_available():
-    from torch.nn.attention.flex_attention import BlockMask
+    from tg_adapter.nn.attention.flex_attention import BlockMask
 
     from ...integrations.flex_attention import make_flex_block_causal_mask
 
@@ -91,7 +91,7 @@ class NemotronLayerNorm1P(nn.LayerNorm):
 ALL_LAYERNORM_LAYERS.append(NemotronLayerNorm1P)
 
 
-# Copied from transformers.models.llama.modeling_llama.LlamaRotaryEmbedding with LLAMA->NEMOTRON,Llama->Nemotron,llama->nemotron
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaRotaryEmbedding with LLAMA->NEMOTRON,Llama->Nemotron,llama->nemotron
 class NemotronRotaryEmbedding(nn.Module):
     # Ignore copy
     def __init__(
@@ -155,7 +155,7 @@ class NemotronRotaryEmbedding(nn.Module):
         return cos.to(dtype=x.dtype), sin.to(dtype=x.dtype)
 
 
-# Copied from transformers.models.llama.modeling_llama.rotate_half
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.rotate_half
 def rotate_half(x):
     """Rotates half the hidden dims of the input."""
     x1 = x[..., : x.shape[-1] // 2]
@@ -210,7 +210,7 @@ class NemotronMLP(nn.Module):
         return self.down_proj(self.act_fn(self.up_proj(x)))
 
 
-# Copied from transformers.models.llama.modeling_llama.repeat_kv
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.repeat_kv
 def repeat_kv(hidden_states: torch.Tensor, n_rep: int) -> torch.Tensor:
     """
     This is the equivalent of torch.repeat_interleave(x, dim=1, repeats=n_rep). The hidden states go from (batch,
@@ -309,7 +309,7 @@ class NemotronAttention(nn.Module):
         return attn_output, attn_weights, past_key_value
 
 
-# NO LONGER EXIST Copied from transformers.models.llama.modeling_llama.LlamaFlashAttention2 with LLAMA->NEMOTRON,Llama->Nemotron,llama->nemotron
+# NO LONGER EXIST Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaFlashAttention2 with LLAMA->NEMOTRON,Llama->Nemotron,llama->nemotron
 # TODO cyril: modular
 class NemotronFlashAttention2(NemotronAttention):
     """
@@ -424,7 +424,7 @@ class NemotronFlashAttention2(NemotronAttention):
         return attn_output, attn_weights, past_key_value
 
 
-# NO LONGER EXIST Copied from transformers.models.llama.modeling_llama.LlamaSdpaAttention with LLAMA->NEMOTRON,Llama->Nemotron,llama->nemotron
+# NO LONGER EXIST Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaSdpaAttention with LLAMA->NEMOTRON,Llama->Nemotron,llama->nemotron
 # TODO cyril: modular
 class NemotronSdpaAttention(NemotronAttention):
     """
@@ -524,7 +524,7 @@ NEMOTRON_ATTENTION_CLASSES = {
 }
 
 
-# copied from transformers.models.llama.modeling_llama.LlamaDecoderLayer with LLAMA->NEMOTRON,Llama->Nemotron,llama->nemotron
+# copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaDecoderLayer with LLAMA->NEMOTRON,Llama->Nemotron,llama->nemotron
 # no longer copied after attention refactors
 class NemotronDecoderLayer(nn.Module):
     # Ignore copy
@@ -876,7 +876,7 @@ class NemotronModel(NemotronPreTrainedModel):
             attentions=all_self_attns,
         )
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask with LLAMA->NEMOTRON,Llama->Nemotron,llama->nemotron
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask with LLAMA->NEMOTRON,Llama->Nemotron,llama->nemotron
     def _update_causal_mask(
         self,
         attention_mask: torch.Tensor,
@@ -948,7 +948,7 @@ class NemotronModel(NemotronPreTrainedModel):
         return causal_mask
 
     @staticmethod
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel._prepare_4d_causal_attention_mask_with_cache_position
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel._prepare_4d_causal_attention_mask_with_cache_position
     def _prepare_4d_causal_attention_mask_with_cache_position(
         attention_mask: torch.Tensor,
         sequence_length: int,
@@ -1007,7 +1007,7 @@ class NemotronModel(NemotronPreTrainedModel):
         return causal_mask
 
 
-# TODO: re-enable check: Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM with LLAMA->NEMOTRON,Llama->Nemotron,llama->nemotron
+# TODO: re-enable check: Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM with LLAMA->NEMOTRON,Llama->Nemotron,llama->nemotron
 class NemotronForCausalLM(NemotronPreTrainedModel, GenerationMixin):
     _tied_weights_keys = ["lm_head.weight"]
 
@@ -1076,7 +1076,7 @@ class NemotronForCausalLM(NemotronPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, NemotronForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, NemotronForCausalLM
 
         >>> model = NemotronForCausalLM.from_pretrained("nvidia/nemotron-3-8b-base-4k-hf")
         >>> tokenizer = AutoTokenizer.from_pretrained("nvidia/nemotron-3-8b-base-4k-hf")
@@ -1146,7 +1146,7 @@ class NemotronForCausalLM(NemotronPreTrainedModel, GenerationMixin):
     """,
     NEMOTRON_START_DOCSTRING,
 )
-# Copied from transformers.models.llama.modeling_llama.LlamaForSequenceClassification with LLAMA->NEMOTRON,Llama->Nemotron,llama->nemotron
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForSequenceClassification with LLAMA->NEMOTRON,Llama->Nemotron,llama->nemotron
 class NemotronForSequenceClassification(NemotronPreTrainedModel):
     def __init__(self, config):
         super().__init__(config)
@@ -1246,11 +1246,11 @@ SQuAD (a linear layer on top of the hidden-states output to compute `span start 
     """,
     NEMOTRON_START_DOCSTRING,
 )
-# Copied from transformers.models.llama.modeling_llama.LlamaForQuestionAnswering with LLAMA->NEMOTRON,Llama->Nemotron,llama->nemotron
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForQuestionAnswering with LLAMA->NEMOTRON,Llama->Nemotron,llama->nemotron
 class NemotronForQuestionAnswering(NemotronPreTrainedModel):
     base_model_prefix = "transformer"
 
-    # Copied from transformers.models.bloom.modeling_bloom.BloomForQuestionAnswering.__init__ with Bloom->Nemotron
+    # Copied from tiny_hf.transformers.models.bloom.modeling_bloom.BloomForQuestionAnswering.__init__ with Bloom->Nemotron
     def __init__(self, config):
         super().__init__(config)
         self.transformer = NemotronModel(config)
@@ -1334,7 +1334,7 @@ class NemotronForQuestionAnswering(NemotronPreTrainedModel):
     """,
     NEMOTRON_START_DOCSTRING,
 )
-# Copied from transformers.models.llama.modeling_llama.LlamaForTokenClassification with LLAMA->NEMOTRON,Llama->Nemotron,llama->nemotron
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForTokenClassification with LLAMA->NEMOTRON,Llama->Nemotron,llama->nemotron
 class NemotronForTokenClassification(NemotronPreTrainedModel):
     def __init__(self, config):
         super().__init__(config)

@@ -17,11 +17,11 @@ import math
 from contextlib import nullcontext
 from typing import Dict, Literal, Optional, Tuple, Union
 
-import torch
-import torch.nn.functional as F
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.nn.functional as F
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...configuration_utils import PretrainedConfig
@@ -149,7 +149,7 @@ class ModernBertConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import ModernBertModel, ModernBertConfig
+    >>> from tiny_hf.transformers.import ModernBertModel, ModernBertConfig
 
     >>> # Initializing a ModernBert style configuration
     >>> configuration = ModernBertConfig()

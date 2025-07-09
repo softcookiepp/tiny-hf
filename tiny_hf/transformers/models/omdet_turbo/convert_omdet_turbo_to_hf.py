@@ -19,10 +19,10 @@ URL: https://github.com/om-ai-lab/OmDet"""
 import argparse
 
 import requests
-import torch
+import tg_adapter as torch
 from PIL import Image
 
-from transformers import (
+from tiny_hf.transformers.import (
     CLIPTokenizer,
     DetrImageProcessor,
     OmDetTurboConfig,

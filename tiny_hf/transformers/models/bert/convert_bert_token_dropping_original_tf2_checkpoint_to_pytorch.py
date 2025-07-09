@@ -22,10 +22,10 @@ https://github.com/tensorflow/models/tree/master/official/projects/token_droppin
 import argparse
 
 import tensorflow as tf
-import torch
+import tg_adapter as torch
 
-from transformers import BertConfig, BertForMaskedLM
-from transformers.models.bert.modeling_bert import (
+from tiny_hf.transformers.import BertConfig, BertForMaskedLM
+from tiny_hf.transformers.models.bert.modeling_bert import (
     BertIntermediate,
     BertLayer,
     BertOutput,
@@ -33,7 +33,7 @@ from transformers.models.bert.modeling_bert import (
     BertSelfAttention,
     BertSelfOutput,
 )
-from transformers.utils import logging
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

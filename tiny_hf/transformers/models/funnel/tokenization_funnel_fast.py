@@ -140,7 +140,7 @@ class FunnelTokenizerFast(PreTrainedTokenizerFast):
 
         self.do_lower_case = do_lower_case
 
-    # Copied from transformers.models.bert.tokenization_bert_fast.BertTokenizerFast.build_inputs_with_special_tokens with BERT->Funnel
+    # Copied from tiny_hf.transformers.models.bert.tokenization_bert_fast.BertTokenizerFast.build_inputs_with_special_tokens with BERT->Funnel
     def build_inputs_with_special_tokens(self, token_ids_0, token_ids_1=None):
         """
         Build model inputs from a sequence or a pair of sequence for sequence classification tasks by concatenating and
@@ -194,7 +194,7 @@ class FunnelTokenizerFast(PreTrainedTokenizerFast):
             return len(cls) * [self.cls_token_type_id] + len(token_ids_0 + sep) * [0]
         return len(cls) * [self.cls_token_type_id] + len(token_ids_0 + sep) * [0] + len(token_ids_1 + sep) * [1]
 
-    # Copied from transformers.models.bert.tokenization_bert_fast.BertTokenizerFast.save_vocabulary
+    # Copied from tiny_hf.transformers.models.bert.tokenization_bert_fast.BertTokenizerFast.save_vocabulary
     def save_vocabulary(self, save_directory: str, filename_prefix: Optional[str] = None) -> Tuple[str]:
         files = self._tokenizer.model.save(save_directory, name=filename_prefix)
         return tuple(files)

@@ -84,7 +84,7 @@ class M2M100Config(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import M2M100Config, M2M100Model
+    >>> from tiny_hf.transformers.import M2M100Config, M2M100Model
 
     >>> # Initializing a M2M100 facebook/m2m100_418M style configuration
     >>> configuration = M2M100Config()
@@ -208,7 +208,7 @@ class M2M100OnnxConfig(OnnxSeq2SeqConfigWithPast):
         common_inputs = dict(tokenizer(dummy_input, return_tensors=framework))
         return common_inputs
 
-    # Copied from transformers.models.bart.configuration_bart.BartOnnxConfig._generate_dummy_inputs_for_default_and_seq2seq_lm
+    # Copied from tiny_hf.transformers.models.bart.configuration_bart.BartOnnxConfig._generate_dummy_inputs_for_default_and_seq2seq_lm
     def _generate_dummy_inputs_for_default_and_seq2seq_lm(
         self,
         tokenizer: PreTrainedTokenizer,
@@ -233,7 +233,7 @@ class M2M100OnnxConfig(OnnxSeq2SeqConfigWithPast):
             if not is_torch_available():
                 raise ValueError("Cannot generate dummy past_keys inputs without PyTorch installed.")
             else:
-                import torch
+                import tg_adapter as torch
             batch, encoder_seq_length = common_inputs["input_ids"].shape
             decoder_seq_length = common_inputs["decoder_input_ids"].shape[1]
             num_encoder_attention_heads, num_decoder_attention_heads = self.num_attention_heads

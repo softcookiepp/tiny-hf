@@ -15,9 +15,9 @@
 # limitations under the License.
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...cache_utils import DynamicCache
 from ...utils import (
@@ -76,8 +76,8 @@ class SmolVLMVisionConfig(Idefics3VisionConfig):
     Example:
 
     ```python
-    >>> from transformers.models.smolvlm.modeling_smolvlm import SmolVLMVisionTransformer
-    >>> from transformers.models.smolvlm.configuration_smolvlm import SmolVLMVisionConfig
+    >>> from tiny_hf.transformers.models.smolvlm.modeling_smolvlm import SmolVLMVisionTransformer
+    >>> from tiny_hf.transformers.models.smolvlm.configuration_smolvlm import SmolVLMVisionConfig
 
     >>> # Initializing a SmolVLMVisionConfig with google/siglip-so400m-patch14-384 style configuration
     >>> configuration = SmolVLMVisionConfig()
@@ -130,7 +130,7 @@ class SmolVLMConfig(Idefics3Config):
 
     Example:
     ```python
-    >>> from transformers import SmolVLMModel, SmolVLMConfig
+    >>> from tiny_hf.transformers.import SmolVLMModel, SmolVLMConfig
     >>> # Initializing configuration
     >>> configuration = SmolVLMConfig()
     >>> # Initializing a model from the configuration
@@ -339,12 +339,12 @@ class SmolVLMForConditionalGeneration(Idefics3ForConditionalGeneration):
 
         ```python
         >>> import requests
-        >>> import torch
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> from io import BytesIO
 
-        >>> from transformers import AutoProcessor, AutoModelForImageTextToText
-        >>> from transformers.image_utils import load_image
+        >>> from tiny_hf.transformers.import AutoProcessor, AutoModelForImageTextToText
+        >>> from tiny_hf.transformers.image_utils import load_image
 
         >>> # Note that passing the image urls (instead of the actual pil images) to the processor is also possible
         >>> image1 = load_image("https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg")

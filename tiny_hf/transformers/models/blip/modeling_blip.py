@@ -18,10 +18,10 @@ import warnings
 from dataclasses import dataclass
 from typing import Any, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn.functional import normalize
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn.functional import normalize
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -44,12 +44,12 @@ logger = logging.get_logger(__name__)
 _CHECKPOINT_FOR_DOC = "Salesforce/blip-vqa-base"
 
 
-# Copied from transformers.models.clip.modeling_clip.contrastive_loss
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.contrastive_loss
 def contrastive_loss(logits: torch.Tensor) -> torch.Tensor:
     return nn.functional.cross_entropy(logits, torch.arange(len(logits), device=logits.device))
 
 
-# Copied from transformers.models.clip.modeling_clip.clip_loss with clip->blip
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.clip_loss with clip->blip
 def blip_loss(similarity: torch.Tensor) -> torch.Tensor:
     caption_loss = contrastive_loss(similarity)
     image_loss = contrastive_loss(similarity.t())
@@ -288,7 +288,7 @@ class BlipVisionEmbeddings(nn.Module):
         return embeddings
 
 
-# Copied from transformers.models.clip.modeling_clip.CLIPTextEmbeddings with CLIP->Blip
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPTextEmbeddings with CLIP->Blip
 class BlipTextEmbeddings(nn.Module):
     def __init__(self, config: BlipTextConfig):
         super().__init__()
@@ -398,7 +398,7 @@ class BlipAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.clip.modeling_clip.CLIPMLP with CLIP->Blip
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPMLP with CLIP->Blip
 class BlipMLP(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -826,7 +826,7 @@ class BlipModel(BlipPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoProcessor, BlipModel
+        >>> from tiny_hf.transformers.import AutoProcessor, BlipModel
 
         >>> model = BlipModel.from_pretrained("Salesforce/blip-image-captioning-base")
         >>> processor = AutoProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
@@ -865,7 +865,7 @@ class BlipModel(BlipPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, BlipModel
+        >>> from tiny_hf.transformers.import AutoProcessor, BlipModel
 
         >>> model = BlipModel.from_pretrained("Salesforce/blip-image-captioning-base")
         >>> processor = AutoProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
@@ -908,7 +908,7 @@ class BlipModel(BlipPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, BlipModel
+        >>> from tiny_hf.transformers.import AutoProcessor, BlipModel
 
         >>> model = BlipModel.from_pretrained("Salesforce/blip-image-captioning-base")
         >>> processor = AutoProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
@@ -967,7 +967,7 @@ class BlipModel(BlipPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, BlipModel
+        >>> from tiny_hf.transformers.import AutoProcessor, BlipModel
 
         >>> model = BlipModel.from_pretrained("Salesforce/blip-image-captioning-base")
         >>> processor = AutoProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
@@ -1096,7 +1096,7 @@ class BlipForConditionalGeneration(BlipPreTrainedModel, GenerationMixin):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, BlipForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoProcessor, BlipForConditionalGeneration
 
         >>> processor = AutoProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
         >>> model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base")
@@ -1174,7 +1174,7 @@ class BlipForConditionalGeneration(BlipPreTrainedModel, GenerationMixin):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, BlipForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoProcessor, BlipForConditionalGeneration
 
         >>> model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base")
         >>> processor = AutoProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
@@ -1282,7 +1282,7 @@ class BlipForQuestionAnswering(BlipPreTrainedModel, GenerationMixin):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, BlipForQuestionAnswering
+        >>> from tiny_hf.transformers.import AutoProcessor, BlipForQuestionAnswering
 
         >>> model = BlipForQuestionAnswering.from_pretrained("Salesforce/blip-vqa-base")
         >>> processor = AutoProcessor.from_pretrained("Salesforce/blip-vqa-base")
@@ -1401,7 +1401,7 @@ class BlipForQuestionAnswering(BlipPreTrainedModel, GenerationMixin):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, BlipForQuestionAnswering
+        >>> from tiny_hf.transformers.import AutoProcessor, BlipForQuestionAnswering
 
         >>> model = BlipForQuestionAnswering.from_pretrained("Salesforce/blip-vqa-base")
         >>> processor = AutoProcessor.from_pretrained("Salesforce/blip-vqa-base")
@@ -1525,7 +1525,7 @@ class BlipForImageTextRetrieval(BlipPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, BlipForImageTextRetrieval
+        >>> from tiny_hf.transformers.import AutoProcessor, BlipForImageTextRetrieval
 
         >>> model = BlipForImageTextRetrieval.from_pretrained("Salesforce/blip-itm-base-coco")
         >>> processor = AutoProcessor.from_pretrained("Salesforce/blip-itm-base-coco")

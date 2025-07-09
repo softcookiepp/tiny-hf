@@ -32,7 +32,7 @@ _torch_distributed_available = torch.distributed.is_available()
 
 
 if is_torch_greater_or_equal("2.5") and _torch_distributed_available:
-    from torch.distributed.tensor import DTensor, Placement, Replicate, Shard
+    from tg_adapter.distributed.tensor import DTensor, Placement, Replicate, Shard
 
 
 def _blocks_to_block_sizes(total_size: int, blocks: Union[int, List[int]]) -> List[int]:
@@ -139,7 +139,7 @@ def distribute_module(
     output_fn=None,
 ) -> nn.Module:
     """
-    Copy pasted from torch's function but we remove the communications (partitionning)
+    Copy pasted from tg_adapter.s function but we remove the communications (partitionning)
     as well as buffer registering that is similarly not efficient.
     """
     if len(module._forward_pre_hooks) == 0:

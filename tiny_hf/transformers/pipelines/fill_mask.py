@@ -39,7 +39,7 @@ class FillMaskPipeline(Pipeline):
     Example:
 
     ```python
-    >>> from transformers import pipeline
+    >>> from tiny_hf.transformers.import pipeline
 
     >>> fill_masker = pipeline(model="google-bert/bert-base-uncased")
     >>> fill_masker("This is a simple [MASK].")
@@ -68,7 +68,7 @@ class FillMaskPipeline(Pipeline):
     This pipeline now supports tokenizer_kwargs. For example try:
 
     ```python
-    >>> from transformers import pipeline
+    >>> from tiny_hf.transformers.import pipeline
 
     >>> fill_masker = pipeline(model="google-bert/bert-base-uncased")
     >>> tokenizer_kwargs = {"truncation": True}

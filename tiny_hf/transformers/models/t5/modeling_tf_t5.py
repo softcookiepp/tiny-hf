@@ -1225,7 +1225,7 @@ class TFT5Model(TFT5PreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, TFT5Model
+        >>> from tiny_hf.transformers.import AutoTokenizer, TFT5Model
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google-t5/t5-small")
         >>> model = TFT5Model.from_pretrained("google-t5/t5-small")
@@ -1407,7 +1407,7 @@ class TFT5ForConditionalGeneration(TFT5PreTrainedModel, TFCausalLanguageModeling
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, TFT5ForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, TFT5ForConditionalGeneration
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google-t5/t5-small")
         >>> model = TFT5ForConditionalGeneration.from_pretrained("google-t5/t5-small")
@@ -1631,7 +1631,7 @@ class TFT5EncoderModel(TFT5PreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, TFT5EncoderModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, TFT5EncoderModel
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google-t5/t5-small")
         >>> model = TFT5EncoderModel.from_pretrained("google-t5/t5-small")

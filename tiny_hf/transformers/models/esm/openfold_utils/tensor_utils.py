@@ -16,9 +16,9 @@
 from functools import partial
 from typing import Any, Callable, Dict, List, Type, TypeVar, Union, overload
 
-import torch
-import torch.nn as nn
-import torch.types
+import tg_adapter as torch
+import tg_adapter.nn as nn
+import tg_adapter.types
 
 
 def add(m1: torch.Tensor, m2: torch.Tensor, inplace: bool) -> torch.Tensor:

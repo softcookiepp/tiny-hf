@@ -20,19 +20,19 @@ import os
 from typing import List, Optional
 
 import regex as re
-import torch
-import torch.nn.functional as F
+import tg_adapter as torch
+import tg_adapter.nn.functional as F
 
-from transformers import (
+from tiny_hf.transformers.import (
     GenerationConfig,
     MllamaConfig,
     MllamaForConditionalGeneration,
     MllamaImageProcessor,
     PreTrainedTokenizerFast,
 )
-from transformers.convert_slow_tokenizer import TikTokenConverter
-from transformers.models.mllama.configuration_mllama import MllamaTextConfig, MllamaVisionConfig
-from transformers.models.mllama.image_processing_mllama import get_all_supported_aspect_ratios
+from tiny_hf.transformers.convert_slow_tokenizer import TikTokenConverter
+from tiny_hf.transformers.models.mllama.configuration_mllama import MllamaTextConfig, MllamaVisionConfig
+from tiny_hf.transformers.models.mllama.image_processing_mllama import get_all_supported_aspect_ratios
 
 
 # fmt: off

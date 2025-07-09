@@ -119,7 +119,7 @@ class FSMTConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import FSMTConfig, FSMTModel
+    >>> from tiny_hf.transformers.import FSMTConfig, FSMTModel
 
     >>> # Initializing a FSMT facebook/wmt19-en-ru style configuration
     >>> config = FSMTConfig()

@@ -21,9 +21,9 @@ import os
 from dataclasses import dataclass
 from typing import Any, Dict, Optional, Tuple, Union
 
-import torch
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import gelu_new, silu
 from ...generation import GenerationMixin
@@ -673,8 +673,8 @@ class OpenAIGPTDoubleHeadsModel(OpenAIGPTPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, OpenAIGPTDoubleHeadsModel
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, OpenAIGPTDoubleHeadsModel
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("openai-community/openai-gpt")
         >>> model = OpenAIGPTDoubleHeadsModel.from_pretrained("openai-community/openai-gpt")

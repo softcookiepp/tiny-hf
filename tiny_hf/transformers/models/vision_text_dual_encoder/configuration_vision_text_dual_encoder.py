@@ -51,7 +51,7 @@ class VisionTextDualEncoderConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import ViTConfig, BertConfig, VisionTextDualEncoderConfig, VisionTextDualEncoderModel
+    >>> from tiny_hf.transformers.import ViTConfig, BertConfig, VisionTextDualEncoderConfig, VisionTextDualEncoderModel
 
     >>> # Initializing a BERT and ViT configuration
     >>> config_vision = ViTConfig()

@@ -16,14 +16,14 @@
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
-from transformers import PreTrainedModel
-from transformers.modeling_outputs import (
+from tiny_hf.transformers.import PreTrainedModel
+from tiny_hf.transformers.modeling_outputs import (
     BaseModelOutputWithNoAttention,
 )
-from transformers.models.superpoint.configuration_superpoint import SuperPointConfig
+from tiny_hf.transformers.models.superpoint.configuration_superpoint import SuperPointConfig
 
 from ...utils import (
     ModelOutput,
@@ -424,8 +424,8 @@ class SuperPointForKeypointDetection(SuperPointPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, SuperPointForKeypointDetection
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoImageProcessor, SuperPointForKeypointDetection
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> import requests
 

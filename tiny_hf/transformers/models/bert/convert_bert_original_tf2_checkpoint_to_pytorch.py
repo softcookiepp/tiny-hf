@@ -30,10 +30,10 @@ import os
 import re
 
 import tensorflow as tf
-import torch
+import tg_adapter as torch
 
-from transformers import BertConfig, BertModel
-from transformers.utils import logging
+from tiny_hf.transformers.import BertConfig, BertModel
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

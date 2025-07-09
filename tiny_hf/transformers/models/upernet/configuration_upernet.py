@@ -70,7 +70,7 @@ class UperNetConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import UperNetConfig, UperNetForSemanticSegmentation
+    >>> from tiny_hf.transformers.import UperNetConfig, UperNetForSemanticSegmentation
 
     >>> # Initializing a configuration
     >>> configuration = UperNetConfig()

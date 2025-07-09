@@ -131,7 +131,7 @@ class MegaConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import MegaConfig, MegaModel
+    >>> from tiny_hf.transformers.import MegaConfig, MegaModel
 
     >>> # Initializing a Mega configuration
     >>> configuration = MegaConfig()

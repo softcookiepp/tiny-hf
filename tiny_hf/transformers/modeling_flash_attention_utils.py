@@ -16,8 +16,8 @@ import inspect
 import os
 from typing import Optional, TypedDict
 
-import torch
-import torch.nn.functional as F
+import tg_adapter as torch
+from tg_adapter import F
 
 from .utils import is_flash_attn_2_available, is_flash_attn_greater_or_equal, logging
 

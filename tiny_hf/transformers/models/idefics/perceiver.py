@@ -39,8 +39,8 @@ References:
 
 from typing import Optional, Tuple
 
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+import tg_adapter.nn as nn
 
 from .configuration_idefics import IdeficsConfig
 

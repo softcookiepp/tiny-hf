@@ -113,7 +113,7 @@ class GPT2Config(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import GPT2Config, GPT2Model
+    >>> from tiny_hf.transformers.import GPT2Config, GPT2Model
 
     >>> # Initializing a GPT2 configuration
     >>> configuration = GPT2Config()
@@ -241,7 +241,7 @@ class GPT2OnnxConfig(OnnxConfigWithPast):
             if not is_torch_available():
                 raise ValueError("Cannot generate dummy past_keys inputs without PyTorch installed.")
             else:
-                import torch
+                import tg_adapter as torch
 
                 batch, seqlen = common_inputs["input_ids"].shape
                 # Not using the same length for past_key_values

@@ -17,10 +17,10 @@
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
-from transformers import AutoModelForImageTextToText
+from tiny_hf.transformers.import AutoModelForImageTextToText
 
 from ...cache_utils import Cache
 from ...modeling_utils import PreTrainedModel

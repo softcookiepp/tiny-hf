@@ -22,11 +22,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Union
 
-import torch
-import torch.nn.functional as F
-from torch import Tensor, nn
-from torch.autograd import Function
-from torch.autograd.function import once_differentiable
+import tg_adapter as torch
+import tg_adapter.nn.functional as F
+from tg_adapter.import Tensor, nn
+from tg_adapter.autograd import Function
+from tg_adapter.autograd.function import once_differentiable
 
 from ....activations import ACT2FN
 from ....file_utils import (
@@ -53,7 +53,7 @@ MultiScaleDeformableAttention = None
 
 
 def load_cuda_kernels():
-    from torch.utils.cpp_extension import load
+    from tg_adapter.utils.cpp_extension import load
 
     global MultiScaleDeformableAttention
 
@@ -135,10 +135,10 @@ if is_accelerate_available():
     from accelerate.utils import reduce
 
 if is_vision_available():
-    from transformers.image_transforms import center_to_corners_format
+    from tiny_hf.transformers.image_transforms import center_to_corners_format
 
 if is_torchvision_available():
-    from torchvision.ops.boxes import batched_nms
+    from tg_adapter.ision.ops.boxes import batched_nms
 
 if is_scipy_available():
     from scipy.optimize import linear_sum_assignment
@@ -345,7 +345,7 @@ class DetaFrozenBatchNorm2d(nn.Module):
     """
     BatchNorm2d where the batch statistics and the affine parameters are fixed.
 
-    Copy-paste from torchvision.misc.ops with added eps before rqsrt, without which any other models than
+    Copy-paste from tg_adapter.ision.misc.ops with added eps before rqsrt, without which any other models than
     torchvision.models.resnet[18,34,50,101] produce nans.
     """
 
@@ -1609,7 +1609,7 @@ class DetaModel(DetaPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, DetaModel
+        >>> from tiny_hf.transformers.import AutoImageProcessor, DetaModel
         >>> from PIL import Image
         >>> import requests
 
@@ -1932,7 +1932,7 @@ class DetaForObjectDetection(DetaPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, DetaForObjectDetection
+        >>> from tiny_hf.transformers.import AutoImageProcessor, DetaForObjectDetection
         >>> from PIL import Image
         >>> import requests
 

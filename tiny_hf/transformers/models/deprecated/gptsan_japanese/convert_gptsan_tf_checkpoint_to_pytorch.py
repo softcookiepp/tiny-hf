@@ -22,7 +22,7 @@ from collections import OrderedDict
 
 import numpy as np
 import tensorflow as tf
-import torch
+import tg_adapter as torch
 
 
 def convert_tf_gptsan_to_pt(args):

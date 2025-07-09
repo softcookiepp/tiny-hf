@@ -56,7 +56,7 @@ class LlavaConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import LlavaForConditionalGeneration, LlavaConfig, CLIPVisionConfig, LlamaConfig
+    >>> from tiny_hf.transformers.import LlavaForConditionalGeneration, LlavaConfig, CLIPVisionConfig, LlamaConfig
 
     >>> # Initializing a CLIP-vision config
     >>> vision_config = CLIPVisionConfig()

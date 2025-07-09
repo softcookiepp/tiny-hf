@@ -18,12 +18,12 @@ import argparse
 from pathlib import Path
 
 import fairseq
-import torch
+import tg_adapter as torch
 from fairseq.models.xmod import XMODModel as FairseqXmodModel
 from packaging import version
 
-from transformers import XmodConfig, XmodForMaskedLM, XmodForSequenceClassification
-from transformers.utils import logging
+from tiny_hf.transformers.import XmodConfig, XmodForMaskedLM, XmodForSequenceClassification
+from tiny_hf.transformers.utils import logging
 
 
 if version.parse(fairseq.__version__) < version.parse("0.12.2"):

@@ -20,9 +20,9 @@ import warnings
 from dataclasses import dataclass
 from typing import Dict, Optional, Tuple, Union
 
-import torch
-from torch import nn
-from torch.nn import CrossEntropyLoss, SmoothL1Loss
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss, SmoothL1Loss
 
 from ...activations import ACT2FN, gelu
 from ...modeling_utils import PreTrainedModel

@@ -30,7 +30,7 @@ if is_scipy_available():
 
 
 if is_vision_available():
-	#from transformers.image_transforms import center_to_corners_format
+	#from tiny_hf.transformers.image_transforms import center_to_corners_format
 	from ..image_transforms import center_to_corners_format
 
 

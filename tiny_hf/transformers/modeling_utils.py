@@ -43,13 +43,13 @@ import tg_adapter as torch
 from huggingface_hub import split_torch_state_dict_into_shards
 from packaging import version
 
-#from torch import Tensor, nn
+#from tg_adapter.import Tensor, nn
 from tg_adapter import Tensor, nn
-#from torch.distributions import constraints
+#from tg_adapter.distributions import constraints
 from tg_adapter.distributions import constraints
-#from torch.nn import CrossEntropyLoss, Identity
+#from tg_adapter.nn import CrossEntropyLoss, Identity
 from tg_adapter.nn import CrossEntropyLoss, Identity
-#from torch.utils.checkpoint import checkpoint
+#from tg_adapter.utils.checkpoint import checkpoint
 from tg_adapter.utils.checkpoint import checkpoint
 
 from .activations import get_activation
@@ -2016,7 +2016,7 @@ class PreTrainedModel(nn.Module, ModuleUtilsMixin, GenerationMixin, PushToHubMix
 		Examples:
 
 		```python
-		from transformers import AutoModel
+		from tiny_hf.transformers.import AutoModel
 
 		model = AutoModel.from_pretrained("google-bert/bert-base-cased")
 
@@ -4048,7 +4048,7 @@ class PreTrainedModel(nn.Module, ModuleUtilsMixin, GenerationMixin, PushToHubMix
 		Examples:
 
 		```python
-		>>> from transformers import BertConfig, BertModel
+		>>> from tiny_hf.transformers.import BertConfig, BertModel
 
 		>>> # Download model and configuration from huggingface.co and cache.
 		>>> model = BertModel.from_pretrained("google-bert/bert-base-uncased")

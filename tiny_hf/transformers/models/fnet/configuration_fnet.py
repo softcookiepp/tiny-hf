@@ -67,7 +67,7 @@ class FNetConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import FNetConfig, FNetModel
+    >>> from tiny_hf.transformers.import FNetConfig, FNetModel
 
     >>> # Initializing a FNet fnet-base style configuration
     >>> configuration = FNetConfig()

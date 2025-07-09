@@ -16,7 +16,7 @@
 import os
 from typing import Any, Dict, Optional, Tuple, Union
 
-import torch
+import tg_adapter as torch
 
 from ...image_processing_utils import BaseImageProcessor, BatchFeature
 from ...image_transforms import to_pil_image
@@ -29,7 +29,7 @@ if is_timm_available():
     import timm
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 
 logger = logging.get_logger(__name__)

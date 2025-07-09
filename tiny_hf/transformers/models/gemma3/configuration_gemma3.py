@@ -138,7 +138,7 @@ class Gemma3TextConfig(PretrainedConfig):
             Pattern for the sliding window attention.
 
     ```python
-    >>> from transformers import Gemma3TextModel, Gemma3TextConfig
+    >>> from tiny_hf.transformers.import Gemma3TextModel, Gemma3TextConfig
     >>> # Initializing a Gemma3Text gemma3_text-7b style configuration
     >>> configuration = Gemma3TextConfig()
     >>> # Initializing a model from the gemma3_text-7b style configuration
@@ -266,7 +266,7 @@ class Gemma3Config(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import Gemma3ForConditionalGeneration, Gemma3Config, SiglipVisionConfig, Gemma3TextConfig
+    >>> from tiny_hf.transformers.import Gemma3ForConditionalGeneration, Gemma3Config, SiglipVisionConfig, Gemma3TextConfig
 
     >>> # Initializing a Siglip-like vision config
     >>> vision_config = SiglipVisionConfig()

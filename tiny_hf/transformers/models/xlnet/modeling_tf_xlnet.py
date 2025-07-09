@@ -1316,7 +1316,7 @@ class TFXLNetLMHeadModel(TFXLNetPreTrainedModel, TFCausalLanguageModelingLoss):
         ```python
         >>> import tensorflow as tf
         >>> import numpy as np
-        >>> from transformers import AutoTokenizer, TFXLNetLMHeadModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, TFXLNetLMHeadModel
 
         >>> tokenizer = AutoTokenizer.from_pretrained("xlnet/xlnet-large-cased")
         >>> model = TFXLNetLMHeadModel.from_pretrained("xlnet/xlnet-large-cased")

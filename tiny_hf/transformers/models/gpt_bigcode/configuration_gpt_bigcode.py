@@ -73,7 +73,7 @@ class GPTBigCodeConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import GPTBigCodeConfig, GPTBigCodeModel
+    >>> from tiny_hf.transformers.import GPTBigCodeConfig, GPTBigCodeModel
 
     >>> # Initializing a GPTBigCode configuration
     >>> configuration = GPTBigCodeConfig()

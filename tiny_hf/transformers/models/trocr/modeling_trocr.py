@@ -18,9 +18,9 @@ import copy
 import math
 from typing import Optional, Tuple, Union
 
-import torch
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -37,7 +37,7 @@ _CONFIG_FOR_DOC = "TrOCRConfig"
 _CHECKPOINT_FOR_DOC = "microsoft/trocr-base-handwritten"
 
 
-# Copied from transformers.models.bart.modeling_bart.BartLearnedPositionalEmbedding with Bart->TrOCR
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartLearnedPositionalEmbedding with Bart->TrOCR
 class TrOCRLearnedPositionalEmbedding(nn.Embedding):
     """
     This module learns positional embeddings up to a fixed maximum size.
@@ -60,7 +60,7 @@ class TrOCRLearnedPositionalEmbedding(nn.Embedding):
         return super().forward(positions + self.offset)
 
 
-# Copied from transformers.models.bart.modeling_bart.BartScaledWordEmbedding with Bart->TrOCR
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartScaledWordEmbedding with Bart->TrOCR
 class TrOCRScaledWordEmbedding(nn.Embedding):
     """
     This module overrides nn.Embeddings' forward by multiplying with embeddings scale.
@@ -858,7 +858,7 @@ class TrOCRForCausalLM(TrOCRPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import (
+        >>> from tiny_hf.transformers.import (
         ...     TrOCRConfig,
         ...     TrOCRProcessor,
         ...     TrOCRForCausalLM,

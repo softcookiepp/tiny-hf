@@ -19,7 +19,7 @@ import argparse
 
 from t5x import checkpoints
 
-from transformers import FlaxT5ForConditionalGeneration, T5Config
+from tiny_hf.transformers.import FlaxT5ForConditionalGeneration, T5Config
 
 
 def convert_t5x_checkpoint_to_flax(t5x_checkpoint_path, config_name, flax_dump_folder_path):

@@ -18,10 +18,10 @@ import math
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ....activations import ACT2FN
 from ....modeling_outputs import BackboneOutput
@@ -886,8 +886,8 @@ class NatBackbone(NatPreTrainedModel, BackboneMixin):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, AutoBackbone
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoImageProcessor, AutoBackbone
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> import requests
 

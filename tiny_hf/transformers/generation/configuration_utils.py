@@ -987,7 +987,7 @@ class GenerationConfig(PushToHubMixin):
         Examples:
 
         ```python
-        >>> from transformers import GenerationConfig
+        >>> from tiny_hf.transformers.import GenerationConfig
 
         >>> # Download configuration from huggingface.co and cache.
         >>> generation_config = GenerationConfig.from_pretrained("openai-community/gpt2")
@@ -1514,7 +1514,7 @@ class SynthIDTextWatermarkingConfig(BaseWatermarkingConfig):
 
     Examples:
     ```python
-    >>> from transformers import AutoModelForCausalLM, AutoTokenizer, SynthIDTextWatermarkingConfig
+    >>> from tiny_hf.transformers.import AutoModelForCausalLM, AutoTokenizer, SynthIDTextWatermarkingConfig
 
     >>> tokenizer = AutoTokenizer.from_pretrained('google/gemma-2-2b', padding_side="left")
     >>> model = AutoModelForCausalLM.from_pretrained('google/gemma-2-2b')
@@ -1599,7 +1599,7 @@ class CompileConfig:
 
     Examples:
     ```python
-    >>> from transformers import AutoModelForCausalLM, AutoTokenizer, CompileConfig
+    >>> from tiny_hf.transformers.import AutoModelForCausalLM, AutoTokenizer, CompileConfig
 
     >>> tokenizer = AutoTokenizer.from_pretrained('google/gemma-2-2b')
     >>> model = AutoModelForCausalLM.from_pretrained('google/gemma-2-2b').cuda()

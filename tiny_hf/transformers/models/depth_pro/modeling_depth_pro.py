@@ -18,9 +18,9 @@ import math
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.nn.functional as F
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.nn.functional as F
+from tg_adapter.import nn
 
 from ...modeling_outputs import BaseModelOutput
 from ...modeling_utils import PreTrainedModel
@@ -744,10 +744,10 @@ class DepthProModel(DepthProPreTrainedModel):
         Examples:
 
         ```python
-        >>> import torch
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, DepthProModel
+        >>> from tiny_hf.transformers.import AutoProcessor, DepthProModel
 
         >>> url = "https://www.ilankelman.org/stopsigns/australia.jpg"
         >>> image = Image.open(requests.get(url, stream=True).raw)
@@ -792,7 +792,7 @@ class DepthProModel(DepthProPreTrainedModel):
         )
 
 
-# Copied from transformers.models.dpt.modeling_dpt.DPTPreActResidualLayer DPT->DepthPro
+# Copied from tiny_hf.transformers.models.dpt.modeling_dpt.DPTPreActResidualLayer DPT->DepthPro
 class DepthProPreActResidualLayer(nn.Module):
     """
     ResidualConvUnit, pre-activate residual unit.
@@ -854,7 +854,7 @@ class DepthProPreActResidualLayer(nn.Module):
         return hidden_state + residual
 
 
-# Modified from transformers.models.dpt.modeling_dpt.DPTFeatureFusionLayer
+# Modified from tiny_hf.transformers.models.dpt.modeling_dpt.DPTFeatureFusionLayer
 # except it uses deconv and skip_add and needs no interpolation
 class DepthProFeatureFusionLayer(nn.Module):
     def __init__(self, config: DepthProConfig, use_deconv: bool = True):
@@ -890,7 +890,7 @@ class DepthProFeatureFusionLayer(nn.Module):
         return hidden_state
 
 
-# Modified from transformers.models.dpt.modeling_dpt.DPTFeatureFusionStage with DPT->DepthPro
+# Modified from tiny_hf.transformers.models.dpt.modeling_dpt.DPTFeatureFusionStage with DPT->DepthPro
 # with deconv and reversed layers
 class DepthProFeatureFusionStage(nn.Module):
     def __init__(self, config):
@@ -1134,8 +1134,8 @@ class DepthProForDepthEstimation(DepthProPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, DepthProForDepthEstimation
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoImageProcessor, DepthProForDepthEstimation
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> import requests
 

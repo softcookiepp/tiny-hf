@@ -16,9 +16,9 @@
 
 import argparse
 
-import torch
+import tg_adapter as torch
 
-from transformers import YosoConfig, YosoForMaskedLM
+from tiny_hf.transformers.import YosoConfig, YosoForMaskedLM
 
 
 def rename_key(orig_key):

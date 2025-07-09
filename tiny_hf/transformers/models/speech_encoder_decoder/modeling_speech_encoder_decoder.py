@@ -16,9 +16,9 @@
 
 from typing import Optional, Tuple, Union
 
-import torch
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...configuration_utils import PretrainedConfig
 from ...generation import GenerationMixin
@@ -150,7 +150,7 @@ SPEECH_ENCODER_DECODER_INPUTS_DOCSTRING = r"""
 """
 
 
-# Copied from transformers.models.encoder_decoder.modeling_encoder_decoder.shift_tokens_right
+# Copied from tiny_hf.transformers.models.encoder_decoder.modeling_encoder_decoder.shift_tokens_right
 def shift_tokens_right(input_ids: torch.Tensor, pad_token_id: int, decoder_start_token_id: int):
     """
     Shift input ids one token to the right.
@@ -343,7 +343,7 @@ class SpeechEncoderDecoderModel(PreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import SpeechEncoderDecoderModel
+        >>> from tiny_hf.transformers.import SpeechEncoderDecoderModel
 
         >>> # initialize a wav2vec2bert from a pretrained Wav2Vec2 and a pretrained BERT model. Note that the cross-attention layers will be randomly initialized
         >>> model = SpeechEncoderDecoderModel.from_encoder_decoder_pretrained(
@@ -465,9 +465,9 @@ class SpeechEncoderDecoderModel(PreTrainedModel, GenerationMixin):
         Examples:
 
         ```python
-        >>> from transformers import SpeechEncoderDecoderModel, AutoProcessor
+        >>> from tiny_hf.transformers.import SpeechEncoderDecoderModel, AutoProcessor
         >>> from datasets import load_dataset
-        >>> import torch
+        >>> import tg_adapter as torch
 
         >>> processor = AutoProcessor.from_pretrained("facebook/wav2vec2-xls-r-300m-en-to-15")
         >>> model = SpeechEncoderDecoderModel.from_pretrained("facebook/wav2vec2-xls-r-300m-en-to-15")

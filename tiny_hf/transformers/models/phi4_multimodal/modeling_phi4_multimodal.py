@@ -23,12 +23,12 @@ import warnings
 from typing import Callable, List, Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.nn.functional as F
-from torch import nn
-from torch.nn.init import _calculate_fan_in_and_fan_out
+import tg_adapter as torch
+import tg_adapter.nn.functional as F
+from tg_adapter.import nn
+from tg_adapter.nn.init import _calculate_fan_in_and_fan_out
 
-from transformers.modeling_attn_mask_utils import _prepare_4d_attention_mask
+from tiny_hf.transformers.modeling_attn_mask_utils import _prepare_4d_attention_mask
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, SlidingWindowCache, StaticCache
@@ -2194,7 +2194,7 @@ class Phi4MultimodalForCausalLM(Phi4MultimodalPreTrainedModel, GenerationMixin):
 
         Example:
         ```python
-        >>> from transformers import AutoTokenizer, Phi4MultimodalForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, Phi4MultimodalForCausalLM
         >>> model = Phi4MultimodalForCausalLM.from_pretrained("TBA")
         >>> tokenizer = AutoTokenizer.from_pretrained("TBA")
         >>> prompt = "This is an example script ."

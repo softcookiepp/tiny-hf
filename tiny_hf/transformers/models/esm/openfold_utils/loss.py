@@ -15,7 +15,7 @@
 
 from typing import Dict, Optional, Tuple
 
-import torch
+import tg_adapter as torch
 
 
 def _calculate_bin_centers(boundaries: torch.Tensor) -> torch.Tensor:

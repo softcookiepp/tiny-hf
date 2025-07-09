@@ -17,9 +17,9 @@ constructed"""
 
 import json
 
-import torch
+import tg_adapter as torch
 
-from transformers import Pop2PianoConfig, Pop2PianoForConditionalGeneration
+from tiny_hf.transformers.import Pop2PianoConfig, Pop2PianoForConditionalGeneration
 
 
 ########################## MODEL WEIGHTS ##########################

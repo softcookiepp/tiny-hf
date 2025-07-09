@@ -18,10 +18,10 @@ import math
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...modeling_outputs import (
@@ -417,7 +417,7 @@ class BrosSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfOutput with Bert->Bros
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfOutput with Bert->Bros
 class BrosSelfOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -486,7 +486,7 @@ class BrosAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate with Bert->Bros
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate with Bert->Bros
 class BrosIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -699,7 +699,7 @@ class BrosEncoder(nn.Module):
         )
 
 
-# Copied from transformers.models.bert.modeling_bert.BertPooler with Bert->Bros
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPooler with Bert->Bros
 class BrosPooler(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -831,8 +831,8 @@ class BrosModel(BrosPreTrainedModel):
         Examples:
 
         ```python
-        >>> import torch
-        >>> from transformers import BrosProcessor, BrosModel
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import BrosProcessor, BrosModel
 
         >>> processor = BrosProcessor.from_pretrained("jinho8345/bros-base-uncased")
 
@@ -997,8 +997,8 @@ class BrosForTokenClassification(BrosPreTrainedModel):
         Examples:
 
         ```python
-        >>> import torch
-        >>> from transformers import BrosProcessor, BrosForTokenClassification
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import BrosProcessor, BrosForTokenClassification
 
         >>> processor = BrosProcessor.from_pretrained("jinho8345/bros-base-uncased")
 
@@ -1116,8 +1116,8 @@ class BrosSpadeEEForTokenClassification(BrosPreTrainedModel):
         Examples:
 
         ```python
-        >>> import torch
-        >>> from transformers import BrosProcessor, BrosSpadeEEForTokenClassification
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import BrosProcessor, BrosSpadeEEForTokenClassification
 
         >>> processor = BrosProcessor.from_pretrained("jinho8345/bros-base-uncased")
 
@@ -1247,8 +1247,8 @@ class BrosSpadeELForTokenClassification(BrosPreTrainedModel):
         Examples:
 
         ```python
-        >>> import torch
-        >>> from transformers import BrosProcessor, BrosSpadeELForTokenClassification
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import BrosProcessor, BrosSpadeELForTokenClassification
 
         >>> processor = BrosProcessor.from_pretrained("jinho8345/bros-base-uncased")
 

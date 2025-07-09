@@ -10,13 +10,13 @@ from .config import OnnxConfig
 
 
 if TYPE_CHECKING:
-    from transformers import PreTrainedModel, TFPreTrainedModel
+    from tiny_hf.transformers.import PreTrainedModel, TFPreTrainedModel
 
 
 logger = logging.get_logger(__name__)  # pylint: disable=invalid-name
 
 if is_torch_available():
-    from transformers.models.auto import (
+    from tiny_hf.transformers.models.auto import (
         AutoModel,
         AutoModelForCausalLM,
         AutoModelForImageClassification,
@@ -34,7 +34,7 @@ if is_torch_available():
         AutoModelForVision2Seq,
     )
 if is_tf_available():
-    from transformers.models.auto import (
+    from tiny_hf.transformers.models.auto import (
         TFAutoModel,
         TFAutoModelForCausalLM,
         TFAutoModelForMaskedLM,

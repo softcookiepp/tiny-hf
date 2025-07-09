@@ -41,7 +41,7 @@ from ...utils import TensorType, filter_out_non_signature_kwargs, logging, requi
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 
 logger = logging.get_logger(__name__)

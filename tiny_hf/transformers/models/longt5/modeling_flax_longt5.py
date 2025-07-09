@@ -54,7 +54,7 @@ _CONFIG_FOR_DOC = "LongT5Config"
 remat = nn_partitioning.remat
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.shift_tokens_right
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.shift_tokens_right
 def shift_tokens_right(input_ids: jnp.ndarray, pad_token_id: int, decoder_start_token_id: int) -> jnp.ndarray:
     """
     Shift input ids one token to the right.
@@ -200,7 +200,7 @@ def _create_global_aggregates(hidden_states: np.ndarray, block_ids: np.ndarray, 
     return jnp.einsum("...nd,...ng->...gd", hidden_states, one_hot_block_ids)
 
 
-# Copied from transformers.models.t5.modeling_flax_t5.FlaxT5LayerNorm with T5->LongT5
+# Copied from tiny_hf.transformers.models.t5.modeling_flax_t5.FlaxT5LayerNorm with T5->LongT5
 class FlaxLongT5LayerNorm(nn.Module):
     hidden_size: int
     dtype: jnp.dtype = jnp.float32
@@ -221,7 +221,7 @@ class FlaxLongT5LayerNorm(nn.Module):
         return self.weight * hidden_states
 
 
-# Copied from transformers.models.t5.modeling_flax_t5.FlaxT5DenseActDense with T5->LongT5
+# Copied from tiny_hf.transformers.models.t5.modeling_flax_t5.FlaxT5DenseActDense with T5->LongT5
 class FlaxLongT5DenseActDense(nn.Module):
     config: LongT5Config
     dtype: jnp.dtype = jnp.float32
@@ -253,7 +253,7 @@ class FlaxLongT5DenseActDense(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.t5.modeling_flax_t5.FlaxT5DenseGatedActDense with T5->LongT5
+# Copied from tiny_hf.transformers.models.t5.modeling_flax_t5.FlaxT5DenseGatedActDense with T5->LongT5
 class FlaxLongT5DenseGatedActDense(nn.Module):
     config: LongT5Config
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -292,7 +292,7 @@ class FlaxLongT5DenseGatedActDense(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.t5.modeling_flax_t5.FlaxT5LayerFF with T5->LongT5
+# Copied from tiny_hf.transformers.models.t5.modeling_flax_t5.FlaxT5LayerFF with T5->LongT5
 class FlaxLongT5LayerFF(nn.Module):
     config: LongT5Config
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -315,7 +315,7 @@ class FlaxLongT5LayerFF(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.t5.modeling_flax_t5.FlaxT5Attention with T5->LongT5
+# Copied from tiny_hf.transformers.models.t5.modeling_flax_t5.FlaxT5Attention with T5->LongT5
 class FlaxLongT5Attention(nn.Module):
     config: LongT5Config
     has_relative_attention_bias: bool = False
@@ -653,7 +653,7 @@ class FlaxLongT5LocalAttention(nn.Module):
             )
 
     @staticmethod
-    # Copied from transformers.models.t5.modeling_flax_t5.FlaxT5Attention._relative_position_bucket
+    # Copied from tiny_hf.transformers.models.t5.modeling_flax_t5.FlaxT5Attention._relative_position_bucket
     def _relative_position_bucket(relative_position, bidirectional=True, num_buckets=32, max_distance=128):
         """
         Adapted from Mesh Tensorflow:
@@ -876,7 +876,7 @@ class FlaxLongT5TransientGlobalAttention(nn.Module):
         )
 
     @staticmethod
-    # Copied from transformers.models.t5.modeling_flax_t5.FlaxT5Attention._relative_position_bucket
+    # Copied from tiny_hf.transformers.models.t5.modeling_flax_t5.FlaxT5Attention._relative_position_bucket
     def _relative_position_bucket(relative_position, bidirectional=True, num_buckets=32, max_distance=128):
         """
         Adapted from Mesh Tensorflow:
@@ -1175,7 +1175,7 @@ class FlaxLongT5LayerTransientGlobalSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.t5.modeling_flax_t5.FlaxT5LayerSelfAttention with T5->LongT5
+# Copied from tiny_hf.transformers.models.t5.modeling_flax_t5.FlaxT5LayerSelfAttention with T5->LongT5
 class FlaxLongT5LayerSelfAttention(nn.Module):
     config: LongT5Config
     has_relative_attention_bias: bool = False
@@ -1216,7 +1216,7 @@ class FlaxLongT5LayerSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.t5.modeling_flax_t5.FlaxT5LayerCrossAttention with T5->LongT5
+# Copied from tiny_hf.transformers.models.t5.modeling_flax_t5.FlaxT5LayerCrossAttention with T5->LongT5
 class FlaxLongT5LayerCrossAttention(nn.Module):
     config: LongT5Config
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -1285,7 +1285,7 @@ class FlaxLongT5Block(nn.Module):
 
         self.layer += (FlaxLongT5LayerFF(self.config, name=str(feed_forward_index), dtype=self.dtype),)
 
-    # Copied from transformers.models.t5.modeling_flax_t5.FlaxT5Block.__call__ with T5->LongT5
+    # Copied from tiny_hf.transformers.models.t5.modeling_flax_t5.FlaxT5Block.__call__ with T5->LongT5
     def __call__(
         self,
         hidden_states,
@@ -1337,7 +1337,7 @@ class FlaxLongT5Block(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.t5.modeling_flax_t5.FlaxT5LayerCollection with T5->LongT5
+# Copied from tiny_hf.transformers.models.t5.modeling_flax_t5.FlaxT5LayerCollection with T5->LongT5
 class FlaxLongT5LayerCollection(nn.Module):
     config: LongT5Config
     has_relative_attention_bias: bool
@@ -1373,7 +1373,7 @@ class FlaxLongT5LayerCollection(nn.Module):
         )
 
 
-# Copied from transformers.models.t5.modeling_flax_t5.FlaxT5BlockCollection with T5->LongT5
+# Copied from tiny_hf.transformers.models.t5.modeling_flax_t5.FlaxT5BlockCollection with T5->LongT5
 class FlaxLongT5BlockCollection(nn.Module):
     config: LongT5Config
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -1460,7 +1460,7 @@ class FlaxLongT5BlockCollection(nn.Module):
         )
 
 
-# Copied from transformers.models.t5.modeling_flax_t5.FlaxT5Stack with T5->LongT5
+# Copied from tiny_hf.transformers.models.t5.modeling_flax_t5.FlaxT5Stack with T5->LongT5
 class FlaxLongT5Stack(nn.Module):
     config: LongT5Config
     embed_tokens: nn.Embed
@@ -1825,7 +1825,7 @@ class FlaxLongT5PreTrainedModel(FlaxPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, FlaxLongT5ForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, FlaxLongT5ForConditionalGeneration
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google-t5/t5-base")
         >>> model = FlaxLongT5ForConditionalGeneration.from_pretrained("google/long-t5-local-base")
@@ -1886,7 +1886,7 @@ class FlaxLongT5PreTrainedModel(FlaxPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, FlaxLongT5ForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, FlaxLongT5ForConditionalGeneration
         >>> import jax.numpy as jnp
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google-t5/t5-base")
@@ -2013,7 +2013,7 @@ LONGT5_START_DOCSTRING = r"""
     "The bare LONGT5 Model transformer outputting raw hidden-stateswithout any specific head on top.",
     LONGT5_START_DOCSTRING,
 )
-# Copied from transformers.models.t5.modeling_flax_t5.FlaxT5Module with T5->LongT5
+# Copied from tiny_hf.transformers.models.t5.modeling_flax_t5.FlaxT5Module with T5->LongT5
 class FlaxLongT5Module(nn.Module):
     config: LongT5Config
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -2103,7 +2103,7 @@ class FlaxLongT5Module(nn.Module):
         )
 
 
-# Copied from transformers.models.t5.modeling_flax_t5.FlaxT5Model with T5->LongT5
+# Copied from tiny_hf.transformers.models.t5.modeling_flax_t5.FlaxT5Model with T5->LongT5
 class FlaxLongT5Model(FlaxLongT5PreTrainedModel):
     module_class = FlaxLongT5Module
 
@@ -2116,7 +2116,7 @@ FLAX_LONGT5_MODEL_DOCSTRING = """
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, FlaxLongT5Model
+    >>> from tiny_hf.transformers.import AutoTokenizer, FlaxLongT5Model
 
     >>> tokenizer = AutoTokenizer.from_pretrained("google-t5/t5-base")
     >>> model = FlaxLongT5Model.from_pretrained("google/long-t5-local-base")
@@ -2138,7 +2138,7 @@ append_replace_return_docstrings(FlaxLongT5Model, output_type=FlaxSeq2SeqLMOutpu
 
 
 @add_start_docstrings("""LONGT5 Model with a `language modeling` head on top.""", LONGT5_START_DOCSTRING)
-# Copied from transformers.models.t5.modeling_flax_t5.FlaxT5ForConditionalGenerationModule with T5->LongT5
+# Copied from tiny_hf.transformers.models.t5.modeling_flax_t5.FlaxT5ForConditionalGenerationModule with T5->LongT5
 class FlaxLongT5ForConditionalGenerationModule(nn.Module):
     config: LongT5Config
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -2274,7 +2274,7 @@ class FlaxLongT5ForConditionalGeneration(FlaxLongT5PreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, FlaxLongT5ForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, FlaxLongT5ForConditionalGeneration
         >>> import jax.numpy as jnp
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google-t5/t5-base")
@@ -2423,7 +2423,7 @@ FLAX_LONGT5_CONDITIONAL_GENERATION_DOCSTRING = """
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, FlaxLongT5ForConditionalGeneration
+    >>> from tiny_hf.transformers.import AutoTokenizer, FlaxLongT5ForConditionalGeneration
 
     >>> tokenizer = AutoTokenizer.from_pretrained("google-t5/t5-base")
     >>> model = FlaxLongT5ForConditionalGeneration.from_pretrained("google/long-t5-local-base")

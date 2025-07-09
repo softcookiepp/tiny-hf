@@ -6,8 +6,8 @@ from copy import deepcopy
 from typing import Dict, List, Optional, Tuple, Union
 
 import numpy as np
-import torch
-from torch.nn import functional as F
+import tg_adapter as torch
+from tg_adapter.nn import functional as F
 
 from ..pytorch_utils import isin_mps_friendly
 from ..tokenization_utils_base import PreTrainedTokenizerBase
@@ -215,7 +215,7 @@ class StopStringCriteria(StoppingCriteria):
     Examples:
 
     ```python
-    >>> from transformers import AutoModelForCausalLM, AutoTokenizer
+    >>> from tiny_hf.transformers.import AutoModelForCausalLM, AutoTokenizer
 
     >>> tokenizer = AutoTokenizer.from_pretrained("microsoft/phi-2")
     >>> model = AutoModelForCausalLM.from_pretrained("microsoft/phi-2")

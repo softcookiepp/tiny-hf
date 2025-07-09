@@ -17,9 +17,9 @@
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -86,7 +86,7 @@ class VideoLlavaCausalLMOutputWithPast(ModelOutput):
     video_hidden_states: Optional[torch.FloatTensor] = None
 
 
-# Copied from transformers.models.llava.modeling_llava.LlavaMultiModalProjector with Llava->VideoLlava
+# Copied from tiny_hf.transformers.models.llava.modeling_llava.LlavaMultiModalProjector with Llava->VideoLlava
 class VideoLlavaMultiModalProjector(nn.Module):
     def __init__(self, config: VideoLlavaConfig):
         super().__init__()
@@ -405,7 +405,7 @@ class VideoLlavaForConditionalGeneration(VideoLlavaPreTrainedModel, GenerationMi
         >>> import numpy as np
         >>> import av
         >>> from huggingface_hub import hf_hub_download
-        >>> from transformers import VideoLlavaProcessor, VideoLlavaForConditionalGeneration
+        >>> from tiny_hf.transformers.import VideoLlavaProcessor, VideoLlavaForConditionalGeneration
 
 
         >>> def read_video_pyav(container, indices):

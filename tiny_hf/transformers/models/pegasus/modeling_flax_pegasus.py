@@ -208,7 +208,7 @@ PEGASUS_DECODE_INPUTS_DOCSTRING = r"""
 """
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.shift_tokens_right
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.shift_tokens_right
 def shift_tokens_right(input_ids: jnp.ndarray, pad_token_id: int, decoder_start_token_id: int) -> jnp.ndarray:
     """
     Shift input ids one token to the right.
@@ -221,7 +221,7 @@ def shift_tokens_right(input_ids: jnp.ndarray, pad_token_id: int, decoder_start_
     return shifted_input_ids
 
 
-# Copied from transformers.models.marian.modeling_flax_marian.create_sinusoidal_positions
+# Copied from tiny_hf.transformers.models.marian.modeling_flax_marian.create_sinusoidal_positions
 def create_sinusoidal_positions(n_pos, dim):
     position_enc = np.array([[pos / np.power(10000, 2 * (j // 2) / dim) for j in range(dim)] for pos in range(n_pos)])
     sentinel = dim // 2 + dim % 2
@@ -232,7 +232,7 @@ def create_sinusoidal_positions(n_pos, dim):
     return jnp.array(out)
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartAttention with Bart->Pegasus
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartAttention with Bart->Pegasus
 class FlaxPegasusAttention(nn.Module):
     config: PegasusConfig
     embed_dim: int
@@ -400,7 +400,7 @@ class FlaxPegasusAttention(nn.Module):
         return attn_output, attn_weights
 
 
-# Copied from transformers.models.mbart.modeling_flax_mbart.FlaxMBartEncoderLayer with MBart->Pegasus
+# Copied from tiny_hf.transformers.models.mbart.modeling_flax_mbart.FlaxMBartEncoderLayer with MBart->Pegasus
 class FlaxPegasusEncoderLayer(nn.Module):
     config: PegasusConfig
     dtype: jnp.dtype = jnp.float32
@@ -457,7 +457,7 @@ class FlaxPegasusEncoderLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartEncoderLayerCollection with Bart->Pegasus
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartEncoderLayerCollection with Bart->Pegasus
 class FlaxPegasusEncoderLayerCollection(nn.Module):
     config: PegasusConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -512,7 +512,7 @@ class FlaxPegasusEncoderLayerCollection(nn.Module):
         )
 
 
-# Copied from transformers.models.mbart.modeling_flax_mbart.FlaxMBartDecoderLayer with MBart->Pegasus
+# Copied from tiny_hf.transformers.models.mbart.modeling_flax_mbart.FlaxMBartDecoderLayer with MBart->Pegasus
 class FlaxPegasusDecoderLayer(nn.Module):
     config: PegasusConfig
     dtype: jnp.dtype = jnp.float32
@@ -601,7 +601,7 @@ class FlaxPegasusDecoderLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartDecoderLayerCollection with Bart->Pegasus
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartDecoderLayerCollection with Bart->Pegasus
 class FlaxPegasusDecoderLayerCollection(nn.Module):
     config: PegasusConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -814,7 +814,7 @@ class FlaxPegasusDecoder(nn.Module):
         )
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartModule with Bart->Pegasus
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartModule with Bart->Pegasus
 class FlaxPegasusModule(nn.Module):
     config: PegasusConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -997,7 +997,7 @@ class FlaxPegasusPreTrainedModel(FlaxPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, FlaxPegasusForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, FlaxPegasusForConditionalGeneration
 
         >>> model = FlaxPegasusForConditionalGeneration.from_pretrained("google/pegasus-large")
         >>> tokenizer = AutoTokenizer.from_pretrained("google/pegasus-large")
@@ -1064,7 +1064,7 @@ class FlaxPegasusPreTrainedModel(FlaxPreTrainedModel):
 
         ```python
         >>> import jax.numpy as jnp
-        >>> from transformers import AutoTokenizer, FlaxPegasusForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, FlaxPegasusForConditionalGeneration
 
         >>> model = FlaxPegasusForConditionalGeneration.from_pretrained("google/pegasus-large")
         >>> tokenizer = AutoTokenizer.from_pretrained("google/pegasus-large")
@@ -1228,7 +1228,7 @@ class FlaxPegasusModel(FlaxPegasusPreTrainedModel):
 append_call_sample_docstring(FlaxPegasusModel, _CHECKPOINT_FOR_DOC, FlaxSeq2SeqModelOutput, _CONFIG_FOR_DOC)
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartForConditionalGenerationModule with Bart->Pegasus
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartForConditionalGenerationModule with Bart->Pegasus
 class FlaxPegasusForConditionalGenerationModule(nn.Module):
     config: PegasusConfig
     dtype: jnp.dtype = jnp.float32
@@ -1332,7 +1332,7 @@ class FlaxPegasusForConditionalGeneration(FlaxPegasusPreTrainedModel):
 
         ```python
         >>> import jax.numpy as jnp
-        >>> from transformers import AutoTokenizer, FlaxPegasusForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, FlaxPegasusForConditionalGeneration
 
         >>> model = FlaxPegasusForConditionalGeneration.from_pretrained("google/pegasus-large")
         >>> tokenizer = AutoTokenizer.from_pretrained("google/pegasus-large")
@@ -1488,7 +1488,7 @@ FLAX_PEGASUS_CONDITIONAL_GENERATION_DOCSTRING = """
     Summarization example:
 
     ```pyton
-    >>> from transformers import AutoTokenizer, FlaxPegasusForConditionalGeneration
+    >>> from tiny_hf.transformers.import AutoTokenizer, FlaxPegasusForConditionalGeneration
 
     >>> model = FlaxPegasusForConditionalGeneration.from_pretrained('google/pegasus-large')
     >>> tokenizer = AutoTokenizer.from_pretrained('google/pegasus-large')
@@ -1504,7 +1504,7 @@ FLAX_PEGASUS_CONDITIONAL_GENERATION_DOCSTRING = """
     Mask filling example:
 
     ```python
-    >>> from transformers import AutoTokenizer, FlaxPegasusForConditionalGeneration
+    >>> from tiny_hf.transformers.import AutoTokenizer, FlaxPegasusForConditionalGeneration
 
     >>> tokenizer = AutoTokenizer.from_pretrained("google/pegasus-large")
     >>> TXT = "My friends are <mask> but they eat too many carbs."

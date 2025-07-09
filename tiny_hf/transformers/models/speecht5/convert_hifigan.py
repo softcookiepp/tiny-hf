@@ -17,9 +17,9 @@
 import argparse
 
 import numpy as np
-import torch
+import tg_adapter as torch
 
-from transformers import SpeechT5HifiGan, SpeechT5HifiGanConfig, logging
+from tiny_hf.transformers.import SpeechT5HifiGan, SpeechT5HifiGanConfig, logging
 
 
 logging.set_verbosity_info()

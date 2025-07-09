@@ -48,7 +48,7 @@ _HIDDEN_STATES_START_POSITION = 1
 _CONFIG_FOR_DOC = "SpeechT5Config"
 
 
-# Copied from transformers.models.bart.modeling_bart.shift_tokens_right
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.shift_tokens_right
 def shift_tokens_right(input_ids: torch.Tensor, pad_token_id: int, decoder_start_token_id: int):
     """
     Shift input ids one token to the right.
@@ -86,7 +86,7 @@ def shift_spectrograms_right(
     return shifted_input_values, attention_mask
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2._compute_mask_indices
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2._compute_mask_indices
 def _compute_mask_indices(
     shape: Tuple[int, int],
     mask_prob: float,
@@ -206,7 +206,7 @@ def _compute_mask_indices(
     return spec_aug_mask
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2NoLayerNormConvLayer with Wav2Vec2->SpeechT5
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2NoLayerNormConvLayer with Wav2Vec2->SpeechT5
 class SpeechT5NoLayerNormConvLayer(nn.Module):
     def __init__(self, config, layer_id=0):
         super().__init__()
@@ -228,7 +228,7 @@ class SpeechT5NoLayerNormConvLayer(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2LayerNormConvLayer with Wav2Vec2->SpeechT5
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2LayerNormConvLayer with Wav2Vec2->SpeechT5
 class SpeechT5LayerNormConvLayer(nn.Module):
     def __init__(self, config, layer_id=0):
         super().__init__()
@@ -256,7 +256,7 @@ class SpeechT5LayerNormConvLayer(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2GroupNormConvLayer with Wav2Vec2->SpeechT5
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2GroupNormConvLayer with Wav2Vec2->SpeechT5
 class SpeechT5GroupNormConvLayer(nn.Module):
     def __init__(self, config, layer_id=0):
         super().__init__()
@@ -281,7 +281,7 @@ class SpeechT5GroupNormConvLayer(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.speech_to_text.modeling_speech_to_text.Speech2TextSinusoidalPositionalEmbedding with Speech2Text->SpeechT5
+# Copied from tiny_hf.transformers.models.speech_to_text.modeling_speech_to_text.Speech2TextSinusoidalPositionalEmbedding with Speech2Text->SpeechT5
 class SpeechT5SinusoidalPositionalEmbedding(nn.Module):
     """This module produces sinusoidal positional embeddings of any length."""
 
@@ -352,7 +352,7 @@ class SpeechT5SinusoidalPositionalEmbedding(nn.Module):
         return incremental_indices.long() + padding_idx
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2PositionalConvEmbedding with Wav2Vec2->SpeechT5
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2PositionalConvEmbedding with Wav2Vec2->SpeechT5
 class SpeechT5PositionalConvEmbedding(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -441,7 +441,7 @@ class SpeechT5RelativePositionalEncoding(torch.nn.Module):
         return self.pe_k(pos_seq)
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2SamePadLayer with Wav2Vec2->SpeechT5
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2SamePadLayer with Wav2Vec2->SpeechT5
 class SpeechT5SamePadLayer(nn.Module):
     def __init__(self, num_conv_pos_embeddings):
         super().__init__()
@@ -453,7 +453,7 @@ class SpeechT5SamePadLayer(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2FeatureEncoder with Wav2Vec2->SpeechT5
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2FeatureEncoder with Wav2Vec2->SpeechT5
 class SpeechT5FeatureEncoder(nn.Module):
     """Construct the features from raw audio waveform"""
 
@@ -500,7 +500,7 @@ class SpeechT5FeatureEncoder(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2FeatureProjection with Wav2Vec2->SpeechT5
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2FeatureProjection with Wav2Vec2->SpeechT5
 class SpeechT5FeatureProjection(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -571,7 +571,7 @@ class SpeechT5SpeechEncoderPrenet(nn.Module):
 
         return hidden_states, attention_mask
 
-    # Copied from transformers.models.unispeech.modeling_unispeech.UniSpeechPreTrainedModel._get_feature_vector_attention_mask
+    # Copied from tiny_hf.transformers.models.unispeech.modeling_unispeech.UniSpeechPreTrainedModel._get_feature_vector_attention_mask
     def _get_feature_vector_attention_mask(self, feature_vector_length: int, attention_mask: torch.LongTensor):
         # Effectively attention_mask.sum(-1), but not inplace to be able to run
         # on inference mode.
@@ -587,7 +587,7 @@ class SpeechT5SpeechEncoderPrenet(nn.Module):
         attention_mask = attention_mask.flip([-1]).cumsum(-1).flip([-1]).bool()
         return attention_mask
 
-    # Copied from transformers.models.unispeech.modeling_unispeech.UniSpeechPreTrainedModel._get_feat_extract_output_lengths
+    # Copied from tiny_hf.transformers.models.unispeech.modeling_unispeech.UniSpeechPreTrainedModel._get_feat_extract_output_lengths
     def _get_feat_extract_output_lengths(self, input_lengths: Union[torch.LongTensor, int]):
         """
         Computes the output length of the convolutional layers
@@ -603,7 +603,7 @@ class SpeechT5SpeechEncoderPrenet(nn.Module):
 
         return input_lengths
 
-    # Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2Model._mask_hidden_states
+    # Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2Model._mask_hidden_states
     def _mask_hidden_states(
         self,
         hidden_states: torch.FloatTensor,
@@ -2335,7 +2335,7 @@ class SpeechT5ForSpeechToText(SpeechT5PreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import SpeechT5Processor, SpeechT5ForSpeechToText
+        >>> from tiny_hf.transformers.import SpeechT5Processor, SpeechT5ForSpeechToText
         >>> from datasets import load_dataset
 
         >>> dataset = load_dataset(
@@ -2691,8 +2691,8 @@ class SpeechT5ForTextToSpeech(SpeechT5PreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import SpeechT5Processor, SpeechT5ForTextToSpeech, SpeechT5HifiGan, set_seed
-        >>> import torch
+        >>> from tiny_hf.transformers.import SpeechT5Processor, SpeechT5ForTextToSpeech, SpeechT5HifiGan, set_seed
+        >>> import tg_adapter as torch
 
         >>> processor = SpeechT5Processor.from_pretrained("microsoft/speecht5_tts")
         >>> model = SpeechT5ForTextToSpeech.from_pretrained("microsoft/speecht5_tts")
@@ -3029,9 +3029,9 @@ class SpeechT5ForSpeechToSpeech(SpeechT5PreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import SpeechT5Processor, SpeechT5ForSpeechToSpeech, SpeechT5HifiGan, set_seed
+        >>> from tiny_hf.transformers.import SpeechT5Processor, SpeechT5ForSpeechToSpeech, SpeechT5HifiGan, set_seed
         >>> from datasets import load_dataset
-        >>> import torch
+        >>> import tg_adapter as torch
 
         >>> dataset = load_dataset(
         ...     "hf-internal-testing/librispeech_asr_demo", "clean", split="validation", trust_remote_code=True

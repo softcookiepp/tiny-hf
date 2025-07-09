@@ -190,7 +190,7 @@ class OwlViTProcessor(ProcessorMixin):
                 attention_mask = jnp.concatenate([encoding["attention_mask"] for encoding in encodings], axis=0)
 
             elif return_tensors == "pt" and is_torch_available():
-                import torch
+                import tg_adapter as torch
 
                 input_ids = torch.cat([encoding["input_ids"] for encoding in encodings], dim=0)
                 attention_mask = torch.cat([encoding["attention_mask"] for encoding in encodings], dim=0)

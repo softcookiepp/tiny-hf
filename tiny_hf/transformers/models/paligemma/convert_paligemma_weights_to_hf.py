@@ -17,10 +17,10 @@
 import argparse
 import collections
 
-import torch
+import tg_adapter as torch
 from numpy import load
 
-from transformers import (
+from tiny_hf.transformers.import (
     AutoTokenizer,
     GemmaTokenizer,
     GemmaTokenizerFast,
@@ -29,8 +29,8 @@ from transformers import (
     PaliGemmaProcessor,
     SiglipImageProcessor,
 )
-from transformers.tokenization_utils_base import AddedToken
-from transformers.utils import logging
+from tiny_hf.transformers.tokenization_utils_base import AddedToken
+from tiny_hf.transformers.utils import logging
 
 
 device = "cuda"  # "cpu"

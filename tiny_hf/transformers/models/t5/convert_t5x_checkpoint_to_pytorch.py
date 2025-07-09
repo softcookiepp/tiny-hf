@@ -31,12 +31,12 @@ Steps:
 import argparse
 import collections
 
-import torch
+import tg_adapter as torch
 from flax import traverse_util
 from t5x import checkpoints
 
-from transformers import T5Config, T5EncoderModel, T5ForConditionalGeneration
-from transformers.utils import logging
+from tiny_hf.transformers.import T5Config, T5EncoderModel, T5ForConditionalGeneration
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

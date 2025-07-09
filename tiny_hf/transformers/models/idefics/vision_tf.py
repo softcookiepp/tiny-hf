@@ -507,7 +507,7 @@ class TFIdeficsVisionTransformer(TFPreTrainedModel):
         self.encoder = TFIdeficsVisionEncoder(config, name="encoder")
         self.post_layernorm = tf.keras.layers.LayerNormalization(epsilon=config.layer_norm_eps, name="post_layernorm")
 
-    # Adapted from transformers.models.clip.modeling_clip.CLIPVisionTransformer.forward
+    # Adapted from tiny_hf.transformers.models.clip.modeling_clip.CLIPVisionTransformer.forward
     def call(
         self,
         pixel_values: Optional[tf.Tensor] = None,

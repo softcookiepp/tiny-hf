@@ -18,10 +18,10 @@ import math
 from dataclasses import dataclass
 from typing import Any, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -51,7 +51,7 @@ _CHECKPOINT_FOR_DOC = "Salesforce/instructblip-flan-t5-xl"
 
 
 @dataclass
-# Copied from transformers.models.blip_2.modeling_blip_2.Blip2ForConditionalGenerationModelOutput with Blip2->InstructBlip
+# Copied from tiny_hf.transformers.models.blip_2.modeling_blip_2.Blip2ForConditionalGenerationModelOutput with Blip2->InstructBlip
 class InstructBlipForConditionalGenerationModelOutput(ModelOutput):
     """
     Class defining the outputs of [`InstructBlipForConditionalGeneration`].
@@ -84,7 +84,7 @@ class InstructBlipForConditionalGenerationModelOutput(ModelOutput):
         )
 
 
-# Copied from transformers.models.blip.modeling_blip.BlipVisionEmbeddings with Blip->InstructBlip
+# Copied from tiny_hf.transformers.models.blip.modeling_blip.BlipVisionEmbeddings with Blip->InstructBlip
 class InstructBlipVisionEmbeddings(nn.Module):
     def __init__(self, config: InstructBlipVisionConfig):
         super().__init__()
@@ -159,7 +159,7 @@ class InstructBlipVisionEmbeddings(nn.Module):
         return embeddings
 
 
-# Copied from transformers.models.blip_2.modeling_blip_2.Blip2Attention with Blip2->InstructBlip
+# Copied from tiny_hf.transformers.models.blip_2.modeling_blip_2.Blip2Attention with Blip2->InstructBlip
 class InstructBlipAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -241,7 +241,7 @@ class InstructBlipAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.blip.modeling_blip.BlipMLP
+# Copied from tiny_hf.transformers.models.blip.modeling_blip.BlipMLP
 class InstructBlipMLP(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -257,7 +257,7 @@ class InstructBlipMLP(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.blip.modeling_blip.BlipEncoderLayer with Blip->InstructBlip
+# Copied from tiny_hf.transformers.models.blip.modeling_blip.BlipEncoderLayer with Blip->InstructBlip
 class InstructBlipEncoderLayer(nn.Module):
     def __init__(self, config: InstructBlipConfig):
         super().__init__()
@@ -323,7 +323,7 @@ class InstructBlipPreTrainedModel(PreTrainedModel):
         "InstructBlipQFormerSelfOutput",
     ]
 
-    # Copied from transformers.models.blip_2.modeling_blip_2.Blip2PreTrainedModel._init_weights with Blip2->InstructBlip
+    # Copied from tiny_hf.transformers.models.blip_2.modeling_blip_2.Blip2PreTrainedModel._init_weights with Blip2->InstructBlip
     def _init_weights(self, module):
         """Initialize the weights"""
         factor = self.config.initializer_range
@@ -446,7 +446,7 @@ INSTRUCTBLIP_INPUTS_DOCSTRING = r"""
 """
 
 
-# Copied from transformers.models.blip.modeling_blip.BlipEncoder with Blip->InstructBlip
+# Copied from tiny_hf.transformers.models.blip.modeling_blip.BlipEncoder with Blip->InstructBlip
 class InstructBlipEncoder(nn.Module):
     """
     Transformer encoder consisting of `config.num_hidden_layers` self attention layers. Each layer is a
@@ -533,7 +533,7 @@ class InstructBlipEncoder(nn.Module):
         )
 
 
-# Copied from transformers.models.blip.modeling_blip.BlipVisionModel with Blip->InstructBlip, BLIP->INSTRUCTBLIP
+# Copied from tiny_hf.transformers.models.blip.modeling_blip.BlipVisionModel with Blip->InstructBlip, BLIP->INSTRUCTBLIP
 class InstructBlipVisionModel(InstructBlipPreTrainedModel):
     main_input_name = "pixel_values"
     config_class = InstructBlipVisionConfig
@@ -734,7 +734,7 @@ class InstructBlipQFormerMultiHeadAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfOutput with Bert->InstructBlipQFormer
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfOutput with Bert->InstructBlipQFormer
 class InstructBlipQFormerSelfOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -749,7 +749,7 @@ class InstructBlipQFormerSelfOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.blip_2.modeling_blip_2.Blip2QFormerAttention with Blip2->InstructBlip
+# Copied from tiny_hf.transformers.models.blip_2.modeling_blip_2.Blip2QFormerAttention with Blip2->InstructBlip
 class InstructBlipQFormerAttention(nn.Module):
     def __init__(self, config, is_cross_attention=False):
         super().__init__()
@@ -799,7 +799,7 @@ class InstructBlipQFormerAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate with Bert->InstructBlipQFormer
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate with Bert->InstructBlipQFormer
 class InstructBlipQFormerIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -815,7 +815,7 @@ class InstructBlipQFormerIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOutput with Bert->InstructBlipQFormer
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOutput with Bert->InstructBlipQFormer
 class InstructBlipQFormerOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -933,7 +933,7 @@ class InstructBlipQFormerLayer(nn.Module):
         return layer_output
 
 
-# Copied from transformers.models.blip_2.modeling_blip_2.Blip2QFormerEncoder with Blip2->InstructBlip
+# Copied from tiny_hf.transformers.models.blip_2.modeling_blip_2.Blip2QFormerEncoder with Blip2->InstructBlip
 class InstructBlipQFormerEncoder(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1394,8 +1394,8 @@ class InstructBlipForConditionalGeneration(InstructBlipPreTrainedModel, Generati
         Examples:
 
         ```python
-        >>> from transformers import InstructBlipProcessor, InstructBlipForConditionalGeneration
-        >>> import torch
+        >>> from tiny_hf.transformers.import InstructBlipProcessor, InstructBlipForConditionalGeneration
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> import requests
 

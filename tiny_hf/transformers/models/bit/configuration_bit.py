@@ -71,7 +71,7 @@ class BitConfig(BackboneConfigMixin, PretrainedConfig):
 
     Example:
     ```python
-    >>> from transformers import BitConfig, BitModel
+    >>> from tiny_hf.transformers.import BitConfig, BitModel
 
     >>> # Initializing a BiT bit-50 style configuration
     >>> configuration = BitConfig()

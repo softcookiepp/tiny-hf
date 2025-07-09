@@ -55,16 +55,16 @@ from .image_processing_qwen2_vl import smart_resize
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 
 if is_torchvision_available():
     from ...image_utils import pil_torch_interpolation_mapping
 
     if is_torchvision_v2_available():
-        from torchvision.transforms.v2 import functional as F
+        from tg_adapter.ision.transforms.v2 import functional as F
     else:
-        from torchvision.transforms import functional as F
+        from tg_adapter.ision.transforms import functional as F
 
 logger = logging.get_logger(__name__)
 

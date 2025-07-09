@@ -18,8 +18,8 @@ import math
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
 from ...modeling_outputs import BaseModelOutput
 from ...modeling_utils import PreTrainedModel
@@ -294,7 +294,7 @@ class FastSpeech2ConformerDurationPredictor(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.speecht5.modeling_speecht5.SpeechT5BatchNormConvLayer
+# Copied from tiny_hf.transformers.models.speecht5.modeling_speecht5.SpeechT5BatchNormConvLayer
 class FastSpeech2ConformerBatchNormConvLayer(nn.Module):
     def __init__(self, config, layer_id=0):
         super().__init__()
@@ -1224,7 +1224,7 @@ class FastSpeech2ConformerModel(FastSpeech2ConformerPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import (
+        >>> from tiny_hf.transformers.import (
         ...     FastSpeech2ConformerTokenizer,
         ...     FastSpeech2ConformerModel,
         ...     FastSpeech2ConformerHifiGan,
@@ -1379,7 +1379,7 @@ class FastSpeech2ConformerModel(FastSpeech2ConformerPreTrainedModel):
         )
 
 
-# Copied from transformers.models.speecht5.modeling_speecht5.HifiGanResidualBlock
+# Copied from tiny_hf.transformers.models.speecht5.modeling_speecht5.HifiGanResidualBlock
 class HifiGanResidualBlock(nn.Module):
     def __init__(self, channels, kernel_size=3, dilation=(1, 3, 5), leaky_relu_slope=0.1):
         super().__init__()
@@ -1446,7 +1446,7 @@ class HifiGanResidualBlock(nn.Module):
     """HiFi-GAN vocoder.""",
     HIFIGAN_START_DOCSTRING,
 )
-# Copied from transformers.models.speecht5.modeling_speecht5.SpeechT5HifiGan with SpeechT5->FastSpeech2Conformer
+# Copied from tiny_hf.transformers.models.speecht5.modeling_speecht5.SpeechT5HifiGan with SpeechT5->FastSpeech2Conformer
 class FastSpeech2ConformerHifiGan(PreTrainedModel):
     config_class = FastSpeech2ConformerHifiGanConfig
     main_input_name = "spectrogram"
@@ -1632,7 +1632,7 @@ class FastSpeech2ConformerWithHifiGan(PreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import (
+        >>> from tiny_hf.transformers.import (
         ...     FastSpeech2ConformerTokenizer,
         ...     FastSpeech2ConformerWithHifiGan,
         ... )

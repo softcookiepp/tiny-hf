@@ -61,8 +61,8 @@ if is_vision_available():
         PILImageResampling = PIL.Image
 
     if is_torchvision_available():
-        from torchvision import io as torchvision_io
-        from torchvision.transforms import InterpolationMode
+        from tg_adapter.vision import io as torchvision_io
+        from tg_adapter.vision.transforms import InterpolationMode
 
         pil_torch_interpolation_mapping = {
             PILImageResampling.NEAREST: InterpolationMode.NEAREST,
@@ -76,7 +76,7 @@ if is_vision_available():
 
 if TYPE_CHECKING:
     if is_torch_available():
-        import torch
+        import tg_adapter as torch
 
 
 logger = logging.get_logger(__name__)
@@ -1091,7 +1091,7 @@ class ImageFeatureExtractionMixin:
             if not isinstance(std, np.ndarray):
                 std = np.array(std).astype(image.dtype)
         elif is_torch_tensor(image):
-            import torch
+            import tg_adapter as torch
 
             if not isinstance(mean, torch.Tensor):
                 if isinstance(mean, np.ndarray):

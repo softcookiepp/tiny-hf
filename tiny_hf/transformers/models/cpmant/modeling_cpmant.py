@@ -17,11 +17,11 @@
 import math
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.nn.functional as F
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.nn.functional as F
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -400,7 +400,7 @@ class CpmAntEncoder(nn.Module):
         return hidden_states, current_key_values, all_hidden_states, all_self_attns
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate with Bert->CPMAnt
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate with Bert->CPMAnt
 class CpmAntIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -508,7 +508,7 @@ class CpmAntSegmentPositionEmbedding(nn.Module):
         return relative_buckets
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOutput with Bert->CPMAnt
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOutput with Bert->CPMAnt
 class CpmAntOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -799,7 +799,7 @@ class CpmAntForCausalLM(CpmAntPreTrainedModel, GenerationMixin):
 
         Text Generation with CpmAntForCausalLM.
         ```python
-        >>> from transformers import CPMAntTokenizer, CpmAntForCausalLM
+        >>> from tiny_hf.transformers.import CPMAntTokenizer, CpmAntForCausalLM
 
         >>> texts = "今天天气不错，"
         >>> model = CpmAntForCausalLM.from_pretrained("openbmb/cpm-ant-10b")

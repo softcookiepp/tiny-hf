@@ -21,9 +21,9 @@ import warnings
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
-import torch
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -1388,8 +1388,8 @@ class XLNetLMHeadModel(XLNetPreTrainedModel, GenerationMixin):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, XLNetLMHeadModel
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, XLNetLMHeadModel
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("xlnet/xlnet-large-cased")
         >>> model = XLNetLMHeadModel.from_pretrained("xlnet/xlnet-large-cased")
@@ -1965,8 +1965,8 @@ class XLNetForQuestionAnswering(XLNetPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, XLNetForQuestionAnswering
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, XLNetForQuestionAnswering
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("xlnet/xlnet-base-cased")
         >>> model = XLNetForQuestionAnswering.from_pretrained("xlnet/xlnet-base-cased")

@@ -316,6 +316,7 @@ if _torch_available:
 		TORCH_FX_REQUIRED_VERSION.major,
 		TORCH_FX_REQUIRED_VERSION.minor,
 	)
+	_torch_fx_available = False # lol
 
 
 _torch_xla_available = False
@@ -349,7 +350,7 @@ def is_torch_deterministic():
 	"""
 	Check whether pytorch uses deterministic algorithms by looking if torch.set_deterministic_debug_mode() is set to 1 or 2"
 	"""
-	import torch
+	import tg_adapter as torch
 
 	if torch.get_deterministic_debug_mode() == 0:
 		return False
@@ -393,6 +394,8 @@ def is_torch_sdpa_available():
 
 
 def is_torch_flex_attn_available():
+	#lets make it easier
+	return False
 	if not is_torch_available():
 		return False
 	elif _torch_version == "N/A":
@@ -408,6 +411,7 @@ def is_torchvision_available():
 
 
 def is_torchvision_v2_available():
+	return False
 	if not is_torchvision_available():
 		return False
 
@@ -453,7 +457,7 @@ def is_pretty_midi_available():
 
 def is_torch_cuda_available():
 	if is_torch_available():
-		import torch
+		import tg_adapter as torch
 
 		return torch.cuda.is_available()
 	else:
@@ -462,7 +466,7 @@ def is_torch_cuda_available():
 
 def is_mamba_ssm_available():
 	if is_torch_available():
-		import torch
+		import tg_adapter as torch
 
 		if not torch.cuda.is_available():
 			return False
@@ -473,7 +477,7 @@ def is_mamba_ssm_available():
 
 def is_mamba_2_ssm_available():
 	if is_torch_available():
-		import torch
+		import tg_adapter as torch
 
 		if not torch.cuda.is_available():
 			return False
@@ -488,7 +492,7 @@ def is_mamba_2_ssm_available():
 
 def is_causal_conv1d_available():
 	if is_torch_available():
-		import torch
+		import tg_adapter as torch
 
 		if not torch.cuda.is_available():
 			return False
@@ -504,7 +508,7 @@ def is_mambapy_available():
 
 def is_torch_mps_available(min_version: Optional[str] = None):
 	if is_torch_available():
-		import torch
+		import tg_adapter as torch
 
 		if hasattr(torch.backends, "mps"):
 			backend_available = torch.backends.mps.is_available() and torch.backends.mps.is_built()
@@ -519,7 +523,7 @@ def is_torch_bf16_gpu_available():
 	if not is_torch_available():
 		return False
 
-	import torch
+	import tg_adapter as torch
 
 	return torch.cuda.is_available() and torch.cuda.is_bf16_supported()
 
@@ -528,7 +532,7 @@ def is_torch_bf16_cpu_available():
 	if not is_torch_available():
 		return False
 
-	import torch
+	import tg_adapter as torch
 
 	try:
 		# multiple levels of AttributeError depending on the pytorch version so do them all in one check
@@ -561,7 +565,7 @@ def is_torch_fp16_available_on_device(device):
 		else:
 			return True
 
-	import torch
+	import tg_adapter as torch
 
 	try:
 		x = torch.zeros(2, 2, dtype=torch.float16).to(device)
@@ -587,7 +591,7 @@ def is_torch_bf16_available_on_device(device):
 	if not is_torch_available():
 		return False
 
-	import torch
+	import tg_adapter as torch
 
 	if device == "cuda":
 		return is_torch_bf16_gpu_available()
@@ -610,7 +614,7 @@ def is_torch_tf32_available():
 	if not is_torch_available():
 		return False
 
-	import torch
+	import tg_adapter as torch
 
 	if not torch.cuda.is_available() or torch.version.cuda is None:
 		return False
@@ -690,7 +694,7 @@ def is_torch_tpu_available(check_device=True):
 		if check_device:
 			# We need to check if `xla_device` can be found, will raise a RuntimeError if not
 			try:
-				import torch_xla.core.xla_model as xm
+				import tg_adapter.xla.core.xla_model as xm
 
 				_ = xm.xla_device()
 				return True
@@ -711,7 +715,7 @@ def is_torch_xla_available(check_is_tpu=False, check_is_gpu=False):
 	if not _torch_xla_available:
 		return False
 
-	import torch_xla
+	import tg_adapter.xla
 
 	if check_is_gpu:
 		return torch_xla.runtime.device_type() in ["GPU", "CUDA"]
@@ -734,8 +738,8 @@ def is_torch_npu_available(check_device=False):
 	if not _torch_available or importlib.util.find_spec("torch_npu") is None:
 		return False
 
-	import torch
-	import torch_npu  # noqa: F401
+	import tg_adapter as torch
+	import tg_adapter.npu  # noqa: F401
 
 	if check_device:
 		try:
@@ -756,8 +760,8 @@ def is_torch_mlu_available(check_device=False):
 	if not _torch_available or importlib.util.find_spec("torch_mlu") is None:
 		return False
 
-	import torch
-	import torch_mlu  # noqa: F401
+	import tg_adapter as torch
+	import tg_adapter.mlu  # noqa: F401
 
 	pytorch_cndev_based_mlu_check_previous_value = os.environ.get("PYTORCH_CNDEV_BASED_MLU_CHECK")
 	try:
@@ -778,8 +782,8 @@ def is_torch_musa_available(check_device=False):
 	if not _torch_available or importlib.util.find_spec("torch_musa") is None:
 		return False
 
-	import torch
-	import torch_musa  # noqa: F401
+	import tg_adapter as torch
+	import tg_adapter.musa  # noqa: F401
 
 	torch_musa_min_version = "0.33.0"
 	if _accelerate_available and version.parse(_accelerate_version) < version.parse(torch_musa_min_version):
@@ -809,7 +813,7 @@ def is_torch_hpu_available():
 	if _accelerate_available and version.parse(_accelerate_version) < version.parse(torch_hpu_min_version):
 		return False
 
-	import torch
+	import tg_adapter as torch
 
 	if not hasattr(torch, "hpu") or not torch.hpu.is_available():
 		return False
@@ -861,7 +865,7 @@ def is_torch_compile_available():
 	if not is_torch_available():
 		return False
 
-	import torch
+	import tg_adapter as torch
 
 	# We don't do any version check here to support nighlies marked as 1.14. Ultimately needs to check version against
 	# 2.0 but let's do it later.
@@ -875,12 +879,12 @@ def is_torchdynamo_compiling():
 	# Importing torch._dynamo causes issues with PyTorch profiler (https://github.com/pytorch/pytorch/issues/130622)
 	# hence rather relying on `torch.compiler.is_compiling()` when possible (torch>=2.3)
 	try:
-		import torch
+		import tg_adapter as torch
 
 		return torch.compiler.is_compiling()
 	except Exception:
 		try:
-			import torch._dynamo as dynamo  # noqa: F401
+			import tg_adapter._dynamo as dynamo  # noqa: F401
 
 			return dynamo.is_compiling()
 		except Exception:
@@ -987,7 +991,7 @@ def is_torch_xpu_available(check_device=False):
 		elif torch_version.major < 2 or (torch_version.major == 2 and torch_version.minor < 4):
 			return False
 
-	import torch
+	import tg_adapter as torch
 
 	if check_device:
 		try:
@@ -1004,7 +1008,7 @@ def is_bitsandbytes_available():
 	if not is_torch_available() or not _bitsandbytes_available:
 		return False
 
-	import torch
+	import tg_adapter as torch
 
 	# `bitsandbytes` versions older than 0.43.1 eagerly require CUDA at import time,
 	# so those versions of the library are practically only available when CUDA is too.
@@ -1032,7 +1036,7 @@ def is_flash_attn_2_available():
 		return False
 
 	# Let's add an extra check to see if cuda is available
-	import torch
+	import tg_adapter as torch
 
 	if not (torch.cuda.is_available() or is_torch_mlu_available()):
 		return False
@@ -1851,7 +1855,7 @@ class DummyObject(type):
 
 def is_torch_fx_proxy(x):
 	if is_torch_fx_available():
-		import torch.fx
+		import tg_adapter.fx
 
 		return isinstance(x, torch.fx.Proxy)
 	return False

@@ -20,10 +20,10 @@ import os
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...modeling_outputs import (
@@ -1477,8 +1477,8 @@ class CanineForTokenClassification(CaninePreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, CanineForTokenClassification
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, CanineForTokenClassification
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/canine-s")
         >>> model = CanineForTokenClassification.from_pretrained("google/canine-s")

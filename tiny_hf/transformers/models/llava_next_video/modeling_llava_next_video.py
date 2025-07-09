@@ -24,8 +24,8 @@ from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
 import numpy as np
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -624,7 +624,7 @@ class LlavaNextVideoForConditionalGeneration(LlavaNextVideoPreTrainedModel, Gene
         >>> from PIL import Image
         >>> import requests
         >>> import av
-        >>> from transformers import AutoProcessor, LlavaNextVideoForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoProcessor, LlavaNextVideoForConditionalGeneration
 
         >>> def read_video_pyav(container, indices):
         ...     '''

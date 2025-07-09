@@ -20,10 +20,10 @@ from collections.abc import Sequence
 from typing import Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import CrossEntropyLoss, LayerNorm
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss, LayerNorm
 
 from ...activations import ACT2FN
 from ...integrations.deepspeed import is_deepspeed_zero3_enabled
@@ -56,7 +56,7 @@ _SEQ_CLASS_EXPECTED_OUTPUT = "'_unknown_'"
 _SEQ_CLASS_EXPECTED_LOSS = 3.16
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2._compute_mask_indices
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2._compute_mask_indices
 def _compute_mask_indices(
     shape: Tuple[int, int],
     mask_prob: float,
@@ -222,19 +222,19 @@ def build_relative_position(query_size, key_size, bucket_size=-1, max_position=-
 
 
 @torch.jit.script
-# Copied from transformers.models.deberta.modeling_deberta.c2p_dynamic_expand
+# Copied from tiny_hf.transformers.models.deberta.modeling_deberta.c2p_dynamic_expand
 def c2p_dynamic_expand(c2p_pos, query_layer, relative_pos):
     return c2p_pos.expand([query_layer.size(0), query_layer.size(1), query_layer.size(2), relative_pos.size(-1)])
 
 
 @torch.jit.script
-# Copied from transformers.models.deberta.modeling_deberta.p2c_dynamic_expand
+# Copied from tiny_hf.transformers.models.deberta.modeling_deberta.p2c_dynamic_expand
 def p2c_dynamic_expand(c2p_pos, query_layer, key_layer):
     return c2p_pos.expand([query_layer.size(0), query_layer.size(1), key_layer.size(-2), key_layer.size(-2)])
 
 
 @torch.jit.script
-# Copied from transformers.models.deberta.modeling_deberta.pos_dynamic_expand
+# Copied from tiny_hf.transformers.models.deberta.modeling_deberta.pos_dynamic_expand
 def pos_dynamic_expand(pos_index, p2c_att, key_layer):
     return pos_index.expand(p2c_att.size()[:2] + (pos_index.size(-2), key_layer.size(-2)))
 
@@ -258,7 +258,7 @@ def get_mask(input, local_context):
     return mask, dropout
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2NoLayerNormConvLayer with Wav2Vec2->SEWD
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2NoLayerNormConvLayer with Wav2Vec2->SEWD
 class SEWDNoLayerNormConvLayer(nn.Module):
     def __init__(self, config, layer_id=0):
         super().__init__()
@@ -280,7 +280,7 @@ class SEWDNoLayerNormConvLayer(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2LayerNormConvLayer with Wav2Vec2->SEWD
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2LayerNormConvLayer with Wav2Vec2->SEWD
 class SEWDLayerNormConvLayer(nn.Module):
     def __init__(self, config, layer_id=0):
         super().__init__()
@@ -308,7 +308,7 @@ class SEWDLayerNormConvLayer(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2GroupNormConvLayer with Wav2Vec2->SEWD
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2GroupNormConvLayer with Wav2Vec2->SEWD
 class SEWDGroupNormConvLayer(nn.Module):
     def __init__(self, config, layer_id=0):
         super().__init__()
@@ -333,7 +333,7 @@ class SEWDGroupNormConvLayer(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.sew.modeling_sew.SEWPositionalConvEmbedding with SEW->SEWD
+# Copied from tiny_hf.transformers.models.sew.modeling_sew.SEWPositionalConvEmbedding with SEW->SEWD
 class SEWDPositionalConvEmbedding(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -377,7 +377,7 @@ class SEWDPositionalConvEmbedding(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2SamePadLayer with Wav2Vec2->SEW
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2SamePadLayer with Wav2Vec2->SEW
 class SEWDSamePadLayer(nn.Module):
     def __init__(self, num_conv_pos_embeddings):
         super().__init__()
@@ -389,7 +389,7 @@ class SEWDSamePadLayer(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.sew.modeling_sew.SEWUpsampling with SEW->SEWD
+# Copied from tiny_hf.transformers.models.sew.modeling_sew.SEWUpsampling with SEW->SEWD
 class SEWDUpsampling(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -412,7 +412,7 @@ class SEWDUpsampling(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2FeatureEncoder with Wav2Vec2->SEWD
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2FeatureEncoder with Wav2Vec2->SEWD
 class SEWDFeatureEncoder(nn.Module):
     """Construct the features from raw audio waveform"""
 
@@ -503,8 +503,8 @@ class XSoftmax(torch.autograd.Function):
     Example:
 
     ```python
-    >>> import torch
-    >>> from transformers.models.deberta_v2.modeling_deberta_v2 import XSoftmax
+    >>> import tg_adapter as torch
+    >>> from tiny_hf.transformers.models.deberta_v2.modeling_deberta_v2 import XSoftmax
 
     >>> # Make a tensor
     >>> x = torch.randn([4, 20, 100])
@@ -537,8 +537,8 @@ class XSoftmax(torch.autograd.Function):
 
     @staticmethod
     def symbolic(g, self, mask, dim):
-        import torch.onnx.symbolic_helper as sym_help
-        from torch.onnx.symbolic_opset9 import masked_fill, softmax
+        import tg_adapter.onnx.symbolic_helper as sym_help
+        from tg_adapter.onnx.symbolic_opset9 import masked_fill, softmax
 
         mask_cast_value = g.op("Cast", mask, to_i=sym_help.cast_pytorch_to_onnx["Long"])
         r_mask = g.op(
@@ -584,7 +584,7 @@ class XDropout(torch.autograd.Function):
 
     @staticmethod
     def symbolic(g: torch._C.Graph, input: torch._C.Value, local_ctx: Union[float, DropoutContext]) -> torch._C.Value:
-        from torch.onnx import symbolic_opset12
+        from tg_adapter.onnx import symbolic_opset12
 
         dropout_p = local_ctx
         if isinstance(local_ctx, DropoutContext):
@@ -916,7 +916,7 @@ class SEWDAttention(nn.Module):
             return attention_output
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate with Bert->SEWD
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate with Bert->SEWD
 class SEWDIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1339,7 +1339,7 @@ SEWD_INPUTS_DOCSTRING = r"""
     "The bare SEW-D Model transformer outputting raw hidden-states without any specific head on top.",
     SEWD_START_DOCSTRING,
 )
-# Copied from transformers.models.sew.modeling_sew.SEWModel with SEW->SEWD, layer_norm_eps->feature_layer_norm_eps
+# Copied from tiny_hf.transformers.models.sew.modeling_sew.SEWModel with SEW->SEWD, layer_norm_eps->feature_layer_norm_eps
 class SEWDModel(SEWDPreTrainedModel):
     def __init__(self, config: SEWDConfig):
         super().__init__(config)
@@ -1360,7 +1360,7 @@ class SEWDModel(SEWDPreTrainedModel):
         # Initialize weights and apply final processing
         self.post_init()
 
-    # Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2Model._mask_hidden_states
+    # Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2Model._mask_hidden_states
     def _mask_hidden_states(
         self,
         hidden_states: torch.FloatTensor,
@@ -1468,7 +1468,7 @@ class SEWDModel(SEWDPreTrainedModel):
     """SEW-D Model with a `language modeling` head on top for Connectionist Temporal Classification (CTC).""",
     SEWD_START_DOCSTRING,
 )
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForCTC with Wav2Vec2->SEWD, wav2vec2->sew_d, WAV_2_VEC_2->SEWD
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForCTC with Wav2Vec2->SEWD, wav2vec2->sew_d, WAV_2_VEC_2->SEWD
 class SEWDForCTC(SEWDPreTrainedModel):
     def __init__(self, config, target_lang: Optional[str] = None):
         super().__init__(config)
@@ -1627,7 +1627,7 @@ class SEWDForCTC(SEWDPreTrainedModel):
     """,
     SEWD_START_DOCSTRING,
 )
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForSequenceClassification with Wav2Vec2->SEWD, wav2vec2->sew_d, WAV_2_VEC_2->SEWD
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForSequenceClassification with Wav2Vec2->SEWD, wav2vec2->sew_d, WAV_2_VEC_2->SEWD
 class SEWDForSequenceClassification(SEWDPreTrainedModel):
     def __init__(self, config):
         super().__init__(config)

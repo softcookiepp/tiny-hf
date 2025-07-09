@@ -33,7 +33,7 @@ from ...utils import TensorType, logging, requires_backends
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 if TYPE_CHECKING:
     from .modeling_superpoint import SuperPointKeypointDescriptionOutput

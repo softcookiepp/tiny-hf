@@ -71,7 +71,7 @@ class LevitConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import LevitConfig, LevitModel
+    >>> from tiny_hf.transformers.import LevitConfig, LevitModel
 
     >>> # Initializing a LeViT levit-128S style configuration
     >>> configuration = LevitConfig()
@@ -124,7 +124,7 @@ class LevitConfig(PretrainedConfig):
         ]
 
 
-# Copied from transformers.models.vit.configuration_vit.ViTOnnxConfig
+# Copied from tiny_hf.transformers.models.vit.configuration_vit.ViTOnnxConfig
 class LevitOnnxConfig(OnnxConfig):
     torch_onnx_minimum_version = version.parse("1.11")
 

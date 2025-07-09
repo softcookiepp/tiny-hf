@@ -82,7 +82,7 @@ class LayoutLMConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import LayoutLMConfig, LayoutLMModel
+    >>> from tiny_hf.transformers.import LayoutLMConfig, LayoutLMModel
 
     >>> # Initializing a LayoutLM configuration
     >>> configuration = LayoutLMConfig()
@@ -189,7 +189,7 @@ class LayoutLMOnnxConfig(OnnxConfig):
 
         if not is_torch_available():
             raise ValueError("Cannot generate dummy inputs without PyTorch installed.")
-        import torch
+        import tg_adapter as torch
 
         batch_size, seq_length = input_dict["input_ids"].shape
         input_dict["bbox"] = torch.tensor([*[box] * seq_length]).tile(batch_size, 1, 1)

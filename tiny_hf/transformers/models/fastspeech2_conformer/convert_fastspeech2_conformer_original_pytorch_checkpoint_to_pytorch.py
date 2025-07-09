@@ -20,10 +20,10 @@ import re
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-import torch
+import tg_adapter as torch
 import yaml
 
-from transformers import (
+from tiny_hf.transformers.import (
     FastSpeech2ConformerConfig,
     FastSpeech2ConformerModel,
     FastSpeech2ConformerTokenizer,

@@ -16,7 +16,7 @@ import warnings
 from dataclasses import dataclass
 from typing import Optional, Tuple
 
-import torch
+import tg_adapter as torch
 
 from .utils import ModelOutput
 

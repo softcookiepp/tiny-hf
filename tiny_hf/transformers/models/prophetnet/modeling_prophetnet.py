@@ -20,10 +20,10 @@ import warnings
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import Tensor, nn
-from torch.nn import LayerNorm
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import Tensor, nn
+from tg_adapter.nn import LayerNorm
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -1269,8 +1269,8 @@ class ProphetNetEncoder(ProphetNetPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, ProphetNetEncoder
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, ProphetNetEncoder
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("microsoft/prophetnet-large-uncased")
         >>> model = ProphetNetEncoder.from_pretrained("patrickvonplaten/prophetnet-large-uncased-standalone")
@@ -1440,8 +1440,8 @@ class ProphetNetDecoder(ProphetNetPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, ProphetNetDecoder
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, ProphetNetDecoder
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("microsoft/prophetnet-large-uncased")
         >>> model = ProphetNetDecoder.from_pretrained("microsoft/prophetnet-large-uncased", add_cross_attention=False)
@@ -1788,7 +1788,7 @@ class ProphetNetModel(ProphetNetPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, ProphetNetModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, ProphetNetModel
 
         >>> tokenizer = AutoTokenizer.from_pretrained("microsoft/prophetnet-large-uncased")
         >>> model = ProphetNetModel.from_pretrained("microsoft/prophetnet-large-uncased")
@@ -1916,7 +1916,7 @@ class ProphetNetForConditionalGeneration(ProphetNetPreTrainedModel, GenerationMi
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, ProphetNetForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, ProphetNetForConditionalGeneration
 
         >>> tokenizer = AutoTokenizer.from_pretrained("microsoft/prophetnet-large-uncased")
         >>> model = ProphetNetForConditionalGeneration.from_pretrained("microsoft/prophetnet-large-uncased")
@@ -2022,7 +2022,7 @@ class ProphetNetForConditionalGeneration(ProphetNetPreTrainedModel, GenerationMi
         return self._shift_right(labels)
 
     @staticmethod
-    # Copied from transformers.models.bart.modeling_bart.BartForConditionalGeneration._reorder_cache
+    # Copied from tiny_hf.transformers.models.bart.modeling_bart.BartForConditionalGeneration._reorder_cache
     def _reorder_cache(past_key_values, beam_idx):
         reordered_past = ()
         for layer_past in past_key_values:
@@ -2144,8 +2144,8 @@ class ProphetNetForCausalLM(ProphetNetPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, ProphetNetForCausalLM
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, ProphetNetForCausalLM
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("microsoft/prophetnet-large-uncased")
         >>> model = ProphetNetForCausalLM.from_pretrained("microsoft/prophetnet-large-uncased")
@@ -2156,8 +2156,8 @@ class ProphetNetForCausalLM(ProphetNetPreTrainedModel, GenerationMixin):
         >>> logits = outputs.logits
 
         >>> # Model can also be used with EncoderDecoder framework
-        >>> from transformers import BertTokenizer, EncoderDecoderModel, AutoTokenizer
-        >>> import torch
+        >>> from tiny_hf.transformers.import BertTokenizer, EncoderDecoderModel, AutoTokenizer
+        >>> import tg_adapter as torch
 
         >>> tokenizer_enc = BertTokenizer.from_pretrained("google-bert/bert-large-uncased")
         >>> tokenizer_dec = AutoTokenizer.from_pretrained("microsoft/prophetnet-large-uncased")
@@ -2279,7 +2279,7 @@ class ProphetNetForCausalLM(ProphetNetPreTrainedModel, GenerationMixin):
         }
 
     @staticmethod
-    # Copied from transformers.models.bart.modeling_bart.BartForCausalLM._reorder_cache
+    # Copied from tiny_hf.transformers.models.bart.modeling_bart.BartForCausalLM._reorder_cache
     def _reorder_cache(past_key_values, beam_idx):
         reordered_past = ()
         for layer_past in past_key_values:

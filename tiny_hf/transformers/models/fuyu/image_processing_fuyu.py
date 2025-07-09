@@ -49,7 +49,7 @@ from ...utils import (
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 
 logger = logging.get_logger(__name__)
@@ -135,7 +135,7 @@ class FuyuBatchFeature(BatchFeature):
             [`BatchFeature`]: The same instance after modification.
         """
         requires_backends(self, ["torch"])
-        import torch  # noqa
+        import tg_adapter. # noqa
 
         new_data = {}
         device = kwargs.get("device")

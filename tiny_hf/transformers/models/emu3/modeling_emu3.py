@@ -24,9 +24,9 @@ import math
 from functools import cached_property
 from typing import Callable, List, Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
+import tg_adapter as torch
+import tg_adapter.nn as nn
+import tg_adapter.nn.functional as F
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, StaticCache
@@ -50,7 +50,7 @@ from .configuration_emu3 import Emu3Config, Emu3TextConfig, Emu3VQVAEConfig
 
 
 if is_torch_flex_attn_available():
-    from torch.nn.attention.flex_attention import BlockMask
+    from tg_adapter.nn.attention.flex_attention import BlockMask
 
     from ...integrations.flex_attention import make_flex_block_causal_mask
 
@@ -1679,8 +1679,8 @@ class Emu3ForCausalLM(Emu3PreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import Emu3Processor, Emu3ForConditionalGeneration
-        >>> import torch
+        >>> from tiny_hf.transformers.import Emu3Processor, Emu3ForConditionalGeneration
+        >>> import tg_adapter as torch
         >>> import requests
         >>> from PIL import Image
 
@@ -1906,8 +1906,8 @@ class Emu3ForConditionalGeneration(Emu3PreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import Emu3Processor, Emu3ForConditionalGeneration
-        >>> import torch
+        >>> from tiny_hf.transformers.import Emu3Processor, Emu3ForConditionalGeneration
+        >>> import tg_adapter as torch
         >>> import requests
         >>> from PIL import Image
 

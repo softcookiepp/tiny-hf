@@ -22,12 +22,12 @@ Original logits where obtained by running the following code:
 import argparse
 from pathlib import Path
 
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 from PIL import Image
 
-from transformers import BeitConfig, ZoeDepthConfig, ZoeDepthForDepthEstimation, ZoeDepthImageProcessor
-from transformers.utils import logging
+from tiny_hf.transformers.import BeitConfig, ZoeDepthConfig, ZoeDepthForDepthEstimation, ZoeDepthImageProcessor
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

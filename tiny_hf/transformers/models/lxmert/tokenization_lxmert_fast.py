@@ -25,7 +25,7 @@ from .tokenization_lxmert import LxmertTokenizer
 VOCAB_FILES_NAMES = {"vocab_file": "vocab.txt", "tokenizer_file": "tokenizer.json"}
 
 
-# Copied from transformers.models.bert.tokenization_bert_fast.BertTokenizerFast with bert-base-cased->unc-nlp/lxmert-base-uncased, BERT->Lxmert, Bert->Lxmert
+# Copied from tiny_hf.transformers.models.bert.tokenization_bert_fast.BertTokenizerFast with bert-base-cased->unc-nlp/lxmert-base-uncased, BERT->Lxmert, Bert->Lxmert
 class LxmertTokenizerFast(PreTrainedTokenizerFast):
     r"""
     Construct a "fast" Lxmert tokenizer (backed by HuggingFace's *tokenizers* library). Based on WordPiece.

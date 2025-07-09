@@ -257,7 +257,7 @@ class SamConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import (
+    >>> from tiny_hf.transformers.import (
     ...     SamVisionConfig,
     ...     SamPromptEncoderConfig,
     ...     SamMaskDecoderConfig,

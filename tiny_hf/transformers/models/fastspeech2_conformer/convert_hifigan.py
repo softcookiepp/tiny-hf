@@ -17,10 +17,10 @@
 import argparse
 from pathlib import Path
 
-import torch
+import tg_adapter as torch
 import yaml
 
-from transformers import FastSpeech2ConformerHifiGan, FastSpeech2ConformerHifiGanConfig, logging
+from tiny_hf.transformers.import FastSpeech2ConformerHifiGan, FastSpeech2ConformerHifiGanConfig, logging
 
 
 logging.set_verbosity_info()

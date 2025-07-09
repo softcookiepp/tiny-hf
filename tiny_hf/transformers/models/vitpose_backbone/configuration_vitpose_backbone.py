@@ -78,7 +78,7 @@ class VitPoseBackboneConfig(BackboneConfigMixin, PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import VitPoseBackboneConfig, VitPoseBackbone
+    >>> from tiny_hf.transformers.import VitPoseBackboneConfig, VitPoseBackbone
 
     >>> # Initializing a VitPose configuration
     >>> configuration = VitPoseBackboneConfig()

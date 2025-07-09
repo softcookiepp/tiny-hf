@@ -83,7 +83,7 @@ class MistralConfig(PretrainedConfig):
             The dropout ratio for the attention probabilities.
 
     ```python
-    >>> from transformers import MistralModel, MistralConfig
+    >>> from tiny_hf.transformers.import MistralModel, MistralConfig
 
     >>> # Initializing a Mistral 7B style configuration
     >>> configuration = MistralConfig()

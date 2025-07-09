@@ -14,9 +14,9 @@
 
 import argparse
 
-import torch
+import tg_adapter as torch
 
-from transformers import UnivNetConfig, UnivNetModel, logging
+from tiny_hf.transformers.import UnivNetConfig, UnivNetModel, logging
 
 
 logging.set_verbosity_info()

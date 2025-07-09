@@ -19,13 +19,13 @@ import json
 from pathlib import Path
 
 import requests
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 from PIL import Image
 
-from transformers import BeitConfig, BeitForImageClassification, BeitForMaskedImageModeling, BeitImageProcessor
-from transformers.image_utils import PILImageResampling
-from transformers.utils import logging
+from tiny_hf.transformers.import BeitConfig, BeitForImageClassification, BeitForMaskedImageModeling, BeitImageProcessor
+from tiny_hf.transformers.image_utils import PILImageResampling
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

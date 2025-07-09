@@ -16,9 +16,9 @@
 
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...file_utils import (
     add_start_docstrings,
@@ -79,7 +79,7 @@ class DepthAnythingReassembleLayer(nn.Module):
             # so should downsample
             self.resize = nn.Conv2d(channels, channels, kernel_size=3, stride=int(1 / factor), padding=1)
 
-    # Copied from transformers.models.dpt.modeling_dpt.DPTReassembleLayer.forward
+    # Copied from tiny_hf.transformers.models.dpt.modeling_dpt.DPTReassembleLayer.forward
     def forward(self, hidden_state):
         hidden_state = self.projection(hidden_state)
         hidden_state = self.resize(hidden_state)
@@ -212,7 +212,7 @@ class DepthAnythingFeatureFusionLayer(nn.Module):
 
 
 class DepthAnythingFeatureFusionStage(nn.Module):
-    # Copied from transformers.models.dpt.modeling_dpt.DPTFeatureFusionStage.__init__ with DPT->DepthAnything
+    # Copied from tiny_hf.transformers.models.dpt.modeling_dpt.DPTFeatureFusionStage.__init__ with DPT->DepthAnything
     def __init__(self, config):
         super().__init__()
         self.layers = nn.ModuleList()
@@ -240,7 +240,7 @@ class DepthAnythingFeatureFusionStage(nn.Module):
         return fused_hidden_states
 
 
-# Modified from transformers.models.dpt.modeling_dpt.DPTPreTrainedModel with DPT->DepthAnything,dpt->depth_anything
+# Modified from tiny_hf.transformers.models.dpt.modeling_dpt.DPTPreTrainedModel with DPT->DepthAnything,dpt->depth_anything
 # avoiding sdpa and flash_attn_2 support, it's done in the backend
 class DepthAnythingPreTrainedModel(PreTrainedModel):
     """
@@ -397,8 +397,8 @@ class DepthAnythingForDepthEstimation(DepthAnythingPreTrainedModel):
 
         Examples:
         ```python
-        >>> from transformers import AutoImageProcessor, AutoModelForDepthEstimation
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoImageProcessor, AutoModelForDepthEstimation
+        >>> import tg_adapter as torch
         >>> import numpy as np
         >>> from PIL import Image
         >>> import requests

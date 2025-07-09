@@ -3,11 +3,11 @@ import json
 import os
 import re
 
-import torch
+import tg_adapter as torch
 from safetensors.torch import load_file
 from tokenizers import processors
 
-from transformers import GlmConfig, GlmForCausalLM, PreTrainedTokenizerFast
+from tiny_hf.transformers.import GlmConfig, GlmForCausalLM, PreTrainedTokenizerFast
 
 
 # fmt: off

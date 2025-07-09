@@ -73,7 +73,7 @@ class AudioClassificationPipeline(Pipeline):
     Example:
 
     ```python
-    >>> from transformers import pipeline
+    >>> from tiny_hf.transformers.import pipeline
 
     >>> classifier = pipeline(model="superb/wav2vec2-base-superb-ks")
     >>> classifier("https://huggingface.co/datasets/Narsil/asr_dummy/resolve/main/1.flac")
@@ -200,7 +200,7 @@ class AudioClassificationPipeline(Pipeline):
                 import tg_adapter as torch
 
                 if is_torchaudio_available():
-                    from torchaudio import functional as F
+                    from tg_adapter.udio import functional as F
                 else:
                     raise ImportError(
                         "torchaudio is required to resample audio samples in AudioClassificationPipeline. "

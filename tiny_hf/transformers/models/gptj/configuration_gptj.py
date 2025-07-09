@@ -70,7 +70,7 @@ class GPTJConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import GPTJModel, GPTJConfig
+    >>> from tiny_hf.transformers.import GPTJModel, GPTJConfig
 
     >>> # Initializing a GPT-J 6B configuration
     >>> configuration = GPTJConfig()
@@ -134,7 +134,7 @@ class GPTJConfig(PretrainedConfig):
         )
 
 
-# Copied from transformers.models.gpt2.configuration_gpt2.GPT2OnnxConfig
+# Copied from tiny_hf.transformers.models.gpt2.configuration_gpt2.GPT2OnnxConfig
 class GPTJOnnxConfig(OnnxConfigWithPast):
     def __init__(
         self,
@@ -187,7 +187,7 @@ class GPTJOnnxConfig(OnnxConfigWithPast):
             if not is_torch_available():
                 raise ValueError("Cannot generate dummy past_keys inputs without PyTorch installed.")
             else:
-                import torch
+                import tg_adapter as torch
 
                 batch, seqlen = common_inputs["input_ids"].shape
                 # Not using the same length for past_key_values

@@ -183,7 +183,7 @@ def _compute_mask_indices(
     return spec_aug_mask
 
 
-# Copied from transformers.models.bart.modeling_tf_bart._expand_mask
+# Copied from tiny_hf.transformers.models.bart.modeling_tf_bart._expand_mask
 def _expand_mask(mask: tf.Tensor, tgt_len: Optional[int] = None):
     """
     Expands attention_mask from `[bsz, seq_len]` to `[bsz, 1, tgt_seq_len, src_seq_len]`.
@@ -687,7 +687,7 @@ class TFWav2Vec2FeatureProjection(keras.layers.Layer):
                 self.projection.build([None, None, self.config.conv_dim[-1]])
 
 
-# Copied from transformers.models.bart.modeling_tf_bart.TFBartAttention with TFBart->TFWav2Vec2
+# Copied from tiny_hf.transformers.models.bart.modeling_tf_bart.TFBartAttention with TFBart->TFWav2Vec2
 class TFWav2Vec2Attention(keras.layers.Layer):
     """Multi-headed attention from "Attention Is All You Need"""
 
@@ -1528,7 +1528,7 @@ class TFWav2Vec2Model(TFWav2Vec2PreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoProcessor, TFWav2Vec2Model
+        >>> from tiny_hf.transformers.import AutoProcessor, TFWav2Vec2Model
         >>> from datasets import load_dataset
         >>> import soundfile as sf
 
@@ -1640,7 +1640,7 @@ class TFWav2Vec2ForCTC(TFWav2Vec2PreTrainedModel):
 
         ```python
         >>> import tensorflow as tf
-        >>> from transformers import AutoProcessor, TFWav2Vec2ForCTC
+        >>> from tiny_hf.transformers.import AutoProcessor, TFWav2Vec2ForCTC
         >>> from datasets import load_dataset
         >>> import soundfile as sf
 

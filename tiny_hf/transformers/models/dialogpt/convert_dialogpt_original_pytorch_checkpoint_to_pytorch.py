@@ -15,9 +15,9 @@
 import argparse
 import os
 
-import torch
+import tg_adapter as torch
 
-from transformers.utils import WEIGHTS_NAME
+from tiny_hf.transformers.utils import WEIGHTS_NAME
 
 
 DIALOGPT_MODELS = ["small", "medium", "large"]

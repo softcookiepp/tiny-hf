@@ -18,9 +18,9 @@ import copy
 import math
 from typing import Optional, Tuple, Union
 
-import torch
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ....activations import ACT2FN
 from ....modeling_attn_mask_utils import _prepare_4d_attention_mask, _prepare_4d_causal_attention_mask
@@ -808,7 +808,7 @@ class Speech2Text2ForCausalLM(Speech2Text2PreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import (
+        >>> from tiny_hf.transformers.import (
         ...     SpeechEncoderDecoderModel,
         ...     Speech2Text2ForCausalLM,
         ...     Wav2Vec2Model,

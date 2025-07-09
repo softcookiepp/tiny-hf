@@ -20,10 +20,10 @@ import warnings
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import Tensor, nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import Tensor, nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...modeling_outputs import (
@@ -152,7 +152,7 @@ class BeitEmbeddings(nn.Module):
             self.position_embeddings = None
         self.dropout = nn.Dropout(config.hidden_dropout_prob)
 
-    # Copied from transformers.models.vit.modeling_vit.ViTEmbeddings.interpolate_pos_encoding
+    # Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTEmbeddings.interpolate_pos_encoding
     def interpolate_pos_encoding(self, embeddings: torch.Tensor, height: int, width: int) -> torch.Tensor:
         """
         This method allows to interpolate the pre-trained position encodings, to be able to use the model on higher resolution
@@ -969,8 +969,8 @@ class BeitForMaskedImageModeling(BeitPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, BeitForMaskedImageModeling
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoImageProcessor, BeitForMaskedImageModeling
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> import requests
 
@@ -1429,7 +1429,7 @@ class BeitForSemanticSegmentation(BeitPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, BeitForSemanticSegmentation
+        >>> from tiny_hf.transformers.import AutoImageProcessor, BeitForSemanticSegmentation
         >>> from PIL import Image
         >>> import requests
 
@@ -1557,8 +1557,8 @@ class BeitBackbone(BeitPreTrainedModel, BackboneMixin):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, AutoBackbone
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoImageProcessor, AutoBackbone
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> import requests
 

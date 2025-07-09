@@ -17,8 +17,8 @@
 from typing import List, Optional, Tuple, Union
 
 import numpy as np
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...modeling_attn_mask_utils import _prepare_4d_attention_mask, _prepare_4d_causal_attention_mask
@@ -40,7 +40,7 @@ logger = logging.get_logger(__name__)
 _CONFIG_FOR_DOC = "InformerConfig"
 
 
-# Copied from transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesFeatureEmbedder with TimeSeries->Informer
+# Copied from tiny_hf.transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesFeatureEmbedder with TimeSeries->Informer
 class InformerFeatureEmbedder(nn.Module):
     """
     Embed a sequence of categorical features.
@@ -75,7 +75,7 @@ class InformerFeatureEmbedder(nn.Module):
         )
 
 
-# Copied from transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesStdScaler with TimeSeriesTransformer->Informer,TimeSeries->Informer
+# Copied from tiny_hf.transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesStdScaler with TimeSeriesTransformer->Informer,TimeSeries->Informer
 class InformerStdScaler(nn.Module):
     """
     Standardize features by calculating the mean and scaling along the first dimension, and then normalizes it by
@@ -111,7 +111,7 @@ class InformerStdScaler(nn.Module):
         return (data - loc) / scale, loc, scale
 
 
-# Copied from transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesMeanScaler with TimeSeriesTransformer->Informer,TimeSeries->Informer
+# Copied from tiny_hf.transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesMeanScaler with TimeSeriesTransformer->Informer,TimeSeries->Informer
 class InformerMeanScaler(nn.Module):
     """
     Computes a scaling factor as the weighted average absolute value along the first dimension, and scales the data
@@ -166,7 +166,7 @@ class InformerMeanScaler(nn.Module):
         return scaled_data, torch.zeros_like(scale), scale
 
 
-# Copied from transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesNOPScaler with TimeSeriesTransformer->Informer,TimeSeries->Informer
+# Copied from tiny_hf.transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesNOPScaler with TimeSeriesTransformer->Informer,TimeSeries->Informer
 class InformerNOPScaler(nn.Module):
     """
     Assigns a scaling factor equal to 1 along the first dimension, and therefore applies no scaling to the input data.
@@ -194,7 +194,7 @@ class InformerNOPScaler(nn.Module):
         return data, loc, scale
 
 
-# Copied from transformers.models.time_series_transformer.modeling_time_series_transformer.weighted_average
+# Copied from tiny_hf.transformers.models.time_series_transformer.modeling_time_series_transformer.weighted_average
 def weighted_average(input_tensor: torch.Tensor, weights: Optional[torch.Tensor] = None, dim=None) -> torch.Tensor:
     """
     Computes the weighted average of a given tensor across a given `dim`, masking values associated with weight zero,
@@ -219,7 +219,7 @@ def weighted_average(input_tensor: torch.Tensor, weights: Optional[torch.Tensor]
         return input_tensor.mean(dim=dim)
 
 
-# Copied from transformers.models.time_series_transformer.modeling_time_series_transformer.nll
+# Copied from tiny_hf.transformers.models.time_series_transformer.modeling_time_series_transformer.nll
 def nll(input: torch.distributions.Distribution, target: torch.Tensor) -> torch.Tensor:
     """
     Computes the negative log likelihood loss from input distribution with respect to target.
@@ -227,7 +227,7 @@ def nll(input: torch.distributions.Distribution, target: torch.Tensor) -> torch.
     return -input.log_prob(target)
 
 
-# Copied from transformers.models.marian.modeling_marian.MarianSinusoidalPositionalEmbedding with Marian->Informer
+# Copied from tiny_hf.transformers.models.marian.modeling_marian.MarianSinusoidalPositionalEmbedding with Marian->Informer
 class InformerSinusoidalPositionalEmbedding(nn.Embedding):
     """This module produces sinusoidal positional embeddings of any length."""
 
@@ -262,7 +262,7 @@ class InformerSinusoidalPositionalEmbedding(nn.Embedding):
         return super().forward(positions)
 
 
-# Copied from transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesValueEmbedding with TimeSeries->Info
+# Copied from tiny_hf.transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesValueEmbedding with TimeSeries->Info
 class InformerValueEmbedding(nn.Module):
     def __init__(self, feature_size, d_model):
         super().__init__()
@@ -272,7 +272,7 @@ class InformerValueEmbedding(nn.Module):
         return self.value_projection(x)
 
 
-# Copied from transformers.models.bart.modeling_bart.BartAttention with Bart->Informer
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartAttention with Bart->Informer
 class InformerAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -1215,7 +1215,7 @@ class InformerEncoder(InformerPreTrainedModel):
         )
 
 
-# Copied from transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesTransformerDecoder with TimeSeriesTransformer->Informer,TimeSeriesTransformerConfig->InformerConfig,time-series-transformer->informer,Transformer->Informer,TimeSeries->Informer
+# Copied from tiny_hf.transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesTransformerDecoder with TimeSeriesTransformer->Informer,TimeSeriesTransformerConfig->InformerConfig,time-series-transformer->informer,Transformer->Informer,TimeSeries->Informer
 class InformerDecoder(InformerPreTrainedModel):
     """
     Informer decoder consisting of *config.decoder_layers* layers. Each layer is a
@@ -1437,7 +1437,7 @@ class InformerDecoder(InformerPreTrainedModel):
     "The bare Informer Model outputting raw hidden-states without any specific head on top.",
     INFORMER_START_DOCSTRING,
 )
-# Copied from transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesTransformerModel with TimeSeriesTransformer->Informer,TIME_SERIES_TRANSFORMER->INFORMER,time-series-transformer->informer,TimeSeries->Informer
+# Copied from tiny_hf.transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesTransformerModel with TimeSeriesTransformer->Informer,TIME_SERIES_TRANSFORMER->INFORMER,time-series-transformer->informer,TimeSeries->Informer
 class InformerModel(InformerPreTrainedModel):
     def __init__(self, config: InformerConfig):
         super().__init__(config)
@@ -1605,8 +1605,8 @@ class InformerModel(InformerPreTrainedModel):
 
         ```python
         >>> from huggingface_hub import hf_hub_download
-        >>> import torch
-        >>> from transformers import InformerModel
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import InformerModel
 
         >>> file = hf_hub_download(
         ...     repo_id="hf-internal-testing/tourism-monthly-batch", filename="train-batch.pt", repo_type="dataset"
@@ -1699,7 +1699,7 @@ class InformerModel(InformerPreTrainedModel):
     "The Informer Model with a distribution head on top for time-series forecasting.",
     INFORMER_START_DOCSTRING,
 )
-# Copied from transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesTransformerForPrediction with TimeSeriesTransformer->Informer,TIME_SERIES_TRANSFORMER->INFORMER,time-series-transformer->informer
+# Copied from tiny_hf.transformers.models.time_series_transformer.modeling_time_series_transformer.TimeSeriesTransformerForPrediction with TimeSeriesTransformer->Informer,TIME_SERIES_TRANSFORMER->INFORMER,time-series-transformer->informer
 class InformerForPrediction(InformerPreTrainedModel):
     def __init__(self, config: InformerConfig):
         super().__init__(config)
@@ -1770,8 +1770,8 @@ class InformerForPrediction(InformerPreTrainedModel):
 
         ```python
         >>> from huggingface_hub import hf_hub_download
-        >>> import torch
-        >>> from transformers import InformerForPrediction
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import InformerForPrediction
 
         >>> file = hf_hub_download(
         ...     repo_id="hf-internal-testing/tourism-monthly-batch", filename="train-batch.pt", repo_type="dataset"

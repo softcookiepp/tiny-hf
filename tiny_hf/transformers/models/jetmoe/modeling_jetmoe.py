@@ -17,10 +17,10 @@
 import math
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import functional as F
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import functional as F
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, StaticCache
@@ -47,7 +47,7 @@ from .configuration_jetmoe import JetMoeConfig
 
 
 if is_torch_flex_attn_available():
-    from torch.nn.attention.flex_attention import BlockMask
+    from tg_adapter.nn.attention.flex_attention import BlockMask
 
     from ...integrations.flex_attention import make_flex_block_causal_mask
 
@@ -61,7 +61,7 @@ _CHECKPOINT_FOR_DOC = "jetmoe"
 _CONFIG_FOR_DOC = "JetMoeConfig"
 
 
-# Copied from transformers.models.mixtral.modeling_mixtral.load_balancing_loss_func
+# Copied from tiny_hf.transformers.models.mixtral.modeling_mixtral.load_balancing_loss_func
 def load_balancing_loss_func(
     gate_logits: Union[torch.Tensor, Tuple[torch.Tensor], None],
     num_experts: Optional[int] = None,
@@ -372,7 +372,7 @@ class JetMoeMoA(nn.Module):
         raise NotImplementedError("This module doesn't support call and forward.")
 
 
-# Copied from transformers.models.llama.modeling_llama.LlamaRMSNorm with Llama->JetMoe
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaRMSNorm with Llama->JetMoe
 class JetMoeRMSNorm(nn.Module):
     def __init__(self, hidden_size, eps=1e-6):
         """
@@ -393,7 +393,7 @@ class JetMoeRMSNorm(nn.Module):
         return f"{tuple(self.weight.shape)}, eps={self.variance_epsilon}"
 
 
-# Copied from transformers.models.gemma.modeling_gemma.GemmaRotaryEmbedding with Gemma->JetMoe
+# Copied from tiny_hf.transformers.models.gemma.modeling_gemma.GemmaRotaryEmbedding with Gemma->JetMoe
 class JetMoeRotaryEmbedding(nn.Module):
     def __init__(self, config: JetMoeConfig, device=None):
         super().__init__()
@@ -455,7 +455,7 @@ class JetMoeRotaryEmbedding(nn.Module):
         return cos.to(dtype=x.dtype), sin.to(dtype=x.dtype)
 
 
-# Copied from transformers.models.llama.modeling_llama.rotate_half
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.rotate_half
 def rotate_half(x):
     """Rotates half the hidden dims of the input."""
     x1 = x[..., : x.shape[-1] // 2]
@@ -463,7 +463,7 @@ def rotate_half(x):
     return torch.cat((-x2, x1), dim=-1)
 
 
-# Copied from transformers.models.llama.modeling_llama.apply_rotary_pos_emb
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.apply_rotary_pos_emb
 def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
     """Applies Rotary Position Embedding to the query and key tensors.
 
@@ -975,11 +975,11 @@ class JetMoeModel(JetMoePreTrainedModel):
         # Initialize weights and apply final processing
         self.post_init()
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel.get_input_embeddings
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel.get_input_embeddings
     def get_input_embeddings(self):
         return self.embed_tokens
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel.set_input_embeddings
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel.set_input_embeddings
     def set_input_embeddings(self, value):
         self.embed_tokens = value
 
@@ -1121,7 +1121,7 @@ class JetMoeModel(JetMoePreTrainedModel):
             router_logits=all_router_logits,
         )
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
     def _update_causal_mask(
         self,
         attention_mask: torch.Tensor,
@@ -1193,7 +1193,7 @@ class JetMoeModel(JetMoePreTrainedModel):
         return causal_mask
 
     @staticmethod
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel._prepare_4d_causal_attention_mask_with_cache_position
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel._prepare_4d_causal_attention_mask_with_cache_position
     def _prepare_4d_causal_attention_mask_with_cache_position(
         attention_mask: torch.Tensor,
         sequence_length: int,
@@ -1266,27 +1266,27 @@ class JetMoeForCausalLM(JetMoePreTrainedModel, GenerationMixin):
         # Initialize weights and apply final processing
         self.post_init()
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.get_input_embeddings
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.get_input_embeddings
     def get_input_embeddings(self):
         return self.model.embed_tokens
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.set_input_embeddings
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.set_input_embeddings
     def set_input_embeddings(self, value):
         self.model.embed_tokens = value
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.get_output_embeddings
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.get_output_embeddings
     def get_output_embeddings(self):
         return self.lm_head
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.set_output_embeddings
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.set_output_embeddings
     def set_output_embeddings(self, new_embeddings):
         self.lm_head = new_embeddings
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.set_decoder
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.set_decoder
     def set_decoder(self, decoder):
         self.model = decoder
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.get_decoder
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.get_decoder
     def get_decoder(self):
         return self.model
 
@@ -1413,7 +1413,7 @@ class JetMoeForCausalLM(JetMoePreTrainedModel, GenerationMixin):
     """,
     JETMOE_START_DOCSTRING,
 )
-# Copied from transformers.models.llama.modeling_llama.LlamaForSequenceClassification with Llama->JetMoe, LLAMA->JETMOE
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForSequenceClassification with Llama->JetMoe, LLAMA->JETMOE
 class JetMoeForSequenceClassification(JetMoePreTrainedModel):
     def __init__(self, config):
         super().__init__(config)

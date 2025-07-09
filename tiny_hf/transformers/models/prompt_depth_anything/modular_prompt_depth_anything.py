@@ -12,11 +12,11 @@
 # limitations under the License.
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+import tg_adapter.nn as nn
 
-from transformers.models.depth_anything.configuration_depth_anything import DepthAnythingConfig
-from transformers.models.depth_anything.modeling_depth_anything import (
+from tiny_hf.transformers.models.depth_anything.configuration_depth_anything import DepthAnythingConfig
+from tiny_hf.transformers.models.depth_anything.modeling_depth_anything import (
     DepthAnythingDepthEstimationHead,
     DepthAnythingFeatureFusionLayer,
     DepthAnythingFeatureFusionStage,
@@ -24,7 +24,7 @@ from transformers.models.depth_anything.modeling_depth_anything import (
     DepthAnythingNeck,
     DepthAnythingReassembleStage,
 )
-from transformers.utils.generic import torch_int
+from tiny_hf.transformers.utils.generic import tg_adapter.int
 
 from ...file_utils import (
     add_start_docstrings,
@@ -297,8 +297,8 @@ class PromptDepthAnythingForDepthEstimation(DepthAnythingForDepthEstimation):
     ) -> Union[Tuple[torch.Tensor], DepthEstimatorOutput]:
         r"""
         ```python
-        >>> from transformers import AutoImageProcessor, AutoModelForDepthEstimation
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoImageProcessor, AutoModelForDepthEstimation
+        >>> import tg_adapter as torch
         >>> import numpy as np
         >>> from PIL import Image
         >>> import requests

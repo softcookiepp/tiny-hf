@@ -18,15 +18,15 @@ import shutil
 from argparse import ArgumentParser
 from collections import OrderedDict
 
-import torch
+import tg_adapter as torch
 from nemo.collections.common.tokenizers.huggingface.auto_tokenizer import AutoTokenizer
 from nemo.collections.nlp.models.language_modeling.megatron_gpt_model import MegatronGPTModel
 from nemo.collections.nlp.parts.nlp_overrides import NLPDDPStrategy
 from nemo.utils import logging
 from pytorch_lightning import Trainer
 
-from transformers import LlamaTokenizer, PreTrainedTokenizerFast
-from transformers.convert_slow_tokenizer import LlamaConverter
+from tiny_hf.transformers.import LlamaTokenizer, PreTrainedTokenizerFast
+from tiny_hf.transformers.convert_slow_tokenizer import LlamaConverter
 
 
 """

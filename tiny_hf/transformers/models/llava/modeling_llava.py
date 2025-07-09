@@ -17,9 +17,9 @@
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -368,7 +368,7 @@ class LlavaForConditionalGeneration(LlavaPreTrainedModel, GenerationMixin):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, LlavaForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoProcessor, LlavaForConditionalGeneration
 
         >>> model = LlavaForConditionalGeneration.from_pretrained("llava-hf/llava-1.5-7b-hf")
         >>> processor = AutoProcessor.from_pretrained("llava-hf/llava-1.5-7b-hf")

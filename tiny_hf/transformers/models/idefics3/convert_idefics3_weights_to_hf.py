@@ -15,11 +15,11 @@
 import argparse
 import json
 
-import torch
+import tg_adapter as torch
 from accelerate import init_empty_weights
 from huggingface_hub import hf_hub_download
 
-from transformers import (
+from tiny_hf.transformers.import (
     AutoModelForCausalLM,
     AutoTokenizer,
     Idefics3Config,

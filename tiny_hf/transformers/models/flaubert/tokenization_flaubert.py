@@ -48,7 +48,7 @@ def convert_to_unicode(text):
     return ensure_text(text, encoding="utf-8", errors="ignore")
 
 
-# Copied from transformers.models.xlm.tokenization_xlm.get_pairs
+# Copied from tiny_hf.transformers.models.xlm.tokenization_xlm.get_pairs
 def get_pairs(word):
     """
     Return set of symbol pairs in a word. word is represented as tuple of symbols (symbols being variable-length
@@ -62,7 +62,7 @@ def get_pairs(word):
     return pairs
 
 
-# Copied from transformers.models.xlm.tokenization_xlm.replace_unicode_punct
+# Copied from tiny_hf.transformers.models.xlm.tokenization_xlm.replace_unicode_punct
 def replace_unicode_punct(text):
     """
     Port of https://github.com/moses-smt/mosesdecoder/blob/master/scripts/tokenizer/replace-unicode-punctuation.perl
@@ -106,7 +106,7 @@ def replace_unicode_punct(text):
     return text
 
 
-# Copied from transformers.models.xlm.tokenization_xlm.remove_non_printing_char
+# Copied from tiny_hf.transformers.models.xlm.tokenization_xlm.remove_non_printing_char
 def remove_non_printing_char(text):
     """
     Port of https://github.com/moses-smt/mosesdecoder/blob/master/scripts/tokenizer/remove-non-printing-char.perl
@@ -260,11 +260,11 @@ class FlaubertTokenizer(PreTrainedTokenizer):
         )
 
     @property
-    # Copied from transformers.models.xlm.tokenization_xlm.XLMTokenizer.do_lower_case
+    # Copied from tiny_hf.transformers.models.xlm.tokenization_xlm.XLMTokenizer.do_lower_case
     def do_lower_case(self):
         return self.do_lowercase_and_remove_accent
 
-    # Copied from transformers.models.xlm.tokenization_xlm.XLMTokenizer.moses_punct_norm
+    # Copied from tiny_hf.transformers.models.xlm.tokenization_xlm.XLMTokenizer.moses_punct_norm
     def moses_punct_norm(self, text, lang):
         if lang not in self.cache_moses_punct_normalizer:
             punct_normalizer = self.sm.MosesPunctNormalizer(lang=lang)
@@ -273,7 +273,7 @@ class FlaubertTokenizer(PreTrainedTokenizer):
             punct_normalizer = self.cache_moses_punct_normalizer[lang]
         return punct_normalizer.normalize(text)
 
-    # Copied from transformers.models.xlm.tokenization_xlm.XLMTokenizer.moses_tokenize
+    # Copied from tiny_hf.transformers.models.xlm.tokenization_xlm.XLMTokenizer.moses_tokenize
     def moses_tokenize(self, text, lang):
         if lang not in self.cache_moses_tokenizer:
             moses_tokenizer = self.sm.MosesTokenizer(lang=lang)
@@ -282,14 +282,14 @@ class FlaubertTokenizer(PreTrainedTokenizer):
             moses_tokenizer = self.cache_moses_tokenizer[lang]
         return moses_tokenizer.tokenize(text, return_str=False, escape=False)
 
-    # Copied from transformers.models.xlm.tokenization_xlm.XLMTokenizer.moses_pipeline
+    # Copied from tiny_hf.transformers.models.xlm.tokenization_xlm.XLMTokenizer.moses_pipeline
     def moses_pipeline(self, text, lang):
         text = replace_unicode_punct(text)
         text = self.moses_punct_norm(text, lang)
         text = remove_non_printing_char(text)
         return text
 
-    # Copied from transformers.models.xlm.tokenization_xlm.XLMTokenizer.ja_tokenize
+    # Copied from tiny_hf.transformers.models.xlm.tokenization_xlm.XLMTokenizer.ja_tokenize
     def ja_tokenize(self, text):
         if self.ja_word_tokenizer is None:
             try:
@@ -312,15 +312,15 @@ class FlaubertTokenizer(PreTrainedTokenizer):
         return list(self.ja_word_tokenizer.getWS(text))
 
     @property
-    # Copied from transformers.models.xlm.tokenization_xlm.XLMTokenizer.vocab_size
+    # Copied from tiny_hf.transformers.models.xlm.tokenization_xlm.XLMTokenizer.vocab_size
     def vocab_size(self):
         return len(self.encoder)
 
-    # Copied from transformers.models.xlm.tokenization_xlm.XLMTokenizer.get_vocab
+    # Copied from tiny_hf.transformers.models.xlm.tokenization_xlm.XLMTokenizer.get_vocab
     def get_vocab(self):
         return dict(self.encoder, **self.added_tokens_encoder)
 
-    # Copied from transformers.models.xlm.tokenization_xlm.XLMTokenizer.bpe
+    # Copied from tiny_hf.transformers.models.xlm.tokenization_xlm.XLMTokenizer.bpe
     def bpe(self, token):
         word = tuple(token[:-1]) + (token[-1] + "</w>",)
         if token in self.cache:
@@ -412,23 +412,23 @@ class FlaubertTokenizer(PreTrainedTokenizer):
 
         return split_tokens
 
-    # Copied from transformers.models.xlm.tokenization_xlm.XLMTokenizer._convert_token_to_id
+    # Copied from tiny_hf.transformers.models.xlm.tokenization_xlm.XLMTokenizer._convert_token_to_id
     def _convert_token_to_id(self, token):
         """Converts a token (str) in an id using the vocab."""
         return self.encoder.get(token, self.encoder.get(self.unk_token))
 
-    # Copied from transformers.models.xlm.tokenization_xlm.XLMTokenizer._convert_id_to_token
+    # Copied from tiny_hf.transformers.models.xlm.tokenization_xlm.XLMTokenizer._convert_id_to_token
     def _convert_id_to_token(self, index):
         """Converts an index (integer) in a token (str) using the vocab."""
         return self.decoder.get(index, self.unk_token)
 
-    # Copied from transformers.models.xlm.tokenization_xlm.XLMTokenizer.convert_tokens_to_string
+    # Copied from tiny_hf.transformers.models.xlm.tokenization_xlm.XLMTokenizer.convert_tokens_to_string
     def convert_tokens_to_string(self, tokens):
         """Converts a sequence of tokens (string) in a single string."""
         out_string = "".join(tokens).replace("</w>", " ").strip()
         return out_string
 
-    # Copied from transformers.models.xlm.tokenization_xlm.XLMTokenizer.build_inputs_with_special_tokens
+    # Copied from tiny_hf.transformers.models.xlm.tokenization_xlm.XLMTokenizer.build_inputs_with_special_tokens
     def build_inputs_with_special_tokens(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
     ) -> List[int]:
@@ -456,7 +456,7 @@ class FlaubertTokenizer(PreTrainedTokenizer):
             return bos + token_ids_0 + sep
         return bos + token_ids_0 + sep + token_ids_1 + sep
 
-    # Copied from transformers.models.xlm.tokenization_xlm.XLMTokenizer.get_special_tokens_mask
+    # Copied from tiny_hf.transformers.models.xlm.tokenization_xlm.XLMTokenizer.get_special_tokens_mask
     def get_special_tokens_mask(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None, already_has_special_tokens: bool = False
     ) -> List[int]:
@@ -485,7 +485,7 @@ class FlaubertTokenizer(PreTrainedTokenizer):
             return [1] + ([0] * len(token_ids_0)) + [1] + ([0] * len(token_ids_1)) + [1]
         return [1] + ([0] * len(token_ids_0)) + [1]
 
-    # Copied from transformers.models.xlm.tokenization_xlm.XLMTokenizer.create_token_type_ids_from_sequences
+    # Copied from tiny_hf.transformers.models.xlm.tokenization_xlm.XLMTokenizer.create_token_type_ids_from_sequences
     def create_token_type_ids_from_sequences(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
     ) -> List[int]:
@@ -515,7 +515,7 @@ class FlaubertTokenizer(PreTrainedTokenizer):
             return len(cls + token_ids_0 + sep) * [0]
         return len(cls + token_ids_0 + sep) * [0] + len(token_ids_1 + sep) * [1]
 
-    # Copied from transformers.models.xlm.tokenization_xlm.XLMTokenizer.save_vocabulary
+    # Copied from tiny_hf.transformers.models.xlm.tokenization_xlm.XLMTokenizer.save_vocabulary
     def save_vocabulary(self, save_directory: str, filename_prefix: Optional[str] = None) -> Tuple[str]:
         if not os.path.isdir(save_directory):
             logger.error(f"Vocabulary path ({save_directory}) should be a directory")
@@ -544,13 +544,13 @@ class FlaubertTokenizer(PreTrainedTokenizer):
 
         return vocab_file, merge_file
 
-    # Copied from transformers.models.xlm.tokenization_xlm.XLMTokenizer.__getstate__
+    # Copied from tiny_hf.transformers.models.xlm.tokenization_xlm.XLMTokenizer.__getstate__
     def __getstate__(self):
         state = self.__dict__.copy()
         state["sm"] = None
         return state
 
-    # Copied from transformers.models.xlm.tokenization_xlm.XLMTokenizer.__setstate__
+    # Copied from tiny_hf.transformers.models.xlm.tokenization_xlm.XLMTokenizer.__setstate__
     def __setstate__(self, d):
         self.__dict__ = d
 

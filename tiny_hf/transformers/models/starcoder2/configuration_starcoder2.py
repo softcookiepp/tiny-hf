@@ -120,7 +120,7 @@ class Starcoder2Config(PretrainedConfig):
 
 
     ```python
-    >>> from transformers import Starcoder2Model, Starcoder2Config
+    >>> from tiny_hf.transformers.import Starcoder2Model, Starcoder2Config
 
     >>> # Initializing a Starcoder2 7B style configuration
     >>> configuration = Starcoder2Config()

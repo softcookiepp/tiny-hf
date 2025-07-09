@@ -18,9 +18,9 @@
 import math
 from typing import Dict, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -43,7 +43,7 @@ _CONFIG_FOR_DOC = "RecurrentGemmaConfig"
 _MAX_SQRT_GRADIENT = 1000.0
 
 
-# Copied from transformers.models.gemma.modeling_gemma.GemmaRMSNorm with Gemma->RecurrentGemma
+# Copied from tiny_hf.transformers.models.gemma.modeling_gemma.GemmaRMSNorm with Gemma->RecurrentGemma
 class RecurrentGemmaRMSNorm(nn.Module):
     def __init__(self, dim: int, eps: float = 1e-6):
         super().__init__()
@@ -93,7 +93,7 @@ class RecurrentGemmaRotaryEmbedding(nn.Module):
         return cos.to(dtype=x.dtype), sin.to(dtype=x.dtype)
 
 
-# Copied from transformers.models.llama.modeling_llama.rotate_half
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.rotate_half
 def rotate_half(x):
     """Rotates half the hidden dims of the input."""
     x1 = x[..., : x.shape[-1] // 2]
@@ -101,7 +101,7 @@ def rotate_half(x):
     return torch.cat((-x2, x1), dim=-1)
 
 
-# Copied from transformers.models.llama.modeling_llama.apply_rotary_pos_emb
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.apply_rotary_pos_emb
 def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
     """Applies Rotary Position Embedding to the query and key tensors.
 
@@ -129,7 +129,7 @@ def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
     return q_embed, k_embed
 
 
-# Copied from transformers.models.llama.modeling_llama.repeat_kv
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.repeat_kv
 def repeat_kv(hidden_states: torch.Tensor, n_rep: int) -> torch.Tensor:
     """
     This is the equivalent of torch.repeat_interleave(x, dim=1, repeats=n_rep). The hidden states go from (batch,
@@ -666,11 +666,11 @@ class RecurrentGemmaModel(RecurrentGemmaPreTrainedModel):
         # Initialize weights and apply final processing
         self.post_init()
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel.get_input_embeddings
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel.get_input_embeddings
     def get_input_embeddings(self):
         return self.embed_tokens
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel.set_input_embeddings
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel.set_input_embeddings
     def set_input_embeddings(self, value):
         self.embed_tokens = value
 
@@ -773,7 +773,7 @@ class RecurrentGemmaModel(RecurrentGemmaPreTrainedModel):
         return causal_mask
 
 
-# TODO: re-enable check: Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM with LLAMA->RECURRENTGEMMA,Llama->RecurrentGemma,llama->gemma
+# TODO: re-enable check: Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM with LLAMA->RECURRENTGEMMA,Llama->RecurrentGemma,llama->gemma
 class RecurrentGemmaForCausalLM(RecurrentGemmaPreTrainedModel, GenerationMixin):
     _tied_weights_keys = ["lm_head.weight"]
 
@@ -831,7 +831,7 @@ class RecurrentGemmaForCausalLM(RecurrentGemmaPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, RecurrentGemmaForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, RecurrentGemmaForCausalLM
 
         >>> model = RecurrentGemmaForCausalLM.from_pretrained("google/recurrentgemma-2b")
         >>> tokenizer = AutoTokenizer.from_pretrained("google/recurrentgemma-2b")

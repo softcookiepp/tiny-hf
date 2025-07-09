@@ -19,10 +19,10 @@ import json
 import os
 
 import fairseq
-import torch
+import tg_adapter as torch
 from fairseq.data import Dictionary
 
-from transformers import (
+from tiny_hf.transformers.import (
     HubertConfig,
     HubertForCTC,
     HubertModel,

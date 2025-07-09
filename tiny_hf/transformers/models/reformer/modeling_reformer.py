@@ -23,10 +23,10 @@ from operator import mul
 from typing import List, Optional, Tuple, Union
 
 import numpy as np
-import torch
-from torch import nn
-from torch.autograd.function import Function
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.autograd.function import Function
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -2369,8 +2369,8 @@ class ReformerForMaskedLM(ReformerPreTrainedModel):
         Example:
 
         ```python
-        >>> import torch
-        >>> from transformers import AutoTokenizer, ReformerForMaskedLM
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, ReformerForMaskedLM
 
         >>> tokenizer = AutoTokenizer.from_pretrained("hf-internal-testing/tiny-random-reformer")
         >>> model = ReformerForMaskedLM.from_pretrained("hf-internal-testing/tiny-random-reformer")
@@ -2485,8 +2485,8 @@ class ReformerForSequenceClassification(ReformerPreTrainedModel):
         Example of single-label classification:
 
         ```python
-        >>> import torch
-        >>> from transformers import AutoTokenizer, ReformerForSequenceClassification
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, ReformerForSequenceClassification
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/reformer-crime-and-punishment")
         >>> model = ReformerForSequenceClassification.from_pretrained("google/reformer-crime-and-punishment")

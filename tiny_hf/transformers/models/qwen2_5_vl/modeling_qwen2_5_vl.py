@@ -28,10 +28,10 @@ import math
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.nn as nn
+import tg_adapter.nn.functional as F
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, SlidingWindowCache, StaticCache
@@ -1754,7 +1754,7 @@ class Qwen2_5_VLForConditionalGeneration(Qwen2_5_VLPreTrainedModel, GenerationMi
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, Qwen2_5_VLForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoProcessor, Qwen2_5_VLForConditionalGeneration
 
         >>> model = Qwen2_5_VLForConditionalGeneration.from_pretrained("Qwen/Qwen2.5-VL-7B-Instruct")
         >>> processor = AutoProcessor.from_pretrained("Qwen/Qwen2.5-VL-7B-Instruct")

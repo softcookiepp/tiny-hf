@@ -125,7 +125,7 @@ class XLMConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import XLMConfig, XLMModel
+    >>> from tiny_hf.transformers.import XLMConfig, XLMModel
 
     >>> # Initializing a XLM configuration
     >>> configuration = XLMConfig()
@@ -221,7 +221,7 @@ class XLMConfig(PretrainedConfig):
         super().__init__(pad_token_id=pad_token_id, bos_token_id=bos_token_id, **kwargs)
 
 
-# Copied from transformers.models.bert.configuration_bert.BertOnnxConfig
+# Copied from tiny_hf.transformers.models.bert.configuration_bert.BertOnnxConfig
 class XLMOnnxConfig(OnnxConfig):
     @property
     def inputs(self) -> Mapping[str, Mapping[int, str]]:

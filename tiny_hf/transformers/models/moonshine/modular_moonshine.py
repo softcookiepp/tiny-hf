@@ -14,8 +14,8 @@
 
 from typing import Callable, Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+import tg_adapter.nn as nn
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, EncoderDecoderCache
@@ -167,7 +167,7 @@ class MoonshineConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import MoonshineModel, MoonshineConfig
+    >>> from tiny_hf.transformers.import MoonshineModel, MoonshineConfig
 
     >>> # Initializing a Moonshine style configuration
     >>> configuration = MoonshineConfig().from_pretrained("UsefulSensors/moonshine-tiny")
@@ -997,8 +997,8 @@ class MoonshineModel(WhisperModel):
     ) -> Union[Tuple[torch.Tensor], Seq2SeqModelOutput]:
         r"""
         ```python
-        >>> import torch
-        >>> from transformers import AutoFeatureExtractor, MoonshineModel
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoFeatureExtractor, MoonshineModel
         >>> from datasets import load_dataset
 
         >>> model = MoonshineModel.from_pretrained("UsefulSensors/moonshine-tiny")
@@ -1125,8 +1125,8 @@ class MoonshineForConditionalGeneration(MoonshinePreTrainedModel, GenerationMixi
         Example:
 
         ```python
-        >>> import torch
-        >>> from transformers import AutoProcessor, MoonshineForConditionalGeneration
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoProcessor, MoonshineForConditionalGeneration
         >>> from datasets import load_dataset
 
         >>> processor = AutoProcessor.from_pretrained("UsefulSensors/moonshine-tiny")

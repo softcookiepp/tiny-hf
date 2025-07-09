@@ -41,14 +41,14 @@ import glob
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-import torch
+import tg_adapter as torch
 from huggingface_hub import snapshot_download
 from safetensors import safe_open
 
-from transformers import AutoConfig
-from transformers.models.colpali import ColPaliForRetrieval
-from transformers.models.colpali.configuration_colpali import ColPaliConfig
-from transformers.utils import logging
+from tiny_hf.transformers.import AutoConfig
+from tiny_hf.transformers.models.colpali import ColPaliForRetrieval
+from tiny_hf.transformers.models.colpali.configuration_colpali import ColPaliConfig
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

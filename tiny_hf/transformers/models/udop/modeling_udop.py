@@ -23,12 +23,12 @@ from copy import deepcopy
 from dataclasses import dataclass
 from typing import Any, Dict, Optional, Sequence, Tuple, Union
 
-import torch
-from torch import Tensor, nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+from tg_adapter.import Tensor, nn
+from tg_adapter.nn import CrossEntropyLoss
 
-from transformers import UdopConfig
-from transformers.modeling_outputs import (
+from tiny_hf.transformers.import UdopConfig
+from tiny_hf.transformers.modeling_outputs import (
     Seq2SeqLMOutput,
     Seq2SeqModelOutput,
 )
@@ -50,7 +50,7 @@ from ...utils import (
 
 
 if is_torch_flex_attn_available():
-    from torch.nn.attention.flex_attention import BlockMask
+    from tg_adapter.nn.attention.flex_attention import BlockMask
 
     from ...integrations.flex_attention import make_flex_block_causal_mask
 
@@ -488,7 +488,7 @@ class UdopPreTrainedModel(PreTrainedModel):
             if module.has_relative_attention_bias:
                 module.relative_attention_bias.weight.data.normal_(mean=0.0, std=factor * ((d_model) ** -0.5))
 
-    # Copied from transformers.models.prophetnet.modeling_prophetnet.ProphetNetPreTrainedModel._shift_right with ProphetNet->Udop
+    # Copied from tiny_hf.transformers.models.prophetnet.modeling_prophetnet.ProphetNetPreTrainedModel._shift_right with ProphetNet->Udop
     def _shift_right(self, input_ids):
         decoder_start_token_id = self.config.decoder_start_token_id
         pad_token_id = self.config.pad_token_id
@@ -512,7 +512,7 @@ class UdopPreTrainedModel(PreTrainedModel):
         return shifted_input_ids
 
 
-# Copied from transformers.models.t5.modeling_t5.T5LayerNorm with T5->Udop
+# Copied from tiny_hf.transformers.models.t5.modeling_t5.T5LayerNorm with T5->Udop
 class UdopLayerNorm(nn.Module):
     def __init__(self, hidden_size, eps=1e-6):
         """
@@ -538,7 +538,7 @@ class UdopLayerNorm(nn.Module):
         return self.weight * hidden_states
 
 
-# Copied from transformers.models.t5.modeling_t5.T5DenseActDense with T5->Udop
+# Copied from tiny_hf.transformers.models.t5.modeling_t5.T5DenseActDense with T5->Udop
 class UdopDenseActDense(nn.Module):
     def __init__(self, config: UdopConfig):
         super().__init__()
@@ -561,7 +561,7 @@ class UdopDenseActDense(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.t5.modeling_t5.T5DenseGatedActDense with T5->Udop
+# Copied from tiny_hf.transformers.models.t5.modeling_t5.T5DenseGatedActDense with T5->Udop
 class UdopDenseGatedActDense(nn.Module):
     def __init__(self, config: UdopConfig):
         super().__init__()
@@ -591,7 +591,7 @@ class UdopDenseGatedActDense(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.t5.modeling_t5.T5LayerFF with T5->Udop
+# Copied from tiny_hf.transformers.models.t5.modeling_t5.T5LayerFF with T5->Udop
 class UdopLayerFF(nn.Module):
     def __init__(self, config: UdopConfig):
         super().__init__()
@@ -610,7 +610,7 @@ class UdopLayerFF(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.t5.modeling_t5.T5Attention with T5->Udop
+# Copied from tiny_hf.transformers.models.t5.modeling_t5.T5Attention with T5->Udop
 class UdopAttention(nn.Module):
     def __init__(
         self,
@@ -839,7 +839,7 @@ class UdopAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.t5.modeling_t5.T5LayerSelfAttention with T5->Udop
+# Copied from tiny_hf.transformers.models.t5.modeling_t5.T5LayerSelfAttention with T5->Udop
 class UdopLayerSelfAttention(nn.Module):
     def __init__(self, config, has_relative_attention_bias=False, layer_idx: Optional[int] = None):
         super().__init__()
@@ -876,7 +876,7 @@ class UdopLayerSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.t5.modeling_t5.T5LayerCrossAttention with T5->Udop
+# Copied from tiny_hf.transformers.models.t5.modeling_t5.T5LayerCrossAttention with T5->Udop
 class UdopLayerCrossAttention(nn.Module):
     def __init__(self, config, layer_idx: Optional[int] = None):
         super().__init__()
@@ -915,7 +915,7 @@ class UdopLayerCrossAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.t5.modeling_t5.T5Block with T5->Udop
+# Copied from tiny_hf.transformers.models.t5.modeling_t5.T5Block with T5->Udop
 class UdopBlock(nn.Module):
     def __init__(self, config, has_relative_attention_bias=False, layer_idx: Optional[int] = None):
         super().__init__()
@@ -1534,7 +1534,7 @@ class UdopStack(UdopPreTrainedModel):
             cross_attentions=all_cross_attentions,
         )
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
     def _update_causal_mask(
         self,
         attention_mask: torch.Tensor,
@@ -1606,7 +1606,7 @@ class UdopStack(UdopPreTrainedModel):
         return causal_mask
 
     @staticmethod
-    # Copied from transformers.models.llama.modeling_llama.LlamaPreTrainedModel._prepare_4d_causal_attention_mask_with_cache_position
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaPreTrainedModel._prepare_4d_causal_attention_mask_with_cache_position
     def _prepare_4d_causal_attention_mask_with_cache_position(
         attention_mask: torch.Tensor,
         sequence_length: int,
@@ -1745,9 +1745,9 @@ class UdopModel(UdopPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoProcessor, AutoModel
+        >>> from tiny_hf.transformers.import AutoProcessor, AutoModel
         >>> from datasets import load_dataset
-        >>> import torch
+        >>> import tg_adapter as torch
 
         >>> # load model and processor
         >>> # in this case, we already have performed OCR ourselves
@@ -1927,7 +1927,7 @@ class UdopForConditionalGeneration(UdopPreTrainedModel, GenerationMixin):
         Examples:
 
         ```python
-        >>> from transformers import AutoProcessor, UdopForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoProcessor, UdopForConditionalGeneration
         >>> from datasets import load_dataset
 
         >>> # load model and processor
@@ -2026,7 +2026,7 @@ class UdopForConditionalGeneration(UdopPreTrainedModel, GenerationMixin):
             encoder_attentions=encoder_outputs.attentions,
         )
 
-    # Copied from transformers.models.t5.modeling_t5.T5ForConditionalGeneration._reorder_cache
+    # Copied from tiny_hf.transformers.models.t5.modeling_t5.T5ForConditionalGeneration._reorder_cache
     def _reorder_cache(self, past_key_values, beam_idx):
         # if decoder past is not included in output
         # speedy decoding is disabled and no need to reorder
@@ -2125,7 +2125,7 @@ class UdopEncoderModel(UdopPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoProcessor, UdopEncoderModel
+        >>> from tiny_hf.transformers.import AutoProcessor, UdopEncoderModel
         >>> from huggingface_hub import hf_hub_download
         >>> from datasets import load_dataset
 

@@ -508,7 +508,7 @@ class TFGenerationMixin:
         Examples:
 
         ```python
-        >>> from transformers import GPT2Tokenizer, TFAutoModelForCausalLM
+        >>> from tiny_hf.transformers.import GPT2Tokenizer, TFAutoModelForCausalLM
         >>> import numpy as np
 
         >>> tokenizer = GPT2Tokenizer.from_pretrained("openai-community/gpt2")
@@ -1576,7 +1576,7 @@ class TFGenerationMixin:
         Examples:
 
         ```python
-        >>> from transformers import (
+        >>> from tiny_hf.transformers.import (
         ...     AutoTokenizer,
         ...     TFAutoModelForCausalLM,
         ...     TFLogitsProcessorList,
@@ -1848,7 +1848,7 @@ class TFGenerationMixin:
 
         ```python
         >>> import tensorflow as tf
-        >>> from transformers import (
+        >>> from tiny_hf.transformers.import (
         ...     AutoTokenizer,
         ...     TFAutoModelForCausalLM,
         ...     TFLogitsProcessorList,
@@ -2172,7 +2172,7 @@ class TFGenerationMixin:
         Examples:
 
         ```python
-        >>> from transformers import (
+        >>> from tiny_hf.transformers.import (
         ...     AutoTokenizer,
         ...     TFAutoModelForSeq2SeqLM,
         ...     TFLogitsProcessorList,
@@ -2742,7 +2742,7 @@ class TFGenerationMixin:
             [`~generation.TFContrastiveSearchEncoderDecoderOutput`] if `model.config.is_encoder_decoder=True`.
         Examples:
         ```python
-        >>> from transformers import AutoTokenizer, TFAutoModelForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, TFAutoModelForCausalLM
 
         >>> tokenizer = AutoTokenizer.from_pretrained("facebook/opt-125m")
         >>> model = TFAutoModelForCausalLM.from_pretrained("facebook/opt-125m")

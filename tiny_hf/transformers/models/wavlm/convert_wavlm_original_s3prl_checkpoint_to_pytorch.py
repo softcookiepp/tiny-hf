@@ -16,9 +16,9 @@
 
 import argparse
 
-import torch
+import tg_adapter as torch
 
-from transformers import (
+from tiny_hf.transformers.import (
     Wav2Vec2FeatureExtractor,
     WavLMConfig,
     WavLMForAudioFrameClassification,

@@ -48,7 +48,7 @@ if is_vision_available():
     import PIL.Image
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 
 logger = logging.get_logger(__name__)
@@ -130,7 +130,7 @@ class SegformerImageProcessor(BaseImageProcessor):
             image_processor_dict["do_reduce_labels"] = image_processor_dict.pop("reduce_labels")
         return super().from_dict(image_processor_dict, **kwargs)
 
-    # Copied from transformers.models.vit.image_processing_vit.ViTImageProcessor.resize
+    # Copied from tiny_hf.transformers.models.vit.image_processing_vit.ViTImageProcessor.resize
     def resize(
         self,
         image: np.ndarray,
@@ -179,7 +179,7 @@ class SegformerImageProcessor(BaseImageProcessor):
             **kwargs,
         )
 
-    # Copied from transformers.models.beit.image_processing_beit.BeitImageProcessor.reduce_label
+    # Copied from tiny_hf.transformers.models.beit.image_processing_beit.BeitImageProcessor.reduce_label
     def reduce_label(self, label: ImageInput) -> np.ndarray:
         label = to_numpy_array(label)
         # Avoid using underflow conversion
@@ -434,7 +434,7 @@ class SegformerImageProcessor(BaseImageProcessor):
 
         return BatchFeature(data=data, tensor_type=return_tensors)
 
-    # Copied from transformers.models.beit.image_processing_beit.BeitImageProcessor.post_process_semantic_segmentation with Beit->Segformer
+    # Copied from tiny_hf.transformers.models.beit.image_processing_beit.BeitImageProcessor.post_process_semantic_segmentation with Beit->Segformer
     def post_process_semantic_segmentation(self, outputs, target_sizes: List[Tuple] = None):
         """
         Converts the output of [`SegformerForSemanticSegmentation`] into semantic segmentation maps. Only supports PyTorch.

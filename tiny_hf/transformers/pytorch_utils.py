@@ -43,8 +43,8 @@ is_torch_greater_or_equal_than_1_12 = is_torch_greater_or_equal("1.12", accept_d
 _torch_distributed_available = torch.distributed.is_available()
 
 if is_torch_greater_or_equal("2.5") and _torch_distributed_available:
-    from torch.distributed.tensor import Replicate
-    from torch.distributed.tensor.parallel import ColwiseParallel, RowwiseParallel
+    from tg_adapter.distributed.tensor import Replicate
+    from tg_adapter.distributed.tensor.parallel import ColwiseParallel, RowwiseParallel
 
 
 def softmax_backward_data(parent, grad_output, output, dim, self):
@@ -53,7 +53,7 @@ def softmax_backward_data(parent, grad_output, output, dim, self):
     to the torch version detected.
     """
 
-    from torch import _softmax_backward_data
+    from tg_adapter import _softmax_backward_data
 
     return _softmax_backward_data(grad_output, output, parent.dim, self.dtype)
 
@@ -302,7 +302,7 @@ def id_tensor_storage(tensor: torch.Tensor) -> tuple[torch.device, int, int]:
         # use some other unique id to distinguish.
         # this is a XLA tensor, it must be created using torch_xla's
         # device. So the following import is safe:
-        import torch_xla
+        import tg_adapter.xla
 
         unique_id = torch_xla._XLAC._xla_get_tensor_id(tensor)
     else:

@@ -21,11 +21,11 @@ import warnings
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
 from packaging import version
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -1228,8 +1228,8 @@ class BertForPreTraining(BertPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, BertForPreTraining
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, BertForPreTraining
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google-bert/bert-base-uncased")
         >>> model = BertForPreTraining.from_pretrained("google-bert/bert-base-uncased")
@@ -1559,8 +1559,8 @@ class BertForNextSentencePrediction(BertPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, BertForNextSentencePrediction
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, BertForNextSentencePrediction
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google-bert/bert-base-uncased")
         >>> model = BertForNextSentencePrediction.from_pretrained("google-bert/bert-base-uncased")

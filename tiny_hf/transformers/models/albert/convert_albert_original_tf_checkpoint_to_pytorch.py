@@ -16,7 +16,7 @@
 
 import argparse
 
-import torch
+import tg_adapter as torch
 
 from ...utils import logging
 from . import AlbertConfig, AlbertForPreTraining, load_tf_weights_in_albert

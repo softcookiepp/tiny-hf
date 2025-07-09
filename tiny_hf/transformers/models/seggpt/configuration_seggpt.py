@@ -76,7 +76,7 @@ class SegGptConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import SegGptConfig, SegGptModel
+    >>> from tiny_hf.transformers.import SegGptConfig, SegGptModel
 
     >>> # Initializing a SegGPT seggpt-vit-large style configuration
     >>> configuration = SegGptConfig()

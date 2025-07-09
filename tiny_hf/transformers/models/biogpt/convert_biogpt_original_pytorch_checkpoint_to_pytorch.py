@@ -20,12 +20,12 @@ import os
 import re
 import shutil
 
-import torch
+import tg_adapter as torch
 
-from transformers import BioGptConfig, BioGptForCausalLM
-from transformers.models.biogpt.tokenization_biogpt import VOCAB_FILES_NAMES
-from transformers.tokenization_utils_base import TOKENIZER_CONFIG_FILE
-from transformers.utils import WEIGHTS_NAME, logging
+from tiny_hf.transformers.import BioGptConfig, BioGptForCausalLM
+from tiny_hf.transformers.models.biogpt.tokenization_biogpt import VOCAB_FILES_NAMES
+from tiny_hf.transformers.tokenization_utils_base import TOKENIZER_CONFIG_FILE
+from tiny_hf.transformers.utils import WEIGHTS_NAME, logging
 
 
 logging.set_verbosity_warning()

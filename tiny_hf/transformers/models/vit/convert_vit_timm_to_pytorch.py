@@ -19,12 +19,12 @@ from pathlib import Path
 
 import requests
 import timm
-import torch
+import tg_adapter as torch
 from PIL import Image
 from timm.data import ImageNetInfo, infer_imagenet_subset
 
-from transformers import DeiTImageProcessor, ViTConfig, ViTForImageClassification, ViTImageProcessor, ViTModel
-from transformers.utils import logging
+from tiny_hf.transformers.import DeiTImageProcessor, ViTConfig, ViTForImageClassification, ViTImageProcessor, ViTModel
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

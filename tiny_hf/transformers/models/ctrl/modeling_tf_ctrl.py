@@ -686,7 +686,7 @@ class TFCTRLLMHeadModel(TFCTRLPreTrainedModel, TFCausalLanguageModelingLoss):
         self.bias_layer.build(None)
         self.bias_layer.bias.assign(value["lm_head.bias"])
 
-    # Copied from transformers.models.gpt2.modeling_tf_gpt2.TFGPT2LMHeadModel.prepare_inputs_for_generation
+    # Copied from tiny_hf.transformers.models.gpt2.modeling_tf_gpt2.TFGPT2LMHeadModel.prepare_inputs_for_generation
     def prepare_inputs_for_generation(self, inputs, past_key_values=None, use_cache=None, **kwargs):
         token_type_ids = kwargs.get("token_type_ids", None)
         # only last token for inputs_ids if past is defined in kwargs

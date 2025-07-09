@@ -19,10 +19,10 @@ import warnings
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -104,7 +104,7 @@ class LEDLearnedPositionalEmbedding(nn.Embedding):
         return super().forward(positions)
 
 
-# Copied from transformers.models.longformer.modeling_longformer.LongformerSelfAttention with Longformer->LEDEncoder
+# Copied from tiny_hf.transformers.models.longformer.modeling_longformer.LongformerSelfAttention with Longformer->LEDEncoder
 class LEDEncoderSelfAttention(nn.Module):
     def __init__(self, config, layer_id):
         super().__init__()
@@ -1147,7 +1147,7 @@ class LEDPreTrainedModel(PreTrainedModel):
 
 
 @dataclass
-# Copied from transformers.models.longformer.modeling_longformer.LongformerBaseModelOutput with Longformer->LEDEncoder
+# Copied from tiny_hf.transformers.models.longformer.modeling_longformer.LongformerBaseModelOutput with Longformer->LEDEncoder
 class LEDEncoderBaseModelOutput(ModelOutput):
     """
     Base class for LEDEncoder's outputs, with potential hidden states, local and global attentions.
@@ -1480,8 +1480,8 @@ LED_GENERATION_EXAMPLE = r"""
     Summarization example:
 
     ```python
-    >>> import torch
-    >>> from transformers import AutoTokenizer, LEDForConditionalGeneration
+    >>> import tg_adapter as torch
+    >>> from tiny_hf.transformers.import AutoTokenizer, LEDForConditionalGeneration
 
     >>> model = LEDForConditionalGeneration.from_pretrained("allenai/led-large-16384-arxiv")
     >>> tokenizer = AutoTokenizer.from_pretrained("allenai/led-large-16384-arxiv")
@@ -2375,7 +2375,7 @@ class LEDForConditionalGeneration(LEDPreTrainedModel, GenerationMixin):
         Conditional generation example:
 
         ```python
-        >>> from transformers import AutoTokenizer, LEDForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, LEDForConditionalGeneration
 
         >>> tokenizer = AutoTokenizer.from_pretrained("allenai/led-base-16384")
         >>> TXT = "My friends are <mask> but they eat too many carbs."

@@ -17,8 +17,8 @@
 from dataclasses import dataclass
 from typing import Optional, Tuple
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
 from ...modeling_utils import PreTrainedModel
 from ...utils import (
@@ -284,8 +284,8 @@ class VitMatteForImageMatting(VitMattePreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import VitMatteImageProcessor, VitMatteForImageMatting
-        >>> import torch
+        >>> from tiny_hf.transformers.import VitMatteImageProcessor, VitMatteForImageMatting
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> from huggingface_hub import hf_hub_download
 

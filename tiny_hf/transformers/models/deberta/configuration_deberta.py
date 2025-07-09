@@ -89,7 +89,7 @@ class DebertaConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import DebertaConfig, DebertaModel
+    >>> from tiny_hf.transformers.import DebertaConfig, DebertaModel
 
     >>> # Initializing a DeBERTa microsoft/deberta-base style configuration
     >>> configuration = DebertaConfig()
@@ -158,7 +158,7 @@ class DebertaConfig(PretrainedConfig):
         self.legacy = legacy
 
 
-# Copied from transformers.models.deberta_v2.configuration_deberta_v2.DebertaV2OnnxConfig
+# Copied from tiny_hf.transformers.models.deberta_v2.configuration_deberta_v2.DebertaV2OnnxConfig
 class DebertaOnnxConfig(OnnxConfig):
     @property
     def inputs(self) -> Mapping[str, Mapping[int, str]]:

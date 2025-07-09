@@ -19,9 +19,9 @@ import os
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple, Union
 
-import torch
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...modeling_attn_mask_utils import _prepare_4d_attention_mask_for_sdpa
@@ -209,7 +209,7 @@ class AlbertEmbeddings(nn.Module):
             "token_type_ids", torch.zeros(self.position_ids.size(), dtype=torch.long), persistent=False
         )
 
-    # Copied from transformers.models.bert.modeling_bert.BertEmbeddings.forward
+    # Copied from tiny_hf.transformers.models.bert.modeling_bert.BertEmbeddings.forward
     def forward(
         self,
         input_ids: Optional[torch.LongTensor] = None,
@@ -281,7 +281,7 @@ class AlbertAttention(nn.Module):
             self.max_position_embeddings = config.max_position_embeddings
             self.distance_embedding = nn.Embedding(2 * config.max_position_embeddings - 1, self.attention_head_size)
 
-    # Copied from transformers.models.bert.modeling_bert.BertSelfAttention.transpose_for_scores
+    # Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfAttention.transpose_for_scores
     def transpose_for_scores(self, x: torch.Tensor) -> torch.Tensor:
         new_x_shape = x.size()[:-1] + (self.num_attention_heads, self.attention_head_size)
         x = x.view(new_x_shape)
@@ -884,8 +884,8 @@ class AlbertForPreTraining(AlbertPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, AlbertForPreTraining
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, AlbertForPreTraining
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("albert/albert-base-v2")
         >>> model = AlbertForPreTraining.from_pretrained("albert/albert-base-v2")
@@ -1031,8 +1031,8 @@ class AlbertForMaskedLM(AlbertPreTrainedModel):
         Example:
 
         ```python
-        >>> import torch
-        >>> from transformers import AutoTokenizer, AlbertForMaskedLM
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, AlbertForMaskedLM
 
         >>> tokenizer = AutoTokenizer.from_pretrained("albert/albert-base-v2")
         >>> model = AlbertForMaskedLM.from_pretrained("albert/albert-base-v2")

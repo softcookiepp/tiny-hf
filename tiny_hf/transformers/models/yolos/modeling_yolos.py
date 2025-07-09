@@ -18,9 +18,9 @@ import collections.abc
 from dataclasses import dataclass
 from typing import Callable, Dict, List, Optional, Set, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...modeling_outputs import BaseModelOutput, BaseModelOutputWithPooling
@@ -230,7 +230,7 @@ class YolosPatchEmbeddings(nn.Module):
         return embeddings
 
 
-# Copied from transformers.models.vit.modeling_vit.eager_attention_forward
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.eager_attention_forward
 def eager_attention_forward(
     module: nn.Module,
     query: torch.Tensor,
@@ -261,7 +261,7 @@ def eager_attention_forward(
     return attn_output, attn_weights
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTSelfAttention with ViT->Yolos
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTSelfAttention with ViT->Yolos
 class YolosSelfAttention(nn.Module):
     def __init__(self, config: YolosConfig) -> None:
         super().__init__()
@@ -324,7 +324,7 @@ class YolosSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTSelfOutput with ViT->Yolos
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTSelfOutput with ViT->Yolos
 class YolosSelfOutput(nn.Module):
     """
     The residual connection is defined in YolosLayer instead of here (as is the case with other models), due to the
@@ -343,7 +343,7 @@ class YolosSelfOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTAttention with ViT->Yolos
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTAttention with ViT->Yolos
 class YolosAttention(nn.Module):
     def __init__(self, config: YolosConfig) -> None:
         super().__init__()
@@ -383,7 +383,7 @@ class YolosAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTIntermediate with ViT->Yolos
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTIntermediate with ViT->Yolos
 class YolosIntermediate(nn.Module):
     def __init__(self, config: YolosConfig) -> None:
         super().__init__()
@@ -400,7 +400,7 @@ class YolosIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTOutput with ViT->Yolos
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTOutput with ViT->Yolos
 class YolosOutput(nn.Module):
     def __init__(self, config: YolosConfig) -> None:
         super().__init__()
@@ -416,7 +416,7 @@ class YolosOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTLayer with ViT->Yolos,VIT->YOLOS
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTLayer with ViT->Yolos,VIT->YOLOS
 class YolosLayer(nn.Module):
     """This corresponds to the Block class in the timm implementation."""
 
@@ -705,7 +705,7 @@ class YolosPooler(nn.Module):
         return pooled_output
 
 
-# Copied from transformers.models.detr.modeling_detr.DetrMLPPredictionHead with Detr->Yolos
+# Copied from tiny_hf.transformers.models.detr.modeling_detr.DetrMLPPredictionHead with Detr->Yolos
 class YolosMLPPredictionHead(nn.Module):
     """
     Very simple multi-layer perceptron (MLP, also called FFN), used to predict the normalized center coordinates,
@@ -783,8 +783,8 @@ class YolosForObjectDetection(YolosPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, AutoModelForObjectDetection
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoImageProcessor, AutoModelForObjectDetection
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> import requests
 

@@ -889,7 +889,7 @@ class FlaxCLIPPreTrainedModel(FlaxPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, FlaxCLIPModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, FlaxCLIPModel
 
         >>> model = FlaxCLIPModel.from_pretrained("openai/clip-vit-base-patch32")
         >>> tokenizer = AutoTokenizer.from_pretrained("openai/clip-vit-base-patch32")
@@ -947,7 +947,7 @@ class FlaxCLIPPreTrainedModel(FlaxPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, FlaxCLIPModel
+        >>> from tiny_hf.transformers.import AutoProcessor, FlaxCLIPModel
 
         >>> model = FlaxCLIPModel.from_pretrained("openai/clip-vit-base-patch32")
         >>> processor = AutoProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -1019,7 +1019,7 @@ FLAX_CLIP_TEXT_MODEL_DOCSTRING = """
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, FlaxCLIPTextModel
+    >>> from tiny_hf.transformers.import AutoTokenizer, FlaxCLIPTextModel
 
     >>> model = FlaxCLIPTextModel.from_pretrained("openai/clip-vit-base-patch32")
     >>> tokenizer = AutoTokenizer.from_pretrained("openai/clip-vit-base-patch32")
@@ -1090,7 +1090,7 @@ FLAX_CLIP_TEXT_MODEL_WITH_PROJECTION_DOCSTRING = """
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, FlaxCLIPTextModelWithProjection
+    >>> from tiny_hf.transformers.import AutoTokenizer, FlaxCLIPTextModelWithProjection
 
     >>> model = FlaxCLIPTextModelWithProjection.from_pretrained("openai/clip-vit-base-patch32")
     >>> tokenizer = AutoTokenizer.from_pretrained("openai/clip-vit-base-patch32")
@@ -1146,7 +1146,7 @@ FLAX_CLIP_VISION_MODEL_DOCSTRING = """
     ```python
     >>> from PIL import Image
     >>> import requests
-    >>> from transformers import AutoProcessor, FlaxCLIPVisionModel
+    >>> from tiny_hf.transformers.import AutoProcessor, FlaxCLIPVisionModel
 
     >>> model = FlaxCLIPVisionModel.from_pretrained("openai/clip-vit-base-patch32")
     >>> processor = AutoProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -1273,7 +1273,7 @@ FLAX_CLIP_MODEL_DOCSTRING = """
     >>> import jax
     >>> from PIL import Image
     >>> import requests
-    >>> from transformers import AutoProcessor, FlaxCLIPModel
+    >>> from tiny_hf.transformers.import AutoProcessor, FlaxCLIPModel
 
     >>> model = FlaxCLIPModel.from_pretrained("openai/clip-vit-base-patch32")
     >>> processor = AutoProcessor.from_pretrained("openai/clip-vit-base-patch32")

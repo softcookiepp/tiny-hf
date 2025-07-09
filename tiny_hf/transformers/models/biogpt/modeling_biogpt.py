@@ -17,10 +17,10 @@
 import math
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -47,7 +47,7 @@ _CHECKPOINT_FOR_DOC = "microsoft/biogpt"
 _CONFIG_FOR_DOC = "BioGptConfig"
 
 
-# copied from transformers.models.opt.modeling_opt.OPTLearnedPositionalEmbedding with OPT->BioGpt
+# copied from tiny_hf.transformers.models.opt.modeling_opt.OPTLearnedPositionalEmbedding with OPT->BioGpt
 # TODO @ArthurZucker bring copied from back
 class BioGptLearnedPositionalEmbedding(nn.Embedding):
     """
@@ -73,7 +73,7 @@ class BioGptLearnedPositionalEmbedding(nn.Embedding):
         return super().forward(positions + self.offset)
 
 
-# Copied from transformers.models.bart.modeling_bart.BartScaledWordEmbedding with Bart->BioGpt
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartScaledWordEmbedding with Bart->BioGpt
 class BioGptScaledWordEmbedding(nn.Embedding):
     """
     This module overrides nn.Embeddings' forward by multiplying with embeddings scale.
@@ -87,7 +87,7 @@ class BioGptScaledWordEmbedding(nn.Embedding):
         return super().forward(input_ids) * self.embed_scale
 
 
-# Copied from transformers.models.bart.modeling_bart.BartAttention with Bart->BioGpt
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartAttention with Bart->BioGpt
 class BioGptAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -246,7 +246,7 @@ class BioGptAttention(nn.Module):
         return attn_output, attn_weights_reshaped, past_key_value
 
 
-# Copied from transformers.models.bart.modeling_bart.BartSdpaAttention with Bart->BioGpt
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartSdpaAttention with Bart->BioGpt
 class BioGptSdpaAttention(BioGptAttention):
     def forward(
         self,

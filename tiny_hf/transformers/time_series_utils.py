@@ -18,9 +18,9 @@ Time series distributional output classes and utilities.
 
 from typing import Callable, Optional
 
-import torch
-from torch import nn
-from torch.distributions import (
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.distributions import (
     AffineTransform,
     Distribution,
     Independent,

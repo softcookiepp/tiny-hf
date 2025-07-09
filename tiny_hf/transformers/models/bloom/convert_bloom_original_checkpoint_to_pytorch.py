@@ -19,11 +19,11 @@ import json
 import os
 import re
 
-import torch
+import tg_adapter as torch
 
-from transformers import BloomConfig, BloomModel
-from transformers.file_utils import CONFIG_NAME, WEIGHTS_NAME
-from transformers.utils import logging
+from tiny_hf.transformers.import BloomConfig, BloomModel
+from tiny_hf.transformers.file_utils import CONFIG_NAME, WEIGHTS_NAME
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

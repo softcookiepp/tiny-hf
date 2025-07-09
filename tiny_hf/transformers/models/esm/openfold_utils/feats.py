@@ -15,9 +15,9 @@
 
 from typing import Dict, Tuple, overload
 
-import torch
-import torch.types
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.types
+from tg_adapter.import nn
 
 from . import residue_constants as rc
 from .rigid_utils import Rigid, Rotation

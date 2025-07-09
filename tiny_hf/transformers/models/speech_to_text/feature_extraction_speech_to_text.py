@@ -27,8 +27,8 @@ from ...utils import PaddingStrategy, TensorType, is_speech_available, logging
 
 
 if is_speech_available():
-    import torch
-    import torchaudio.compliance.kaldi as ta_kaldi
+    import tg_adapter as torch
+    import tg_adapter.udio.compliance.kaldi as ta_kaldi
 
 logger = logging.get_logger(__name__)
 

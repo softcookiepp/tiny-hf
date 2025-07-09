@@ -70,7 +70,7 @@ class GPTNeoXJapaneseTokenizer(PreTrainedTokenizer):
     Example:
 
     ```python
-    >>> from transformers import GPTNeoXJapaneseTokenizer
+    >>> from tiny_hf.transformers.import GPTNeoXJapaneseTokenizer
 
     >>> tokenizer = GPTNeoXJapaneseTokenizer.from_pretrained("abeja/gpt-neox-japanese-2.7b")
     >>> # You can confirm both 慶応 and 慶應 are encoded to 17749

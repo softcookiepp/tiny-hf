@@ -159,7 +159,7 @@ class Qwen2_5_VLConfig(PretrainedConfig):
                     Only used with 'llama3'. Scaling factor applied to high frequency components of the RoPE
 
     ```python
-    >>> from transformers import Qwen2_5_VLForConditionalGeneration, Qwen2_5_VLConfig
+    >>> from tiny_hf.transformers.import Qwen2_5_VLForConditionalGeneration, Qwen2_5_VLConfig
 
     >>> # Initializing a Qwen2_5_VL style configuration
     >>> configuration = Qwen2_5_VLConfig()

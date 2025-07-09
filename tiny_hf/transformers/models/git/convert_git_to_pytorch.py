@@ -22,12 +22,12 @@ from pathlib import Path
 import av
 import numpy as np
 import requests
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 from PIL import Image
-from torchvision.transforms import CenterCrop, Compose, Normalize, Resize, ToTensor
+from tg_adapter.ision.transforms import CenterCrop, Compose, Normalize, Resize, ToTensor
 
-from transformers import (
+from tiny_hf.transformers.import (
     AutoTokenizer,
     CLIPImageProcessor,
     GitConfig,
@@ -36,7 +36,7 @@ from transformers import (
     GitVisionConfig,
     VideoMAEImageProcessor,
 )
-from transformers.utils import logging
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

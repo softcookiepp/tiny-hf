@@ -25,7 +25,7 @@ from .tokenization_electra import ElectraTokenizer
 VOCAB_FILES_NAMES = {"vocab_file": "vocab.txt", "tokenizer_file": "tokenizer.json"}
 
 
-# Copied from transformers.models.bert.tokenization_bert_fast.BertTokenizerFast with Bert->Electra , BERT->ELECTRA
+# Copied from tiny_hf.transformers.models.bert.tokenization_bert_fast.BertTokenizerFast with Bert->Electra , BERT->ELECTRA
 class ElectraTokenizerFast(PreTrainedTokenizerFast):
     r"""
     Construct a "fast" ELECTRA tokenizer (backed by HuggingFace's *tokenizers* library). Based on WordPiece.

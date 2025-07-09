@@ -141,7 +141,7 @@ LAYOUTLMV3_ENCODE_PLUS_ADDITIONAL_KWARGS_DOCSTRING = r"""
 
 
 @lru_cache()
-# Copied from transformers.models.roberta.tokenization_roberta.bytes_to_unicode
+# Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.bytes_to_unicode
 def bytes_to_unicode():
     """
     Returns list of utf-8 byte and a mapping to unicode strings. We specifically avoids mapping to whitespace/control
@@ -166,7 +166,7 @@ def bytes_to_unicode():
     return dict(zip(bs, cs))
 
 
-# Copied from transformers.models.roberta.tokenization_roberta.get_pairs
+# Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.get_pairs
 def get_pairs(word):
     """
     Return set of symbol pairs in a word.
@@ -328,17 +328,17 @@ class LayoutLMv3Tokenizer(PreTrainedTokenizer):
         )
 
     @property
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer.vocab_size
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer.vocab_size
     def vocab_size(self):
         return len(self.encoder)
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer.get_vocab
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer.get_vocab
     def get_vocab(self):
         vocab = dict(self.encoder).copy()
         vocab.update(self.added_tokens_encoder)
         return vocab
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer.bpe
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer.bpe
     def bpe(self, token):
         if token in self.cache:
             return self.cache[token]
@@ -381,7 +381,7 @@ class LayoutLMv3Tokenizer(PreTrainedTokenizer):
         self.cache[token] = word
         return word
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer._tokenize
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer._tokenize
     def _tokenize(self, text):
         """Tokenize a string."""
         bpe_tokens = []
@@ -392,24 +392,24 @@ class LayoutLMv3Tokenizer(PreTrainedTokenizer):
             bpe_tokens.extend(bpe_token for bpe_token in self.bpe(token).split(" "))
         return bpe_tokens
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer._convert_token_to_id
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer._convert_token_to_id
     def _convert_token_to_id(self, token):
         """Converts a token (str) in an id using the vocab."""
         return self.encoder.get(token, self.encoder.get(self.unk_token))
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer._convert_id_to_token
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer._convert_id_to_token
     def _convert_id_to_token(self, index):
         """Converts an index (integer) in a token (str) using the vocab."""
         return self.decoder.get(index)
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer.convert_tokens_to_string
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer.convert_tokens_to_string
     def convert_tokens_to_string(self, tokens):
         """Converts a sequence of tokens (string) in a single string."""
         text = "".join(tokens)
         text = bytearray([self.byte_decoder[c] for c in text]).decode("utf-8", errors=self.errors)
         return text
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer.save_vocabulary
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer.save_vocabulary
     def save_vocabulary(self, save_directory: str, filename_prefix: Optional[str] = None) -> Tuple[str]:
         if not os.path.isdir(save_directory):
             logger.error(f"Vocabulary path ({save_directory}) should be a directory")
@@ -439,7 +439,7 @@ class LayoutLMv3Tokenizer(PreTrainedTokenizer):
 
         return vocab_file, merge_file
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer.build_inputs_with_special_tokens
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer.build_inputs_with_special_tokens
     def build_inputs_with_special_tokens(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
     ) -> List[int]:
@@ -465,7 +465,7 @@ class LayoutLMv3Tokenizer(PreTrainedTokenizer):
         sep = [self.sep_token_id]
         return cls + token_ids_0 + sep + sep + token_ids_1 + sep
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer.get_special_tokens_mask
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer.get_special_tokens_mask
     def get_special_tokens_mask(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None, already_has_special_tokens: bool = False
     ) -> List[int]:
@@ -493,7 +493,7 @@ class LayoutLMv3Tokenizer(PreTrainedTokenizer):
             return [1] + ([0] * len(token_ids_0)) + [1]
         return [1] + ([0] * len(token_ids_0)) + [1, 1] + ([0] * len(token_ids_1)) + [1]
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer.create_token_type_ids_from_sequences
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer.create_token_type_ids_from_sequences
     def create_token_type_ids_from_sequences(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
     ) -> List[int]:
@@ -530,7 +530,7 @@ class LayoutLMv3Tokenizer(PreTrainedTokenizer):
         return (text, kwargs)
 
     @add_end_docstrings(LAYOUTLMV3_ENCODE_KWARGS_DOCSTRING, LAYOUTLMV3_ENCODE_PLUS_ADDITIONAL_KWARGS_DOCSTRING)
-    # Copied from transformers.models.layoutlmv2.tokenization_layoutlmv2.LayoutLMv2Tokenizer.__call__
+    # Copied from tiny_hf.transformers.models.layoutlmv2.tokenization_layoutlmv2.LayoutLMv2Tokenizer.__call__
     def __call__(
         self,
         text: Union[TextInput, PreTokenizedInput, List[TextInput], List[PreTokenizedInput]],
@@ -683,7 +683,7 @@ class LayoutLMv3Tokenizer(PreTrainedTokenizer):
             )
 
     @add_end_docstrings(LAYOUTLMV3_ENCODE_KWARGS_DOCSTRING, LAYOUTLMV3_ENCODE_PLUS_ADDITIONAL_KWARGS_DOCSTRING)
-    # Copied from transformers.models.layoutlmv2.tokenization_layoutlmv2.LayoutLMv2Tokenizer.batch_encode_plus
+    # Copied from tiny_hf.transformers.models.layoutlmv2.tokenization_layoutlmv2.LayoutLMv2Tokenizer.batch_encode_plus
     def batch_encode_plus(
         self,
         batch_text_or_text_pairs: Union[
@@ -744,7 +744,7 @@ class LayoutLMv3Tokenizer(PreTrainedTokenizer):
             **kwargs,
         )
 
-    # Copied from transformers.models.layoutlmv2.tokenization_layoutlmv2.LayoutLMv2Tokenizer._batch_encode_plus
+    # Copied from tiny_hf.transformers.models.layoutlmv2.tokenization_layoutlmv2.LayoutLMv2Tokenizer._batch_encode_plus
     def _batch_encode_plus(
         self,
         batch_text_or_text_pairs: Union[
@@ -803,7 +803,7 @@ class LayoutLMv3Tokenizer(PreTrainedTokenizer):
         return BatchEncoding(batch_outputs)
 
     @add_end_docstrings(LAYOUTLMV3_ENCODE_KWARGS_DOCSTRING, LAYOUTLMV3_ENCODE_PLUS_ADDITIONAL_KWARGS_DOCSTRING)
-    # Copied from transformers.models.layoutlmv2.tokenization_layoutlmv2.LayoutLMv2Tokenizer._batch_prepare_for_model
+    # Copied from tiny_hf.transformers.models.layoutlmv2.tokenization_layoutlmv2.LayoutLMv2Tokenizer._batch_prepare_for_model
     def _batch_prepare_for_model(
         self,
         batch_text_or_text_pairs,
@@ -878,7 +878,7 @@ class LayoutLMv3Tokenizer(PreTrainedTokenizer):
         return batch_outputs
 
     @add_end_docstrings(LAYOUTLMV3_ENCODE_KWARGS_DOCSTRING)
-    # Copied from transformers.models.layoutlmv2.tokenization_layoutlmv2.LayoutLMv2Tokenizer.encode
+    # Copied from tiny_hf.transformers.models.layoutlmv2.tokenization_layoutlmv2.LayoutLMv2Tokenizer.encode
     def encode(
         self,
         text: Union[TextInput, PreTokenizedInput],
@@ -928,7 +928,7 @@ class LayoutLMv3Tokenizer(PreTrainedTokenizer):
         return encoded_inputs["input_ids"]
 
     @add_end_docstrings(LAYOUTLMV3_ENCODE_KWARGS_DOCSTRING, LAYOUTLMV3_ENCODE_PLUS_ADDITIONAL_KWARGS_DOCSTRING)
-    # Copied from transformers.models.layoutlmv2.tokenization_layoutlmv2.LayoutLMv2Tokenizer.encode_plus
+    # Copied from tiny_hf.transformers.models.layoutlmv2.tokenization_layoutlmv2.LayoutLMv2Tokenizer.encode_plus
     def encode_plus(
         self,
         text: Union[TextInput, PreTokenizedInput],
@@ -997,7 +997,7 @@ class LayoutLMv3Tokenizer(PreTrainedTokenizer):
             **kwargs,
         )
 
-    # Copied from transformers.models.layoutlmv2.tokenization_layoutlmv2.LayoutLMv2Tokenizer._encode_plus
+    # Copied from tiny_hf.transformers.models.layoutlmv2.tokenization_layoutlmv2.LayoutLMv2Tokenizer._encode_plus
     def _encode_plus(
         self,
         text: Union[TextInput, PreTokenizedInput],
@@ -1267,7 +1267,7 @@ class LayoutLMv3Tokenizer(PreTrainedTokenizer):
 
         return batch_outputs
 
-    # Copied from transformers.models.layoutlmv2.tokenization_layoutlmv2.LayoutLMv2Tokenizer.truncate_sequences
+    # Copied from tiny_hf.transformers.models.layoutlmv2.tokenization_layoutlmv2.LayoutLMv2Tokenizer.truncate_sequences
     def truncate_sequences(
         self,
         ids: List[int],
@@ -1393,7 +1393,7 @@ class LayoutLMv3Tokenizer(PreTrainedTokenizer):
             overflowing_labels,
         )
 
-    # Copied from transformers.models.layoutlmv2.tokenization_layoutlmv2.LayoutLMv2Tokenizer._pad
+    # Copied from tiny_hf.transformers.models.layoutlmv2.tokenization_layoutlmv2.LayoutLMv2Tokenizer._pad
     def _pad(
         self,
         encoded_inputs: Union[Dict[str, EncodedInput], BatchEncoding],

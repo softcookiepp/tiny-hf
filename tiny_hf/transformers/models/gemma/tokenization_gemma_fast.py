@@ -41,7 +41,7 @@ class GemmaTokenizerFast(PreTrainedTokenizerFast):
     This uses notably ByteFallback and no prefix space. Normalization is applied to replace  `" "` with `"▁"`
 
     ```python
-    >>> from transformers import GemmaTokenizerFast
+    >>> from tiny_hf.transformers.import GemmaTokenizerFast
 
     >>> tokenizer = GemmaTokenizerFast.from_pretrained("hf-internal-testing/dummy-gemma")
     >>> tokenizer.encode("Hello this is a test")
@@ -121,7 +121,7 @@ class GemmaTokenizerFast(PreTrainedTokenizerFast):
     def can_save_slow_tokenizer(self) -> bool:
         return os.path.isfile(self.vocab_file) if self.vocab_file else False
 
-    # Copied from transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast.update_post_processor
+    # Copied from tiny_hf.transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast.update_post_processor
     def update_post_processor(self):
         """
         Updates the underlying post processor with the current `bos_token` and `eos_token`.
@@ -166,7 +166,7 @@ class GemmaTokenizerFast(PreTrainedTokenizerFast):
         self._add_bos_token = value
         self.update_post_processor()
 
-    # Copied from transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast.save_vocabulary
+    # Copied from tiny_hf.transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast.save_vocabulary
     def save_vocabulary(self, save_directory: str, filename_prefix: Optional[str] = None) -> Tuple[str]:
         if not self.can_save_slow_tokenizer:
             raise ValueError(
@@ -186,7 +186,7 @@ class GemmaTokenizerFast(PreTrainedTokenizerFast):
 
         return (out_vocab_file,)
 
-    # Copied from transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast.build_inputs_with_special_tokens
+    # Copied from tiny_hf.transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast.build_inputs_with_special_tokens
     def build_inputs_with_special_tokens(self, token_ids_0, token_ids_1=None):
         bos_token_id = [self.bos_token_id] if self.add_bos_token else []
         eos_token_id = [self.eos_token_id] if self.add_eos_token else []

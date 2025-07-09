@@ -18,8 +18,8 @@ import math
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple, Union
 
-import torch
-from torch import Tensor, nn
+import tg_adapter as torch
+from tg_adapter.import Tensor, nn
 
 from ...activations import ACT2FN
 from ...modeling_attn_mask_utils import _prepare_4d_attention_mask
@@ -43,7 +43,7 @@ _CHECKPOINT_FOR_DOC = "IDEA-Research/dab_detr-base"
 
 
 @dataclass
-# Copied from transformers.models.conditional_detr.modeling_conditional_detr.ConditionalDetrDecoderOutput with ConditionalDetr->DabDetr,Conditional DETR->DAB-DETR,2 (anchor points)->4 (anchor points)
+# Copied from tiny_hf.transformers.models.conditional_detr.modeling_conditional_detr.ConditionalDetrDecoderOutput with ConditionalDetr->DabDetr,Conditional DETR->DAB-DETR,2 (anchor points)->4 (anchor points)
 class DabDetrDecoderOutput(BaseModelOutputWithCrossAttentions):
     """
     Base class for outputs of the Conditional DETR decoder. This class adds one attribute to
@@ -78,7 +78,7 @@ class DabDetrDecoderOutput(BaseModelOutputWithCrossAttentions):
 
 
 @dataclass
-# Copied from transformers.models.conditional_detr.modeling_conditional_detr.ConditionalDetrModelOutput with ConditionalDetr->DabDetr,Conditional DETR->DAB-DETR,2 (anchor points)->4 (anchor points)
+# Copied from tiny_hf.transformers.models.conditional_detr.modeling_conditional_detr.ConditionalDetrModelOutput with ConditionalDetr->DabDetr,Conditional DETR->DAB-DETR,2 (anchor points)->4 (anchor points)
 class DabDetrModelOutput(Seq2SeqModelOutput):
     """
     Base class for outputs of the Conditional DETR encoder-decoder model. This class adds one attribute to
@@ -123,7 +123,7 @@ class DabDetrModelOutput(Seq2SeqModelOutput):
 
 
 @dataclass
-# Copied from transformers.models.detr.modeling_detr.DetrObjectDetectionOutput with Detr->DabDetr
+# Copied from tiny_hf.transformers.models.detr.modeling_detr.DetrObjectDetectionOutput with Detr->DabDetr
 class DabDetrObjectDetectionOutput(ModelOutput):
     """
     Output type of [`DabDetrForObjectDetection`].
@@ -186,12 +186,12 @@ class DabDetrObjectDetectionOutput(ModelOutput):
     encoder_attentions: Optional[Tuple[torch.FloatTensor]] = None
 
 
-# Copied from transformers.models.detr.modeling_detr.DetrFrozenBatchNorm2d with Detr->DabDetr
+# Copied from tiny_hf.transformers.models.detr.modeling_detr.DetrFrozenBatchNorm2d with Detr->DabDetr
 class DabDetrFrozenBatchNorm2d(nn.Module):
     """
     BatchNorm2d where the batch statistics and the affine parameters are fixed.
 
-    Copy-paste from torchvision.misc.ops with added eps before rqsrt, without which any other models than
+    Copy-paste from tg_adapter.ision.misc.ops with added eps before rqsrt, without which any other models than
     torchvision.models.resnet[18,34,50,101] produce nans.
     """
 
@@ -226,7 +226,7 @@ class DabDetrFrozenBatchNorm2d(nn.Module):
         return x * scale + bias
 
 
-# Copied from transformers.models.detr.modeling_detr.replace_batch_norm with Detr->DabDetr
+# Copied from tiny_hf.transformers.models.detr.modeling_detr.replace_batch_norm with Detr->DabDetr
 def replace_batch_norm(model):
     r"""
     Recursively replace all `torch.nn.BatchNorm2d` with `DabDetrFrozenBatchNorm2d`.
@@ -251,7 +251,7 @@ def replace_batch_norm(model):
             replace_batch_norm(module)
 
 
-# Modified from transformers.models.detr.modeling_detr.DetrConvEncoder with Detr->DabDetr
+# Modified from tiny_hf.transformers.models.detr.modeling_detr.DetrConvEncoder with Detr->DabDetr
 class DabDetrConvEncoder(nn.Module):
     """
     Convolutional backbone, using either the AutoBackbone API or one from the timm library.
@@ -284,7 +284,7 @@ class DabDetrConvEncoder(nn.Module):
         return out
 
 
-# Copied from transformers.models.detr.modeling_detr.DetrConvModel with Detr->DabDetr
+# Copied from tiny_hf.transformers.models.detr.modeling_detr.DetrConvModel with Detr->DabDetr
 class DabDetrConvModel(nn.Module):
     """
     This module adds 2D position embeddings to all intermediate feature maps of the convolutional encoder.
@@ -306,7 +306,7 @@ class DabDetrConvModel(nn.Module):
         return out, pos
 
 
-# Modified from transformers.models.conditional_detr.modeling_conditional_detr.ConditionalDetrSinePositionEmbedding with ConditionalDetr->DabDetr
+# Modified from tiny_hf.transformers.models.conditional_detr.modeling_conditional_detr.ConditionalDetrSinePositionEmbedding with ConditionalDetr->DabDetr
 class DabDetrSinePositionEmbedding(nn.Module):
     """
     This is a more standard version of the position embedding, very similar to the one used by the Attention is all you
@@ -400,7 +400,7 @@ def inverse_sigmoid(x, eps=1e-5):
     return torch.log(x1 / x2)
 
 
-# Modified from transformers.models.detr.modeling_detr.DetrAttention
+# Modified from tiny_hf.transformers.models.detr.modeling_detr.DetrAttention
 class DetrAttention(nn.Module):
     """
     Multi-headed attention from 'Attention Is All You Need' paper.
@@ -478,7 +478,7 @@ class DetrAttention(nn.Module):
         return attn_output, attn_weights
 
 
-# Modified from transformers.models.conditional_detr.modeling_conditional_detr.ConditionalDetrAttention with ConditionalDetr->DABDETR,Conditional DETR->DabDetr
+# Modified from tiny_hf.transformers.models.conditional_detr.modeling_conditional_detr.ConditionalDetrAttention with ConditionalDetr->DABDETR,Conditional DETR->DabDetr
 class DabDetrAttention(nn.Module):
     """
     Cross-Attention used in DAB-DETR 'DAB-DETR for Fast Training Convergence' paper.
@@ -706,7 +706,7 @@ class DabDetrDecoderLayerFFN(nn.Module):
         return hidden_states
 
 
-# Modified from transformers.models.detr.modeling_detr.DetrEncoderLayer with DetrEncoderLayer->DabDetrEncoderLayer,DetrConfig->DabDetrConfig
+# Modified from tiny_hf.transformers.models.detr.modeling_detr.DetrEncoderLayer with DetrEncoderLayer->DabDetrEncoderLayer,DetrConfig->DabDetrConfig
 class DabDetrEncoderLayer(nn.Module):
     def __init__(self, config: DabDetrConfig):
         super().__init__()
@@ -768,7 +768,7 @@ class DabDetrEncoderLayer(nn.Module):
         return outputs
 
 
-# Modified from transformers.models.conditional_detr.modeling_conditional_detr.ConditionalDetrDecoderLayer with ConditionalDetr->DabDetr
+# Modified from tiny_hf.transformers.models.conditional_detr.modeling_conditional_detr.ConditionalDetrDecoderLayer with ConditionalDetr->DabDetr
 class DabDetrDecoderLayer(nn.Module):
     def __init__(self, config: DabDetrConfig, is_first: bool = False):
         super().__init__()
@@ -836,7 +836,7 @@ class DabDetrDecoderLayer(nn.Module):
         return outputs
 
 
-# Modified from transformers.models.detr.modeling_detr.DetrMLPPredictionHead with DetrMLPPredictionHead->DabDetrMLP
+# Modified from tiny_hf.transformers.models.detr.modeling_detr.DetrMLPPredictionHead with DetrMLPPredictionHead->DabDetrMLP
 class DabDetrMLP(nn.Module):
     """
     Very simple multi-layer perceptron (MLP, also called FFN), used to predict the normalized center coordinates,
@@ -858,7 +858,7 @@ class DabDetrMLP(nn.Module):
         return input_tensor
 
 
-# Modified from transformers.models.detr.modeling_detr.DetrPreTrainedModel with Detr->DabDetr
+# Modified from tiny_hf.transformers.models.detr.modeling_detr.DetrPreTrainedModel with Detr->DabDetr
 class DabDetrPreTrainedModel(PreTrainedModel):
     config_class = DabDetrConfig
     base_model_prefix = "model"
@@ -949,7 +949,7 @@ DAB_DETR_INPUTS_DOCSTRING = r"""
 """
 
 
-# Modified from transformers.models.detr.modeling_detr.DetrEncoder with Detr->DabDetr,DETR->ConditionalDETR
+# Modified from tiny_hf.transformers.models.detr.modeling_detr.DetrEncoder with Detr->DabDetr,DETR->ConditionalDETR
 class DabDetrEncoder(DabDetrPreTrainedModel):
     """
     Transformer encoder consisting of *config.encoder_layers* self attention layers. Each layer is a
@@ -1069,7 +1069,7 @@ class DabDetrEncoder(DabDetrPreTrainedModel):
         )
 
 
-# Modified from transformers.models.conditional_detr.modeling_conditional_detr.ConditionalDetrDecoder with ConditionalDetr->DabDetr,Conditional DETR->DAB-DETR
+# Modified from tiny_hf.transformers.models.conditional_detr.modeling_conditional_detr.ConditionalDetrDecoder with ConditionalDetr->DabDetr,Conditional DETR->DAB-DETR
 class DabDetrDecoder(DabDetrPreTrainedModel):
     """
     Transformer decoder consisting of *config.decoder_layers* layers. Each layer is a [`DabDetrDecoderLayer`].
@@ -1358,7 +1358,7 @@ class DabDetrModel(DabDetrPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, AutoModel
+        >>> from tiny_hf.transformers.import AutoImageProcessor, AutoModel
         >>> from PIL import Image
         >>> import requests
 
@@ -1514,7 +1514,7 @@ class DabDetrModel(DabDetrPreTrainedModel):
         )
 
 
-# Copied from transformers.models.detr.modeling_detr.DetrMHAttentionMap with Detr->DabDetr
+# Copied from tiny_hf.transformers.models.detr.modeling_detr.DetrMHAttentionMap with Detr->DabDetr
 class DabDetrMHAttentionMap(nn.Module):
     """This is a 2D attention module, which only returns the attention softmax (no multiplication by value)"""
 
@@ -1614,7 +1614,7 @@ class DabDetrForObjectDetection(DabDetrPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, AutoModelForObjectDetection
+        >>> from tiny_hf.transformers.import AutoImageProcessor, AutoModelForObjectDetection
         >>> from PIL import Image
         >>> import requests
 

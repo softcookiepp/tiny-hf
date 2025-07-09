@@ -18,10 +18,10 @@ import math
 from dataclasses import dataclass
 from typing import Any, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -121,7 +121,7 @@ class Blip2ImageTextMatchingModelOutput(ModelOutput):
 
 
 @dataclass
-# Copied from transformers.models.clip.modeling_clip.CLIPTextModelOutput with CLIP->Blip2
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPTextModelOutput with CLIP->Blip2
 class Blip2TextModelOutput(ModelOutput):
     """
     Base class for text model's outputs that also contains a pooling of the last hidden states.
@@ -151,7 +151,7 @@ class Blip2TextModelOutput(ModelOutput):
 
 
 @dataclass
-# Copied from transformers.models.clip.modeling_clip.CLIPVisionModelOutput with CLIP->Blip2
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPVisionModelOutput with CLIP->Blip2
 class Blip2VisionModelOutput(ModelOutput):
     """
     Base class for vision model's outputs that also contains image embeddings of the pooling of the last hidden states.
@@ -180,7 +180,7 @@ class Blip2VisionModelOutput(ModelOutput):
     attentions: Optional[Tuple[torch.FloatTensor, ...]] = None
 
 
-# Copied from transformers.models.blip.modeling_blip.BlipVisionEmbeddings with Blip->Blip2
+# Copied from tiny_hf.transformers.models.blip.modeling_blip.BlipVisionEmbeddings with Blip->Blip2
 class Blip2VisionEmbeddings(nn.Module):
     def __init__(self, config: Blip2VisionConfig):
         super().__init__()
@@ -336,7 +336,7 @@ class Blip2Attention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.blip.modeling_blip.BlipMLP
+# Copied from tiny_hf.transformers.models.blip.modeling_blip.BlipMLP
 class Blip2MLP(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -352,7 +352,7 @@ class Blip2MLP(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.blip.modeling_blip.BlipEncoderLayer with Blip->Blip2
+# Copied from tiny_hf.transformers.models.blip.modeling_blip.BlipEncoderLayer with Blip->Blip2
 class Blip2EncoderLayer(nn.Module):
     def __init__(self, config: Blip2Config):
         super().__init__()
@@ -621,7 +621,7 @@ BLIP2_IMAGE_TEXT_RETRIEVAL_INPUTS_DOCSTRING = r"""
 """
 
 
-# Copied from transformers.models.blip.modeling_blip.BlipEncoder with Blip->Blip2
+# Copied from tiny_hf.transformers.models.blip.modeling_blip.BlipEncoder with Blip->Blip2
 class Blip2Encoder(nn.Module):
     """
     Transformer encoder consisting of `config.num_hidden_layers` self attention layers. Each layer is a
@@ -708,7 +708,7 @@ class Blip2Encoder(nn.Module):
         )
 
 
-# Copied from transformers.models.blip.modeling_blip.BlipVisionModel with Blip->Blip2, BLIP->BLIP_2
+# Copied from tiny_hf.transformers.models.blip.modeling_blip.BlipVisionModel with Blip->Blip2, BLIP->BLIP_2
 class Blip2VisionModel(Blip2PreTrainedModel):
     main_input_name = "pixel_values"
     config_class = Blip2VisionConfig
@@ -908,7 +908,7 @@ class Blip2QFormerMultiHeadAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfOutput with Bert->Blip2QFormer
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfOutput with Bert->Blip2QFormer
 class Blip2QFormerSelfOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -972,7 +972,7 @@ class Blip2QFormerAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate with Bert->Blip2QFormer
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate with Bert->Blip2QFormer
 class Blip2QFormerIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -988,7 +988,7 @@ class Blip2QFormerIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOutput with Bert->Blip2QFormer
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOutput with Bert->Blip2QFormer
 class Blip2QFormerOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1515,8 +1515,8 @@ class Blip2Model(Blip2PreTrainedModel):
                 `output_hidden_states=True`.
         Examples:
         ```python
-        >>> import torch
-        >>> from transformers import AutoTokenizer, Blip2Model
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, Blip2Model
 
         >>> model = Blip2Model.from_pretrained("Salesforce/blip2-opt-2.7b")
 
@@ -1571,10 +1571,10 @@ class Blip2Model(Blip2PreTrainedModel):
                 `output_hidden_states=True`.
         Examples:
         ```python
-        >>> import torch
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, Blip2Model
+        >>> from tiny_hf.transformers.import AutoProcessor, Blip2Model
 
         >>> model = Blip2Model.from_pretrained("Salesforce/blip2-opt-2.7b")
 
@@ -1617,10 +1617,10 @@ class Blip2Model(Blip2PreTrainedModel):
                 `output_hidden_states=True`.
         Examples:
         ```python
-        >>> import torch
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import Blip2Processor, Blip2Model
+        >>> from tiny_hf.transformers.import Blip2Processor, Blip2Model
 
         >>> processor = Blip2Processor.from_pretrained("Salesforce/blip2-opt-2.7b")
         >>> model = Blip2Model.from_pretrained("Salesforce/blip2-opt-2.7b")
@@ -1684,8 +1684,8 @@ class Blip2Model(Blip2PreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import Blip2Processor, Blip2Model
-        >>> import torch
+        >>> from tiny_hf.transformers.import Blip2Processor, Blip2Model
+        >>> import tg_adapter as torch
 
         >>> device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -1837,8 +1837,8 @@ class Blip2TextModelWithProjection(Blip2PreTrainedModel):
         Examples:
 
         ```python
-        >>> import torch
-        >>> from transformers import AutoProcessor, Blip2TextModelWithProjection
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoProcessor, Blip2TextModelWithProjection
 
         >>> device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -1932,10 +1932,10 @@ class Blip2VisionModelWithProjection(Blip2PreTrainedModel):
         Examples:
 
         ```python
-        >>> import torch
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, Blip2VisionModelWithProjection
+        >>> from tiny_hf.transformers.import AutoProcessor, Blip2VisionModelWithProjection
 
         >>> device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -2113,8 +2113,8 @@ class Blip2ForConditionalGeneration(Blip2PreTrainedModel, GenerationMixin):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import Blip2Processor, Blip2ForConditionalGeneration
-        >>> import torch
+        >>> from tiny_hf.transformers.import Blip2Processor, Blip2ForConditionalGeneration
+        >>> import tg_adapter as torch
 
         >>> device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -2420,10 +2420,10 @@ class Blip2ForImageTextRetrieval(Blip2PreTrainedModel):
         Examples:
 
         ```python
-        >>> import torch
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, Blip2ForImageTextRetrieval
+        >>> from tiny_hf.transformers.import AutoProcessor, Blip2ForImageTextRetrieval
 
         >>> device = "cuda" if torch.cuda.is_available() else "cpu"
 

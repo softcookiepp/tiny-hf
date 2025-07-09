@@ -74,7 +74,7 @@ class GLPNConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import GLPNModel, GLPNConfig
+    >>> from tiny_hf.transformers.import GLPNModel, GLPNConfig
 
     >>> # Initializing a GLPN vinvino02/glpn-kitti style configuration
     >>> configuration = GLPNConfig()

@@ -18,10 +18,10 @@ import copy
 import math
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -56,7 +56,7 @@ _CONFIG_FOR_DOC = "MvpConfig"
 _EXPECTED_OUTPUT_SHAPE = [1, 8, 1024]
 
 
-# Copied from transformers.models.bart.modeling_bart.shift_tokens_right
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.shift_tokens_right
 def shift_tokens_right(input_ids: torch.Tensor, pad_token_id: int, decoder_start_token_id: int):
     """
     Shift input ids one token to the right.
@@ -73,7 +73,7 @@ def shift_tokens_right(input_ids: torch.Tensor, pad_token_id: int, decoder_start
     return shifted_input_ids
 
 
-# Copied from transformers.models.bart.modeling_bart.BartLearnedPositionalEmbedding with Bart->MVP
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartLearnedPositionalEmbedding with Bart->MVP
 class MvpLearnedPositionalEmbedding(nn.Embedding):
     """
     This module learns positional embeddings up to a fixed maximum size.
@@ -448,7 +448,7 @@ class MvpDecoderLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bart.modeling_bart.BartClassificationHead with Bart->MVP
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartClassificationHead with Bart->MVP
 class MvpClassificationHead(nn.Module):
     """Head for sentence-level classification tasks."""
 
@@ -643,8 +643,8 @@ MVP_CONDITIONAL_GENERATION_EXAMPLE = r"""
 
     Fine-tuning a model
     ```python
-    >>> import torch
-    >>> from transformers import AutoTokenizer, MvpForConditionalGeneration
+    >>> import tg_adapter as torch
+    >>> from tiny_hf.transformers.import AutoTokenizer, MvpForConditionalGeneration
 
     >>> tokenizer = AutoTokenizer.from_pretrained("RUCAIBox/mvp")
     >>> model = MvpForConditionalGeneration.from_pretrained("RUCAIBox/mvp")
@@ -673,8 +673,8 @@ MVP_SEQUENCE_CLASSIFICATION_SAMPLE = r"""
 
     Fine-tuning a model on `num_labels` classes
     ```python
-    >>> import torch
-    >>> from transformers import AutoTokenizer, MvpForSequenceClassification
+    >>> import tg_adapter as torch
+    >>> from tiny_hf.transformers.import AutoTokenizer, MvpForSequenceClassification
 
     >>> num_labels = 2  # for example, this is a binary classification task
     >>> tokenizer = AutoTokenizer.from_pretrained("RUCAIBox/mvp")
@@ -702,8 +702,8 @@ MVP_QUESTION_ANSWERING_SAMPLE = r"""
     Fine-tuning a model for extrative question answering, and our model also supports generative question answering
     using `BartForConditionalGeneration`
     ```python
-    >>> import torch
-    >>> from transformers import AutoTokenizer, MvpForQuestionAnswering
+    >>> import tg_adapter as torch
+    >>> from tiny_hf.transformers.import AutoTokenizer, MvpForQuestionAnswering
 
     >>> tokenizer = AutoTokenizer.from_pretrained("RUCAIBox/mvp")
     >>> model = MvpForQuestionAnswering.from_pretrained("RUCAIBox/mvp")
@@ -1742,7 +1742,7 @@ class MvpForQuestionAnswering(MvpPreTrainedModel):
         )
 
 
-# Copied from transformers.models.bart.modeling_bart.BartDecoderWrapper with Bart->Mvp
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartDecoderWrapper with Bart->Mvp
 class MvpDecoderWrapper(MvpPreTrainedModel):
     """
     This wrapper class is a helper class to correctly load pretrained checkpoints when the causal language model is
@@ -1882,7 +1882,7 @@ class MvpForCausalLM(MvpPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, MvpForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, MvpForCausalLM
 
         >>> tokenizer = AutoTokenizer.from_pretrained("RUCAIBox/mvp")
         >>> model = MvpForCausalLM.from_pretrained("RUCAIBox/mvp", add_cross_attention=False)

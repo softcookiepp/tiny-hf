@@ -17,11 +17,11 @@
 import argparse
 
 import requests
-import torch
+import tg_adapter as torch
 from PIL import Image
-from torchvision.transforms import Compose, Normalize, Resize, ToTensor
+from tg_adapter.ision.transforms import Compose, Normalize, Resize, ToTensor
 
-from transformers import Swin2SRConfig, Swin2SRForImageSuperResolution, Swin2SRImageProcessor
+from tiny_hf.transformers.import Swin2SRConfig, Swin2SRForImageSuperResolution, Swin2SRImageProcessor
 
 
 def get_config(checkpoint_url):

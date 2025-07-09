@@ -16,7 +16,7 @@
 
 from typing import ClassVar, List, Optional, Union
 
-from transformers.models.paligemma.processing_paligemma import (
+from tiny_hf.transformers.models.paligemma.processing_paligemma import (
     IMAGE_TOKEN,
     PaliGemmaProcessor,
     build_string_from_input,
@@ -39,7 +39,7 @@ from ...utils import (
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 
 logger = logging.get_logger(__name__)

@@ -66,7 +66,7 @@ class IJepaConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import IJepaConfig, IJepaModel
+    >>> from tiny_hf.transformers.import IJepaConfig, IJepaModel
 
     >>> # Initializing a IJEPA ijepa-base-patch16-224 style configuration
     >>> configuration = IJepaConfig()

@@ -147,7 +147,7 @@ class Gemma3Processor(ProcessorMixin):
         text_inputs["token_type_ids"] = mm_token_type_ids.tolist()
         return BatchFeature(data={**text_inputs, **image_inputs}, tensor_type=return_tensors)
 
-    # Copied from transformers.models.clip.processing_clip.CLIPProcessor.batch_decode with CLIP->Gemma
+    # Copied from tiny_hf.transformers.models.clip.processing_clip.CLIPProcessor.batch_decode with CLIP->Gemma
     def batch_decode(self, *args, **kwargs):
         """
         This method forwards all its arguments to GemmaTokenizerFast's [`~PreTrainedTokenizer.batch_decode`]. Please
@@ -155,7 +155,7 @@ class Gemma3Processor(ProcessorMixin):
         """
         return self.tokenizer.batch_decode(*args, **kwargs)
 
-    # Copied from transformers.models.clip.processing_clip.CLIPProcessor.decode with CLIP->Gemma
+    # Copied from tiny_hf.transformers.models.clip.processing_clip.CLIPProcessor.decode with CLIP->Gemma
     def decode(self, *args, **kwargs):
         """
         This method forwards all its arguments to GemmaTokenizerFast's [`~PreTrainedTokenizer.decode`]. Please refer to

@@ -17,10 +17,10 @@
 import argparse
 
 import pytorch_lightning as pl
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
-from transformers import LongformerForQuestionAnswering, LongformerModel
+from tiny_hf.transformers.import LongformerForQuestionAnswering, LongformerModel
 
 
 class LightningModel(pl.LightningModule):

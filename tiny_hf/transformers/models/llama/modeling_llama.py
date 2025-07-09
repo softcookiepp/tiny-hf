@@ -19,9 +19,9 @@
 # limitations under the License.
 from typing import Callable, List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter import nn
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, StaticCache
@@ -53,7 +53,7 @@ from .configuration_llama import LlamaConfig
 
 
 if is_torch_flex_attn_available():
-    from torch.nn.attention.flex_attention import BlockMask
+    from tg_adapter.nn.attention.flex_attention import BlockMask
 
     from ...integrations.flex_attention import make_flex_block_causal_mask
 
@@ -830,7 +830,7 @@ class LlamaForCausalLM(LlamaPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, LlamaForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, LlamaForCausalLM
 
         >>> model = LlamaForCausalLM.from_pretrained("meta-llama/Llama-2-7b-hf")
         >>> tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-2-7b-hf")
@@ -1003,7 +1003,7 @@ SQuAD (a linear layer on top of the hidden-states output to compute `span start 
 class LlamaForQuestionAnswering(LlamaPreTrainedModel):
     base_model_prefix = "transformer"
 
-    # Copied from transformers.models.bloom.modeling_bloom.BloomForQuestionAnswering.__init__ with Bloom->Llama
+    # Copied from tiny_hf.transformers.models.bloom.modeling_bloom.BloomForQuestionAnswering.__init__ with Bloom->Llama
     def __init__(self, config):
         super().__init__(config)
         self.transformer = LlamaModel(config)

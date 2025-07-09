@@ -18,10 +18,10 @@ import math
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...modeling_outputs import BaseModelOutputWithPastAndCrossAttentions, ModelOutput, QuestionAnsweringModelOutput
@@ -91,7 +91,7 @@ class SplinterEmbeddings(nn.Module):
         return embeddings
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfAttention with Bert->Splinter
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfAttention with Bert->Splinter
 class SplinterSelfAttention(nn.Module):
     def __init__(self, config, position_embedding_type=None):
         super().__init__()
@@ -226,7 +226,7 @@ class SplinterSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfOutput with Bert->Splinter
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfOutput with Bert->Splinter
 class SplinterSelfOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -246,7 +246,7 @@ SPLINTER_SELF_ATTENTION_CLASSES = {
 }
 
 
-# Copied from transformers.models.bert.modeling_bert.BertAttention with Bert->Splinter,BERT->SPLINTER
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertAttention with Bert->Splinter,BERT->SPLINTER
 class SplinterAttention(nn.Module):
     def __init__(self, config, position_embedding_type=None):
         super().__init__()
@@ -298,7 +298,7 @@ class SplinterAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate with Bert->Splinter
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate with Bert->Splinter
 class SplinterIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -314,7 +314,7 @@ class SplinterIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOutput with Bert->Splinter
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOutput with Bert->Splinter
 class SplinterOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -329,7 +329,7 @@ class SplinterOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertLayer with Bert->Splinter
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertLayer with Bert->Splinter
 class SplinterLayer(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -416,7 +416,7 @@ class SplinterLayer(nn.Module):
         return layer_output
 
 
-# Copied from transformers.models.bert.modeling_bert.BertEncoder with Bert->Splinter
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertEncoder with Bert->Splinter
 class SplinterEncoder(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -520,7 +520,7 @@ class SplinterPreTrainedModel(PreTrainedModel):
     base_model_prefix = "splinter"
     supports_gradient_checkpointing = True
 
-    # Copied from transformers.models.bert.modeling_bert.BertPreTrainedModel._init_weights
+    # Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPreTrainedModel._init_weights
     def _init_weights(self, module):
         """Initialize the weights"""
         if isinstance(module, nn.Linear):

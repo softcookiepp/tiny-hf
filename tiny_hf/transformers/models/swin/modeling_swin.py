@@ -20,10 +20,10 @@ import warnings
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...modeling_outputs import BackboneOutput
@@ -254,7 +254,7 @@ class SwinEmbeddings(nn.Module):
         self.patch_size = config.patch_size
         self.config = config
 
-    # Copied from transformers.models.vit.modeling_vit.ViTEmbeddings.interpolate_pos_encoding
+    # Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTEmbeddings.interpolate_pos_encoding
     def interpolate_pos_encoding(self, embeddings: torch.Tensor, height: int, width: int) -> torch.Tensor:
         """
         This method allows to interpolate the pre-trained position encodings, to be able to use the model on higher resolution
@@ -420,7 +420,7 @@ class SwinPatchMerging(nn.Module):
         return input_feature
 
 
-# Copied from transformers.models.beit.modeling_beit.drop_path
+# Copied from tiny_hf.transformers.models.beit.modeling_beit.drop_path
 def drop_path(input: torch.Tensor, drop_prob: float = 0.0, training: bool = False) -> torch.Tensor:
     """
     Drop paths (Stochastic Depth) per sample (when applied in main path of residual blocks).
@@ -441,7 +441,7 @@ def drop_path(input: torch.Tensor, drop_prob: float = 0.0, training: bool = Fals
     return output
 
 
-# Copied from transformers.models.beit.modeling_beit.BeitDropPath with Beit->Swin
+# Copied from tiny_hf.transformers.models.beit.modeling_beit.BeitDropPath with Beit->Swin
 class SwinDropPath(nn.Module):
     """Drop paths (Stochastic Depth) per sample (when applied in main path of residual blocks)."""
 
@@ -1139,8 +1139,8 @@ class SwinForMaskedImageModeling(SwinPreTrainedModel):
 
         Examples:
         ```python
-        >>> from transformers import AutoImageProcessor, SwinForMaskedImageModeling
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoImageProcessor, SwinForMaskedImageModeling
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> import requests
 
@@ -1352,8 +1352,8 @@ class SwinBackbone(SwinPreTrainedModel, BackboneMixin):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, AutoBackbone
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoImageProcessor, AutoBackbone
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> import requests
 

@@ -18,10 +18,10 @@ import collections.abc
 import math
 from typing import Dict, List, Optional, Set, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ....activations import ACT2FN
 from ....modeling_outputs import BaseModelOutput, BaseModelOutputWithPooling, ImageClassifierOutput
@@ -69,7 +69,7 @@ class ViTHybridEmbeddings(nn.Module):
         self.patch_size = config.patch_size
         self.config = config
 
-    # Copied from transformers.models.vit.modeling_vit.ViTEmbeddings.interpolate_pos_encoding
+    # Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTEmbeddings.interpolate_pos_encoding
     def interpolate_pos_encoding(self, embeddings: torch.Tensor, height: int, width: int) -> torch.Tensor:
         """
         This method allows to interpolate the pre-trained position encodings, to be able to use the model on higher resolution

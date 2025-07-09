@@ -16,9 +16,9 @@
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
-import torch
-from torch import Tensor, nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+from tg_adapter.import Tensor, nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...modeling_outputs import ImageClassifierOutput, ModelOutput
 from ...modeling_utils import PreTrainedModel
@@ -159,10 +159,10 @@ class TimmWrapperModel(TimmWrapperPreTrainedModel):
 
         Examples:
         ```python
-        >>> import torch
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> from urllib.request import urlopen
-        >>> from transformers import AutoModel, AutoImageProcessor
+        >>> from tiny_hf.transformers.import AutoModel, AutoImageProcessor
 
         >>> # Load image
         >>> image = Image.open(urlopen(
@@ -275,10 +275,10 @@ class TimmWrapperForImageClassification(TimmWrapperPreTrainedModel):
 
         Examples:
         ```python
-        >>> import torch
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> from urllib.request import urlopen
-        >>> from transformers import AutoModelForImageClassification, AutoImageProcessor
+        >>> from tiny_hf.transformers.import AutoModelForImageClassification, AutoImageProcessor
 
         >>> # Load image
         >>> image = Image.open(urlopen(

@@ -17,11 +17,11 @@
 import math
 from typing import TYPE_CHECKING, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, LayerNorm, MSELoss
-from torch.nn import functional as F
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, LayerNorm, MSELoss
+from tg_adapter.nn import functional as F
 
 from ...activations import get_activation
 from ...cache_utils import Cache, DynamicCache, StaticCache
@@ -73,7 +73,7 @@ class FalconLinear(nn.Linear):
         return hidden_states + self.bias
 
 
-# Copied from transformers.models.llama.modeling_llama.rotate_half
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.rotate_half
 def rotate_half(x):
     """Rotates half the hidden dims of the input."""
     x1 = x[..., : x.shape[-1] // 2]
@@ -81,7 +81,7 @@ def rotate_half(x):
     return torch.cat((-x2, x1), dim=-1)
 
 
-# Copied from transformers.models.llama.modeling_llama.apply_rotary_pos_emb
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.apply_rotary_pos_emb
 def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
     """Applies Rotary Position Embedding to the query and key tensors.
 
@@ -109,7 +109,7 @@ def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
     return q_embed, k_embed
 
 
-# Copied from transformers.models.llama.modeling_llama.LlamaRotaryEmbedding with Llama->Falcon
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaRotaryEmbedding with Llama->Falcon
 class FalconRotaryEmbedding(nn.Module):
     def __init__(self, config: FalconConfig, device=None):
         super().__init__()
@@ -199,7 +199,7 @@ def build_alibi_tensor(attention_mask: torch.Tensor, num_heads: int, dtype: torc
     return alibi.reshape(batch_size * num_heads, 1, seq_length).to(dtype)
 
 
-# Copied from transformers.models.bloom.modeling_bloom.dropout_add
+# Copied from tiny_hf.transformers.models.bloom.modeling_bloom.dropout_add
 def dropout_add(x: torch.Tensor, residual: torch.Tensor, prob: float, training: bool) -> torch.Tensor:
     """
     Dropout add function
@@ -298,7 +298,7 @@ class FalconAttention(nn.Module):
             fused_qkv = fused_qkv.view(batch_size, seq_length, self.num_heads + 2, self.head_dim)
             return fused_qkv[..., :-2, :], fused_qkv[..., [-2], :], fused_qkv[..., [-1], :]
 
-    # Copied from transformers.models.bloom.modeling_bloom.BloomAttention._merge_heads
+    # Copied from tiny_hf.transformers.models.bloom.modeling_bloom.BloomAttention._merge_heads
     def _merge_heads(self, x: torch.Tensor) -> torch.Tensor:
         """
         Merge heads together over the last dimension
@@ -808,7 +808,7 @@ class FalconPreTrainedModel(PreTrainedModel):
             module.bias.data.zero_()
             module.weight.data.fill_(1.0)
 
-    # Adapted from transformers.modeling_utils.PreTrainedModel._check_and_enable_sdpa
+    # Adapted from tiny_hf.transformers.modeling_utils.PreTrainedModel._check_and_enable_sdpa
     @classmethod
     def _check_and_enable_sdpa(cls, config, hard_check_only: bool = False) -> "PretrainedConfig":
         _is_bettertransformer = getattr(cls, "use_bettertransformer", False)
@@ -1099,7 +1099,7 @@ class FalconModel(FalconPreTrainedModel):
         return causal_mask
 
     @staticmethod
-    # Copied from transformers.models.llama.modeling_llama.LlamaPreTrainedModel._prepare_4d_causal_attention_mask_with_cache_position
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaPreTrainedModel._prepare_4d_causal_attention_mask_with_cache_position
     def _prepare_4d_causal_attention_mask_with_cache_position(
         attention_mask: torch.Tensor,
         sequence_length: int,

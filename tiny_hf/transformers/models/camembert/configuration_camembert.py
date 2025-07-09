@@ -82,7 +82,7 @@ class CamembertConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import CamembertConfig, CamembertModel
+    >>> from tiny_hf.transformers.import CamembertConfig, CamembertModel
 
     >>> # Initializing a Camembert almanach/camembert-base style configuration
     >>> configuration = CamembertConfig()

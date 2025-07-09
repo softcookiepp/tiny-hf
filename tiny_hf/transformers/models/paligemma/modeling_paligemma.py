@@ -17,9 +17,9 @@
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...cache_utils import Cache, HybridCache, StaticCache
 from ...generation import GenerationMixin
@@ -48,7 +48,7 @@ logger = logging.get_logger(__name__)
 _CONFIG_FOR_DOC = "PaliGemmaConfig"
 
 
-# Adapted from transformers.models.llama.modeling_llama.LlamaModel._prepare_4d_causal_attention_mask_with_cache_position
+# Adapted from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel._prepare_4d_causal_attention_mask_with_cache_position
 # But Paligemma has no causal mask on prefix
 def _prepare_4d_causal_attention_mask_with_cache_position(
     attention_mask: torch.Tensor,
@@ -313,27 +313,27 @@ class PaliGemmaForConditionalGeneration(PaliGemmaPreTrainedModel, GenerationMixi
         self.pad_token_id = self.config.pad_token_id if self.config.pad_token_id is not None else -1
         self.post_init()
 
-    # Copied from transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.get_input_embeddings with Llava->PaliGemma
+    # Copied from tiny_hf.transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.get_input_embeddings with Llava->PaliGemma
     def get_input_embeddings(self):
         return self.language_model.get_input_embeddings()
 
-    # Copied from transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.set_input_embeddings with Llava->PaliGemma
+    # Copied from tiny_hf.transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.set_input_embeddings with Llava->PaliGemma
     def set_input_embeddings(self, value):
         self.language_model.set_input_embeddings(value)
 
-    # Copied from transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.get_output_embeddings with Llava->PaliGemma
+    # Copied from tiny_hf.transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.get_output_embeddings with Llava->PaliGemma
     def get_output_embeddings(self):
         return self.language_model.get_output_embeddings()
 
-    # Copied from transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.set_output_embeddings with Llava->PaliGemma
+    # Copied from tiny_hf.transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.set_output_embeddings with Llava->PaliGemma
     def set_output_embeddings(self, new_embeddings):
         self.language_model.set_output_embeddings(new_embeddings)
 
-    # Copied from transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.set_decoder with Llava->PaliGemma
+    # Copied from tiny_hf.transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.set_decoder with Llava->PaliGemma
     def set_decoder(self, decoder):
         self.language_model.set_decoder(decoder)
 
-    # Copied from transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.get_decoder with Llava->PaliGemma
+    # Copied from tiny_hf.transformers.models.llava.modeling_llava.LlavaForConditionalGeneration.get_decoder with Llava->PaliGemma
     def get_decoder(self):
         return self.language_model.get_decoder()
 
@@ -462,7 +462,7 @@ class PaliGemmaForConditionalGeneration(PaliGemmaPreTrainedModel, GenerationMixi
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, PaliGemmaForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoProcessor, PaliGemmaForConditionalGeneration
 
         >>> model = PaliGemmaForConditionalGeneration.from_pretrained("google/paligemma2-3b-mix-224")
         >>> processor = AutoProcessor.from_pretrained("google/paligemma2-3b-mix-224")

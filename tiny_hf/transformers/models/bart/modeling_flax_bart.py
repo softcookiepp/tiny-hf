@@ -1016,7 +1016,7 @@ class FlaxBartPreTrainedModel(FlaxPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, FlaxBartForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, FlaxBartForConditionalGeneration
 
         >>> model = FlaxBartForConditionalGeneration.from_pretrained("facebook/bart-large-cnn")
         >>> tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-cnn")
@@ -1083,7 +1083,7 @@ class FlaxBartPreTrainedModel(FlaxPreTrainedModel):
 
         ```python
         >>> import jax.numpy as jnp
-        >>> from transformers import AutoTokenizer, FlaxBartForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, FlaxBartForConditionalGeneration
 
         >>> model = FlaxBartForConditionalGeneration.from_pretrained("facebook/bart-large-cnn")
         >>> tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-cnn")
@@ -1350,7 +1350,7 @@ class FlaxBartForConditionalGeneration(FlaxBartPreTrainedModel):
 
         ```python
         >>> import jax.numpy as jnp
-        >>> from transformers import AutoTokenizer, FlaxBartForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, FlaxBartForConditionalGeneration
 
         >>> model = FlaxBartForConditionalGeneration.from_pretrained("facebook/bart-large-cnn")
         >>> tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-cnn")
@@ -1506,7 +1506,7 @@ FLAX_BART_CONDITIONAL_GENERATION_DOCSTRING = """
     Summarization example:
 
     ```python
-    >>> from transformers import AutoTokenizer, FlaxBartForConditionalGeneration
+    >>> from tiny_hf.transformers.import AutoTokenizer, FlaxBartForConditionalGeneration
 
     >>> model = FlaxBartForConditionalGeneration.from_pretrained("facebook/bart-large-cnn")
     >>> tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-cnn")
@@ -1523,7 +1523,7 @@ FLAX_BART_CONDITIONAL_GENERATION_DOCSTRING = """
 
     ```python
     >>> import jax
-    >>> from transformers import AutoTokenizer, FlaxBartForConditionalGeneration
+    >>> from tiny_hf.transformers.import AutoTokenizer, FlaxBartForConditionalGeneration
 
     >>> model = FlaxBartForConditionalGeneration.from_pretrained("facebook/bart-large")
     >>> tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large")

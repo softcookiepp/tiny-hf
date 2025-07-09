@@ -23,12 +23,12 @@ import urllib
 import warnings
 from typing import Any, List, Optional, Tuple
 
-import torch
+import tg_adapter as torch
 from huggingface_hub.utils import insecure_hashlib
-from torch import nn
+from tg_adapter.import nn
 from tqdm import tqdm
 
-from transformers import (
+from tiny_hf.transformers.import (
     GenerationConfig,
     WhisperConfig,
     WhisperFeatureExtractor,
@@ -37,8 +37,8 @@ from transformers import (
     WhisperTokenizer,
     WhisperTokenizerFast,
 )
-from transformers.models.whisper.tokenization_whisper import LANGUAGES, bytes_to_unicode
-from transformers.utils.import_utils import _is_package_available
+from tiny_hf.transformers.models.whisper.tokenization_whisper import LANGUAGES, bytes_to_unicode
+from tiny_hf.transformers.utils.import_utils import _is_package_available
 
 
 _MODELS = {

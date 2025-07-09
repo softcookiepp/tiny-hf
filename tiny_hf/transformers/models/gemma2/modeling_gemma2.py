@@ -21,8 +21,8 @@
 # limitations under the License.
 from typing import Callable, List, Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+import tg_adapter.nn as nn
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, HybridCache, StaticCache
@@ -859,7 +859,7 @@ class Gemma2ForCausalLM(Gemma2PreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, Gemma2ForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, Gemma2ForCausalLM
 
         >>> model = Gemma2ForCausalLM.from_pretrained("google/gemma-2-9b")
         >>> tokenizer = AutoTokenizer.from_pretrained("google/gemma-2-9b")

@@ -224,7 +224,7 @@ class FlaxLlamaAttention(nn.Module):
         return hidden_states.reshape(hidden_states.shape[:2] + (self.embed_dim,))
 
     @nn.compact
-    # Copied from transformers.models.gpt_neo.modeling_flax_gpt_neo.FlaxGPTNeoSelfAttention._concatenate_to_cache
+    # Copied from tiny_hf.transformers.models.gpt_neo.modeling_flax_gpt_neo.FlaxGPTNeoSelfAttention._concatenate_to_cache
     def _concatenate_to_cache(self, key, value, query, attention_mask):
         """
         This function takes projected key, value states from a single input token and concatenates the states to cached
@@ -399,7 +399,7 @@ class FlaxLlamaDecoderLayer(nn.Module):
         return (hidden_states,) + outputs[1:]
 
 
-# Copied from transformers.models.gpt_neo.modeling_flax_gpt_neo.FlaxGPTNeoPreTrainedModel with GPTNeo->Llama, GPT_NEO->LLAMA, transformer->model
+# Copied from tiny_hf.transformers.models.gpt_neo.modeling_flax_gpt_neo.FlaxGPTNeoPreTrainedModel with GPTNeo->Llama, GPT_NEO->LLAMA, transformer->model
 class FlaxLlamaPreTrainedModel(FlaxPreTrainedModel):
     """
     An abstract class to handle weights initialization and a simple interface for downloading and loading pretrained
@@ -704,7 +704,7 @@ class FlaxLlamaForCausalLMModule(nn.Module):
     """,
     LLAMA_START_DOCSTRING,
 )
-# Copied from transformers.models.gptj.modeling_flax_gptj.FlaxGPTJForCausalLM with GPTJ->Llama
+# Copied from tiny_hf.transformers.models.gptj.modeling_flax_gptj.FlaxGPTJForCausalLM with GPTJ->Llama
 class FlaxLlamaForCausalLM(FlaxLlamaPreTrainedModel):
     module_class = FlaxLlamaForCausalLMModule
 

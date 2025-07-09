@@ -17,8 +17,8 @@
 Utilities for PyTorch Transformer XL model. Directly adapted from https://github.com/kimiyoung/transformer-xl.
 """
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
 
 # CUDA_MAJOR = int(torch.version.cuda.split('.')[0])

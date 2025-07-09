@@ -15,9 +15,9 @@ import argparse
 import json
 import os
 
-import torch
+import tg_adapter as torch
 
-from transformers import (
+from tiny_hf.transformers.import (
     MixtralConfig,
     MixtralForCausalLM,
 )
@@ -34,7 +34,7 @@ python src/transformers/models/mixtral/convert_mixtral_weights_to_hf.py \
 Thereafter, models can be loaded via:
 
 ```py
-from transformers import MixtralForCausalLM
+from tiny_hf.transformers.import MixtralForCausalLM
 
 model = MixtralForCausalLM.from_pretrained("/output/path")
 ```

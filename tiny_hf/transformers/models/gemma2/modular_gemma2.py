@@ -15,9 +15,9 @@
 # limitations under the License.
 from typing import Callable, Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
-import torch.utils.checkpoint
+import tg_adapter as torch
+import tg_adapter.nn as nn
+import tg_adapter.utils.checkpoint
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, HybridCache, StaticCache
@@ -112,7 +112,7 @@ class Gemma2Config(PretrainedConfig):
         cache_implementation (`str`, *optional*, defaults to `"hybrid"`): the cache type to be used with `generate`.
 
     ```python
-    >>> from transformers import Gemma2Model, Gemma2Config
+    >>> from tiny_hf.transformers.import Gemma2Model, Gemma2Config
     >>> # Initializing a Gemma2 gemma2-7b style configuration
     >>> configuration = Gemma2Config()
     >>> # Initializing a model from the gemma2-7b style configuration
@@ -610,7 +610,7 @@ class Gemma2ForCausalLM(GemmaForCausalLM):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, Gemma2ForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, Gemma2ForCausalLM
 
         >>> model = Gemma2ForCausalLM.from_pretrained("google/gemma-2-9b")
         >>> tokenizer = AutoTokenizer.from_pretrained("google/gemma-2-9b")

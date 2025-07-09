@@ -24,9 +24,9 @@
 
 from typing import Callable, List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...cache_utils import Cache
 from ...modeling_flash_attention_utils import FlashAttentionKwargs
@@ -338,7 +338,7 @@ class CohereForCausalLM(LlamaForCausalLM):
         Example:
 
         ```python
-        >> from transformers import AutoTokenizer, CohereForCausalLM
+        >> from tiny_hf.transformers.import AutoTokenizer, CohereForCausalLM
 
         >> model = CohereForCausalLM.from_pretrained("CohereForAI/c4ai-command-r-v01")
         >> tokenizer = AutoTokenizer.from_pretrained("CohereForAI/c4ai-command-r-v01")

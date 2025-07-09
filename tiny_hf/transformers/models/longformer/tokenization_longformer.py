@@ -31,7 +31,7 @@ VOCAB_FILES_NAMES = {"vocab_file": "vocab.json", "merges_file": "merges.txt"}
 
 
 @lru_cache()
-# Copied from transformers.models.roberta.tokenization_roberta.bytes_to_unicode
+# Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.bytes_to_unicode
 def bytes_to_unicode():
     """
     Returns list of utf-8 byte and a mapping to unicode strings. We specifically avoids mapping to whitespace/control
@@ -56,7 +56,7 @@ def bytes_to_unicode():
     return dict(zip(bs, cs))
 
 
-# Copied from transformers.models.roberta.tokenization_roberta.get_pairs
+# Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.get_pairs
 def get_pairs(word):
     """
     Return set of symbol pairs in a word.
@@ -71,7 +71,7 @@ def get_pairs(word):
     return pairs
 
 
-# Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer with FacebookAI/roberta-base->allenai/longformer-base-4096, RoBERTa->Longformer all-casing, RobertaTokenizer->LongformerTokenizer
+# Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer with FacebookAI/roberta-base->allenai/longformer-base-4096, RoBERTa->Longformer all-casing, RobertaTokenizer->LongformerTokenizer
 class LongformerTokenizer(PreTrainedTokenizer):
     """
     Constructs a Longformer tokenizer, derived from the GPT-2 tokenizer, using byte-level Byte-Pair-Encoding.
@@ -80,7 +80,7 @@ class LongformerTokenizer(PreTrainedTokenizer):
     be encoded differently whether it is at the beginning of the sentence (without space) or not:
 
     ```python
-    >>> from transformers import LongformerTokenizer
+    >>> from tiny_hf.transformers.import LongformerTokenizer
 
     >>> tokenizer = LongformerTokenizer.from_pretrained("allenai/longformer-base-4096")
     >>> tokenizer("Hello world")["input_ids"]

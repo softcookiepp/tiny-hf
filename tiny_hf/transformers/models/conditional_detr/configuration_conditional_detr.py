@@ -122,7 +122,7 @@ class ConditionalDetrConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import ConditionalDetrConfig, ConditionalDetrModel
+    >>> from tiny_hf.transformers.import ConditionalDetrConfig, ConditionalDetrModel
 
     >>> # Initializing a Conditional DETR microsoft/conditional-detr-resnet-50 style configuration
     >>> configuration = ConditionalDetrConfig()

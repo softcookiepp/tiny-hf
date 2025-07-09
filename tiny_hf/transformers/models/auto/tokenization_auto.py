@@ -722,7 +722,7 @@ def get_tokenizer_config(
 	tokenizer_config = get_tokenizer_config("FacebookAI/xlm-roberta-base")
 
 	# Save a pretrained tokenizer locally and you can reload its config
-	from transformers import AutoTokenizer
+	from tiny_hf.transformers.import AutoTokenizer
 
 	tokenizer = AutoTokenizer.from_pretrained("google-bert/bert-base-cased")
 	tokenizer.save_pretrained("tokenizer-test")
@@ -843,7 +843,7 @@ class AutoTokenizer:
 		Examples:
 
 		```python
-		>>> from transformers import AutoTokenizer
+		>>> from tiny_hf.transformers.import AutoTokenizer
 
 		>>> # Download vocabulary from huggingface.co and cache.
 		>>> tokenizer = AutoTokenizer.from_pretrained("google-bert/bert-base-uncased")

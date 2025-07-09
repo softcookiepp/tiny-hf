@@ -22,9 +22,9 @@ from dataclasses import dataclass
 from typing import Dict, Optional, Tuple, Union
 
 import numpy as np
-import torch
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import gelu
 from ...generation import GenerationMixin
@@ -1021,8 +1021,8 @@ class XLMForQuestionAnswering(XLMPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, XLMForQuestionAnswering
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, XLMForQuestionAnswering
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("FacebookAI/xlm-mlm-en-2048")
         >>> model = XLMForQuestionAnswering.from_pretrained("FacebookAI/xlm-mlm-en-2048")

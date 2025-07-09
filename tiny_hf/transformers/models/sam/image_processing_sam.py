@@ -49,11 +49,11 @@ from ...utils import (
 
 
 if is_torch_available():
-    import torch
-    import torch.nn.functional as F
+    import tg_adapter as torch
+    import tg_adapter.nn.functional as F
 
 if is_torchvision_available():
-    from torchvision.ops.boxes import batched_nms
+    from tg_adapter.ision.ops.boxes import batched_nms
 
 if is_tf_available():
     import tensorflow as tf

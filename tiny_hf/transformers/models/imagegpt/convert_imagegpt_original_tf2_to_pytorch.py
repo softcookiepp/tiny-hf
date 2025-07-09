@@ -16,10 +16,10 @@
 
 import argparse
 
-import torch
+import tg_adapter as torch
 
-from transformers import ImageGPTConfig, ImageGPTForCausalLM, load_tf_weights_in_imagegpt
-from transformers.utils import CONFIG_NAME, WEIGHTS_NAME, logging
+from tiny_hf.transformers.import ImageGPTConfig, ImageGPTForCausalLM, load_tf_weights_in_imagegpt
+from tiny_hf.transformers.utils import CONFIG_NAME, WEIGHTS_NAME, logging
 
 
 logging.set_verbosity_info()

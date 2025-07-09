@@ -18,9 +18,9 @@
 import math
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, SlidingWindowCache, StaticCache
@@ -59,7 +59,7 @@ logger = logging.get_logger(__name__)
 _CONFIG_FOR_DOC = "PhimoeConfig"
 
 
-# Copied from transformers.models.mixtral.modeling_mixtral.load_balancing_loss_func
+# Copied from tiny_hf.transformers.models.mixtral.modeling_mixtral.load_balancing_loss_func
 def load_balancing_loss_func(
     gate_logits: Union[torch.Tensor, Tuple[torch.Tensor], None],
     num_experts: Optional[int] = None,
@@ -175,7 +175,7 @@ class PhimoeRotaryEmbedding(nn.Module):
         return (emb.cos() * mscale).to(x.dtype), (emb.sin() * mscale).to(x.dtype)
 
 
-# Copied from transformers.models.llama.modeling_llama.rotate_half
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.rotate_half
 def rotate_half(x):
     """Rotates half the hidden dims of the input."""
     x1 = x[..., : x.shape[-1] // 2]
@@ -211,7 +211,7 @@ def apply_rotary_pos_emb(q, k, cos, sin, position_ids, unsqueeze_dim=1):
     return q_embed, k_embed
 
 
-# Copied from transformers.models.llama.modeling_llama.repeat_kv
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.repeat_kv
 def repeat_kv(hidden_states: torch.Tensor, n_rep: int) -> torch.Tensor:
     """
     This is the equivalent of torch.repeat_interleave(x, dim=1, repeats=n_rep). The hidden states go from (batch,
@@ -517,7 +517,7 @@ PHIMOE_ATTENTION_CLASSES = {
 }
 
 
-# Copied from transformers.models.mixtral.modeling_mixtral.MixtralBlockSparseTop2MLP with Mixtral->Phimoe
+# Copied from tiny_hf.transformers.models.mixtral.modeling_mixtral.MixtralBlockSparseTop2MLP with Mixtral->Phimoe
 class PhimoeBlockSparseTop2MLP(nn.Module):
     def __init__(self, config: PhimoeConfig):
         super().__init__()
@@ -1173,7 +1173,7 @@ class PhimoeModel(PhimoePreTrainedModel):
             router_logits=all_router_logits,
         )
 
-    # Copied from transformers.models.phi3.modeling_phi3.Phi3Model._update_causal_mask with Phi3->Phimoe
+    # Copied from tiny_hf.transformers.models.phi3.modeling_phi3.Phi3Model._update_causal_mask with Phi3->Phimoe
     def _update_causal_mask(
         self,
         attention_mask: torch.Tensor,
@@ -1258,7 +1258,7 @@ class PhimoeModel(PhimoePreTrainedModel):
         return causal_mask
 
     @staticmethod
-    # Copied from transformers.models.mistral.modeling_mistral.MistralModel._prepare_4d_causal_attention_mask_with_cache_position with Mistral->Phimoe
+    # Copied from tiny_hf.transformers.models.mistral.modeling_mistral.MistralModel._prepare_4d_causal_attention_mask_with_cache_position with Mistral->Phimoe
     def _prepare_4d_causal_attention_mask_with_cache_position(
         attention_mask: torch.Tensor,
         sequence_length: int,
@@ -1342,27 +1342,27 @@ class PhimoeForCausalLM(PhimoePreTrainedModel, GenerationMixin):
         # Initialize weights and apply final processing
         self.post_init()
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.get_input_embeddings
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.get_input_embeddings
     def get_input_embeddings(self):
         return self.model.embed_tokens
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.set_input_embeddings
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.set_input_embeddings
     def set_input_embeddings(self, value):
         self.model.embed_tokens = value
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.get_output_embeddings
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.get_output_embeddings
     def get_output_embeddings(self):
         return self.lm_head
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.set_output_embeddings
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.set_output_embeddings
     def set_output_embeddings(self, new_embeddings):
         self.lm_head = new_embeddings
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.set_decoder
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.set_decoder
     def set_decoder(self, decoder):
         self.model = decoder
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.get_decoder
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.get_decoder
     def get_decoder(self):
         return self.model
 
@@ -1402,7 +1402,7 @@ class PhimoeForCausalLM(PhimoePreTrainedModel, GenerationMixin):
         Returns:
         Example:
         ```python
-        >>> from transformers import AutoTokenizer, PhimoeForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, PhimoeForCausalLM
         >>> model = PhimoeForCausalLM.from_pretrained("microsoft/Phi-3.5-MoE-instruct")
         >>> tokenizer = AutoTokenizer.from_pretrained("microsoft/Phi-3.5-MoE-instruct")
         >>> prompt = "Hey, are you conscious? Can you talk to me?"
@@ -1482,7 +1482,7 @@ class PhimoeForCausalLM(PhimoePreTrainedModel, GenerationMixin):
             router_logits=outputs.router_logits,
         )
 
-    # Copied from transformers.models.phi3.modeling_phi3.Phi3ForCausalLM.prepare_inputs_for_generation
+    # Copied from tiny_hf.transformers.models.phi3.modeling_phi3.Phi3ForCausalLM.prepare_inputs_for_generation
     def prepare_inputs_for_generation(
         self,
         input_ids,
@@ -1537,7 +1537,7 @@ class PhimoeForCausalLM(PhimoePreTrainedModel, GenerationMixin):
     PHIMOE_START_DOCSTRING,
 )
 
-# Copied from transformers.models.llama.modeling_llama.LlamaForSequenceClassification with Llama->Phimoe, LLAMA->PHIMOE
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForSequenceClassification with Llama->Phimoe, LLAMA->PHIMOE
 class PhimoeForSequenceClassification(PhimoePreTrainedModel):
     def __init__(self, config):
         super().__init__(config)

@@ -90,7 +90,7 @@ class Dinov2WithRegistersConfig(BackboneConfigMixin, PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import Dinov2WithRegistersConfig, Dinov2WithRegistersModel
+    >>> from tiny_hf.transformers.import Dinov2WithRegistersConfig, Dinov2WithRegistersModel
 
     >>> # Initializing a Dinov2WithRegisters base style configuration
     >>> configuration = Dinov2WithRegistersConfig()

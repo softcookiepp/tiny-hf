@@ -83,7 +83,7 @@ class RecurrentGemmaConfig(PretrainedConfig):
         attention_bias (`bool`, *optional*, defaults to `False`): whether or not the linear q,k,v of the Attention layer should have bias
         w_init_variance_scale (`float`, *optional*, defaults to 0.01): weight initialization variance.
     ```python
-    >>> from transformers import RecurrentGemmaModel, RecurrentGemmaConfig
+    >>> from tiny_hf.transformers.import RecurrentGemmaModel, RecurrentGemmaConfig
 
     >>> # Initializing a RecurrentGemma recurrentgemma-2b style configuration
     >>> configuration = RecurrentGemmaConfig()

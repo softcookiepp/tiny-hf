@@ -119,7 +119,7 @@ class DiffLlamaConfig(PretrainedConfig):
             The attention head dimension. If None, it will default to hidden_size // num_heads
 
     ```python
-    >>> from transformers import DiffLlamaModel, DiffLlamaConfig
+    >>> from tiny_hf.transformers.import DiffLlamaModel, DiffLlamaConfig
 
     >>> # Initializing a DiffLlama diffllama-7b style configuration
     >>> configuration = DiffLlamaConfig()

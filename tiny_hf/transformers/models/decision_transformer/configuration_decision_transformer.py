@@ -81,7 +81,7 @@ class DecisionTransformerConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import DecisionTransformerConfig, DecisionTransformerModel
+    >>> from tiny_hf.transformers.import DecisionTransformerConfig, DecisionTransformerModel
 
     >>> # Initializing a DecisionTransformer configuration
     >>> configuration = DecisionTransformerConfig()

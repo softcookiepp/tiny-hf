@@ -20,23 +20,23 @@ import os
 import gluonnlp as nlp
 import mxnet as mx
 import numpy as np
-import torch
+import tg_adapter as torch
 from gluonnlp.base import get_home_dir
 from gluonnlp.model.bert import BERTEncoder
 from gluonnlp.model.utils import _load_vocab
 from gluonnlp.vocab import Vocab
 from packaging import version
-from torch import nn
+from tg_adapter.import nn
 
-from transformers import BertConfig, BertForMaskedLM, BertModel, RobertaTokenizer
-from transformers.models.bert.modeling_bert import (
+from tiny_hf.transformers.import BertConfig, BertForMaskedLM, BertModel, RobertaTokenizer
+from tiny_hf.transformers.models.bert.modeling_bert import (
     BertIntermediate,
     BertLayer,
     BertOutput,
     BertSelfAttention,
     BertSelfOutput,
 )
-from transformers.utils import logging
+from tiny_hf.transformers.utils import logging
 
 
 if version.parse(nlp.__version__) != version.parse("0.8.3"):

@@ -27,7 +27,7 @@ logger = logging.get_logger(__name__)
 VOCAB_FILES_NAMES = {"vocab_file": "vocab.txt"}
 
 
-# Copied from transformers.models.bert.tokenization_bert.load_vocab
+# Copied from tiny_hf.transformers.models.bert.tokenization_bert.load_vocab
 def load_vocab(vocab_file):
     """Loads a vocabulary file into a dictionary."""
     vocab = collections.OrderedDict()
@@ -39,7 +39,7 @@ def load_vocab(vocab_file):
     return vocab
 
 
-# Copied from transformers.models.bert.tokenization_bert.whitespace_tokenize
+# Copied from tiny_hf.transformers.models.bert.tokenization_bert.whitespace_tokenize
 def whitespace_tokenize(text):
     """Runs basic whitespace cleaning and splitting on a piece of text."""
     text = text.strip()
@@ -49,7 +49,7 @@ def whitespace_tokenize(text):
     return tokens
 
 
-# Copied from transformers.models.bert.tokenization_bert.BertTokenizer with bert-base-cased->unc-nlp/lxmert-base-uncased, BERT->Lxmert, BertTokenizer->LxmertTokenizer
+# Copied from tiny_hf.transformers.models.bert.tokenization_bert.BertTokenizer with bert-base-cased->unc-nlp/lxmert-base-uncased, BERT->Lxmert, BertTokenizer->LxmertTokenizer
 class LxmertTokenizer(PreTrainedTokenizer):
     r"""
     Construct a Lxmert tokenizer. Based on WordPiece.
@@ -288,7 +288,7 @@ class LxmertTokenizer(PreTrainedTokenizer):
         return (vocab_file,)
 
 
-# Copied from transformers.models.bert.tokenization_bert.BasicTokenizer
+# Copied from tiny_hf.transformers.models.bert.tokenization_bert.BasicTokenizer
 class BasicTokenizer:
     """
     Constructs a BasicTokenizer that will run basic tokenization (punctuation splitting, lower casing, etc.).
@@ -450,7 +450,7 @@ class BasicTokenizer:
         return "".join(output)
 
 
-# Copied from transformers.models.bert.tokenization_bert.WordpieceTokenizer
+# Copied from tiny_hf.transformers.models.bert.tokenization_bert.WordpieceTokenizer
 class WordpieceTokenizer:
     """Runs WordPiece tokenization."""
 

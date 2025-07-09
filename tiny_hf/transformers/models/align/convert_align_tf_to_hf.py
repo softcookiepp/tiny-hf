@@ -21,11 +21,11 @@ import align
 import numpy as np
 import requests
 import tensorflow as tf
-import torch
+import tg_adapter as torch
 from PIL import Image
 from tokenizer import Tokenizer
 
-from transformers import (
+from tiny_hf.transformers.import (
     AlignConfig,
     AlignModel,
     AlignProcessor,
@@ -34,7 +34,7 @@ from transformers import (
     EfficientNetConfig,
     EfficientNetImageProcessor,
 )
-from transformers.utils import logging
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

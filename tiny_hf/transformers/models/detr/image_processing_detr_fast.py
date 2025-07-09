@@ -65,19 +65,19 @@ from .image_processing_detr import (
 
 
 if is_torch_available():
-    import torch
-    from torch import nn
+    import tg_adapter as torch
+    from tg_adapter.import nn
 
 if is_vision_available():
     import PIL
 
 
 if is_torchvision_v2_available():
-    from torchvision.io import read_image
-    from torchvision.transforms.v2 import functional as F
+    from tg_adapter.ision.io import read_image
+    from tg_adapter.ision.transforms.v2 import functional as F
 elif is_torchvision_available():
-    from torchvision.io import read_image
-    from torchvision.transforms import functional as F
+    from tg_adapter.ision.io import read_image
+    from tg_adapter.ision.transforms import functional as F
 
 
 logger = logging.get_logger(__name__)
@@ -760,7 +760,7 @@ class DetrImageProcessorFast(BaseImageProcessorFast):
             ]
         return encoded_inputs
 
-    # Copied from transformers.models.detr.image_processing_detr.DetrImageProcessor.post_process
+    # Copied from tiny_hf.transformers.models.detr.image_processing_detr.DetrImageProcessor.post_process
     def post_process(self, outputs, target_sizes):
         """
         Converts the raw output of [`DetrForObjectDetection`] into final bounding boxes in (top_left_x, top_left_y,
@@ -802,7 +802,7 @@ class DetrImageProcessorFast(BaseImageProcessorFast):
         results = [{"scores": s, "labels": l, "boxes": b} for s, l, b in zip(scores, labels, boxes)]
         return results
 
-    # Copied from transformers.models.detr.image_processing_detr.DetrImageProcessor.post_process_segmentation
+    # Copied from tiny_hf.transformers.models.detr.image_processing_detr.DetrImageProcessor.post_process_segmentation
     def post_process_segmentation(self, outputs, target_sizes, threshold=0.9, mask_threshold=0.5):
         """
         Converts the output of [`DetrForSegmentation`] into image segmentation predictions. Only supports PyTorch.
@@ -847,7 +847,7 @@ class DetrImageProcessorFast(BaseImageProcessorFast):
             preds.append(predictions)
         return preds
 
-    # Copied from transformers.models.detr.image_processing_detr.DetrImageProcessor.post_process_instance
+    # Copied from tiny_hf.transformers.models.detr.image_processing_detr.DetrImageProcessor.post_process_instance
     def post_process_instance(self, results, outputs, orig_target_sizes, max_target_sizes, threshold=0.5):
         """
         Converts the output of [`DetrForSegmentation`] into actual instance segmentation predictions. Only supports
@@ -893,7 +893,7 @@ class DetrImageProcessorFast(BaseImageProcessorFast):
 
         return results
 
-    # Copied from transformers.models.detr.image_processing_detr.DetrImageProcessor.post_process_panoptic
+    # Copied from tiny_hf.transformers.models.detr.image_processing_detr.DetrImageProcessor.post_process_panoptic
     def post_process_panoptic(self, outputs, processed_sizes, target_sizes=None, is_thing_map=None, threshold=0.85):
         """
         Converts the output of [`DetrForSegmentation`] into actual panoptic predictions. Only supports PyTorch.
@@ -1031,7 +1031,7 @@ class DetrImageProcessorFast(BaseImageProcessorFast):
             preds.append(predictions)
         return preds
 
-    # Copied from transformers.models.detr.image_processing_detr.DetrImageProcessor.post_process_object_detection
+    # Copied from tiny_hf.transformers.models.detr.image_processing_detr.DetrImageProcessor.post_process_object_detection
     def post_process_object_detection(
         self, outputs, threshold: float = 0.5, target_sizes: Union[TensorType, List[Tuple]] = None
     ):
@@ -1085,7 +1085,7 @@ class DetrImageProcessorFast(BaseImageProcessorFast):
 
         return results
 
-    # Copied from transformers.models.detr.image_processing_detr.DetrImageProcessor.post_process_semantic_segmentation
+    # Copied from tiny_hf.transformers.models.detr.image_processing_detr.DetrImageProcessor.post_process_semantic_segmentation
     def post_process_semantic_segmentation(self, outputs, target_sizes: List[Tuple[int, int]] = None):
         """
         Converts the output of [`DetrForSegmentation`] into semantic segmentation maps. Only supports PyTorch.
@@ -1133,7 +1133,7 @@ class DetrImageProcessorFast(BaseImageProcessorFast):
 
         return semantic_segmentation
 
-    # Copied from transformers.models.detr.image_processing_detr.DetrImageProcessor.post_process_instance_segmentation
+    # Copied from tiny_hf.transformers.models.detr.image_processing_detr.DetrImageProcessor.post_process_instance_segmentation
     def post_process_instance_segmentation(
         self,
         outputs,
@@ -1217,7 +1217,7 @@ class DetrImageProcessorFast(BaseImageProcessorFast):
             results.append({"segmentation": segmentation, "segments_info": segments})
         return results
 
-    # Copied from transformers.models.detr.image_processing_detr.DetrImageProcessor.post_process_panoptic_segmentation
+    # Copied from tiny_hf.transformers.models.detr.image_processing_detr.DetrImageProcessor.post_process_panoptic_segmentation
     def post_process_panoptic_segmentation(
         self,
         outputs,

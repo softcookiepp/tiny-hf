@@ -1050,7 +1050,7 @@ class AutoConfig:
         Examples:
 
         ```python
-        >>> from transformers import AutoConfig
+        >>> from tiny_hf.transformers.import AutoConfig
 
         >>> # Download configuration from huggingface.co and cache.
         >>> config = AutoConfig.from_pretrained("google-bert/bert-base-uncased")

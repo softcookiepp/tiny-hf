@@ -59,7 +59,7 @@ class Emu3VQVAEConfig(PretrainedConfig):
             The dropout ratio for the attention probabilities.
 
     ```python
-    >>> from transformers import Emu3VQVAE, Emu3VQVAEConfig
+    >>> from tiny_hf.transformers.import Emu3VQVAE, Emu3VQVAEConfig
 
     >>> # Initializing a video VQ model of Emu3 configuration
     >>> configuration = Emu3VQVAEConfig()
@@ -208,7 +208,7 @@ class Emu3TextConfig(PretrainedConfig):
 
 
     ```python
-    >>> from transformers import Emu3Model, Emu3Config
+    >>> from tiny_hf.transformers.import Emu3Model, Emu3Config
 
     >>> # Initializing a Emu3-community/Emu3-Chat-hf style configuration
     >>> configuration = Emu3Config()

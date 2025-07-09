@@ -16,8 +16,8 @@
 
 from typing import List, Optional, Union
 
-from transformers.configuration_utils import PretrainedConfig
-from transformers.utils import logging
+from tiny_hf.transformers.configuration_utils import PretrainedConfig
+from tiny_hf.transformers.utils import logging
 
 
 logger = logging.get_logger(__name__)
@@ -126,7 +126,7 @@ class PatchTSTConfig(PretrainedConfig):
 
 
     ```python
-    >>> from transformers import PatchTSTConfig, PatchTSTModel
+    >>> from tiny_hf.transformers.import PatchTSTConfig, PatchTSTModel
 
     >>> # Initializing an PatchTST configuration with 12 time steps for prediction
     >>> configuration = PatchTSTConfig(prediction_length=12)

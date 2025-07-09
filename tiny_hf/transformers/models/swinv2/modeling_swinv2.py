@@ -20,10 +20,10 @@ import warnings
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import Tensor, nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import Tensor, nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...modeling_outputs import BackboneOutput
@@ -60,7 +60,7 @@ _IMAGE_CLASS_EXPECTED_OUTPUT = "Egyptian cat"
 
 
 @dataclass
-# Copied from transformers.models.swin.modeling_swin.SwinEncoderOutput with Swin->Swinv2
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinEncoderOutput with Swin->Swinv2
 class Swinv2EncoderOutput(ModelOutput):
     """
     Swinv2 encoder's outputs, with potential hidden states and attentions.
@@ -94,7 +94,7 @@ class Swinv2EncoderOutput(ModelOutput):
 
 
 @dataclass
-# Copied from transformers.models.swin.modeling_swin.SwinModelOutput with Swin->Swinv2
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinModelOutput with Swin->Swinv2
 class Swinv2ModelOutput(ModelOutput):
     """
     Swinv2 model's outputs that also contains a pooling of the last hidden states.
@@ -131,7 +131,7 @@ class Swinv2ModelOutput(ModelOutput):
 
 
 @dataclass
-# Copied from transformers.models.swin.modeling_swin.SwinMaskedImageModelingOutput with Swin->Swinv2
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinMaskedImageModelingOutput with Swin->Swinv2
 class Swinv2MaskedImageModelingOutput(ModelOutput):
     """
     Swinv2 masked image model outputs.
@@ -177,7 +177,7 @@ class Swinv2MaskedImageModelingOutput(ModelOutput):
 
 
 @dataclass
-# Copied from transformers.models.swin.modeling_swin.SwinImageClassifierOutput with Swin->Swinv2
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinImageClassifierOutput with Swin->Swinv2
 class Swinv2ImageClassifierOutput(ModelOutput):
     """
     Swinv2 outputs for image classification.
@@ -213,7 +213,7 @@ class Swinv2ImageClassifierOutput(ModelOutput):
     reshaped_hidden_states: Optional[Tuple[torch.FloatTensor, ...]] = None
 
 
-# Copied from transformers.models.swin.modeling_swin.window_partition
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.window_partition
 def window_partition(input_feature, window_size):
     """
     Partitions the given input into windows.
@@ -226,7 +226,7 @@ def window_partition(input_feature, window_size):
     return windows
 
 
-# Copied from transformers.models.swin.modeling_swin.window_reverse
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.window_reverse
 def window_reverse(windows, window_size, height, width):
     """
     Merges windows to produce higher resolution features.
@@ -237,7 +237,7 @@ def window_reverse(windows, window_size, height, width):
     return windows
 
 
-# Copied from transformers.models.swin.modeling_swin.drop_path
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.drop_path
 def drop_path(input: torch.Tensor, drop_prob: float = 0.0, training: bool = False) -> torch.Tensor:
     """
     Drop paths (Stochastic Depth) per sample (when applied in main path of residual blocks).
@@ -258,7 +258,7 @@ def drop_path(input: torch.Tensor, drop_prob: float = 0.0, training: bool = Fals
     return output
 
 
-# Copied from transformers.models.swin.modeling_swin.SwinDropPath with Swin->Swinv2
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinDropPath with Swin->Swinv2
 class Swinv2DropPath(nn.Module):
     """Drop paths (Stochastic Depth) per sample (when applied in main path of residual blocks)."""
 
@@ -273,7 +273,7 @@ class Swinv2DropPath(nn.Module):
         return "p={}".format(self.drop_prob)
 
 
-# Copied from transformers.models.swin.modeling_swin.SwinEmbeddings with Swin->Swinv2
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinEmbeddings with Swin->Swinv2
 class Swinv2Embeddings(nn.Module):
     """
     Construct the patch and position embeddings. Optionally, also the mask token.
@@ -297,7 +297,7 @@ class Swinv2Embeddings(nn.Module):
         self.patch_size = config.patch_size
         self.config = config
 
-    # Copied from transformers.models.vit.modeling_vit.ViTEmbeddings.interpolate_pos_encoding
+    # Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTEmbeddings.interpolate_pos_encoding
     def interpolate_pos_encoding(self, embeddings: torch.Tensor, height: int, width: int) -> torch.Tensor:
         """
         This method allows to interpolate the pre-trained position encodings, to be able to use the model on higher resolution
@@ -366,7 +366,7 @@ class Swinv2Embeddings(nn.Module):
         return embeddings, output_dimensions
 
 
-# Copied from transformers.models.swin.modeling_swin.SwinPatchEmbeddings with Swin->Swinv2
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinPatchEmbeddings with Swin->Swinv2
 class Swinv2PatchEmbeddings(nn.Module):
     """
     This class turns `pixel_values` of shape `(batch_size, num_channels, height, width)` into the initial
@@ -593,7 +593,7 @@ class Swinv2SelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.swin.modeling_swin.SwinSelfOutput with Swin->Swinv2
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinSelfOutput with Swin->Swinv2
 class Swinv2SelfOutput(nn.Module):
     def __init__(self, config, dim):
         super().__init__()
@@ -653,7 +653,7 @@ class Swinv2Attention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.swin.modeling_swin.SwinIntermediate with Swin->Swinv2
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinIntermediate with Swin->Swinv2
 class Swinv2Intermediate(nn.Module):
     def __init__(self, config, dim):
         super().__init__()
@@ -669,7 +669,7 @@ class Swinv2Intermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.swin.modeling_swin.SwinOutput with Swin->Swinv2
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinOutput with Swin->Swinv2
 class Swinv2Output(nn.Module):
     def __init__(self, config, dim):
         super().__init__()
@@ -976,7 +976,7 @@ class Swinv2Encoder(nn.Module):
         )
 
 
-# Copied from transformers.models.swin.modeling_swin.SwinPreTrainedModel with Swin->Swinv2,swin->swinv2
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinPreTrainedModel with Swin->Swinv2,swin->swinv2
 class Swinv2PreTrainedModel(PreTrainedModel):
     """
     An abstract class to handle weights initialization and a simple interface for downloading and loading pretrained
@@ -1041,7 +1041,7 @@ SWINV2_INPUTS_DOCSTRING = r"""
     "The bare Swinv2 Model transformer outputting raw hidden-states without any specific head on top.",
     SWINV2_START_DOCSTRING,
 )
-# Copied from transformers.models.swin.modeling_swin.SwinModel with SWIN->SWINV2,Swin->Swinv2
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinModel with SWIN->SWINV2,Swin->Swinv2
 class Swinv2Model(Swinv2PreTrainedModel):
     def __init__(self, config, add_pooling_layer=True, use_mask_token=False):
         super().__init__(config)
@@ -1155,7 +1155,7 @@ class Swinv2Model(Swinv2PreTrainedModel):
     """,
     SWINV2_START_DOCSTRING,
 )
-# Copied from transformers.models.swin.modeling_swin.SwinForMaskedImageModeling with swin->swinv2, base-simmim-window6-192->tiny-patch4-window8-256,SWIN->SWINV2,Swin->Swinv2,192->256
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinForMaskedImageModeling with swin->swinv2, base-simmim-window6-192->tiny-patch4-window8-256,SWIN->SWINV2,Swin->Swinv2,192->256
 class Swinv2ForMaskedImageModeling(Swinv2PreTrainedModel):
     def __init__(self, config):
         super().__init__(config)
@@ -1193,8 +1193,8 @@ class Swinv2ForMaskedImageModeling(Swinv2PreTrainedModel):
 
         Examples:
         ```python
-        >>> from transformers import AutoImageProcessor, Swinv2ForMaskedImageModeling
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoImageProcessor, Swinv2ForMaskedImageModeling
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> import requests
 
@@ -1277,7 +1277,7 @@ class Swinv2ForMaskedImageModeling(Swinv2PreTrainedModel):
     """,
     SWINV2_START_DOCSTRING,
 )
-# Copied from transformers.models.swin.modeling_swin.SwinForImageClassification with SWIN->SWINV2,Swin->Swinv2,swin->swinv2
+# Copied from tiny_hf.transformers.models.swin.modeling_swin.SwinForImageClassification with SWIN->SWINV2,Swin->Swinv2,swin->swinv2
 class Swinv2ForImageClassification(Swinv2PreTrainedModel):
     def __init__(self, config):
         super().__init__(config)
@@ -1403,8 +1403,8 @@ class Swinv2Backbone(Swinv2PreTrainedModel, BackboneMixin):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, AutoBackbone
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoImageProcessor, AutoBackbone
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> import requests
 

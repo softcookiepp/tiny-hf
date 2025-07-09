@@ -22,9 +22,9 @@ import math
 from typing import Dict, List, Optional, Set, Tuple, Union
 
 import numpy as np
-import torch
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import get_activation
 from ...configuration_utils import PretrainedConfig
@@ -1302,8 +1302,8 @@ class DistilBertForMultipleChoice(DistilBertPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, DistilBertForMultipleChoice
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, DistilBertForMultipleChoice
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("distilbert-base-cased")
         >>> model = DistilBertForMultipleChoice.from_pretrained("distilbert-base-cased")

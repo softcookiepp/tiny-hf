@@ -306,7 +306,7 @@ def load_backbone(config):
 	If the config is from the parent model of the backbone model itself, then we load the pretrained backbone weights
 	if specified.
 	"""
-	#from transformers import AutoBackbone, AutoConfig
+	#from tiny_hf.transformers.import AutoBackbone, AutoConfig
 	from . import AutoBackbone, AutoConfig
 
 	backbone_config = getattr(config, "backbone_config", None)

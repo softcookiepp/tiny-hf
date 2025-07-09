@@ -114,7 +114,7 @@ class TFBertTokenizer(keras.layers.Layer):
         Examples:
 
         ```python
-        from transformers import AutoTokenizer, TFBertTokenizer
+        from tiny_hf.transformers.import AutoTokenizer, TFBertTokenizer
 
         tokenizer = AutoTokenizer.from_pretrained("google-bert/bert-base-uncased")
         tf_tokenizer = TFBertTokenizer.from_tokenizer(tokenizer)
@@ -153,7 +153,7 @@ class TFBertTokenizer(keras.layers.Layer):
         Examples:
 
         ```python
-        from transformers import TFBertTokenizer
+        from tiny_hf.transformers.import TFBertTokenizer
 
         tf_tokenizer = TFBertTokenizer.from_pretrained("google-bert/bert-base-uncased")
         ```

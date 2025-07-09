@@ -17,10 +17,10 @@
 import math
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN, gelu
 from ...generation import GenerationMixin
@@ -43,13 +43,13 @@ from .configuration_xmod import XmodConfig
 logger = logging.get_logger(__name__)
 
 
-# Copied from transformers.models.roberta.modeling_roberta.RobertaEmbeddings with Roberta->Xmod
+# Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaEmbeddings with Roberta->Xmod
 class XmodEmbeddings(nn.Module):
     """
     Same as BertEmbeddings with a tiny tweak for positional embeddings indexing.
     """
 
-    # Copied from transformers.models.bert.modeling_bert.BertEmbeddings.__init__
+    # Copied from tiny_hf.transformers.models.bert.modeling_bert.BertEmbeddings.__init__
     def __init__(self, config):
         super().__init__()
         self.word_embeddings = nn.Embedding(config.vocab_size, config.hidden_size, padding_idx=config.pad_token_id)
@@ -133,7 +133,7 @@ class XmodEmbeddings(nn.Module):
         return position_ids.unsqueeze(0).expand(input_shape)
 
 
-# Copied from transformers.models.roberta.modeling_roberta.RobertaSelfAttention with Roberta->Xmod
+# Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaSelfAttention with Roberta->Xmod
 class XmodSelfAttention(nn.Module):
     def __init__(self, config, position_embedding_type=None):
         super().__init__()
@@ -269,7 +269,7 @@ class XmodSelfAttention(nn.Module):
 
 
 class XmodSelfOutput(nn.Module):
-    # Copied from transformers.models.roberta.modeling_roberta.RobertaSelfOutput.__init__
+    # Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaSelfOutput.__init__
     def __init__(self, config):
         super().__init__()
         self.dense = nn.Linear(config.hidden_size, config.hidden_size)
@@ -291,7 +291,7 @@ class XmodAttention(nn.Module):
         self.pruned_heads = set()
         self.pre_norm = config.pre_norm
 
-    # Copied from transformers.models.roberta.modeling_roberta.RobertaAttention.prune_heads
+    # Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaAttention.prune_heads
     def prune_heads(self, heads):
         if len(heads) == 0:
             return
@@ -339,7 +339,7 @@ class XmodAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.roberta.modeling_roberta.RobertaIntermediate
+# Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaIntermediate
 class XmodIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -619,7 +619,7 @@ class XmodEncoder(nn.Module):
         )
 
 
-# Copied from transformers.models.roberta.modeling_roberta.RobertaPooler
+# Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaPooler
 class XmodPooler(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -645,7 +645,7 @@ class XmodPreTrainedModel(PreTrainedModel):
     base_model_prefix = "roberta"
     supports_gradient_checkpointing = True
 
-    # Copied from transformers.models.bert.modeling_bert.BertPreTrainedModel._init_weights
+    # Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPreTrainedModel._init_weights
     def _init_weights(self, module):
         """Initialize the weights"""
         if isinstance(module, nn.Linear):
@@ -781,7 +781,7 @@ class XmodModel(XmodPreTrainedModel):
 
     """
 
-    # Copied from transformers.models.clap.modeling_clap.ClapTextModel.__init__ with ClapText->Xmod
+    # Copied from tiny_hf.transformers.models.clap.modeling_clap.ClapTextModel.__init__ with ClapText->Xmod
     def __init__(self, config, add_pooling_layer=True):
         super().__init__(config)
         self.config = config
@@ -794,15 +794,15 @@ class XmodModel(XmodPreTrainedModel):
         # Initialize weights and apply final processing
         self.post_init()
 
-    # Copied from transformers.models.roberta.modeling_roberta.RobertaModel.get_input_embeddings
+    # Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaModel.get_input_embeddings
     def get_input_embeddings(self):
         return self.embeddings.word_embeddings
 
-    # Copied from transformers.models.roberta.modeling_roberta.RobertaModel.set_input_embeddings
+    # Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaModel.set_input_embeddings
     def set_input_embeddings(self, value):
         self.embeddings.word_embeddings = value
 
-    # Copied from transformers.models.roberta.modeling_roberta.RobertaModel._prune_heads
+    # Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaModel._prune_heads
     def _prune_heads(self, heads_to_prune):
         """
         Prunes heads of the model. heads_to_prune: dict of {layer_num: list of heads to prune in this layer} See base
@@ -960,7 +960,7 @@ class XmodModel(XmodPreTrainedModel):
 class XmodForCausalLM(XmodPreTrainedModel, GenerationMixin):
     _tied_weights_keys = ["lm_head.decoder.weight", "lm_head.decoder.bias"]
 
-    # Copied from transformers.models.roberta.modeling_roberta.RobertaForCausalLM.__init__ with Roberta->Xmod
+    # Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaForCausalLM.__init__ with Roberta->Xmod
     def __init__(self, config):
         super().__init__(config)
 
@@ -973,11 +973,11 @@ class XmodForCausalLM(XmodPreTrainedModel, GenerationMixin):
         # Initialize weights and apply final processing
         self.post_init()
 
-    # Copied from transformers.models.roberta.modeling_roberta.RobertaForCausalLM.get_output_embeddings
+    # Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaForCausalLM.get_output_embeddings
     def get_output_embeddings(self):
         return self.lm_head.decoder
 
-    # Copied from transformers.models.roberta.modeling_roberta.RobertaForCausalLM.set_output_embeddings
+    # Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaForCausalLM.set_output_embeddings
     def set_output_embeddings(self, new_embeddings):
         self.lm_head.decoder = new_embeddings
 
@@ -1031,8 +1031,8 @@ class XmodForCausalLM(XmodPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, XmodForCausalLM, AutoConfig
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, XmodForCausalLM, AutoConfig
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("FacebookAI/xlm-roberta-base")
         >>> config = AutoConfig.from_pretrained("facebook/xmod-base")
@@ -1091,7 +1091,7 @@ class XmodForCausalLM(XmodPreTrainedModel, GenerationMixin):
             cross_attentions=outputs.cross_attentions,
         )
 
-    # Copied from transformers.models.roberta.modeling_roberta.RobertaForCausalLM._reorder_cache
+    # Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaForCausalLM._reorder_cache
     def _reorder_cache(self, past_key_values, beam_idx):
         reordered_past = ()
         for layer_past in past_key_values:
@@ -1108,7 +1108,7 @@ class XmodForCausalLM(XmodPreTrainedModel, GenerationMixin):
 class XmodForMaskedLM(XmodPreTrainedModel):
     _tied_weights_keys = ["lm_head.decoder.weight", "lm_head.decoder.bias"]
 
-    # Copied from transformers.models.roberta.modeling_roberta.RobertaForMaskedLM.__init__ with Roberta->Xmod
+    # Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaForMaskedLM.__init__ with Roberta->Xmod
     def __init__(self, config):
         super().__init__(config)
 
@@ -1124,11 +1124,11 @@ class XmodForMaskedLM(XmodPreTrainedModel):
         # Initialize weights and apply final processing
         self.post_init()
 
-    # Copied from transformers.models.roberta.modeling_roberta.RobertaForMaskedLM.get_output_embeddings
+    # Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaForMaskedLM.get_output_embeddings
     def get_output_embeddings(self):
         return self.lm_head.decoder
 
-    # Copied from transformers.models.roberta.modeling_roberta.RobertaForMaskedLM.set_output_embeddings
+    # Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaForMaskedLM.set_output_embeddings
     def set_output_embeddings(self, new_embeddings):
         self.lm_head.decoder = new_embeddings
 
@@ -1193,7 +1193,7 @@ class XmodForMaskedLM(XmodPreTrainedModel):
         )
 
 
-# Copied from transformers.models.roberta.modeling_roberta.RobertaLMHead
+# Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaLMHead
 class XmodLMHead(nn.Module):
     """Roberta Head for masked language modeling."""
 
@@ -1233,7 +1233,7 @@ class XmodLMHead(nn.Module):
     XMOD_START_DOCSTRING,
 )
 class XmodForSequenceClassification(XmodPreTrainedModel):
-    # Copied from transformers.models.roberta.modeling_roberta.RobertaForSequenceClassification.__init__ with Roberta->Xmod
+    # Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaForSequenceClassification.__init__ with Roberta->Xmod
     def __init__(self, config):
         super().__init__(config)
         self.num_labels = config.num_labels
@@ -1326,7 +1326,7 @@ class XmodForSequenceClassification(XmodPreTrainedModel):
     XMOD_START_DOCSTRING,
 )
 class XmodForMultipleChoice(XmodPreTrainedModel):
-    # Copied from transformers.models.roberta.modeling_roberta.RobertaForMultipleChoice.__init__ with Roberta->Xmod
+    # Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaForMultipleChoice.__init__ with Roberta->Xmod
     def __init__(self, config):
         super().__init__(config)
 
@@ -1415,7 +1415,7 @@ class XmodForMultipleChoice(XmodPreTrainedModel):
     XMOD_START_DOCSTRING,
 )
 class XmodForTokenClassification(XmodPreTrainedModel):
-    # Copied from transformers.models.roberta.modeling_roberta.RobertaForTokenClassification.__init__ with Roberta->Xmod
+    # Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaForTokenClassification.__init__ with Roberta->Xmod
     def __init__(self, config):
         super().__init__(config)
         self.num_labels = config.num_labels
@@ -1486,7 +1486,7 @@ class XmodForTokenClassification(XmodPreTrainedModel):
         )
 
 
-# Copied from transformers.models.roberta.modeling_roberta.RobertaClassificationHead
+# Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaClassificationHead
 class XmodClassificationHead(nn.Module):
     """Head for sentence-level classification tasks."""
 
@@ -1517,7 +1517,7 @@ class XmodClassificationHead(nn.Module):
     XMOD_START_DOCSTRING,
 )
 class XmodForQuestionAnswering(XmodPreTrainedModel):
-    # Copied from transformers.models.roberta.modeling_roberta.RobertaForQuestionAnswering.__init__ with Roberta->Xmod
+    # Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaForQuestionAnswering.__init__ with Roberta->Xmod
     def __init__(self, config):
         super().__init__(config)
         self.num_labels = config.num_labels
@@ -1606,7 +1606,7 @@ class XmodForQuestionAnswering(XmodPreTrainedModel):
         )
 
 
-# Copied from transformers.models.roberta.modeling_roberta.create_position_ids_from_input_ids
+# Copied from tiny_hf.transformers.models.roberta.modeling_roberta.create_position_ids_from_input_ids
 def create_position_ids_from_input_ids(input_ids, padding_idx, past_key_values_length=0):
     """
     Replace non-padding symbols with their position numbers. Position numbers begin at padding_idx+1. Padding symbols

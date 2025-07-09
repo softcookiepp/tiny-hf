@@ -16,7 +16,7 @@
 
 import argparse
 
-import torch
+import tg_adapter as torch
 
 # Step 1. clone https://github.com/microsoft/unilm
 # Step 2. git checkout to https://github.com/microsoft/unilm/commit/b94ec76c36f02fb2b0bf0dcb0b8554a2185173cd
@@ -26,7 +26,7 @@ import torch
 from unilm.wavlm.WavLM import WavLM as WavLMOrig
 from unilm.wavlm.WavLM import WavLMConfig as WavLMConfigOrig
 
-from transformers import WavLMConfig, WavLMModel, logging
+from tiny_hf.transformers.import WavLMConfig, WavLMModel, logging
 
 
 logging.set_verbosity_info()

@@ -14,13 +14,13 @@
 # limitations under the License.
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.nn as nn
+import tg_adapter.nn.functional as F
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
-from transformers.models.siglip.configuration_siglip import SiglipConfig, SiglipTextConfig, SiglipVisionConfig
-from transformers.models.siglip.modeling_siglip import (
+from tiny_hf.transformers.models.siglip.configuration_siglip import SiglipConfig, SiglipTextConfig, SiglipVisionConfig
+from tiny_hf.transformers.models.siglip.modeling_siglip import (
     BaseModelOutputWithPooling,
     ImageClassifierOutput,
     SiglipForImageClassification,
@@ -81,7 +81,7 @@ class Siglip2VisionConfig(SiglipVisionConfig):
     Example:
 
     ```python
-    >>> from transformers import Siglip2VisionConfig, Siglip2VisionModel
+    >>> from tiny_hf.transformers.import Siglip2VisionConfig, Siglip2VisionModel
 
     >>> # Initializing a Siglip2VisionConfig with google/siglip2-base-patch16-naflex style configuration
     >>> configuration = Siglip2VisionConfig()

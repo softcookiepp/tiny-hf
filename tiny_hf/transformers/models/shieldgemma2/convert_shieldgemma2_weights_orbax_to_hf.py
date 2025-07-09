@@ -14,7 +14,7 @@ from typing import Any
 
 import accelerate
 import numpy as np
-import torch
+import tg_adapter as torch
 import tree
 from absl import app, flags, logging
 from orbax import checkpoint as obc

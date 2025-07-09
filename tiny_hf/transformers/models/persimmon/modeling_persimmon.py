@@ -22,9 +22,9 @@
 import math
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, StaticCache
@@ -51,7 +51,7 @@ from .configuration_persimmon import PersimmonConfig
 
 
 if is_torch_flex_attn_available():
-    from torch.nn.attention.flex_attention import BlockMask
+    from tg_adapter.nn.attention.flex_attention import BlockMask
 
     from ...integrations.flex_attention import make_flex_block_causal_mask
 
@@ -62,7 +62,7 @@ _CHECKPOINT_FOR_DOC = "adept/persimmon-8b-base"
 _CONFIG_FOR_DOC = "PersimmonConfig"
 
 
-# Copied from transformers.models.llama.modeling_llama.LlamaRotaryEmbedding with Llama->Persimmon
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaRotaryEmbedding with Llama->Persimmon
 class PersimmonRotaryEmbedding(nn.Module):
     def __init__(self, config: PersimmonConfig, device=None):
         super().__init__()
@@ -124,7 +124,7 @@ class PersimmonRotaryEmbedding(nn.Module):
         return cos.to(dtype=x.dtype), sin.to(dtype=x.dtype)
 
 
-# Copied from transformers.models.llama.modeling_llama.rotate_half
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.rotate_half
 def rotate_half(x):
     """Rotates half the hidden dims of the input."""
     x1 = x[..., : x.shape[-1] // 2]
@@ -132,7 +132,7 @@ def rotate_half(x):
     return torch.cat((-x2, x1), dim=-1)
 
 
-# Copied from transformers.models.llama.modeling_llama.apply_rotary_pos_emb
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.apply_rotary_pos_emb
 def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
     """Applies Rotary Position Embedding to the query and key tensors.
 
@@ -160,7 +160,7 @@ def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
     return q_embed, k_embed
 
 
-# Copied from transformers.models.gpt_neox.modeling_gpt_neox.GPTNeoXMLP with GPTNeoX->Persimmon
+# Copied from tiny_hf.transformers.models.gpt_neox.modeling_gpt_neox.GPTNeoXMLP with GPTNeoX->Persimmon
 class PersimmonMLP(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -676,7 +676,7 @@ class PersimmonModel(PersimmonPreTrainedModel):
             attentions=all_self_attns,
         )
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
     def _update_causal_mask(
         self,
         attention_mask: torch.Tensor,
@@ -748,7 +748,7 @@ class PersimmonModel(PersimmonPreTrainedModel):
         return causal_mask
 
     @staticmethod
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel._prepare_4d_causal_attention_mask_with_cache_position
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel._prepare_4d_causal_attention_mask_with_cache_position
     def _prepare_4d_causal_attention_mask_with_cache_position(
         attention_mask: torch.Tensor,
         sequence_length: int,
@@ -810,7 +810,7 @@ class PersimmonModel(PersimmonPreTrainedModel):
 class PersimmonForCausalLM(PersimmonPreTrainedModel, GenerationMixin):
     _tied_weights_keys = ["lm_head.weight"]
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.__init__ with LLAMA->PERSIMMON,Llama->Persimmon
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.__init__ with LLAMA->PERSIMMON,Llama->Persimmon
     def __init__(self, config):
         super().__init__(config)
         self.model = PersimmonModel(config)
@@ -820,27 +820,27 @@ class PersimmonForCausalLM(PersimmonPreTrainedModel, GenerationMixin):
         # Initialize weights and apply final processing
         self.post_init()
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.get_input_embeddings
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.get_input_embeddings
     def get_input_embeddings(self):
         return self.model.embed_tokens
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.set_input_embeddings
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.set_input_embeddings
     def set_input_embeddings(self, value):
         self.model.embed_tokens = value
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.get_output_embeddings
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.get_output_embeddings
     def get_output_embeddings(self):
         return self.lm_head
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.set_output_embeddings
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.set_output_embeddings
     def set_output_embeddings(self, new_embeddings):
         self.lm_head = new_embeddings
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.set_decoder
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.set_decoder
     def set_decoder(self, decoder):
         self.model = decoder
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.get_decoder
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.get_decoder
     def get_decoder(self):
         return self.model
 
@@ -881,7 +881,7 @@ class PersimmonForCausalLM(PersimmonPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, PersimmonForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, PersimmonForCausalLM
 
         >>> model = PersimmonForCausalLM.from_pretrained("adept/persimmon-8b-base")
         >>> tokenizer = AutoTokenizer.from_pretrained("adept/persimmon-8b-base")
@@ -957,7 +957,7 @@ class PersimmonForCausalLM(PersimmonPreTrainedModel, GenerationMixin):
     """,
     PERSIMMON_START_DOCSTRING,
 )
-# Copied from transformers.models.llama.modeling_llama.LlamaForSequenceClassification with LLAMA->PERSIMMON,Llama->Persimmon
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForSequenceClassification with LLAMA->PERSIMMON,Llama->Persimmon
 class PersimmonForSequenceClassification(PersimmonPreTrainedModel):
     def __init__(self, config):
         super().__init__(config)
@@ -1057,7 +1057,7 @@ class PersimmonForSequenceClassification(PersimmonPreTrainedModel):
     """,
     PERSIMMON_START_DOCSTRING,
 )
-# Copied from transformers.models.llama.modeling_llama.LlamaForTokenClassification with Llama->Persimmon, LLAMA->PERSIMMON
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForTokenClassification with Llama->Persimmon, LLAMA->PERSIMMON
 class PersimmonForTokenClassification(PersimmonPreTrainedModel):
     def __init__(self, config):
         super().__init__(config)

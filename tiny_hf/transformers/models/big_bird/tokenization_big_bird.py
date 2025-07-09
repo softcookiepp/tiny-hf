@@ -160,7 +160,7 @@ class BigBirdTokenizer(PreTrainedTokenizer):
         token = self.sp_model.IdToPiece(index)
         return token
 
-    # Copied from transformers.models.albert.tokenization_albert.AlbertTokenizer.convert_tokens_to_string
+    # Copied from tiny_hf.transformers.models.albert.tokenization_albert.AlbertTokenizer.convert_tokens_to_string
     def convert_tokens_to_string(self, tokens):
         """Converts a sequence of tokens (string) in a single string."""
         current_sub_tokens = []

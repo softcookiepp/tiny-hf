@@ -19,9 +19,9 @@ from dataclasses import dataclass
 from typing import Optional
 
 import numpy as np
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
+import tg_adapter as torch
+import tg_adapter.nn as nn
+import tg_adapter.nn.functional as F
 
 from ...modeling_utils import PreTrainedModel
 from ...utils import (
@@ -81,7 +81,7 @@ class DacEncoderOutput(ModelOutput):
 
 
 @dataclass
-# Copied from transformers.models.encodec.modeling_encodec.EncodecDecoderOutput with Encodec->Dac, segment_length->input_length
+# Copied from tiny_hf.transformers.models.encodec.modeling_encodec.EncodecDecoderOutput with Encodec->Dac, segment_length->input_length
 class DacDecoderOutput(ModelOutput):
     """
     Args:
@@ -690,7 +690,7 @@ class DacModel(DacPreTrainedModel):
 
         ```python
         >>> from datasets import load_dataset, Audio
-        >>> from transformers import DacModel, AutoProcessor
+        >>> from tiny_hf.transformers.import DacModel, AutoProcessor
         >>> librispeech_dummy = load_dataset("hf-internal-testing/librispeech_asr_dummy", "clean", split="validation")
 
         >>> model = DacModel.from_pretrained("descript/dac_16khz")

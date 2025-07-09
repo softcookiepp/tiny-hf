@@ -15,12 +15,12 @@ import argparse
 import json
 import os
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
-from transformers import NllbMoeConfig, NllbMoeModel
-from transformers.modeling_utils import dtype_byte_size
-from transformers.utils import WEIGHTS_INDEX_NAME, WEIGHTS_NAME
+from tiny_hf.transformers.import NllbMoeConfig, NllbMoeModel
+from tiny_hf.transformers.modeling_utils import dtype_byte_size
+from tiny_hf.transformers.utils import WEIGHTS_INDEX_NAME, WEIGHTS_NAME
 
 
 def remove_ignore_keys_(state_dict):

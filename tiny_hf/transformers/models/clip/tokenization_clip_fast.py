@@ -83,7 +83,7 @@ class CLIPTokenizerFast(PreTrainedTokenizerFast):
         if not isinstance(self.backend_tokenizer.pre_tokenizer, pre_tokenizers.Sequence):
             raise ValueError(
                 "The `backend_tokenizer` provided does not match the expected format. The CLIP tokenizer has been"
-                " heavily modified from transformers version 4.17.0. You need to convert the tokenizer you are using"
+                " heavily modified from tiny_hf.transformers.version 4.17.0. You need to convert the tokenizer you are using"
                 " to be compatible with this version.The easiest way to do so is"
                 ' `CLIPTokenizerFast.from_pretrained("path_to_local_folder_or_hub_repo, from_slow=True)`. If you want'
                 " to use your existing tokenizer, you will have to revert to a version prior to 4.17.0 of"

@@ -38,7 +38,7 @@ if is_tf_available():
 
 if is_torch_available():
     import tg_adapter as torch
-    from torch.utils.data import Dataset
+    from tg_adapter.utils.data import Dataset
 
     from ..models.auto.modeling_auto import MODEL_FOR_QUESTION_ANSWERING_MAPPING_NAMES
 
@@ -238,7 +238,7 @@ class QuestionAnsweringPipeline(ChunkPipeline):
     Example:
 
     ```python
-    >>> from transformers import pipeline
+    >>> from tiny_hf.transformers.import pipeline
 
     >>> oracle = pipeline(model="deepset/roberta-base-squad2")
     >>> oracle(question="Where do I live?", context="My name is Wolfgang and I live in Berlin")

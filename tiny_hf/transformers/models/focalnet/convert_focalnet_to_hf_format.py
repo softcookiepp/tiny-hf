@@ -18,13 +18,13 @@ import argparse
 import json
 
 import requests
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 from PIL import Image
-from torchvision import transforms
+from tg_adapter.ision import transforms
 
-from transformers import BitImageProcessor, FocalNetConfig, FocalNetForImageClassification
-from transformers.image_utils import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD, PILImageResampling
+from tiny_hf.transformers.import BitImageProcessor, FocalNetConfig, FocalNetForImageClassification
+from tiny_hf.transformers.image_utils import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD, PILImageResampling
 
 
 def get_focalnet_config(model_name):

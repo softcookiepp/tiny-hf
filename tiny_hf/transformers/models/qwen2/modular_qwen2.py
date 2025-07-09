@@ -1,8 +1,8 @@
 from typing import Callable, Optional, Tuple
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...cache_utils import Cache
 from ...modeling_flash_attention_utils import FlashAttentionKwargs

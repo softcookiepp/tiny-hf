@@ -17,10 +17,10 @@
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache
@@ -126,7 +126,7 @@ class Idefics3CausalLMOutputWithPast(ModelOutput):
     image_hidden_states: Optional[Tuple[torch.FloatTensor]] = None
 
 
-# Copied from transformers.models.idefics2.modeling_idefics2.Idefics2VisionEmbeddings with Idefics2->Idefics3
+# Copied from tiny_hf.transformers.models.idefics2.modeling_idefics2.Idefics2VisionEmbeddings with Idefics2->Idefics3
 class Idefics3VisionEmbeddings(nn.Module):
     """
     This is a modified version of `siglip.modelign_siglip.SiglipVisionEmbeddings` to enable images of variable
@@ -185,11 +185,11 @@ class Idefics3VisionEmbeddings(nn.Module):
         return embeddings
 
 
-# Copied from transformers.models.siglip.modeling_siglip.SiglipAttention with Siglip->Idefics3Vision
+# Copied from tiny_hf.transformers.models.siglip.modeling_siglip.SiglipAttention with Siglip->Idefics3Vision
 class Idefics3VisionAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
-    # Copied from transformers.models.clip.modeling_clip.CLIPAttention.__init__
+    # Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPAttention.__init__
     def __init__(self, config):
         super().__init__()
         self.config = config
@@ -265,7 +265,7 @@ class Idefics3VisionAttention(nn.Module):
         return attn_output, attn_weights
 
 
-# Copied from transformers.models.idefics2.modeling_idefics2.Idefics2VisionFlashAttention2 with Idefics2->Idefics3
+# Copied from tiny_hf.transformers.models.idefics2.modeling_idefics2.Idefics2VisionFlashAttention2 with Idefics2->Idefics3
 class Idefics3VisionFlashAttention2(Idefics3VisionAttention):
     """
     Idefics3Vision flash attention module. This module inherits from `Idefics3VisionAttention` as the weights of the module stays
@@ -369,7 +369,7 @@ IDEFICS_VISION_ATTENTION_CLASSES = {
 }
 
 
-# Copied from transformers.models.siglip.modeling_siglip.SiglipMLP with Siglip->Idefics3Vision
+# Copied from tiny_hf.transformers.models.siglip.modeling_siglip.SiglipMLP with Siglip->Idefics3Vision
 class Idefics3VisionMLP(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -396,7 +396,7 @@ class Idefics3SimpleMLP(nn.Module):
         return self.proj(x)
 
 
-# Copied from transformers.models.idefics2.modeling_idefics2.Idefics2EncoderLayer with Idefics2->Idefics3
+# Copied from tiny_hf.transformers.models.idefics2.modeling_idefics2.Idefics2EncoderLayer with Idefics2->Idefics3
 class Idefics3EncoderLayer(nn.Module):
     def __init__(self, config: Idefics3VisionConfig):
         super().__init__()
@@ -406,7 +406,7 @@ class Idefics3EncoderLayer(nn.Module):
         self.mlp = Idefics3VisionMLP(config)
         self.layer_norm2 = nn.LayerNorm(self.embed_dim, eps=config.layer_norm_eps)
 
-    # Copied from transformers.models.siglip.modeling_siglip.SiglipEncoderLayer.forward
+    # Copied from tiny_hf.transformers.models.siglip.modeling_siglip.SiglipEncoderLayer.forward
     def forward(
         self,
         hidden_states: torch.Tensor,
@@ -446,7 +446,7 @@ class Idefics3EncoderLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.siglip.modeling_siglip.SiglipEncoder with Siglip->Idefics3
+# Copied from tiny_hf.transformers.models.siglip.modeling_siglip.SiglipEncoder with Siglip->Idefics3
 class Idefics3Encoder(nn.Module):
     """
     Transformer encoder consisting of `config.num_hidden_layers` self attention layers. Each layer is a
@@ -535,7 +535,7 @@ class Idefics3Encoder(nn.Module):
         )
 
 
-# Copied from transformers.models.llama.modeling_llama.repeat_kv
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.repeat_kv
 def repeat_kv(hidden_states: torch.Tensor, n_rep: int) -> torch.Tensor:
     """
     This is the equivalent of torch.repeat_interleave(x, dim=1, repeats=n_rep). The hidden states go from (batch,
@@ -548,7 +548,7 @@ def repeat_kv(hidden_states: torch.Tensor, n_rep: int) -> torch.Tensor:
     return hidden_states.reshape(batch, num_key_value_heads * n_rep, slen, head_dim)
 
 
-# Copied from transformers.models.llama.modeling_llama.LlamaRMSNorm with Llama->Idefics3
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaRMSNorm with Llama->Idefics3
 class Idefics3RMSNorm(nn.Module):
     def __init__(self, hidden_size, eps=1e-6):
         """
@@ -623,7 +623,7 @@ class Idefics3PreTrainedModel(PreTrainedModel):
     _supports_sdpa = True
     _supports_cache_class = True
 
-    # Copied from transformers.models.idefics2.modeling_idefics2.Idefics2PreTrainedModel._init_weights
+    # Copied from tiny_hf.transformers.models.idefics2.modeling_idefics2.Idefics2PreTrainedModel._init_weights
     def _init_weights(self, module):
         std = (
             self.config.text_config.initializer_range
@@ -679,11 +679,11 @@ class Idefics3VisionTransformer(Idefics3PreTrainedModel):
         self.post_layernorm = nn.LayerNorm(embed_dim, eps=config.layer_norm_eps)
         self._use_flash_attention_2 = config._attn_implementation == "flash_attention_2"
 
-    # Copied from transformers.models.idefics2.modeling_idefics2.Idefics2VisionTransformer.get_input_embeddings
+    # Copied from tiny_hf.transformers.models.idefics2.modeling_idefics2.Idefics2VisionTransformer.get_input_embeddings
     def get_input_embeddings(self):
         return self.embeddings
 
-    # Copied from transformers.models.idefics2.modeling_idefics2.Idefics2VisionTransformer.set_input_embeddings
+    # Copied from tiny_hf.transformers.models.idefics2.modeling_idefics2.Idefics2VisionTransformer.set_input_embeddings
     def set_input_embeddings(self, value):
         self.embeddings = value
 
@@ -842,7 +842,7 @@ class Idefics3Model(Idefics3PreTrainedModel):
 
         self.post_init()
 
-    # Copied from transformers.models.idefics2.modeling_idefics2.Idefics2Model.enable_input_require_grads
+    # Copied from tiny_hf.transformers.models.idefics2.modeling_idefics2.Idefics2Model.enable_input_require_grads
     def enable_input_require_grads(self):
         """
         Enables the gradients for the input embeddings.
@@ -869,16 +869,16 @@ class Idefics3Model(Idefics3PreTrainedModel):
             make_inputs_require_grads
         )
 
-    # Copied from transformers.models.idefics2.modeling_idefics2.Idefics2Model.disable_input_require_grads
+    # Copied from tiny_hf.transformers.models.idefics2.modeling_idefics2.Idefics2Model.disable_input_require_grads
     def disable_input_require_grads(self):
         self._text_require_grads_hook.remove()
         self._vision_require_grads_hook.remove()
 
-    # Copied from transformers.models.idefics2.modeling_idefics2.Idefics2Model.get_input_embeddings
+    # Copied from tiny_hf.transformers.models.idefics2.modeling_idefics2.Idefics2Model.get_input_embeddings
     def get_input_embeddings(self):
         return self.text_model.get_input_embeddings()
 
-    # Copied from transformers.models.idefics2.modeling_idefics2.Idefics2Model.set_input_embeddings
+    # Copied from tiny_hf.transformers.models.idefics2.modeling_idefics2.Idefics2Model.set_input_embeddings
     def set_input_embeddings(self, value):
         self.text_model.set_input_embeddings(value)
 
@@ -1052,7 +1052,7 @@ class Idefics3Model(Idefics3PreTrainedModel):
 class Idefics3ForConditionalGeneration(Idefics3PreTrainedModel, GenerationMixin):
     _tied_weights_keys = ["lm_head.weight"]
 
-    # Copied from transformers.models.idefics2.modeling_idefics2.Idefics2ForConditionalGeneration.__init__ with Idefics2->Idefics3
+    # Copied from tiny_hf.transformers.models.idefics2.modeling_idefics2.Idefics2ForConditionalGeneration.__init__ with Idefics2->Idefics3
     def __init__(self, config):
         super().__init__(config)
         self.model = Idefics3Model(config)
@@ -1064,7 +1064,7 @@ class Idefics3ForConditionalGeneration(Idefics3PreTrainedModel, GenerationMixin)
         # Initialize weights and apply final processing
         self.post_init()
 
-    # Copied from transformers.models.idefics2.modeling_idefics2.Idefics2ForConditionalGeneration.enable_input_require_grads
+    # Copied from tiny_hf.transformers.models.idefics2.modeling_idefics2.Idefics2ForConditionalGeneration.enable_input_require_grads
     def enable_input_require_grads(self):
         """
         Enables the gradients for the input embeddings. This is useful for fine-tuning adapter weights while keeping
@@ -1079,24 +1079,24 @@ class Idefics3ForConditionalGeneration(Idefics3PreTrainedModel, GenerationMixin)
             make_inputs_require_grads
         )
 
-    # Copied from transformers.models.idefics2.modeling_idefics2.Idefics2ForConditionalGeneration.disable_input_require_grads
+    # Copied from tiny_hf.transformers.models.idefics2.modeling_idefics2.Idefics2ForConditionalGeneration.disable_input_require_grads
     def disable_input_require_grads(self):
         self._text_require_grads_hook.remove()
         self._vision_require_grads_hook.remove()
 
-    # Copied from transformers.models.idefics2.modeling_idefics2.Idefics2ForConditionalGeneration.get_input_embeddings
+    # Copied from tiny_hf.transformers.models.idefics2.modeling_idefics2.Idefics2ForConditionalGeneration.get_input_embeddings
     def get_input_embeddings(self):
         return self.model.text_model.get_input_embeddings()
 
-    # Copied from transformers.models.idefics2.modeling_idefics2.Idefics2ForConditionalGeneration.set_input_embeddings
+    # Copied from tiny_hf.transformers.models.idefics2.modeling_idefics2.Idefics2ForConditionalGeneration.set_input_embeddings
     def set_input_embeddings(self, value):
         self.model.text_model.set_input_embeddings(value)
 
-    # Copied from transformers.models.idefics2.modeling_idefics2.Idefics2ForConditionalGeneration.get_output_embeddings
+    # Copied from tiny_hf.transformers.models.idefics2.modeling_idefics2.Idefics2ForConditionalGeneration.get_output_embeddings
     def get_output_embeddings(self):
         return self.lm_head
 
-    # Copied from transformers.models.idefics2.modeling_idefics2.Idefics2ForConditionalGeneration.set_output_embeddings
+    # Copied from tiny_hf.transformers.models.idefics2.modeling_idefics2.Idefics2ForConditionalGeneration.set_output_embeddings
     def set_output_embeddings(self, new_embeddings):
         self.lm_head = new_embeddings
 
@@ -1139,12 +1139,12 @@ class Idefics3ForConditionalGeneration(Idefics3PreTrainedModel, GenerationMixin)
 
         ```python
         >>> import requests
-        >>> import torch
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> from io import BytesIO
 
-        >>> from transformers import AutoProcessor, AutoModelForVision2Seq
-        >>> from transformers.image_utils import load_image
+        >>> from tiny_hf.transformers.import AutoProcessor, AutoModelForVision2Seq
+        >>> from tiny_hf.transformers.image_utils import load_image
 
         >>> # Note that passing the image urls (instead of the actual pil images) to the processor is also possible
         >>> image1 = load_image("https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg")
@@ -1248,7 +1248,7 @@ class Idefics3ForConditionalGeneration(Idefics3PreTrainedModel, GenerationMixin)
             image_hidden_states=outputs.image_hidden_states,
         )
 
-    # Copied from transformers.models.idefics2.modeling_idefics2.Idefics2ForConditionalGeneration.prepare_inputs_for_generation
+    # Copied from tiny_hf.transformers.models.idefics2.modeling_idefics2.Idefics2ForConditionalGeneration.prepare_inputs_for_generation
     def prepare_inputs_for_generation(
         self,
         input_ids,
@@ -1289,7 +1289,7 @@ class Idefics3ForConditionalGeneration(Idefics3PreTrainedModel, GenerationMixin)
 
         return model_inputs
 
-    # Copied from transformers.models.idefics2.modeling_idefics2.Idefics2ForConditionalGeneration._update_model_kwargs_for_generation
+    # Copied from tiny_hf.transformers.models.idefics2.modeling_idefics2.Idefics2ForConditionalGeneration._update_model_kwargs_for_generation
     def _update_model_kwargs_for_generation(self, outputs, model_kwargs, is_encoder_decoder, **kwargs):
         model_kwargs = super()._update_model_kwargs_for_generation(
             outputs=outputs,

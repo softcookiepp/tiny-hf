@@ -40,7 +40,7 @@ logger = logging.get_logger(__name__)
 
 if TYPE_CHECKING:
     if is_torch_available():
-        import torch
+        import tg_adapter as torch
     if is_tf_available():
         import tensorflow as tf
     if is_flax_available():

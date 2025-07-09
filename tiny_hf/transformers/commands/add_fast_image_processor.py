@@ -173,7 +173,7 @@ def add_fast_image_processor_to_model_init(
         # we have an init file in the old format
 
         # add "is_torchvision_available" import to from ...utils import (
-        # Regex to match import statements from transformers.utils
+        # Regex to match import statements from tiny_hf.transformers.utils
         pattern = r"""
             from\s+\.\.\.utils\s+import\s+
             (?:                                   # Non-capturing group for either:
@@ -347,7 +347,7 @@ def add_fast_image_processor_to_tests(fast_image_processor_name: str, model_name
         content = f.read()
 
     # add is_torchvision_available import to the imports
-    # Regex to match import statements from transformers.utils
+    # Regex to match import statements from tiny_hf.transformers.utils
     pattern = r"""
         from\s+transformers\.utils\s+import\s+
         (?:                                   # Non-capturing group for either:
@@ -375,15 +375,15 @@ def add_fast_image_processor_to_tests(fast_image_processor_name: str, model_name
         else:  # Multi-line import
             updated_imports = "(\n    " + ",\n    ".join(existing_imports) + ",\n)"
 
-        return f"from transformers.utils import {updated_imports}"
+        return f"from tiny_hf.transformers.utils import {updated_imports}"
 
     # Replace all matches in the file content
     updated_content = regex.sub(replacement_function, content)
 
     # add the fast image processor to the imports
-    base_import_string = f"    from transformers import {fast_image_processor_name[:-4]}"
+    base_import_string = f"    from tiny_hf.transformers.import {fast_image_processor_name[:-4]}"
     fast_import_string = (
-        f"    if is_torchvision_available():\n        from transformers import {fast_image_processor_name}"
+        f"    if is_torchvision_available():\n        from tiny_hf.transformers.import {fast_image_processor_name}"
     )
     if fast_import_string not in updated_content:
         updated_content = updated_content.replace(base_import_string, base_import_string + "\n\n" + fast_import_string)

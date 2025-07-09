@@ -84,7 +84,7 @@ class MoshiDepthConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import (
+    >>> from tiny_hf.transformers.import (
     ...     MoshiDepthConfig,
     ...     MoshiDepthDecoder,
     ... )
@@ -213,7 +213,7 @@ class MoshiConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import (
+    >>> from tiny_hf.transformers.import (
     ...     MoshiConfig,
     ...     MoshiForConditionalGeneration,
     ... )

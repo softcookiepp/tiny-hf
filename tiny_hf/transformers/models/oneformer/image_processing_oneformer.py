@@ -59,11 +59,11 @@ logger = logging.get_logger(__name__)
 
 
 if is_torch_available():
-    import torch
-    from torch import nn
+    import tg_adapter as torch
+    from tg_adapter.import nn
 
 
-# Copied from transformers.models.detr.image_processing_detr.max_across_indices
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.max_across_indices
 def max_across_indices(values: Iterable[Any]) -> List[Any]:
     """
     Return the maximum value across all indices of an iterable of values.
@@ -71,7 +71,7 @@ def max_across_indices(values: Iterable[Any]) -> List[Any]:
     return [max(values_i) for values_i in zip(*values)]
 
 
-# Copied from transformers.models.detr.image_processing_detr.get_max_height_width
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.get_max_height_width
 def get_max_height_width(
     images: List[np.ndarray], input_data_format: Optional[Union[str, ChannelDimension]] = None
 ) -> List[int]:
@@ -90,7 +90,7 @@ def get_max_height_width(
     return (max_height, max_width)
 
 
-# Copied from transformers.models.detr.image_processing_detr.make_pixel_mask
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.make_pixel_mask
 def make_pixel_mask(
     image: np.ndarray, output_size: Tuple[int, int], input_data_format: Optional[Union[str, ChannelDimension]] = None
 ) -> np.ndarray:
@@ -109,7 +109,7 @@ def make_pixel_mask(
     return mask
 
 
-# Copied from transformers.models.detr.image_processing_detr.binary_mask_to_rle
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.binary_mask_to_rle
 def binary_mask_to_rle(mask):
     """
     Converts given binary mask of shape `(height, width)` to the run-length encoding (RLE) format.
@@ -132,7 +132,7 @@ def binary_mask_to_rle(mask):
     return list(runs)
 
 
-# Copied from transformers.models.detr.image_processing_detr.convert_segmentation_to_rle
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.convert_segmentation_to_rle
 def convert_segmentation_to_rle(segmentation):
     """
     Converts given segmentation map of shape `(height, width)` to the run-length encoding (RLE) format.
@@ -154,7 +154,7 @@ def convert_segmentation_to_rle(segmentation):
     return run_length_encodings
 
 
-# Copied from transformers.models.detr.image_processing_detr.remove_low_and_no_objects
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.remove_low_and_no_objects
 def remove_low_and_no_objects(masks, scores, labels, object_mask_threshold, num_labels):
     """
     Binarize the given masks using `object_mask_threshold`, it returns the associated values of `masks`, `scores` and
@@ -183,7 +183,7 @@ def remove_low_and_no_objects(masks, scores, labels, object_mask_threshold, num_
     return masks[to_keep], scores[to_keep], labels[to_keep]
 
 
-# Copied from transformers.models.detr.image_processing_detr.check_segment_validity
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.check_segment_validity
 def check_segment_validity(mask_labels, mask_probs, k, mask_threshold=0.5, overlap_mask_area_threshold=0.8):
     # Get the mask associated with the k class
     mask_k = mask_labels == k
@@ -202,7 +202,7 @@ def check_segment_validity(mask_labels, mask_probs, k, mask_threshold=0.5, overl
     return mask_exists, mask_k
 
 
-# Copied from transformers.models.detr.image_processing_detr.compute_segments
+# Copied from tiny_hf.transformers.models.detr.image_processing_detr.compute_segments
 def compute_segments(
     mask_probs,
     pred_scores,
@@ -263,7 +263,7 @@ def compute_segments(
     return segmentation, segments
 
 
-# Copied from transformers.models.maskformer.image_processing_maskformer.convert_segmentation_map_to_binary_masks
+# Copied from tiny_hf.transformers.models.maskformer.image_processing_maskformer.convert_segmentation_map_to_binary_masks
 def convert_segmentation_map_to_binary_masks(
     segmentation_map: "np.ndarray",
     instance_id_to_semantic_id: Optional[Dict[int, int]] = None,
@@ -482,7 +482,7 @@ class OneFormerImageProcessor(BaseImageProcessor):
             image_processor_dict["do_reduce_labels"] = image_processor_dict.pop("reduce_labels")
         return super().from_dict(image_processor_dict, **kwargs)
 
-    # Copied from transformers.models.maskformer.image_processing_maskformer.MaskFormerImageProcessor.to_dict
+    # Copied from tiny_hf.transformers.models.maskformer.image_processing_maskformer.MaskFormerImageProcessor.to_dict
     def to_dict(self) -> Dict[str, Any]:
         """
         Serializes this instance to a Python dictionary. This method calls the superclass method and then removes the
@@ -530,7 +530,7 @@ class OneFormerImageProcessor(BaseImageProcessor):
         )
         return image
 
-    # Copied from transformers.models.detr.image_processing_detr.DetrImageProcessor.rescale
+    # Copied from tiny_hf.transformers.models.detr.image_processing_detr.DetrImageProcessor.rescale
     def rescale(
         self,
         image: np.ndarray,
@@ -559,7 +559,7 @@ class OneFormerImageProcessor(BaseImageProcessor):
         """
         return rescale(image, rescale_factor, data_format=data_format, input_data_format=input_data_format)
 
-    # Copied from transformers.models.maskformer.image_processing_maskformer.MaskFormerImageProcessor.convert_segmentation_map_to_binary_masks
+    # Copied from tiny_hf.transformers.models.maskformer.image_processing_maskformer.MaskFormerImageProcessor.convert_segmentation_map_to_binary_masks
     def convert_segmentation_map_to_binary_masks(
         self,
         segmentation_map: "np.ndarray",
@@ -776,7 +776,7 @@ class OneFormerImageProcessor(BaseImageProcessor):
         )
         return encoded_inputs
 
-    # Copied from transformers.models.vilt.image_processing_vilt.ViltImageProcessor._pad_image
+    # Copied from tiny_hf.transformers.models.vilt.image_processing_vilt.ViltImageProcessor._pad_image
     def _pad_image(
         self,
         image: np.ndarray,
@@ -804,7 +804,7 @@ class OneFormerImageProcessor(BaseImageProcessor):
         )
         return padded_image
 
-    # Copied from transformers.models.vilt.image_processing_vilt.ViltImageProcessor.pad
+    # Copied from tiny_hf.transformers.models.vilt.image_processing_vilt.ViltImageProcessor.pad
     def pad(
         self,
         images: List[np.ndarray],
@@ -1091,7 +1091,7 @@ class OneFormerImageProcessor(BaseImageProcessor):
 
         return encoded_inputs
 
-    # Copied from transformers.models.maskformer.image_processing_maskformer.MaskFormerImageProcessor.post_process_semantic_segmentation
+    # Copied from tiny_hf.transformers.models.maskformer.image_processing_maskformer.MaskFormerImageProcessor.post_process_semantic_segmentation
     def post_process_semantic_segmentation(
         self, outputs, target_sizes: Optional[List[Tuple[int, int]]] = None
     ) -> "torch.Tensor":
@@ -1261,7 +1261,7 @@ class OneFormerImageProcessor(BaseImageProcessor):
             results.append({"segmentation": segmentation, "segments_info": segments})
         return results
 
-    # Copied from transformers.models.maskformer.image_processing_maskformer.MaskFormerImageProcessor.post_process_panoptic_segmentation
+    # Copied from tiny_hf.transformers.models.maskformer.image_processing_maskformer.MaskFormerImageProcessor.post_process_panoptic_segmentation
     def post_process_panoptic_segmentation(
         self,
         outputs,

@@ -18,18 +18,18 @@ import argparse
 import os
 from pathlib import Path
 
-import torch
+import tg_adapter as torch
 from accelerate.utils.modeling import find_tied_parameters
 from seamless_communication.inference import Translator
 
-from transformers import (
+from tiny_hf.transformers.import (
     SeamlessM4TFeatureExtractor,
     SeamlessM4TProcessor,
     SeamlessM4TTokenizer,
     SeamlessM4Tv2Config,
     SeamlessM4Tv2Model,
 )
-from transformers.utils import logging
+from tiny_hf.transformers.utils import logging
 
 
 # fmt: off

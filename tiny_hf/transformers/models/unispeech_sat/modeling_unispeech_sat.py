@@ -20,10 +20,10 @@ from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...integrations.deepspeed import is_deepspeed_zero3_enabled
@@ -117,7 +117,7 @@ class UniSpeechSatForPreTrainingOutput(ModelOutput):
     attentions: Optional[Tuple[torch.FloatTensor]] = None
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2._compute_mask_indices
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2._compute_mask_indices
 def _compute_mask_indices(
     shape: Tuple[int, int],
     mask_prob: float,
@@ -237,7 +237,7 @@ def _compute_mask_indices(
     return spec_aug_mask
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2NoLayerNormConvLayer with Wav2Vec2->UniSpeechSat
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2NoLayerNormConvLayer with Wav2Vec2->UniSpeechSat
 class UniSpeechSatNoLayerNormConvLayer(nn.Module):
     def __init__(self, config, layer_id=0):
         super().__init__()
@@ -259,7 +259,7 @@ class UniSpeechSatNoLayerNormConvLayer(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2LayerNormConvLayer with Wav2Vec2->UniSpeechSat
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2LayerNormConvLayer with Wav2Vec2->UniSpeechSat
 class UniSpeechSatLayerNormConvLayer(nn.Module):
     def __init__(self, config, layer_id=0):
         super().__init__()
@@ -287,7 +287,7 @@ class UniSpeechSatLayerNormConvLayer(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2GroupNormConvLayer with Wav2Vec2->UniSpeechSat
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2GroupNormConvLayer with Wav2Vec2->UniSpeechSat
 class UniSpeechSatGroupNormConvLayer(nn.Module):
     def __init__(self, config, layer_id=0):
         super().__init__()
@@ -312,7 +312,7 @@ class UniSpeechSatGroupNormConvLayer(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2PositionalConvEmbedding with Wav2Vec2->UniSpeechSat
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2PositionalConvEmbedding with Wav2Vec2->UniSpeechSat
 class UniSpeechSatPositionalConvEmbedding(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -358,7 +358,7 @@ class UniSpeechSatPositionalConvEmbedding(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2SamePadLayer with Wav2Vec2->UniSpeechSat
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2SamePadLayer with Wav2Vec2->UniSpeechSat
 class UniSpeechSatSamePadLayer(nn.Module):
     def __init__(self, num_conv_pos_embeddings):
         super().__init__()
@@ -370,7 +370,7 @@ class UniSpeechSatSamePadLayer(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2FeatureEncoder with Wav2Vec2->UniSpeechSat
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2FeatureEncoder with Wav2Vec2->UniSpeechSat
 class UniSpeechSatFeatureEncoder(nn.Module):
     """Construct the features from raw audio waveform"""
 
@@ -429,7 +429,7 @@ class UniSpeechSatFeatureExtractor(UniSpeechSatFeatureEncoder):
         )
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2FeatureProjection with Wav2Vec2->UniSpeechSat
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2FeatureProjection with Wav2Vec2->UniSpeechSat
 class UniSpeechSatFeatureProjection(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -445,7 +445,7 @@ class UniSpeechSatFeatureProjection(nn.Module):
         return hidden_states, norm_hidden_states
 
 
-# Copied from transformers.models.bart.modeling_bart.BartAttention with Bart->UniSpeechSat
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartAttention with Bart->UniSpeechSat
 class UniSpeechSatAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -604,7 +604,7 @@ class UniSpeechSatAttention(nn.Module):
         return attn_output, attn_weights_reshaped, past_key_value
 
 
-# Copied from transformers.models.bart.modeling_bart.BartFlashAttention2 with Bart->UniSpeechSat
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartFlashAttention2 with Bart->UniSpeechSat
 class UniSpeechSatFlashAttention2(UniSpeechSatAttention):
     """
     UniSpeechSat flash attention module. This module inherits from `UniSpeechSatAttention` as the weights of the module stays
@@ -732,7 +732,7 @@ class UniSpeechSatFlashAttention2(UniSpeechSatAttention):
 
 
 class UniSpeechSatSdpaAttention(UniSpeechSatAttention):
-    # Copied from transformers.models.bart.modeling_bart.BartSdpaAttention.forward with Bart->UniSpeechSat
+    # Copied from tiny_hf.transformers.models.bart.modeling_bart.BartSdpaAttention.forward with Bart->UniSpeechSat
     def forward(
         self,
         hidden_states: torch.Tensor,
@@ -845,7 +845,7 @@ UNISPEECHSAT_ATTENTION_CLASSES = {
 }
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2FeedForward with Wav2Vec2->UniSpeechSat
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2FeedForward with Wav2Vec2->UniSpeechSat
 class UniSpeechSatFeedForward(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -870,7 +870,7 @@ class UniSpeechSatFeedForward(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2EncoderLayer with Wav2Vec2->UniSpeechSat, WAV2VEC2->UNISPEECHSAT
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2EncoderLayer with Wav2Vec2->UniSpeechSat, WAV2VEC2->UNISPEECHSAT
 class UniSpeechSatEncoderLayer(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -906,7 +906,7 @@ class UniSpeechSatEncoderLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2AttnAdapterLayer with Wav2Vec2->UniSpeechSat
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2AttnAdapterLayer with Wav2Vec2->UniSpeechSat
 class UniSpeechSatAttnAdapterLayer(nn.Module):
     def __init__(self, config):
         """
@@ -932,7 +932,7 @@ class UniSpeechSatAttnAdapterLayer(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2EncoderLayerStableLayerNorm with Wav2Vec2->UniSpeechSat, WAV2VEC2->UNISPEECHSAT
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2EncoderLayerStableLayerNorm with Wav2Vec2->UniSpeechSat, WAV2VEC2->UNISPEECHSAT
 class UniSpeechSatEncoderLayerStableLayerNorm(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -978,7 +978,7 @@ class UniSpeechSatEncoderLayerStableLayerNorm(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2Encoder with Wav2Vec2->UniSpeechSat
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2Encoder with Wav2Vec2->UniSpeechSat
 class UniSpeechSatEncoder(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1064,7 +1064,7 @@ class UniSpeechSatEncoder(nn.Module):
         )
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2EncoderStableLayerNorm with Wav2Vec2->UniSpeechSat
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2EncoderStableLayerNorm with Wav2Vec2->UniSpeechSat
 class UniSpeechSatEncoderStableLayerNorm(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1380,7 +1380,7 @@ class UniSpeechSatModel(UniSpeechSatPreTrainedModel):
         # Initialize weights and apply final processing
         self.post_init()
 
-    # Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2Model._mask_hidden_states
+    # Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2Model._mask_hidden_states
     def _mask_hidden_states(
         self,
         hidden_states: torch.FloatTensor,
@@ -1568,9 +1568,9 @@ class UniSpeechSatForPreTraining(UniSpeechSatPreTrainedModel):
         Example:
 
         ```python
-        >>> import torch
-        >>> from transformers import AutoFeatureExtractor, UniSpeechSatForPreTraining
-        >>> from transformers.models.unispeech_sat.modeling_unispeech_sat import _compute_mask_indices
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoFeatureExtractor, UniSpeechSatForPreTraining
+        >>> from tiny_hf.transformers.models.unispeech_sat.modeling_unispeech_sat import _compute_mask_indices
 
         >>> feature_extractor = AutoFeatureExtractor.from_pretrained("microsoft/unispeech-sat-base")
         >>> model = UniSpeechSatForPreTraining.from_pretrained("microsoft/unispeech-sat-base")
@@ -1631,7 +1631,7 @@ class UniSpeechSatForPreTraining(UniSpeechSatPreTrainedModel):
             'eng' by default.
     """,
 )
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForCTC with Wav2Vec2->UniSpeechSat, wav2vec2->unispeech_sat, WAV_2_VEC_2->UNISPEECH_SAT
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForCTC with Wav2Vec2->UniSpeechSat, wav2vec2->unispeech_sat, WAV_2_VEC_2->UNISPEECH_SAT
 class UniSpeechSatForCTC(UniSpeechSatPreTrainedModel):
     def __init__(self, config, target_lang: Optional[str] = None):
         super().__init__(config)
@@ -1808,7 +1808,7 @@ class UniSpeechSatForSequenceClassification(UniSpeechSatPreTrainedModel):
         # Initialize weights and apply final processing
         self.post_init()
 
-    # Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForSequenceClassification.freeze_feature_extractor
+    # Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForSequenceClassification.freeze_feature_extractor
     def freeze_feature_extractor(self):
         """
         Calling this function will disable the gradient computation for the feature encoder so that its parameters will
@@ -1821,7 +1821,7 @@ class UniSpeechSatForSequenceClassification(UniSpeechSatPreTrainedModel):
         )
         self.freeze_feature_encoder()
 
-    # Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForSequenceClassification.freeze_feature_encoder with wav2vec2->unispeech_sat
+    # Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForSequenceClassification.freeze_feature_encoder with wav2vec2->unispeech_sat
     def freeze_feature_encoder(self):
         """
         Calling this function will disable the gradient computation for the feature encoder so that its parameter will
@@ -1829,7 +1829,7 @@ class UniSpeechSatForSequenceClassification(UniSpeechSatPreTrainedModel):
         """
         self.unispeech_sat.feature_extractor._freeze_parameters()
 
-    # Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForSequenceClassification.freeze_base_model with wav2vec2->unispeech_sat
+    # Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForSequenceClassification.freeze_base_model with wav2vec2->unispeech_sat
     def freeze_base_model(self):
         """
         Calling this function will disable the gradient computation for the base model so that its parameters will not
@@ -1845,7 +1845,7 @@ class UniSpeechSatForSequenceClassification(UniSpeechSatPreTrainedModel):
         config_class=_CONFIG_FOR_DOC,
         modality="audio",
     )
-    # Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForSequenceClassification.forward with Wav2Vec2->UniSpeechSat, wav2vec2->unispeech_sat
+    # Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForSequenceClassification.forward with Wav2Vec2->UniSpeechSat, wav2vec2->unispeech_sat
     def forward(
         self,
         input_values: Optional[torch.Tensor],
@@ -1915,7 +1915,7 @@ class UniSpeechSatForSequenceClassification(UniSpeechSatPreTrainedModel):
     """,
     UNISPEECH_SAT_START_DOCSTRING,
 )
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForAudioFrameClassification with Wav2Vec2->UniSpeechSat, wav2vec2->unispeech_sat, WAV_2_VEC_2->UNISPEECH_SAT
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForAudioFrameClassification with Wav2Vec2->UniSpeechSat, wav2vec2->unispeech_sat, WAV_2_VEC_2->UNISPEECH_SAT
 class UniSpeechSatForAudioFrameClassification(UniSpeechSatPreTrainedModel):
     def __init__(self, config):
         super().__init__(config)
@@ -2022,7 +2022,7 @@ class UniSpeechSatForAudioFrameClassification(UniSpeechSatPreTrainedModel):
         )
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.AMSoftmaxLoss
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.AMSoftmaxLoss
 class AMSoftmaxLoss(nn.Module):
     def __init__(self, input_dim, num_labels, scale=30.0, margin=0.4):
         super(AMSoftmaxLoss, self).__init__()
@@ -2046,7 +2046,7 @@ class AMSoftmaxLoss(nn.Module):
         return loss
 
 
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.TDNNLayer
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.TDNNLayer
 class TDNNLayer(nn.Module):
     def __init__(self, config, layer_id=0):
         super().__init__()
@@ -2084,7 +2084,7 @@ class TDNNLayer(nn.Module):
     """,
     UNISPEECH_SAT_START_DOCSTRING,
 )
-# Copied from transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForXVector with Wav2Vec2->UniSpeechSat, wav2vec2->unispeech_sat, WAV_2_VEC_2->UNISPEECH_SAT
+# Copied from tiny_hf.transformers.models.wav2vec2.modeling_wav2vec2.Wav2Vec2ForXVector with Wav2Vec2->UniSpeechSat, wav2vec2->unispeech_sat, WAV_2_VEC_2->UNISPEECH_SAT
 class UniSpeechSatForXVector(UniSpeechSatPreTrainedModel):
     def __init__(self, config):
         super().__init__(config)

@@ -47,16 +47,16 @@ logger = logging.get_logger(__name__)
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 
 if is_torchvision_available():
     from ...image_utils import pil_torch_interpolation_mapping
 
     if is_torchvision_v2_available():
-        from torchvision.transforms.v2 import functional as F
+        from tg_adapter.ision.transforms.v2 import functional as F
     else:
-        from torchvision.transforms import functional as F
+        from tg_adapter.ision.transforms import functional as F
 
 
 @add_start_docstrings(
@@ -111,7 +111,7 @@ class DepthProImageProcessorFast(BaseImageProcessorFast):
 
         return BatchFeature(data={"pixel_values": processed_images}, tensor_type=return_tensors)
 
-    # Copied from transformers.models.depth_pro.image_processing_depth_pro.DepthProImageProcessor.post_process_depth_estimation
+    # Copied from tiny_hf.transformers.models.depth_pro.image_processing_depth_pro.DepthProImageProcessor.post_process_depth_estimation
     def post_process_depth_estimation(
         self,
         outputs: "DepthProDepthEstimatorOutput",

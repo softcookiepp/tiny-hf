@@ -131,7 +131,7 @@ ENCODE_PLUS_ADDITIONAL_KWARGS_DOCSTRING = r"""
 
 
 @lru_cache()
-# Copied from transformers.models.roberta.tokenization_roberta.bytes_to_unicode
+# Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.bytes_to_unicode
 def bytes_to_unicode():
     """
     Returns list of utf-8 byte and a mapping to unicode strings. We specifically avoids mapping to whitespace/control
@@ -156,7 +156,7 @@ def bytes_to_unicode():
     return dict(zip(bs, cs))
 
 
-# Copied from transformers.models.roberta.tokenization_roberta.get_pairs
+# Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.get_pairs
 def get_pairs(word):
     """
     Return set of symbol pairs in a word.
@@ -179,7 +179,7 @@ class LukeTokenizer(PreTrainedTokenizer):
     be encoded differently whether it is at the beginning of the sentence (without space) or not:
 
     ```python
-    >>> from transformers import LukeTokenizer
+    >>> from tiny_hf.transformers.import LukeTokenizer
 
     >>> tokenizer = LukeTokenizer.from_pretrained("studio-ousia/luke-base")
     >>> tokenizer("Hello world")["input_ids"]
@@ -387,17 +387,17 @@ class LukeTokenizer(PreTrainedTokenizer):
         )
 
     @property
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer.vocab_size with Roberta->Luke, RoBERTa->LUKE
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer.vocab_size with Roberta->Luke, RoBERTa->LUKE
     def vocab_size(self):
         return len(self.encoder)
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer.get_vocab with Roberta->Luke, RoBERTa->LUKE
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer.get_vocab with Roberta->Luke, RoBERTa->LUKE
     def get_vocab(self):
         vocab = dict(self.encoder).copy()
         vocab.update(self.added_tokens_encoder)
         return vocab
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer.bpe with Roberta->Luke, RoBERTa->LUKE
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer.bpe with Roberta->Luke, RoBERTa->LUKE
     def bpe(self, token):
         if token in self.cache:
             return self.cache[token]
@@ -440,7 +440,7 @@ class LukeTokenizer(PreTrainedTokenizer):
         self.cache[token] = word
         return word
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer._tokenize with Roberta->Luke, RoBERTa->LUKE
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer._tokenize with Roberta->Luke, RoBERTa->LUKE
     def _tokenize(self, text):
         """Tokenize a string."""
         bpe_tokens = []
@@ -451,24 +451,24 @@ class LukeTokenizer(PreTrainedTokenizer):
             bpe_tokens.extend(bpe_token for bpe_token in self.bpe(token).split(" "))
         return bpe_tokens
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer._convert_token_to_id with Roberta->Luke, RoBERTa->LUKE
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer._convert_token_to_id with Roberta->Luke, RoBERTa->LUKE
     def _convert_token_to_id(self, token):
         """Converts a token (str) in an id using the vocab."""
         return self.encoder.get(token, self.encoder.get(self.unk_token))
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer._convert_id_to_token with Roberta->Luke, RoBERTa->LUKE
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer._convert_id_to_token with Roberta->Luke, RoBERTa->LUKE
     def _convert_id_to_token(self, index):
         """Converts an index (integer) in a token (str) using the vocab."""
         return self.decoder.get(index)
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer.convert_tokens_to_string with Roberta->Luke, RoBERTa->LUKE
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer.convert_tokens_to_string with Roberta->Luke, RoBERTa->LUKE
     def convert_tokens_to_string(self, tokens):
         """Converts a sequence of tokens (string) in a single string."""
         text = "".join(tokens)
         text = bytearray([self.byte_decoder[c] for c in text]).decode("utf-8", errors=self.errors)
         return text
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer.build_inputs_with_special_tokens with Roberta->Luke, RoBERTa->LUKE
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer.build_inputs_with_special_tokens with Roberta->Luke, RoBERTa->LUKE
     def build_inputs_with_special_tokens(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
     ) -> List[int]:
@@ -494,7 +494,7 @@ class LukeTokenizer(PreTrainedTokenizer):
         sep = [self.sep_token_id]
         return cls + token_ids_0 + sep + sep + token_ids_1 + sep
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer.get_special_tokens_mask with Roberta->Luke, RoBERTa->LUKE
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer.get_special_tokens_mask with Roberta->Luke, RoBERTa->LUKE
     def get_special_tokens_mask(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None, already_has_special_tokens: bool = False
     ) -> List[int]:
@@ -522,7 +522,7 @@ class LukeTokenizer(PreTrainedTokenizer):
             return [1] + ([0] * len(token_ids_0)) + [1]
         return [1] + ([0] * len(token_ids_0)) + [1, 1] + ([0] * len(token_ids_1)) + [1]
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer.create_token_type_ids_from_sequences with Roberta->Luke, RoBERTa->LUKE
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer.create_token_type_ids_from_sequences with Roberta->Luke, RoBERTa->LUKE
     def create_token_type_ids_from_sequences(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
     ) -> List[int]:
@@ -546,7 +546,7 @@ class LukeTokenizer(PreTrainedTokenizer):
             return len(cls + token_ids_0 + sep) * [0]
         return len(cls + token_ids_0 + sep + sep + token_ids_1 + sep) * [0]
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer.prepare_for_tokenization with Roberta->Luke, RoBERTa->LUKE
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer.prepare_for_tokenization with Roberta->Luke, RoBERTa->LUKE
     def prepare_for_tokenization(self, text, is_split_into_words=False, **kwargs):
         add_prefix_space = kwargs.pop("add_prefix_space", self.add_prefix_space)
         if (is_split_into_words or add_prefix_space) and (len(text) > 0 and not text[0].isspace()):

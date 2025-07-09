@@ -17,16 +17,16 @@
 import argparse
 import os
 
-import torch
+import tg_adapter as torch
 
-from transformers import (
+from tiny_hf.transformers.import (
     XLNetConfig,
     XLNetForQuestionAnswering,
     XLNetForSequenceClassification,
     XLNetLMHeadModel,
     load_tf_weights_in_xlnet,
 )
-from transformers.utils import CONFIG_NAME, WEIGHTS_NAME, logging
+from tiny_hf.transformers.utils import CONFIG_NAME, WEIGHTS_NAME, logging
 
 
 GLUE_TASKS_NUM_LABELS = {

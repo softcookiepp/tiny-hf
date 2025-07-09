@@ -168,7 +168,7 @@ class FlaxElectraEmbeddings(nn.Module):
         self.LayerNorm = nn.LayerNorm(epsilon=self.config.layer_norm_eps, dtype=self.dtype)
         self.dropout = nn.Dropout(rate=self.config.hidden_dropout_prob)
 
-    # Copied from transformers.models.bert.modeling_flax_bert.FlaxBertEmbeddings.__call__
+    # Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertEmbeddings.__call__
     def __call__(self, input_ids, token_type_ids, position_ids, attention_mask, deterministic: bool = True):
         # Embed
         inputs_embeds = self.word_embeddings(input_ids.astype("i4"))
@@ -184,7 +184,7 @@ class FlaxElectraEmbeddings(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertSelfAttention with Bert->Electra
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertSelfAttention with Bert->Electra
 class FlaxElectraSelfAttention(nn.Module):
     config: ElectraConfig
     causal: bool = False
@@ -226,7 +226,7 @@ class FlaxElectraSelfAttention(nn.Module):
         return hidden_states.reshape(hidden_states.shape[:2] + (self.config.hidden_size,))
 
     @nn.compact
-    # Copied from transformers.models.bart.modeling_flax_bart.FlaxBartAttention._concatenate_to_cache
+    # Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartAttention._concatenate_to_cache
     def _concatenate_to_cache(self, key, value, query, attention_mask):
         """
         This function takes projected key, value states from a single input token and concatenates the states to cached
@@ -356,7 +356,7 @@ class FlaxElectraSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertSelfOutput with Bert->Electra
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertSelfOutput with Bert->Electra
 class FlaxElectraSelfOutput(nn.Module):
     config: ElectraConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -377,7 +377,7 @@ class FlaxElectraSelfOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertAttention with Bert->Electra
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertAttention with Bert->Electra
 class FlaxElectraAttention(nn.Module):
     config: ElectraConfig
     causal: bool = False
@@ -420,7 +420,7 @@ class FlaxElectraAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertIntermediate with Bert->Electra
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertIntermediate with Bert->Electra
 class FlaxElectraIntermediate(nn.Module):
     config: ElectraConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -439,7 +439,7 @@ class FlaxElectraIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertOutput with Bert->Electra
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertOutput with Bert->Electra
 class FlaxElectraOutput(nn.Module):
     config: ElectraConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -460,7 +460,7 @@ class FlaxElectraOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertLayer with Bert->Electra
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertLayer with Bert->Electra
 class FlaxElectraLayer(nn.Module):
     config: ElectraConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -518,7 +518,7 @@ class FlaxElectraLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertLayerCollection with Bert->Electra
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertLayerCollection with Bert->Electra
 class FlaxElectraLayerCollection(nn.Module):
     config: ElectraConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -601,7 +601,7 @@ class FlaxElectraLayerCollection(nn.Module):
         )
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertEncoder with Bert->Electra
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertEncoder with Bert->Electra
 class FlaxElectraEncoder(nn.Module):
     config: ElectraConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -696,7 +696,7 @@ class FlaxElectraPreTrainedModel(FlaxPreTrainedModel):
         module = self.module_class(config=config, dtype=dtype, gradient_checkpointing=gradient_checkpointing, **kwargs)
         super().__init__(config, module, input_shape=input_shape, seed=seed, dtype=dtype, _do_init=_do_init)
 
-    # Copied from transformers.models.bert.modeling_flax_bert.FlaxBertPreTrainedModel.enable_gradient_checkpointing
+    # Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertPreTrainedModel.enable_gradient_checkpointing
     def enable_gradient_checkpointing(self):
         self._module = self.module_class(
             config=self.config,
@@ -704,7 +704,7 @@ class FlaxElectraPreTrainedModel(FlaxPreTrainedModel):
             gradient_checkpointing=True,
         )
 
-    # Copied from transformers.models.bert.modeling_flax_bert.FlaxBertPreTrainedModel.init_weights
+    # Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertPreTrainedModel.init_weights
     def init_weights(self, rng: jax.random.PRNGKey, input_shape: Tuple, params: FrozenDict = None) -> FrozenDict:
         # init input tensors
         input_ids = jnp.zeros(input_shape, dtype="i4")
@@ -747,7 +747,7 @@ class FlaxElectraPreTrainedModel(FlaxPreTrainedModel):
         else:
             return random_params
 
-    # Copied from transformers.models.bart.modeling_flax_bart.FlaxBartDecoderPreTrainedModel.init_cache
+    # Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartDecoderPreTrainedModel.init_cache
     def init_cache(self, batch_size, max_length):
         r"""
         Args:
@@ -1078,7 +1078,7 @@ FLAX_ELECTRA_FOR_PRETRAINING_DOCSTRING = """
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, FlaxElectraForPreTraining
+    >>> from tiny_hf.transformers.import AutoTokenizer, FlaxElectraForPreTraining
 
     >>> tokenizer = AutoTokenizer.from_pretrained("google/electra-small-discriminator")
     >>> model = FlaxElectraForPreTraining.from_pretrained("google/electra-small-discriminator")
@@ -1562,7 +1562,7 @@ class FlaxElectraForCausalLMModule(nn.Module):
     """,
     ELECTRA_START_DOCSTRING,
 )
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertForCausalLM with Bert->Electra
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertForCausalLM with Bert->Electra
 class FlaxElectraForCausalLM(FlaxElectraPreTrainedModel):
     module_class = FlaxElectraForCausalLMModule
 

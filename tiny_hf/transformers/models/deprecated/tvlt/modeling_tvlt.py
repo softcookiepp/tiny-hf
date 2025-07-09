@@ -20,10 +20,10 @@ from copy import deepcopy
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ....activations import ACT2FN
 from ....modeling_outputs import BaseModelOutput, SequenceClassifierOutput
@@ -708,9 +708,9 @@ class TvltModel(TvltPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import TvltProcessor, TvltModel
+        >>> from tiny_hf.transformers.import TvltProcessor, TvltModel
         >>> import numpy as np
-        >>> import torch
+        >>> import tg_adapter as torch
 
         >>> num_frames = 8
         >>> images = list(np.random.randn(num_frames, 3, 224, 224))
@@ -1048,9 +1048,9 @@ class TvltForPreTraining(TvltPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import TvltProcessor, TvltForPreTraining
+        >>> from tiny_hf.transformers.import TvltProcessor, TvltForPreTraining
         >>> import numpy as np
-        >>> import torch
+        >>> import tg_adapter as torch
 
         >>> num_frames = 8
         >>> images = list(np.random.randn(num_frames, 3, 224, 224))
@@ -1239,9 +1239,9 @@ class TvltForAudioVisualClassification(TvltPreTrainedModel):
 
         Examples:
         ```python
-        >>> from transformers import TvltProcessor, TvltForAudioVisualClassification
+        >>> from tiny_hf.transformers.import TvltProcessor, TvltForAudioVisualClassification
         >>> import numpy as np
-        >>> import torch
+        >>> import tg_adapter as torch
 
         >>> num_frames = 8
         >>> images = list(np.random.randn(num_frames, 3, 224, 224))

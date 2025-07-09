@@ -27,7 +27,7 @@ from ...utils import is_tf_available, is_torch_available, logging, to_py_obj
 
 if TYPE_CHECKING:
     if is_torch_available():
-        import torch
+        import tg_adapter as torch
     if is_tf_available():
         import tensorflow as tf
 
@@ -89,7 +89,7 @@ class CodeGenTokenizer(PreTrainedTokenizer):
     be encoded differently whether it is at the beginning of the sentence (without space) or not:
 
     ```python
-    >>> from transformers import CodeGenTokenizer
+    >>> from tiny_hf.transformers.import CodeGenTokenizer
 
     >>> tokenizer = CodeGenTokenizer.from_pretrained("Salesforce/codegen-350M-mono")
     >>> tokenizer("Hello world")["input_ids"]

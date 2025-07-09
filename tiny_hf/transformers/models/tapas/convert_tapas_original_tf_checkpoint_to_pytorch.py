@@ -16,7 +16,7 @@
 
 import argparse
 
-from transformers import (
+from tiny_hf.transformers.import (
     TapasConfig,
     TapasForMaskedLM,
     TapasForQuestionAnswering,
@@ -25,7 +25,7 @@ from transformers import (
     TapasTokenizer,
     load_tf_weights_in_tapas,
 )
-from transformers.utils import logging
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

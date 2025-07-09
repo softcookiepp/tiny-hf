@@ -16,9 +16,9 @@
 
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...generation import GenerationMixin
 from ...modeling_outputs import CausalLMOutputWithPast
@@ -252,7 +252,7 @@ class FuyuForCausalLM(FuyuPreTrainedModel, GenerationMixin):
         Examples:
 
         ```python
-        >>> from transformers import FuyuProcessor, FuyuForCausalLM
+        >>> from tiny_hf.transformers.import FuyuProcessor, FuyuForCausalLM
         >>> from PIL import Image
         >>> import requests
 

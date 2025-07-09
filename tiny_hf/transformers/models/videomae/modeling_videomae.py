@@ -20,10 +20,10 @@ from dataclasses import dataclass
 from typing import Callable, Optional, Set, Tuple, Union
 
 import numpy as np
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...modeling_outputs import BaseModelOutput, ImageClassifierOutput
@@ -195,7 +195,7 @@ class VideoMAEPatchEmbeddings(nn.Module):
         return embeddings
 
 
-# Copied from transformers.models.vit.modeling_vit.eager_attention_forward
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.eager_attention_forward
 def eager_attention_forward(
     module: nn.Module,
     query: torch.Tensor,
@@ -299,7 +299,7 @@ class VideoMAESelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTSelfOutput with ViT->VideoMAE
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTSelfOutput with ViT->VideoMAE
 class VideoMAESelfOutput(nn.Module):
     """
     The residual connection is defined in VideoMAELayer instead of here (as is the case with other models), due to the
@@ -318,7 +318,7 @@ class VideoMAESelfOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTAttention with ViT->VideoMAE
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTAttention with ViT->VideoMAE
 class VideoMAEAttention(nn.Module):
     def __init__(self, config: VideoMAEConfig) -> None:
         super().__init__()
@@ -358,7 +358,7 @@ class VideoMAEAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTIntermediate ViT->VideoMAE
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTIntermediate ViT->VideoMAE
 class VideoMAEIntermediate(nn.Module):
     def __init__(self, config: VideoMAEConfig) -> None:
         super().__init__()
@@ -375,7 +375,7 @@ class VideoMAEIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTOutput ViT->VideoMAE
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTOutput ViT->VideoMAE
 class VideoMAEOutput(nn.Module):
     def __init__(self, config: VideoMAEConfig) -> None:
         super().__init__()
@@ -391,7 +391,7 @@ class VideoMAEOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTLayer with ViT->VideoMAE,VIT->VIDEOMAE
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTLayer with ViT->VideoMAE,VIT->VIDEOMAE
 class VideoMAELayer(nn.Module):
     """This corresponds to the Block class in the timm implementation."""
 
@@ -434,7 +434,7 @@ class VideoMAELayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTEncoder with ViT->VideoMAE
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTEncoder with ViT->VideoMAE
 class VideoMAEEncoder(nn.Module):
     def __init__(self, config: VideoMAEConfig) -> None:
         super().__init__()
@@ -602,7 +602,7 @@ class VideoMAEModel(VideoMAEPreTrainedModel):
         >>> import av
         >>> import numpy as np
 
-        >>> from transformers import AutoImageProcessor, VideoMAEModel
+        >>> from tiny_hf.transformers.import AutoImageProcessor, VideoMAEModel
         >>> from huggingface_hub import hf_hub_download
 
         >>> np.random.seed(0)
@@ -816,9 +816,9 @@ class VideoMAEForPreTraining(VideoMAEPreTrainedModel):
 
         Examples:
         ```python
-        >>> from transformers import AutoImageProcessor, VideoMAEForPreTraining
+        >>> from tiny_hf.transformers.import AutoImageProcessor, VideoMAEForPreTraining
         >>> import numpy as np
-        >>> import torch
+        >>> import tg_adapter as torch
 
         >>> num_frames = 16
         >>> video = list(np.random.randint(0, 256, (num_frames, 3, 224, 224)))
@@ -999,10 +999,10 @@ class VideoMAEForVideoClassification(VideoMAEPreTrainedModel):
 
         ```python
         >>> import av
-        >>> import torch
+        >>> import tg_adapter as torch
         >>> import numpy as np
 
-        >>> from transformers import AutoImageProcessor, VideoMAEForVideoClassification
+        >>> from tiny_hf.transformers.import AutoImageProcessor, VideoMAEForVideoClassification
         >>> from huggingface_hub import hf_hub_download
 
         >>> np.random.seed(0)

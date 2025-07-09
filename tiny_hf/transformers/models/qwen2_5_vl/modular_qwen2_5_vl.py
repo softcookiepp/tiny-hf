@@ -22,14 +22,14 @@
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import torch.utils.checkpoint
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.nn as nn
+import tg_adapter.nn.functional as F
+import tg_adapter.utils.checkpoint
+from tg_adapter.nn import CrossEntropyLoss
 
-from transformers.models.qwen2_vl.configuration_qwen2_vl import Qwen2VLConfig
-from transformers.models.qwen2_vl.modeling_qwen2_vl import (
+from tiny_hf.transformers.models.qwen2_vl.configuration_qwen2_vl import Qwen2VLConfig
+from tiny_hf.transformers.models.qwen2_vl.modeling_qwen2_vl import (
     PatchEmbed,
     PatchMerger,
     Qwen2RMSNorm,
@@ -41,7 +41,7 @@ from transformers.models.qwen2_vl.modeling_qwen2_vl import (
     VisionRotaryEmbedding,
     VisionSdpaAttention,
 )
-from transformers.models.qwen2_vl.processing_qwen2_vl import Qwen2VLImagesKwargs, Qwen2VLProcessor
+from tiny_hf.transformers.models.qwen2_vl.processing_qwen2_vl import Qwen2VLImagesKwargs, Qwen2VLProcessor
 
 from ...activations import ACT2FN
 from ...configuration_utils import PretrainedConfig
@@ -620,7 +620,7 @@ class Qwen2_5_VLForConditionalGeneration(Qwen2VLForConditionalGeneration):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, Qwen2_5_VLForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoProcessor, Qwen2_5_VLForConditionalGeneration
 
         >>> model = Qwen2_5_VLForConditionalGeneration.from_pretrained("Qwen/Qwen2.5-VL-7B-Instruct")
         >>> processor = AutoProcessor.from_pretrained("Qwen/Qwen2.5-VL-7B-Instruct")

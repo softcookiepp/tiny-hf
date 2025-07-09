@@ -15,10 +15,10 @@ import argparse
 import os
 
 import requests
-import torch
+import tg_adapter as torch
 from PIL import Image
 
-from transformers import SuperPointConfig, SuperPointForKeypointDetection, SuperPointImageProcessor
+from tiny_hf.transformers.import SuperPointConfig, SuperPointForKeypointDetection, SuperPointImageProcessor
 
 
 def get_superpoint_config():

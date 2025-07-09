@@ -177,7 +177,7 @@ def load_pytorch_checkpoint_in_tf2_model(
     """Load pytorch checkpoints in a TF 2.0 model"""
     try:
         import tensorflow as tf  # noqa: F401
-        import torch  # noqa: F401
+        import tg_adapter. # noqa: F401
         from safetensors.torch import load_file as safe_load_file  # noqa: F401
     except ImportError:
         logger.error(
@@ -237,7 +237,7 @@ def load_pytorch_weights_in_tf2_model(
     """Load pytorch state_dict in a TF 2.0 model."""
     try:
         import tensorflow as tf  # noqa: F401
-        import torch  # noqa: F401
+        import tg_adapter. # noqa: F401
     except ImportError:
         logger.error(
             "Loading a PyTorch model in TensorFlow, requires both PyTorch and TensorFlow to be installed. Please see "
@@ -501,7 +501,7 @@ def load_tf2_checkpoint_in_pytorch_model(
     """
     try:
         import tensorflow as tf  # noqa: F401
-        import torch  # noqa: F401
+        import tg_adapter. # noqa: F401
     except ImportError:
         logger.error(
             "Loading a TensorFlow model in PyTorch, requires both PyTorch and TensorFlow to be installed. Please see "
@@ -546,7 +546,7 @@ def load_tf2_weights_in_pytorch_model(pt_model, tf_weights, allow_missing_keys=F
     """Load TF2.0 symbolic weights in a PyTorch model"""
     try:
         import tensorflow as tf  # noqa: F401
-        import torch  # noqa: F401
+        import tg_adapter. # noqa: F401
     except ImportError:
         logger.error(
             "Loading a TensorFlow model in PyTorch, requires both PyTorch and TensorFlow to be installed. Please see "
@@ -561,7 +561,7 @@ def load_tf2_weights_in_pytorch_model(pt_model, tf_weights, allow_missing_keys=F
 
 
 def load_tf2_state_dict_in_pytorch_model(pt_model, tf_state_dict, allow_missing_keys=False, output_loading_info=False):
-    import torch
+    import tg_adapter as torch
 
     new_pt_params_dict = {}
     current_pt_params_dict = dict(pt_model.named_parameters())

@@ -42,7 +42,7 @@ if is_vision_available():
     from PIL import Image, ImageDraw, ImageFont
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 logger = logging.get_logger(__name__)
 DEFAULT_FONT_PATH = "ybelkada/fonts"

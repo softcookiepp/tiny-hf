@@ -18,9 +18,9 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
-import torch.utils.checkpoint
+import tg_adapter as torch
+import tg_adapter.nn as nn
+import tg_adapter.utils.checkpoint
 
 from ...cache_utils import Cache, HybridCache, StaticCache
 from ...configuration_utils import PretrainedConfig
@@ -172,7 +172,7 @@ class Gemma3TextConfig(Gemma2Config):
             Pattern for the sliding window attention.
 
     ```python
-    >>> from transformers import Gemma3TextModel, Gemma3TextConfig
+    >>> from tiny_hf.transformers.import Gemma3TextModel, Gemma3TextConfig
     >>> # Initializing a Gemma3Text gemma3_text-7b style configuration
     >>> configuration = Gemma3TextConfig()
     >>> # Initializing a model from the gemma3_text-7b style configuration
@@ -240,7 +240,7 @@ class Gemma3Config(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import Gemma3ForConditionalGeneration, Gemma3Config, SiglipVisionConfig, Gemma3TextConfig
+    >>> from tiny_hf.transformers.import Gemma3ForConditionalGeneration, Gemma3Config, SiglipVisionConfig, Gemma3TextConfig
 
     >>> # Initializing a Siglip-like vision config
     >>> vision_config = SiglipVisionConfig()
@@ -881,7 +881,7 @@ class Gemma3ForConditionalGeneration(PaliGemmaForConditionalGeneration):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, Gemma3ForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoProcessor, Gemma3ForConditionalGeneration
 
         >>> model = Gemma3ForConditionalGeneration.from_pretrained("google/gemma-3-4b-it")
         >>> processor = AutoProcessor.from_pretrained("google/gemma-3-4b-it")

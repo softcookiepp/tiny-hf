@@ -147,7 +147,7 @@ class ChameleonProcessor(ProcessorMixin):
 
         return BatchFeature(data=data, tensor_type=output_kwargs["common_kwargs"]["return_tensors"])
 
-    # Copied from transformers.models.clip.processing_clip.CLIPProcessor.batch_decode with CLIP->Llama
+    # Copied from tiny_hf.transformers.models.clip.processing_clip.CLIPProcessor.batch_decode with CLIP->Llama
     def batch_decode(self, *args, **kwargs):
         """
         This method forwards all its arguments to LlamaTokenizerFast's [`~PreTrainedTokenizer.batch_decode`]. Please
@@ -155,7 +155,7 @@ class ChameleonProcessor(ProcessorMixin):
         """
         return self.tokenizer.batch_decode(*args, **kwargs)
 
-    # Copied from transformers.models.clip.processing_clip.CLIPProcessor.decode with CLIP->Llama
+    # Copied from tiny_hf.transformers.models.clip.processing_clip.CLIPProcessor.decode with CLIP->Llama
     def decode(self, *args, **kwargs):
         """
         This method forwards all its arguments to LlamaTokenizerFast's [`~PreTrainedTokenizer.decode`]. Please refer to
@@ -164,7 +164,7 @@ class ChameleonProcessor(ProcessorMixin):
         return self.tokenizer.decode(*args, **kwargs)
 
     @property
-    # Copied from transformers.models.clip.processing_clip.CLIPProcessor.model_input_names
+    # Copied from tiny_hf.transformers.models.clip.processing_clip.CLIPProcessor.model_input_names
     def model_input_names(self):
         tokenizer_input_names = self.tokenizer.model_input_names
         image_processor_input_names = self.image_processor.model_input_names

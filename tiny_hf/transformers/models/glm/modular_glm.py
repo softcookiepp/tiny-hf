@@ -15,9 +15,9 @@
 # limitations under the License.
 from typing import Optional
 
-import torch
-import torch.nn as nn
-import torch.utils.checkpoint
+import tg_adapter as torch
+import tg_adapter.nn as nn
+import tg_adapter.utils.checkpoint
 
 from ...utils import logging
 from ..llama.modeling_llama import (

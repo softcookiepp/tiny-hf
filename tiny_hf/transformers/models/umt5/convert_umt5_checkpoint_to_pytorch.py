@@ -32,12 +32,12 @@ import argparse
 import collections
 
 import numpy as np
-import torch
+import tg_adapter as torch
 from flax import traverse_util
 from t5x import checkpoints
 
-from transformers import MT5Config, UMT5EncoderModel, UMT5ForConditionalGeneration
-from transformers.utils import logging
+from tiny_hf.transformers.import MT5Config, UMT5EncoderModel, UMT5ForConditionalGeneration
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

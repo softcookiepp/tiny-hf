@@ -83,7 +83,7 @@ def get_repo_type(repo_id, repo_type=None, **hub_kwargs):
 
 
 # docstyle-ignore
-APP_FILE_TEMPLATE = """from transformers import launch_gradio_demo
+APP_FILE_TEMPLATE = """from tiny_hf.transformers.import launch_gradio_demo
 from {module_name} import {class_name}
 
 launch_gradio_demo({class_name})
@@ -963,7 +963,7 @@ class ToolCollection:
     Example:
 
     ```py
-    >>> from transformers import ToolCollection, ReactCodeAgent
+    >>> from tiny_hf.transformers.import ToolCollection, ReactCodeAgent
 
     >>> image_tool_collection = ToolCollection(collection_slug="huggingface-tools/diffusion-tools-6630bb19a942c2306a2cdb6f")
     >>> agent = ReactCodeAgent(tools=[*image_tool_collection.tools], add_base_tools=True)

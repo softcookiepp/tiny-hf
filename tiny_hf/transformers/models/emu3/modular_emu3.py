@@ -18,10 +18,10 @@ import math
 from functools import cached_property
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import torch.utils.checkpoint
+import tg_adapter as torch
+import tg_adapter.nn as nn
+import tg_adapter.nn.functional as F
+import tg_adapter.utils.checkpoint
 
 from ...cache_utils import Cache
 from ...generation import GenerationMixin
@@ -1094,8 +1094,8 @@ class Emu3ForCausalLM(LlamaForCausalLM, Emu3PreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import Emu3Processor, Emu3ForConditionalGeneration
-        >>> import torch
+        >>> from tiny_hf.transformers.import Emu3Processor, Emu3ForConditionalGeneration
+        >>> import tg_adapter as torch
         >>> import requests
         >>> from PIL import Image
 
@@ -1202,8 +1202,8 @@ class Emu3ForConditionalGeneration(Emu3PreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import Emu3Processor, Emu3ForConditionalGeneration
-        >>> import torch
+        >>> from tiny_hf.transformers.import Emu3Processor, Emu3ForConditionalGeneration
+        >>> import tg_adapter as torch
         >>> import requests
         >>> from PIL import Image
 

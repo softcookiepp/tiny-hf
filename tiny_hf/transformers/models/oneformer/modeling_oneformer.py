@@ -21,9 +21,9 @@ from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple, Union
 
 import numpy as np
-import torch
-from torch import Tensor, nn
-from torch.cuda.amp import autocast
+import tg_adapter as torch
+from tg_adapter.import Tensor, nn
+from tg_adapter.cuda.amp import autocast
 
 from ...activations import ACT2FN
 from ...modeling_outputs import BaseModelOutput
@@ -103,7 +103,7 @@ def multi_scale_deformable_attention(
     return output.transpose(1, 2).contiguous()
 
 
-# Copied from transformers.models.maskformer.modeling_maskformer.dice_loss
+# Copied from tiny_hf.transformers.models.maskformer.modeling_maskformer.dice_loss
 def dice_loss(inputs: Tensor, labels: Tensor, num_masks: int) -> Tensor:
     r"""
     Compute the DICE loss, similar to generalized IOU for masks as follows:
@@ -134,7 +134,7 @@ def dice_loss(inputs: Tensor, labels: Tensor, num_masks: int) -> Tensor:
     return loss
 
 
-# Copied from transformers.models.mask2former.modeling_mask2former.sigmoid_cross_entropy_loss
+# Copied from tiny_hf.transformers.models.mask2former.modeling_mask2former.sigmoid_cross_entropy_loss
 def sigmoid_cross_entropy_loss(inputs: torch.Tensor, labels: torch.Tensor, num_masks: int) -> torch.Tensor:
     r"""
     Args:
@@ -154,7 +154,7 @@ def sigmoid_cross_entropy_loss(inputs: torch.Tensor, labels: torch.Tensor, num_m
     return loss
 
 
-# Copied from transformers.models.maskformer.modeling_maskformer.pair_wise_dice_loss
+# Copied from tiny_hf.transformers.models.maskformer.modeling_maskformer.pair_wise_dice_loss
 def pair_wise_dice_loss(inputs: Tensor, labels: Tensor) -> Tensor:
     """
     A pair wise version of the dice loss, see `dice_loss` for usage.
@@ -177,7 +177,7 @@ def pair_wise_dice_loss(inputs: Tensor, labels: Tensor) -> Tensor:
     return loss
 
 
-# Copied from transformers.models.mask2former.modeling_mask2former.pair_wise_sigmoid_cross_entropy_loss
+# Copied from tiny_hf.transformers.models.mask2former.modeling_mask2former.pair_wise_sigmoid_cross_entropy_loss
 def pair_wise_sigmoid_cross_entropy_loss(inputs: torch.Tensor, labels: torch.Tensor) -> torch.Tensor:
     r"""
     A pair wise version of the cross entropy loss, see `sigmoid_cross_entropy_loss` for usage.
@@ -205,7 +205,7 @@ def pair_wise_sigmoid_cross_entropy_loss(inputs: torch.Tensor, labels: torch.Ten
     return loss
 
 
-# Copied from transformers.models.mask2former.modeling_mask2former.sample_point
+# Copied from tiny_hf.transformers.models.mask2former.modeling_mask2former.sample_point
 def sample_point(
     input_features: torch.Tensor, point_coordinates: torch.Tensor, add_dim=False, **kwargs
 ) -> torch.Tensor:
@@ -558,7 +558,7 @@ class OneFormerLoss(nn.Module):
         del target_masks
         return losses
 
-    # Copied from transformers.models.mask2former.modeling_mask2former.Mask2FormerLoss.calculate_uncertainty
+    # Copied from tiny_hf.transformers.models.mask2former.modeling_mask2former.Mask2FormerLoss.calculate_uncertainty
     def calculate_uncertainty(self, logits: torch.Tensor) -> torch.Tensor:
         """
         In Mask2Former paper, uncertainty is estimated as L1 distance between 0.0 and the logit prediction in 'logits'
@@ -576,7 +576,7 @@ class OneFormerLoss(nn.Module):
         uncertainty_scores = -(torch.abs(logits))
         return uncertainty_scores
 
-    # Copied from transformers.models.mask2former.modeling_mask2former.Mask2FormerLoss.sample_points_using_uncertainty
+    # Copied from tiny_hf.transformers.models.mask2former.modeling_mask2former.Mask2FormerLoss.sample_points_using_uncertainty
     def sample_points_using_uncertainty(
         self,
         logits: torch.Tensor,
@@ -762,7 +762,7 @@ class OneFormerTransformerDecoderOutput(BaseModelOutput):
 
 
 @dataclass
-# Copied from transformers.models.mask2former.modeling_mask2former.Mask2FormerPixelDecoderOutput with Mask2->One
+# Copied from tiny_hf.transformers.models.mask2former.modeling_mask2former.Mask2FormerPixelDecoderOutput with Mask2->One
 class OneFormerPixelDecoderOutput(ModelOutput):
     """
     OneFormer's pixel decoder module output, practically a Multi-Scale Deformable Attention based decoder. It returns
@@ -928,12 +928,12 @@ class OneFormerForUniversalSegmentationOutput(ModelOutput):
     attentions: Optional[Tuple[Tuple[torch.FloatTensor]]] = None
 
 
-# Modified from transformers.models.deformable_detr.modeling_deformable_detr.DeformableDetrFrozenBatchNorm2d with DeformableDetr->OneFormerPixelDecoder
+# Modified from tiny_hf.transformers.models.deformable_detr.modeling_deformable_detr.DeformableDetrFrozenBatchNorm2d with DeformableDetr->OneFormerPixelDecoder
 class OneFormerPixelDecoderFrozenBatchNorm2d(nn.Module):
     """
     BatchNorm2d where the batch statistics and the affine parameters are fixed.
 
-    Copy-paste from torchvision.misc.ops with added eps before rqsrt, without which any other models than
+    Copy-paste from tg_adapter.ision.misc.ops with added eps before rqsrt, without which any other models than
     torchvision.models.resnet[18,34,50,101] produce nans.
     """
 
@@ -966,7 +966,7 @@ class OneFormerPixelDecoderFrozenBatchNorm2d(nn.Module):
         return x * scale + bias
 
 
-# Modified from transformers.models.detr.modeling_deformable_detr.DeformableDetrMultiscaleDeformableAttention with DeformableDetr->OneFormerPixelDecoderEncoder
+# Modified from tiny_hf.transformers.models.detr.modeling_deformable_detr.DeformableDetrMultiscaleDeformableAttention with DeformableDetr->OneFormerPixelDecoderEncoder
 class OneFormerPixelDecoderEncoderMultiscaleDeformableAttention(nn.Module):
     """
     Multiscale deformable attention as proposed in Deformable DETR.
@@ -1151,7 +1151,7 @@ class OneFormerPixelDecoderEncoderLayer(nn.Module):
         return outputs
 
 
-# Modified from from transformers.models.detr.modeling_deformable_detr.DeformableDetrEncoder with DeformableDetrEncoder->OneFormerPixelDecoderEncoderOnly
+# Modified from from tiny_hf.transformers.models.detr.modeling_deformable_detr.DeformableDetrEncoder with DeformableDetrEncoder->OneFormerPixelDecoderEncoderOnly
 class OneFormerPixelDecoderEncoderOnly(nn.Module):
     """
     Transformer encoder consisting of *config.encoder_layers* deformable attention layers. Each layer is a
@@ -1274,7 +1274,7 @@ class OneFormerPixelDecoderEncoderOnly(nn.Module):
         )
 
 
-# Modified from from transformers.models.mask2former.modeling_mask2former.Mask2FormerPixelDecoder with Mask2->One
+# Modified from from tiny_hf.transformers.models.mask2former.modeling_mask2former.Mask2FormerPixelDecoder with Mask2->One
 class OneFormerPixelDecoder(nn.Module):
     def __init__(self, config: OneFormerConfig, feature_channels):
         super().__init__()
@@ -1474,7 +1474,7 @@ class OneFormerPixelDecoder(nn.Module):
         )
 
 
-# Modified from from transformers.models.mask2former.modeling_mask2former.Mask2FormerPixelLevelModule with Mask2->One
+# Modified from from tiny_hf.transformers.models.mask2former.modeling_mask2former.Mask2FormerPixelLevelModule with Mask2->One
 class OneFormerPixelLevelModule(nn.Module):
     def __init__(self, config: OneFormerConfig):
         """
@@ -1500,7 +1500,7 @@ class OneFormerPixelLevelModule(nn.Module):
         )
 
 
-# Modified from transformers.models.detr.modeling_detr.DetrAttention with Detr->OneFormer
+# Modified from tiny_hf.transformers.models.detr.modeling_detr.DetrAttention with Detr->OneFormer
 class OneFormerAttention(nn.Module):
     """
     Multi-headed attention from 'Attention Is All You Need' paper. Here, we add position embeddings to the queries and
@@ -2380,7 +2380,7 @@ class OneFormerTransformerModule(nn.Module):
         )
 
 
-# Copied from transformers.models.maskformer.modeling_maskformer.MaskFormerSinePositionEmbedding with Mask->One
+# Copied from tiny_hf.transformers.models.maskformer.modeling_maskformer.MaskFormerSinePositionEmbedding with Mask->One
 class OneFormerSinePositionEmbedding(nn.Module):
     """
     This is a more standard version of the position embedding, very similar to the one used by the Attention is all you
@@ -2420,7 +2420,7 @@ class OneFormerSinePositionEmbedding(nn.Module):
         return pos
 
 
-# Copied from transformers.models.maskformer.modeling_maskformer.PredictionBlock
+# Copied from tiny_hf.transformers.models.maskformer.modeling_maskformer.PredictionBlock
 class PredictionBlock(nn.Module):
     def __init__(self, in_dim: int, out_dim: int, activation: nn.Module) -> None:
         super().__init__()
@@ -2942,10 +2942,10 @@ class OneFormerModel(OneFormerPreTrainedModel):
         Example:
 
         ```python
-        >>> import torch
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import OneFormerProcessor, OneFormerModel
+        >>> from tiny_hf.transformers.import OneFormerProcessor, OneFormerModel
 
         >>> # download texting image
         >>> url = "http://images.cocodataset.org/val2017/000000039769.jpg"
@@ -3134,10 +3134,10 @@ class OneFormerForUniversalSegmentation(OneFormerPreTrainedModel):
         Universal segmentation example:
 
         ```python
-        >>> from transformers import OneFormerProcessor, OneFormerForUniversalSegmentation
+        >>> from tiny_hf.transformers.import OneFormerProcessor, OneFormerForUniversalSegmentation
         >>> from PIL import Image
         >>> import requests
-        >>> import torch
+        >>> import tg_adapter as torch
 
         >>> # load OneFormer fine-tuned on ADE20k for universal segmentation
         >>> processor = OneFormerProcessor.from_pretrained("shi-labs/oneformer_ade20k_swin_tiny")

@@ -26,7 +26,7 @@ logger = logging.get_logger(__name__)
 _CONFIG_FOR_DOC = "T5Config"
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.shift_tokens_right
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.shift_tokens_right
 def shift_tokens_right(input_ids: jnp.ndarray, pad_token_id: int, decoder_start_token_id: int) -> jnp.ndarray:
     """
     Shift input ids one token to the right.
@@ -47,7 +47,7 @@ class FlaxMT5Model(FlaxT5Model):
     Examples:
 
     ```python
-    >>> from transformers import FlaxMT5Model, AutoTokenizer
+    >>> from tiny_hf.transformers.import FlaxMT5Model, AutoTokenizer
 
     >>> model = FlaxMT5Model.from_pretrained("google/mt5-small")
     >>> tokenizer = AutoTokenizer.from_pretrained("google/mt5-small")
@@ -74,7 +74,7 @@ class FlaxMT5EncoderModel(FlaxT5EncoderModel):
     Examples:
 
     ```python
-    >>> from transformers import FlaxT5EncoderModel, AutoTokenizer
+    >>> from tiny_hf.transformers.import FlaxT5EncoderModel, AutoTokenizer
 
     >>> model = FlaxT5EncoderModel.from_pretrained("google/mt5-small")
     >>> tokenizer = AutoTokenizer.from_pretrained("google/mt5-small")
@@ -101,7 +101,7 @@ class FlaxMT5ForConditionalGeneration(FlaxT5ForConditionalGeneration):
     Examples:
 
     ```python
-    >>> from transformers import FlaxMT5ForConditionalGeneration, AutoTokenizer
+    >>> from tiny_hf.transformers.import FlaxMT5ForConditionalGeneration, AutoTokenizer
 
     >>> model = FlaxMT5ForConditionalGeneration.from_pretrained("google/mt5-small")
     >>> tokenizer = AutoTokenizer.from_pretrained("google/mt5-small")

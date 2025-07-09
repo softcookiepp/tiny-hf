@@ -158,7 +158,7 @@ class PerceiverImageProcessor(BaseImageProcessor):
             **kwargs,
         )
 
-    # Copied from transformers.models.vit.image_processing_vit.ViTImageProcessor.resize with PILImageResampling.BILINEAR->PILImageResampling.BICUBIC
+    # Copied from tiny_hf.transformers.models.vit.image_processing_vit.ViTImageProcessor.resize with PILImageResampling.BILINEAR->PILImageResampling.BICUBIC
     def resize(
         self,
         image: np.ndarray,

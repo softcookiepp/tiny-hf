@@ -24,10 +24,10 @@ from pprint import pformat
 from typing import Any, Dict, Iterator, List, Set, Tuple
 
 import requests
-import torch
-import torchvision.transforms as T
+import tg_adapter as torch
+import tg_adapter.ision.transforms as T
 from PIL import Image
-from torch import Tensor, nn
+from tg_adapter.import Tensor, nn
 
 
 try:
@@ -37,17 +37,17 @@ try:
     from detectron2.projects.deeplab import add_deeplab_config
 except ImportError:
     pass
-from transformers import CLIPTokenizer, DinatConfig, SwinConfig
-from transformers.models.oneformer.image_processing_oneformer import OneFormerImageProcessor
-from transformers.models.oneformer.modeling_oneformer import (
+from tiny_hf.transformers.import CLIPTokenizer, DinatConfig, SwinConfig
+from tiny_hf.transformers.models.oneformer.image_processing_oneformer import OneFormerImageProcessor
+from tiny_hf.transformers.models.oneformer.modeling_oneformer import (
     OneFormerConfig,
     OneFormerForUniversalSegmentation,
     OneFormerForUniversalSegmentationOutput,
     OneFormerModel,
     OneFormerModelOutput,
 )
-from transformers.models.oneformer.processing_oneformer import OneFormerProcessor
-from transformers.utils import logging
+from tiny_hf.transformers.models.oneformer.processing_oneformer import OneFormerProcessor
+from tiny_hf.transformers.utils import logging
 
 
 StateDict = Dict[str, Tensor]

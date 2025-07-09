@@ -16,11 +16,11 @@ import json
 import os
 
 import regex as re
-import torch
+import tg_adapter as torch
 from mistral_common.tokens.tokenizers.mistral import MistralTokenizer
 from safetensors.torch import load_file as safe_load_file
 
-from transformers import (
+from tiny_hf.transformers.import (
     LlavaConfig,
     LlavaForConditionalGeneration,
     MistralConfig,
@@ -85,7 +85,7 @@ OLD_KEY_TO_NEW_KEY_MAPPING = {
 
 
 def convert_mistral_tokenizer(model_file):
-    from transformers import LlamaTokenizer
+    from tiny_hf.transformers.import LlamaTokenizer
 
     mistral_tokenizer = MistralTokenizer.from_file(model_file)
     vocab = mistral_tokenizer.instruct_tokenizer.tokenizer.vocab()

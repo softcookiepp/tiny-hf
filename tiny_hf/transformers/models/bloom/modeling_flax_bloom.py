@@ -183,7 +183,7 @@ class FlaxBloomAttention(nn.Module):
         return hidden_states.reshape(hidden_states.shape[:2] + (self.hidden_size,))
 
     @nn.compact
-    # Copied from transformers.models.gptj.modeling_flax_gptj.FlaxGPTJAttention._concatenate_to_cache
+    # Copied from tiny_hf.transformers.models.gptj.modeling_flax_gptj.FlaxGPTJAttention._concatenate_to_cache
     def _concatenate_to_cache(self, key, value, query, attention_mask):
         """
         This function takes projected key, value states from a single input token and concatenates the states to cached
@@ -643,7 +643,7 @@ class FlaxBloomModule(nn.Module):
     "The bare Bloom Model transformer outputting raw hidden-states without any specific head on top.",
     BLOOM_START_DOCSTRING,
 )
-# Copied from transformers.models.gpt_neo.modeling_flax_gpt_neo.FlaxGPTNeoModel with GPTNeo->Bloom
+# Copied from tiny_hf.transformers.models.gpt_neo.modeling_flax_gpt_neo.FlaxGPTNeoModel with GPTNeo->Bloom
 class FlaxBloomModel(FlaxBloomPreTrainedModel):
     module_class = FlaxBloomModule
 

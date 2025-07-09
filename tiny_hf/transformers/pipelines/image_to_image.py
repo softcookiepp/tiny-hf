@@ -48,7 +48,7 @@ class ImageToImagePipeline(Pipeline):
     >>> from PIL import Image
     >>> import requests
 
-    >>> from transformers import pipeline
+    >>> from tiny_hf.transformers.import pipeline
 
     >>> upscaler = pipeline("image-to-image", model="caidas/swin2SR-classical-sr-x2-64")
     >>> img = Image.open(requests.get("http://images.cocodataset.org/val2017/000000039769.jpg", stream=True).raw)

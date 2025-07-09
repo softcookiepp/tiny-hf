@@ -18,8 +18,8 @@ from typing import List, Optional, Tuple, Union
 
 import numpy as np
 
-from transformers.processing_utils import ImagesKwargs, ProcessingKwargs, ProcessorMixin, TextKwargs, Unpack
-from transformers.tokenization_utils_base import PreTokenizedInput, TextInput
+from tiny_hf.transformers.processing_utils import ImagesKwargs, ProcessingKwargs, ProcessorMixin, TextKwargs, Unpack
+from tiny_hf.transformers.tokenization_utils_base import PreTokenizedInput, TextInput
 
 from ...image_processing_utils import BatchFeature
 from ...image_utils import ImageInput

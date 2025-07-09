@@ -61,7 +61,7 @@ class MaskGenerationPipeline(ChunkPipeline):
     Example:
 
     ```python
-    >>> from transformers import pipeline
+    >>> from tiny_hf.transformers.import pipeline
 
     >>> generator = pipeline(model="facebook/sam-vit-base", task="mask-generation")
     >>> outputs = generator(

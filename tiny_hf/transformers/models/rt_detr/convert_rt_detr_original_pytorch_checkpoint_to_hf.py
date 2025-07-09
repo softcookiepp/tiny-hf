@@ -19,13 +19,13 @@ import json
 from pathlib import Path
 
 import requests
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 from PIL import Image
-from torchvision import transforms
+from tg_adapter.ision import transforms
 
-from transformers import RTDetrConfig, RTDetrForObjectDetection, RTDetrImageProcessor
-from transformers.utils import logging
+from tiny_hf.transformers.import RTDetrConfig, RTDetrForObjectDetection, RTDetrImageProcessor
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()
@@ -552,7 +552,7 @@ def convert_rt_detr_checkpoint(model_name, pytorch_dump_folder_path, push_to_hub
     # load default config
     config = get_rt_detr_config(model_name)
 
-    # load original model from torch hub
+    # load original model from tg_adapter.hub
     model_name_to_checkpoint_url = {
         "rtdetr_r18vd": "https://github.com/lyuwenyu/storage/releases/download/v0.1/rtdetr_r18vd_dec3_6x_coco_from_paddle.pth",
         "rtdetr_r34vd": "https://github.com/lyuwenyu/storage/releases/download/v0.1/rtdetr_r34vd_dec4_6x_coco_from_paddle.pth",

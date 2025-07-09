@@ -18,10 +18,10 @@ import argparse
 import json
 import tempfile
 
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 
-from transformers import VitsConfig, VitsModel, VitsTokenizer, logging
+from tiny_hf.transformers.import VitsConfig, VitsModel, VitsTokenizer, logging
 
 
 logging.set_verbosity_info()

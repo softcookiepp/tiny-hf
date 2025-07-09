@@ -48,8 +48,8 @@ import urllib3
 from huggingface_hub import delete_repo
 from packaging import version
 
-#from transformers import Trainer
-#from transformers import logging as transformers_logging
+#from tiny_hf.transformers.import Trainer
+#from tiny_hf.transformers.import logging as transformers_logging
 from . import Trainer
 from . import logging as transformers_logging
 
@@ -199,7 +199,7 @@ ENDPOINT_STAGING = "https://hub-ci.huggingface.co"
 TOKEN = "hf_94wBhPGp6KrrTH3KDchhKpRxZwd6dmHWLL"
 
 if is_torch_available():
-	import torch
+	import tg_adapter as torch
 
 	IS_ROCM_SYSTEM = torch.version.hip is not None
 	IS_CUDA_SYSTEM = torch.version.cuda is not None
@@ -762,7 +762,7 @@ def require_torch_multi_gpu(test_case):
 	if not is_torch_available():
 		return unittest.skip(reason="test requires PyTorch")(test_case)
 
-	import torch
+	import tg_adapter as torch
 
 	return unittest.skipUnless(torch.cuda.device_count() > 1, "test requires multiple CUDA GPUs")(test_case)
 
@@ -788,7 +788,7 @@ def require_torch_non_multi_gpu(test_case):
 	if not is_torch_available():
 		return unittest.skip(reason="test requires PyTorch")(test_case)
 
-	import torch
+	import tg_adapter as torch
 
 	return unittest.skipUnless(torch.cuda.device_count() < 2, "test requires 0 or 1 GPU")(test_case)
 
@@ -810,7 +810,7 @@ def require_torch_up_to_2_gpus(test_case):
 	if not is_torch_available():
 		return unittest.skip(reason="test requires PyTorch")(test_case)
 
-	import torch
+	import tg_adapter as torch
 
 	return unittest.skipUnless(torch.cuda.device_count() < 3, "test requires 0 or 1 or 2 GPUs")(test_case)
 
@@ -916,7 +916,7 @@ def require_torch_multi_hpu(test_case):
 
 if is_torch_available():
 	# Set env var CUDA_VISIBLE_DEVICES="" to force cpu-mode
-	import torch
+	import tg_adapter as torch
 
 	if "TRANSFORMERS_TEST_BACKEND" in os.environ:
 		backend = os.environ["TRANSFORMERS_TEST_BACKEND"]
@@ -1413,7 +1413,7 @@ def get_gpu_count():
 	Return the number of available gpus (regardless of whether torch, tf or jax is used)
 	"""
 	if is_torch_available():
-		import torch
+		import tg_adapter as torch
 
 		return torch.cuda.device_count()
 	elif is_tf_available():
@@ -1725,8 +1725,8 @@ class CaptureLogger:
 	Example:
 
 	```python
-	>>> from transformers import logging
-	>>> from transformers.testing_utils import CaptureLogger
+	>>> from tiny_hf.transformers.import logging
+	>>> from tiny_hf.transformers.testing_utils import CaptureLogger
 
 	>>> msg = "Testing 1, 2, 3"
 	>>> logging.set_verbosity_info()
@@ -2083,7 +2083,7 @@ class TestCasePlus(unittest.TestCase):
 		Example:
 
 		```
-		one_liner_str = 'from transformers import AutoModel; AutoModel.from_pretrained("google-t5/t5-large")'
+		one_liner_str = 'from tiny_hf.transformers.import AutoModel; AutoModel.from_pretrained("google-t5/t5-large")'
 		max_rss = self.python_one_liner_max_rss(one_liner_str)
 		```
 		"""
@@ -3063,7 +3063,7 @@ def get_device_properties() -> DeviceProperties:
 	Get environment device properties.
 	"""
 	if IS_CUDA_SYSTEM or IS_ROCM_SYSTEM:
-		import torch
+		import tg_adapter as torch
 
 		major, _ = torch.cuda.get_device_capability()
 		if IS_ROCM_SYSTEM:

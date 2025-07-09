@@ -492,7 +492,7 @@ def to_channel_dimension_format(
     return image
 
 
-# Copied from transformers.models.idefics2.image_processing_idefics2.convert_to_rgb
+# Copied from tiny_hf.transformers.models.idefics2.image_processing_idefics2.convert_to_rgb
 def convert_to_rgb(image: ImageInput) -> ImageInput:
     """
     Converts an image to RGB format. Only converts if the image is of type PIL.Image.Image, otherwise returns the image

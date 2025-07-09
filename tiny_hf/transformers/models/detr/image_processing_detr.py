@@ -66,8 +66,8 @@ from ...utils import (
 
 
 if is_torch_available():
-    import torch
-    from torch import nn
+    import tg_adapter as torch
+    from tg_adapter.import nn
 
 
 if is_vision_available():
@@ -201,7 +201,7 @@ def get_numpy_to_framework_fn(arr) -> Callable:
 
         return tf.convert_to_tensor
     if is_torch_available() and is_torch_tensor(arr):
-        import torch
+        import tg_adapter as torch
 
         return torch.tensor
     if is_flax_available() and is_jax_tensor(arr):
@@ -238,7 +238,7 @@ def normalize_annotation(annotation: Dict, image_size: Tuple[int, int]) -> Dict:
     return norm_annotation
 
 
-# Copied from transformers.models.vilt.image_processing_vilt.max_across_indices
+# Copied from tiny_hf.transformers.models.vilt.image_processing_vilt.max_across_indices
 def max_across_indices(values: Iterable[Any]) -> List[Any]:
     """
     Return the maximum value across all indices of an iterable of values.
@@ -246,7 +246,7 @@ def max_across_indices(values: Iterable[Any]) -> List[Any]:
     return [max(values_i) for values_i in zip(*values)]
 
 
-# Copied from transformers.models.vilt.image_processing_vilt.get_max_height_width
+# Copied from tiny_hf.transformers.models.vilt.image_processing_vilt.get_max_height_width
 def get_max_height_width(
     images: List[np.ndarray], input_data_format: Optional[Union[str, ChannelDimension]] = None
 ) -> List[int]:
@@ -265,7 +265,7 @@ def get_max_height_width(
     return (max_height, max_width)
 
 
-# Copied from transformers.models.vilt.image_processing_vilt.make_pixel_mask
+# Copied from tiny_hf.transformers.models.vilt.image_processing_vilt.make_pixel_mask
 def make_pixel_mask(
     image: np.ndarray, output_size: Tuple[int, int], input_data_format: Optional[Union[str, ChannelDimension]] = None
 ) -> np.ndarray:

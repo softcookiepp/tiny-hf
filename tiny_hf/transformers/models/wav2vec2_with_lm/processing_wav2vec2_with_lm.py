@@ -535,10 +535,10 @@ class Wav2Vec2ProcessorWithLM(ProcessorMixin):
 
         ```python
         >>> # Let's see how to retrieve time steps for a model
-        >>> from transformers import AutoTokenizer, AutoProcessor, AutoModelForCTC
+        >>> from tiny_hf.transformers.import AutoTokenizer, AutoProcessor, AutoModelForCTC
         >>> from datasets import load_dataset
         >>> import datasets
-        >>> import torch
+        >>> import tg_adapter as torch
 
         >>> # import model, feature extractor, tokenizer
         >>> model = AutoModelForCTC.from_pretrained("patrickvonplaten/wav2vec2-base-100h-with-lm")

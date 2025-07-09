@@ -21,10 +21,10 @@
 
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.nn.functional as F
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.nn.functional as F
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...cache_utils import DynamicCache
@@ -497,7 +497,7 @@ class MixtralForCausalLM(MistralForCausalLM):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, MixtralForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, MixtralForCausalLM
 
         >>> model = MixtralForCausalLM.from_pretrained("mistralai/Mixtral-8x7B-v0.1")
         >>> tokenizer = AutoTokenizer.from_pretrained("mistralai/Mixtral-8x7B-v0.1")

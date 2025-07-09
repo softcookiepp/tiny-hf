@@ -16,11 +16,11 @@ import json
 import os
 import re
 
-import torch
+import tg_adapter as torch
 from peft import LoraConfig
 from safetensors.torch import load_file, save_file
 
-from transformers import (
+from tiny_hf.transformers.import (
     Phi4MultimodalAudioConfig,
     Phi4MultimodalConfig,
     Phi4MultimodalForCausalLM,

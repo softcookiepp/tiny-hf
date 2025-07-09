@@ -1,10 +1,10 @@
 import argparse
 from argparse import Namespace
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
-from transformers import XGLMConfig, XGLMForCausalLM
+from tiny_hf.transformers.import XGLMConfig, XGLMForCausalLM
 
 
 def remove_ignore_keys_(state_dict):

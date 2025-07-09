@@ -131,7 +131,7 @@ def create_sinusoidal_positions(num_pos, dim):
     return jnp.array(out[:, :, :num_pos])
 
 
-# Copied from transformers.models.llama.modeling_flax_llama.rotate_half
+# Copied from tiny_hf.transformers.models.llama.modeling_flax_llama.rotate_half
 def rotate_half(tensor):
     """Rotates half the hidden dims of the input."""
     rotate_half_tensor = jnp.concatenate(
@@ -140,7 +140,7 @@ def rotate_half(tensor):
     return rotate_half_tensor
 
 
-# Copied from transformers.models.llama.modeling_flax_llama.apply_rotary_pos_emb
+# Copied from tiny_hf.transformers.models.llama.modeling_flax_llama.apply_rotary_pos_emb
 def apply_rotary_pos_emb(tensor, sin_pos, cos_pos):
     return (tensor * cos_pos) + (rotate_half(tensor) * sin_pos)
 
@@ -163,7 +163,7 @@ class FlaxGemmaRMSNorm(nn.Module):
         return (1 + self.weight) * jnp.asarray(hidden_states, dtype=self.dtype)
 
 
-# Copied from transformers.models.llama.modeling_flax_llama.FlaxLlamaRotaryEmbedding with Llama->Gemma
+# Copied from tiny_hf.transformers.models.llama.modeling_flax_llama.FlaxLlamaRotaryEmbedding with Llama->Gemma
 class FlaxGemmaRotaryEmbedding(nn.Module):
     config: GemmaConfig
     dtype: jnp.dtype = jnp.float32
@@ -230,7 +230,7 @@ class FlaxGemmaAttention(nn.Module):
         return hidden_states.reshape(hidden_states.shape[:2] + (self.num_heads * self.head_dim,))
 
     @nn.compact
-    # Copied from transformers.models.gpt_neo.modeling_flax_gpt_neo.FlaxGPTNeoSelfAttention._concatenate_to_cache
+    # Copied from tiny_hf.transformers.models.gpt_neo.modeling_flax_gpt_neo.FlaxGPTNeoSelfAttention._concatenate_to_cache
     def _concatenate_to_cache(self, key, value, query, attention_mask):
         """
         This function takes projected key, value states from a single input token and concatenates the states to cached
@@ -374,7 +374,7 @@ class FlaxGemmaMLP(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.llama.modeling_flax_llama.FlaxLlamaDecoderLayer with Llama->Gemma
+# Copied from tiny_hf.transformers.models.llama.modeling_flax_llama.FlaxLlamaDecoderLayer with Llama->Gemma
 class FlaxGemmaDecoderLayer(nn.Module):
     config: GemmaConfig
     dtype: jnp.dtype = jnp.float32
@@ -417,7 +417,7 @@ class FlaxGemmaDecoderLayer(nn.Module):
         return (hidden_states,) + outputs[1:]
 
 
-# Copied from transformers.models.gpt_neo.modeling_flax_gpt_neo.FlaxGPTNeoPreTrainedModel with GPTNeo->Gemma, GPT_NEO->GEMMA, transformer->model
+# Copied from tiny_hf.transformers.models.gpt_neo.modeling_flax_gpt_neo.FlaxGPTNeoPreTrainedModel with GPTNeo->Gemma, GPT_NEO->GEMMA, transformer->model
 class FlaxGemmaPreTrainedModel(FlaxPreTrainedModel):
     """
     An abstract class to handle weights initialization and a simple interface for downloading and loading pretrained
@@ -550,7 +550,7 @@ class FlaxGemmaPreTrainedModel(FlaxPreTrainedModel):
         return outputs
 
 
-# Copied from transformers.models.llama.modeling_flax_llama.FlaxLlamaLayerCollection with Llama->Gemma
+# Copied from tiny_hf.transformers.models.llama.modeling_flax_llama.FlaxLlamaLayerCollection with Llama->Gemma
 class FlaxGemmaLayerCollection(nn.Module):
     config: GemmaConfig
     dtype: jnp.dtype = jnp.float32
@@ -597,7 +597,7 @@ class FlaxGemmaLayerCollection(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.llama.modeling_flax_llama.FlaxLlamaModule with Llama->Gemma
+# Copied from tiny_hf.transformers.models.llama.modeling_flax_llama.FlaxLlamaModule with Llama->Gemma
 class FlaxGemmaModule(nn.Module):
     config: GemmaConfig
     dtype: jnp.dtype = jnp.float32
@@ -664,7 +664,7 @@ class FlaxGemmaModule(nn.Module):
     "The bare Gemma Model transformer outputting raw hidden-states without any specific head on top.",
     GEMMA_START_DOCSTRING,
 )
-# Copied from transformers.models.llama.modeling_flax_llama.FlaxLlamaModel with Llama->Gemma
+# Copied from tiny_hf.transformers.models.llama.modeling_flax_llama.FlaxLlamaModel with Llama->Gemma
 class FlaxGemmaModel(FlaxGemmaPreTrainedModel):
     module_class = FlaxGemmaModule
 
@@ -678,7 +678,7 @@ append_call_sample_docstring(
 )
 
 
-# Copied from transformers.models.llama.modeling_flax_llama.FlaxLlamaForCausalLMModule with Llama->Gemma
+# Copied from tiny_hf.transformers.models.llama.modeling_flax_llama.FlaxLlamaForCausalLMModule with Llama->Gemma
 class FlaxGemmaForCausalLMModule(nn.Module):
     config: GemmaConfig
     dtype: jnp.dtype = jnp.float32
@@ -734,7 +734,7 @@ class FlaxGemmaForCausalLMModule(nn.Module):
     """,
     GEMMA_START_DOCSTRING,
 )
-# Copied from transformers.models.gptj.modeling_flax_gptj.FlaxGPTJForCausalLM with GPTJ->Gemma
+# Copied from tiny_hf.transformers.models.gptj.modeling_flax_gptj.FlaxGPTJForCausalLM with GPTJ->Gemma
 class FlaxGemmaForCausalLM(FlaxGemmaPreTrainedModel):
     module_class = FlaxGemmaForCausalLMModule
 

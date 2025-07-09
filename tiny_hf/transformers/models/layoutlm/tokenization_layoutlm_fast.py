@@ -29,7 +29,7 @@ logger = logging.get_logger(__name__)
 VOCAB_FILES_NAMES = {"vocab_file": "vocab.txt", "tokenizer_file": "tokenizer.json"}
 
 
-# Copied from transformers.models.bert.tokenization_bert_fast.BertTokenizerFast with Bert->LayoutLM,BERT->LayoutLM
+# Copied from tiny_hf.transformers.models.bert.tokenization_bert_fast.BertTokenizerFast with Bert->LayoutLM,BERT->LayoutLM
 class LayoutLMTokenizerFast(PreTrainedTokenizerFast):
     r"""
     Construct a "fast" LayoutLM tokenizer (backed by HuggingFace's *tokenizers* library). Based on WordPiece.

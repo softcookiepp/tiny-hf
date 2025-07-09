@@ -153,7 +153,7 @@ class SEWDConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import SEWDConfig, SEWDModel
+    >>> from tiny_hf.transformers.import SEWDConfig, SEWDModel
 
     >>> # Initializing a SEW-D asapp/sew-d-tiny-100k style configuration
     >>> configuration = SEWDConfig()

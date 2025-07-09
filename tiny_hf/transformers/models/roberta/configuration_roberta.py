@@ -82,7 +82,7 @@ class RobertaConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import RobertaConfig, RobertaModel
+    >>> from tiny_hf.transformers.import RobertaConfig, RobertaModel
 
     >>> # Initializing a RoBERTa configuration
     >>> configuration = RobertaConfig()

@@ -29,7 +29,7 @@ class DepthEstimationPipeline(Pipeline):
     Example:
 
     ```python
-    >>> from transformers import pipeline
+    >>> from tiny_hf.transformers.import pipeline
 
     >>> depth_estimator = pipeline(task="depth-estimation", model="LiheYoung/depth-anything-base-hf")
     >>> output = depth_estimator("http://images.cocodataset.org/val2017/000000039769.jpg")

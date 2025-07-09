@@ -43,7 +43,7 @@ logger = logging.get_logger(__name__)
 
 if TYPE_CHECKING:
     if is_torch_available():
-        import torch
+        import tg_adapter as torch
     if is_tf_available():
         import tensorflow as tf
     if is_flax_available():
@@ -579,10 +579,10 @@ class Wav2Vec2CTCTokenizer(PreTrainedTokenizer):
 
         ```python
         >>> # Let's see how to retrieve time steps for a model
-        >>> from transformers import AutoTokenizer, AutoFeatureExtractor, AutoModelForCTC
+        >>> from tiny_hf.transformers.import AutoTokenizer, AutoFeatureExtractor, AutoModelForCTC
         >>> from datasets import load_dataset
         >>> import datasets
-        >>> import torch
+        >>> import tg_adapter as torch
 
         >>> # import model, feature extractor, tokenizer
         >>> model = AutoModelForCTC.from_pretrained("facebook/wav2vec2-base-960h")

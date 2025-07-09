@@ -26,7 +26,7 @@ from ...utils import logging
 logger = logging.get_logger(__name__)
 
 
-# Copied from transformers.models.roberta.configuration_roberta.RobertaConfig with FacebookAI/roberta-base->andreasmadsen/efficient_mlm_m0.40,RoBERTa->RoBERTa-PreLayerNorm,Roberta->RobertaPreLayerNorm,roberta->roberta-prelayernorm
+# Copied from tiny_hf.transformers.models.roberta.configuration_roberta.RobertaConfig with FacebookAI/roberta-base->andreasmadsen/efficient_mlm_m0.40,RoBERTa->RoBERTa-PreLayerNorm,Roberta->RobertaPreLayerNorm,roberta->roberta-prelayernorm
 class RobertaPreLayerNormConfig(PretrainedConfig):
     r"""
     This is the configuration class to store the configuration of a [`RobertaPreLayerNormModel`] or a [`TFRobertaPreLayerNormModel`]. It is
@@ -83,7 +83,7 @@ class RobertaPreLayerNormConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import RobertaPreLayerNormConfig, RobertaPreLayerNormModel
+    >>> from tiny_hf.transformers.import RobertaPreLayerNormConfig, RobertaPreLayerNormModel
 
     >>> # Initializing a RoBERTa-PreLayerNorm configuration
     >>> configuration = RobertaPreLayerNormConfig()
@@ -138,7 +138,7 @@ class RobertaPreLayerNormConfig(PretrainedConfig):
         self.classifier_dropout = classifier_dropout
 
 
-# Copied from transformers.models.roberta.configuration_roberta.RobertaOnnxConfig with Roberta->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.roberta.configuration_roberta.RobertaOnnxConfig with Roberta->RobertaPreLayerNorm
 class RobertaPreLayerNormOnnxConfig(OnnxConfig):
     @property
     def inputs(self) -> Mapping[str, Mapping[int, str]]:

@@ -40,7 +40,7 @@ class LEDTokenizerFast(PreTrainedTokenizerFast):
     be encoded differently whether it is at the beginning of the sentence (without space) or not:
 
     ```python
-    >>> from transformers import LEDTokenizerFast
+    >>> from tiny_hf.transformers.import LEDTokenizerFast
 
     >>> tokenizer = LEDTokenizerFast.from_pretrained("allenai/led-base-16384")
     >>> tokenizer("Hello world")["input_ids"]
@@ -116,7 +116,7 @@ class LEDTokenizerFast(PreTrainedTokenizerFast):
     slow_tokenizer_class = LEDTokenizer
     model_input_names = ["input_ids", "attention_mask"]
 
-    # Copied from transformers.models.bart.tokenization_bart_fast.BartTokenizerFast.__init__
+    # Copied from tiny_hf.transformers.models.bart.tokenization_bart_fast.BartTokenizerFast.__init__
     def __init__(
         self,
         vocab_file=None,
@@ -185,7 +185,7 @@ class LEDTokenizerFast(PreTrainedTokenizerFast):
                 setattr(self.backend_tokenizer, tokenizer_component, new_value)
 
     @property
-    # Copied from transformers.models.bart.tokenization_bart_fast.BartTokenizerFast.mask_token with BART->LED
+    # Copied from tiny_hf.transformers.models.bart.tokenization_bart_fast.BartTokenizerFast.mask_token with BART->LED
     def mask_token(self) -> str:
         """
         `str`: Mask token, to use when training a model with masked-language modeling. Log an error if used while not
@@ -212,7 +212,7 @@ class LEDTokenizerFast(PreTrainedTokenizerFast):
         value = AddedToken(value, lstrip=True, rstrip=False) if isinstance(value, str) else value
         self._mask_token = value
 
-    # Copied from transformers.models.bart.tokenization_bart_fast.BartTokenizerFast._batch_encode_plus
+    # Copied from tiny_hf.transformers.models.bart.tokenization_bart_fast.BartTokenizerFast._batch_encode_plus
     def _batch_encode_plus(self, *args, **kwargs) -> BatchEncoding:
         is_split_into_words = kwargs.get("is_split_into_words", False)
 
@@ -224,7 +224,7 @@ class LEDTokenizerFast(PreTrainedTokenizerFast):
 
         return super()._batch_encode_plus(*args, **kwargs)
 
-    # Copied from transformers.models.bart.tokenization_bart_fast.BartTokenizerFast._encode_plus
+    # Copied from tiny_hf.transformers.models.bart.tokenization_bart_fast.BartTokenizerFast._encode_plus
     def _encode_plus(self, *args, **kwargs) -> BatchEncoding:
         is_split_into_words = kwargs.get("is_split_into_words", False)
 
@@ -236,12 +236,12 @@ class LEDTokenizerFast(PreTrainedTokenizerFast):
 
         return super()._encode_plus(*args, **kwargs)
 
-    # Copied from transformers.models.bart.tokenization_bart_fast.BartTokenizerFast.save_vocabulary
+    # Copied from tiny_hf.transformers.models.bart.tokenization_bart_fast.BartTokenizerFast.save_vocabulary
     def save_vocabulary(self, save_directory: str, filename_prefix: Optional[str] = None) -> Tuple[str]:
         files = self._tokenizer.model.save(save_directory, name=filename_prefix)
         return tuple(files)
 
-    # Copied from transformers.models.bart.tokenization_bart_fast.BartTokenizerFast.build_inputs_with_special_tokens
+    # Copied from tiny_hf.transformers.models.bart.tokenization_bart_fast.BartTokenizerFast.build_inputs_with_special_tokens
     def build_inputs_with_special_tokens(self, token_ids_0, token_ids_1=None):
         output = [self.bos_token_id] + token_ids_0 + [self.eos_token_id]
         if token_ids_1 is None:
@@ -249,7 +249,7 @@ class LEDTokenizerFast(PreTrainedTokenizerFast):
 
         return output + [self.eos_token_id] + token_ids_1 + [self.eos_token_id]
 
-    # Copied from transformers.models.bart.tokenization_bart_fast.BartTokenizerFast.create_token_type_ids_from_sequences with BART->LED
+    # Copied from tiny_hf.transformers.models.bart.tokenization_bart_fast.BartTokenizerFast.create_token_type_ids_from_sequences with BART->LED
     def create_token_type_ids_from_sequences(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
     ) -> List[int]:
@@ -273,7 +273,7 @@ class LEDTokenizerFast(PreTrainedTokenizerFast):
             return len(cls + token_ids_0 + sep) * [0]
         return len(cls + token_ids_0 + sep + sep + token_ids_1 + sep) * [0]
 
-    # Copied from transformers.models.led.tokenization_led.LEDTokenizer._pad
+    # Copied from tiny_hf.transformers.models.led.tokenization_led.LEDTokenizer._pad
     def _pad(
         self,
         encoded_inputs: Union[Dict[str, EncodedInput], BatchEncoding],

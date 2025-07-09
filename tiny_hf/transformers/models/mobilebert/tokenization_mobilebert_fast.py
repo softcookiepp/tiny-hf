@@ -30,7 +30,7 @@ logger = logging.get_logger(__name__)
 VOCAB_FILES_NAMES = {"vocab_file": "vocab.txt", "tokenizer_file": "tokenizer.json"}
 
 
-# Copied from transformers.models.bert.tokenization_bert_fast.BertTokenizerFast with BERT->MobileBERT,Bert->MobileBert
+# Copied from tiny_hf.transformers.models.bert.tokenization_bert_fast.BertTokenizerFast with BERT->MobileBERT,Bert->MobileBert
 class MobileBertTokenizerFast(PreTrainedTokenizerFast):
     r"""
     Construct a "fast" MobileBERT tokenizer (backed by HuggingFace's *tokenizers* library). Based on WordPiece.

@@ -508,8 +508,9 @@ def test_uvit_2d_conv_embed():
 	a = np.arange(32).astype(np.int32).reshape(2, 4, 4)
 	_test_hf_reimplementation([a], {}, hf_module, "__call__", tg_module, "__call__")
 
-def test_quantized_weights():
+def test_flux_incomplete():
 	# how do I do this?
+	raise NotImplementedError
 	ckpt_path = "https://huggingface.co/city96/FLUX.1-dev-gguf/blob/main/flux1-dev-Q2_K.gguf"
 	from diffusers import FluxPipeline as hf_FluxPipeline
 	from diffusers import FluxTransformer2DModel as hf_FluxTransformer2DModel
@@ -540,6 +541,22 @@ def test_quantized_weights():
 	
 	_test_hf_reimplementation(["a cute bunny"], {"num_inference_steps": 1}, hf_pipe, "__call__", tg_pipe, "__call__")
 
+def test_quantized_weights():
+	#raise NotImplementedError
+	model_id = "TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF"
+	filename = "tinyllama-1.1b-chat-v1.0.Q6_K.gguf"
+	
+	from tiny_hf.transformers import AutoTokenizer as tg_tokenizer_class, AutoModelForCausalLM as tg_model_class
+	tg_tokenizer = tg_tokenizer_class.from_pretrained(model_id, gguf_file=filename)
+	tg_model = tg_model_class.from_pretrained(model_id, gguf_file=filename)
+	
+	from transformers import AutoTokenizer as hf_tokenizer_class, AutoModelForCausalLM as hf_model_class
+	hf_tokenizer = hf_tokenizer_class.from_pretrained(model_id, gguf_file=filename)
+	hf_model = hf_model_class.from_pretrained(model_id, gguf_file=filename)
+	
+	
+	
+	
 
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
@@ -547,8 +564,8 @@ def main():
 	#test_uvit_2d_conv_embed()
 	#input("did it workie?")
 	#test_amused_pipeline()
-	test_quantized_weights()
-	input("did it crash?")
+	#test_quantized_weights()
+	#input("did it crash?")
 	test_audioldm_pipeline()
 	#test_euler_discrete_scheduler()
 	test_stable_diffusion_xl_pipeline()

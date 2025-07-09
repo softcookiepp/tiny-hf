@@ -23,9 +23,9 @@ import math
 from dataclasses import dataclass
 from typing import Any, Optional, Tuple, Union
 
-import torch
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -1388,8 +1388,8 @@ class InstructBlipVideoForConditionalGeneration(InstructBlipVideoPreTrainedModel
         Examples:
 
         ```python
-        >>> from transformers import InstructBlipVideoProcessor, InstructBlipVideoForConditionalGeneration
-        >>> import torch
+        >>> from tiny_hf.transformers.import InstructBlipVideoProcessor, InstructBlipVideoForConditionalGeneration
+        >>> import tg_adapter as torch
         >>> from huggingface_hub import hf_hub_download
         >>> import av
         >>> import numpy as np

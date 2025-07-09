@@ -36,7 +36,7 @@ VOCAB_FILES_NAMES = {
 
 
 @lru_cache()
-# Copied from transformers.models.roberta.tokenization_roberta.bytes_to_unicode
+# Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.bytes_to_unicode
 def bytes_to_unicode():
     """
     Returns list of utf-8 byte and a mapping to unicode strings. We specifically avoids mapping to whitespace/control
@@ -61,7 +61,7 @@ def bytes_to_unicode():
     return dict(zip(bs, cs))
 
 
-# Copied from transformers.models.roberta.tokenization_roberta.get_pairs
+# Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.get_pairs
 def get_pairs(word):
     """
     Return set of symbol pairs in a word.
@@ -84,7 +84,7 @@ class BlenderbotTokenizer(PreTrainedTokenizer):
     be encoded differently whether it is at the beginning of the sentence (without space) or not:
 
     ```python
-    >>> from transformers import BlenderbotTokenizer
+    >>> from tiny_hf.transformers.import BlenderbotTokenizer
 
     >>> tokenizer = BlenderbotTokenizer.from_pretrained("facebook/blenderbot-3B")
     >>> tokenizer.add_prefix_space = False
@@ -158,7 +158,7 @@ class BlenderbotTokenizer(PreTrainedTokenizer):
     vocab_files_names = VOCAB_FILES_NAMES
     model_input_names = ["input_ids", "attention_mask"]
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer.__init__ with Roberta->Blenderbot, RoBERTa->Blenderbot
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer.__init__ with Roberta->Blenderbot, RoBERTa->Blenderbot
     def __init__(
         self,
         vocab_file,
@@ -220,17 +220,17 @@ class BlenderbotTokenizer(PreTrainedTokenizer):
         )
 
     @property
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer.vocab_size with Roberta->Blenderbot, RoBERTa->Blenderbot
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer.vocab_size with Roberta->Blenderbot, RoBERTa->Blenderbot
     def vocab_size(self):
         return len(self.encoder)
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer.get_vocab with Roberta->Blenderbot, RoBERTa->Blenderbot
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer.get_vocab with Roberta->Blenderbot, RoBERTa->Blenderbot
     def get_vocab(self):
         vocab = dict(self.encoder).copy()
         vocab.update(self.added_tokens_encoder)
         return vocab
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer.bpe with Roberta->Blenderbot, RoBERTa->Blenderbot
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer.bpe with Roberta->Blenderbot, RoBERTa->Blenderbot
     def bpe(self, token):
         if token in self.cache:
             return self.cache[token]
@@ -273,7 +273,7 @@ class BlenderbotTokenizer(PreTrainedTokenizer):
         self.cache[token] = word
         return word
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer._tokenize with Roberta->Blenderbot, RoBERTa->Blenderbot
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer._tokenize with Roberta->Blenderbot, RoBERTa->Blenderbot
     def _tokenize(self, text):
         """Tokenize a string."""
         bpe_tokens = []
@@ -284,24 +284,24 @@ class BlenderbotTokenizer(PreTrainedTokenizer):
             bpe_tokens.extend(bpe_token for bpe_token in self.bpe(token).split(" "))
         return bpe_tokens
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer._convert_token_to_id with Roberta->Blenderbot, RoBERTa->Blenderbot
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer._convert_token_to_id with Roberta->Blenderbot, RoBERTa->Blenderbot
     def _convert_token_to_id(self, token):
         """Converts a token (str) in an id using the vocab."""
         return self.encoder.get(token, self.encoder.get(self.unk_token))
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer._convert_id_to_token with Roberta->Blenderbot, RoBERTa->Blenderbot
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer._convert_id_to_token with Roberta->Blenderbot, RoBERTa->Blenderbot
     def _convert_id_to_token(self, index):
         """Converts an index (integer) in a token (str) using the vocab."""
         return self.decoder.get(index)
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer.convert_tokens_to_string with Roberta->Blenderbot, RoBERTa->Blenderbot
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer.convert_tokens_to_string with Roberta->Blenderbot, RoBERTa->Blenderbot
     def convert_tokens_to_string(self, tokens):
         """Converts a sequence of tokens (string) in a single string."""
         text = "".join(tokens)
         text = bytearray([self.byte_decoder[c] for c in text]).decode("utf-8", errors=self.errors)
         return text
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer.save_vocabulary with Roberta->Blenderbot, RoBERTa->Blenderbot
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer.save_vocabulary with Roberta->Blenderbot, RoBERTa->Blenderbot
     def save_vocabulary(self, save_directory: str, filename_prefix: Optional[str] = None) -> Tuple[str]:
         if not os.path.isdir(save_directory):
             logger.error(f"Vocabulary path ({save_directory}) should be a directory")
@@ -331,7 +331,7 @@ class BlenderbotTokenizer(PreTrainedTokenizer):
 
         return vocab_file, merge_file
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer.get_special_tokens_mask with Roberta->Blenderbot, RoBERTa->Blenderbot
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer.get_special_tokens_mask with Roberta->Blenderbot, RoBERTa->Blenderbot
     def get_special_tokens_mask(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None, already_has_special_tokens: bool = False
     ) -> List[int]:
@@ -359,7 +359,7 @@ class BlenderbotTokenizer(PreTrainedTokenizer):
             return [1] + ([0] * len(token_ids_0)) + [1]
         return [1] + ([0] * len(token_ids_0)) + [1, 1] + ([0] * len(token_ids_1)) + [1]
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer.create_token_type_ids_from_sequences with Roberta->Blenderbot, RoBERTa->Blenderbot
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer.create_token_type_ids_from_sequences with Roberta->Blenderbot, RoBERTa->Blenderbot
     def create_token_type_ids_from_sequences(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
     ) -> List[int]:
@@ -383,7 +383,7 @@ class BlenderbotTokenizer(PreTrainedTokenizer):
             return len(cls + token_ids_0 + sep) * [0]
         return len(cls + token_ids_0 + sep + sep + token_ids_1 + sep) * [0]
 
-    # Copied from transformers.models.roberta.tokenization_roberta.RobertaTokenizer.prepare_for_tokenization with Roberta->Blenderbot, RoBERTa->Blenderbot
+    # Copied from tiny_hf.transformers.models.roberta.tokenization_roberta.RobertaTokenizer.prepare_for_tokenization with Roberta->Blenderbot, RoBERTa->Blenderbot
     def prepare_for_tokenization(self, text, is_split_into_words=False, **kwargs):
         add_prefix_space = kwargs.pop("add_prefix_space", self.add_prefix_space)
         if (is_split_into_words or add_prefix_space) and (len(text) > 0 and not text[0].isspace()):

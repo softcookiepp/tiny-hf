@@ -48,7 +48,7 @@ class TimmWrapperConfig(PretrainedConfig):
 
     Example:
     ```python
-    >>> from transformers import TimmWrapperModel
+    >>> from tiny_hf.transformers.import TimmWrapperModel
 
     >>> # Initializing a timm model
     >>> model = TimmWrapperModel.from_pretrained("timm/resnet18.a1_in1k")

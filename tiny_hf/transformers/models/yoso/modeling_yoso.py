@@ -18,10 +18,10 @@ import math
 from pathlib import Path
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...modeling_outputs import (
@@ -56,7 +56,7 @@ lsh_cumulation = None
 
 def load_cuda_kernels():
     global lsh_cumulation
-    from torch.utils.cpp_extension import load
+    from tg_adapter.utils.cpp_extension import load
 
     def append_root(files):
         src_folder = Path(__file__).resolve().parent.parent.parent / "kernels" / "yoso"
@@ -232,7 +232,7 @@ class YosoLSHCumulation(torch.autograd.Function):
         return None, None, grad_query, grad_key, grad_value, None
 
 
-# Copied from transformers.models.nystromformer.modeling_nystromformer.NystromformerEmbeddings
+# Copied from tiny_hf.transformers.models.nystromformer.modeling_nystromformer.NystromformerEmbeddings
 class YosoEmbeddings(nn.Module):
     """Construct the embeddings from word, position and token_type embeddings."""
 
@@ -434,7 +434,7 @@ class YosoSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfOutput
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfOutput
 class YosoSelfOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -481,7 +481,7 @@ class YosoAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate
 class YosoIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -497,7 +497,7 @@ class YosoIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOutput
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOutput
 class YosoOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -590,7 +590,7 @@ class YosoEncoder(nn.Module):
         )
 
 
-# Copied from transformers.models.bert.modeling_bert.BertPredictionHeadTransform
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPredictionHeadTransform
 class YosoPredictionHeadTransform(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -608,7 +608,7 @@ class YosoPredictionHeadTransform(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertLMPredictionHead with Bert->Yoso
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertLMPredictionHead with Bert->Yoso
 class YosoLMPredictionHead(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -632,7 +632,7 @@ class YosoLMPredictionHead(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOnlyMLMHead with Bert->Yoso
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOnlyMLMHead with Bert->Yoso
 class YosoOnlyMLMHead(nn.Module):
     def __init__(self, config):
         super().__init__()

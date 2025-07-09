@@ -333,8 +333,8 @@ class SingleSentenceClassificationProcessor(DataProcessor):
         elif return_tensors == "pt":
             if not is_torch_available():
                 raise RuntimeError("return_tensors set to 'pt' but PyTorch can't be imported")
-            import torch
-            from torch.utils.data import TensorDataset
+            import tg_adapter as torch
+            from tg_adapter.utils.data import TensorDataset
 
             all_input_ids = torch.tensor([f.input_ids for f in features], dtype=torch.long)
             all_attention_mask = torch.tensor([f.attention_mask for f in features], dtype=torch.long)

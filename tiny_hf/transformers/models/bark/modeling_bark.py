@@ -18,9 +18,9 @@ import math
 from typing import Dict, Optional, Tuple, Union
 
 import numpy as np
-import torch
-from torch import nn
-from torch.nn import functional as F
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.nn import functional as F
 
 from ...generation import GenerationMixin
 from ...generation.logits_process import (
@@ -98,7 +98,7 @@ class BarkSelfAttention(nn.Module):
             bias = torch.tril(torch.ones((block_size, block_size), dtype=bool)).view(1, 1, block_size, block_size)
             self.register_buffer("bias", bias)
 
-    # Copied from transformers.models.gpt_neo.modeling_gpt_neo.GPTNeoSelfAttention._split_heads
+    # Copied from tiny_hf.transformers.models.gpt_neo.modeling_gpt_neo.GPTNeoSelfAttention._split_heads
     def _split_heads(self, tensor, num_heads, attn_head_size):
         """
         Splits hidden_size dim into attn_head_size and num_heads
@@ -1692,7 +1692,7 @@ class BarkModel(BarkPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoProcessor, BarkModel
+        >>> from tiny_hf.transformers.import AutoProcessor, BarkModel
 
         >>> processor = AutoProcessor.from_pretrained("suno/bark-small")
         >>> model = BarkModel.from_pretrained("suno/bark-small")

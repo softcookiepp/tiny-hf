@@ -752,7 +752,7 @@ FLAX_ALBERT_FOR_PRETRAINING_DOCSTRING = """
     Example:
 
     ```python
-    >>> from transformers import AutoTokenizer, FlaxAlbertForPreTraining
+    >>> from tiny_hf.transformers.import AutoTokenizer, FlaxAlbertForPreTraining
 
     >>> tokenizer = AutoTokenizer.from_pretrained("albert/albert-base-v2")
     >>> model = FlaxAlbertForPreTraining.from_pretrained("albert/albert-base-v2")

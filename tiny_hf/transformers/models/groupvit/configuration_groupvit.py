@@ -73,7 +73,7 @@ class GroupViTTextConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import GroupViTTextConfig, GroupViTTextModel
+    >>> from tiny_hf.transformers.import GroupViTTextConfig, GroupViTTextModel
 
     >>> # Initializing a GroupViTTextModel with nvidia/groupvit-gcc-yfcc style configuration
     >>> configuration = GroupViTTextConfig()
@@ -167,7 +167,7 @@ class GroupViTVisionConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import GroupViTVisionConfig, GroupViTVisionModel
+    >>> from tiny_hf.transformers.import GroupViTVisionConfig, GroupViTVisionModel
 
     >>> # Initializing a GroupViTVisionModel with nvidia/groupvit-gcc-yfcc style configuration
     >>> configuration = GroupViTVisionConfig()

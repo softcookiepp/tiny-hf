@@ -42,7 +42,7 @@ if is_vision_available():
     from .image_utils import PILImageResampling
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 if is_tf_available():
     import tensorflow as tf
@@ -248,7 +248,7 @@ def get_size_with_aspect_ratio(image_size, size, max_size=None) -> tuple[int, in
     return (oh, ow)
 
 
-# Logic adapted from torchvision resizing logic: https://github.com/pytorch/vision/blob/511924c1ced4ce0461197e5caa64ce5b9e558aab/torchvision/transforms/functional.py#L366
+# Logic adapted from tg_adapter.ision resizing logic: https://github.com/pytorch/vision/blob/511924c1ced4ce0461197e5caa64ce5b9e558aab/torchvision/transforms/functional.py#L366
 def get_resize_output_image_size(
     input_image: np.ndarray,
     size: Union[int, tuple[int, int], list[int], tuple[int]],

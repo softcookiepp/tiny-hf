@@ -26,13 +26,13 @@ import sys
 import warnings
 from typing import Any, Callable, Dict, List, Literal, Optional, Tuple, Type, Union
 
-import torch
-import torch.utils._pytree as pytree
-from torch import nn
-from torch.fx import Graph, GraphModule, Node, Proxy, Tracer
-from torch.fx._compatibility import compatibility
-from torch.fx._symbolic_trace import is_fx_tracing
-from torch.fx.proxy import ParameterProxy
+import tg_adapter as torch
+import tg_adapter.utils._pytree as pytree
+from tg_adapter.import nn
+from tg_adapter.fx import Graph, GraphModule, Node, Proxy, Tracer
+from tg_adapter.fx._compatibility import compatibility
+from tg_adapter.fx._symbolic_trace import is_fx_tracing
+from tg_adapter.fx.proxy import ParameterProxy
 
 from .. import logging
 from ..cache_utils import Cache, DynamicCache, SinkCache, StaticCache
@@ -1471,7 +1471,7 @@ def symbolic_trace(
     Example:
 
         ```python
-        from transformers.utils.fx import symbolic_trace
+        from tiny_hf.transformers.utils.fx import symbolic_trace
 
         traced_model = symbolic_trace(model, input_names=["input_ids", "attention_mask", "token_type_ids"])
         ```

@@ -18,10 +18,10 @@ import math
 from dataclasses import dataclass
 from typing import Any, Dict, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...cache_utils import MambaCache
@@ -380,7 +380,7 @@ class FalconMambaMixer(nn.Module):
         contextualized_states = self.out_proj(scan_output.transpose(1, 2))  # [batch, seq_len, hidden_size]
         return contextualized_states
 
-    # Copied from transformers.models.mamba.modeling_mamba.MambaMixer.forward
+    # Copied from tiny_hf.transformers.models.mamba.modeling_mamba.MambaMixer.forward
     def forward(
         self,
         hidden_states,
@@ -393,7 +393,7 @@ class FalconMambaMixer(nn.Module):
         return self.slow_forward(hidden_states, cache_params, cache_position, attention_mask)
 
 
-# Copied from transformers.models.mamba.modeling_mamba.MambaRMSNorm with Mamba->FalconMamba
+# Copied from tiny_hf.transformers.models.mamba.modeling_mamba.MambaRMSNorm with Mamba->FalconMamba
 class FalconMambaRMSNorm(nn.Module):
     def __init__(self, hidden_size, eps=1e-6):
         """
@@ -413,7 +413,7 @@ class FalconMambaRMSNorm(nn.Module):
         )
 
 
-# Copied from transformers.models.mamba.modeling_mamba.MambaBlock with Mamba->FalconMamba,FalconMambaCache->MambaCache
+# Copied from tiny_hf.transformers.models.mamba.modeling_mamba.MambaBlock with Mamba->FalconMamba,FalconMambaCache->MambaCache
 class FalconMambaBlock(nn.Module):
     def __init__(self, config, layer_idx):
         super().__init__()
@@ -442,7 +442,7 @@ class FalconMambaBlock(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.mamba.modeling_mamba.MambaPreTrainedModel with Mamba->FalconMamba
+# Copied from tiny_hf.transformers.models.mamba.modeling_mamba.MambaPreTrainedModel with Mamba->FalconMamba
 class FalconMambaPreTrainedModel(PreTrainedModel):
     """
     An abstract class to handle weights initialization and a simple interface for downloading and loading pretrained
@@ -504,7 +504,7 @@ class FalconMambaPreTrainedModel(PreTrainedModel):
 
 
 @dataclass
-# Copied from transformers.models.mamba.modeling_mamba.MambaOutput with MAMBA->FALCONMAMBA,Mamba->FalconMamba,FalconMambaCache->MambaCache
+# Copied from tiny_hf.transformers.models.mamba.modeling_mamba.MambaOutput with MAMBA->FALCONMAMBA,Mamba->FalconMamba,FalconMambaCache->MambaCache
 class FalconMambaOutput(ModelOutput):
     """
     Class for the FALCONMAMBA model outputs.
@@ -530,7 +530,7 @@ class FalconMambaOutput(ModelOutput):
 
 
 @dataclass
-# Copied from transformers.models.mamba.modeling_mamba.MambaCausalLMOutput with Mamba->FalconMamba,FalconMambaCache->MambaCache
+# Copied from tiny_hf.transformers.models.mamba.modeling_mamba.MambaCausalLMOutput with Mamba->FalconMamba,FalconMambaCache->MambaCache
 class FalconMambaCausalLMOutput(ModelOutput):
     """
     Base class for causal language model (or autoregressive) outputs.
@@ -716,7 +716,7 @@ class FalconMambaModel(FalconMambaPreTrainedModel):
     """,
     FALCONMAMBA_START_DOCSTRING,
 )
-# Copied from transformers.models.mamba.modeling_mamba.MambaForCausalLM with MAMBA->FALCONMAMBA,Mamba->FalconMamba,mamba->falcon_mamba,FalconMambaCache->MambaCache
+# Copied from tiny_hf.transformers.models.mamba.modeling_mamba.MambaForCausalLM with MAMBA->FALCONMAMBA,Mamba->FalconMamba,mamba->falcon_mamba,FalconMambaCache->MambaCache
 class FalconMambaForCausalLM(FalconMambaPreTrainedModel, GenerationMixin):
     _tied_weights_keys = ["lm_head.weight"]
 

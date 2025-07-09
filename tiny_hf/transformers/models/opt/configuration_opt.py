@@ -74,7 +74,7 @@ class OPTConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import OPTConfig, OPTModel
+    >>> from tiny_hf.transformers.import OPTConfig, OPTModel
 
     >>> # Initializing a OPT facebook/opt-large style configuration
     >>> configuration = OPTConfig()

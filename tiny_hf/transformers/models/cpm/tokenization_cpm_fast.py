@@ -148,7 +148,7 @@ class CpmTokenizerFast(PreTrainedTokenizerFast):
     def can_save_slow_tokenizer(self) -> bool:
         return os.path.isfile(self.vocab_file) if self.vocab_file else False
 
-    # Copied from transformers.models.xlnet.tokenization_xlnet_fast.XLNetTokenizerFast.build_inputs_with_special_tokens
+    # Copied from tiny_hf.transformers.models.xlnet.tokenization_xlnet_fast.XLNetTokenizerFast.build_inputs_with_special_tokens
     def build_inputs_with_special_tokens(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
     ) -> List[int]:
@@ -174,7 +174,7 @@ class CpmTokenizerFast(PreTrainedTokenizerFast):
             return token_ids_0 + sep + cls
         return token_ids_0 + sep + token_ids_1 + sep + cls
 
-    # Copied from transformers.models.xlnet.tokenization_xlnet_fast.XLNetTokenizerFast.create_token_type_ids_from_sequences
+    # Copied from tiny_hf.transformers.models.xlnet.tokenization_xlnet_fast.XLNetTokenizerFast.create_token_type_ids_from_sequences
     def create_token_type_ids_from_sequences(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
     ) -> List[int]:
@@ -205,7 +205,7 @@ class CpmTokenizerFast(PreTrainedTokenizerFast):
             return len(token_ids_0 + sep) * [0] + cls_segment_id
         return len(token_ids_0 + sep) * [0] + len(token_ids_1 + sep) * [1] + cls_segment_id
 
-    # Copied from transformers.models.xlnet.tokenization_xlnet_fast.XLNetTokenizerFast.save_vocabulary
+    # Copied from tiny_hf.transformers.models.xlnet.tokenization_xlnet_fast.XLNetTokenizerFast.save_vocabulary
     def save_vocabulary(self, save_directory: str, filename_prefix: Optional[str] = None) -> Tuple[str]:
         if not self.can_save_slow_tokenizer:
             raise ValueError(

@@ -127,7 +127,7 @@ class DetaConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import DetaConfig, DetaModel
+    >>> from tiny_hf.transformers.import DetaConfig, DetaModel
 
     >>> # Initializing a DETA SenseTime/deformable-detr style configuration
     >>> configuration = DetaConfig()

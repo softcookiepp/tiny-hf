@@ -99,7 +99,7 @@ class HieraConfig(BackboneConfigMixin, PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import HieraConfig, HieraModel
+    >>> from tiny_hf.transformers.import HieraConfig, HieraModel
 
     >>> # Initializing a Hiera hiera-base-patch16-224 style configuration
     >>> configuration = HieraConfig()

@@ -19,9 +19,9 @@ import os
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ....activations import ACT2FN
 from ....modeling_outputs import (
@@ -1168,8 +1168,8 @@ class RealmEmbedder(RealmPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, RealmEmbedder
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, RealmEmbedder
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/realm-cc-news-pretrained-embedder")
         >>> model = RealmEmbedder.from_pretrained("google/realm-cc-news-pretrained-embedder")
@@ -1281,8 +1281,8 @@ class RealmScorer(RealmPreTrainedModel):
         Example:
 
         ```python
-        >>> import torch
-        >>> from transformers import AutoTokenizer, RealmScorer
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, RealmScorer
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/realm-cc-news-pretrained-scorer")
         >>> model = RealmScorer.from_pretrained("google/realm-cc-news-pretrained-scorer", num_candidates=2)
@@ -1425,8 +1425,8 @@ class RealmKnowledgeAugEncoder(RealmPreTrainedModel):
         Example:
 
         ```python
-        >>> import torch
-        >>> from transformers import AutoTokenizer, RealmKnowledgeAugEncoder
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, RealmKnowledgeAugEncoder
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/realm-cc-news-pretrained-encoder")
         >>> model = RealmKnowledgeAugEncoder.from_pretrained(
@@ -1765,8 +1765,8 @@ class RealmForOpenQA(RealmPreTrainedModel):
         Example:
 
         ```python
-        >>> import torch
-        >>> from transformers import RealmForOpenQA, RealmRetriever, AutoTokenizer
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import RealmForOpenQA, RealmRetriever, AutoTokenizer
 
         >>> retriever = RealmRetriever.from_pretrained("google/realm-orqa-nq-openqa")
         >>> tokenizer = AutoTokenizer.from_pretrained("google/realm-orqa-nq-openqa")

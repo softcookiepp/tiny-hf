@@ -19,10 +19,10 @@ import os
 from typing import List, Optional, Tuple
 
 import numpy as np
-import torch
-import torch.nn.functional as F
-from torch import nn
-from torch.nn import LayerNorm as FusedLayerNorm
+import tg_adapter as torch
+import tg_adapter.nn.functional as F
+from tg_adapter.import nn
+from tg_adapter.nn import LayerNorm as FusedLayerNorm
 
 from ....activations import ACT2FN
 from ....modeling_utils import PreTrainedModel
@@ -746,8 +746,8 @@ class JukeboxVQVAE(PreTrainedModel):
 
         Example:
         ```python
-        >>> from transformers import JukeboxVQVAE, set_seed
-        >>> import torch
+        >>> from tiny_hf.transformers.import JukeboxVQVAE, set_seed
+        >>> import tg_adapter as torch
 
         >>> model = JukeboxVQVAE.from_pretrained("openai/jukebox-1b-lyrics").eval()
         >>> set_seed(0)
@@ -2491,8 +2491,8 @@ class JukeboxModel(JukeboxPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, JukeboxModel, set_seed
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, JukeboxModel, set_seed
+        >>> import tg_adapter as torch
 
         >>> metas = dict(artist="Zac Brown Band", genres="Country", lyrics="I met a traveller from an antique land")
         >>> tokenizer = AutoTokenizer.from_pretrained("openai/jukebox-1b-lyrics")
@@ -2584,7 +2584,7 @@ class JukeboxModel(JukeboxPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, JukeboxModel, set_seed
+        >>> from tiny_hf.transformers.import AutoTokenizer, JukeboxModel, set_seed
 
         >>> model = JukeboxModel.from_pretrained("openai/jukebox-1b-lyrics", min_duration=0).eval()
         >>> tokenizer = AutoTokenizer.from_pretrained("openai/jukebox-1b-lyrics")

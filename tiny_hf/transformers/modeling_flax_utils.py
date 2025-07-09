@@ -345,7 +345,7 @@ class FlaxPreTrainedModel(PushToHubMixin, FlaxGenerationMixin):
         Examples:
 
         ```python
-        >>> from transformers import FlaxBertModel
+        >>> from tiny_hf.transformers.import FlaxBertModel
 
         >>> # load model
         >>> model = FlaxBertModel.from_pretrained("google-bert/bert-base-cased")
@@ -381,7 +381,7 @@ class FlaxPreTrainedModel(PushToHubMixin, FlaxGenerationMixin):
         Examples:
 
         ```python
-        >>> from transformers import FlaxBertModel
+        >>> from tiny_hf.transformers.import FlaxBertModel
 
         >>> # Download model and configuration from huggingface.co
         >>> model = FlaxBertModel.from_pretrained("google-bert/bert-base-cased")
@@ -411,7 +411,7 @@ class FlaxPreTrainedModel(PushToHubMixin, FlaxGenerationMixin):
         Examples:
 
         ```python
-        >>> from transformers import FlaxBertModel
+        >>> from tiny_hf.transformers.import FlaxBertModel
 
         >>> # load model
         >>> model = FlaxBertModel.from_pretrained("google-bert/bert-base-cased")
@@ -635,7 +635,7 @@ class FlaxPreTrainedModel(PushToHubMixin, FlaxGenerationMixin):
         Examples:
 
         ```python
-        >>> from transformers import BertConfig, FlaxBertModel
+        >>> from tiny_hf.transformers.import BertConfig, FlaxBertModel
 
         >>> # Download model and configuration from huggingface.co and cache.
         >>> model = FlaxBertModel.from_pretrained("google-bert/bert-base-cased")

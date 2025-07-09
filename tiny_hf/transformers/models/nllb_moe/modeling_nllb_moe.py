@@ -17,9 +17,9 @@
 import math
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.nn as nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -56,7 +56,7 @@ _REAL_CHECKPOINT_FOR_DOC = "facebook/nllb-moe-54b"
 ####################################################
 
 
-# Copied from transformers.models.bart.modeling_bart.shift_tokens_right
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.shift_tokens_right
 def shift_tokens_right(input_ids: torch.Tensor, pad_token_id: int, decoder_start_token_id: int):
     """
     Shift input ids one token to the right.
@@ -73,7 +73,7 @@ def shift_tokens_right(input_ids: torch.Tensor, pad_token_id: int, decoder_start
     return shifted_input_ids
 
 
-# Copied from transformers.models.roberta.modeling_roberta.create_position_ids_from_input_ids
+# Copied from tiny_hf.transformers.models.roberta.modeling_roberta.create_position_ids_from_input_ids
 def create_position_ids_from_input_ids(input_ids, padding_idx, past_key_values_length=0):
     """
     Replace non-padding symbols with their position numbers. Position numbers begin at padding_idx+1. Padding symbols
@@ -132,7 +132,7 @@ def load_balancing_loss_func(router_probs: torch.Tensor, expert_indices: torch.T
     return torch.mean(tokens_per_group_and_expert * router_prob_per_group_and_expert) * (num_experts**2)
 
 
-# Copied from transformers.models.m2m_100.modeling_m2m_100.M2M100ScaledWordEmbedding with M2M100->NllbMoe
+# Copied from tiny_hf.transformers.models.m2m_100.modeling_m2m_100.M2M100ScaledWordEmbedding with M2M100->NllbMoe
 class NllbMoeScaledWordEmbedding(nn.Embedding):
     """
     This module overrides nn.Embeddings' forward by multiplying with embeddings scale.
@@ -146,7 +146,7 @@ class NllbMoeScaledWordEmbedding(nn.Embedding):
         return super().forward(input_ids) * self.embed_scale
 
 
-# Copied from transformers.models.m2m_100.modeling_m2m_100.M2M100SinusoidalPositionalEmbedding
+# Copied from tiny_hf.transformers.models.m2m_100.modeling_m2m_100.M2M100SinusoidalPositionalEmbedding
 class NllbMoeSinusoidalPositionalEmbedding(nn.Module):
     """This module produces sinusoidal positional embeddings of any length."""
 
@@ -467,7 +467,7 @@ class NllbMoeSparseMLP(nn.Module):
         return hidden_states, (router_probs, top_1_expert_index)
 
 
-# Copied from transformers.models.bart.modeling_bart.BartAttention with Bart->NllbMoe,key_value_states->encoder_hidden_states
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartAttention with Bart->NllbMoe,key_value_states->encoder_hidden_states
 class NllbMoeAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -877,7 +877,7 @@ NLLB_MOE_GENERATION_EXAMPLE = r"""
     Translation example:
 
     ```python
-    >>> from transformers import AutoTokenizer, NllbMoeForConditionalGeneration
+    >>> from tiny_hf.transformers.import AutoTokenizer, NllbMoeForConditionalGeneration
 
     >>> model = NllbMoeForConditionalGeneration.from_pretrained("facebook/nllb-moe-54b")
     >>> tokenizer = AutoTokenizer.from_pretrained("facebook/nllb-moe-54b")
@@ -1531,7 +1531,7 @@ class NllbMoeModel(NllbMoePreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, NllbMoeModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, NllbMoeModel
 
         >>> tokenizer = AutoTokenizer.from_pretrained("hf-internal-testing/random-nllb-moe-2-experts")
         >>> model = SwitchTransformersModel.from_pretrained("hf-internal-testing/random-nllb-moe-2-experts")

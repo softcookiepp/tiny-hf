@@ -18,10 +18,10 @@ from copy import deepcopy
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Callable, Optional, Union
 
-import torch
-from torch import nn
-from torch.distributed.fsdp import FullyShardedDataParallel
-from torch.utils.data import Dataset
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.distributed.fsdp import FullyShardedDataParallel
+from tg_adapter.utils.data import Dataset
 
 from .generation.configuration_utils import GenerationConfig
 from .integrations.deepspeed import is_deepspeed_zero3_enabled
@@ -35,7 +35,7 @@ if is_datasets_available():
     import datasets
 
 if TYPE_CHECKING:
-    from torch.utils.data import IterableDataset
+    from tg_adapter.utils.data import IterableDataset
 
     from .data.data_collator import DataCollator
     from .feature_extraction_utils import FeatureExtractionMixin

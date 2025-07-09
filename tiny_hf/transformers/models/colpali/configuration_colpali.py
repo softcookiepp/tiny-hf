@@ -52,7 +52,7 @@ class ColPaliConfig(PretrainedConfig):
     Example:
 
     ```python
-    from transformers.models.colpali import ColPaliConfig, ColPaliForRetrieval
+    from tiny_hf.transformers.models.colpali import ColPaliConfig, ColPaliForRetrieval
 
     config = ColPaliConfig()
     model = ColPaliForRetrieval(config)

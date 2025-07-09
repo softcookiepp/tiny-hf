@@ -20,18 +20,18 @@ import json
 from pathlib import Path
 
 import requests
-import torch
+import tg_adapter as torch
 import yaml
 from huggingface_hub import hf_hub_download
 from PIL import Image
 
-from transformers import (
+from tiny_hf.transformers.import (
     MobileViTImageProcessor,
     MobileViTV2Config,
     MobileViTV2ForImageClassification,
     MobileViTV2ForSemanticSegmentation,
 )
-from transformers.utils import logging
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

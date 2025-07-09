@@ -14,10 +14,10 @@
 
 import argparse
 
-import torch
+import tg_adapter as torch
 
-from transformers import MobileBertConfig, MobileBertForPreTraining, load_tf_weights_in_mobilebert
-from transformers.utils import logging
+from tiny_hf.transformers.import MobileBertConfig, MobileBertForPreTraining, load_tf_weights_in_mobilebert
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

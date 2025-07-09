@@ -16,10 +16,10 @@ import json
 import os
 import re
 
-import torch
+import tg_adapter as torch
 from safetensors.torch import load_file
 
-from transformers import (
+from tiny_hf.transformers.import (
     Mistral3Config,
     Mistral3ForConditionalGeneration,
     MistralConfig,
@@ -27,7 +27,7 @@ from transformers import (
     PixtralProcessor,
     PixtralVisionConfig,
 )
-from transformers.integrations.mistral import convert_tekken_tokenizer
+from tiny_hf.transformers.integrations.mistral import convert_tekken_tokenizer
 
 
 # fmt: off

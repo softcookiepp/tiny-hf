@@ -16,7 +16,7 @@
 from typing import Dict
 
 import numpy as np
-import torch
+import tg_adapter as torch
 
 from . import residue_constants as rc
 from .tensor_utils import tensor_tree_map, tree_map

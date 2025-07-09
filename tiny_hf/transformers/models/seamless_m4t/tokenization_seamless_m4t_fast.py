@@ -53,7 +53,7 @@ class SeamlessM4TTokenizerFast(PreTrainedTokenizerFast):
     Examples:
 
     ```python
-    >>> from transformers import SeamlessM4TTokenizerFast
+    >>> from tiny_hf.transformers.import SeamlessM4TTokenizerFast
 
     >>> tokenizer = SeamlessM4TTokenizerFast.from_pretrained(
     ...     "facebook/hf-seamless-m4t-medium", src_lang="eng", tgt_lang="fra"
@@ -156,7 +156,7 @@ class SeamlessM4TTokenizerFast(PreTrainedTokenizerFast):
         return os.path.isfile(self.vocab_file) if self.vocab_file else False
 
     @property
-    # Copied from transformers.models.nllb.tokenization_nllb.NllbTokenizer.src_lang
+    # Copied from tiny_hf.transformers.models.nllb.tokenization_nllb.NllbTokenizer.src_lang
     def src_lang(self) -> str:
         return self._src_lang
 
@@ -209,7 +209,7 @@ class SeamlessM4TTokenizerFast(PreTrainedTokenizerFast):
         # We don't expect to process pairs, but leave the pair logic for API consistency
         return self.prefix_tokens + token_ids_0 + token_ids_1 + self.suffix_tokens
 
-    # Copied from transformers.models.nllb.tokenization_nllb_fast.NllbTokenizerFast.create_token_type_ids_from_sequences
+    # Copied from tiny_hf.transformers.models.nllb.tokenization_nllb_fast.NllbTokenizerFast.create_token_type_ids_from_sequences
     def create_token_type_ids_from_sequences(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
     ) -> List[int]:
@@ -249,7 +249,7 @@ class SeamlessM4TTokenizerFast(PreTrainedTokenizerFast):
         inputs["forced_bos_token_id"] = tgt_lang_id
         return inputs
 
-    # Copied from transformers.models.nllb.tokenization_nllb_fast.NllbTokenizerFast.prepare_seq2seq_batch with "fra_Latn"->"fra", "eng_Latn"->"eng"
+    # Copied from tiny_hf.transformers.models.nllb.tokenization_nllb_fast.NllbTokenizerFast.prepare_seq2seq_batch with "fra_Latn"->"fra", "eng_Latn"->"eng"
     def prepare_seq2seq_batch(
         self,
         src_texts: List[str],
@@ -262,11 +262,11 @@ class SeamlessM4TTokenizerFast(PreTrainedTokenizerFast):
         self.tgt_lang = tgt_lang
         return super().prepare_seq2seq_batch(src_texts, tgt_texts, **kwargs)
 
-    # Copied from transformers.models.nllb.tokenization_nllb_fast.NllbTokenizerFast._switch_to_input_mode
+    # Copied from tiny_hf.transformers.models.nllb.tokenization_nllb_fast.NllbTokenizerFast._switch_to_input_mode
     def _switch_to_input_mode(self):
         return self.set_src_lang_special_tokens(self.src_lang)
 
-    # Copied from transformers.models.nllb.tokenization_nllb_fast.NllbTokenizerFast._switch_to_target_mode
+    # Copied from tiny_hf.transformers.models.nllb.tokenization_nllb_fast.NllbTokenizerFast._switch_to_target_mode
     def _switch_to_target_mode(self):
         return self.set_tgt_lang_special_tokens(self.tgt_lang)
 
@@ -320,7 +320,7 @@ class SeamlessM4TTokenizerFast(PreTrainedTokenizerFast):
             special_tokens=list(zip(prefix_tokens_str + suffix_tokens_str, self.prefix_tokens + self.suffix_tokens)),
         )
 
-    # Copied from transformers.models.nllb.tokenization_nllb_fast.NllbTokenizerFast.save_vocabulary
+    # Copied from tiny_hf.transformers.models.nllb.tokenization_nllb_fast.NllbTokenizerFast.save_vocabulary
     def save_vocabulary(self, save_directory: str, filename_prefix: Optional[str] = None) -> Tuple[str]:
         if not self.can_save_slow_tokenizer:
             raise ValueError(

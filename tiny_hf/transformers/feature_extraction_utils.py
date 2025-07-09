@@ -100,15 +100,15 @@ class BatchFeature(UserDict):
         if "data" in state:
             self.data = state["data"]
 
-    # Copied from transformers.tokenization_utils_base.BatchEncoding.keys
+    # Copied from tiny_hf.transformers.tokenization_utils_base.BatchEncoding.keys
     def keys(self):
         return self.data.keys()
 
-    # Copied from transformers.tokenization_utils_base.BatchEncoding.values
+    # Copied from tiny_hf.transformers.tokenization_utils_base.BatchEncoding.values
     def values(self):
         return self.data.values()
 
-    # Copied from transformers.tokenization_utils_base.BatchEncoding.items
+    # Copied from tiny_hf.transformers.tokenization_utils_base.BatchEncoding.items
     def items(self):
         return self.data.items()
 

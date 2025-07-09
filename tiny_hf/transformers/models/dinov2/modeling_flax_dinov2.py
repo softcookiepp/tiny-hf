@@ -112,7 +112,7 @@ class FlaxDinov2PatchEmbeddings(nn.Module):
             ),
         )
 
-    # Copied from transformers.models.vit.modeling_flax_vit.FlaxViTPatchEmbeddings.__call__
+    # Copied from tiny_hf.transformers.models.vit.modeling_flax_vit.FlaxViTPatchEmbeddings.__call__
     def __call__(self, pixel_values):
         num_channels = pixel_values.shape[-1]
         if num_channels != self.num_channels:
@@ -209,7 +209,7 @@ class FlaxDinov2Embeddings(nn.Module):
         return embeddings
 
 
-# Copied from transformers.models.vit.modeling_flax_vit.FlaxViTSelfAttention with ViT->Dinov2
+# Copied from tiny_hf.transformers.models.vit.modeling_flax_vit.FlaxViTSelfAttention with ViT->Dinov2
 class FlaxDinov2SelfAttention(nn.Module):
     config: Dinov2Config
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -281,7 +281,7 @@ class FlaxDinov2SelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.vit.modeling_flax_vit.FlaxViTSelfOutput with ViT->Dinov2
+# Copied from tiny_hf.transformers.models.vit.modeling_flax_vit.FlaxViTSelfOutput with ViT->Dinov2
 class FlaxDinov2SelfOutput(nn.Module):
     config: Dinov2Config
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -302,7 +302,7 @@ class FlaxDinov2SelfOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.vit.modeling_flax_vit.FlaxViTAttention with ViT->Dinov2
+# Copied from tiny_hf.transformers.models.vit.modeling_flax_vit.FlaxViTAttention with ViT->Dinov2
 class FlaxDinov2Attention(nn.Module):
     config: Dinov2Config
     dtype: jnp.dtype = jnp.float32
@@ -344,7 +344,7 @@ class FlaxDinov2LayerScale(nn.Module):
         return self.lambda1 * hidden_states
 
 
-# Copied from transformers.models.beit.modeling_flax_beit.FlaxBeitDropPath with Beit -> Dinov2
+# Copied from tiny_hf.transformers.models.beit.modeling_flax_beit.FlaxBeitDropPath with Beit -> Dinov2
 class FlaxDinov2DropPath(nn.Module):
     """Drop paths (Stochastic Depth) per sample (when applied in main path of residual blocks)."""
 
@@ -474,7 +474,7 @@ class FlaxDinov2Layer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.vit.modeling_flax_vit.FlaxViTLayerCollection with ViT->Dinov2
+# Copied from tiny_hf.transformers.models.vit.modeling_flax_vit.FlaxViTLayerCollection with ViT->Dinov2
 class FlaxDinov2LayerCollection(nn.Module):
     config: Dinov2Config
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -518,7 +518,7 @@ class FlaxDinov2LayerCollection(nn.Module):
         )
 
 
-# Copied from transformers.models.vit.modeling_flax_vit.FlaxViTEncoder with ViT->Dinov2
+# Copied from tiny_hf.transformers.models.vit.modeling_flax_vit.FlaxViTEncoder with ViT->Dinov2
 class FlaxDinov2Encoder(nn.Module):
     config: Dinov2Config
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -681,7 +681,7 @@ FLAX_VISION_MODEL_DOCSTRING = """
     Examples:
 
     ```python
-    >>> from transformers import AutoImageProcessor, FlaxDinov2Model
+    >>> from tiny_hf.transformers.import AutoImageProcessor, FlaxDinov2Model
     >>> from PIL import Image
     >>> import requests
 
@@ -771,7 +771,7 @@ FLAX_VISION_CLASSIFICATION_DOCSTRING = """
     Example:
 
     ```python
-    >>> from transformers import AutoImageProcessor, FlaxDinov2ForImageClassification
+    >>> from tiny_hf.transformers.import AutoImageProcessor, FlaxDinov2ForImageClassification
     >>> from PIL import Image
     >>> import jax
     >>> import requests

@@ -32,7 +32,7 @@ class TextToAudioPipeline(Pipeline):
     Example:
 
     ```python
-    >>> from transformers import pipeline
+    >>> from tiny_hf.transformers.import pipeline
 
     >>> pipe = pipeline(model="suno/bark-small")
     >>> output = pipe("Hey it's HuggingFace on the phone!")
@@ -51,7 +51,7 @@ class TextToAudioPipeline(Pipeline):
     Example:
 
     ```python
-    >>> from transformers import pipeline
+    >>> from tiny_hf.transformers.import pipeline
 
     >>> music_generator = pipeline(task="text-to-audio", model="facebook/musicgen-small", framework="pt")
 

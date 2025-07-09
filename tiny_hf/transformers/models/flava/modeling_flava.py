@@ -20,9 +20,9 @@ from collections import OrderedDict
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Set, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...modeling_outputs import BaseModelOutput, BaseModelOutputWithPooling
@@ -263,7 +263,7 @@ class FlavaImageEmbeddings(nn.Module):
         self.patch_size = config.patch_size
         self.config = config
 
-    # Copied from transformers.models.vit.modeling_vit.ViTEmbeddings.interpolate_pos_encoding
+    # Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTEmbeddings.interpolate_pos_encoding
     def interpolate_pos_encoding(self, embeddings: torch.Tensor, height: int, width: int) -> torch.Tensor:
         """
         This method allows to interpolate the pre-trained position encodings, to be able to use the model on higher resolution
@@ -569,7 +569,7 @@ class FlavaIntermediate(nn.Module):
         else:
             self.intermediate_act_fn = config.hidden_act
 
-    # Copied from transformers.models.vit.modeling_vit.ViTIntermediate.forward
+    # Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTIntermediate.forward
     def forward(self, hidden_states: torch.Tensor) -> torch.Tensor:
         hidden_states = self.dense(hidden_states)
         hidden_states = self.intermediate_act_fn(hidden_states)
@@ -583,7 +583,7 @@ class FlavaOutput(nn.Module):
         self.dense = nn.Linear(config.intermediate_size, config.hidden_size)
         self.dropout = nn.Dropout(config.hidden_dropout_prob)
 
-    # Copied from transformers.models.vit.modeling_vit.ViTOutput.forward
+    # Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTOutput.forward
     def forward(self, hidden_states: torch.Tensor, input_tensor: torch.Tensor) -> torch.Tensor:
         hidden_states = self.dense(hidden_states)
         hidden_states = self.dropout(hidden_states)
@@ -1247,7 +1247,7 @@ class FlavaModel(FlavaPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoProcessor, FlavaModel
+        >>> from tiny_hf.transformers.import AutoProcessor, FlavaModel
 
         >>> model = FlavaModel.from_pretrained("{0}")
         >>> processor = AutoProcessor.from_pretrained("{0}")
@@ -1294,7 +1294,7 @@ class FlavaModel(FlavaPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, FlavaModel
+        >>> from tiny_hf.transformers.import AutoProcessor, FlavaModel
 
         >>> model = FlavaModel.from_pretrained("{0}")
         >>> processor = AutoProcessor.from_pretrained("{0}")
@@ -1348,7 +1348,7 @@ class FlavaModel(FlavaPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, FlavaModel
+        >>> from tiny_hf.transformers.import AutoProcessor, FlavaModel
 
         >>> model = FlavaModel.from_pretrained("facebook/flava-full")
         >>> processor = AutoProcessor.from_pretrained("facebook/flava-full")
@@ -1578,7 +1578,7 @@ class FlavaImageCodebook(FlavaPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoImageProcessor, FlavaImageCodebook
+        >>> from tiny_hf.transformers.import AutoImageProcessor, FlavaImageCodebook
 
         >>> model = FlavaImageCodebook.from_pretrained("{0}")
         >>> image_processor = AutoImageProcessor.from_pretrained("{0}")
@@ -1611,7 +1611,7 @@ class FlavaImageCodebook(FlavaPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoImageProcessor, FlavaImageCodebook
+        >>> from tiny_hf.transformers.import AutoImageProcessor, FlavaImageCodebook
 
         >>> model = FlavaImageCodebook.from_pretrained("{0}")
         >>> image_processor = AutoImageProcessor.from_pretrained("{0}")
@@ -1805,7 +1805,7 @@ class FlavaForPreTraining(FlavaPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import FlavaForPreTraining, AutoProcessor
+        >>> from tiny_hf.transformers.import FlavaForPreTraining, AutoProcessor
 
         >>> url = "http://images.cocodataset.org/val2017/000000039769.jpg"
         >>> image = Image.open(requests.get(url, stream=True).raw)

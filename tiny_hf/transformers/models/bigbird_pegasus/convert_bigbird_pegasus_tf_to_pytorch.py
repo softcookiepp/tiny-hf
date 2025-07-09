@@ -17,10 +17,10 @@ import argparse
 from typing import Dict
 
 import tensorflow as tf
-import torch
+import tg_adapter as torch
 from tqdm import tqdm
 
-from transformers import BigBirdPegasusConfig, BigBirdPegasusForConditionalGeneration
+from tiny_hf.transformers.import BigBirdPegasusConfig, BigBirdPegasusForConditionalGeneration
 
 
 INIT_COMMON = [

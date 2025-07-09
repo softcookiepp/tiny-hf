@@ -1,7 +1,7 @@
 from typing import Callable, Optional, Tuple
 
-import torch
-import torch.nn as nn
+import tg_adapter as torch
+import tg_adapter.nn as nn
 
 from ...cache_utils import Cache
 from ...modeling_utils import ALL_ATTENTION_FUNCTIONS
@@ -86,7 +86,7 @@ class Olmo2Config(OlmoConfig):
             The epsilon used by the rms normalization layers.
 
     ```python
-    >>> from transformers import Olmo2Model, Olmo2Config
+    >>> from tiny_hf.transformers.import Olmo2Model, Olmo2Config
 
     >>> # Initializing a Olmo2 7B style configuration
     >>> configuration = Olmo2Config()

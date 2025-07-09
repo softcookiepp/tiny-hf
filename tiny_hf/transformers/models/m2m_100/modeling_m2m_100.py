@@ -17,9 +17,9 @@
 import math
 from typing import List, Optional, Tuple, Union
 
-import torch
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -61,7 +61,7 @@ _CONFIG_FOR_DOC = "M2M100Config"
 _CHECKPOINT_FOR_DOC = "facebook/m2m100_418M"
 
 
-# Copied from transformers.models.bart.modeling_bart.shift_tokens_right
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.shift_tokens_right
 def shift_tokens_right(input_ids: torch.Tensor, pad_token_id: int, decoder_start_token_id: int):
     """
     Shift input ids one token to the right.
@@ -89,7 +89,7 @@ def create_position_ids_from_input_ids(input_ids, padding_idx, past_key_values_l
     return incremental_indices.long() + padding_idx
 
 
-# Copied from transformers.models.bart.modeling_bart.BartScaledWordEmbedding with Bart->M2M100
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartScaledWordEmbedding with Bart->M2M100
 class M2M100ScaledWordEmbedding(nn.Embedding):
     """
     This module overrides nn.Embeddings' forward by multiplying with embeddings scale.
@@ -181,7 +181,7 @@ class M2M100SinusoidalPositionalEmbedding(nn.Module):
         return position_ids.unsqueeze(0).expand(input_shape).contiguous() + past_key_values_length
 
 
-# Copied from transformers.models.bart.modeling_bart.BartAttention with Bart->M2M100
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartAttention with Bart->M2M100
 class M2M100Attention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -340,7 +340,7 @@ class M2M100Attention(nn.Module):
         return attn_output, attn_weights_reshaped, past_key_value
 
 
-# Copied from transformers.models.bart.modeling_bart.BartFlashAttention2 with Bart->M2M100
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartFlashAttention2 with Bart->M2M100
 class M2M100FlashAttention2(M2M100Attention):
     """
     M2M100 flash attention module. This module inherits from `M2M100Attention` as the weights of the module stays
@@ -467,7 +467,7 @@ class M2M100FlashAttention2(M2M100Attention):
         return attn_output, attn_weights, past_key_value
 
 
-# Copied from transformers.models.bart.modeling_bart.BartSdpaAttention with Bart->M2M100
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartSdpaAttention with Bart->M2M100
 class M2M100SdpaAttention(M2M100Attention):
     def forward(
         self,
@@ -574,7 +574,7 @@ class M2M100SdpaAttention(M2M100Attention):
         return attn_output, None, past_key_value
 
 
-# Copied from transformers.models.mbart.modeling_mbart.MBartEncoderLayer with MBart->M2M100, MBART->M2M100
+# Copied from tiny_hf.transformers.models.mbart.modeling_mbart.MBartEncoderLayer with MBart->M2M100, MBART->M2M100
 class M2M100EncoderLayer(nn.Module):
     def __init__(self, config: M2M100Config):
         super().__init__()
@@ -652,7 +652,7 @@ M2M100_ATTENTION_CLASSES = {
 }
 
 
-# Copied from transformers.models.mbart.modeling_mbart.MBartDecoderLayer with MBart->M2M100, MBART->M2M100
+# Copied from tiny_hf.transformers.models.mbart.modeling_mbart.MBartDecoderLayer with MBart->M2M100, MBART->M2M100
 class M2M100DecoderLayer(nn.Module):
     def __init__(self, config: M2M100Config):
         super().__init__()
@@ -813,7 +813,7 @@ M2M_100_GENERATION_EXAMPLE = r"""
     Translation example:
 
     ```python
-    >>> from transformers import AutoTokenizer, M2M100ForConditionalGeneration
+    >>> from tiny_hf.transformers.import AutoTokenizer, M2M100ForConditionalGeneration
 
     >>> model = M2M100ForConditionalGeneration.from_pretrained("facebook/m2m100_418M")
     >>> tokenizer = AutoTokenizer.from_pretrained("facebook/m2m100_418M")

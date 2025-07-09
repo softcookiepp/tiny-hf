@@ -16,15 +16,15 @@
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.nn import CrossEntropyLoss
 
-from transformers.models.instructblip.configuration_instructblip import (
+from tiny_hf.transformers.models.instructblip.configuration_instructblip import (
     InstructBlipQFormerConfig,
     InstructBlipVisionConfig,
 )
-from transformers.models.instructblip.modeling_instructblip import (
+from tiny_hf.transformers.models.instructblip.modeling_instructblip import (
     InstructBlipForConditionalGeneration,
     InstructBlipForConditionalGenerationModelOutput,
 )
@@ -75,7 +75,7 @@ class InstructBlipVideoConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import (
+    >>> from tiny_hf.transformers.import (
     ...     InstructBlipVideoVisionConfig,
     ...     InstructBlipVideoQFormerConfig,
     ...     OPTConfig,
@@ -192,8 +192,8 @@ class InstructBlipVideoForConditionalGeneration(InstructBlipForConditionalGenera
     ) -> Union[Tuple, InstructBlipVideoForConditionalGenerationModelOutput]:
         r"""
         ```python
-        >>> from transformers import InstructBlipVideoProcessor, InstructBlipVideoForConditionalGeneration
-        >>> import torch
+        >>> from tiny_hf.transformers.import InstructBlipVideoProcessor, InstructBlipVideoForConditionalGeneration
+        >>> import tg_adapter as torch
         >>> from huggingface_hub import hf_hub_download
         >>> import av
         >>> import numpy as np

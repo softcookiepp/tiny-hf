@@ -18,8 +18,8 @@ import math
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple, Union
 
-import torch
-from torch import Tensor, nn
+import tg_adapter as torch
+from tg_adapter.import Tensor, nn
 
 from ...activations import ACT2FN
 from ...modeling_attn_mask_utils import _prepare_4d_attention_mask
@@ -49,7 +49,7 @@ _CHECKPOINT_FOR_DOC = "microsoft/table-transformer-detection"
 
 
 @dataclass
-# Copied from transformers.models.detr.modeling_detr.DetrDecoderOutput with DETR->TABLE_TRANSFORMER,Detr->TableTransformer
+# Copied from tiny_hf.transformers.models.detr.modeling_detr.DetrDecoderOutput with DETR->TABLE_TRANSFORMER,Detr->TableTransformer
 class TableTransformerDecoderOutput(BaseModelOutputWithCrossAttentions):
     """
     Base class for outputs of the TABLE_TRANSFORMER decoder. This class adds one attribute to BaseModelOutputWithCrossAttentions,
@@ -80,7 +80,7 @@ class TableTransformerDecoderOutput(BaseModelOutputWithCrossAttentions):
 
 
 @dataclass
-# Copied from transformers.models.detr.modeling_detr.DetrModelOutput with DETR->TABLE_TRANSFORMER,Detr->TableTransformer
+# Copied from tiny_hf.transformers.models.detr.modeling_detr.DetrModelOutput with DETR->TABLE_TRANSFORMER,Detr->TableTransformer
 class TableTransformerModelOutput(Seq2SeqModelOutput):
     """
     Base class for outputs of the TABLE_TRANSFORMER encoder-decoder model. This class adds one attribute to Seq2SeqModelOutput,
@@ -121,7 +121,7 @@ class TableTransformerModelOutput(Seq2SeqModelOutput):
 
 
 @dataclass
-# Copied from transformers.models.detr.modeling_detr.DetrObjectDetectionOutput with Detr->TableTransformer,DetrImageProcessor->DetrImageProcessor
+# Copied from tiny_hf.transformers.models.detr.modeling_detr.DetrObjectDetectionOutput with Detr->TableTransformer,DetrImageProcessor->DetrImageProcessor
 class TableTransformerObjectDetectionOutput(ModelOutput):
     """
     Output type of [`TableTransformerForObjectDetection`].
@@ -184,12 +184,12 @@ class TableTransformerObjectDetectionOutput(ModelOutput):
     encoder_attentions: Optional[Tuple[torch.FloatTensor]] = None
 
 
-# Copied from transformers.models.detr.modeling_detr.DetrFrozenBatchNorm2d with Detr->TableTransformer
+# Copied from tiny_hf.transformers.models.detr.modeling_detr.DetrFrozenBatchNorm2d with Detr->TableTransformer
 class TableTransformerFrozenBatchNorm2d(nn.Module):
     """
     BatchNorm2d where the batch statistics and the affine parameters are fixed.
 
-    Copy-paste from torchvision.misc.ops with added eps before rqsrt, without which any other models than
+    Copy-paste from tg_adapter.ision.misc.ops with added eps before rqsrt, without which any other models than
     torchvision.models.resnet[18,34,50,101] produce nans.
     """
 
@@ -224,7 +224,7 @@ class TableTransformerFrozenBatchNorm2d(nn.Module):
         return x * scale + bias
 
 
-# Copied from transformers.models.detr.modeling_detr.replace_batch_norm with Detr->TableTransformer
+# Copied from tiny_hf.transformers.models.detr.modeling_detr.replace_batch_norm with Detr->TableTransformer
 def replace_batch_norm(model):
     r"""
     Recursively replace all `torch.nn.BatchNorm2d` with `TableTransformerFrozenBatchNorm2d`.
@@ -249,7 +249,7 @@ def replace_batch_norm(model):
             replace_batch_norm(module)
 
 
-# Copied from transformers.models.detr.modeling_detr.DetrConvEncoder with Detr->TableTransformer
+# Copied from tiny_hf.transformers.models.detr.modeling_detr.DetrConvEncoder with Detr->TableTransformer
 class TableTransformerConvEncoder(nn.Module):
     """
     Convolutional backbone, using either the AutoBackbone API or one from the timm library.
@@ -322,7 +322,7 @@ class TableTransformerConvEncoder(nn.Module):
         return out
 
 
-# Copied from transformers.models.detr.modeling_detr.DetrConvModel with Detr->TableTransformer
+# Copied from tiny_hf.transformers.models.detr.modeling_detr.DetrConvModel with Detr->TableTransformer
 class TableTransformerConvModel(nn.Module):
     """
     This module adds 2D position embeddings to all intermediate feature maps of the convolutional encoder.
@@ -344,7 +344,7 @@ class TableTransformerConvModel(nn.Module):
         return out, pos
 
 
-# Copied from transformers.models.detr.modeling_detr.DetrSinePositionEmbedding with Detr->TableTransformer
+# Copied from tiny_hf.transformers.models.detr.modeling_detr.DetrSinePositionEmbedding with Detr->TableTransformer
 class TableTransformerSinePositionEmbedding(nn.Module):
     """
     This is a more standard version of the position embedding, very similar to the one used by the Attention is all you
@@ -382,7 +382,7 @@ class TableTransformerSinePositionEmbedding(nn.Module):
         return pos
 
 
-# Copied from transformers.models.detr.modeling_detr.DetrLearnedPositionEmbedding with Detr->TableTransformer
+# Copied from tiny_hf.transformers.models.detr.modeling_detr.DetrLearnedPositionEmbedding with Detr->TableTransformer
 class TableTransformerLearnedPositionEmbedding(nn.Module):
     """
     This module learns positional embeddings up to a fixed maximum size.
@@ -406,7 +406,7 @@ class TableTransformerLearnedPositionEmbedding(nn.Module):
         return pos
 
 
-# Copied from transformers.models.detr.modeling_detr.build_position_encoding with Detr->TableTransformer
+# Copied from tiny_hf.transformers.models.detr.modeling_detr.build_position_encoding with Detr->TableTransformer
 def build_position_encoding(config):
     n_steps = config.d_model // 2
     if config.position_embedding_type == "sine":
@@ -420,7 +420,7 @@ def build_position_encoding(config):
     return position_embedding
 
 
-# Copied from transformers.models.detr.modeling_detr.DetrAttention with DETR->TABLE_TRANSFORMER,Detr->TableTransformer
+# Copied from tiny_hf.transformers.models.detr.modeling_detr.DetrAttention with DETR->TABLE_TRANSFORMER,Detr->TableTransformer
 class TableTransformerAttention(nn.Module):
     """
     Multi-headed attention from 'Attention Is All You Need' paper.
@@ -551,7 +551,7 @@ class TableTransformerAttention(nn.Module):
 
 
 class TableTransformerEncoderLayer(nn.Module):
-    # Copied from transformers.models.detr.modeling_detr.DetrEncoderLayer.__init__ with Detr->TableTransformer
+    # Copied from tiny_hf.transformers.models.detr.modeling_detr.DetrEncoderLayer.__init__ with Detr->TableTransformer
     def __init__(self, config: TableTransformerConfig):
         super().__init__()
         self.embed_dim = config.d_model
@@ -624,7 +624,7 @@ class TableTransformerEncoderLayer(nn.Module):
 
 
 class TableTransformerDecoderLayer(nn.Module):
-    # Copied from transformers.models.detr.modeling_detr.DetrDecoderLayer.__init__ with Detr->TableTransformer
+    # Copied from tiny_hf.transformers.models.detr.modeling_detr.DetrDecoderLayer.__init__ with Detr->TableTransformer
     def __init__(self, config: TableTransformerConfig):
         super().__init__()
         self.embed_dim = config.d_model
@@ -928,7 +928,7 @@ class TableTransformerEncoder(TableTransformerPreTrainedModel):
         )
 
 
-# Copied from transformers.models.detr.modeling_detr.DetrDecoder with DETR->TABLE_TRANSFORMER,Detr->TableTransformer
+# Copied from tiny_hf.transformers.models.detr.modeling_detr.DetrDecoder with DETR->TABLE_TRANSFORMER,Detr->TableTransformer
 class TableTransformerDecoder(TableTransformerPreTrainedModel):
     """
     Transformer decoder consisting of *config.decoder_layers* layers. Each layer is a [`TableTransformerDecoderLayer`].
@@ -1113,7 +1113,7 @@ class TableTransformerDecoder(TableTransformerPreTrainedModel):
     TABLE_TRANSFORMER_START_DOCSTRING,
 )
 class TableTransformerModel(TableTransformerPreTrainedModel):
-    # Copied from transformers.models.detr.modeling_detr.DetrModel.__init__ with Detr->TableTransformer
+    # Copied from tiny_hf.transformers.models.detr.modeling_detr.DetrModel.__init__ with Detr->TableTransformer
     def __init__(self, config: TableTransformerConfig):
         super().__init__(config)
 
@@ -1167,7 +1167,7 @@ class TableTransformerModel(TableTransformerPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, TableTransformerModel
+        >>> from tiny_hf.transformers.import AutoImageProcessor, TableTransformerModel
         >>> from huggingface_hub import hf_hub_download
         >>> from PIL import Image
 
@@ -1282,7 +1282,7 @@ class TableTransformerModel(TableTransformerPreTrainedModel):
     TABLE_TRANSFORMER_START_DOCSTRING,
 )
 class TableTransformerForObjectDetection(TableTransformerPreTrainedModel):
-    # Copied from transformers.models.detr.modeling_detr.DetrForObjectDetection.__init__ with Detr->TableTransformer
+    # Copied from tiny_hf.transformers.models.detr.modeling_detr.DetrForObjectDetection.__init__ with Detr->TableTransformer
     def __init__(self, config: TableTransformerConfig):
         super().__init__(config)
 
@@ -1328,8 +1328,8 @@ class TableTransformerForObjectDetection(TableTransformerPreTrainedModel):
 
         ```python
         >>> from huggingface_hub import hf_hub_download
-        >>> from transformers import AutoImageProcessor, TableTransformerForObjectDetection
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoImageProcessor, TableTransformerForObjectDetection
+        >>> import tg_adapter as torch
         >>> from PIL import Image
 
         >>> file_path = hf_hub_download(repo_id="nielsr/example-pdf", repo_type="dataset", filename="example_pdf.png")
@@ -1410,7 +1410,7 @@ class TableTransformerForObjectDetection(TableTransformerPreTrainedModel):
         )
 
 
-# Copied from transformers.models.detr.modeling_detr.DetrMLPPredictionHead with Detr->TableTransformer,detr->table_transformer
+# Copied from tiny_hf.transformers.models.detr.modeling_detr.DetrMLPPredictionHead with Detr->TableTransformer,detr->table_transformer
 class TableTransformerMLPPredictionHead(nn.Module):
     """
     Very simple multi-layer perceptron (MLP, also called FFN), used to predict the normalized center coordinates,

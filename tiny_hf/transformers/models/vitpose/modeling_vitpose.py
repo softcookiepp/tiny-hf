@@ -17,9 +17,9 @@
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...modeling_utils import PreTrainedModel
 from ...utils import (
@@ -275,8 +275,8 @@ class VitPoseForPoseEstimation(VitPosePreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, VitPoseForPoseEstimation
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoImageProcessor, VitPoseForPoseEstimation
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> import requests
 

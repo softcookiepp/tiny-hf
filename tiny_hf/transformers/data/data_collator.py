@@ -126,7 +126,7 @@ class DefaultDataCollator(DataCollatorMixin):
 
 
 def torch_default_data_collator(features: List[InputDataClass]) -> Dict[str, Any]:
-    import torch
+    import tg_adapter as torch
 
     if not isinstance(features[0], Mapping):
         features = [vars(f) for f in features]
@@ -324,7 +324,7 @@ class DataCollatorForTokenClassification(DataCollatorMixin):
     return_tensors: str = "pt"
 
     def torch_call(self, features):
-        import torch
+        import tg_adapter as torch
 
         label_name = "label" if "label" in features[0].keys() else "labels"
         labels = [feature[label_name] for feature in features] if label_name in features[0].keys() else None
@@ -428,7 +428,7 @@ class DataCollatorForTokenClassification(DataCollatorMixin):
 
 def _torch_collate_batch(examples, tokenizer, pad_to_multiple_of: Optional[int] = None):
     """Collate `examples` into a batch, using the information in `tokenizer` for padding if necessary."""
-    import torch
+    import tg_adapter as torch
 
     # Tensorize if necessary.
     if isinstance(examples[0], (list, tuple, np.ndarray)):
@@ -570,7 +570,7 @@ class DataCollatorForMultipleChoice(DataCollatorMixin):
     return_tensors: str = "pt"
 
     def torch_call(self, examples: List[Dict[str, Any]]):  # Refactored implementation from the docs.
-        import torch
+        import tg_adapter as torch
 
         # Take labels out of the examples beforehand, because they aren't nested.
         label_name = "label" if "label" in examples[0].keys() else "labels"
@@ -736,7 +736,7 @@ class DataCollatorForSeq2Seq:
         # reintroduce side effects via tokenizer that return respective datatypes for the `return_tensors` argument
         if batch.get("labels", None) is not None:
             if return_tensors == "pt":
-                import torch
+                import tg_adapter as torch
 
                 batch["labels"] = torch.tensor(batch["labels"], dtype=torch.int64)
             elif return_tensors == "tf":
@@ -860,7 +860,7 @@ class DataCollatorForLanguageModeling(DataCollatorMixin):
 
     def get_generator(self, seed):
         if self.return_tensors == "pt":
-            import torch
+            import tg_adapter as torch
 
             return torch.Generator().manual_seed(seed)
         elif self.return_tensors == "tf":
@@ -882,7 +882,7 @@ class DataCollatorForLanguageModeling(DataCollatorMixin):
             # (https://pytorch.org/docs/stable/data.html#randomness-in-multi-process-data-loading)
             # Only PyTorch DataLoader allows us to access the worker ID, and so we check for this.
             # For other frameworks, we will throw an error.
-            import torch
+            import tg_adapter as torch
 
             worker_info = torch.utils.data.get_worker_info()
             if worker_info is None:
@@ -1035,7 +1035,7 @@ class DataCollatorForLanguageModeling(DataCollatorMixin):
         """
         Prepare masked tokens inputs/labels for masked language modeling: 80% MASK, 10% random, 10% original.
         """
-        import torch
+        import tg_adapter as torch
 
         labels = inputs.clone()
         # We sample a few tokens in each sequence for MLM training (with probability `self.mlm_probability`)
@@ -1301,7 +1301,7 @@ class DataCollatorForWholeWordMask(DataCollatorForLanguageModeling):
 
         # if seed is provided, use the generator to shuffle
         if self.return_tensors == "pt":
-            import torch
+            import tg_adapter as torch
 
             indices = torch.randperm(len(cand_indexes), generator=self.generator)
             return [cand_indexes[i] for i in indices]
@@ -1362,7 +1362,7 @@ class DataCollatorForWholeWordMask(DataCollatorForLanguageModeling):
         Prepare masked tokens inputs/labels for masked language modeling: 80% MASK, 10% random, 10% original. Set
         'mask_labels' means we use whole word mask (wwm), we directly mask idxs according to it's ref.
         """
-        import torch
+        import tg_adapter as torch
 
         if self.tokenizer.mask_token is None:
             raise ValueError(
@@ -1564,8 +1564,8 @@ class DataCollatorForSOP(DataCollatorForLanguageModeling):
         )
 
     def __call__(self, examples: List[Dict[str, Any]]) -> Dict[str, Any]:
-        import torch
-        from torch.nn.utils.rnn import pad_sequence
+        import tg_adapter as torch
+        from tg_adapter.nn.utils.rnn import pad_sequence
 
         input_ids = [example["input_ids"] for example in examples]
         input_ids = _torch_collate_batch(input_ids, self.tokenizer)
@@ -1591,7 +1591,7 @@ class DataCollatorForSOP(DataCollatorForLanguageModeling):
         Prepare masked tokens inputs/labels/attention_mask for masked language modeling: 80% MASK, 10% random, 10%
         original. N-gram not applied yet.
         """
-        import torch
+        import tg_adapter as torch
 
         if self.tokenizer.mask_token is None:
             raise ValueError(
@@ -1678,7 +1678,7 @@ class DataCollatorForPermutationLanguageModeling(DataCollatorMixin):
             4. Set `cur_len = cur_len + context_length`. If `cur_len < max_len` (i.e. there are tokens remaining in the
                sequence to be processed), repeat from Step 1.
         """
-        import torch
+        import tg_adapter as torch
 
         if self.tokenizer.mask_token is None:
             raise ValueError(

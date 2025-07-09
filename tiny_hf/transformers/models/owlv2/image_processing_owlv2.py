@@ -51,7 +51,7 @@ from ...utils import (
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 
 if is_vision_available():
@@ -97,7 +97,7 @@ def _scale_boxes(boxes, target_sizes):
     return boxes
 
 
-# Copied from transformers.models.owlvit.image_processing_owlvit._upcast
+# Copied from tiny_hf.transformers.models.owlvit.image_processing_owlvit._upcast
 def _upcast(t):
     # Protects from numerical overflows in multiplications by upcasting to the equivalent higher type
     if t.is_floating_point():
@@ -106,7 +106,7 @@ def _upcast(t):
         return t if t.dtype in (torch.int32, torch.int64) else t.int()
 
 
-# Copied from transformers.models.owlvit.image_processing_owlvit.box_area
+# Copied from tiny_hf.transformers.models.owlvit.image_processing_owlvit.box_area
 def box_area(boxes):
     """
     Computes the area of a set of bounding boxes, which are specified by its (x1, y1, x2, y2) coordinates.
@@ -122,7 +122,7 @@ def box_area(boxes):
     return (boxes[:, 2] - boxes[:, 0]) * (boxes[:, 3] - boxes[:, 1])
 
 
-# Copied from transformers.models.owlvit.image_processing_owlvit.box_iou
+# Copied from tiny_hf.transformers.models.owlvit.image_processing_owlvit.box_iou
 def box_iou(boxes1, boxes2):
     area1 = box_area(boxes1)
     area2 = box_area(boxes2)
@@ -499,7 +499,7 @@ class Owlv2ImageProcessor(BaseImageProcessor):
         data = {"pixel_values": images}
         return BatchFeature(data=data, tensor_type=return_tensors)
 
-    # Copied from transformers.models.owlvit.image_processing_owlvit.OwlViTImageProcessor.post_process_object_detection with OwlViT->Owlv2
+    # Copied from tiny_hf.transformers.models.owlvit.image_processing_owlvit.OwlViTImageProcessor.post_process_object_detection with OwlViT->Owlv2
     def post_process_object_detection(
         self,
         outputs: "Owlv2ObjectDetectionOutput",
@@ -553,7 +553,7 @@ class Owlv2ImageProcessor(BaseImageProcessor):
 
         return results
 
-    # Copied from transformers.models.owlvit.image_processing_owlvit.OwlViTImageProcessor.post_process_image_guided_detection
+    # Copied from tiny_hf.transformers.models.owlvit.image_processing_owlvit.OwlViTImageProcessor.post_process_image_guided_detection
     def post_process_image_guided_detection(self, outputs, threshold=0.0, nms_threshold=0.3, target_sizes=None):
         """
         Converts the output of [`OwlViTForObjectDetection.image_guided_detection`] into the format expected by the COCO

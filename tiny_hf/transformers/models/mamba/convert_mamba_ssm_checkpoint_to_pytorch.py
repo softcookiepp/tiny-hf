@@ -19,11 +19,11 @@ import json
 import math
 from typing import Tuple
 
-import torch
+import tg_adapter as torch
 
-from transformers import AutoTokenizer, MambaConfig, MambaForCausalLM
-from transformers.utils import logging
-from transformers.utils.import_utils import is_mamba_ssm_available
+from tiny_hf.transformers.import AutoTokenizer, MambaConfig, MambaForCausalLM
+from tiny_hf.transformers.utils import logging
+from tiny_hf.transformers.utils.import_utils import is_mamba_ssm_available
 
 
 if is_mamba_ssm_available():
@@ -31,7 +31,7 @@ if is_mamba_ssm_available():
     from mamba_ssm.models.mixer_seq_simple import MambaLMHeadModel
 
     def convert_ssm_config_to_hf_config(config_ssm: MambaConfigSSM) -> MambaConfig:
-        """Convert a MambaConfig from mamba_ssm to a MambaConfig from transformers."""
+        """Convert a MambaConfig from mamba_ssm to a MambaConfig from tiny_hf.transformers."""
         hf_config = MambaConfig()
         # Set config hidden size, num hidden layers, and vocab size directly from the original config
         hf_config.hidden_size = config_ssm.d_model

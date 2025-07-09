@@ -214,7 +214,7 @@ BLENDERBOT_SMALL_DECODE_INPUTS_DOCSTRING = r"""
 """
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.shift_tokens_right
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.shift_tokens_right
 def shift_tokens_right(input_ids: jnp.ndarray, pad_token_id: int, decoder_start_token_id: int) -> jnp.ndarray:
     """
     Shift input ids one token to the right.
@@ -227,7 +227,7 @@ def shift_tokens_right(input_ids: jnp.ndarray, pad_token_id: int, decoder_start_
     return shifted_input_ids
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartAttention with Bart->BlenderbotSmall
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartAttention with Bart->BlenderbotSmall
 class FlaxBlenderbotSmallAttention(nn.Module):
     config: BlenderbotSmallConfig
     embed_dim: int
@@ -395,7 +395,7 @@ class FlaxBlenderbotSmallAttention(nn.Module):
         return attn_output, attn_weights
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartEncoderLayer with Bart->BlenderbotSmall
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartEncoderLayer with Bart->BlenderbotSmall
 class FlaxBlenderbotSmallEncoderLayer(nn.Module):
     config: BlenderbotSmallConfig
     dtype: jnp.dtype = jnp.float32
@@ -453,7 +453,7 @@ class FlaxBlenderbotSmallEncoderLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartEncoderLayerCollection with Bart->BlenderbotSmall
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartEncoderLayerCollection with Bart->BlenderbotSmall
 class FlaxBlenderbotSmallEncoderLayerCollection(nn.Module):
     config: BlenderbotSmallConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -508,7 +508,7 @@ class FlaxBlenderbotSmallEncoderLayerCollection(nn.Module):
         )
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartDecoderLayer with Bart->BlenderbotSmall
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartDecoderLayer with Bart->BlenderbotSmall
 class FlaxBlenderbotSmallDecoderLayer(nn.Module):
     config: BlenderbotSmallConfig
     dtype: jnp.dtype = jnp.float32
@@ -597,7 +597,7 @@ class FlaxBlenderbotSmallDecoderLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartDecoderLayerCollection with Bart->BlenderbotSmall
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartDecoderLayerCollection with Bart->BlenderbotSmall
 class FlaxBlenderbotSmallDecoderLayerCollection(nn.Module):
     config: BlenderbotSmallConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -801,7 +801,7 @@ class FlaxBlenderbotSmallDecoder(nn.Module):
         )
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartModule with Bart->BlenderbotSmall
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartModule with Bart->BlenderbotSmall
 class FlaxBlenderbotSmallModule(nn.Module):
     config: BlenderbotSmallConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -986,7 +986,7 @@ class FlaxBlenderbotSmallPreTrainedModel(FlaxPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, FlaxBlenderbotSmallForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, FlaxBlenderbotSmallForConditionalGeneration
 
         >>> model = FlaxBlenderbotSmallForConditionalGeneration.from_pretrained("facebook/blenderbot_small-90M")
         >>> tokenizer = AutoTokenizer.from_pretrained("facebook/blenderbot_small-90M")
@@ -1055,7 +1055,7 @@ class FlaxBlenderbotSmallPreTrainedModel(FlaxPreTrainedModel):
 
         ```python
         >>> import jax.numpy as jnp
-        >>> from transformers import AutoTokenizer, FlaxBlenderbotSmallForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, FlaxBlenderbotSmallForConditionalGeneration
 
         >>> model = FlaxBlenderbotSmallForConditionalGeneration.from_pretrained("facebook/blenderbot_small-90M")
         >>> tokenizer = AutoTokenizer.from_pretrained("facebook/blenderbot_small-90M")
@@ -1218,7 +1218,7 @@ class FlaxBlenderbotSmallModel(FlaxBlenderbotSmallPreTrainedModel):
 append_call_sample_docstring(FlaxBlenderbotSmallModel, _CHECKPOINT_FOR_DOC, FlaxSeq2SeqModelOutput, _CONFIG_FOR_DOC)
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartForConditionalGenerationModule with Bart->BlenderbotSmall
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartForConditionalGenerationModule with Bart->BlenderbotSmall
 class FlaxBlenderbotSmallForConditionalGenerationModule(nn.Module):
     config: BlenderbotSmallConfig
     dtype: jnp.dtype = jnp.float32
@@ -1323,7 +1323,7 @@ class FlaxBlenderbotSmallForConditionalGeneration(FlaxBlenderbotSmallPreTrainedM
 
         ```python
         >>> import jax.numpy as jnp
-        >>> from transformers import AutoTokenizer, FlaxBlenderbotSmallForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, FlaxBlenderbotSmallForConditionalGeneration
 
         >>> model = FlaxBlenderbotSmallForConditionalGeneration.from_pretrained("facebook/blenderbot_small-90M")
         >>> tokenizer = AutoTokenizer.from_pretrained("facebook/blenderbot_small-90M")
@@ -1479,7 +1479,7 @@ FLAX_BLENDERBOT_SMALL_CONDITIONAL_GENERATION_DOCSTRING = """
     Summarization example:
 
     ```py
-    >>> from transformers import AutoTokenizer, FlaxBlenderbotSmallForConditionalGeneration
+    >>> from tiny_hf.transformers.import AutoTokenizer, FlaxBlenderbotSmallForConditionalGeneration
 
     >>> model = FlaxBlenderbotSmallForConditionalGeneration.from_pretrained("facebook/blenderbot_small-90M")
     >>> tokenizer = AutoTokenizer.from_pretrained("facebook/blenderbot_small-90M")
@@ -1495,7 +1495,7 @@ FLAX_BLENDERBOT_SMALL_CONDITIONAL_GENERATION_DOCSTRING = """
     Mask filling example:
 
     ```py
-    >>> from transformers import AutoTokenizer, FlaxBlenderbotSmallForConditionalGeneration
+    >>> from tiny_hf.transformers.import AutoTokenizer, FlaxBlenderbotSmallForConditionalGeneration
 
     >>> tokenizer = AutoTokenizer.from_pretrained("facebook/blenderbot_small-90M")
     >>> TXT = "My friends are <mask> but they eat too many carbs."

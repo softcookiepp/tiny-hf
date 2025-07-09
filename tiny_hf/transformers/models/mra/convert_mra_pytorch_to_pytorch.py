@@ -16,9 +16,9 @@
 
 import argparse
 
-import torch
+import tg_adapter as torch
 
-from transformers import MraConfig, MraForMaskedLM
+from tiny_hf.transformers.import MraConfig, MraForMaskedLM
 
 
 def rename_key(orig_key):

@@ -18,9 +18,9 @@ import math
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...modeling_outputs import BaseModelOutput, BaseModelOutputWithPooling
@@ -60,7 +60,7 @@ class IdeficsVisionModelOutput(ModelOutput):
     attentions: Optional[Tuple[torch.FloatTensor, ...]] = None
 
 
-# Adapted from transformers.models.clip.modeling_clip.CLIPVisionEmbeddings
+# Adapted from tiny_hf.transformers.models.clip.modeling_clip.CLIPVisionEmbeddings
 class IdeficsVisionEmbeddings(nn.Module):
     def __init__(self, config: IdeficsVisionConfig):
         super().__init__()
@@ -160,7 +160,7 @@ class IdeficsVisionEmbeddings(nn.Module):
         return embeddings
 
 
-# Copied from transformers.models.clip.modeling_clip.CLIPAttention with CLIP->IdeficsVision
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPAttention with CLIP->IdeficsVision
 class IdeficsVisionAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -265,7 +265,7 @@ class IdeficsVisionAttention(nn.Module):
         return attn_output, attn_weights_reshaped
 
 
-# Copied from transformers.models.clip.modeling_clip.CLIPMLP with CLIP->IdeficsVision
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPMLP with CLIP->IdeficsVision
 class IdeficsVisionMLP(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -281,7 +281,7 @@ class IdeficsVisionMLP(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.altclip.modeling_altclip.AltCLIPEncoderLayer with AltCLIP->IdeficsVision
+# Copied from tiny_hf.transformers.models.altclip.modeling_altclip.AltCLIPEncoderLayer with AltCLIP->IdeficsVision
 class IdeficsVisionEncoderLayer(nn.Module):
     def __init__(self, config: IdeficsVisionConfig):
         super().__init__()
@@ -332,7 +332,7 @@ class IdeficsVisionEncoderLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.altclip.modeling_altclip.AltCLIPEncoder with AltCLIP->IdeficsVision
+# Copied from tiny_hf.transformers.models.altclip.modeling_altclip.AltCLIPEncoder with AltCLIP->IdeficsVision
 class IdeficsVisionEncoder(nn.Module):
     """
     Transformer encoder consisting of `config.num_hidden_layers` self attention layers. Each layer is a
@@ -430,7 +430,7 @@ class IdeficsVisionEncoder(nn.Module):
         )
 
 
-# Adapted from transformers.models.clip.modeling_clip.CLIPVisionTransformer
+# Adapted from tiny_hf.transformers.models.clip.modeling_clip.CLIPVisionTransformer
 class IdeficsVisionTransformer(nn.Module):
     def __init__(self, config: IdeficsVisionConfig):
         super().__init__()
@@ -442,7 +442,7 @@ class IdeficsVisionTransformer(nn.Module):
         self.encoder = IdeficsVisionEncoder(config)
         self.post_layernorm = nn.LayerNorm(embed_dim, eps=config.layer_norm_eps)
 
-    # Adapted from transformers.models.clip.modeling_clip.CLIPVisionTransformer.forward
+    # Adapted from tiny_hf.transformers.models.clip.modeling_clip.CLIPVisionTransformer.forward
     def forward(
         self,
         pixel_values: Optional[torch.FloatTensor] = None,

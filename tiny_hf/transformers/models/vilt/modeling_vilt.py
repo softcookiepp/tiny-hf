@@ -19,10 +19,10 @@ import math
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...modeling_outputs import (
@@ -377,7 +377,7 @@ class ViltSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTSelfOutput with ViT->Vilt
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTSelfOutput with ViT->Vilt
 class ViltSelfOutput(nn.Module):
     """
     The residual connection is defined in ViltLayer instead of here (as is the case with other models), due to the
@@ -430,7 +430,7 @@ class ViltAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTIntermediate with ViT->Vilt
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTIntermediate with ViT->Vilt
 class ViltIntermediate(nn.Module):
     def __init__(self, config: ViltConfig) -> None:
         super().__init__()
@@ -447,7 +447,7 @@ class ViltIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTOutput with ViT->Vilt
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTOutput with ViT->Vilt
 class ViltOutput(nn.Module):
     def __init__(self, config: ViltConfig) -> None:
         super().__init__()
@@ -759,7 +759,7 @@ class ViltModel(ViltPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import ViltProcessor, ViltModel
+        >>> from tiny_hf.transformers.import ViltProcessor, ViltModel
         >>> from PIL import Image
         >>> import requests
 
@@ -921,11 +921,11 @@ class ViltForMaskedLM(ViltPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import ViltProcessor, ViltForMaskedLM
+        >>> from tiny_hf.transformers.import ViltProcessor, ViltForMaskedLM
         >>> import requests
         >>> from PIL import Image
         >>> import re
-        >>> import torch
+        >>> import tg_adapter as torch
 
         >>> url = "http://images.cocodataset.org/val2017/000000039769.jpg"
         >>> image = Image.open(requests.get(url, stream=True).raw)
@@ -1100,7 +1100,7 @@ class ViltForQuestionAnswering(ViltPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import ViltProcessor, ViltForQuestionAnswering
+        >>> from tiny_hf.transformers.import ViltProcessor, ViltForQuestionAnswering
         >>> import requests
         >>> from PIL import Image
 
@@ -1205,7 +1205,7 @@ class ViltForImageAndTextRetrieval(ViltPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import ViltProcessor, ViltForImageAndTextRetrieval
+        >>> from tiny_hf.transformers.import ViltProcessor, ViltForImageAndTextRetrieval
         >>> import requests
         >>> from PIL import Image
 
@@ -1311,7 +1311,7 @@ class ViltForImagesAndTextClassification(ViltPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import ViltProcessor, ViltForImagesAndTextClassification
+        >>> from tiny_hf.transformers.import ViltProcessor, ViltForImagesAndTextClassification
         >>> import requests
         >>> from PIL import Image
 

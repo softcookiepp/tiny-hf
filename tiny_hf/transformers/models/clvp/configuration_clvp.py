@@ -78,7 +78,7 @@ class ClvpEncoderConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import ClvpEncoderConfig, ClvpEncoder
+    >>> from tiny_hf.transformers.import ClvpEncoderConfig, ClvpEncoder
 
     >>> # Initializing a ClvpEncoderConfig with susnato/clvp_dev style configuration
     >>> encoder_configuration = ClvpEncoderConfig()
@@ -241,7 +241,7 @@ class ClvpDecoderConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import ClvpDecoderConfig, ClvpDecoder
+    >>> from tiny_hf.transformers.import ClvpDecoderConfig, ClvpDecoder
 
     >>> # Initializing a ClvpDecoderConfig with susnato/clvp_dev style configuration
     >>> decoder_configuration = ClvpDecoderConfig()
@@ -347,7 +347,7 @@ class ClvpConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import ClvpConfig, ClvpModelForConditionalGeneration
+    >>> from tiny_hf.transformers.import ClvpConfig, ClvpModelForConditionalGeneration
 
     >>> # Initializing a ClvpConfig with susnato/clvp_dev style configuration
     >>> configuration = ClvpConfig()
@@ -359,7 +359,7 @@ class ClvpConfig(PretrainedConfig):
     >>> configuration = model.config
 
     >>> # We can also initialize a CLVPConfig from a CLVPTextConfig, CLVPSpeechConfig and a CLVPAutoRegressiveConfig
-    >>> from transformers import ClvpEncoderConfig, ClvpDecoderConfig
+    >>> from tiny_hf.transformers.import ClvpEncoderConfig, ClvpDecoderConfig
 
     >>> # Initializing a CLVP text, CLVP speech and CLVP decoder configuration
     >>> config_text = ClvpEncoderConfig()

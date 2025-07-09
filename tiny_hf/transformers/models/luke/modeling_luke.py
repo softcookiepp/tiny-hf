@@ -18,10 +18,10 @@ import math
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN, gelu
 from ...modeling_outputs import BaseModelOutput, BaseModelOutputWithPooling
@@ -609,7 +609,7 @@ class LukeSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfOutput
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfOutput
 class LukeSelfOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -671,7 +671,7 @@ class LukeAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate
 class LukeIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -687,7 +687,7 @@ class LukeIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOutput
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOutput
 class LukeOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -832,7 +832,7 @@ class LukeEncoder(nn.Module):
         )
 
 
-# Copied from transformers.models.bert.modeling_bert.BertPooler
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPooler
 class LukePooler(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1059,7 +1059,7 @@ class LukeModel(LukePreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, LukeModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, LukeModel
 
         >>> tokenizer = AutoTokenizer.from_pretrained("studio-ousia/luke-base")
         >>> model = LukeModel.from_pretrained("studio-ousia/luke-base")
@@ -1221,7 +1221,7 @@ def create_position_ids_from_input_ids(input_ids, padding_idx):
     return incremental_indices.long() + padding_idx
 
 
-# Copied from transformers.models.roberta.modeling_roberta.RobertaLMHead
+# Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaLMHead
 class LukeLMHead(nn.Module):
     """Roberta Head for masked language modeling."""
 
@@ -1440,7 +1440,7 @@ class LukeForEntityClassification(LukePreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, LukeForEntityClassification
+        >>> from tiny_hf.transformers.import AutoTokenizer, LukeForEntityClassification
 
         >>> tokenizer = AutoTokenizer.from_pretrained("studio-ousia/luke-large-finetuned-open-entity")
         >>> model = LukeForEntityClassification.from_pretrained("studio-ousia/luke-large-finetuned-open-entity")
@@ -1555,7 +1555,7 @@ class LukeForEntityPairClassification(LukePreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, LukeForEntityPairClassification
+        >>> from tiny_hf.transformers.import AutoTokenizer, LukeForEntityPairClassification
 
         >>> tokenizer = AutoTokenizer.from_pretrained("studio-ousia/luke-large-finetuned-tacred")
         >>> model = LukeForEntityPairClassification.from_pretrained("studio-ousia/luke-large-finetuned-tacred")
@@ -1683,7 +1683,7 @@ class LukeForEntitySpanClassification(LukePreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, LukeForEntitySpanClassification
+        >>> from tiny_hf.transformers.import AutoTokenizer, LukeForEntitySpanClassification
 
         >>> tokenizer = AutoTokenizer.from_pretrained("studio-ousia/luke-large-finetuned-conll-2003")
         >>> model = LukeForEntitySpanClassification.from_pretrained("studio-ousia/luke-large-finetuned-conll-2003")

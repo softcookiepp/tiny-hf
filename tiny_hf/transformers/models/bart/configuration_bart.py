@@ -92,7 +92,7 @@ class BartConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import BartConfig, BartModel
+    >>> from tiny_hf.transformers.import BartConfig, BartModel
 
     >>> # Initializing a BART facebook/bart-large style configuration
     >>> configuration = BartConfig()
@@ -261,7 +261,7 @@ class BartOnnxConfig(OnnxSeq2SeqConfigWithPast):
             if not is_torch_available():
                 raise ValueError("Cannot generate dummy past_keys inputs without PyTorch installed.")
             else:
-                import torch
+                import tg_adapter as torch
             batch, encoder_seq_length = common_inputs["input_ids"].shape
             decoder_seq_length = common_inputs["decoder_input_ids"].shape[1]
             num_encoder_attention_heads, num_decoder_attention_heads = self.num_attention_heads
@@ -321,7 +321,7 @@ class BartOnnxConfig(OnnxSeq2SeqConfigWithPast):
             if not is_torch_available():
                 raise ValueError("Cannot generate dummy past_keys inputs without PyTorch installed.")
             else:
-                import torch
+                import tg_adapter as torch
             batch, seqlen = common_inputs["input_ids"].shape
             # Not using the same length for past_key_values
             past_key_values_length = seqlen + 2

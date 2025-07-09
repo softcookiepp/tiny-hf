@@ -21,27 +21,27 @@ from pprint import pformat
 from typing import Any, Dict, Iterator, List, Set, Tuple
 
 import requests
-import torch
-import torchvision.transforms as T
+import tg_adapter as torch
+import tg_adapter.ision.transforms as T
 from detectron2.checkpoint import DetectionCheckpointer
 from detectron2.config import get_cfg
 from detectron2.projects.deeplab import add_deeplab_config
 from huggingface_hub import hf_hub_download
 from PIL import Image
-from torch import Tensor, nn
+from tg_adapter.import Tensor, nn
 
-from transformers import (
+from tiny_hf.transformers.import (
     Mask2FormerConfig,
     Mask2FormerForUniversalSegmentation,
     Mask2FormerImageProcessor,
     Mask2FormerModel,
     SwinConfig,
 )
-from transformers.models.mask2former.modeling_mask2former import (
+from tiny_hf.transformers.models.mask2former.modeling_mask2former import (
     Mask2FormerForUniversalSegmentationOutput,
     Mask2FormerModelOutput,
 )
-from transformers.utils import logging
+from tiny_hf.transformers.utils import logging
 
 
 StateDict = Dict[str, Tensor]

@@ -23,20 +23,20 @@ import jax.numpy as jnp
 from flax.core.frozen_dict import FrozenDict, freeze, unfreeze
 from flax.traverse_util import flatten_dict, unflatten_dict
 
-from transformers import RegNetConfig
-from transformers.modeling_flax_outputs import (
+from tiny_hf.transformers.import RegNetConfig
+from tiny_hf.transformers.modeling_flax_outputs import (
     FlaxBaseModelOutputWithNoAttention,
     FlaxBaseModelOutputWithPooling,
     FlaxBaseModelOutputWithPoolingAndNoAttention,
     FlaxImageClassifierOutputWithNoAttention,
 )
-from transformers.modeling_flax_utils import (
+from tiny_hf.transformers.modeling_flax_utils import (
     ACT2FN,
     FlaxPreTrainedModel,
     append_replace_return_docstrings,
     overwrite_call_docstring,
 )
-from transformers.utils import (
+from tiny_hf.transformers.utils import (
     add_start_docstrings,
     add_start_docstrings_to_model_forward,
 )
@@ -91,7 +91,7 @@ REGNET_INPUTS_DOCSTRING = r"""
 """
 
 
-# Copied from transformers.models.resnet.modeling_flax_resnet.Identity
+# Copied from tiny_hf.transformers.models.resnet.modeling_flax_resnet.Identity
 class Identity(nn.Module):
     """Identity function."""
 
@@ -152,7 +152,7 @@ class FlaxRegNetEmbeddings(nn.Module):
         return hidden_state
 
 
-# Copied from transformers.models.resnet.modeling_flax_resnet.FlaxResNetShortCut with ResNet->RegNet
+# Copied from tiny_hf.transformers.models.resnet.modeling_flax_resnet.FlaxResNetShortCut with ResNet->RegNet
 class FlaxRegNetShortCut(nn.Module):
     """
     RegNet shortcut, used to project the residual features to the correct size. If needed, it is also used to
@@ -449,7 +449,7 @@ class FlaxRegNetStageLayersCollection(nn.Module):
         return hidden_state
 
 
-# Copied from transformers.models.resnet.modeling_flax_resnet.FlaxResNetStage with ResNet->RegNet
+# Copied from tiny_hf.transformers.models.resnet.modeling_flax_resnet.FlaxResNetStage with ResNet->RegNet
 class FlaxRegNetStage(nn.Module):
     """
     A RegNet stage composed by stacked layers.
@@ -476,7 +476,7 @@ class FlaxRegNetStage(nn.Module):
         return self.layers(x, deterministic=deterministic)
 
 
-# Copied from transformers.models.resnet.modeling_flax_resnet.FlaxResNetStageCollection with ResNet->RegNet
+# Copied from tiny_hf.transformers.models.resnet.modeling_flax_resnet.FlaxResNetStageCollection with ResNet->RegNet
 class FlaxRegNetStageCollection(nn.Module):
     config: RegNetConfig
     dtype: jnp.dtype = jnp.float32
@@ -519,7 +519,7 @@ class FlaxRegNetStageCollection(nn.Module):
         return hidden_state, hidden_states
 
 
-# Copied from transformers.models.resnet.modeling_flax_resnet.FlaxResNetEncoder with ResNet->RegNet
+# Copied from tiny_hf.transformers.models.resnet.modeling_flax_resnet.FlaxResNetEncoder with ResNet->RegNet
 class FlaxRegNetEncoder(nn.Module):
     config: RegNetConfig
     dtype: jnp.dtype = jnp.float32
@@ -550,7 +550,7 @@ class FlaxRegNetEncoder(nn.Module):
         )
 
 
-# Copied from transformers.models.resnet.modeling_flax_resnet.FlaxResNetPreTrainedModel with ResNet->RegNet,resnet->regnet,RESNET->REGNET
+# Copied from tiny_hf.transformers.models.resnet.modeling_flax_resnet.FlaxResNetPreTrainedModel with ResNet->RegNet,resnet->regnet,RESNET->REGNET
 class FlaxRegNetPreTrainedModel(FlaxPreTrainedModel):
     """
     An abstract class to handle weights initialization and a simple interface for downloading and loading pretrained
@@ -627,7 +627,7 @@ class FlaxRegNetPreTrainedModel(FlaxPreTrainedModel):
         )
 
 
-# Copied from transformers.models.resnet.modeling_flax_resnet.FlaxResNetModule with ResNet->RegNet
+# Copied from tiny_hf.transformers.models.resnet.modeling_flax_resnet.FlaxResNetModule with ResNet->RegNet
 class FlaxRegNetModule(nn.Module):
     config: RegNetConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -697,7 +697,7 @@ FLAX_VISION_MODEL_DOCSTRING = """
     Examples:
 
     ```python
-    >>> from transformers import AutoImageProcessor, FlaxRegNetModel
+    >>> from tiny_hf.transformers.import AutoImageProcessor, FlaxRegNetModel
     >>> from PIL import Image
     >>> import requests
 
@@ -721,7 +721,7 @@ append_replace_return_docstrings(
 )
 
 
-# Copied from transformers.models.resnet.modeling_flax_resnet.FlaxResNetClassifierCollection with ResNet->RegNet
+# Copied from tiny_hf.transformers.models.resnet.modeling_flax_resnet.FlaxResNetClassifierCollection with ResNet->RegNet
 class FlaxRegNetClassifierCollection(nn.Module):
     config: RegNetConfig
     dtype: jnp.dtype = jnp.float32
@@ -733,7 +733,7 @@ class FlaxRegNetClassifierCollection(nn.Module):
         return self.classifier(x)
 
 
-# Copied from transformers.models.resnet.modeling_flax_resnet.FlaxResNetForImageClassificationModule with ResNet->RegNet,resnet->regnet,RESNET->REGNET
+# Copied from tiny_hf.transformers.models.resnet.modeling_flax_resnet.FlaxResNetForImageClassificationModule with ResNet->RegNet,resnet->regnet,RESNET->REGNET
 class FlaxRegNetForImageClassificationModule(nn.Module):
     config: RegNetConfig
     dtype: jnp.dtype = jnp.float32
@@ -790,7 +790,7 @@ FLAX_VISION_CLASSIF_DOCSTRING = """
     Example:
 
     ```python
-    >>> from transformers import AutoImageProcessor, FlaxRegNetForImageClassification
+    >>> from tiny_hf.transformers.import AutoImageProcessor, FlaxRegNetForImageClassification
     >>> from PIL import Image
     >>> import jax
     >>> import requests

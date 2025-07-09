@@ -22,9 +22,9 @@
 import math
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, StaticCache
@@ -53,7 +53,7 @@ from .configuration_stablelm import StableLmConfig
 
 
 if is_torch_flex_attn_available():
-    from torch.nn.attention.flex_attention import BlockMask
+    from tg_adapter.nn.attention.flex_attention import BlockMask
 
     from ...integrations.flex_attention import make_flex_block_causal_mask
 
@@ -68,7 +68,7 @@ _CHECKPOINT_FOR_DOC = "stabilityai/stablelm-3b-4e1t"
 _CONFIG_FOR_DOC = "StableLmConfig"
 
 
-# Copied from transformers.models.llama.modeling_llama.LlamaRotaryEmbedding with Llama->StableLm
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaRotaryEmbedding with Llama->StableLm
 class StableLmRotaryEmbedding(nn.Module):
     def __init__(self, config: StableLmConfig, device=None):
         super().__init__()
@@ -130,7 +130,7 @@ class StableLmRotaryEmbedding(nn.Module):
         return cos.to(dtype=x.dtype), sin.to(dtype=x.dtype)
 
 
-# Copied from transformers.models.llama.modeling_llama.rotate_half
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.rotate_half
 def rotate_half(x):
     """Rotates half the hidden dims of the input."""
     x1 = x[..., : x.shape[-1] // 2]
@@ -138,7 +138,7 @@ def rotate_half(x):
     return torch.cat((-x2, x1), dim=-1)
 
 
-# Copied from transformers.models.llama.modeling_llama.apply_rotary_pos_emb
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.apply_rotary_pos_emb
 def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
     """Applies Rotary Position Embedding to the query and key tensors.
 
@@ -166,7 +166,7 @@ def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
     return q_embed, k_embed
 
 
-# Copied from transformers.models.mistral.modeling_mistral.MistralMLP with Mistral->StableLm
+# Copied from tiny_hf.transformers.models.mistral.modeling_mistral.MistralMLP with Mistral->StableLm
 class StableLmMLP(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -198,7 +198,7 @@ class StableLmLayerNormPerHead(nn.Module):
         return torch.cat([norm(hidden_states) for norm, hidden_states in zip(self.norms, states_per_heads)], dim=1)
 
 
-# Copied from transformers.models.llama.modeling_llama.repeat_kv
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.repeat_kv
 def repeat_kv(hidden_states: torch.Tensor, n_rep: int) -> torch.Tensor:
     """
     This is the equivalent of torch.repeat_interleave(x, dim=1, repeats=n_rep). The hidden states go from (batch,
@@ -623,7 +623,7 @@ class StableLmDecoderLayer(nn.Module):
             position_embeddings=position_embeddings,
         )
 
-        # copied from transformers.models.gpt_neox.modeling_gpt_neox.GPTNeoXLayer.forward
+        # copied from tiny_hf.transformers.models.gpt_neox.modeling_gpt_neox.GPTNeoXLayer.forward
         if self.use_parallel_residual:
             # x = x + attn(ln1(x)) + mlp(ln1(x))
             # Fully Connected
@@ -931,7 +931,7 @@ class StableLmModel(StableLmPreTrainedModel):
             attentions=all_self_attns,
         )
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel._update_causal_mask
     def _update_causal_mask(
         self,
         attention_mask: torch.Tensor,
@@ -1003,7 +1003,7 @@ class StableLmModel(StableLmPreTrainedModel):
         return causal_mask
 
     @staticmethod
-    # Copied from transformers.models.llama.modeling_llama.LlamaModel._prepare_4d_causal_attention_mask_with_cache_position
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaModel._prepare_4d_causal_attention_mask_with_cache_position
     def _prepare_4d_causal_attention_mask_with_cache_position(
         attention_mask: torch.Tensor,
         sequence_length: int,
@@ -1062,11 +1062,11 @@ class StableLmModel(StableLmPreTrainedModel):
         return causal_mask
 
 
-# Copied from transformers.models.persimmon.modeling_persimmon.PersimmonForCausalLM with PERSIMMON->STABLELM,Persimmon->StableLm
+# Copied from tiny_hf.transformers.models.persimmon.modeling_persimmon.PersimmonForCausalLM with PERSIMMON->STABLELM,Persimmon->StableLm
 class StableLmForCausalLM(StableLmPreTrainedModel, GenerationMixin):
     _tied_weights_keys = ["lm_head.weight"]
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.__init__ with LLAMA->STABLELM,Llama->StableLm
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.__init__ with LLAMA->STABLELM,Llama->StableLm
     def __init__(self, config):
         super().__init__(config)
         self.model = StableLmModel(config)
@@ -1076,27 +1076,27 @@ class StableLmForCausalLM(StableLmPreTrainedModel, GenerationMixin):
         # Initialize weights and apply final processing
         self.post_init()
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.get_input_embeddings
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.get_input_embeddings
     def get_input_embeddings(self):
         return self.model.embed_tokens
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.set_input_embeddings
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.set_input_embeddings
     def set_input_embeddings(self, value):
         self.model.embed_tokens = value
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.get_output_embeddings
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.get_output_embeddings
     def get_output_embeddings(self):
         return self.lm_head
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.set_output_embeddings
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.set_output_embeddings
     def set_output_embeddings(self, new_embeddings):
         self.lm_head = new_embeddings
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.set_decoder
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.set_decoder
     def set_decoder(self, decoder):
         self.model = decoder
 
-    # Copied from transformers.models.llama.modeling_llama.LlamaForCausalLM.get_decoder
+    # Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForCausalLM.get_decoder
     def get_decoder(self):
         return self.model
 
@@ -1138,7 +1138,7 @@ class StableLmForCausalLM(StableLmPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, StableLmForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, StableLmForCausalLM
 
         >>> model = StableLmForCausalLM.from_pretrained("stabilityai/stablelm-3b-4e1t")
         >>> tokenizer = AutoTokenizer.from_pretrained("stabilityai/stablelm-3b-4e1t")
@@ -1213,7 +1213,7 @@ class StableLmForCausalLM(StableLmPreTrainedModel, GenerationMixin):
     """,
     STABLELM_START_DOCSTRING,
 )
-# Copied from transformers.models.llama.modeling_llama.LlamaForSequenceClassification with LLAMA->STABLELM,Llama->StableLm
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForSequenceClassification with LLAMA->STABLELM,Llama->StableLm
 class StableLmForSequenceClassification(StableLmPreTrainedModel):
     def __init__(self, config):
         super().__init__(config)
@@ -1313,7 +1313,7 @@ class StableLmForSequenceClassification(StableLmPreTrainedModel):
     """,
     STABLELM_START_DOCSTRING,
 )
-# Copied from transformers.models.llama.modeling_llama.LlamaForTokenClassification with Llama->StableLm, LLAMA->STABLELM
+# Copied from tiny_hf.transformers.models.llama.modeling_llama.LlamaForTokenClassification with Llama->StableLm, LLAMA->STABLELM
 class StableLmForTokenClassification(StableLmPreTrainedModel):
     def __init__(self, config):
         super().__init__(config)

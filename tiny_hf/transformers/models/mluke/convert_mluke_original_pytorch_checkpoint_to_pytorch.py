@@ -19,10 +19,10 @@ import json
 import os
 from collections import OrderedDict
 
-import torch
+import tg_adapter as torch
 
-from transformers import LukeConfig, LukeForMaskedLM, MLukeTokenizer, XLMRobertaTokenizer
-from transformers.tokenization_utils_base import AddedToken
+from tiny_hf.transformers.import LukeConfig, LukeForMaskedLM, MLukeTokenizer, XLMRobertaTokenizer
+from tiny_hf.transformers.tokenization_utils_base import AddedToken
 
 
 @torch.no_grad()

@@ -78,7 +78,7 @@ class NatConfig(BackboneConfigMixin, PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import NatConfig, NatModel
+    >>> from tiny_hf.transformers.import NatConfig, NatModel
 
     >>> # Initializing a Nat shi-labs/nat-mini-in1k-224 style configuration
     >>> configuration = NatConfig()

@@ -19,10 +19,10 @@ import os
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN, get_activation
 from ...generation import GenerationMixin
@@ -160,7 +160,7 @@ class ElectraEmbeddings(nn.Module):
             "token_type_ids", torch.zeros(self.position_ids.size(), dtype=torch.long), persistent=False
         )
 
-    # Copied from transformers.models.bert.modeling_bert.BertEmbeddings.forward
+    # Copied from tiny_hf.transformers.models.bert.modeling_bert.BertEmbeddings.forward
     def forward(
         self,
         input_ids: Optional[torch.LongTensor] = None,
@@ -203,7 +203,7 @@ class ElectraEmbeddings(nn.Module):
         return embeddings
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfAttention with Bert->Electra
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfAttention with Bert->Electra
 class ElectraSelfAttention(nn.Module):
     def __init__(self, config, position_embedding_type=None):
         super().__init__()
@@ -338,7 +338,7 @@ class ElectraSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfOutput
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfOutput
 class ElectraSelfOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -358,7 +358,7 @@ ELECTRA_SELF_ATTENTION_CLASSES = {
 }
 
 
-# Copied from transformers.models.bert.modeling_bert.BertAttention with Bert->Electra,BERT->ELECTRA
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertAttention with Bert->Electra,BERT->ELECTRA
 class ElectraAttention(nn.Module):
     def __init__(self, config, position_embedding_type=None):
         super().__init__()
@@ -410,7 +410,7 @@ class ElectraAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate
 class ElectraIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -426,7 +426,7 @@ class ElectraIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOutput
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOutput
 class ElectraOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -441,7 +441,7 @@ class ElectraOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertLayer with Bert->Electra
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertLayer with Bert->Electra
 class ElectraLayer(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -528,7 +528,7 @@ class ElectraLayer(nn.Module):
         return layer_output
 
 
-# Copied from transformers.models.bert.modeling_bert.BertEncoder with Bert->Electra
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertEncoder with Bert->Electra
 class ElectraEncoder(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -670,7 +670,7 @@ class ElectraPreTrainedModel(PreTrainedModel):
     base_model_prefix = "electra"
     supports_gradient_checkpointing = True
 
-    # Copied from transformers.models.bert.modeling_bert.BertPreTrainedModel._init_weights
+    # Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPreTrainedModel._init_weights
     def _init_weights(self, module):
         """Initialize the weights"""
         if isinstance(module, nn.Linear):
@@ -1089,8 +1089,8 @@ class ElectraForPreTraining(ElectraPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import ElectraForPreTraining, AutoTokenizer
-        >>> import torch
+        >>> from tiny_hf.transformers.import ElectraForPreTraining, AutoTokenizer
+        >>> import tg_adapter as torch
 
         >>> discriminator = ElectraForPreTraining.from_pretrained("google/electra-base-discriminator")
         >>> tokenizer = AutoTokenizer.from_pretrained("google/electra-base-discriminator")
@@ -1596,8 +1596,8 @@ class ElectraForCausalLM(ElectraPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, ElectraForCausalLM, ElectraConfig
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, ElectraForCausalLM, ElectraConfig
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/electra-base-generator")
         >>> config = ElectraConfig.from_pretrained("google/electra-base-generator")
@@ -1654,7 +1654,7 @@ class ElectraForCausalLM(ElectraPreTrainedModel, GenerationMixin):
             cross_attentions=outputs.cross_attentions,
         )
 
-    # Copied from transformers.models.roberta.modeling_roberta.RobertaForCausalLM._reorder_cache
+    # Copied from tiny_hf.transformers.models.roberta.modeling_roberta.RobertaForCausalLM._reorder_cache
     def _reorder_cache(self, past_key_values, beam_idx):
         reordered_past = ()
         for layer_past in past_key_values:

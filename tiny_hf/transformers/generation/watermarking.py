@@ -19,9 +19,9 @@ from functools import lru_cache
 from typing import Any, Dict, Optional, Tuple, Union
 
 import numpy as np
-import torch
-from torch import nn
-from torch.nn import BCELoss
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.nn import BCELoss
 
 from ..modeling_utils import PreTrainedModel
 from ..utils import ModelOutput, is_torch_available, logging
@@ -29,7 +29,7 @@ from .configuration_utils import PretrainedConfig, WatermarkingConfig
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
     from .logits_process import SynthIDTextWatermarkLogitsProcessor, WatermarkLogitsProcessor
 
@@ -94,7 +94,7 @@ class WatermarkDetector:
     Examples:
 
     ```python
-    >>> from transformers import AutoTokenizer, AutoModelForCausalLM, WatermarkDetector, WatermarkingConfig
+    >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM, WatermarkDetector, WatermarkingConfig
 
     >>> model_id = "openai-community/gpt2"
     >>> model = AutoModelForCausalLM.from_pretrained(model_id)
@@ -498,7 +498,7 @@ class SynthIDTextWatermarkDetector:
 
     Examples:
     ```python
-    >>> from transformers import (
+    >>> from tiny_hf.transformers.import (
     ...     AutoTokenizer, BayesianDetectorModel, SynthIDTextWatermarkLogitsProcessor, SynthIDTextWatermarkDetector
     ... )
 

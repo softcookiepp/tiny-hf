@@ -52,7 +52,7 @@ _CONFIG_FOR_DOC = "XLMRobertaConfig"
 remat = nn_partitioning.remat
 
 
-# Copied from transformers.models.roberta.modeling_flax_roberta.create_position_ids_from_input_ids
+# Copied from tiny_hf.transformers.models.roberta.modeling_flax_roberta.create_position_ids_from_input_ids
 def create_position_ids_from_input_ids(input_ids, padding_idx):
     """
     Replace non-padding symbols with their position numbers. Position numbers begin at padding_idx+1. Padding symbols
@@ -138,7 +138,7 @@ XLM_ROBERTA_INPUTS_DOCSTRING = r"""
 """
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertEmbeddings with Bert->XLMRoberta
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertEmbeddings with Bert->XLMRoberta
 class FlaxXLMRobertaEmbeddings(nn.Module):
     """Construct the embeddings from word, position and token_type embeddings."""
 
@@ -182,7 +182,7 @@ class FlaxXLMRobertaEmbeddings(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertSelfAttention with Bert->XLMRoberta
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertSelfAttention with Bert->XLMRoberta
 class FlaxXLMRobertaSelfAttention(nn.Module):
     config: XLMRobertaConfig
     causal: bool = False
@@ -224,7 +224,7 @@ class FlaxXLMRobertaSelfAttention(nn.Module):
         return hidden_states.reshape(hidden_states.shape[:2] + (self.config.hidden_size,))
 
     @nn.compact
-    # Copied from transformers.models.bart.modeling_flax_bart.FlaxBartAttention._concatenate_to_cache
+    # Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartAttention._concatenate_to_cache
     def _concatenate_to_cache(self, key, value, query, attention_mask):
         """
         This function takes projected key, value states from a single input token and concatenates the states to cached
@@ -354,7 +354,7 @@ class FlaxXLMRobertaSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertSelfOutput with Bert->XLMRoberta
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertSelfOutput with Bert->XLMRoberta
 class FlaxXLMRobertaSelfOutput(nn.Module):
     config: XLMRobertaConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -375,7 +375,7 @@ class FlaxXLMRobertaSelfOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertAttention with Bert->XLMRoberta
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertAttention with Bert->XLMRoberta
 class FlaxXLMRobertaAttention(nn.Module):
     config: XLMRobertaConfig
     causal: bool = False
@@ -418,7 +418,7 @@ class FlaxXLMRobertaAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertIntermediate with Bert->XLMRoberta
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertIntermediate with Bert->XLMRoberta
 class FlaxXLMRobertaIntermediate(nn.Module):
     config: XLMRobertaConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -437,7 +437,7 @@ class FlaxXLMRobertaIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertOutput with Bert->XLMRoberta
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertOutput with Bert->XLMRoberta
 class FlaxXLMRobertaOutput(nn.Module):
     config: XLMRobertaConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -458,7 +458,7 @@ class FlaxXLMRobertaOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertLayer with Bert->XLMRoberta
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertLayer with Bert->XLMRoberta
 class FlaxXLMRobertaLayer(nn.Module):
     config: XLMRobertaConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -516,7 +516,7 @@ class FlaxXLMRobertaLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertLayerCollection with Bert->XLMRoberta
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertLayerCollection with Bert->XLMRoberta
 class FlaxXLMRobertaLayerCollection(nn.Module):
     config: XLMRobertaConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -599,7 +599,7 @@ class FlaxXLMRobertaLayerCollection(nn.Module):
         )
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertEncoder with Bert->XLMRoberta
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertEncoder with Bert->XLMRoberta
 class FlaxXLMRobertaEncoder(nn.Module):
     config: XLMRobertaConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -639,7 +639,7 @@ class FlaxXLMRobertaEncoder(nn.Module):
         )
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertPooler with Bert->XLMRoberta
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertPooler with Bert->XLMRoberta
 class FlaxXLMRobertaPooler(nn.Module):
     config: XLMRobertaConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -657,7 +657,7 @@ class FlaxXLMRobertaPooler(nn.Module):
         return nn.tanh(cls_hidden_state)
 
 
-# Copied from transformers.models.roberta.modeling_flax_roberta.FlaxRobertaLMHead with Roberta->XLMRoberta
+# Copied from tiny_hf.transformers.models.roberta.modeling_flax_roberta.FlaxRobertaLMHead with Roberta->XLMRoberta
 class FlaxXLMRobertaLMHead(nn.Module):
     config: XLMRobertaConfig
     dtype: jnp.dtype = jnp.float32
@@ -693,7 +693,7 @@ class FlaxXLMRobertaLMHead(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.roberta.modeling_flax_roberta.FlaxRobertaClassificationHead with Roberta->XLMRoberta
+# Copied from tiny_hf.transformers.models.roberta.modeling_flax_roberta.FlaxRobertaClassificationHead with Roberta->XLMRoberta
 class FlaxXLMRobertaClassificationHead(nn.Module):
     config: XLMRobertaConfig
     dtype: jnp.dtype = jnp.float32
@@ -726,7 +726,7 @@ class FlaxXLMRobertaClassificationHead(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.roberta.modeling_flax_roberta.FlaxRobertaPreTrainedModel with Roberta->XLMRoberta, roberta->xlm-roberta, ROBERTA->XLM_ROBERTA
+# Copied from tiny_hf.transformers.models.roberta.modeling_flax_roberta.FlaxRobertaPreTrainedModel with Roberta->XLMRoberta, roberta->xlm-roberta, ROBERTA->XLM_ROBERTA
 class FlaxXLMRobertaPreTrainedModel(FlaxPreTrainedModel):
     """
     An abstract class to handle weights initialization and a simple interface for downloading and loading pretrained
@@ -751,7 +751,7 @@ class FlaxXLMRobertaPreTrainedModel(FlaxPreTrainedModel):
         module = self.module_class(config=config, dtype=dtype, gradient_checkpointing=gradient_checkpointing, **kwargs)
         super().__init__(config, module, input_shape=input_shape, seed=seed, dtype=dtype, _do_init=_do_init)
 
-    # Copied from transformers.models.bert.modeling_flax_bert.FlaxBertPreTrainedModel.enable_gradient_checkpointing
+    # Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertPreTrainedModel.enable_gradient_checkpointing
     def enable_gradient_checkpointing(self):
         self._module = self.module_class(
             config=self.config,
@@ -801,7 +801,7 @@ class FlaxXLMRobertaPreTrainedModel(FlaxPreTrainedModel):
         else:
             return random_params
 
-    # Copied from transformers.models.bart.modeling_flax_bart.FlaxBartDecoderPreTrainedModel.init_cache
+    # Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartDecoderPreTrainedModel.init_cache
     def init_cache(self, batch_size, max_length):
         r"""
         Args:
@@ -919,7 +919,7 @@ class FlaxXLMRobertaPreTrainedModel(FlaxPreTrainedModel):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertModule with Bert->XLMRoberta
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertModule with Bert->XLMRoberta
 class FlaxXLMRobertaModule(nn.Module):
     config: XLMRobertaConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -1002,7 +1002,7 @@ class FlaxXLMRobertaModel(FlaxXLMRobertaPreTrainedModel):
 append_call_sample_docstring(FlaxXLMRobertaModel, _CHECKPOINT_FOR_DOC, FlaxBaseModelOutputWithPooling, _CONFIG_FOR_DOC)
 
 
-# Copied from transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForMaskedLMModule with Roberta->XLMRoberta
+# Copied from tiny_hf.transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForMaskedLMModule with Roberta->XLMRoberta
 class FlaxXLMRobertaForMaskedLMModule(nn.Module):
     config: XLMRobertaConfig
     dtype: jnp.dtype = jnp.float32
@@ -1075,7 +1075,7 @@ append_call_sample_docstring(
 )
 
 
-# Copied from transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForSequenceClassificationModule with Roberta->XLMRoberta
+# Copied from tiny_hf.transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForSequenceClassificationModule with Roberta->XLMRoberta
 class FlaxXLMRobertaForSequenceClassificationModule(nn.Module):
     config: XLMRobertaConfig
     dtype: jnp.dtype = jnp.float32
@@ -1147,7 +1147,7 @@ append_call_sample_docstring(
 )
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertForMultipleChoiceModule with Bert->XLMRoberta, with self.bert->self.roberta
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertForMultipleChoiceModule with Bert->XLMRoberta, with self.bert->self.roberta
 class FlaxXLMRobertaForMultipleChoiceModule(nn.Module):
     config: XLMRobertaConfig
     dtype: jnp.dtype = jnp.float32
@@ -1231,7 +1231,7 @@ append_call_sample_docstring(
 )
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertForTokenClassificationModule with Bert->XLMRoberta, with self.bert->self.roberta
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertForTokenClassificationModule with Bert->XLMRoberta, with self.bert->self.roberta
 class FlaxXLMRobertaForTokenClassificationModule(nn.Module):
     config: XLMRobertaConfig
     dtype: jnp.dtype = jnp.float32
@@ -1310,7 +1310,7 @@ append_call_sample_docstring(
 )
 
 
-# Copied from transformers.models.bert.modeling_flax_bert.FlaxBertForQuestionAnsweringModule with Bert->XLMRoberta, with self.bert->self.roberta
+# Copied from tiny_hf.transformers.models.bert.modeling_flax_bert.FlaxBertForQuestionAnsweringModule with Bert->XLMRoberta, with self.bert->self.roberta
 class FlaxXLMRobertaForQuestionAnsweringModule(nn.Module):
     config: XLMRobertaConfig
     dtype: jnp.dtype = jnp.float32
@@ -1387,7 +1387,7 @@ append_call_sample_docstring(
 )
 
 
-# Copied from transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForCausalLMModule with Roberta->XLMRoberta
+# Copied from tiny_hf.transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForCausalLMModule with Roberta->XLMRoberta
 class FlaxXLMRobertaForCausalLMModule(nn.Module):
     config: XLMRobertaConfig
     dtype: jnp.dtype = jnp.float32
@@ -1460,7 +1460,7 @@ class FlaxXLMRobertaForCausalLMModule(nn.Module):
     """,
     XLM_ROBERTA_START_DOCSTRING,
 )
-# Copied from transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForCausalLM with Roberta->XLMRoberta
+# Copied from tiny_hf.transformers.models.roberta.modeling_flax_roberta.FlaxRobertaForCausalLM with Roberta->XLMRoberta
 class FlaxXLMRobertaForCausalLM(FlaxXLMRobertaPreTrainedModel):
     module_class = FlaxXLMRobertaForCausalLMModule
 

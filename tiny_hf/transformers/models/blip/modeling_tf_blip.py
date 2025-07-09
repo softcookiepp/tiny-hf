@@ -49,7 +49,7 @@ logger = logging.get_logger(__name__)
 _CHECKPOINT_FOR_DOC = "Salesforce/blip-vqa-base"
 
 
-# Copied from transformers.models.clip.modeling_tf_clip.contrastive_loss
+# Copied from tiny_hf.transformers.models.clip.modeling_tf_clip.contrastive_loss
 def contrastive_loss(logits: tf.Tensor) -> tf.Tensor:
     return tf.math.reduce_mean(
         keras.metrics.sparse_categorical_crossentropy(
@@ -58,7 +58,7 @@ def contrastive_loss(logits: tf.Tensor) -> tf.Tensor:
     )
 
 
-# Copied from transformers.models.clip.modeling_tf_clip.clip_loss with clip->blip
+# Copied from tiny_hf.transformers.models.clip.modeling_tf_clip.clip_loss with clip->blip
 def blip_loss(similarity: tf.Tensor) -> tf.Tensor:
     caption_loss = contrastive_loss(similarity)
     image_loss = contrastive_loss(tf.transpose(similarity))
@@ -279,7 +279,7 @@ class TFBlipVisionEmbeddings(keras.layers.Layer):
         return embeddings
 
 
-# Copied from transformers.models.clip.modeling_tf_clip.TFCLIPTextEmbeddings with CLIP->Blip
+# Copied from tiny_hf.transformers.models.clip.modeling_tf_clip.TFCLIPTextEmbeddings with CLIP->Blip
 class TFBlipTextEmbeddings(keras.layers.Layer):
     def __init__(self, config: BlipTextConfig, **kwargs):
         super().__init__(**kwargs)
@@ -968,7 +968,7 @@ class TFBlipModel(TFBlipPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, TFBlipModel
+        >>> from tiny_hf.transformers.import AutoProcessor, TFBlipModel
 
         >>> model = TFBlipModel.from_pretrained("Salesforce/blip-image-captioning-base")
         >>> processor = AutoProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
@@ -1013,7 +1013,7 @@ class TFBlipModel(TFBlipPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoProcessor, TFBlipModel
+        >>> from tiny_hf.transformers.import AutoProcessor, TFBlipModel
 
         >>> model = TFBlipModel.from_pretrained("Salesforce/blip-image-captioning-base")
         >>> processor = AutoProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
@@ -1051,7 +1051,7 @@ class TFBlipModel(TFBlipPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, TFBlipModel
+        >>> from tiny_hf.transformers.import AutoProcessor, TFBlipModel
 
         >>> model = TFBlipModel.from_pretrained("Salesforce/blip-image-captioning-base")
         >>> processor = AutoProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
@@ -1130,7 +1130,7 @@ class TFBlipForConditionalGeneration(TFBlipPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, TFBlipForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoProcessor, TFBlipForConditionalGeneration
 
         >>> processor = AutoProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
         >>> model = TFBlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base")
@@ -1210,7 +1210,7 @@ class TFBlipForConditionalGeneration(TFBlipPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, TFBlipForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoProcessor, TFBlipForConditionalGeneration
 
         >>> model = TFBlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base")
         >>> processor = AutoProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
@@ -1299,7 +1299,7 @@ class TFBlipForQuestionAnswering(TFBlipPreTrainedModel):
     def get_input_embeddings(self) -> keras.layers.Layer:
         return self.vision_model.embeddings.patch_embedding
 
-    # Adapted from transformers.models.t5.modeling_tf_t5.TFT5PreTrainedModel._shift_right
+    # Adapted from tiny_hf.transformers.models.t5.modeling_tf_t5.TFT5PreTrainedModel._shift_right
     def _shift_right(self, input_ids):
         decoder_start_token_id = self.decoder_start_token_id
         pad_token_id = self.decoder_pad_token_id
@@ -1347,7 +1347,7 @@ class TFBlipForQuestionAnswering(TFBlipPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, TFBlipForQuestionAnswering
+        >>> from tiny_hf.transformers.import AutoProcessor, TFBlipForQuestionAnswering
 
         >>> model = TFBlipForQuestionAnswering.from_pretrained("Salesforce/blip-vqa-base")
         >>> processor = AutoProcessor.from_pretrained("Salesforce/blip-vqa-base")
@@ -1460,7 +1460,7 @@ class TFBlipForQuestionAnswering(TFBlipPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, TFBlipForQuestionAnswering
+        >>> from tiny_hf.transformers.import AutoProcessor, TFBlipForQuestionAnswering
 
         >>> model = TFBlipForQuestionAnswering.from_pretrained("Salesforce/blip-vqa-base")
         >>> processor = AutoProcessor.from_pretrained("Salesforce/blip-vqa-base")
@@ -1601,7 +1601,7 @@ class TFBlipForImageTextRetrieval(TFBlipPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, TFBlipForImageTextRetrieval
+        >>> from tiny_hf.transformers.import AutoProcessor, TFBlipForImageTextRetrieval
 
         >>> model = TFBlipForImageTextRetrieval.from_pretrained("Salesforce/blip-itm-base-coco")
         >>> processor = AutoProcessor.from_pretrained("Salesforce/blip-itm-base-coco")

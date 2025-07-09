@@ -18,11 +18,11 @@ import argparse
 from pathlib import Path
 
 import requests
-import torch
+import tg_adapter as torch
 from PIL import Image
 
-from transformers import BeitConfig, DPTConfig, DPTForDepthEstimation, DPTImageProcessor
-from transformers.utils import logging
+from tiny_hf.transformers.import BeitConfig, DPTConfig, DPTForDepthEstimation, DPTImageProcessor
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()
@@ -220,7 +220,7 @@ def convert_dpt_checkpoint(model_name, pytorch_dump_folder_path, push_to_hub):
 
     import requests
     from PIL import Image
-    from torchvision import transforms
+    from tg_adapter.ision import transforms
 
     url = "http://images.cocodataset.org/val2017/000000039769.jpg"
     image = Image.open(requests.get(url, stream=True).raw)

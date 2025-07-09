@@ -20,12 +20,12 @@ import re
 import sys
 import types
 
-import torch
+import tg_adapter as torch
 from huggingface_hub import split_torch_state_dict_into_shards
 from packaging import version
 
-from transformers import AutoTokenizer, GPT2Config
-from transformers.modeling_utils import WEIGHTS_INDEX_NAME, WEIGHTS_NAME
+from tiny_hf.transformers.import AutoTokenizer, GPT2Config
+from tiny_hf.transformers.modeling_utils import WEIGHTS_INDEX_NAME, WEIGHTS_NAME
 
 
 def add_checkpointing_args(parser):
@@ -266,7 +266,7 @@ def transformers_to_megatron_fix_query_key_value_ordering(
 
 def merge_transformers_sharded_states(path, num_checkpoints):
     """
-    Merge sharded checkpoints from transformers into a single checkpoint.
+    Merge sharded checkpoints from tiny_hf.transformers.into a single checkpoint.
 
     Args:
         path (str): the path to the sharded checkpoints

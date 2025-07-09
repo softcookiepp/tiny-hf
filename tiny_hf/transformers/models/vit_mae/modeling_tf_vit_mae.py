@@ -406,7 +406,7 @@ class TFViTMAEPatchEmbeddings(keras.layers.Layer):
                 self.projection.build([None, None, None, self.num_channels])
 
 
-# Copied from transformers.models.vit.modeling_tf_vit.TFViTSelfAttention with ViT->ViTMAE
+# Copied from tiny_hf.transformers.models.vit.modeling_tf_vit.TFViTSelfAttention with ViT->ViTMAE
 class TFViTMAESelfAttention(keras.layers.Layer):
     def __init__(self, config: ViTMAEConfig, **kwargs):
         super().__init__(**kwargs)
@@ -497,7 +497,7 @@ class TFViTMAESelfAttention(keras.layers.Layer):
                 self.value.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.vit.modeling_tf_vit.TFViTSelfOutput with ViT->ViTMAE
+# Copied from tiny_hf.transformers.models.vit.modeling_tf_vit.TFViTSelfOutput with ViT->ViTMAE
 class TFViTMAESelfOutput(keras.layers.Layer):
     """
     The residual connection is defined in TFViTMAELayer instead of here (as is the case with other models), due to the
@@ -528,7 +528,7 @@ class TFViTMAESelfOutput(keras.layers.Layer):
                 self.dense.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.vit.modeling_tf_vit.TFViTAttention with ViT->ViTMAE
+# Copied from tiny_hf.transformers.models.vit.modeling_tf_vit.TFViTAttention with ViT->ViTMAE
 class TFViTMAEAttention(keras.layers.Layer):
     def __init__(self, config: ViTMAEConfig, **kwargs):
         super().__init__(**kwargs)
@@ -568,7 +568,7 @@ class TFViTMAEAttention(keras.layers.Layer):
                 self.dense_output.build(None)
 
 
-# Copied from transformers.models.vit.modeling_tf_vit.TFViTIntermediate with ViT->ViTMAE
+# Copied from tiny_hf.transformers.models.vit.modeling_tf_vit.TFViTIntermediate with ViT->ViTMAE
 class TFViTMAEIntermediate(keras.layers.Layer):
     def __init__(self, config: ViTMAEConfig, **kwargs):
         super().__init__(**kwargs)
@@ -598,7 +598,7 @@ class TFViTMAEIntermediate(keras.layers.Layer):
                 self.dense.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.vit.modeling_tf_vit.TFViTOutput with ViT->ViTMAE
+# Copied from tiny_hf.transformers.models.vit.modeling_tf_vit.TFViTOutput with ViT->ViTMAE
 class TFViTMAEOutput(keras.layers.Layer):
     def __init__(self, config: ViTMAEConfig, **kwargs):
         super().__init__(**kwargs)
@@ -625,7 +625,7 @@ class TFViTMAEOutput(keras.layers.Layer):
                 self.dense.build([None, None, self.config.intermediate_size])
 
 
-# Copied from transformers.models.vit.modeling_tf_vit.TFViTLayer with ViT->ViTMAE
+# Copied from tiny_hf.transformers.models.vit.modeling_tf_vit.TFViTLayer with ViT->ViTMAE
 class TFViTMAELayer(keras.layers.Layer):
     """This corresponds to the Block class in the timm implementation."""
 
@@ -693,7 +693,7 @@ class TFViTMAELayer(keras.layers.Layer):
                 self.layernorm_after.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.vit.modeling_tf_vit.TFViTEncoder with ViT->ViTMAE
+# Copied from tiny_hf.transformers.models.vit.modeling_tf_vit.TFViTEncoder with ViT->ViTMAE
 class TFViTMAEEncoder(keras.layers.Layer):
     def __init__(self, config: ViTMAEConfig, **kwargs):
         super().__init__(**kwargs)
@@ -957,7 +957,7 @@ class TFViTMAEModel(TFViTMAEPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, TFViTMAEModel
+        >>> from tiny_hf.transformers.import AutoImageProcessor, TFViTMAEModel
         >>> from PIL import Image
         >>> import requests
 
@@ -1308,7 +1308,7 @@ class TFViTMAEForPreTraining(TFViTMAEPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoImageProcessor, TFViTMAEForPreTraining
+        >>> from tiny_hf.transformers.import AutoImageProcessor, TFViTMAEForPreTraining
         >>> from PIL import Image
         >>> import requests
 

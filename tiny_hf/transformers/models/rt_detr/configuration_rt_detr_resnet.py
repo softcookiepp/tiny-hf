@@ -64,7 +64,7 @@ class RTDetrResNetConfig(BackboneConfigMixin, PretrainedConfig):
 
     Example:
     ```python
-    >>> from transformers import RTDetrResNetConfig, RTDetrResnetBackbone
+    >>> from tiny_hf.transformers.import RTDetrResNetConfig, RTDetrResnetBackbone
 
     >>> # Initializing a ResNet resnet-50 style configuration
     >>> configuration = RTDetrResNetConfig()

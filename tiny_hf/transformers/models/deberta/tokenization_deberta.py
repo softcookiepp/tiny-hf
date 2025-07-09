@@ -29,7 +29,7 @@ logger = logging.get_logger(__name__)
 VOCAB_FILES_NAMES = {"vocab_file": "vocab.json", "merges_file": "merges.txt"}
 
 
-# Copied from transformers.models.gpt2.tokenization_gpt2.bytes_to_unicode
+# Copied from tiny_hf.transformers.models.gpt2.tokenization_gpt2.bytes_to_unicode
 def bytes_to_unicode():
     """
     Returns list of utf-8 byte and a mapping to unicode strings. We specifically avoids mapping to whitespace/control
@@ -54,7 +54,7 @@ def bytes_to_unicode():
     return dict(zip(bs, cs))
 
 
-# Copied from transformers.models.gpt2.tokenization_gpt2.get_pairs
+# Copied from tiny_hf.transformers.models.gpt2.tokenization_gpt2.get_pairs
 def get_pairs(word):
     """
     Return set of symbol pairs in a word.
@@ -77,7 +77,7 @@ class DebertaTokenizer(PreTrainedTokenizer):
     be encoded differently whether it is at the beginning of the sentence (without space) or not:
 
     ```python
-    >>> from transformers import DebertaTokenizer
+    >>> from tiny_hf.transformers.import DebertaTokenizer
 
     >>> tokenizer = DebertaTokenizer.from_pretrained("microsoft/deberta-base")
     >>> tokenizer("Hello world")["input_ids"]
@@ -195,15 +195,15 @@ class DebertaTokenizer(PreTrainedTokenizer):
         )
 
     @property
-    # Copied from transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer.vocab_size
+    # Copied from tiny_hf.transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer.vocab_size
     def vocab_size(self):
         return len(self.encoder)
 
-    # Copied from transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer.get_vocab
+    # Copied from tiny_hf.transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer.get_vocab
     def get_vocab(self):
         return dict(self.encoder, **self.added_tokens_encoder)
 
-    # Copied from transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer.bpe
+    # Copied from tiny_hf.transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer.bpe
     def bpe(self, token):
         if token in self.cache:
             return self.cache[token]
@@ -328,7 +328,7 @@ class DebertaTokenizer(PreTrainedTokenizer):
             return len(cls + token_ids_0 + sep) * [0]
         return len(cls + token_ids_0 + sep) * [0] + len(token_ids_1 + sep) * [1]
 
-    # Copied from transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer._tokenize
+    # Copied from tiny_hf.transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer._tokenize
     def _tokenize(self, text):
         """Tokenize a string."""
         bpe_tokens = []
@@ -339,24 +339,24 @@ class DebertaTokenizer(PreTrainedTokenizer):
             bpe_tokens.extend(bpe_token for bpe_token in self.bpe(token).split(" "))
         return bpe_tokens
 
-    # Copied from transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer._convert_token_to_id
+    # Copied from tiny_hf.transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer._convert_token_to_id
     def _convert_token_to_id(self, token):
         """Converts a token (str) in an id using the vocab."""
         return self.encoder.get(token, self.encoder.get(self.unk_token))
 
-    # Copied from transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer._convert_id_to_token
+    # Copied from tiny_hf.transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer._convert_id_to_token
     def _convert_id_to_token(self, index):
         """Converts an index (integer) in a token (str) using the vocab."""
         return self.decoder.get(index)
 
-    # Copied from transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer.convert_tokens_to_string
+    # Copied from tiny_hf.transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer.convert_tokens_to_string
     def convert_tokens_to_string(self, tokens):
         """Converts a sequence of tokens (string) in a single string."""
         text = "".join(tokens)
         text = bytearray([self.byte_decoder[c] for c in text]).decode("utf-8", errors=self.errors)
         return text
 
-    # Copied from transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer.save_vocabulary
+    # Copied from tiny_hf.transformers.models.gpt2.tokenization_gpt2.GPT2Tokenizer.save_vocabulary
     def save_vocabulary(self, save_directory: str, filename_prefix: Optional[str] = None) -> Tuple[str]:
         if not os.path.isdir(save_directory):
             logger.error(f"Vocabulary path ({save_directory}) should be a directory")

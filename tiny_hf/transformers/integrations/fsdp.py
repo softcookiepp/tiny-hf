@@ -19,7 +19,7 @@ from ..utils import is_torch_available
 
 
 if TYPE_CHECKING:
-    from torch import nn
+    from tg_adapter import nn
 
 
 def is_fsdp_managed_module(module: nn.Module) -> bool:

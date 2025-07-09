@@ -78,7 +78,7 @@ _CHECKPOINT_FOR_DOC = "nvidia/groupvit-gcc-yfcc"
 LARGE_NEGATIVE = -1e8
 
 
-# Copied from transformers.models.bart.modeling_tf_bart._expand_mask
+# Copied from tiny_hf.transformers.models.bart.modeling_tf_bart._expand_mask
 def _expand_mask(mask: tf.Tensor, tgt_len: Optional[int] = None):
     """
     Expands attention_mask from `[bsz, seq_len]` to `[bsz, 1, tgt_seq_len, src_seq_len]`.
@@ -102,7 +102,7 @@ def contrastive_loss(logits: tf.Tensor) -> tf.Tensor:
     )
 
 
-# Copied from transformers.models.clip.modeling_tf_clip.clip_loss with clip->groupvit
+# Copied from tiny_hf.transformers.models.clip.modeling_tf_clip.clip_loss with clip->groupvit
 def groupvit_loss(similarity: tf.Tensor) -> tf.Tensor:
     caption_loss = contrastive_loss(similarity)
     image_loss = contrastive_loss(tf.transpose(similarity))
@@ -455,7 +455,7 @@ class TFGroupViTTokenAssign(keras.layers.Layer):
                 self.mlp_channels.build(None)
 
 
-# Adapted from transformers.models.vit.modeling_tf_vit.TFViTPatchEmbeddings with ViT->GroupViT
+# Adapted from tiny_hf.transformers.models.vit.modeling_tf_vit.TFViTPatchEmbeddings with ViT->GroupViT
 class TFGroupViTPatchEmbeddings(keras.layers.Layer):
     """
     This class turns `pixel_values` of shape `(batch_size, num_channels, height, width)` into the initial
@@ -534,7 +534,7 @@ class TFGroupViTPatchEmbeddings(keras.layers.Layer):
                 self.projection.build([None, None, None, self.num_channels])
 
 
-# Adapted from transformers.vit.modeling_tf_vit.TFViTEmbeddings
+# Adapted from tiny_hf.transformers.vit.modeling_tf_vit.TFViTEmbeddings
 class TFGroupViTVisionEmbeddings(keras.layers.Layer):
     """
     Construct the position and patch embeddings.
@@ -616,7 +616,7 @@ class TFGroupViTVisionEmbeddings(keras.layers.Layer):
         return embeddings
 
 
-# Copied from transformers.models.clip.modeling_tf_clip.TFCLIPTextEmbeddings with CLIP->GroupViT
+# Copied from tiny_hf.transformers.models.clip.modeling_tf_clip.TFCLIPTextEmbeddings with CLIP->GroupViT
 class TFGroupViTTextEmbeddings(keras.layers.Layer):
     def __init__(self, config: GroupViTTextConfig, **kwargs):
         super().__init__(**kwargs)
@@ -849,7 +849,7 @@ class TFGroupViTMixerMLP(TFGroupViTMLP):
         return tf.transpose(x, perm=(0, 2, 1))
 
 
-# Adapted from transformers.models.clip.modeling_tf_clip.TFCLIPAttention
+# Adapted from tiny_hf.transformers.models.clip.modeling_tf_clip.TFCLIPAttention
 class TFGroupViTAttention(keras.layers.Layer):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -887,7 +887,7 @@ class TFGroupViTAttention(keras.layers.Layer):
             units=self.embed_dim, kernel_initializer=get_initializer(out_proj_std), name="out_proj"
         )
 
-    # Copied from transformers.models.bert.modeling_tf_bert.TFBertSelfAttention.transpose_for_scores
+    # Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertSelfAttention.transpose_for_scores
     def transpose_for_scores(self, tensor: tf.Tensor, batch_size: int) -> tf.Tensor:
         # Reshape from [batch_size, seq_length, all_head_size] to [batch_size, seq_length, num_attention_heads, attention_head_size]
         tensor = tf.reshape(tensor=tensor, shape=(batch_size, -1, self.num_attention_heads, self.attention_head_size))
@@ -974,7 +974,7 @@ class TFGroupViTAttention(keras.layers.Layer):
                 self.out_proj.build([None, None, self.embed_dim])
 
 
-# Copied from transformers.models.clip.modeling_tf_clip.TFCLIPEncoderLayer with CLIP->GroupViT
+# Copied from tiny_hf.transformers.models.clip.modeling_tf_clip.TFCLIPEncoderLayer with CLIP->GroupViT
 class TFGroupViTEncoderLayer(keras.layers.Layer):
     def __init__(self, config: GroupViTConfig, **kwargs):
         super().__init__(**kwargs)
@@ -1044,7 +1044,7 @@ class TFGroupViTEncoderLayer(keras.layers.Layer):
                 self.layer_norm2.build([None, None, self.embed_dim])
 
 
-# Adapted from transformers.models.clip.modeling_tf_clip.TFGroupViTTextEncoder
+# Adapted from tiny_hf.transformers.models.clip.modeling_tf_clip.TFGroupViTTextEncoder
 class TFGroupViTTextEncoder(keras.layers.Layer):
     def __init__(self, config: GroupViTTextConfig, **kwargs):
         super().__init__(**kwargs)
@@ -1158,7 +1158,7 @@ class TFGroupViTVisionEncoder(keras.layers.Layer):
                     layer.build(None)
 
 
-# Copied from transformers.models.clip.modeling_tf_clip.TFCLIPTextTransformer with CLIPText->GroupViTText, CLIPEncoder->GroupViTTextEncoder
+# Copied from tiny_hf.transformers.models.clip.modeling_tf_clip.TFCLIPTextTransformer with CLIPText->GroupViTText, CLIPEncoder->GroupViTTextEncoder
 class TFGroupViTTextTransformer(keras.layers.Layer):
     def __init__(self, config: GroupViTTextConfig, **kwargs):
         super().__init__(**kwargs)
@@ -1275,7 +1275,7 @@ class TFGroupViTTextTransformer(keras.layers.Layer):
                 self.final_layer_norm.build([None, None, self.embed_dim])
 
 
-# Adapted from transformers.models.clip.modeling_tf_clip.TFCLIPVisionTransformer
+# Adapted from tiny_hf.transformers.models.clip.modeling_tf_clip.TFCLIPVisionTransformer
 class TFGroupViTVisionTransformer(keras.layers.Layer):
     def __init__(self, config: GroupViTVisionConfig, **kwargs):
         super().__init__(**kwargs)
@@ -1334,7 +1334,7 @@ class TFGroupViTVisionTransformer(keras.layers.Layer):
 
 
 @keras_serializable
-# Copied from transformers.models.clip.modeling_tf_clip.TFCLIPTextMainLayer with CLIP->GroupViT
+# Copied from tiny_hf.transformers.models.clip.modeling_tf_clip.TFCLIPTextMainLayer with CLIP->GroupViT
 class TFGroupViTTextMainLayer(keras.layers.Layer):
     config_class = GroupViTTextConfig
 
@@ -1391,7 +1391,7 @@ class TFGroupViTTextMainLayer(keras.layers.Layer):
 
 
 @keras_serializable
-# Copied from transformers.models.clip.modeling_tf_clip.TFCLIPVisionMainLayer with CLIP->GroupViT
+# Copied from tiny_hf.transformers.models.clip.modeling_tf_clip.TFCLIPVisionMainLayer with CLIP->GroupViT
 class TFGroupViTVisionMainLayer(keras.layers.Layer):
     config_class = GroupViTVisionConfig
 
@@ -1435,7 +1435,7 @@ class TFGroupViTVisionMainLayer(keras.layers.Layer):
 
 
 @keras_serializable
-# Adapted from transformers.models.clip.modeling_tf_clip.TFCLIPMainLayer
+# Adapted from tiny_hf.transformers.models.clip.modeling_tf_clip.TFCLIPMainLayer
 class TFGroupViTMainLayer(keras.layers.Layer):
     config_class = GroupViTConfig
 
@@ -1878,7 +1878,7 @@ class TFGroupViTTextModel(TFGroupViTPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import CLIPTokenizer, TFGroupViTTextModel
+        >>> from tiny_hf.transformers.import CLIPTokenizer, TFGroupViTTextModel
 
         >>> tokenizer = CLIPTokenizer.from_pretrained("nvidia/groupvit-gcc-yfcc")
         >>> model = TFGroupViTTextModel.from_pretrained("nvidia/groupvit-gcc-yfcc")
@@ -1939,7 +1939,7 @@ class TFGroupViTVisionModel(TFGroupViTPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, TFGroupViTVisionModel
+        >>> from tiny_hf.transformers.import AutoProcessor, TFGroupViTVisionModel
 
         >>> processor = AutoProcessor.from_pretrained("nvidia/groupvit-gcc-yfcc")
         >>> model = TFGroupViTVisionModel.from_pretrained("nvidia/groupvit-gcc-yfcc")
@@ -2002,7 +2002,7 @@ class TFGroupViTModel(TFGroupViTPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import CLIPTokenizer, TFGroupViTModel
+        >>> from tiny_hf.transformers.import CLIPTokenizer, TFGroupViTModel
 
         >>> model = TFGroupViTModel.from_pretrained("nvidia/groupvit-gcc-yfcc")
         >>> tokenizer = CLIPTokenizer.from_pretrained("nvidia/groupvit-gcc-yfcc")
@@ -2043,7 +2043,7 @@ class TFGroupViTModel(TFGroupViTPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, TFGroupViTModel
+        >>> from tiny_hf.transformers.import AutoProcessor, TFGroupViTModel
 
         >>> model = TFGroupViTModel.from_pretrained("nvidia/groupvit-gcc-yfcc")
         >>> processor = AutoProcessor.from_pretrained("nvidia/groupvit-gcc-yfcc")
@@ -2090,7 +2090,7 @@ class TFGroupViTModel(TFGroupViTPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, TFGroupViTModel
+        >>> from tiny_hf.transformers.import AutoProcessor, TFGroupViTModel
         >>> import tensorflow as tf
 
         >>> model = TFGroupViTModel.from_pretrained("nvidia/groupvit-gcc-yfcc")

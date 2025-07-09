@@ -16,9 +16,9 @@
 import math
 from typing import Optional
 
-import torch
-import torch.nn as nn
-import torch.utils.checkpoint
+import tg_adapter as torch
+import tg_adapter.nn as nn
+import tg_adapter.utils.checkpoint
 
 from ...utils import logging
 from ..gemma.modeling_gemma import (

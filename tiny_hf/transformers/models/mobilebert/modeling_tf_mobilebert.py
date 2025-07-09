@@ -84,7 +84,7 @@ _SEQ_CLASS_EXPECTED_OUTPUT = "'others'"
 _SEQ_CLASS_EXPECTED_LOSS = "4.72"
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertPreTrainingLoss
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertPreTrainingLoss
 class TFMobileBertPreTrainingLoss:
     """
     Loss function suitable for BERT-like pretraining, that is, the task of pretraining a language model by combining
@@ -1266,7 +1266,7 @@ class TFMobileBertForPreTraining(TFMobileBertPreTrainedModel, TFMobileBertPreTra
 
         ```python
         >>> import tensorflow as tf
-        >>> from transformers import AutoTokenizer, TFMobileBertForPreTraining
+        >>> from tiny_hf.transformers.import AutoTokenizer, TFMobileBertForPreTraining
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/mobilebert-uncased")
         >>> model = TFMobileBertForPreTraining.from_pretrained("google/mobilebert-uncased")
@@ -1484,7 +1484,7 @@ class TFMobileBertForNextSentencePrediction(TFMobileBertPreTrainedModel, TFNextS
 
         ```python
         >>> import tensorflow as tf
-        >>> from transformers import AutoTokenizer, TFMobileBertForNextSentencePrediction
+        >>> from tiny_hf.transformers.import AutoTokenizer, TFMobileBertForNextSentencePrediction
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/mobilebert-uncased")
         >>> model = TFMobileBertForNextSentencePrediction.from_pretrained("google/mobilebert-uncased")

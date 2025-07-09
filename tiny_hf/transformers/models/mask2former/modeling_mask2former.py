@@ -20,8 +20,8 @@ from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple, Union
 
 import numpy as np
-import torch
-from torch import Tensor, nn
+import tg_adapter as torch
+from tg_adapter.import Tensor, nn
 
 from ...activations import ACT2FN
 from ...file_utils import (
@@ -279,7 +279,7 @@ def sample_point(
     return point_features
 
 
-# Copied from transformers.models.maskformer.modeling_maskformer.dice_loss
+# Copied from tiny_hf.transformers.models.maskformer.modeling_maskformer.dice_loss
 def dice_loss(inputs: Tensor, labels: Tensor, num_masks: int) -> Tensor:
     r"""
     Compute the DICE loss, similar to generalized IOU for masks as follows:
@@ -329,7 +329,7 @@ def sigmoid_cross_entropy_loss(inputs: torch.Tensor, labels: torch.Tensor, num_m
     return loss
 
 
-# Copied from transformers.models.maskformer.modeling_maskformer.pair_wise_dice_loss
+# Copied from tiny_hf.transformers.models.maskformer.modeling_maskformer.pair_wise_dice_loss
 def pair_wise_dice_loss(inputs: Tensor, labels: Tensor) -> Tensor:
     """
     A pair wise version of the dice loss, see `dice_loss` for usage.
@@ -799,7 +799,7 @@ class Mask2FormerLoss(nn.Module):
         return num_masks
 
 
-# Copied from transformers.models.oneformer.modeling_oneformer.multi_scale_deformable_attention
+# Copied from tiny_hf.transformers.models.oneformer.modeling_oneformer.multi_scale_deformable_attention
 def multi_scale_deformable_attention(
     value: Tensor,
     value_spatial_shapes: Union[Tensor, List[Tuple]],
@@ -842,7 +842,7 @@ def multi_scale_deformable_attention(
     return output.transpose(1, 2).contiguous()
 
 
-# Copied from transformers.models.maskformer.modeling_maskformer.MaskFormerSinePositionEmbedding with MaskFormer->Mask2Former
+# Copied from tiny_hf.transformers.models.maskformer.modeling_maskformer.MaskFormerSinePositionEmbedding with MaskFormer->Mask2Former
 class Mask2FormerSinePositionEmbedding(nn.Module):
     """
     This is a more standard version of the position embedding, very similar to the one used by the Attention is all you
@@ -882,7 +882,7 @@ class Mask2FormerSinePositionEmbedding(nn.Module):
         return pos
 
 
-# Modified from transformers.models.detr.modeling_deformable_detr.DeformableDetrMultiscaleDeformableAttention
+# Modified from tiny_hf.transformers.models.detr.modeling_deformable_detr.DeformableDetrMultiscaleDeformableAttention
 class Mask2FormerPixelDecoderEncoderMultiscaleDeformableAttention(nn.Module):
     """
     Multiscale deformable attention as proposed in Deformable DETR.
@@ -1070,7 +1070,7 @@ class Mask2FormerPixelDecoderEncoderLayer(nn.Module):
         return outputs
 
 
-# Modified from from transformers.models.detr.modeling_deformable_detr.DeformableDetrEncoder with DeformableDetrEncoder->Mask2FormerPixelDecoderEncoderOnly
+# Modified from from tiny_hf.transformers.models.detr.modeling_deformable_detr.DeformableDetrEncoder with DeformableDetrEncoder->Mask2FormerPixelDecoderEncoderOnly
 class Mask2FormerPixelDecoderEncoderOnly(nn.Module):
     """
     Transformer encoder consisting of *config.encoder_layers* deformable attention layers. Each layer is a
@@ -1199,7 +1199,7 @@ class Mask2FormerPixelDecoderEncoderOnly(nn.Module):
         )
 
 
-# Modified from from transformers.models.detr.modeling_deformable_detr.DeformableDetrModel with DeformableDetrModel->Mask2FormerPixelDecoder
+# Modified from from tiny_hf.transformers.models.detr.modeling_deformable_detr.DeformableDetrModel with DeformableDetrModel->Mask2FormerPixelDecoder
 class Mask2FormerPixelDecoder(nn.Module):
     def __init__(self, config: Mask2FormerConfig, feature_channels):
         super().__init__()
@@ -1412,7 +1412,7 @@ class Mask2FormerPixelLevelModule(nn.Module):
         )
 
 
-# Modified from transformers.models.detr.modeling_detr.DetrAttention with Detr->Mask2Former
+# Modified from tiny_hf.transformers.models.detr.modeling_detr.DetrAttention with Detr->Mask2Former
 class Mask2FormerAttention(nn.Module):
     """
     Multi-headed attention from 'Attention Is All You Need' paper. Here, we add position embeddings to the queries and
@@ -1936,7 +1936,7 @@ class Mask2FormerMaskedAttentionDecoder(nn.Module):
         )
 
 
-# Copied from transformers.models.maskformer.modeling_maskformer.PredictionBlock with MaskFormer->Mask2Former
+# Copied from tiny_hf.transformers.models.maskformer.modeling_maskformer.PredictionBlock with MaskFormer->Mask2Former
 class Mask2FormerPredictionBlock(nn.Module):
     def __init__(self, in_dim: int, out_dim: int, activation: nn.Module) -> None:
         super().__init__()
@@ -2245,10 +2245,10 @@ class Mask2FormerModel(Mask2FormerPreTrainedModel):
 
         Examples:
         ```python
-        >>> import torch
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoImageProcessor, Mask2FormerModel
+        >>> from tiny_hf.transformers.import AutoImageProcessor, Mask2FormerModel
 
         >>> # load image
         >>> url = "http://images.cocodataset.org/val2017/000000039769.jpg"
@@ -2404,10 +2404,10 @@ class Mask2FormerForUniversalSegmentation(Mask2FormerPreTrainedModel):
         Instance segmentation example:
 
         ```python
-        >>> from transformers import AutoImageProcessor, Mask2FormerForUniversalSegmentation
+        >>> from tiny_hf.transformers.import AutoImageProcessor, Mask2FormerForUniversalSegmentation
         >>> from PIL import Image
         >>> import requests
-        >>> import torch
+        >>> import tg_adapter as torch
 
         >>> # Load Mask2Former trained on COCO instance segmentation dataset
         >>> image_processor = AutoImageProcessor.from_pretrained("facebook/mask2former-swin-small-coco-instance")
@@ -2437,10 +2437,10 @@ class Mask2FormerForUniversalSegmentation(Mask2FormerPreTrainedModel):
 
         Semantic segmentation example:
         ```python
-        >>> from transformers import AutoImageProcessor, Mask2FormerForUniversalSegmentation
+        >>> from tiny_hf.transformers.import AutoImageProcessor, Mask2FormerForUniversalSegmentation
         >>> from PIL import Image
         >>> import requests
-        >>> import torch
+        >>> import tg_adapter as torch
 
         >>> # Load Mask2Former trained on ADE20k semantic segmentation dataset
         >>> image_processor = AutoImageProcessor.from_pretrained("facebook/mask2former-swin-small-ade-semantic")
@@ -2471,10 +2471,10 @@ class Mask2FormerForUniversalSegmentation(Mask2FormerPreTrainedModel):
         Panoptic segmentation example:
 
         ```python
-        >>> from transformers import AutoImageProcessor, Mask2FormerForUniversalSegmentation
+        >>> from tiny_hf.transformers.import AutoImageProcessor, Mask2FormerForUniversalSegmentation
         >>> from PIL import Image
         >>> import requests
-        >>> import torch
+        >>> import tg_adapter as torch
 
         >>> # Load Mask2Former trained on CityScapes panoptic segmentation dataset
         >>> image_processor = AutoImageProcessor.from_pretrained("facebook/mask2former-swin-small-cityscapes-panoptic")

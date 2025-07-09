@@ -63,11 +63,11 @@ from ....utils.generic import TensorType
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 
 if is_torchvision_available():
-    from torchvision.ops.boxes import batched_nms
+    from tg_adapter.ision.ops.boxes import batched_nms
 
 if is_vision_available():
     import PIL
@@ -194,7 +194,7 @@ def get_numpy_to_framework_fn(arr) -> Callable:
 
         return tf.convert_to_tensor
     if is_torch_available() and is_torch_tensor(arr):
-        import torch
+        import tg_adapter as torch
 
         return torch.tensor
     if is_flax_available() and is_jax_tensor(arr):

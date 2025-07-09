@@ -19,8 +19,8 @@ Processor class for Phi4Multimodal
 import math
 from typing import List, Optional, Union
 
-import torch
-from torchvision.transforms import functional as F
+import tg_adapter as torch
+from tg_adapter.ision.transforms import functional as F
 
 from ...image_processing_utils_fast import (
     BaseImageProcessorFast,

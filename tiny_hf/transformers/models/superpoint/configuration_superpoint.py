@@ -49,7 +49,7 @@ class SuperPointConfig(PretrainedConfig):
 
     Example:
     ```python
-    >>> from transformers import SuperPointConfig, SuperPointForKeypointDetection
+    >>> from tiny_hf.transformers.import SuperPointConfig, SuperPointForKeypointDetection
 
     >>> # Initializing a SuperPoint superpoint style configuration
     >>> configuration = SuperPointConfig()

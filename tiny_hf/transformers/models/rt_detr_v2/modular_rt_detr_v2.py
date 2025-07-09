@@ -16,9 +16,9 @@ import warnings
 from functools import partial
 from typing import List, Optional
 
-import torch
-import torch.nn.functional as F
-from torch import Tensor, nn
+import tg_adapter as torch
+import tg_adapter.nn.functional as F
+from tg_adapter.import Tensor, nn
 
 from ...configuration_utils import PretrainedConfig
 from ...utils import is_torchdynamo_compiling, logging
@@ -182,7 +182,7 @@ class RTDetrV2Config(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import RTDetrV2Config, RTDetrV2Model
+    >>> from tiny_hf.transformers.import RTDetrV2Config, RTDetrV2Model
 
     >>> # Initializing a RT-DETR configuration
     >>> configuration = RTDetrV2Config()

@@ -118,7 +118,7 @@ class ChameleonImageProcessor(BaseImageProcessor):
         self.image_std = image_std if image_std is not None else [1.0, 1.0, 1.0]
         self.do_convert_rgb = do_convert_rgb
 
-    # Copied from transformers.models.clip.image_processing_clip.CLIPImageProcessor.resize
+    # Copied from tiny_hf.transformers.models.clip.image_processing_clip.CLIPImageProcessor.resize
     def resize(
         self,
         image: np.ndarray,

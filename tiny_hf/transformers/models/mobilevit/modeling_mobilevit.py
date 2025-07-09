@@ -19,10 +19,10 @@
 import math
 from typing import Dict, Optional, Set, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...modeling_outputs import (
@@ -1012,9 +1012,9 @@ class MobileViTForSemanticSegmentation(MobileViTPreTrainedModel):
 
         ```python
         >>> import requests
-        >>> import torch
+        >>> import tg_adapter as torch
         >>> from PIL import Image
-        >>> from transformers import AutoImageProcessor, MobileViTForSemanticSegmentation
+        >>> from tiny_hf.transformers.import AutoImageProcessor, MobileViTForSemanticSegmentation
 
         >>> url = "http://images.cocodataset.org/val2017/000000039769.jpg"
         >>> image = Image.open(requests.get(url, stream=True).raw)

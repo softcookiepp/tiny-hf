@@ -1015,7 +1015,7 @@ class TFGPT2DoubleHeadsModel(TFGPT2PreTrainedModel):
 
         ```python
         >>> import tensorflow as tf
-        >>> from transformers import AutoTokenizer, TFGPT2DoubleHeadsModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, TFGPT2DoubleHeadsModel
 
         >>> tokenizer = AutoTokenizer.from_pretrained("openai-community/gpt2")
         >>> model = TFGPT2DoubleHeadsModel.from_pretrained("openai-community/gpt2")

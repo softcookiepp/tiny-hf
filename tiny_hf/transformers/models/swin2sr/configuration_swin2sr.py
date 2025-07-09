@@ -80,7 +80,7 @@ class Swin2SRConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import Swin2SRConfig, Swin2SRModel
+    >>> from tiny_hf.transformers.import Swin2SRConfig, Swin2SRModel
 
     >>> # Initializing a Swin2SR caidas/swin2sr-classicalsr-x2-64 style configuration
     >>> configuration = Swin2SRConfig()

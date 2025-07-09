@@ -81,7 +81,7 @@ class Data2VecTextConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import Data2VecTextConfig, Data2VecTextModel
+    >>> from tiny_hf.transformers.import Data2VecTextConfig, Data2VecTextModel
 
     >>> # Initializing a Data2VecText facebook/data2vec-text-base style configuration
     >>> configuration = Data2VecTextConfig()

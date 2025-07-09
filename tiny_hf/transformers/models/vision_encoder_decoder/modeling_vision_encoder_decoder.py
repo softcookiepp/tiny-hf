@@ -19,8 +19,8 @@ import os
 import tempfile
 from typing import Optional, Tuple, Union
 
-import torch
-from torch import nn
+import tg_adapter as torch
+from tg_adapter.import nn
 
 from ...configuration_utils import PretrainedConfig
 from ...generation import GenerationMixin
@@ -32,7 +32,7 @@ from ..auto.modeling_auto import AutoModel, AutoModelForCausalLM
 from .configuration_vision_encoder_decoder import VisionEncoderDecoderConfig
 
 
-# Copied from transformers.models.encoder_decoder.modeling_encoder_decoder.shift_tokens_right
+# Copied from tiny_hf.transformers.models.encoder_decoder.modeling_encoder_decoder.shift_tokens_right
 def shift_tokens_right(input_ids: torch.Tensor, pad_token_id: int, decoder_start_token_id: int):
     """
     Shift input ids one token to the right.
@@ -251,7 +251,7 @@ class VisionEncoderDecoderModel(PreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import VisionEncoderDecoderModel, AutoImageProcessor, AutoTokenizer
+        >>> from tiny_hf.transformers.import VisionEncoderDecoderModel, AutoImageProcessor, AutoTokenizer
         >>> from PIL import Image
         >>> import requests
 
@@ -275,7 +275,7 @@ class VisionEncoderDecoderModel(PreTrainedModel, GenerationMixin):
 
         from_tf = kwargs.pop("from_tf", False)
         if from_tf:
-            from transformers import TFVisionEncoderDecoderModel
+            from tiny_hf.transformers.import TFVisionEncoderDecoderModel
 
             # a workaround to load from tensorflow checkpoint
             # Using `_tf_model` won't work, because the weight names in the encoder/decoder of `_tf_model` get
@@ -433,7 +433,7 @@ class VisionEncoderDecoderModel(PreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import VisionEncoderDecoderModel
+        >>> from tiny_hf.transformers.import VisionEncoderDecoderModel
 
         >>> # initialize a vit-bert from a pretrained ViT and a pretrained BERT model. Note that the cross-attention layers will be randomly initialized
         >>> model = VisionEncoderDecoderModel.from_encoder_decoder_pretrained(
@@ -552,10 +552,10 @@ class VisionEncoderDecoderModel(PreTrainedModel, GenerationMixin):
         Examples:
 
         ```python
-        >>> from transformers import AutoProcessor, VisionEncoderDecoderModel
+        >>> from tiny_hf.transformers.import AutoProcessor, VisionEncoderDecoderModel
         >>> import requests
         >>> from PIL import Image
-        >>> import torch
+        >>> import tg_adapter as torch
 
         >>> processor = AutoProcessor.from_pretrained("microsoft/trocr-base-handwritten")
         >>> model = VisionEncoderDecoderModel.from_pretrained("microsoft/trocr-base-handwritten")

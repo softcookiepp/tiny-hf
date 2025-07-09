@@ -165,7 +165,7 @@ class Wav2Vec2BertConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import Wav2Vec2BertConfig, Wav2Vec2BertModel
+    >>> from tiny_hf.transformers.import Wav2Vec2BertConfig, Wav2Vec2BertModel
 
     >>> # Initializing a Wav2Vec2Bert facebook/wav2vec2-bert-rel-pos-large style configuration
     >>> configuration = Wav2Vec2BertConfig()

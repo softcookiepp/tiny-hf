@@ -94,7 +94,7 @@ class Mamba2Config(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import Mamba2Config, Mamba2Model
+    >>> from tiny_hf.transformers.import Mamba2Config, Mamba2Model
 
     >>> # Initializing a Mamba2 configuration
     >>> configuration = Mamba2Config()

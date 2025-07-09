@@ -82,7 +82,7 @@ class SegformerConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import SegformerModel, SegformerConfig
+    >>> from tiny_hf.transformers.import SegformerModel, SegformerConfig
 
     >>> # Initializing a SegFormer nvidia/segformer-b0-finetuned-ade-512-512 style configuration
     >>> configuration = SegformerConfig()

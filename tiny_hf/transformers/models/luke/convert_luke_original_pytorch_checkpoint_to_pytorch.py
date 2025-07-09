@@ -18,10 +18,10 @@ import argparse
 import json
 import os
 
-import torch
+import tg_adapter as torch
 
-from transformers import LukeConfig, LukeModel, LukeTokenizer, RobertaTokenizer
-from transformers.tokenization_utils_base import AddedToken
+from tiny_hf.transformers.import LukeConfig, LukeModel, LukeTokenizer, RobertaTokenizer
+from tiny_hf.transformers.tokenization_utils_base import AddedToken
 
 
 @torch.no_grad()

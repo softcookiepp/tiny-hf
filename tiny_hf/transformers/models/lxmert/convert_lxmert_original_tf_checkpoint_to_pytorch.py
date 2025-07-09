@@ -16,10 +16,10 @@
 
 import argparse
 
-import torch
+import tg_adapter as torch
 
-from transformers import LxmertConfig, LxmertForPreTraining, load_tf_weights_in_lxmert
-from transformers.utils import logging
+from tiny_hf.transformers.import LxmertConfig, LxmertForPreTraining, load_tf_weights_in_lxmert
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

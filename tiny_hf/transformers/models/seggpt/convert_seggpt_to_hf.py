@@ -20,11 +20,11 @@ URL: https://github.com/baaivision/Painter/tree/main/SegGPT
 import argparse
 
 import requests
-import torch
+import tg_adapter as torch
 from PIL import Image
 
-from transformers import SegGptConfig, SegGptForImageSegmentation, SegGptImageProcessor
-from transformers.utils import logging
+from tiny_hf.transformers.import SegGptConfig, SegGptForImageSegmentation, SegGptImageProcessor
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

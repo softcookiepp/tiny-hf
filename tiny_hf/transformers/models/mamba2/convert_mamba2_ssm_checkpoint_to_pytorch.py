@@ -20,11 +20,11 @@ from functools import partial
 from os import path
 from typing import Dict, Optional
 
-import torch
+import tg_adapter as torch
 from safetensors import safe_open
 from safetensors.torch import save_model
 
-from transformers import GPTNeoXTokenizerFast, LlamaTokenizerFast, Mamba2Config, Mamba2ForCausalLM
+from tiny_hf.transformers.import GPTNeoXTokenizerFast, LlamaTokenizerFast, Mamba2Config, Mamba2ForCausalLM
 
 
 def load_state_dict_from_safetensors(mamba2_checkpoint_path: str, ckpt_name: str) -> Dict[str, torch.Tensor]:

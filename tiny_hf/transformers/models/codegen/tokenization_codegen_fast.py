@@ -24,7 +24,7 @@ from ...utils import is_tf_available, is_torch_available, logging
 
 if TYPE_CHECKING:
     if is_torch_available():
-        import torch
+        import tg_adapter as torch
     if is_tf_available():
         import tensorflow as tf
 
@@ -48,7 +48,7 @@ class CodeGenTokenizerFast(PreTrainedTokenizerFast):
     be encoded differently whether it is at the beginning of the sentence (without space) or not:
 
     ```python
-    >>> from transformers import CodeGenTokenizerFast
+    >>> from tiny_hf.transformers.import CodeGenTokenizerFast
 
     >>> tokenizer = CodeGenTokenizerFast.from_pretrained("Salesforce/codegen-350M-mono")
     >>> tokenizer("Hello world")["input_ids"]
@@ -154,7 +154,7 @@ class CodeGenTokenizerFast(PreTrainedTokenizerFast):
 
         return super()._encode_plus(*args, **kwargs)
 
-    # Copied from transformers.models.codegen.tokenization_codegen.CodeGenTokenizer.create_token_type_ids_from_sequences
+    # Copied from tiny_hf.transformers.models.codegen.tokenization_codegen.CodeGenTokenizer.create_token_type_ids_from_sequences
     def create_token_type_ids_from_sequences(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
     ) -> List[int]:

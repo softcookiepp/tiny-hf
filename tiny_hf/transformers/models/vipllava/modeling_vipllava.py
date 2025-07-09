@@ -17,9 +17,9 @@
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -43,7 +43,7 @@ _CONFIG_FOR_DOC = "VipLlavaConfig"
 
 
 @dataclass
-# Copied from transformers.models.llava.modeling_llava.LlavaCausalLMOutputWithPast with Llava->VipLlava
+# Copied from tiny_hf.transformers.models.llava.modeling_llava.LlavaCausalLMOutputWithPast with Llava->VipLlava
 class VipLlavaCausalLMOutputWithPast(ModelOutput):
     """
     Base class for VipLlava causal language model (or autoregressive) outputs.
@@ -128,7 +128,7 @@ VIPLLAVA_START_DOCSTRING = r"""
     "The bare VipLlava Model outputting raw hidden-states without any specific head on top.",
     VIPLLAVA_START_DOCSTRING,
 )
-# Copied from transformers.models.llava.modeling_llava.LlavaPreTrainedModel with Llava->VipLlava,llava->vipllava
+# Copied from tiny_hf.transformers.models.llava.modeling_llava.LlavaPreTrainedModel with Llava->VipLlava,llava->vipllava
 class VipLlavaPreTrainedModel(PreTrainedModel):
     config_class = VipLlavaConfig
     base_model_prefix = "model"
@@ -238,7 +238,7 @@ VIPLLAVA_INPUTS_DOCSTRING = r"""
     """The VIPLLAVA model which consists of a vision backbone and a language model.""",
     VIPLLAVA_START_DOCSTRING,
 )
-# Copied from transformers.models.llava.modeling_llava.LlavaForConditionalGeneration with LLAVA->VIPLLAVA,Llava->VipLlava
+# Copied from tiny_hf.transformers.models.llava.modeling_llava.LlavaForConditionalGeneration with LLAVA->VIPLLAVA,Llava->VipLlava
 class VipLlavaForConditionalGeneration(VipLlavaPreTrainedModel, GenerationMixin):
     def __init__(self, config: VipLlavaConfig):
         super().__init__(config)
@@ -341,10 +341,10 @@ class VipLlavaForConditionalGeneration(VipLlavaPreTrainedModel, GenerationMixin)
         Example:
 
         ```python
-        >>> import torch
+        >>> import tg_adapter as torch
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, VipLlavaForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoProcessor, VipLlavaForConditionalGeneration
 
         >>> model = VipLlavaForConditionalGeneration.from_pretrained("llava-hf/vip-llava-7b-hf", device_map="auto", torch_dtype=torch.float16)
         >>> processor = AutoProcessor.from_pretrained("llava-hf/vip-llava-7b-hf")

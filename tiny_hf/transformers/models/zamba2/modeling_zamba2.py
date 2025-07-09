@@ -24,9 +24,9 @@ import re
 from itertools import cycle
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
-import torch
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache
@@ -359,7 +359,7 @@ class Zamba2Attention(nn.Module):
     Multi-headed attention from 'Attention Is All You Need' paper. Modified to use sliding window attention: Longformer
     and "Generating Long Sequences with Sparse Transformers".
 
-    Adapted from transformers.models.mistral.modeling_mistral.MistralAttention:
+    Adapted from tiny_hf.transformers.models.mistral.modeling_mistral.MistralAttention:
     The input dimension here is attention_hidden_size = 2 * hidden_size, and head_dim = attention_hidden_size // num_heads.
     The extra factor of 2 comes from the input being the concatenation of original_hidden_states with the output of the previous (mamba) layer
     (see fig. 2 in https://arxiv.org/pdf/2405.16712).
@@ -369,7 +369,7 @@ class Zamba2Attention(nn.Module):
 
     Multi-headed attention from 'Attention Is All You Need' paper.
 
-    Adapted from transformers.models.mistral.modeling_mistral.MistralAttention:
+    Adapted from tiny_hf.transformers.models.mistral.modeling_mistral.MistralAttention:
     The input dimension here is attention_hidden_size = 2 * hidden_size, and head_dim = attention_hidden_size // num_heads.
     The extra factor of 2 comes from the input being the concatenation of original_hidden_states with the output of the previous (mamba) layer
     (see fig. 2 in https://arxiv.org/pdf/2405.16712).
@@ -1614,7 +1614,7 @@ class Zamba2Model(Zamba2PreTrainedModel):
         return layers
 
 
-# Adapted from transformers.models.jamba.modeling_jamba.JambaForCausalLM with Jamba->Zamba2, JAMBA->ZAMBA2
+# Adapted from tiny_hf.transformers.models.jamba.modeling_jamba.JambaForCausalLM with Jamba->Zamba2, JAMBA->ZAMBA2
 class Zamba2ForCausalLM(Zamba2PreTrainedModel, GenerationMixin):
     def __init__(self, config: Zamba2Config):
         super().__init__(config)
@@ -1681,7 +1681,7 @@ class Zamba2ForCausalLM(Zamba2PreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, Zamba2ForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, Zamba2ForCausalLM
 
         >>> model = Zamba2ForCausalLM.from_pretrained("Zyphra/Zamba2-7B-v1")
         >>> tokenizer = AutoTokenizer.from_pretrained("Zyphra/Zamba2-7B-v1")

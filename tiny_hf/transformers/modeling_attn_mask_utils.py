@@ -14,7 +14,7 @@
 from dataclasses import dataclass
 from typing import Optional, Union
 
-#import torch
+#import tg_adapter as torch
 import tg_adapter as torch
 
 from .utils.import_utils import is_torchdynamo_compiling
@@ -32,8 +32,8 @@ class AttentionMaskConverter:
 	Examples:
 
 	```python
-	>>> import torch
-	>>> from transformers.modeling_attn_mask_utils import AttentionMaskConverter
+	>>> import tg_adapter as torch
+	>>> from tiny_hf.transformers.modeling_attn_mask_utils import AttentionMaskConverter
 
 	>>> converter = AttentionMaskConverter(True)
 	>>> converter.to_4d(torch.tensor([[0, 0, 0, 1, 1]]), 5, key_value_length=5, dtype=torch.float32)

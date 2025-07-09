@@ -16,11 +16,11 @@ import argparse
 import os
 import re
 
-import torch
+import tg_adapter as torch
 from flax.traverse_util import flatten_dict
 from t5x import checkpoints
 
-from transformers import (
+from tiny_hf.transformers.import (
     AutoTokenizer,
     Pix2StructConfig,
     Pix2StructForConditionalGeneration,

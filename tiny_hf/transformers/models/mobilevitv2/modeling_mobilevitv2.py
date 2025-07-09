@@ -18,10 +18,10 @@
 
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...modeling_outputs import (
@@ -56,7 +56,7 @@ _IMAGE_CLASS_CHECKPOINT = "apple/mobilevitv2-1.0-imagenet1k-256"
 _IMAGE_CLASS_EXPECTED_OUTPUT = "tabby, tabby cat"
 
 
-# Copied from transformers.models.mobilevit.modeling_mobilevit.make_divisible
+# Copied from tiny_hf.transformers.models.mobilevit.modeling_mobilevit.make_divisible
 def make_divisible(value: int, divisor: int = 8, min_value: Optional[int] = None) -> int:
     """
     Ensure that all layers have a channel count that is divisible by `divisor`. This function is taken from the
@@ -76,7 +76,7 @@ def clip(value: float, min_val: float = float("-inf"), max_val: float = float("i
     return max(min_val, min(max_val, value))
 
 
-# Copied from transformers.models.mobilevit.modeling_mobilevit.MobileViTConvLayer with MobileViT->MobileViTV2
+# Copied from tiny_hf.transformers.models.mobilevit.modeling_mobilevit.MobileViTConvLayer with MobileViT->MobileViTV2
 class MobileViTV2ConvLayer(nn.Module):
     def __init__(
         self,
@@ -141,7 +141,7 @@ class MobileViTV2ConvLayer(nn.Module):
         return features
 
 
-# Copied from transformers.models.mobilevit.modeling_mobilevit.MobileViTInvertedResidual with MobileViT->MobileViTV2
+# Copied from tiny_hf.transformers.models.mobilevit.modeling_mobilevit.MobileViTInvertedResidual with MobileViT->MobileViTV2
 class MobileViTV2InvertedResidual(nn.Module):
     """
     Inverted residual block (MobileNetv2): https://arxiv.org/abs/1801.04381
@@ -190,7 +190,7 @@ class MobileViTV2InvertedResidual(nn.Module):
         return residual + features if self.use_residual else features
 
 
-# Copied from transformers.models.mobilevit.modeling_mobilevit.MobileViTMobileNetLayer with MobileViT->MobileViTV2
+# Copied from tiny_hf.transformers.models.mobilevit.modeling_mobilevit.MobileViTMobileNetLayer with MobileViT->MobileViTV2
 class MobileViTV2MobileNetLayer(nn.Module):
     def __init__(
         self, config: MobileViTV2Config, in_channels: int, out_channels: int, stride: int = 1, num_stages: int = 1
@@ -591,7 +591,7 @@ class MobileViTV2Encoder(nn.Module):
         return BaseModelOutputWithNoAttention(last_hidden_state=hidden_states, hidden_states=all_hidden_states)
 
 
-# Copied from transformers.models.mobilevit.modeling_mobilevit.MobileViTPreTrainedModel with MobileViT->MobileViTV2,mobilevit->mobilevitv2
+# Copied from tiny_hf.transformers.models.mobilevit.modeling_mobilevit.MobileViTPreTrainedModel with MobileViT->MobileViTV2,mobilevit->mobilevitv2
 class MobileViTV2PreTrainedModel(PreTrainedModel):
     """
     An abstract class to handle weights initialization and a simple interface for downloading and loading pretrained
@@ -816,7 +816,7 @@ class MobileViTV2ForImageClassification(MobileViTV2PreTrainedModel):
         )
 
 
-# Copied from transformers.models.mobilevit.modeling_mobilevit.MobileViTASPPPooling with MobileViT->MobileViTV2
+# Copied from tiny_hf.transformers.models.mobilevit.modeling_mobilevit.MobileViTASPPPooling with MobileViT->MobileViTV2
 class MobileViTV2ASPPPooling(nn.Module):
     def __init__(self, config: MobileViTV2Config, in_channels: int, out_channels: int) -> None:
         super().__init__()
@@ -901,7 +901,7 @@ class MobileViTV2ASPP(nn.Module):
         return pooled_features
 
 
-# Copied from transformers.models.mobilevit.modeling_mobilevit.MobileViTDeepLabV3 with MobileViT->MobileViTV2
+# Copied from tiny_hf.transformers.models.mobilevit.modeling_mobilevit.MobileViTDeepLabV3 with MobileViT->MobileViTV2
 class MobileViTV2DeepLabV3(nn.Module):
     """
     DeepLabv3 architecture: https://arxiv.org/abs/1706.05587
@@ -967,9 +967,9 @@ class MobileViTV2ForSemanticSegmentation(MobileViTV2PreTrainedModel):
 
         ```python
         >>> import requests
-        >>> import torch
+        >>> import tg_adapter as torch
         >>> from PIL import Image
-        >>> from transformers import AutoImageProcessor, MobileViTV2ForSemanticSegmentation
+        >>> from tiny_hf.transformers.import AutoImageProcessor, MobileViTV2ForSemanticSegmentation
 
         >>> url = "http://images.cocodataset.org/val2017/000000039769.jpg"
         >>> image = Image.open(requests.get(url, stream=True).raw)

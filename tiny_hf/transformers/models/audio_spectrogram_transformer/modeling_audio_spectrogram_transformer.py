@@ -16,10 +16,10 @@
 
 from typing import Callable, Dict, List, Optional, Set, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN
 from ...modeling_outputs import BaseModelOutput, BaseModelOutputWithPooling, SequenceClassifierOutput
@@ -107,7 +107,7 @@ class ASTPatchEmbeddings(nn.Module):
         return embeddings
 
 
-# Copied from transformers.models.vit.modeling_vit.eager_attention_forward
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.eager_attention_forward
 def eager_attention_forward(
     module: nn.Module,
     query: torch.Tensor,
@@ -138,7 +138,7 @@ def eager_attention_forward(
     return attn_output, attn_weights
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTSelfAttention with ViT->AST
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTSelfAttention with ViT->AST
 class ASTSelfAttention(nn.Module):
     def __init__(self, config: ASTConfig) -> None:
         super().__init__()
@@ -201,7 +201,7 @@ class ASTSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTSelfOutput with ViT->AST
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTSelfOutput with ViT->AST
 class ASTSelfOutput(nn.Module):
     """
     The residual connection is defined in ASTLayer instead of here (as is the case with other models), due to the
@@ -220,7 +220,7 @@ class ASTSelfOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTAttention with ViT->AST
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTAttention with ViT->AST
 class ASTAttention(nn.Module):
     def __init__(self, config: ASTConfig) -> None:
         super().__init__()
@@ -260,7 +260,7 @@ class ASTAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTIntermediate with ViT->AST
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTIntermediate with ViT->AST
 class ASTIntermediate(nn.Module):
     def __init__(self, config: ASTConfig) -> None:
         super().__init__()
@@ -277,7 +277,7 @@ class ASTIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTOutput with ViT->AST
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTOutput with ViT->AST
 class ASTOutput(nn.Module):
     def __init__(self, config: ASTConfig) -> None:
         super().__init__()
@@ -293,7 +293,7 @@ class ASTOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTLayer with ViT->AST,VIT->AST
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTLayer with ViT->AST,VIT->AST
 class ASTLayer(nn.Module):
     """This corresponds to the Block class in the timm implementation."""
 
@@ -336,7 +336,7 @@ class ASTLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.vit.modeling_vit.ViTEncoder with ViT->AST
+# Copied from tiny_hf.transformers.models.vit.modeling_vit.ViTEncoder with ViT->AST
 class ASTEncoder(nn.Module):
     def __init__(self, config: ASTConfig) -> None:
         super().__init__()
@@ -401,7 +401,7 @@ class ASTPreTrainedModel(PreTrainedModel):
     _supports_sdpa = True
     _supports_flash_attn_2 = True
 
-    # Copied from transformers.models.deit.modeling_deit.DeiTPreTrainedModel._init_weights
+    # Copied from tiny_hf.transformers.models.deit.modeling_deit.DeiTPreTrainedModel._init_weights
     def _init_weights(self, module: Union[nn.Linear, nn.Conv2d, nn.LayerNorm]) -> None:
         """Initialize the weights"""
         if isinstance(module, (nn.Linear, nn.Conv2d)):

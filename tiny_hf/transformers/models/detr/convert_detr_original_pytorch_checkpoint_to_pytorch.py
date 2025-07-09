@@ -20,12 +20,12 @@ from collections import OrderedDict
 from pathlib import Path
 
 import requests
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 from PIL import Image
 
-from transformers import DetrConfig, DetrForObjectDetection, DetrForSegmentation, DetrImageProcessor
-from transformers.utils import logging
+from tiny_hf.transformers.import DetrConfig, DetrForObjectDetection, DetrForSegmentation, DetrImageProcessor
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()
@@ -211,7 +211,7 @@ def convert_detr_checkpoint(model_name, pytorch_dump_folder_path):
 
     logger.info(f"Converting model {model_name}...")
 
-    # load original model from torch hub
+    # load original model from tg_adapter.hub
     detr = torch.hub.load("facebookresearch/detr", model_name, pretrained=True).eval()
     state_dict = detr.state_dict()
     # rename keys

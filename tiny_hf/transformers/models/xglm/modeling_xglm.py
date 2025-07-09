@@ -17,9 +17,9 @@
 import math
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -123,7 +123,7 @@ XGLM_INPUTS_DOCSTRING = r"""
 """
 
 
-# Copied from transformers.models.bart.modeling_bart.BartScaledWordEmbedding with Bart->XGLM
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartScaledWordEmbedding with Bart->XGLM
 class XGLMScaledWordEmbedding(nn.Embedding):
     """
     This module overrides nn.Embeddings' forward by multiplying with embeddings scale.
@@ -372,7 +372,7 @@ class XGLMDecoderLayer(nn.Module):
         self.fc2 = nn.Linear(config.ffn_dim, self.embed_dim)
         self.final_layer_norm = nn.LayerNorm(self.embed_dim)
 
-    # Copied from transformers.models.mbart.modeling_mbart.MBartDecoderLayer.forward
+    # Copied from tiny_hf.transformers.models.mbart.modeling_mbart.MBartDecoderLayer.forward
     def forward(
         self,
         hidden_states: torch.Tensor,

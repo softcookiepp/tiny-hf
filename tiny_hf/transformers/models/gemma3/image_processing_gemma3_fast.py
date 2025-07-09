@@ -49,13 +49,13 @@ if is_vision_available():
     from ...image_utils import PILImageResampling
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 if is_torchvision_available():
     if is_torchvision_v2_available():
-        from torchvision.transforms.v2 import functional as F
+        from tg_adapter.ision.transforms.v2 import functional as F
     else:
-        from torchvision.transforms import functional as F
+        from tg_adapter.ision.transforms import functional as F
 
 logger = logging.get_logger(__name__)
 

@@ -20,7 +20,7 @@ import os
 import re
 from contextlib import contextmanager
 
-#from transformers.utils.import_utils import export
+#from tiny_hf.transformers.utils.import_utils import export
 from .utils.import_utils import export
 
 from .utils import is_torch_available
@@ -245,10 +245,10 @@ def model_addition_debugger(cls):
     Then, in a separate script (example is for Llava)
 
     ```python
-    import torch
+    import tg_adapter as torch
     from PIL import Image
     import requests
-    from transformers import LlavaProcessor, LlavaForConditionalGeneration
+    from tiny_hf.transformers.import LlavaProcessor, LlavaForConditionalGeneration
     torch.random.manual_seed(673)
 
     # load pretrained model and processor
@@ -296,10 +296,10 @@ def model_addition_debugger_context(model, debug_path: str = None):
     add the context manager to a model to debug
 
     ```python
-    import torch
+    import tg_adapter as torch
     from PIL import Image
     import requests
-    from transformers import LlavaProcessor, LlavaForConditionalGeneration
+    from tiny_hf.transformers.import LlavaProcessor, LlavaForConditionalGeneration
     torch.random.manual_seed(673)
 
     # load pretrained model and processor

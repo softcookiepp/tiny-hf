@@ -19,7 +19,7 @@ from typing import Any, Optional, Tuple, Union
 
 import tg_adapter as torch
 from tg_adapter import nn
-#from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+#from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 #from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 
@@ -419,7 +419,7 @@ class CLIPFlashAttention2(CLIPAttention):
         # Beware that with flash_attn<2.1, using q_seqlen != k_seqlen (except for the case q_seqlen == 1) produces a wrong mask (top-left).
         self._flash_attn_uses_top_left_mask = not is_flash_attn_greater_or_equal_2_10()
 
-    # Adapted from transformers.models.llama.modeling_llama.LlamaFlashAttention2.forward
+    # Adapted from tiny_hf.transformers.models.llama.modeling_llama.LlamaFlashAttention2.forward
     def forward(
         self,
         hidden_states: torch.Tensor,
@@ -1052,7 +1052,7 @@ class CLIPTextModel(CLIPPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, CLIPTextModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, CLIPTextModel
 
         >>> model = CLIPTextModel.from_pretrained("openai/clip-vit-base-patch32")
         >>> tokenizer = AutoTokenizer.from_pretrained("openai/clip-vit-base-patch32")
@@ -1170,7 +1170,7 @@ class CLIPVisionModel(CLIPPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, CLIPVisionModel
+        >>> from tiny_hf.transformers.import AutoProcessor, CLIPVisionModel
 
         >>> model = CLIPVisionModel.from_pretrained("openai/clip-vit-base-patch32")
         >>> processor = AutoProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -1253,7 +1253,7 @@ class CLIPModel(CLIPPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, CLIPModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, CLIPModel
 
         >>> model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
         >>> tokenizer = AutoTokenizer.from_pretrained("openai/clip-vit-base-patch32")
@@ -1301,7 +1301,7 @@ class CLIPModel(CLIPPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, CLIPModel
+        >>> from tiny_hf.transformers.import AutoProcessor, CLIPModel
 
         >>> model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
         >>> processor = AutoProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -1355,7 +1355,7 @@ class CLIPModel(CLIPPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, CLIPModel
+        >>> from tiny_hf.transformers.import AutoProcessor, CLIPModel
 
         >>> model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
         >>> processor = AutoProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -1475,7 +1475,7 @@ class CLIPTextModelWithProjection(CLIPPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, CLIPTextModelWithProjection
+        >>> from tiny_hf.transformers.import AutoTokenizer, CLIPTextModelWithProjection
 
         >>> model = CLIPTextModelWithProjection.from_pretrained("openai/clip-vit-base-patch32")
         >>> tokenizer = AutoTokenizer.from_pretrained("openai/clip-vit-base-patch32")
@@ -1554,7 +1554,7 @@ class CLIPVisionModelWithProjection(CLIPPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, CLIPVisionModelWithProjection
+        >>> from tiny_hf.transformers.import AutoProcessor, CLIPVisionModelWithProjection
 
         >>> model = CLIPVisionModelWithProjection.from_pretrained("openai/clip-vit-base-patch32")
         >>> processor = AutoProcessor.from_pretrained("openai/clip-vit-base-patch32")

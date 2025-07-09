@@ -1300,7 +1300,7 @@ class TFBertForPreTraining(TFBertPreTrainedModel, TFBertPreTrainingLoss):
 
         ```python
         >>> import tensorflow as tf
-        >>> from transformers import AutoTokenizer, TFBertForPreTraining
+        >>> from tiny_hf.transformers.import AutoTokenizer, TFBertForPreTraining
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google-bert/bert-base-uncased")
         >>> model = TFBertForPreTraining.from_pretrained("google-bert/bert-base-uncased")
@@ -1630,7 +1630,7 @@ class TFBertForNextSentencePrediction(TFBertPreTrainedModel, TFNextSentencePredi
 
         ```python
         >>> import tensorflow as tf
-        >>> from transformers import AutoTokenizer, TFBertForNextSentencePrediction
+        >>> from tiny_hf.transformers.import AutoTokenizer, TFBertForNextSentencePrediction
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google-bert/bert-base-uncased")
         >>> model = TFBertForNextSentencePrediction.from_pretrained("google-bert/bert-base-uncased")

@@ -20,10 +20,10 @@ import warnings
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import Tensor, nn
-from torch.nn import LayerNorm
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import Tensor, nn
+from tg_adapter.nn import LayerNorm
 
 from ....activations import ACT2FN
 from ....modeling_outputs import BaseModelOutput
@@ -1269,8 +1269,8 @@ class XLMProphetNetEncoder(XLMProphetNetPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, XLMProphetNetEncoder
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, XLMProphetNetEncoder
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("patrickvonplaten/xprophetnet-large-uncased-standalone")
         >>> model = XLMProphetNetEncoder.from_pretrained("patrickvonplaten/prophetnet-large-uncased-standalone")
@@ -1440,8 +1440,8 @@ class XLMProphetNetDecoder(XLMProphetNetPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, XLMProphetNetDecoder
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, XLMProphetNetDecoder
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("patrickvonplaten/xprophetnet-large-uncased-standalone")
         >>> model = XLMProphetNetDecoder.from_pretrained("patrickvonplaten/xprophetnet-large-uncased-standalone", add_cross_attention=False)
@@ -1788,7 +1788,7 @@ class XLMProphetNetModel(XLMProphetNetPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, XLMProphetNetModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, XLMProphetNetModel
 
         >>> tokenizer = AutoTokenizer.from_pretrained("patrickvonplaten/xprophetnet-large-uncased-standalone")
         >>> model = XLMProphetNetModel.from_pretrained("patrickvonplaten/xprophetnet-large-uncased-standalone")
@@ -1916,7 +1916,7 @@ class XLMProphetNetForConditionalGeneration(XLMProphetNetPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, XLMProphetNetForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, XLMProphetNetForConditionalGeneration
 
         >>> tokenizer = AutoTokenizer.from_pretrained("patrickvonplaten/xprophetnet-large-uncased-standalone")
         >>> model = XLMProphetNetForConditionalGeneration.from_pretrained("patrickvonplaten/xprophetnet-large-uncased-standalone")
@@ -2172,8 +2172,8 @@ class XLMProphetNetForCausalLM(XLMProphetNetPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, XLMProphetNetForCausalLM
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, XLMProphetNetForCausalLM
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("patrickvonplaten/xprophetnet-large-uncased-standalone")
         >>> model = XLMProphetNetForCausalLM.from_pretrained("patrickvonplaten/xprophetnet-large-uncased-standalone")
@@ -2184,8 +2184,8 @@ class XLMProphetNetForCausalLM(XLMProphetNetPreTrainedModel):
         >>> logits = outputs.logits
 
         >>> # Model can also be used with EncoderDecoder framework
-        >>> from transformers import BertTokenizer, EncoderDecoderModel, AutoTokenizer
-        >>> import torch
+        >>> from tiny_hf.transformers.import BertTokenizer, EncoderDecoderModel, AutoTokenizer
+        >>> import tg_adapter as torch
 
         >>> tokenizer_enc = BertTokenizer.from_pretrained("google-bert/bert-large-uncased")
         >>> tokenizer_dec = AutoTokenizer.from_pretrained("patrickvonplaten/xprophetnet-large-uncased-standalone")

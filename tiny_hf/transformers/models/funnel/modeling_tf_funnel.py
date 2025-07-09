@@ -1348,8 +1348,8 @@ class TFFunnelForPreTraining(TFFunnelPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, TFFunnelForPreTraining
-        >>> import torch
+        >>> from tiny_hf.transformers.import AutoTokenizer, TFFunnelForPreTraining
+        >>> import tg_adapter as torch
 
         >>> tokenizer = AutoTokenizer.from_pretrained("funnel-transformer/small")
         >>> model = TFFunnelForPreTraining.from_pretrained("funnel-transformer/small")

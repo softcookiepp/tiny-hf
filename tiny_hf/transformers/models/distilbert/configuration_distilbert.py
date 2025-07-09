@@ -70,7 +70,7 @@ class DistilBertConfig(PretrainedConfig):
     Examples:
 
     ```python
-    >>> from transformers import DistilBertConfig, DistilBertModel
+    >>> from tiny_hf.transformers.import DistilBertConfig, DistilBertModel
 
     >>> # Initializing a DistilBERT configuration
     >>> configuration = DistilBertConfig()

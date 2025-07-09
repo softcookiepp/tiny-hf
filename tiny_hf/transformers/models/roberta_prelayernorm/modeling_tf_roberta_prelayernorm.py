@@ -65,7 +65,7 @@ _CHECKPOINT_FOR_DOC = "andreasmadsen/efficient_mlm_m0.40"
 _CONFIG_FOR_DOC = "RobertaPreLayerNormConfig"
 
 
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaEmbeddings with Roberta->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaEmbeddings with Roberta->RobertaPreLayerNorm
 class TFRobertaPreLayerNormEmbeddings(keras.layers.Layer):
     """
     Same as BertEmbeddings with a tiny tweak for positional embeddings indexing.
@@ -171,7 +171,7 @@ class TFRobertaPreLayerNormEmbeddings(keras.layers.Layer):
         return final_embeddings
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertPooler with Bert->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertPooler with Bert->RobertaPreLayerNorm
 class TFRobertaPreLayerNormPooler(keras.layers.Layer):
     def __init__(self, config: RobertaPreLayerNormConfig, **kwargs):
         super().__init__(**kwargs)
@@ -201,7 +201,7 @@ class TFRobertaPreLayerNormPooler(keras.layers.Layer):
                 self.dense.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertSelfAttention with Bert->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertSelfAttention with Bert->RobertaPreLayerNorm
 class TFRobertaPreLayerNormSelfAttention(keras.layers.Layer):
     def __init__(self, config: RobertaPreLayerNormConfig, **kwargs):
         super().__init__(**kwargs)
@@ -369,7 +369,7 @@ class TFRobertaPreLayerNormAttention(keras.layers.Layer):
         self.LayerNorm = keras.layers.LayerNormalization(epsilon=config.layer_norm_eps, name="LayerNorm")
         self.config = config
 
-    # Copied from transformers.models.bert.modeling_tf_bert.TFBertAttention.prune_heads
+    # Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertAttention.prune_heads
     def prune_heads(self, heads):
         raise NotImplementedError
 
@@ -478,7 +478,7 @@ class TFRobertaPreLayerNormOutput(keras.layers.Layer):
                 self.dense.build([None, None, self.config.intermediate_size])
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertLayer with Bert->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertLayer with Bert->RobertaPreLayerNorm
 class TFRobertaPreLayerNormLayer(keras.layers.Layer):
     def __init__(self, config: RobertaPreLayerNormConfig, **kwargs):
         super().__init__(**kwargs)
@@ -582,7 +582,7 @@ class TFRobertaPreLayerNormLayer(keras.layers.Layer):
                 self.crossattention.build(None)
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertEncoder with Bert->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertEncoder with Bert->RobertaPreLayerNorm
 class TFRobertaPreLayerNormEncoder(keras.layers.Layer):
     def __init__(self, config: RobertaPreLayerNormConfig, **kwargs):
         super().__init__(**kwargs)
@@ -871,7 +871,7 @@ class TFRobertaPreLayerNormMainLayer(keras.layers.Layer):
                 self.embeddings.build(None)
 
 
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaPreTrainedModel with Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaPreTrainedModel with Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
 class TFRobertaPreLayerNormPreTrainedModel(TFPreTrainedModel):
     """
     An abstract class to handle weights initialization and a simple interface for downloading and loading pretrained
@@ -984,7 +984,7 @@ ROBERTA_PRELAYERNORM_INPUTS_DOCSTRING = r"""
     "The bare RoBERTa-PreLayerNorm Model transformer outputting raw hidden-states without any specific head on top.",
     ROBERTA_PRELAYERNORM_START_DOCSTRING,
 )
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaModel with ROBERTA->ROBERTA_PRELAYERNORM,Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaModel with ROBERTA->ROBERTA_PRELAYERNORM,Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
 class TFRobertaPreLayerNormModel(TFRobertaPreLayerNormPreTrainedModel):
     def __init__(self, config, *inputs, **kwargs):
         super().__init__(config, *inputs, **kwargs)
@@ -1062,7 +1062,7 @@ class TFRobertaPreLayerNormModel(TFRobertaPreLayerNormPreTrainedModel):
                 self.roberta_prelayernorm.build(None)
 
 
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaLMHead with Roberta->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaLMHead with Roberta->RobertaPreLayerNorm
 class TFRobertaPreLayerNormLMHead(keras.layers.Layer):
     """RobertaPreLayerNorm Head for masked language modeling."""
 
@@ -1130,7 +1130,7 @@ class TFRobertaPreLayerNormForMaskedLM(TFRobertaPreLayerNormPreTrainedModel, TFM
     # names with a '.' represents the authorized unexpected/missing layers when a TF model is loaded from a PT model
     _keys_to_ignore_on_load_unexpected = [r"pooler", r"lm_head.decoder.weight"]
 
-    # Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaForMaskedLM.__init__ with ROBERTA->ROBERTA_PRELAYERNORM,Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
+    # Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaForMaskedLM.__init__ with ROBERTA->ROBERTA_PRELAYERNORM,Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
     def __init__(self, config, *inputs, **kwargs):
         super().__init__(config, *inputs, **kwargs)
 
@@ -1156,7 +1156,7 @@ class TFRobertaPreLayerNormForMaskedLM(TFRobertaPreLayerNormPreTrainedModel, TFM
         expected_output="' Paris'",
         expected_loss=0.69,
     )
-    # Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaForMaskedLM.call with ROBERTA->ROBERTA_PRELAYERNORM,Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
+    # Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaForMaskedLM.call with ROBERTA->ROBERTA_PRELAYERNORM,Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
     def call(
         self,
         input_ids: TFModelInputType | None = None,
@@ -1218,7 +1218,7 @@ class TFRobertaPreLayerNormForMaskedLM(TFRobertaPreLayerNormPreTrainedModel, TFM
                 self.lm_head.build(None)
 
 
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaForCausalLM with ROBERTA->ROBERTA_PRELAYERNORM,Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaForCausalLM with ROBERTA->ROBERTA_PRELAYERNORM,Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
 class TFRobertaPreLayerNormForCausalLM(TFRobertaPreLayerNormPreTrainedModel, TFCausalLanguageModelingLoss):
     # names with a '.' represents the authorized unexpected/missing layers when a TF model is loaded from a PT model
     _keys_to_ignore_on_load_unexpected = [r"pooler", r"lm_head.decoder.weight"]
@@ -1245,7 +1245,7 @@ class TFRobertaPreLayerNormForCausalLM(TFRobertaPreLayerNormPreTrainedModel, TFC
         warnings.warn("The method get_prefix_bias_name is deprecated. Please use `get_bias` instead.", FutureWarning)
         return self.name + "/" + self.lm_head.name
 
-    # Copied from transformers.models.bert.modeling_tf_bert.TFBertLMHeadModel.prepare_inputs_for_generation
+    # Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertLMHeadModel.prepare_inputs_for_generation
     def prepare_inputs_for_generation(self, input_ids, past_key_values=None, attention_mask=None, **model_kwargs):
         input_shape = input_ids.shape
         # if model is used as a decoder in encoder-decoder model, the decoder attention mask is created on the fly
@@ -1358,7 +1358,7 @@ class TFRobertaPreLayerNormForCausalLM(TFRobertaPreLayerNormPreTrainedModel, TFC
                 self.lm_head.build(None)
 
 
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaClassificationHead with Roberta->RobertaPreLayerNorm
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaClassificationHead with Roberta->RobertaPreLayerNorm
 class TFRobertaPreLayerNormClassificationHead(keras.layers.Layer):
     """Head for sentence-level classification tasks."""
 
@@ -1428,7 +1428,7 @@ class TFRobertaPreLayerNormForSequenceClassification(
         output_type=TFSequenceClassifierOutput,
         config_class=_CONFIG_FOR_DOC,
     )
-    # Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaForSequenceClassification.call with roberta->roberta_prelayernorm
+    # Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaForSequenceClassification.call with roberta->roberta_prelayernorm
     def call(
         self,
         input_ids: TFModelInputType | None = None,
@@ -1496,7 +1496,7 @@ class TFRobertaPreLayerNormForSequenceClassification(
     """,
     ROBERTA_PRELAYERNORM_START_DOCSTRING,
 )
-# Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaForMultipleChoice with ROBERTA->ROBERTA_PRELAYERNORM,Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
+# Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaForMultipleChoice with ROBERTA->ROBERTA_PRELAYERNORM,Roberta->RobertaPreLayerNorm,roberta->roberta_prelayernorm
 class TFRobertaPreLayerNormForMultipleChoice(TFRobertaPreLayerNormPreTrainedModel, TFMultipleChoiceLoss):
     # names with a '.' represents the authorized unexpected/missing layers when a TF model is loaded from a PT model
     _keys_to_ignore_on_load_unexpected = [r"lm_head"]
@@ -1629,7 +1629,7 @@ class TFRobertaPreLayerNormForTokenClassification(TFRobertaPreLayerNormPreTraine
         output_type=TFTokenClassifierOutput,
         config_class=_CONFIG_FOR_DOC,
     )
-    # Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaForTokenClassification.call with roberta->roberta_prelayernorm
+    # Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaForTokenClassification.call with roberta->roberta_prelayernorm
     def call(
         self,
         input_ids: TFModelInputType | None = None,
@@ -1720,7 +1720,7 @@ class TFRobertaPreLayerNormForQuestionAnswering(TFRobertaPreLayerNormPreTrainedM
         output_type=TFQuestionAnsweringModelOutput,
         config_class=_CONFIG_FOR_DOC,
     )
-    # Copied from transformers.models.roberta.modeling_tf_roberta.TFRobertaForQuestionAnswering.call with roberta->roberta_prelayernorm
+    # Copied from tiny_hf.transformers.models.roberta.modeling_tf_roberta.TFRobertaForQuestionAnswering.call with roberta->roberta_prelayernorm
     def call(
         self,
         input_ids: TFModelInputType | None = None,

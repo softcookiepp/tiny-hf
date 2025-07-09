@@ -41,7 +41,7 @@ from ...utils import TensorType, filter_out_non_signature_kwargs, is_torch_avail
 
 
 if is_torch_available():
-    import torch
+    import tg_adapter as torch
 
 
 logger = logging.get_logger(__name__)
@@ -118,7 +118,7 @@ class MobileNetV2ImageProcessor(BaseImageProcessor):
         self.image_mean = image_mean if image_mean is not None else IMAGENET_STANDARD_MEAN
         self.image_std = image_std if image_std is not None else IMAGENET_STANDARD_STD
 
-    # Copied from transformers.models.mobilenet_v1.image_processing_mobilenet_v1.MobileNetV1ImageProcessor.resize
+    # Copied from tiny_hf.transformers.models.mobilenet_v1.image_processing_mobilenet_v1.MobileNetV1ImageProcessor.resize
     def resize(
         self,
         image: np.ndarray,
@@ -304,7 +304,7 @@ class MobileNetV2ImageProcessor(BaseImageProcessor):
         data = {"pixel_values": images}
         return BatchFeature(data=data, tensor_type=return_tensors)
 
-    # Copied from transformers.models.beit.image_processing_beit.BeitImageProcessor.post_process_semantic_segmentation with Beit->MobileNetV2
+    # Copied from tiny_hf.transformers.models.beit.image_processing_beit.BeitImageProcessor.post_process_semantic_segmentation with Beit->MobileNetV2
     def post_process_semantic_segmentation(self, outputs, target_sizes: List[Tuple] = None):
         """
         Converts the output of [`MobileNetV2ForSemanticSegmentation`] into semantic segmentation maps. Only supports PyTorch.

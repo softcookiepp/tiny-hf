@@ -18,7 +18,7 @@ import math
 from typing import Callable, Iterable, List, Optional, Tuple, Union
 
 import numpy as np
-import torch
+import tg_adapter as torch
 
 from ..pytorch_utils import isin_mps_friendly
 from ..utils import add_start_docstrings
@@ -106,7 +106,7 @@ class MinLengthLogitsProcessor(LogitsProcessor):
     Examples:
 
     ```python
-    >>> from transformers import AutoModelForCausalLM, AutoTokenizer
+    >>> from tiny_hf.transformers.import AutoModelForCausalLM, AutoTokenizer
 
     >>> tokenizer = AutoTokenizer.from_pretrained("bigscience/bloomz-560m")
     >>> model = AutoModelForCausalLM.from_pretrained("bigscience/bloomz-560m")
@@ -170,7 +170,7 @@ class MinNewTokensLengthLogitsProcessor(LogitsProcessor):
     Examples:
 
     ```python
-    >>> from transformers import AutoModelForCausalLM, AutoTokenizer
+    >>> from tiny_hf.transformers.import AutoModelForCausalLM, AutoTokenizer
 
     >>> tokenizer = AutoTokenizer.from_pretrained("bigscience/bloomz-560m")
     >>> model = AutoModelForCausalLM.from_pretrained("bigscience/bloomz-560m")
@@ -245,8 +245,8 @@ class TemperatureLogitsWarper(LogitsProcessor):
     Examples:
 
     ```python
-    >>> import torch
-    >>> from transformers import AutoTokenizer, AutoModelForCausalLM, set_seed
+    >>> import tg_adapter as torch
+    >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM, set_seed
 
     >>> set_seed(0)  # for reproducibility
 
@@ -307,7 +307,7 @@ class RepetitionPenaltyLogitsProcessor(LogitsProcessor):
     Examples:
 
     ```py
-    >>> from transformers import AutoTokenizer, AutoModelForCausalLM
+    >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM
 
     >>> # Initializing the model and tokenizer for it
     >>> model = AutoModelForCausalLM.from_pretrained("distilbert/distilgpt2")
@@ -362,7 +362,7 @@ class EncoderRepetitionPenaltyLogitsProcessor(LogitsProcessor):
     Examples:
 
     ```python
-    >>> from transformers import AutoModelForCausalLM, AutoTokenizer
+    >>> from tiny_hf.transformers.import AutoModelForCausalLM, AutoTokenizer
 
     >>> tokenizer = AutoTokenizer.from_pretrained("bigscience/bloomz-560m")
     >>> model = AutoModelForCausalLM.from_pretrained("bigscience/bloomz-560m")
@@ -415,7 +415,7 @@ class TopPLogitsWarper(LogitsProcessor):
     Examples:
 
     ```python
-    >>> from transformers import AutoTokenizer, AutoModelForCausalLM, set_seed
+    >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM, set_seed
 
     >>> set_seed(1)
     >>> model = AutoModelForCausalLM.from_pretrained("distilbert/distilgpt2")
@@ -481,7 +481,7 @@ class TopKLogitsWarper(LogitsProcessor):
     Examples:
 
     ```python
-    >>> from transformers import AutoTokenizer, AutoModelForCausalLM, set_seed
+    >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM, set_seed
 
     >>> set_seed(1)
     >>> model = AutoModelForCausalLM.from_pretrained("distilbert/distilgpt2")
@@ -542,7 +542,7 @@ class MinPLogitsWarper(LogitsProcessor):
     Examples:
 
     ```python
-    >>> from transformers import AutoTokenizer, AutoModelForCausalLM, set_seed
+    >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM, set_seed
 
     >>> set_seed(1)
     >>> model = AutoModelForCausalLM.from_pretrained("distilbert/distilgpt2")
@@ -614,7 +614,7 @@ class TypicalLogitsWarper(LogitsProcessor):
     Examples:
 
     ```python
-    >>> from transformers import AutoTokenizer, AutoModelForCausalLM, set_seed
+    >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM, set_seed
 
     >>> model = AutoModelForCausalLM.from_pretrained("bigscience/bloomz-560m")
     >>> tokenizer = AutoTokenizer.from_pretrained("bigscience/bloomz-560m")
@@ -699,7 +699,7 @@ class EpsilonLogitsWarper(LogitsProcessor):
 
     Examples:
     ```python
-    >>> from transformers import AutoTokenizer, AutoModelForCausalLM, set_seed
+    >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM, set_seed
 
     >>> set_seed(1)
     >>> model = AutoModelForCausalLM.from_pretrained("distilbert/distilgpt2")
@@ -780,7 +780,7 @@ class EtaLogitsWarper(LogitsProcessor):
 
     Examples:
     ```python
-    >>> from transformers import AutoTokenizer, AutoModelForCausalLM, set_seed
+    >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM, set_seed
 
     >>> set_seed(1)
     >>> model = AutoModelForCausalLM.from_pretrained("distilbert/distilgpt2")
@@ -928,7 +928,7 @@ class NoRepeatNGramLogitsProcessor(LogitsProcessor):
     Examples:
 
     ```py
-    >>> from transformers import AutoTokenizer, AutoModelForCausalLM
+    >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM
 
     >>> model = AutoModelForCausalLM.from_pretrained("distilbert/distilgpt2")
     >>> tokenizer = AutoTokenizer.from_pretrained("distilbert/distilgpt2")
@@ -979,7 +979,7 @@ class EncoderNoRepeatNGramLogitsProcessor(LogitsProcessor):
     Examples:
 
     ```py
-    >>> from transformers import AutoTokenizer, AutoModelForCausalLM
+    >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM
 
     >>> model = AutoModelForCausalLM.from_pretrained("bigscience/bloomz-560m")
     >>> tokenizer = AutoTokenizer.from_pretrained("bigscience/bloomz-560m")
@@ -1057,7 +1057,7 @@ class SequenceBiasLogitsProcessor(LogitsProcessor):
     Examples:
 
     ```python
-    >>> from transformers import AutoTokenizer, AutoModelForCausalLM
+    >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM
 
     >>> model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen2.5-0.5B-Instruct")
     >>> tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen2.5-0.5B-Instruct")
@@ -1231,7 +1231,7 @@ class NoBadWordsLogitsProcessor(SequenceBiasLogitsProcessor):
     Examples:
 
     ```python
-    >>> from transformers import AutoTokenizer, AutoModelForCausalLM
+    >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM
 
     >>> model = AutoModelForCausalLM.from_pretrained("openai-community/gpt2")
     >>> tokenizer = AutoTokenizer.from_pretrained("openai-community/gpt2")
@@ -1314,7 +1314,7 @@ class PrefixConstrainedLogitsProcessor(LogitsProcessor):
     Examples:
 
     ```py
-    >>> from transformers import AutoTokenizer, AutoModelForCausalLM
+    >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM
 
     >>> model = AutoModelForCausalLM.from_pretrained("bigscience/bloomz-560m")
     >>> tokenizer = AutoTokenizer.from_pretrained("bigscience/bloomz-560m")
@@ -1397,8 +1397,8 @@ class HammingDiversityLogitsProcessor(LogitsProcessor):
     Examples:
 
     ```python
-    >>> from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
-    >>> import torch
+    >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForSeq2SeqLM
+    >>> import tg_adapter as torch
 
     >>> # Initialize the model and tokenizer
     >>> tokenizer = AutoTokenizer.from_pretrained("google-t5/t5-base")
@@ -1519,7 +1519,7 @@ class ForcedBOSTokenLogitsProcessor(LogitsProcessor):
     Examples:
 
     ```python
-    >>> from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+    >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForSeq2SeqLM
 
     >>> model = AutoModelForSeq2SeqLM.from_pretrained("google/flan-t5-small")
     >>> tokenizer = AutoTokenizer.from_pretrained("google/flan-t5-small")
@@ -1567,7 +1567,7 @@ class ForcedEOSTokenLogitsProcessor(LogitsProcessor):
     Examples:
 
     ```python
-    >>> from transformers import AutoTokenizer, AutoModelForCausalLM
+    >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM
 
     >>> model = AutoModelForCausalLM.from_pretrained("distilbert/distilgpt2")
     >>> tokenizer = AutoTokenizer.from_pretrained("distilbert/distilgpt2")
@@ -1647,7 +1647,7 @@ class ExponentialDecayLengthPenalty(LogitsProcessor):
     Examples:
 
     ```python
-    >>> from transformers import AutoTokenizer, AutoModelForCausalLM, set_seed
+    >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM, set_seed
 
     >>> model = AutoModelForCausalLM.from_pretrained("openai-community/gpt2")
     >>> tokenizer = AutoTokenizer.from_pretrained("openai-community/gpt2")
@@ -1740,8 +1740,8 @@ class LogitNormalization(LogitsProcessor):
     Examples:
 
     ```python
-    >>> from transformers import AutoTokenizer, AutoModelForCausalLM
-    >>> import torch
+    >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM
+    >>> import tg_adapter as torch
 
     >>> model = AutoModelForCausalLM.from_pretrained("distilbert/distilgpt2")
     >>> tokenizer = AutoTokenizer.from_pretrained("distilbert/distilgpt2")
@@ -1777,7 +1777,7 @@ class SuppressTokensAtBeginLogitsProcessor(LogitsProcessor):
     Examples:
 
     ```python
-    >>> from transformers import AutoProcessor, WhisperForConditionalGeneration
+    >>> from tiny_hf.transformers.import AutoProcessor, WhisperForConditionalGeneration
     >>> from datasets import load_dataset
 
     >>> processor = AutoProcessor.from_pretrained("openai/whisper-tiny.en")
@@ -1829,7 +1829,7 @@ class SuppressTokensLogitsProcessor(LogitsProcessor):
     Examples:
 
     ```python
-    >>> from transformers import AutoProcessor, WhisperForConditionalGeneration
+    >>> from tiny_hf.transformers.import AutoProcessor, WhisperForConditionalGeneration
     >>> from datasets import load_dataset
 
     >>> processor = AutoProcessor.from_pretrained("openai/whisper-tiny.en")
@@ -1889,8 +1889,8 @@ class WhisperTimeStampLogitsProcessor(LogitsProcessor):
 
     Examples:
     ``` python
-    >>> import torch
-    >>> from transformers import AutoProcessor, WhisperForConditionalGeneration, GenerationConfig
+    >>> import tg_adapter as torch
+    >>> from tiny_hf.transformers.import AutoProcessor, WhisperForConditionalGeneration, GenerationConfig
     >>> from datasets import load_dataset
 
     >>> processor = AutoProcessor.from_pretrained("openai/whisper-tiny.en")
@@ -2078,7 +2078,7 @@ class ClassifierFreeGuidanceLogitsProcessor(LogitsProcessor):
     Examples:
 
     ```python
-    >>> from transformers import AutoProcessor, MusicgenForConditionalGeneration
+    >>> from tiny_hf.transformers.import AutoProcessor, MusicgenForConditionalGeneration
 
     >>> processor = AutoProcessor.from_pretrained("facebook/musicgen-small")
     >>> model = MusicgenForConditionalGeneration.from_pretrained("facebook/musicgen-small")
@@ -2191,7 +2191,7 @@ class UnbatchedClassifierFreeGuidanceLogitsProcessor(LogitsProcessor):
     Examples:
 
     ```python
-    >>> from transformers import AutoTokenizer, AutoModelForCausalLM
+    >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM
 
     >>> model = AutoModelForCausalLM.from_pretrained("openai-community/gpt2")
     >>> tokenizer = AutoTokenizer.from_pretrained("openai-community/gpt2")
@@ -2363,7 +2363,7 @@ class WatermarkLogitsProcessor(LogitsProcessor):
     Examples:
 
     ```python
-    >>> from transformers import AutoTokenizer, AutoModelForCausalLM, WatermarkingConfig
+    >>> from tiny_hf.transformers.import AutoTokenizer, AutoModelForCausalLM, WatermarkingConfig
 
     >>> model = AutoModelForCausalLM.from_pretrained("openai-community/gpt2")
     >>> tokenizer = AutoTokenizer.from_pretrained("openai-community/gpt2")
@@ -2381,7 +2381,7 @@ class WatermarkLogitsProcessor(LogitsProcessor):
     'Alice and Bob are both still alive and well and the story is pretty much a one-hour adventure'
 
     >>> # to detect watermarked text use the WatermarkDetector class
-    >>> from transformers import WatermarkDetector
+    >>> from tiny_hf.transformers.import WatermarkDetector
     >>> detector = WatermarkDetector(model_config=model.config, device="cpu", watermarking_config= watermarking_config)
     >>> detection_preds = detector(out)
     >>> detection_preds
@@ -2552,7 +2552,7 @@ class SynthIDTextWatermarkLogitsProcessor(LogitsProcessor):
 
     Examples:
     ```python
-    >>> from transformers import AutoModelForCausalLM, AutoTokenizer, SynthIDTextWatermarkingConfig
+    >>> from tiny_hf.transformers.import AutoModelForCausalLM, AutoTokenizer, SynthIDTextWatermarkingConfig
 
     >>> tokenizer = AutoTokenizer.from_pretrained('google/gemma-2-2b', padding_side="left")
     >>> model = AutoModelForCausalLM.from_pretrained('google/gemma-2-2b')

@@ -18,10 +18,10 @@ import math
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -771,7 +771,7 @@ class Mamba2PreTrainedModel(PreTrainedModel):
 
 
 @dataclass
-# Copied from transformers.models.mamba.modeling_mamba.MambaOutput with MAMBA->MAMBA2,Mamba->Mamba2
+# Copied from tiny_hf.transformers.models.mamba.modeling_mamba.MambaOutput with MAMBA->MAMBA2,Mamba->Mamba2
 class Mamba2Output(ModelOutput):
     """
     Class for the MAMBA2 model outputs.
@@ -797,7 +797,7 @@ class Mamba2Output(ModelOutput):
 
 
 @dataclass
-# Copied from transformers.models.mamba.modeling_mamba.MambaCausalLMOutput with Mamba->Mamba2
+# Copied from tiny_hf.transformers.models.mamba.modeling_mamba.MambaCausalLMOutput with Mamba->Mamba2
 class Mamba2CausalLMOutput(ModelOutput):
     """
     Base class for causal language model (or autoregressive) outputs.

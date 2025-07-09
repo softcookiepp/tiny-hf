@@ -18,9 +18,9 @@ from dataclasses import dataclass
 from functools import lru_cache
 from typing import Any, Dict, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import Tensor, nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import Tensor, nn
 
 from ...activations import ACT2FN
 from ...modeling_attn_mask_utils import _create_4d_causal_attention_mask, _prepare_4d_attention_mask
@@ -39,7 +39,7 @@ from .configuration_owlv2 import Owlv2Config, Owlv2TextConfig, Owlv2VisionConfig
 
 
 if is_vision_available():
-    from transformers.image_transforms import center_to_corners_format
+    from tiny_hf.transformers.image_transforms import center_to_corners_format
 
 
 logger = logging.get_logger(__name__)
@@ -49,12 +49,12 @@ _CHECKPOINT_FOR_DOC = "google/owlv2-base-patch16-ensemble"
 # See all Owlv2 models at https://huggingface.co/models?filter=owlv2
 
 
-# Copied from transformers.models.clip.modeling_clip.contrastive_loss with clip->owlv2
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.contrastive_loss with clip->owlv2
 def contrastive_loss(logits: torch.Tensor) -> torch.Tensor:
     return nn.functional.cross_entropy(logits, torch.arange(len(logits), device=logits.device))
 
 
-# Copied from transformers.models.clip.modeling_clip.clip_loss with clip->owlv2
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.clip_loss with clip->owlv2
 def owlv2_loss(similarity: torch.Tensor) -> torch.Tensor:
     caption_loss = contrastive_loss(similarity)
     image_loss = contrastive_loss(similarity.t())
@@ -99,7 +99,7 @@ class Owlv2Output(ModelOutput):
         )
 
 
-# Copied from transformers.loss.loss_for_object_detection._upcast
+# Copied from tiny_hf.transformers.loss.loss_for_object_detection._upcast
 def _upcast(t: Tensor) -> Tensor:
     # Protects from numerical overflows in multiplications by upcasting to the equivalent higher type
     if t.is_floating_point():
@@ -108,7 +108,7 @@ def _upcast(t: Tensor) -> Tensor:
         return t if t.dtype in (torch.int32, torch.int64) else t.int()
 
 
-# Copied from transformers.loss.loss_for_object_detection.box_area
+# Copied from tiny_hf.transformers.loss.loss_for_object_detection.box_area
 def box_area(boxes: Tensor) -> Tensor:
     """
     Computes the area of a set of bounding boxes, which are specified by its (x1, y1, x2, y2) coordinates.
@@ -125,7 +125,7 @@ def box_area(boxes: Tensor) -> Tensor:
     return (boxes[:, 2] - boxes[:, 0]) * (boxes[:, 3] - boxes[:, 1])
 
 
-# Copied from transformers.loss.loss_for_object_detection.box_iou
+# Copied from tiny_hf.transformers.loss.loss_for_object_detection.box_iou
 def box_iou(boxes1, boxes2):
     area1 = box_area(boxes1)
     area2 = box_area(boxes2)
@@ -142,7 +142,7 @@ def box_iou(boxes1, boxes2):
     return iou, union
 
 
-# Copied from transformers.loss.loss_for_object_detection.generalized_box_iou
+# Copied from tiny_hf.transformers.loss.loss_for_object_detection.generalized_box_iou
 def generalized_box_iou(boxes1, boxes2):
     """
     Generalized IoU from https://giou.stanford.edu/. The boxes should be in [x0, y0, x1, y1] (corner) format.
@@ -222,7 +222,7 @@ class Owlv2ObjectDetectionOutput(ModelOutput):
 
 
 @dataclass
-# Copied from transformers.models.owlvit.modeling_owlvit.OwlViTImageGuidedObjectDetectionOutput with OwlViT->Owlv2,OWL-ViT->OWLv2
+# Copied from tiny_hf.transformers.models.owlvit.modeling_owlvit.OwlViTImageGuidedObjectDetectionOutput with OwlViT->Owlv2,OWL-ViT->OWLv2
 class Owlv2ImageGuidedObjectDetectionOutput(ModelOutput):
     """
     Output type of [`Owlv2ForObjectDetection.image_guided_detection`].
@@ -271,7 +271,7 @@ class Owlv2ImageGuidedObjectDetectionOutput(ModelOutput):
         )
 
 
-# Copied from transformers.models.owlvit.modeling_owlvit.OwlViTVisionEmbeddings with OwlViT->Owlv2
+# Copied from tiny_hf.transformers.models.owlvit.modeling_owlvit.OwlViTVisionEmbeddings with OwlViT->Owlv2
 class Owlv2VisionEmbeddings(nn.Module):
     def __init__(self, config: Owlv2VisionConfig):
         super().__init__()
@@ -293,7 +293,7 @@ class Owlv2VisionEmbeddings(nn.Module):
         self.position_embedding = nn.Embedding(self.num_positions, self.embed_dim)
         self.register_buffer("position_ids", torch.arange(self.num_positions).expand((1, -1)), persistent=False)
 
-    # Copied from transformers.models.clip.modeling_clip.CLIPVisionEmbeddings.interpolate_pos_encoding
+    # Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPVisionEmbeddings.interpolate_pos_encoding
     def interpolate_pos_encoding(self, embeddings: torch.Tensor, height: int, width: int) -> torch.Tensor:
         """
         This method allows to interpolate the pre-trained position encodings, to be able to use the model on higher resolution
@@ -349,7 +349,7 @@ class Owlv2VisionEmbeddings(nn.Module):
         return embeddings
 
 
-# Copied from transformers.models.owlvit.modeling_owlvit.OwlViTTextEmbeddings with OwlViT->Owlv2
+# Copied from tiny_hf.transformers.models.owlvit.modeling_owlvit.OwlViTTextEmbeddings with OwlViT->Owlv2
 class Owlv2TextEmbeddings(nn.Module):
     def __init__(self, config: Owlv2TextConfig):
         super().__init__()
@@ -381,7 +381,7 @@ class Owlv2TextEmbeddings(nn.Module):
         return embeddings
 
 
-# Copied from transformers.models.owlvit.modeling_owlvit.OwlViTAttention with OwlViT->Owlv2
+# Copied from tiny_hf.transformers.models.owlvit.modeling_owlvit.OwlViTAttention with OwlViT->Owlv2
 class Owlv2Attention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -489,7 +489,7 @@ class Owlv2Attention(nn.Module):
         return attn_output, attn_weights_reshaped
 
 
-# Copied from transformers.models.clip.modeling_clip.CLIPMLP with CLIP->Owlv2
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPMLP with CLIP->Owlv2
 class Owlv2MLP(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -505,7 +505,7 @@ class Owlv2MLP(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.altclip.modeling_altclip.AltCLIPEncoderLayer with AltCLIP->Owlv2
+# Copied from tiny_hf.transformers.models.altclip.modeling_altclip.AltCLIPEncoderLayer with AltCLIP->Owlv2
 class Owlv2EncoderLayer(nn.Module):
     def __init__(self, config: Owlv2Config):
         super().__init__()
@@ -556,7 +556,7 @@ class Owlv2EncoderLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.owlvit.modeling_owlvit.OwlViTPreTrainedModel with OwlViT->Owlv2,owlvit->owlv2
+# Copied from tiny_hf.transformers.models.owlvit.modeling_owlvit.OwlViTPreTrainedModel with OwlViT->Owlv2,owlvit->owlv2
 class Owlv2PreTrainedModel(PreTrainedModel):
     """
     An abstract class to handle weights initialization and a simple interface for downloading and loading pretrained
@@ -732,7 +732,7 @@ OWLV2_IMAGE_GUIDED_OBJECT_DETECTION_INPUTS_DOCSTRING = r"""
 """
 
 
-# Copied from transformers.models.owlvit.modeling_owlvit.OwlViTEncoder with OwlViT->Owlv2
+# Copied from tiny_hf.transformers.models.owlvit.modeling_owlvit.OwlViTEncoder with OwlViT->Owlv2
 class Owlv2Encoder(nn.Module):
     """
     Transformer encoder consisting of `config.num_hidden_layers` self attention layers. Each layer is a
@@ -822,7 +822,7 @@ class Owlv2Encoder(nn.Module):
         )
 
 
-# Copied from transformers.models.owlvit.modeling_owlvit.OwlViTTextTransformer with OWLVIT->OWLV2,OwlViT->Owlv2
+# Copied from tiny_hf.transformers.models.owlvit.modeling_owlvit.OwlViTTextTransformer with OWLVIT->OWLV2,OwlViT->Owlv2
 class Owlv2TextTransformer(nn.Module):
     def __init__(self, config: Owlv2TextConfig):
         super().__init__()
@@ -897,7 +897,7 @@ class Owlv2TextTransformer(nn.Module):
         )
 
 
-# Copied from transformers.models.owlvit.modeling_owlvit.OwlViTTextModel with google/owlvit-base-patch32->google/owlv2-base-patch16, OWLVIT->OWLV2,OwlViT->Owlv2
+# Copied from tiny_hf.transformers.models.owlvit.modeling_owlvit.OwlViTTextModel with google/owlvit-base-patch32->google/owlv2-base-patch16, OWLVIT->OWLV2,OwlViT->Owlv2
 class Owlv2TextModel(Owlv2PreTrainedModel):
     config_class = Owlv2TextConfig
 
@@ -928,7 +928,7 @@ class Owlv2TextModel(Owlv2PreTrainedModel):
 
         Examples:
         ```python
-        >>> from transformers import AutoProcessor, Owlv2TextModel
+        >>> from tiny_hf.transformers.import AutoProcessor, Owlv2TextModel
 
         >>> model = Owlv2TextModel.from_pretrained("google/owlv2-base-patch16")
         >>> processor = AutoProcessor.from_pretrained("google/owlv2-base-patch16")
@@ -950,7 +950,7 @@ class Owlv2TextModel(Owlv2PreTrainedModel):
         )
 
 
-# Copied from transformers.models.owlvit.modeling_owlvit.OwlViTVisionTransformer with OWLVIT->OWLV2,OwlViT->Owlv2
+# Copied from tiny_hf.transformers.models.owlvit.modeling_owlvit.OwlViTVisionTransformer with OWLVIT->OWLV2,OwlViT->Owlv2
 class Owlv2VisionTransformer(nn.Module):
     def __init__(self, config: Owlv2VisionConfig):
         super().__init__()
@@ -1010,7 +1010,7 @@ class Owlv2VisionTransformer(nn.Module):
         )
 
 
-# Copied from transformers.models.owlvit.modeling_owlvit.OwlViTVisionModel with OWLVIT->OWLV2,OwlViT->Owlv2,google/owlvit-base-patch32->google/owlv2-base-patch16
+# Copied from tiny_hf.transformers.models.owlvit.modeling_owlvit.OwlViTVisionModel with OWLVIT->OWLV2,OwlViT->Owlv2,google/owlvit-base-patch32->google/owlv2-base-patch16
 class Owlv2VisionModel(Owlv2PreTrainedModel):
     config_class = Owlv2VisionConfig
     main_input_name = "pixel_values"
@@ -1041,7 +1041,7 @@ class Owlv2VisionModel(Owlv2PreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, Owlv2VisionModel
+        >>> from tiny_hf.transformers.import AutoProcessor, Owlv2VisionModel
 
         >>> model = Owlv2VisionModel.from_pretrained("google/owlv2-base-patch16")
         >>> processor = AutoProcessor.from_pretrained("google/owlv2-base-patch16")
@@ -1064,7 +1064,7 @@ class Owlv2VisionModel(Owlv2PreTrainedModel):
 
 
 @add_start_docstrings(OWLV2_START_DOCSTRING)
-# Copied from transformers.models.owlvit.modeling_owlvit.OwlViTModel with google/owlvit-base-patch32->google/owlv2-base-patch16-ensemble, OWLVIT->OWLV2,OwlViT->Owlv2,owlvit->owlv2,OWL-ViT->OWLv2
+# Copied from tiny_hf.transformers.models.owlvit.modeling_owlvit.OwlViTModel with google/owlvit-base-patch32->google/owlv2-base-patch16-ensemble, OWLVIT->OWLV2,OwlViT->Owlv2,owlvit->owlv2,OWL-ViT->OWLv2
 class Owlv2Model(Owlv2PreTrainedModel):
     config_class = Owlv2Config
 
@@ -1116,7 +1116,7 @@ class Owlv2Model(Owlv2PreTrainedModel):
 
         Examples:
         ```python
-        >>> from transformers import AutoProcessor, Owlv2Model
+        >>> from tiny_hf.transformers.import AutoProcessor, Owlv2Model
 
         >>> model = Owlv2Model.from_pretrained("google/owlv2-base-patch16-ensemble")
         >>> processor = AutoProcessor.from_pretrained("google/owlv2-base-patch16-ensemble")
@@ -1153,7 +1153,7 @@ class Owlv2Model(Owlv2PreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, Owlv2Model
+        >>> from tiny_hf.transformers.import AutoProcessor, Owlv2Model
 
         >>> model = Owlv2Model.from_pretrained("google/owlv2-base-patch16-ensemble")
         >>> processor = AutoProcessor.from_pretrained("google/owlv2-base-patch16-ensemble")
@@ -1203,7 +1203,7 @@ class Owlv2Model(Owlv2PreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, Owlv2Model
+        >>> from tiny_hf.transformers.import AutoProcessor, Owlv2Model
 
         >>> model = Owlv2Model.from_pretrained("google/owlv2-base-patch16-ensemble")
         >>> processor = AutoProcessor.from_pretrained("google/owlv2-base-patch16-ensemble")
@@ -1274,7 +1274,7 @@ class Owlv2Model(Owlv2PreTrainedModel):
         )
 
 
-# Copied from transformers.models.owlvit.modeling_owlvit.OwlViTBoxPredictionHead with OwlViT->Owlv2
+# Copied from tiny_hf.transformers.models.owlvit.modeling_owlvit.OwlViTBoxPredictionHead with OwlViT->Owlv2
 class Owlv2BoxPredictionHead(nn.Module):
     def __init__(self, config: Owlv2Config, out_dim: int = 4):
         super().__init__()
@@ -1294,7 +1294,7 @@ class Owlv2BoxPredictionHead(nn.Module):
         return output
 
 
-# Copied from transformers.models.owlvit.modeling_owlvit.OwlViTClassPredictionHead with OwlViT->Owlv2
+# Copied from tiny_hf.transformers.models.owlvit.modeling_owlvit.OwlViTClassPredictionHead with OwlViT->Owlv2
 class Owlv2ClassPredictionHead(nn.Module):
     def __init__(self, config: Owlv2Config):
         super().__init__()
@@ -1362,7 +1362,7 @@ class Owlv2ForObjectDetection(Owlv2PreTrainedModel):
         self.box_bias = self.compute_box_bias(self.num_patches_height, self.num_patches_width)
 
     @staticmethod
-    # Copied from transformers.models.owlvit.modeling_owlvit.OwlViTForObjectDetection.normalize_grid_corner_coordinates
+    # Copied from tiny_hf.transformers.models.owlvit.modeling_owlvit.OwlViTForObjectDetection.normalize_grid_corner_coordinates
     def normalize_grid_corner_coordinates(num_patches_height: int, num_patches_width: int) -> torch.Tensor:
         # Create grid coordinates using torch
         x_coordinates = torch.arange(1, num_patches_width + 1, dtype=torch.float32)
@@ -1394,7 +1394,7 @@ class Owlv2ForObjectDetection(Owlv2PreTrainedModel):
         return objectness_logits
 
     @lru_cache(maxsize=2)
-    # Copied from transformers.models.owlvit.modeling_owlvit.OwlViTForObjectDetection.compute_box_bias
+    # Copied from tiny_hf.transformers.models.owlvit.modeling_owlvit.OwlViTForObjectDetection.compute_box_bias
     def compute_box_bias(
         self, num_patches_height: int, num_patches_width: int, feature_map: Optional[torch.FloatTensor] = None
     ) -> torch.Tensor:
@@ -1417,7 +1417,7 @@ class Owlv2ForObjectDetection(Owlv2PreTrainedModel):
         box_bias = torch.cat([box_coord_bias, box_size_bias], dim=-1)
         return box_bias
 
-    # Copied from transformers.models.owlvit.modeling_owlvit.OwlViTForObjectDetection.box_predictor
+    # Copied from tiny_hf.transformers.models.owlvit.modeling_owlvit.OwlViTForObjectDetection.box_predictor
     def box_predictor(
         self,
         image_feats: torch.FloatTensor,
@@ -1451,7 +1451,7 @@ class Owlv2ForObjectDetection(Owlv2PreTrainedModel):
         pred_boxes = self.sigmoid(pred_boxes)
         return pred_boxes
 
-    # Copied from transformers.models.owlvit.modeling_owlvit.OwlViTForObjectDetection.class_predictor
+    # Copied from tiny_hf.transformers.models.owlvit.modeling_owlvit.OwlViTForObjectDetection.class_predictor
     def class_predictor(
         self,
         image_feats: torch.FloatTensor,
@@ -1471,7 +1471,7 @@ class Owlv2ForObjectDetection(Owlv2PreTrainedModel):
 
         return (pred_logits, image_class_embeds)
 
-    # Copied from transformers.models.owlvit.modeling_owlvit.OwlViTForObjectDetection.image_text_embedder with owlvit->owlv2
+    # Copied from tiny_hf.transformers.models.owlvit.modeling_owlvit.OwlViTForObjectDetection.image_text_embedder with owlvit->owlv2
     def image_text_embedder(
         self,
         input_ids: torch.Tensor,
@@ -1523,7 +1523,7 @@ class Owlv2ForObjectDetection(Owlv2PreTrainedModel):
 
         return (text_embeds, image_embeds, outputs)
 
-    # Copied from transformers.models.owlvit.modeling_owlvit.OwlViTForObjectDetection.image_embedder with owlvit->owlv2, OwlViTModel->Owlv2Model
+    # Copied from tiny_hf.transformers.models.owlvit.modeling_owlvit.OwlViTForObjectDetection.image_embedder with owlvit->owlv2, OwlViTModel->Owlv2Model
     def image_embedder(
         self,
         pixel_values: torch.FloatTensor,
@@ -1566,7 +1566,7 @@ class Owlv2ForObjectDetection(Owlv2PreTrainedModel):
 
         return (image_embeds, vision_outputs)
 
-    # Copied from transformers.models.owlvit.modeling_owlvit.OwlViTForObjectDetection.embed_image_query
+    # Copied from tiny_hf.transformers.models.owlvit.modeling_owlvit.OwlViTForObjectDetection.embed_image_query
     def embed_image_query(
         self,
         query_image_features: torch.FloatTensor,
@@ -1629,8 +1629,8 @@ class Owlv2ForObjectDetection(Owlv2PreTrainedModel):
         ```python
         >>> import requests
         >>> from PIL import Image
-        >>> import torch
-        >>> from transformers import AutoProcessor, Owlv2ForObjectDetection
+        >>> import tg_adapter as torch
+        >>> from tiny_hf.transformers.import AutoProcessor, Owlv2ForObjectDetection
 
         >>> processor = AutoProcessor.from_pretrained("google/owlv2-base-patch16-ensemble")
         >>> model = Owlv2ForObjectDetection.from_pretrained("google/owlv2-base-patch16-ensemble")
@@ -1748,9 +1748,9 @@ class Owlv2ForObjectDetection(Owlv2PreTrainedModel):
         ```python
         >>> import requests
         >>> from PIL import Image
-        >>> import torch
+        >>> import tg_adapter as torch
 
-        >>> from transformers import Owlv2Processor, Owlv2ForObjectDetection
+        >>> from tiny_hf.transformers.import Owlv2Processor, Owlv2ForObjectDetection
 
         >>> processor = Owlv2Processor.from_pretrained("google/owlv2-base-patch16-ensemble")
         >>> model = Owlv2ForObjectDetection.from_pretrained("google/owlv2-base-patch16-ensemble")

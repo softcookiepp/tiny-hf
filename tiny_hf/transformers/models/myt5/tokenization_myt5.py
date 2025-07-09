@@ -212,13 +212,13 @@ class MyT5Tokenizer(PreTrainedTokenizer):
     def vocab_size(self):
         return self._utf_vocab_size
 
-    # Copied from transformers.models.byt5.tokenization_byt5.ByT5Tokenizer.get_vocab
+    # Copied from tiny_hf.transformers.models.byt5.tokenization_byt5.ByT5Tokenizer.get_vocab
     def get_vocab(self):
         vocab = {self.convert_ids_to_tokens(i): i for i in range(self.vocab_size + self.offset)}
         vocab.update(self.added_tokens_encoder)
         return vocab
 
-    # Copied from transformers.models.byt5.tokenization_byt5.ByT5Tokenizer.get_special_tokens_mask
+    # Copied from tiny_hf.transformers.models.byt5.tokenization_byt5.ByT5Tokenizer.get_special_tokens_mask
     def get_special_tokens_mask(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None, already_has_special_tokens: bool = False
     ) -> List[int]:
@@ -280,7 +280,7 @@ class MyT5Tokenizer(PreTrainedTokenizer):
             return len(token_ids_0 + eos) * [0]
         return len(token_ids_0 + eos + token_ids_1 + eos) * [0]
 
-    # Copied from transformers.models.byt5.tokenization_byt5.ByT5Tokenizer.build_inputs_with_special_tokens
+    # Copied from tiny_hf.transformers.models.byt5.tokenization_byt5.ByT5Tokenizer.build_inputs_with_special_tokens
     def build_inputs_with_special_tokens(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
     ) -> List[int]:

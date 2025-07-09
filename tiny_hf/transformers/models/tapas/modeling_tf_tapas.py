@@ -231,7 +231,7 @@ class TFTapasEmbeddings(keras.layers.Layer):
         return final_embeddings
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertSelfAttention with Bert->Tapas
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertSelfAttention with Bert->Tapas
 class TFTapasSelfAttention(keras.layers.Layer):
     def __init__(self, config: TapasConfig, **kwargs):
         super().__init__(**kwargs)
@@ -364,7 +364,7 @@ class TFTapasSelfAttention(keras.layers.Layer):
                 self.value.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertSelfOutput with Bert->Tapas
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertSelfOutput with Bert->Tapas
 class TFTapasSelfOutput(keras.layers.Layer):
     def __init__(self, config: TapasConfig, **kwargs):
         super().__init__(**kwargs)
@@ -395,7 +395,7 @@ class TFTapasSelfOutput(keras.layers.Layer):
                 self.LayerNorm.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertAttention with Bert->Tapas
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertAttention with Bert->Tapas
 class TFTapasAttention(keras.layers.Layer):
     def __init__(self, config: TapasConfig, **kwargs):
         super().__init__(**kwargs)
@@ -447,7 +447,7 @@ class TFTapasAttention(keras.layers.Layer):
                 self.dense_output.build(None)
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertIntermediate with Bert->Tapas
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertIntermediate with Bert->Tapas
 class TFTapasIntermediate(keras.layers.Layer):
     def __init__(self, config: TapasConfig, **kwargs):
         super().__init__(**kwargs)
@@ -477,7 +477,7 @@ class TFTapasIntermediate(keras.layers.Layer):
                 self.dense.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertOutput with Bert->Tapas
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertOutput with Bert->Tapas
 class TFTapasOutput(keras.layers.Layer):
     def __init__(self, config: TapasConfig, **kwargs):
         super().__init__(**kwargs)
@@ -508,7 +508,7 @@ class TFTapasOutput(keras.layers.Layer):
                 self.LayerNorm.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertLayer with Bert->Tapas
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertLayer with Bert->Tapas
 class TFTapasLayer(keras.layers.Layer):
     def __init__(self, config: TapasConfig, **kwargs):
         super().__init__(**kwargs)
@@ -612,7 +612,7 @@ class TFTapasLayer(keras.layers.Layer):
                 self.crossattention.build(None)
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertEncoder with Bert->Tapas
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertEncoder with Bert->Tapas
 class TFTapasEncoder(keras.layers.Layer):
     def __init__(self, config: TapasConfig, **kwargs):
         super().__init__(**kwargs)
@@ -691,7 +691,7 @@ class TFTapasEncoder(keras.layers.Layer):
                     layer.build(None)
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertPooler with Bert->Tapas
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertPooler with Bert->Tapas
 class TFTapasPooler(keras.layers.Layer):
     def __init__(self, config: TapasConfig, **kwargs):
         super().__init__(**kwargs)
@@ -721,7 +721,7 @@ class TFTapasPooler(keras.layers.Layer):
                 self.dense.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertPredictionHeadTransform with Bert->Tapas
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertPredictionHeadTransform with Bert->Tapas
 class TFTapasPredictionHeadTransform(keras.layers.Layer):
     def __init__(self, config: TapasConfig, **kwargs):
         super().__init__(**kwargs)
@@ -759,7 +759,7 @@ class TFTapasPredictionHeadTransform(keras.layers.Layer):
                 self.LayerNorm.build([None, None, self.config.hidden_size])
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertLMPredictionHead with Bert->Tapas
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertLMPredictionHead with Bert->Tapas
 class TFTapasLMPredictionHead(keras.layers.Layer):
     def __init__(self, config: TapasConfig, input_embeddings: keras.layers.Layer, **kwargs):
         super().__init__(**kwargs)
@@ -808,7 +808,7 @@ class TFTapasLMPredictionHead(keras.layers.Layer):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_tf_bert.TFBertMLMHead with Bert->Tapas
+# Copied from tiny_hf.transformers.models.bert.modeling_tf_bert.TFBertMLMHead with Bert->Tapas
 class TFTapasMLMHead(keras.layers.Layer):
     def __init__(self, config: TapasConfig, input_embeddings: keras.layers.Layer, **kwargs):
         super().__init__(**kwargs)
@@ -1111,7 +1111,7 @@ class TFTapasModel(TFTapasPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, TapasModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, TapasModel
         >>> import pandas as pd
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/tapas-base")
@@ -1199,7 +1199,7 @@ class TFTapasForMaskedLM(TFTapasPreTrainedModel, TFMaskedLanguageModelingLoss):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, TapasForMaskedLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, TapasForMaskedLM
         >>> import pandas as pd
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/tapas-base")
@@ -1441,7 +1441,7 @@ class TFTapasForQuestionAnswering(TFTapasPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, TapasForQuestionAnswering
+        >>> from tiny_hf.transformers.import AutoTokenizer, TapasForQuestionAnswering
         >>> import pandas as pd
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/tapas-base-finetuned-wtq")
@@ -1749,7 +1749,7 @@ class TFTapasForSequenceClassification(TFTapasPreTrainedModel, TFSequenceClassif
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, TapasForSequenceClassification
+        >>> from tiny_hf.transformers.import AutoTokenizer, TapasForSequenceClassification
         >>> import tensorflow as tf
         >>> import pandas as pd
 

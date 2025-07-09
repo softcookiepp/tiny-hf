@@ -17,9 +17,9 @@
 
 import argparse
 
-import torch
+import tg_adapter as torch
 
-from transformers import NystromformerConfig, NystromformerForMaskedLM
+from tiny_hf.transformers.import NystromformerConfig, NystromformerForMaskedLM
 
 
 def rename_key(orig_key):

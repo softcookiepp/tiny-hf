@@ -16,9 +16,9 @@
 import argparse
 import os
 
-import torch
+import tg_adapter as torch
 
-from transformers import FlavaImageCodebook, FlavaImageCodebookConfig
+from tiny_hf.transformers.import FlavaImageCodebook, FlavaImageCodebookConfig
 
 
 def rreplace(s, old, new, occurrence):

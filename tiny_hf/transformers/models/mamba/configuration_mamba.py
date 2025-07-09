@@ -86,7 +86,7 @@ class MambaConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import MambaConfig, MambaModel
+    >>> from tiny_hf.transformers.import MambaConfig, MambaModel
 
     >>> # Initializing a Mamba configuration
     >>> configuration = MambaConfig()

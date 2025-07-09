@@ -82,7 +82,7 @@ class GemmaConfig(PretrainedConfig):
         attention_dropout (`float`, *optional*, defaults to 0.0):
             The dropout ratio for the attention probabilities.
     ```python
-    >>> from transformers import GemmaModel, GemmaConfig
+    >>> from tiny_hf.transformers.import GemmaModel, GemmaConfig
     >>> # Initializing a Gemma gemma-7b style configuration
     >>> configuration = GemmaConfig()
     >>> # Initializing a model from the gemma-7b style configuration

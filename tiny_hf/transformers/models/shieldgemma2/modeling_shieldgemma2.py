@@ -16,8 +16,8 @@
 from dataclasses import dataclass
 from typing import List, Optional, Union
 
-import torch
-import torch.utils.checkpoint
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
 
 from ...cache_utils import Cache
 from ...modeling_outputs import ImageClassifierOutputWithNoAttention

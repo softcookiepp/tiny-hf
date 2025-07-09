@@ -14,11 +14,11 @@
 import argparse
 import glob
 
-import torch
+import tg_adapter as torch
 from huggingface_hub import snapshot_download
 from safetensors import safe_open
 
-from transformers import (
+from tiny_hf.transformers.import (
     AddedToken,
     AriaForConditionalGeneration,
     AriaProcessor,
@@ -32,7 +32,7 @@ EPILOG_TXT = """Example:
 
 Example for creating the old state dict file with Python:
 
-    import torch
+    import tg_adapter as torch
     from aria.model.language_model.aria_llama import AriaTextForCausalLM
 
     # load model

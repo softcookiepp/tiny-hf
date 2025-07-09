@@ -151,7 +151,7 @@ class FastSpeech2ConformerConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import FastSpeech2ConformerModel, FastSpeech2ConformerConfig
+    >>> from tiny_hf.transformers.import FastSpeech2ConformerModel, FastSpeech2ConformerConfig
 
     >>> # Initializing a FastSpeech2Conformer style configuration
     >>> configuration = FastSpeech2ConformerConfig()
@@ -365,7 +365,7 @@ class FastSpeech2ConformerHifiGanConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import FastSpeech2ConformerHifiGan, FastSpeech2ConformerHifiGanConfig
+    >>> from tiny_hf.transformers.import FastSpeech2ConformerHifiGan, FastSpeech2ConformerHifiGanConfig
 
     >>> # Initializing a FastSpeech2ConformerHifiGan configuration
     >>> configuration = FastSpeech2ConformerHifiGanConfig()
@@ -432,7 +432,7 @@ class FastSpeech2ConformerWithHifiGanConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import (
+    >>> from tiny_hf.transformers.import (
     ...     FastSpeech2ConformerConfig,
     ...     FastSpeech2ConformerHifiGanConfig,
     ...     FastSpeech2ConformerWithHifiGanConfig,

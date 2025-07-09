@@ -62,7 +62,7 @@ class VanConfig(PretrainedConfig):
 
     Example:
     ```python
-    >>> from transformers import VanModel, VanConfig
+    >>> from tiny_hf.transformers.import VanModel, VanConfig
 
     >>> # Initializing a VAN van-base style configuration
     >>> configuration = VanConfig()

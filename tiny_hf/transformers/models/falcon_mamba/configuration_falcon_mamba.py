@@ -86,7 +86,7 @@ class FalconMambaConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import FalconMambaConfig, FalconMambaModel
+    >>> from tiny_hf.transformers.import FalconMambaConfig, FalconMambaModel
 
     >>> # Initializing a FalconMamba configuration
     >>> configuration = FalconMambaConfig()

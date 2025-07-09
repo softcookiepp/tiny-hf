@@ -18,9 +18,9 @@
 import decimal
 
 import numpy as np
-import torch
-from torch import nn
-from torch.autograd import Function
+import tg_adapter as torch
+from tg_adapter.import nn
+from tg_adapter.autograd import Function
 
 from ...utils import logging
 

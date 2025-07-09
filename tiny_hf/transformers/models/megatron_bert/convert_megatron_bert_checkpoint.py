@@ -37,9 +37,9 @@ import os
 import re
 import zipfile
 
-import torch
+import tg_adapter as torch
 
-from transformers import MegatronBertConfig
+from tiny_hf.transformers.import MegatronBertConfig
 
 
 ####################################################################################################

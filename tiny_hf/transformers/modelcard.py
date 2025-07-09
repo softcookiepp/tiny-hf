@@ -527,7 +527,7 @@ class TrainingSummary:
         model_card += f"- Transformers {__version__}\n"
 
         if self.source == "trainer" and is_torch_available():
-            import torch
+            import tg_adapter as torch
 
             model_card += f"- Pytorch {torch.__version__}\n"
         elif self.source == "keras" and is_tf_available():

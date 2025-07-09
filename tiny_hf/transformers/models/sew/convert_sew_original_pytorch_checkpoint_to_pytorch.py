@@ -19,13 +19,13 @@ import json
 import os
 
 import fairseq
-import torch
+import tg_adapter as torch
 from fairseq.data import Dictionary
 
 # Register SEW's fairseq modules
 from sew_asapp import tasks  # noqa: F401
 
-from transformers import (
+from tiny_hf.transformers.import (
     SEWConfig,
     SEWForCTC,
     SEWModel,

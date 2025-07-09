@@ -16,14 +16,14 @@
 
 import argparse
 
-import torch
-import torchaudio
+import tg_adapter as torch
+import tg_adapter.udio
 from fairseq2.data import Collater
 from fairseq2.data.audio import WaveformToFbankConverter
 from fairseq2.nn.padding import get_seqs_and_padding_mask
 from seamless_communication.models.conformer_shaw import load_conformer_shaw_model
 
-from transformers import (
+from tiny_hf.transformers.import (
     SeamlessM4TFeatureExtractor,
     Wav2Vec2BertConfig,
     Wav2Vec2BertModel,

@@ -111,7 +111,7 @@ class GraphormerConfig(PretrainedConfig):
 
         Example:
             ```python
-            >>> from transformers import GraphormerForGraphClassification, GraphormerConfig
+            >>> from tiny_hf.transformers.import GraphormerForGraphClassification, GraphormerConfig
 
             >>> # Initializing a Graphormer graphormer-base-pcqm4mv2 style configuration
             >>> configuration = GraphormerConfig()

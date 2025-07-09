@@ -32,13 +32,13 @@ import tg_adapter as torch
 
 from ..utils import is_torch_flex_attn_available
 
-
-if is_torch_flex_attn_available():
-    from torch.nn.attention.flex_attention import (
+# lol
+if False and is_torch_flex_attn_available():
+    from tg_adapter.nn.attention.flex_attention import (
         BlockMask,
         flex_attention,
     )
-    from torch.nn.attention.flex_attention import (
+    from tg_adapter.nn.attention.flex_attention import (
         create_block_mask as create_block_causal_mask_flex,
     )
 

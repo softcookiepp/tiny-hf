@@ -14,10 +14,10 @@
 # limitations under the License.
 """TrajectoryTransformer pytorch checkpoint conversion"""
 
-import torch
+import tg_adapter as torch
 import trajectory.utils as utils
 
-from transformers import TrajectoryTransformerModel
+from tiny_hf.transformers.import TrajectoryTransformerModel
 
 
 class Parser(utils.Parser):

@@ -21,9 +21,9 @@ from typing import Optional
 from packaging.version import Version, parse
 
 """
-from transformers.pipelines import Pipeline, pipeline
-from transformers.tokenization_utils import BatchEncoding
-from transformers.utils import ModelOutput, is_tf_available, is_torch_available
+from tiny_hf.transformers.pipelines import Pipeline, pipeline
+from tiny_hf.transformers.tokenization_utils import BatchEncoding
+from tiny_hf.transformers.utils import ModelOutput, is_tf_available, is_torch_available
 """
 
 from .pipelines import Pipeline, pipeline
@@ -275,8 +275,8 @@ def convert_pytorch(nlp: Pipeline, opset: int, output: Path, use_external_format
     if not is_torch_available():
         raise Exception("Cannot convert because PyTorch is not installed. Please install torch first.")
 
-    import torch
-    from torch.onnx import export
+    import tg_adapter as torch
+    from tg_adapter.onnx import export
 
     print(f"Using framework PyTorch: {torch.__version__}")
 

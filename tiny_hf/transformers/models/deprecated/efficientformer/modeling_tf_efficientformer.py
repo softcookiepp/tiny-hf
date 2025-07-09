@@ -402,7 +402,7 @@ class TFEfficientFormerConvMlp(keras.layers.Layer):
                 self.batchnorm_after.build([None, None, None, self.out_features])
 
 
-# Copied from transformers.models.convnext.modeling_tf_convnext.TFConvNextDropPath with ConvNext->EfficientFormer
+# Copied from tiny_hf.transformers.models.convnext.modeling_tf_convnext.TFConvNextDropPath with ConvNext->EfficientFormer
 class TFEfficientFormerDropPath(keras.layers.Layer):
     """Drop paths (Stochastic Depth) per sample (when applied in main path of residual blocks).
     References:

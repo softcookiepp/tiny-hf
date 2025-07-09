@@ -16,11 +16,11 @@
 
 import argparse
 
-import torch
+import tg_adapter as torch
 from flax.training.checkpoints import restore_checkpoint
 
-from transformers import FNetConfig, FNetForPreTraining
-from transformers.utils import logging
+from tiny_hf.transformers.import FNetConfig, FNetForPreTraining
+from tiny_hf.transformers.utils import logging
 
 
 logging.set_verbosity_info()

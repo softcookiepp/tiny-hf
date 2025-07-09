@@ -363,14 +363,14 @@ class RagRetriever:
 
     ```python
     >>> # To load the default "wiki_dpr" dataset with 21M passages from wikipedia (index name is 'compressed' or 'exact')
-    >>> from transformers import RagRetriever
+    >>> from tiny_hf.transformers.import RagRetriever
 
     >>> retriever = RagRetriever.from_pretrained(
     ...     "facebook/dpr-ctx_encoder-single-nq-base", dataset="wiki_dpr", index_name="compressed"
     ... )
 
     >>> # To load your own indexed dataset built with the datasets library. More info on how to build the indexed dataset in examples/rag/use_own_knowledge_dataset.py
-    >>> from transformers import RagRetriever
+    >>> from tiny_hf.transformers.import RagRetriever
 
     >>> dataset = (
     ...     ...
@@ -378,7 +378,7 @@ class RagRetriever:
     >>> retriever = RagRetriever.from_pretrained("facebook/dpr-ctx_encoder-single-nq-base", indexed_dataset=dataset)
 
     >>> # To load your own indexed dataset built with the datasets library that was saved on disk. More info in examples/rag/use_own_knowledge_dataset.py
-    >>> from transformers import RagRetriever
+    >>> from tiny_hf.transformers.import RagRetriever
 
     >>> dataset_path = "path/to/my/dataset"  # dataset saved via *dataset.save_to_disk(...)*
     >>> index_path = "path/to/my/index.faiss"  # faiss index saved via *dataset.get_index("embeddings").save(...)*
@@ -390,7 +390,7 @@ class RagRetriever:
     ... )
 
     >>> # To load the legacy index built originally for Rag's paper
-    >>> from transformers import RagRetriever
+    >>> from tiny_hf.transformers.import RagRetriever
 
     >>> retriever = RagRetriever.from_pretrained("facebook/dpr-ctx_encoder-single-nq-base", index_name="legacy")
     ```"""

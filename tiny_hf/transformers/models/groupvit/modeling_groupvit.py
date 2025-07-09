@@ -19,9 +19,9 @@ from dataclasses import dataclass
 from typing import Any, Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...modeling_attn_mask_utils import _create_4d_causal_attention_mask, _prepare_4d_attention_mask
@@ -49,7 +49,7 @@ def contrastive_loss(logits: torch.Tensor) -> torch.Tensor:
     return nn.functional.cross_entropy(logits, torch.arange(len(logits), device=logits.device))
 
 
-# Copied from transformers.models.clip.modeling_clip.clip_loss with clip->groupvit
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.clip_loss with clip->groupvit
 def groupvit_loss(similarity: torch.Tensor) -> torch.Tensor:
     caption_loss = contrastive_loss(similarity)
     image_loss = contrastive_loss(similarity.t())
@@ -425,7 +425,7 @@ class GroupViTVisionEmbeddings(nn.Module):
         return embeddings
 
 
-# Copied from transformers.models.clip.modeling_clip.CLIPTextEmbeddings with CLIP->GroupViT
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPTextEmbeddings with CLIP->GroupViT
 class GroupViTTextEmbeddings(nn.Module):
     def __init__(self, config: GroupViTTextConfig):
         super().__init__()
@@ -700,7 +700,7 @@ class GroupViTAttention(nn.Module):
         return attn_output, attn_weights_reshaped
 
 
-# Copied from transformers.models.altclip.modeling_altclip.AltCLIPEncoderLayer with AltCLIP->GroupViT
+# Copied from tiny_hf.transformers.models.altclip.modeling_altclip.AltCLIPEncoderLayer with AltCLIP->GroupViT
 class GroupViTEncoderLayer(nn.Module):
     def __init__(self, config: GroupViTConfig):
         super().__init__()
@@ -1175,7 +1175,7 @@ class GroupViTTextModel(GroupViTPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import CLIPTokenizer, GroupViTTextModel
+        >>> from tiny_hf.transformers.import CLIPTokenizer, GroupViTTextModel
 
         >>> tokenizer = CLIPTokenizer.from_pretrained("nvidia/groupvit-gcc-yfcc")
         >>> model = GroupViTTextModel.from_pretrained("nvidia/groupvit-gcc-yfcc")
@@ -1284,7 +1284,7 @@ class GroupViTVisionModel(GroupViTPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, GroupViTVisionModel
+        >>> from tiny_hf.transformers.import AutoProcessor, GroupViTVisionModel
 
         >>> processor = AutoProcessor.from_pretrained("nvidia/groupvit-gcc-yfcc")
         >>> model = GroupViTVisionModel.from_pretrained("nvidia/groupvit-gcc-yfcc")
@@ -1371,7 +1371,7 @@ class GroupViTModel(GroupViTPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import CLIPTokenizer, GroupViTModel
+        >>> from tiny_hf.transformers.import CLIPTokenizer, GroupViTModel
 
         >>> model = GroupViTModel.from_pretrained("nvidia/groupvit-gcc-yfcc")
         >>> tokenizer = CLIPTokenizer.from_pretrained("nvidia/groupvit-gcc-yfcc")
@@ -1418,7 +1418,7 @@ class GroupViTModel(GroupViTPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, GroupViTModel
+        >>> from tiny_hf.transformers.import AutoProcessor, GroupViTModel
 
         >>> model = GroupViTModel.from_pretrained("nvidia/groupvit-gcc-yfcc")
         >>> processor = AutoProcessor.from_pretrained("nvidia/groupvit-gcc-yfcc")
@@ -1471,7 +1471,7 @@ class GroupViTModel(GroupViTPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, GroupViTModel
+        >>> from tiny_hf.transformers.import AutoProcessor, GroupViTModel
 
         >>> model = GroupViTModel.from_pretrained("nvidia/groupvit-gcc-yfcc")
         >>> processor = AutoProcessor.from_pretrained("nvidia/groupvit-gcc-yfcc")

@@ -19,10 +19,10 @@ import math
 from typing import List, Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -51,7 +51,7 @@ _CONFIG_FOR_DOC = "MarianConfig"
 _CHECKPOINT_FOR_DOC = "Helsinki-NLP/opus-mt-en-de"
 
 
-# Copied from transformers.models.bart.modeling_bart.shift_tokens_right
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.shift_tokens_right
 def shift_tokens_right(input_ids: torch.Tensor, pad_token_id: int, decoder_start_token_id: int):
     """
     Shift input ids one token to the right.
@@ -102,7 +102,7 @@ class MarianSinusoidalPositionalEmbedding(nn.Embedding):
         return super().forward(positions)
 
 
-# Copied from transformers.models.bart.modeling_bart.BartAttention with Bart->Marian
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartAttention with Bart->Marian
 class MarianAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -261,7 +261,7 @@ class MarianAttention(nn.Module):
         return attn_output, attn_weights_reshaped, past_key_value
 
 
-# Copied from transformers.models.bart.modeling_bart.BartEncoderLayer with Bart->Marian, BART->MARIAN
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartEncoderLayer with Bart->Marian, BART->MARIAN
 class MarianEncoderLayer(nn.Module):
     def __init__(self, config: MarianConfig):
         super().__init__()
@@ -335,7 +335,7 @@ class MarianEncoderLayer(nn.Module):
 MARIAN_ATTENTION_CLASSES = {"eager": MarianAttention}
 
 
-# Copied from transformers.models.bart.modeling_bart.BartDecoderLayer with Bart->Marian, BART->MARIAN
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartDecoderLayer with Bart->Marian, BART->MARIAN
 class MarianDecoderLayer(nn.Module):
     def __init__(self, config: MarianConfig):
         super().__init__()
@@ -509,7 +509,7 @@ MARIAN_GENERATION_EXAMPLE = r"""
     Examples:
 
     ```python
-    >>> from transformers import AutoTokenizer, MarianMTModel
+    >>> from tiny_hf.transformers.import AutoTokenizer, MarianMTModel
 
     >>> src = "fr"  # source language
     >>> trg = "en"  # target language
@@ -1149,7 +1149,7 @@ class MarianModel(MarianPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, MarianModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, MarianModel
 
         >>> tokenizer = AutoTokenizer.from_pretrained("Helsinki-NLP/opus-mt-en-de")
         >>> model = MarianModel.from_pretrained("Helsinki-NLP/opus-mt-en-de")
@@ -1455,7 +1455,7 @@ class MarianMTModel(MarianPreTrainedModel, GenerationMixin):
         return reordered_past
 
 
-# Copied from transformers.models.bart.modeling_bart.BartDecoderWrapper with Bart->Marian
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartDecoderWrapper with Bart->Marian
 class MarianDecoderWrapper(MarianPreTrainedModel):
     """
     This wrapper class is a helper class to correctly load pretrained checkpoints when the causal language model is
@@ -1470,7 +1470,7 @@ class MarianDecoderWrapper(MarianPreTrainedModel):
         return self.decoder(*args, **kwargs)
 
 
-# Copied from transformers.models.bart.modeling_bart.BartForCausalLM with Bart->Marian, facebook/bart-base->Helsinki-NLP/opus-mt-fr-en
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartForCausalLM with Bart->Marian, facebook/bart-base->Helsinki-NLP/opus-mt-fr-en
 class MarianForCausalLM(MarianPreTrainedModel, GenerationMixin):
     _tied_weights_keys = ["lm_head.weight"]
 
@@ -1592,7 +1592,7 @@ class MarianForCausalLM(MarianPreTrainedModel, GenerationMixin):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, MarianForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, MarianForCausalLM
 
         >>> tokenizer = AutoTokenizer.from_pretrained("Helsinki-NLP/opus-mt-fr-en")
         >>> model = MarianForCausalLM.from_pretrained("Helsinki-NLP/opus-mt-fr-en", add_cross_attention=False)

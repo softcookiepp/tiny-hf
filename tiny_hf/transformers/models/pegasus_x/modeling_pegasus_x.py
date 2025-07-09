@@ -19,10 +19,10 @@ import math
 from typing import Optional, Tuple, Union
 
 import numpy as np
-import torch
-import torch.utils.checkpoint
-from torch import nn
-from torch.nn import CrossEntropyLoss
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
+from tg_adapter.nn import CrossEntropyLoss
 
 from ...activations import ACT2FN
 from ...generation import GenerationMixin
@@ -68,7 +68,7 @@ class DimensionInfo:
     #       a multiple of block size at the start of the encoder layers, so T=P always.
 
 
-# Copied from transformers.models.bart.modeling_bart.shift_tokens_right
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.shift_tokens_right
 def shift_tokens_right(input_ids: torch.Tensor, pad_token_id: int, decoder_start_token_id: int):
     """
     Shift input ids one token to the right.
@@ -85,7 +85,7 @@ def shift_tokens_right(input_ids: torch.Tensor, pad_token_id: int, decoder_start
     return shifted_input_ids
 
 
-# Copied from transformers.models.bart.modeling_bart.BartScaledWordEmbedding with Bart->PegasusX
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartScaledWordEmbedding with Bart->PegasusX
 class PegasusXScaledWordEmbedding(nn.Embedding):
     """
     This module overrides nn.Embeddings' forward by multiplying with embeddings scale.
@@ -125,7 +125,7 @@ class PegasusXSinusoidalPositionalEmbedding(nn.Module):
         return pe[None].expand(batch_size, -1, -1)
 
 
-# Copied from transformers.models.bart.modeling_bart.BartAttention with Bart->PegasusX
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartAttention with Bart->PegasusX
 class PegasusXAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -781,7 +781,7 @@ PEGASUS_X_GENERATION_EXAMPLE = r"""
     Summarization example:
 
     ```python
-    >>> from transformers import AutoTokenizer, PegasusXForConditionalGeneration
+    >>> from tiny_hf.transformers.import AutoTokenizer, PegasusXForConditionalGeneration
 
     >>> model = PegasusXForConditionalGeneration.from_pretrained("google/pegasus-x-base")
     >>> tokenizer = AutoTokenizer.from_pretrained("google/pegasus-x-large")
@@ -1397,7 +1397,7 @@ class PegasusXModel(PegasusXPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, PegasusModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, PegasusModel
 
         >>> tokenizer = AutoTokenizer.from_pretrained("google/pegasus-x-large")
         >>> model = PegasusModel.from_pretrained("google/pegasus-x-large")
@@ -1603,7 +1603,7 @@ class PegasusXForConditionalGeneration(PegasusXPreTrainedModel, GenerationMixin)
         return reordered_past
 
 
-# Copied from transformers.models.bart.modeling_bart.BartDecoderWrapper with Bart->PegasusX
+# Copied from tiny_hf.transformers.models.bart.modeling_bart.BartDecoderWrapper with Bart->PegasusX
 class PegasusXDecoderWrapper(PegasusXPreTrainedModel):
     """
     This wrapper class is a helper class to correctly load pretrained checkpoints when the causal language model is

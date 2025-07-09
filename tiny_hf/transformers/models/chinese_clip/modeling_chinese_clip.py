@@ -18,9 +18,9 @@ import math
 from dataclasses import dataclass
 from typing import Any, List, Optional, Tuple, Union
 
-import torch
-import torch.utils.checkpoint
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.utils.checkpoint
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...modeling_outputs import (
@@ -50,7 +50,7 @@ _CONFIG_FOR_DOC = "ChineseCLIPConfig"
 
 
 # https://sachinruk.github.io/blog/pytorch/pytorch%20lightning/loss%20function/gpu/2021/03/07/CLIP.html
-# Copied from transformers.models.clip.modeling_clip.contrastive_loss
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.contrastive_loss
 def contrastive_loss(logits: torch.Tensor) -> torch.Tensor:
     return nn.functional.cross_entropy(logits, torch.arange(len(logits), device=logits.device))
 
@@ -100,7 +100,7 @@ class ChineseCLIPOutput(ModelOutput):
         )
 
 
-# Copied from transformers.models.bert.modeling_bert.BertEmbeddings with Bert->ChineseCLIPText
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertEmbeddings with Bert->ChineseCLIPText
 class ChineseCLIPTextEmbeddings(nn.Module):
     """Construct the embeddings from word, position and token_type embeddings."""
 
@@ -165,7 +165,7 @@ class ChineseCLIPTextEmbeddings(nn.Module):
         return embeddings
 
 
-# Copied from transformers.models.clip.modeling_clip.CLIPVisionEmbeddings with CLIP->ChineseCLIP
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPVisionEmbeddings with CLIP->ChineseCLIP
 class ChineseCLIPVisionEmbeddings(nn.Module):
     def __init__(self, config: ChineseCLIPVisionConfig):
         super().__init__()
@@ -249,7 +249,7 @@ class ChineseCLIPVisionEmbeddings(nn.Module):
         return embeddings
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfAttention with Bert->ChineseCLIPText
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfAttention with Bert->ChineseCLIPText
 class ChineseCLIPTextSelfAttention(nn.Module):
     def __init__(self, config, position_embedding_type=None):
         super().__init__()
@@ -384,7 +384,7 @@ class ChineseCLIPTextSelfAttention(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertSelfOutput with Bert->ChineseCLIPText
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertSelfOutput with Bert->ChineseCLIPText
 class ChineseCLIPTextSelfOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -404,7 +404,7 @@ CHINESE_CLIP_TEXT_SELF_ATTENTION_CLASSES = {
 }
 
 
-# Copied from transformers.models.bert.modeling_bert.BertAttention with Bert->ChineseCLIPText,BERT->CHINESE_CLIP_TEXT
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertAttention with Bert->ChineseCLIPText,BERT->CHINESE_CLIP_TEXT
 class ChineseCLIPTextAttention(nn.Module):
     def __init__(self, config, position_embedding_type=None):
         super().__init__()
@@ -540,7 +540,7 @@ class ChineseCLIPVisionAttention(nn.Module):
         return attn_output, attn_weights_reshaped
 
 
-# Copied from transformers.models.bert.modeling_bert.BertIntermediate with Bert->ChineseCLIPText
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertIntermediate with Bert->ChineseCLIPText
 class ChineseCLIPTextIntermediate(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -556,7 +556,7 @@ class ChineseCLIPTextIntermediate(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertOutput with Bert->ChineseCLIPText
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertOutput with Bert->ChineseCLIPText
 class ChineseCLIPTextOutput(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -571,7 +571,7 @@ class ChineseCLIPTextOutput(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.clip.modeling_clip.CLIPMLP with CLIP->ChineseCLIPVision
+# Copied from tiny_hf.transformers.models.clip.modeling_clip.CLIPMLP with CLIP->ChineseCLIPVision
 class ChineseCLIPVisionMLP(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -587,7 +587,7 @@ class ChineseCLIPVisionMLP(nn.Module):
         return hidden_states
 
 
-# Copied from transformers.models.bert.modeling_bert.BertLayer with Bert->ChineseCLIPText
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertLayer with Bert->ChineseCLIPText
 class ChineseCLIPTextLayer(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -717,7 +717,7 @@ class ChineseCLIPVisionLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bert.modeling_bert.BertPooler with Bert->ChineseCLIPText
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertPooler with Bert->ChineseCLIPText
 class ChineseCLIPTextPooler(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -916,7 +916,7 @@ CHINESE_CLIP_INPUTS_DOCSTRING = r"""
 """
 
 
-# Copied from transformers.models.bert.modeling_bert.BertEncoder with Bert->ChineseCLIPText
+# Copied from tiny_hf.transformers.models.bert.modeling_bert.BertEncoder with Bert->ChineseCLIPText
 class ChineseCLIPTextEncoder(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -1364,7 +1364,7 @@ class ChineseCLIPVisionModel(ChineseCLIPPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import CLIPProcessor, ChineseCLIPVisionModel
+        >>> from tiny_hf.transformers.import CLIPProcessor, ChineseCLIPVisionModel
 
         >>> model = ChineseCLIPVisionModel.from_pretrained("OFA-Sys/chinese-clip-vit-base-patch16")
         >>> processor = CLIPProcessor.from_pretrained("OFA-Sys/chinese-clip-vit-base-patch16")
@@ -1444,7 +1444,7 @@ class ChineseCLIPModel(ChineseCLIPPreTrainedModel):
         Examples:
 
         ```python
-        >>> from transformers import AutoTokenizer, ChineseCLIPModel
+        >>> from tiny_hf.transformers.import AutoTokenizer, ChineseCLIPModel
 
         >>> model = ChineseCLIPModel.from_pretrained("OFA-Sys/chinese-clip-vit-base-patch16")
         >>> tokenizer = AutoTokenizer.from_pretrained("OFA-Sys/chinese-clip-vit-base-patch16")
@@ -1494,7 +1494,7 @@ class ChineseCLIPModel(ChineseCLIPPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, ChineseCLIPModel
+        >>> from tiny_hf.transformers.import AutoProcessor, ChineseCLIPModel
 
         >>> model = ChineseCLIPModel.from_pretrained("OFA-Sys/chinese-clip-vit-base-patch16")
         >>> processor = AutoProcessor.from_pretrained("OFA-Sys/chinese-clip-vit-base-patch16")
@@ -1550,7 +1550,7 @@ class ChineseCLIPModel(ChineseCLIPPreTrainedModel):
         ```python
         >>> from PIL import Image
         >>> import requests
-        >>> from transformers import AutoProcessor, ChineseCLIPModel
+        >>> from tiny_hf.transformers.import AutoProcessor, ChineseCLIPModel
 
         >>> model = ChineseCLIPModel.from_pretrained("OFA-Sys/chinese-clip-vit-base-patch16")
         >>> processor = AutoProcessor.from_pretrained("OFA-Sys/chinese-clip-vit-base-patch16")

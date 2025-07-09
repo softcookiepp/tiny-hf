@@ -15,9 +15,9 @@
 
 import argparse
 
-import torch
+import tg_adapter as torch
 
-from transformers import ChineseCLIPConfig, ChineseCLIPModel
+from tiny_hf.transformers.import ChineseCLIPConfig, ChineseCLIPModel
 
 
 def copy_attn_layer(hf_attn_layer, pt_weights, prefix):

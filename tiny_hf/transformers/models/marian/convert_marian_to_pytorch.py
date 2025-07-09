@@ -23,12 +23,12 @@ from typing import Dict, List, Union
 from zipfile import ZipFile
 
 import numpy as np
-import torch
+import tg_adapter as torch
 from huggingface_hub.hf_api import list_models
-from torch import nn
+from tg_adapter.import nn
 from tqdm import tqdm
 
-from transformers import MarianConfig, MarianMTModel, MarianTokenizer
+from tiny_hf.transformers.import MarianConfig, MarianMTModel, MarianTokenizer
 
 
 def remove_suffix(text: str, suffix: str):

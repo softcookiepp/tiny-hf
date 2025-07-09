@@ -2,7 +2,7 @@ import argparse
 
 from fairseq.checkpoint_utils import load_checkpoint_to_cpu
 
-from transformers import Kosmos2Config, Kosmos2ForConditionalGeneration
+from tiny_hf.transformers.import Kosmos2Config, Kosmos2ForConditionalGeneration
 
 
 KEYS_TO_MODIFY_MAPPING = {

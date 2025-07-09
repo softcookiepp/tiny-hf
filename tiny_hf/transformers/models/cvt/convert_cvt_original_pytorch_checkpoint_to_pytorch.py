@@ -21,10 +21,10 @@ import json
 from collections import OrderedDict
 from pathlib import Path
 
-import torch
+import tg_adapter as torch
 from huggingface_hub import hf_hub_download
 
-from transformers import AutoImageProcessor, CvtConfig, CvtForImageClassification
+from tiny_hf.transformers.import AutoImageProcessor, CvtConfig, CvtForImageClassification
 
 
 def embeddings(idx):

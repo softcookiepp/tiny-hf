@@ -240,7 +240,7 @@ def shift_tokens_right(input_ids: jnp.ndarray, pad_token_id: int) -> jnp.ndarray
     return prev_output_tokens
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartAttention with Bart->MBart
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartAttention with Bart->MBart
 class FlaxMBartAttention(nn.Module):
     config: MBartConfig
     embed_dim: int
@@ -464,7 +464,7 @@ class FlaxMBartEncoderLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartEncoderLayerCollection with Bart->MBart
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartEncoderLayerCollection with Bart->MBart
 class FlaxMBartEncoderLayerCollection(nn.Module):
     config: MBartConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -607,7 +607,7 @@ class FlaxMBartDecoderLayer(nn.Module):
         return outputs
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartDecoderLayerCollection with Bart->MBart
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartDecoderLayerCollection with Bart->MBart
 class FlaxMBartDecoderLayerCollection(nn.Module):
     config: MBartConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -678,7 +678,7 @@ class FlaxMBartDecoderLayerCollection(nn.Module):
         )
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartClassificationHead with Bart->MBart
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartClassificationHead with Bart->MBart
 class FlaxMBartClassificationHead(nn.Module):
     """Head for sentence-level classification tasks."""
 
@@ -868,7 +868,7 @@ class FlaxMBartDecoder(nn.Module):
         )
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartModule with Bart->MBart
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartModule with Bart->MBart
 class FlaxMBartModule(nn.Module):
     config: MBartConfig
     dtype: jnp.dtype = jnp.float32  # the dtype of the computation
@@ -992,7 +992,7 @@ class FlaxMBartPreTrainedModel(FlaxPreTrainedModel):
         else:
             return random_params
 
-    # Copied from transformers.models.bart.modeling_flax_bart.FlaxBartPreTrainedModel.init_cache with Bart->MBart
+    # Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartPreTrainedModel.init_cache with Bart->MBart
     def init_cache(self, batch_size, max_length, encoder_outputs):
         r"""
         Args:
@@ -1054,7 +1054,7 @@ class FlaxMBartPreTrainedModel(FlaxPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, FlaxMBartForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, FlaxMBartForConditionalGeneration
 
         >>> model = FlaxMBartForConditionalGeneration.from_pretrained("facebook/mbart-large-cc25")
         >>> tokenizer = AutoTokenizer.from_pretrained("facebook/mbart-large-cc25")
@@ -1120,7 +1120,7 @@ class FlaxMBartPreTrainedModel(FlaxPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, FlaxMBartForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, FlaxMBartForConditionalGeneration
 
         >>> model = FlaxMBartForConditionalGeneration.from_pretrained("facebook/mbart-large-cc25")
         >>> tokenizer = AutoTokenizer.from_pretrained("facebook/mbart-large-cc25")
@@ -1282,7 +1282,7 @@ class FlaxMBartModel(FlaxMBartPreTrainedModel):
 append_call_sample_docstring(FlaxMBartModel, _CHECKPOINT_FOR_DOC, FlaxSeq2SeqModelOutput, _CONFIG_FOR_DOC)
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartForConditionalGenerationModule with Bart->MBart
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartForConditionalGenerationModule with Bart->MBart
 class FlaxMBartForConditionalGenerationModule(nn.Module):
     config: MBartConfig
     dtype: jnp.dtype = jnp.float32
@@ -1385,7 +1385,7 @@ class FlaxMBartForConditionalGeneration(FlaxMBartPreTrainedModel):
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, FlaxMBartForConditionalGeneration
+        >>> from tiny_hf.transformers.import AutoTokenizer, FlaxMBartForConditionalGeneration
 
         >>> model = FlaxMBartForConditionalGeneration.from_pretrained("facebook/mbart-large-cc25")
         >>> tokenizer = AutoTokenizer.from_pretrained("facebook/mbart-large-cc25")
@@ -1541,7 +1541,7 @@ FLAX_MBART_CONDITIONAL_GENERATION_DOCSTRING = r"""
     Summarization example:
 
     ```python
-    >>> from transformers import AutoTokenizer, FlaxMBartForConditionalGeneration, MBartConfig
+    >>> from tiny_hf.transformers.import AutoTokenizer, FlaxMBartForConditionalGeneration, MBartConfig
 
     >>> model = FlaxMBartForConditionalGeneration.from_pretrained("facebook/mbart-large-cc25")
     >>> tokenizer = AutoTokenizer.from_pretrained("facebook/mbart-large-cc25")
@@ -1557,7 +1557,7 @@ FLAX_MBART_CONDITIONAL_GENERATION_DOCSTRING = r"""
     Mask filling example:
 
     ```python
-    >>> from transformers import AutoTokenizer, FlaxMBartForConditionalGeneration
+    >>> from tiny_hf.transformers.import AutoTokenizer, FlaxMBartForConditionalGeneration
 
     >>> model = FlaxMBartForConditionalGeneration.from_pretrained("facebook/mbart-large-cc25")
     >>> tokenizer = AutoTokenizer.from_pretrained("facebook/mbart-large-cc25")
@@ -1583,7 +1583,7 @@ append_replace_return_docstrings(
 )
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartForSequenceClassificationModule with Bart->MBart
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartForSequenceClassificationModule with Bart->MBart
 class FlaxMBartForSequenceClassificationModule(nn.Module):
     config: MBartConfig
     dtype: jnp.dtype = jnp.float32
@@ -1684,7 +1684,7 @@ append_call_sample_docstring(
 )
 
 
-# Copied from transformers.models.bart.modeling_flax_bart.FlaxBartForQuestionAnsweringModule with Bart->MBart
+# Copied from tiny_hf.transformers.models.bart.modeling_flax_bart.FlaxBartForQuestionAnsweringModule with Bart->MBart
 class FlaxMBartForQuestionAnsweringModule(nn.Module):
     config: MBartConfig
     dtype: jnp.dtype = jnp.float32

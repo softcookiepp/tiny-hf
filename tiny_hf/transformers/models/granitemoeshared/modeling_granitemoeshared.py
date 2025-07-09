@@ -21,9 +21,9 @@
 # limitations under the License.
 from typing import List, Optional, Tuple, Union
 
-import torch
-import torch.nn.functional as F
-from torch import nn
+import tg_adapter as torch
+import tg_adapter.nn.functional as F
+from tg_adapter.import nn
 
 from ...activations import ACT2FN
 from ...cache_utils import Cache, DynamicCache, StaticCache
@@ -45,7 +45,7 @@ from .configuration_granitemoeshared import GraniteMoeSharedConfig
 
 
 if is_torch_flex_attn_available():
-    from torch.nn.attention.flex_attention import BlockMask
+    from tg_adapter.nn.attention.flex_attention import BlockMask
 
     from ...integrations.flex_attention import make_flex_block_causal_mask
 
@@ -298,7 +298,7 @@ def repeat_kv(hidden_states: torch.Tensor, n_rep: int) -> torch.Tensor:
     return hidden_states.reshape(batch, num_key_value_heads * n_rep, slen, head_dim)
 
 
-# copied from transformers.models.granite.modeling_granite.GraniteAttention with Granite->GraniteMoeShared
+# copied from tiny_hf.transformers.models.granite.modeling_granite.GraniteAttention with Granite->GraniteMoeShared
 # no longer copied after attention refactors
 class GraniteMoeSharedAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
@@ -396,7 +396,7 @@ class GraniteMoeSharedAttention(nn.Module):
         return attn_output, attn_weights, past_key_value
 
 
-# NO LONGER EXIST Copied from transformers.models.granite.modeling_granite.GraniteFlashAttention2 with Granite->GraniteMoeShared
+# NO LONGER EXIST Copied from tiny_hf.transformers.models.granite.modeling_granite.GraniteFlashAttention2 with Granite->GraniteMoeShared
 # TODO cyril: modular
 class GraniteMoeSharedFlashAttention2(GraniteMoeSharedAttention):
     """
@@ -504,7 +504,7 @@ class GraniteMoeSharedFlashAttention2(GraniteMoeSharedAttention):
         return attn_output, attn_weights, past_key_value
 
 
-# NO LONGER EXIST Copied from transformers.models.granite.modeling_granite.GraniteSdpaAttention with Granite->GraniteMoeShared
+# NO LONGER EXIST Copied from tiny_hf.transformers.models.granite.modeling_granite.GraniteSdpaAttention with Granite->GraniteMoeShared
 # TODO cyril: modular
 class GraniteMoeSharedSdpaAttention(GraniteMoeSharedAttention):
     """
@@ -1335,7 +1335,7 @@ class GraniteMoeSharedForCausalLM(GraniteMoeSharedPreTrainedModel, GenerationMix
         Example:
 
         ```python
-        >>> from transformers import AutoTokenizer, GraniteMoeSharedForCausalLM
+        >>> from tiny_hf.transformers.import AutoTokenizer, GraniteMoeSharedForCausalLM
 
         >>> model = GraniteMoeSharedForCausalLM.from_pretrained("ibm/PowerMoE-3b")
         >>> tokenizer = AutoTokenizer.from_pretrained("ibm/PowerMoE-3b")

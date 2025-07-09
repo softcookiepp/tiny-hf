@@ -75,7 +75,7 @@ class MraConfig(PretrainedConfig):
     Example:
 
     ```python
-    >>> from transformers import MraConfig, MraModel
+    >>> from tiny_hf.transformers.import MraConfig, MraModel
 
     >>> # Initializing a Mra uw-madison/mra-base-512-4 style configuration
     >>> configuration = MraConfig()

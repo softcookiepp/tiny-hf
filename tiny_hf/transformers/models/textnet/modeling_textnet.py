@@ -16,27 +16,27 @@
 
 from typing import Any, List, Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
-from torch import Tensor
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+import tg_adapter as torch
+import tg_adapter.nn as nn
+from tg_adapter.import Tensor
+from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
-from transformers import PreTrainedModel, add_start_docstrings
-from transformers.activations import ACT2CLS
-from transformers.modeling_outputs import (
+from tiny_hf.transformers.import PreTrainedModel, add_start_docstrings
+from tiny_hf.transformers.activations import ACT2CLS
+from tiny_hf.transformers.modeling_outputs import (
     BackboneOutput,
     BaseModelOutputWithNoAttention,
     BaseModelOutputWithPoolingAndNoAttention,
     ImageClassifierOutputWithNoAttention,
 )
-from transformers.models.textnet.configuration_textnet import TextNetConfig
-from transformers.utils import (
+from tiny_hf.transformers.models.textnet.configuration_textnet import TextNetConfig
+from tiny_hf.transformers.utils import (
     add_code_sample_docstrings,
     add_start_docstrings_to_model_forward,
     logging,
     replace_return_docstrings,
 )
-from transformers.utils.backbone_utils import BackboneMixin
+from tiny_hf.transformers.utils.backbone_utils import BackboneMixin
 
 
 logger = logging.get_logger(__name__)
@@ -359,9 +359,9 @@ class TextNetForImageClassification(TextNetPreTrainedModel):
 
         Examples:
         ```python
-        >>> import torch
+        >>> import tg_adapter as torch
         >>> import requests
-        >>> from transformers import TextNetForImageClassification, TextNetImageProcessor
+        >>> from tiny_hf.transformers.import TextNetForImageClassification, TextNetImageProcessor
         >>> from PIL import Image
 
         >>> url = "http://images.cocodataset.org/val2017/000000039769.jpg"
@@ -441,10 +441,10 @@ class TextNetBackbone(TextNetPreTrainedModel, BackboneMixin):
         Examples:
 
         ```python
-        >>> import torch
+        >>> import tg_adapter as torch
         >>> import requests
         >>> from PIL import Image
-        >>> from transformers import AutoImageProcessor, AutoBackbone
+        >>> from tiny_hf.transformers.import AutoImageProcessor, AutoBackbone
 
         >>> url = "http://images.cocodataset.org/val2017/000000039769.jpg"
         >>> image = Image.open(requests.get(url, stream=True).raw)
