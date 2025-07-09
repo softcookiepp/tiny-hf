@@ -371,6 +371,7 @@ def cached_files(
     full_filenames = [os.path.join(subfolder, file) for file in filenames]
 
     try:
+        print(path_or_repo_id.__dir__() )
         path_or_repo_id = path_or_repo_id["_name_or_path"]
     except (TypeError, IndexError) as e:
         path_or_repo_id = str(path_or_repo_id)
