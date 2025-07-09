@@ -563,8 +563,10 @@ def test_quantized_weights():
 			ids = tg_tokenizer(["a cute bunny"], return_tensors = "pt")
 		return llm.generate(**(ids ))
 	
-	_test_hf_reimplementation([], {}, hf_model, _inference, tg_model, _inference)
-	
+	try:
+		_test_hf_reimplementation([], {}, hf_model, _inference, tg_model, _inference)
+	except RecursionError:
+		_test_all_submodules(hf_model, tg_model)
 	
 	
 
