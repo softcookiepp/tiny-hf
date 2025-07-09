@@ -421,7 +421,7 @@ def cached_files(
     try:
         if len(full_filenames) == 1:
             # This is slightly better for only 1 file
-            print(path_or_repo_id)
+            print({"path_or_repo_id": path_or_repo_id})
             input(filenames)
             hf_hub_download(
                 path_or_repo_id,
