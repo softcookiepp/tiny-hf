@@ -554,6 +554,9 @@ def test_quantized_weights():
 	hf_tokenizer = hf_tokenizer_class.from_pretrained(model_id, gguf_file=filename)
 	hf_model = hf_model_class.from_pretrained(model_id, gguf_file=filename)
 	
+	from transformers import pipeline as hf_pipeline_class
+	hf_pipeline = hf_pipeline_class(model = hf_model)
+	out = hf_pipeline(["peepeepoopoo"])
 	
 	
 	
