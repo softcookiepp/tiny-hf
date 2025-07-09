@@ -554,7 +554,12 @@ def test_quantized_weights():
 	hf_tokenizer = hf_tokenizer_class.from_pretrained(model_id, gguf_file=filename)
 	hf_model = hf_model_class.from_pretrained(model_id, gguf_file=filename)
 	
-	_test_hf_reimplementation([], {}, hf_model, "__call__", tg_model, "__call__")
+	def _inference(*args, **kwargs):
+		print(args)
+		print(kwargs)
+		raise NotImplementedError
+	
+	_test_hf_reimplementation([], {}, hf_model, _inference, tg_model, _inference)
 	
 	
 	
