@@ -371,8 +371,8 @@ def cached_files(
     full_filenames = [os.path.join(subfolder, file) for file in filenames]
 
     try:
-        path_or_repo_id = path_or_repo_id._name_or_path
-    except AttributeError:
+        path_or_repo_id = path_or_repo_id["_name_or_path"]
+    except IndexError:
         path_or_repo_id = str(path_or_repo_id)
     existing_files = []
     for filename in full_filenames:
