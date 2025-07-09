@@ -559,7 +559,7 @@ def test_quantized_weights():
 			ids = hf_tokenizer(["a cute bunny"], return_tensors = "pt")
 		else:
 			ids = tg_tokenizer(["a cute bunny"], return_tensors = "pt")
-		return llm.generate(**ids)
+		return llm.generate(**(ids.to(llm.device) ))
 	
 	_test_hf_reimplementation([], {}, hf_model, _inference, tg_model, _inference)
 	
