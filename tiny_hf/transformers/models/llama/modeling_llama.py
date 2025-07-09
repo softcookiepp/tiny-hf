@@ -105,6 +105,7 @@ class LlamaRotaryEmbedding(nn.Module):
         self.__device = device
         #self.register_buffer("inv_freq", inv_freq, persistent=False)
         #self.original_inv_freq = self.inv_freq
+        input(hasattr(self, "inv_freq") )
 
     def _dynamic_frequency_update(self, position_ids, device):
         """
