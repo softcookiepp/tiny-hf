@@ -102,8 +102,9 @@ class LlamaRotaryEmbedding(nn.Module):
         self.rope_init_fn = ROPE_INIT_FUNCTIONS[self.rope_type]
 
         inv_freq, self.attention_scaling = self.rope_init_fn(self.config, device)
-        self.register_buffer("inv_freq", inv_freq, persistent=False)
-        self.original_inv_freq = self.inv_freq
+        self.__device = device
+        #self.register_buffer("inv_freq", inv_freq, persistent=False)
+        #self.original_inv_freq = self.inv_freq
 
     def _dynamic_frequency_update(self, position_ids, device):
         """
@@ -126,6 +127,9 @@ class LlamaRotaryEmbedding(nn.Module):
 
     @torch.no_grad()
     def forward(self, x, position_ids):
+        if not hasattr(self, "inv_freq"):
+            self.inv_freq = self.rope_init_fn(self.config, self.__device)[0]
+            self.original_inv_freq = self.inv_freq
         if "dynamic" in self.rope_type:
             self._dynamic_frequency_update(position_ids, device=x.device)
 
