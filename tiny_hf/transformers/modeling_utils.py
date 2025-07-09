@@ -4440,8 +4440,9 @@ class PreTrainedModel(nn.Module, ModuleUtilsMixin, GenerationMixin, PushToHubMix
 
 				# we need a dummy model to get the state_dict - for this reason, we keep the state_dict as if it was
 				# passed directly as a kwarg from now on
-				with torch.device("meta"):
-					dummy_model = cls(config)
+				#with torch.device("meta"):
+				# tinygrad doesn't care
+				dummy_model = cls(config)
 				state_dict = load_gguf_checkpoint(checkpoint_files[0], return_tensors=True, model_to_load=dummy_model)[
 					"tensors"
 				]
