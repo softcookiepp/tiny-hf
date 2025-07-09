@@ -554,10 +554,12 @@ def test_quantized_weights():
 	hf_tokenizer = hf_tokenizer_class.from_pretrained(model_id, gguf_file=filename)
 	hf_model = hf_model_class.from_pretrained(model_id, gguf_file=filename)
 	
-	def _inference(*args, **kwargs):
-		print(args)
-		print(kwargs)
-		raise NotImplementedError
+	def _inference(llm, _torch):
+		if _torch == torch:
+			ids = hf_tokenizer(["a cute bunny"], return_tensors = "pt")
+		else:
+			ids = tg_tokenizer(["a cute bunny"], return_tensors = "pt")
+		return llm(ids)
 	
 	_test_hf_reimplementation([], {}, hf_model, _inference, tg_model, _inference)
 	
