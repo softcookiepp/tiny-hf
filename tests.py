@@ -549,7 +549,6 @@ def test_quantized_weights():
 	from tiny_hf.transformers import AutoTokenizer as tg_tokenizer_class, AutoModelForCausalLM as tg_model_class
 	tg_tokenizer = tg_tokenizer_class.from_pretrained(model_id, gguf_file=filename)
 	tg_model = tg_model_class.from_pretrained(model_id, gguf_file=filename)
-	input(type(tg_model) )
 	
 	from transformers import AutoTokenizer as hf_tokenizer_class, AutoModelForCausalLM as hf_model_class
 	hf_tokenizer = hf_tokenizer_class.from_pretrained(model_id, gguf_file=filename)
