@@ -370,7 +370,7 @@ def cached_files(
     # Add folder to filenames
     full_filenames = [os.path.join(subfolder, file) for file in filenames]
 
-    if "_name_or_path\": " in path_or_repo_id:
+    if "\"_name_or_path\": " in path_or_repo_id:
         # guess we gotta get hacky
         path_or_repo_id = path_or_repo_id.split("\"_name_or_path\": \"")[1].split("\"")[0]
     else:
