@@ -372,7 +372,7 @@ def cached_files(
 
     try:
         path_or_repo_id = path_or_repo_id["_name_or_path"]
-    except IndexError:
+    except (TypeError, IndexError) as e:
         path_or_repo_id = str(path_or_repo_id)
     existing_files = []
     for filename in full_filenames:
