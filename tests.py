@@ -561,11 +561,8 @@ def test_quantized_weights():
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
-	#test_uvit_2d_conv_embed()
-	#input("did it workie?")
-	#test_amused_pipeline()
-	#test_quantized_weights()
-	#input("did it crash?")
+	test_quantized_weights()
+	input("did it crash?")
 	test_audioldm_pipeline()
 	#test_euler_discrete_scheduler()
 	test_stable_diffusion_xl_pipeline()
