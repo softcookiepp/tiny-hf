@@ -370,7 +370,10 @@ def cached_files(
     # Add folder to filenames
     full_filenames = [os.path.join(subfolder, file) for file in filenames]
 
-    path_or_repo_id = str(path_or_repo_id)
+    if hasattr(path_or_repo_id, "_name_or_path"):
+        path_or_repo_id = path_or_repo_id._name_or_path
+    else:
+        path_or_repo_id = str(path_or_repo_id)
     existing_files = []
     for filename in full_filenames:
         if os.path.isdir(path_or_repo_id):
