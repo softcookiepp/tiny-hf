@@ -345,6 +345,8 @@ class LlamaDecoderLayer(nn.Module):
     ) -> Tuple[torch.FloatTensor, Optional[Tuple[torch.FloatTensor, torch.FloatTensor]]]:
         residual = hidden_states
 
+        print(hidden_states.shape)
+        print(position_ids.shape)
         hidden_states = self.input_layernorm(hidden_states)
 
         # Self Attention
