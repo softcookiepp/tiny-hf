@@ -557,7 +557,6 @@ def test_quantized_weights():
 	compare_state_dicts(hf_model, tg_model)
 	ids = hf_tokenizer(["a cute bunny"], return_tensors = "pt")
 	hf_model.generate(**ids)
-	input("did this crap not work?")
 	
 	def _inference(llm, _torch):
 		if _torch == torch:
@@ -592,7 +591,7 @@ def test_llama_decoder_layer():
 	for hf_layer, tg_layer in zip(hf_model.model.layers, tg_model.model.layers):
 		hidden_states = make_test_data(1, 7, 2048)
 		position_ids = make_test_data(1, 7)
-		position_embeddings = np.sin(position_ids), np.cos(position_ids)
+		position_embeddings = make_test_data(1, 7, 64), make_test_data(1, 7, 64)
 		_test_hf_reimplementation([hidden_states], {"position_ids": position_ids, "position_embeddings": position_embeddings}, hf_layer, "__call__", tg_layer, "__call__")
 	
 
