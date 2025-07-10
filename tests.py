@@ -555,6 +555,9 @@ def test_quantized_weights():
 	hf_model = hf_model_class.from_pretrained(model_id, gguf_file=filename)
 	
 	compare_state_dicts(hf_model, tg_model)
+	ids = hf_tokenizer(["a cute bunny"], return_tensors = "pt")
+	hf_model.generate(**ids)
+	input("did this crap not work?")
 	
 	def _inference(llm, _torch):
 		if _torch == torch:
@@ -568,11 +571,33 @@ def test_quantized_weights():
 	except RecursionError:
 		_test_all_submodules(hf_model, tg_model)
 	
+def test_llama_decoder_layer():
+	#raise NotImplementedError
+	#from transformers.models.llama import LlamaDecoderLayer as hf_class
+	#from tiny_hf.transformers.models.llama import LlamaDecoderLayer as tg_class
+	
+	model_id = "TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF"
+	filename = "tinyllama-1.1b-chat-v1.0.Q6_K.gguf"
+	
+	from tiny_hf.transformers import AutoTokenizer as tg_tokenizer_class, AutoModelForCausalLM as tg_model_class
+	tg_tokenizer = tg_tokenizer_class.from_pretrained(model_id, gguf_file=filename)
+	tg_model = tg_model_class.from_pretrained(model_id, gguf_file=filename)
+	
+	from transformers import AutoTokenizer as hf_tokenizer_class, AutoModelForCausalLM as hf_model_class
+	hf_tokenizer = hf_tokenizer_class.from_pretrained(model_id, gguf_file=filename)
+	hf_model = hf_model_class.from_pretrained(model_id, gguf_file=filename)
+	
+	compare_state_dicts(hf_model, tg_model)
+	print(hf_model.model.layers[0])
+	for k, v in tg_model.state_dict().items():
+		print(k)
+		input()
 	
 
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
+	test_llama_decoder_layer()
 	test_quantized_weights()
 	input("did it crash?")
 	test_audioldm_pipeline()
