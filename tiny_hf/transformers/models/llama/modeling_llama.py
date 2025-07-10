@@ -623,6 +623,7 @@ class LlamaModel(LlamaPreTrainedModel):
             hidden_states = layer_outputs[0]
 
             if output_attentions:
+                layer_outputs[1].numpy()
                 all_self_attns += (layer_outputs[1],)
 
         hidden_states = self.norm(hidden_states)
@@ -637,6 +638,7 @@ class LlamaModel(LlamaPreTrainedModel):
             hidden_states=all_hidden_states,
             attentions=all_self_attns,
         )
+        input("here we are! the llama model has been executed at least once")
         return output if return_dict else output.to_tuple()
 
     def _update_causal_mask(
