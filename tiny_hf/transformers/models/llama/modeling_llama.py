@@ -349,6 +349,8 @@ class LlamaDecoderLayer(nn.Module):
         print(position_ids.shape)
         print(attention_mask)
         print(position_embeddings)
+        print(position_embeddings[0].shape)
+        print(position_embeddings[1].shape)
         input(use_cache)
         hidden_states = self.input_layernorm(hidden_states)
 

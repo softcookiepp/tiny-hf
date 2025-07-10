@@ -592,15 +592,14 @@ def test_llama_decoder_layer():
 	for hf_layer, tg_layer in zip(hf_model.model.layers, tg_model.model.layers):
 		hidden_states = make_test_data(1, 7, 2048)
 		position_ids = make_test_data(1, 7)
-		#position_embeddings = np.sin(position_ids), np.cos(position_ids)
-		#position_ids": position_ids}
-		_test_hf_reimplementation([hidden_states], {}, hf_layer, "__call__", tg_layer, "__call__")
+		position_embeddings = np.sin(position_ids), np.cos(position_ids)
+		_test_hf_reimplementation([hidden_states], {"position_ids": position_ids, "position_embeddings": position_embeddings}, hf_layer, "__call__", tg_layer, "__call__")
 	
 
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
-	test_llama_decoder_layer()
+	#test_llama_decoder_layer()
 	test_quantized_weights()
 	input("did it crash?")
 	test_audioldm_pipeline()
