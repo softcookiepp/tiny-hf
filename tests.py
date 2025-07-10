@@ -599,7 +599,8 @@ def test_llama_decoder_layer():
 	
 	# now we test the embed tokens?
 	_test_hf_reimplementation([np.arange(4).astype(np.int64) + 10], {}, hf_model.model.embed_tokens, "__call__", tg_model.model.embed_tokens, "__call__")
-
+	
+	input("did it work?")
 
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
