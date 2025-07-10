@@ -591,7 +591,7 @@ def test_llama_decoder_layer():
 	print(hf_model.model.layers[0])
 	for hf_layer, tg_layer in zip(hf_model.model.layers, tg_model.model.layers):
 		hidden_states = make_test_data(2, 2048)
-		position_embeddings = make_test_data(2, 128)
+		position_embeddings = make_test_data(2, 64)
 		_test_hf_reimplementation([hidden_states], {"position_embeddings": position_embeddings}, hf_layer, "__call__", tg_layer, "__call__")
 	
 
