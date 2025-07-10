@@ -620,7 +620,7 @@ class LlamaModel(LlamaPreTrainedModel):
                     **flash_attn_kwargs,
                 )
                 layer_outputs[0].tg.realize()
-                layer_outputs[1].tg.realize()
+                #layer_outputs[1].tg.realize()
 
             hidden_states = layer_outputs[0]
 
