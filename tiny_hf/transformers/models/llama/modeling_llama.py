@@ -619,7 +619,7 @@ class LlamaModel(LlamaPreTrainedModel):
                     position_embeddings=position_embeddings,
                     **flash_attn_kwargs,
                 )
-                layer_outputs[0].tg.realize()
+                print(layer_outputs[0].numpy().shape)
                 #layer_outputs[1].tg.realize()
 
             hidden_states = layer_outputs[0]
