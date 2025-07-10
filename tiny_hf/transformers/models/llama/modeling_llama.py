@@ -591,10 +591,10 @@ class LlamaModel(LlamaPreTrainedModel):
         all_hidden_states = () if output_hidden_states else None
         all_self_attns = () if output_attentions else None
 
-        for decoder_layer in self.layers[: self.config.num_hidden_layers]:
+        for i, decoder_layer in enumerate(self.layers[: self.config.num_hidden_layers]):
             if output_hidden_states:
                 all_hidden_states += (hidden_states,)
-
+            print(f"layer {i}" )
             if self.gradient_checkpointing and self.training:
                 layer_outputs = self._gradient_checkpointing_func(
                     decoder_layer.__call__,
