@@ -600,7 +600,7 @@ def test_llama_decoder_layer():
 	# now we test the embed tokens?
 	_test_hf_reimplementation([np.arange(4).astype(np.int64) + 10], {}, hf_model.model.embed_tokens, "__call__", tg_model.model.embed_tokens, "__call__")
 	
-	_test_hf_reimplementation([make_test_data(4)], {}, hf_model.model.norm, "__call__", tg_model.model.norm, "__call__")
+	_test_hf_reimplementation([make_test_data(2048)], {}, hf_model.model.norm, "__call__", tg_model.model.norm, "__call__")
 	
 	input("did it work?")
 
