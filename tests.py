@@ -586,6 +586,9 @@ def test_llama_decoder_layer():
 	hf_tokenizer = hf_tokenizer_class.from_pretrained(model_id, gguf_file=filename)
 	hf_model = hf_model_class.from_pretrained(model_id, gguf_file=filename)
 	
+	print(tg_model.state_dict().keys() )
+	input("LOOK AT YE KEYS")
+	
 	compare_state_dicts(hf_model, tg_model)
 	print(hf_model.model.layers[0])
 	for hf_layer, tg_layer in zip(hf_model.model.layers, tg_model.model.layers):
@@ -594,6 +597,7 @@ def test_llama_decoder_layer():
 		position_embeddings = make_test_data(1, 7, 64), make_test_data(1, 7, 64)
 		_test_hf_reimplementation([hidden_states], {"position_ids": position_ids, "position_embeddings": position_embeddings}, hf_layer, "__call__", tg_layer, "__call__")
 	
+
 
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
