@@ -584,7 +584,8 @@ class LlamaModel(LlamaPreTrainedModel):
         print("does the rotary work?")
         # create position embeddings to be shared across the decoder layers
         position_embeddings = self.rotary_emb(hidden_states, position_ids)
-        print(position_embeddings.numpy() )
+        print(position_embeddings[0].numpy() )
+        print(position_embeddings[1].numpy() )
         input("it does!")
         # decoder layers
         all_hidden_states = () if output_hidden_states else None
