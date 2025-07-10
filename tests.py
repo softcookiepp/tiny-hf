@@ -599,7 +599,7 @@ def test_llama_decoder_layer():
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
-	#test_llama_decoder_layer()
+	test_llama_decoder_layer()
 	test_quantized_weights()
 	input("did it crash?")
 	test_audioldm_pipeline()
