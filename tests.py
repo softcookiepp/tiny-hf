@@ -597,6 +597,8 @@ def test_llama_decoder_layer():
 		position_embeddings = make_test_data(1, 7, 64), make_test_data(1, 7, 64)
 		_test_hf_reimplementation([hidden_states], {"position_ids": position_ids, "position_embeddings": position_embeddings}, hf_layer, "__call__", tg_layer, "__call__")
 	
+	# now we test the embed tokens?
+	_test_hf_reimplementation([np.arange(4).astype(np.int64) + 10], {}, hf_model.model.embed_tokens, "__call__", tg_model.model.embed_tokens, "__call__")
 
 
 @tinygrad.Tensor.train(mode = False)
