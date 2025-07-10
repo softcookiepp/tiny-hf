@@ -589,9 +589,9 @@ def test_llama_decoder_layer():
 	
 	compare_state_dicts(hf_model, tg_model)
 	print(hf_model.model.layers[0])
-	for k, v in tg_model.state_dict().items():
-		print(k)
-		input()
+	for hf_layer, tg_layer in zip(hf_model.model.layers, tg_model.model.layers):
+		hidden_states = make_test_data(4, 4)
+		_test_hf_reimplementation([], {}, hf_layer, "__call__", tg_layer, "__call__")
 	
 
 @tinygrad.Tensor.train(mode = False)
