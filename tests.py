@@ -564,11 +564,8 @@ def test_quantized_weights():
 		else:
 			ids = tg_tokenizer(["a cute bunny"], return_tensors = "pt")
 		return llm.generate(**(ids ))
-	
-	try:
-		_test_hf_reimplementation([], {}, hf_model, _inference, tg_model, _inference)
-	except RecursionError:
-		_test_all_submodules(hf_model, tg_model)
+
+	_test_hf_reimplementation([], {}, hf_model, _inference, tg_model, _inference)
 	
 def test_llama_decoder_layer():
 	#raise NotImplementedError
@@ -608,7 +605,7 @@ def test_llama_decoder_layer():
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
-	test_llama_decoder_layer()
+	#test_llama_decoder_layer()
 	test_quantized_weights()
 	input("did it crash?")
 	test_audioldm_pipeline()
