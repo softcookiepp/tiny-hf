@@ -458,7 +458,8 @@ def load_gguf_checkpoint(gguf_checkpoint_path, return_tensors=False, model_to_lo
 
         ProcessorClass = TENSOR_PROCESSORS.get(architecture, TensorProcessor)
         processor = ProcessorClass(config=config)
-
+        print("ProcessorClass:")
+        input(ProcessorClass)
         for tensor in tqdm(reader.tensors, desc="Converting and de-quantizing GGUF tensors..."):
             name = tensor.name
             weights = dequantize(tensor.data, tensor.tensor_type)
