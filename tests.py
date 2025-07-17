@@ -607,7 +607,6 @@ def test_llama_decoder_layer():
 def main():
 	#test_llama_decoder_layer()
 	test_quantized_weights()
-	input("did it crash?")
 	test_audioldm_pipeline()
 	#test_euler_discrete_scheduler()
 	test_stable_diffusion_xl_pipeline()
