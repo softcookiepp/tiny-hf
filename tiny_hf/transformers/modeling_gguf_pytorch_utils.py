@@ -145,25 +145,26 @@ class BloomTensorProcessor(TensorProcessor):
     def _reverse_reshape_weights(self, weights: np.ndarray, n_head: int, n_embed: int):
         # Original reshape implementation
         # https://github.com/ggerganov/llama.cpp/blob/master/convert_hf_to_gguf.py#L972-L985
-        q, k, v = np.array_split(weights, 3, axis=0)
+        import tinybloat
+        q, k, v = torch.convert_to_torch( tinybloat.array_split(weights.tg, 3, dim=0) )
 
         q = q.reshape(n_head, n_embed // n_head, n_embed)
         k = k.reshape(n_head, n_embed // n_head, n_embed)
         v = v.reshape(n_head, n_embed // n_head, n_embed)
-        qkv_weights = np.stack([q, k, v], axis=1)
+        qkv_weights = torch.stack([q, k, v], axis=1)
 
         return qkv_weights.reshape(n_head * 3 * (n_embed // n_head), n_embed)
 
     def _reverse_reshape_bias(self, weights: np.ndarray, n_head: int, n_embed: int):
         # Original reshape implementation
         # https://github.com/ggerganov/llama.cpp/blob/master/convert_hf_to_gguf.py#L986-L998
-        q_bias, k_bias, v_bias = np.array_split(weights, 3)
+        q_bias, k_bias, v_bias = torch.convert_to_torch( tinybloat.array_split(weights, 3) )
 
         q_bias = q_bias.reshape(n_head, n_embed // n_head)
         k_bias = k_bias.reshape(n_head, n_embed // n_head)
         v_bias = v_bias.reshape(n_head, n_embed // n_head)
 
-        qkv_bias = np.stack([q_bias, k_bias, v_bias], axis=1).flatten()
+        qkv_bias = torch.stack([q_bias, k_bias, v_bias], axis=1).flatten()
         return qkv_bias
 
 
@@ -218,7 +219,7 @@ class MambaTensorProcessor(TensorProcessor):
         if "ssm_a" in name:
             # Original exponential implementation
             # https://github.com/ggerganov/llama.cpp/blob/master/convert_hf_to_gguf.py#L2975-L2977
-            weights = np.log(-weights)
+            weights = torch.log(-weights)
         return GGUFTensor(weights, name, {})
 
 
