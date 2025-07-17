@@ -53,7 +53,9 @@ GGUF_SUPPORTED_ARCHITECTURES = list(GGUF_TO_TRANSFORMERS_MAPPING["config"].keys(
 
 
 class GGUFTensor(NamedTuple):
-    weights: np.ndarray
+    #weights: np.ndarray
+    # we are doing it straight in torch now
+    weights: torch.Tensor
     name: str
     metadata: dict
 
@@ -84,8 +86,8 @@ class LlamaTensorProcessor(TensorProcessor):
         return GGUFTensor(weights, name, {})
 
     def _reverse_permute_weights(
-        self, weights: np.ndarray, n_head: int, num_kv_heads: Optional[int] = None
-    ) -> np.ndarray:
+        self, weights: torch.Tensor, n_head: int, num_kv_heads: Optional[int] = None
+    ) -> torch.Tensor:
         # Original permutation implementation
         # https://github.com/ggerganov/llama.cpp/blob/a38b884c6c4b0c256583acfaaabdf556c62fabea/convert_hf_to_gguf.py#L1402-L1408
         if num_kv_heads is not None and n_head != num_kv_heads:
@@ -458,11 +460,12 @@ def load_gguf_checkpoint(gguf_checkpoint_path, return_tensors=False, model_to_lo
 
         ProcessorClass = TENSOR_PROCESSORS.get(architecture, TensorProcessor)
         processor = ProcessorClass(config=config)
-        print("ProcessorClass:")
-        input(ProcessorClass)
+        # LlamaTensorProcessor
         for tensor in tqdm(reader.tensors, desc="Converting and de-quantizing GGUF tensors..."):
             name = tensor.name
-            weights = dequantize(tensor.data, tensor.tensor_type)
+            #weights = dequantize(tensor.data, tensor.tensor_type)
+            # if this works I will be very surprised
+            weights = torch.tensor(tensor)
 
             result = processor.process(
                 weights=weights,
@@ -479,7 +482,8 @@ def load_gguf_checkpoint(gguf_checkpoint_path, return_tensors=False, model_to_lo
 
             name = tensor_key_mapping[name]
 
-            parsed_parameters["tensors"][name] = torch.from_numpy(np.copy(weights))
+            #parsed_parameters["tensors"][name] = torch.from_numpy(np.copy(weights))
+            parsed_parameters["tensors"][name] = weights
 
     if len(reader_keys) > 0:
         logger.info(f"Some keys of the GGUF file were not considered: {reader_keys}")
