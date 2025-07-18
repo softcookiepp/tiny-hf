@@ -604,7 +604,9 @@ def test_llama_decoder_layer():
 	
 def test_load_wan_models():
 	from tiny_hf.transformers import UMT5EncoderModel
+	from timy_hf.diffusers.models import AutoencoderKLWan, WanTransformer3DModel
 	text_encoder = UMT5EncoderModel.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="text_encoder", torch_dtype=tg_adapter.bfloat16)
+	#vae = 
 	
 
 @tinygrad.Tensor.train(mode = False)

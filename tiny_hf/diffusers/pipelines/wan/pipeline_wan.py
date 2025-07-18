@@ -17,8 +17,8 @@ from typing import Any, Callable, Dict, List, Optional, Union
 
 import ftfy
 import regex as re
-import torch
-from transformers import AutoTokenizer, UMT5EncoderModel
+import tg_adapter as torch
+from tiny_hf.transformers import AutoTokenizer, UMT5EncoderModel
 
 from ...callbacks import MultiPipelineCallbacks, PipelineCallback
 from ...loaders import WanLoraLoaderMixin
