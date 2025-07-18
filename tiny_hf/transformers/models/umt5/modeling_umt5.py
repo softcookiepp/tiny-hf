@@ -19,7 +19,7 @@ import math
 from typing import List, Optional, Tuple, Union
 
 import tg_adapter as torch
-from tg_adapter.import nn
+from tg_adapter import nn
 from tg_adapter.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from ...activations import ACT2FN

@@ -38,6 +38,7 @@ from typing import Any, Callable, Dict, List, Optional, Set, Tuple, Type, TypeVa
 from zipfile import is_zipfile
 
 import tinygrad
+from tinygrad import dtypes
 import tg_adapter as torch
 
 from huggingface_hub import split_torch_state_dict_into_shards

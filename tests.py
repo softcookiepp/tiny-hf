@@ -601,10 +601,17 @@ def test_llama_decoder_layer():
 	_test_hf_reimplementation([make_test_data(2048)], {}, hf_model.lm_head, "__call__", tg_model.lm_head, "__call__")
 	
 	input("did it work?")
+	
+def test_load_wan_models():
+	from tiny_hf.transformers import UMT5EncoderModel
+	text_encoder = UMT5EncoderModel.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="text_encoder", torch_dtype=tg_adapter.bfloat16)
+	
 
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
+	test_load_wan_models()
+	input("geeeey")
 	#test_llama_decoder_layer()
 	test_quantized_weights()
 	test_audioldm_pipeline()
