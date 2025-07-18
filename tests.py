@@ -609,7 +609,7 @@ def test_load_wan_models():
 	
 	tg_text_encoder = tg_text_encoder_class.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="text_encoder", torch_dtype=tg_adapter.float32)
 	tg_vae = tg_vae_class.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="vae", torch_dtype=tg_adapter.float32)
-	tg_transformer = tg_model_class.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="transformer")
+	tg_transformer = tg_model_class.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="transformer", keep_in_fp32_modules = False)
 	
 	from transformers import UMT5EncoderModel as hf_text_encoder_class
 	from diffusers import AutoencoderKLWan as hf_vae_class
