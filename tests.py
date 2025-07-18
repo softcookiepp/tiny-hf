@@ -607,7 +607,7 @@ def test_load_wan_models():
 	from tiny_hf.diffusers.models import AutoencoderKLWan as tg_vae_class
 	from tiny_hf.diffusers.models import WanTransformer3DModel as tg_model_class
 	
-	tg_text_encoder = tg_text_encoder_class.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="text_encoder", torch_dtype=tg_adapter.bfloat16)
+	tg_text_encoder = tg_text_encoder_class.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="text_encoder", torch_dtype=tg_adapter.float32)
 	tg_vae = tg_vae_class.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="vae", torch_dtype=tg_adapter.float32)
 	
 	
@@ -615,7 +615,7 @@ def test_load_wan_models():
 	from diffusers import AutoencoderKLWan as hf_vae_class
 	from diffusers import WanTransformer3DModel as hf_model_class
 	
-	hf_text_encoder = hf_text_encoder_class.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="text_encoder", torch_dtype=torch.bfloat16)
+	hf_text_encoder = hf_text_encoder_class.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="text_encoder", torch_dtype=torch.float32)
 	hf_vae = hf_vae_class.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="vae", torch_dtype=torch.float32)
 	
 	compare_state_dicts(hf_text_encoder, tg_text_encoder)
