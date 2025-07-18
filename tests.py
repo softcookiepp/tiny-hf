@@ -608,7 +608,7 @@ def test_load_wan_models():
 	from tiny_hf.diffusers.models import WanTransformer3DModel as tg_model_class
 	
 	tg_text_encoder = tg_text_encoder_class.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="text_encoder", torch_dtype=tg_adapter.bfloat16)
-	vae = AutoencoderKLWan.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="vae", torch_dtype=tg_adapter.float32)
+	vae = tg_vae_class.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="vae", torch_dtype=tg_adapter.float32)
 	
 
 @tinygrad.Tensor.train(mode = False)
