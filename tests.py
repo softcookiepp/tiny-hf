@@ -612,8 +612,8 @@ def test_load_wan_models():
 	
 	
 	from transformers import UMT5EncoderModel as hf_text_encoder_class
-	from diffusers.models import AutoencoderKLWan as hf_vae_class
-	from diffusers.models import WanTransformer3DModel as hf_model_class
+	from diffusers import AutoencoderKLWan as hf_vae_class
+	from diffusers import WanTransformer3DModel as hf_model_class
 	
 	hf_text_encoder = hf_text_encoder_class.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="text_encoder", torch_dtype=torch.bfloat16)
 	hf_vae = hf_vae_class.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="vae", torch_dtype=torch.float32)
