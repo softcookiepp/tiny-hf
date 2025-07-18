@@ -609,7 +609,7 @@ def test_load_wan_models():
 	
 	tg_text_encoder = tg_text_encoder_class.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="text_encoder", torch_dtype=tg_adapter.float32)
 	tg_vae = tg_vae_class.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="vae", torch_dtype=tg_adapter.float32)
-	
+	tg_transformer = tg_model_class.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="transformer", torch_dtype=tg_adapter.float32)
 	
 	from transformers import UMT5EncoderModel as hf_text_encoder_class
 	from diffusers import AutoencoderKLWan as hf_vae_class
@@ -617,9 +617,11 @@ def test_load_wan_models():
 	
 	hf_text_encoder = hf_text_encoder_class.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="text_encoder", torch_dtype=torch.float32)
 	hf_vae = hf_vae_class.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="vae", torch_dtype=torch.float32)
+	hf_transformer = hf_model_class.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="transformer", torch_dtype=torch.float32)
 	
 	compare_state_dicts(hf_text_encoder, tg_text_encoder)
 	compare_state_dicts(hf_vae, tg_vae)
+	compare_state_dicts(hf_transformer, tg_transformer)
 	
 
 @tinygrad.Tensor.train(mode = False)
