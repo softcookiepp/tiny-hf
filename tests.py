@@ -603,9 +603,11 @@ def test_llama_decoder_layer():
 	input("did it work?")
 	
 def test_load_wan_models():
-	from tiny_hf.transformers import UMT5EncoderModel
-	from tiny_hf.diffusers.models import AutoencoderKLWan, WanTransformer3DModel
-	text_encoder = UMT5EncoderModel.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="text_encoder", torch_dtype=tg_adapter.bfloat16)
+	from tiny_hf.transformers import UMT5EncoderModel as tg_text_encoder_class
+	from tiny_hf.diffusers.models import AutoencoderKLWan as tg_vae_class
+	from tiny_hf.diffusers.models import WanTransformer3DModel as tg_model_class
+	
+	tg_text_encoder = tg_text_encoder_class.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="text_encoder", torch_dtype=tg_adapter.bfloat16)
 	vae = AutoencoderKLWan.from_pretrained("Wan-AI/Wan2.1-T2V-14B-Diffusers", subfolder="vae", torch_dtype=tg_adapter.float32)
 	
 

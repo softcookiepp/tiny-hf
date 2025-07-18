@@ -139,6 +139,7 @@ class WanResample(nn.Module):
         self.mode = mode
 
         # layers
+        mode = None # lets try this
         if mode == "upsample2d":
             self.resample = nn.Sequential(
                 WanUpsample(scale_factor=(2.0, 2.0), mode="nearest-exact"), nn.Conv2d(dim, dim // 2, 3, padding=1)
