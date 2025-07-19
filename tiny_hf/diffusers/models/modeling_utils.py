@@ -1031,7 +1031,8 @@ class ModelMixin(tga.nn.Module, PushToHubMixin):
 		use_keep_in_fp32_modules = cls._keep_in_fp32_modules is not None and (
 			hf_quantizer is None or getattr(hf_quantizer, "use_keep_in_fp32_modules", False)
 		)
-
+		# just to hack to make it stop kvetching
+		use_keep_in_fp32_modules = False
 		if use_keep_in_fp32_modules:
 			keep_in_fp32_modules = cls._keep_in_fp32_modules
 			if not isinstance(keep_in_fp32_modules, list):
