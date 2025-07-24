@@ -1147,6 +1147,9 @@ def get_1d_rotary_pos_embed(
 		pos = torch.from_numpy(pos)  # type: ignore  # [S]
 
 	theta = theta * ntk_factor
+	#print(theta.dtype)
+	#print(dim)
+	#input(linear_factor)
 	freqs = (
 		1.0
 		/ (theta ** (torch.arange(0, dim, 2, dtype=freqs_dtype, device=pos.device)[: (dim // 2)] / dim))

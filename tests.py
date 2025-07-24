@@ -606,24 +606,29 @@ def test_load_wan_models():
 	from tiny_hf.transformers import UMT5EncoderModel as tg_text_encoder_class
 	from tiny_hf.diffusers.models import AutoencoderKLWan as tg_vae_class
 	from tiny_hf.diffusers.models import WanTransformer3DModel as tg_model_class
+	from tiny_hf.diffusers.pipelines import WanPipeline as tg_pipeline_class
 	
 	model_url = "Wan-AI/Wan2.1-T2V-1.3B-Diffusers"
 	tg_text_encoder = tg_text_encoder_class.from_pretrained(model_url, subfolder="text_encoder", torch_dtype=tg_adapter.float32)
 	tg_vae = tg_vae_class.from_pretrained(model_url, subfolder="vae", torch_dtype=tg_adapter.float32)
 	tg_transformer = tg_model_class.from_pretrained(model_url, subfolder="transformer", keep_in_fp32_modules = False)
+	tg_pipeline = tg_pipeline_class.from_pretrained(model_url, vae = tg_vae, transformer = tg_transformer, text_encoder = tg_text_encoder)
 	
 	from transformers import UMT5EncoderModel as hf_text_encoder_class
 	from diffusers import AutoencoderKLWan as hf_vae_class
 	from diffusers import WanTransformer3DModel as hf_model_class
+	from diffusers.pipelines import WanPipeline as hf_pipeline_class
 	
 	hf_text_encoder = hf_text_encoder_class.from_pretrained(model_url, subfolder="text_encoder", torch_dtype=torch.float32)
 	hf_vae = hf_vae_class.from_pretrained(model_url, subfolder="vae", torch_dtype=torch.float32)
 	hf_transformer = hf_model_class.from_pretrained(model_url, subfolder="transformer")
+	hf_pipeline = hf_pipeline_class.from_pretrained(model_url, vae = hf_vae, transformer = hf_transformer, text_encoder = hf_text_encoder)
 	
-	compare_state_dicts(hf_text_encoder, tg_text_encoder)
-	compare_state_dicts(hf_vae, tg_vae)
-	compare_state_dicts(hf_transformer, tg_transformer)
+	# compare_state_dicts(hf_text_encoder, tg_text_encoder)
+	# compare_state_dicts(hf_vae, tg_vae)
+	# compare_state_dicts(hf_transformer, tg_transformer)
 	
+	_test_hf_reimplementation([], {"prompt": "cute bunny", "num_frames": 5, "num_inference_steps": 5}, hf_pipeline, "__call__", tg_pipeline, "__call__")
 
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
