@@ -633,13 +633,13 @@ def test_load_wan_models():
 @tinygrad.Tensor.train(mode = False)
 @torch.no_grad()
 def main():
-	test_load_wan_models()
-	input("geeeey")
+	#test_load_wan_models()
+	#input("geeeey")
 	#test_llama_decoder_layer()
-	test_quantized_weights()
-	test_audioldm_pipeline()
+	#test_quantized_weights()
+	#test_audioldm_pipeline()
 	#test_euler_discrete_scheduler()
-	test_stable_diffusion_xl_pipeline()
+	#test_stable_diffusion_xl_pipeline()
 	
 	#test_stable_diffusion_img2img()
 	test_stable_diffusion_pipeline()
