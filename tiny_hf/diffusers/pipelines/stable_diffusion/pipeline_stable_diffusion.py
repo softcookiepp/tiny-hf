@@ -429,6 +429,7 @@ class StableDiffusionPipeline(
 			if clip_skip is None:
 				text_input_ids = text_input_ids.to(device)
 				text_input_ids.tg.realize()
+				input(f"{text_input_ids.tg.device} {text_input_ids.tg.dtype}")
 				prompt_embeds = self.text_encoder(text_input_ids, attention_mask=attention_mask)
 				prompt_embeds = prompt_embeds[0]
 			else:
