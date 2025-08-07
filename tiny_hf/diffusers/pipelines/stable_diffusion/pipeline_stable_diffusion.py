@@ -406,7 +406,6 @@ class StableDiffusionPipeline(
 				truncation=True,
 				return_tensors="pt",
 			)
-			input(f"{text_inputs.input_ids.device} {text_inputs.input_ids.dtype} {device}")
 			text_input_ids = text_inputs.input_ids
 			untruncated_ids = self.tokenizer(prompt, padding="longest", return_tensors="pt").input_ids
 
@@ -429,7 +428,6 @@ class StableDiffusionPipeline(
 			if clip_skip is None:
 				text_input_ids = text_input_ids.to(device)
 				text_input_ids.tg.realize()
-				input(f"{attention_mask.tg.device} {attention_mask.tg.dtype}")
 				prompt_embeds = self.text_encoder(text_input_ids, attention_mask=attention_mask)
 				prompt_embeds = prompt_embeds[0]
 			else:
