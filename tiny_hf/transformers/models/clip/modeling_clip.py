@@ -290,7 +290,7 @@ class CLIPTextEmbeddings(nn.Module):
             position_ids = self.position_ids[:, :seq_length]
 
         if inputs_embeds is None:
-            input(f"{input_ids.type} {input_ids.device}")
+            input(f"{input_ids.dtype} {input_ids.device}")
             inputs_embeds = self.token_embedding(input_ids)
 
         position_ids = position_ids.to(torch.float)
