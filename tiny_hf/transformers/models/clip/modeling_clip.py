@@ -546,7 +546,7 @@ class CLIPSdpaAttention(CLIPAttention):
             value_states = value_states.contiguous()
 
         # CLIP text model uses both `causal_attention_mask` and `attention_mask` sequentially.
-        input( (query_states.tg.device, key_states.tg.device, value_states.tg.device, attn_mask) )
+        input( (query_states.tg.device, key_states.tg.device, value_states.tg.device, attn_mask.device) )
         attn_output = torch.nn.functional.scaled_dot_product_attention(
             query_states,
             key_states,
@@ -953,7 +953,7 @@ class CLIPTextTransformer(nn.Module):
         # CLIP's text model uses causal mask, prepare it here.
         # https://github.com/openai/CLIP/blob/cfcffb90e69f37bf2ff1e988237a0fbe41f33c04/clip/model.py#L324
         causal_attention_mask = _create_4d_causal_attention_mask(
-            input_shape, hidden_states.dtype, device="cpu"#hidden_states.device
+            input_shape, hidden_states.dtype, device=hidden_states.device
         ).to(hidden_states.device)
         # so that was the problem all along...interesting. Wonder why!
 
