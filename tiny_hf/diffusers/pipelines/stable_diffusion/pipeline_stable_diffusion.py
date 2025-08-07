@@ -406,7 +406,7 @@ class StableDiffusionPipeline(
 				truncation=True,
 				return_tensors="pt",
 			)
-			input(f"{text_inputs.input_ids.device} {text_inputs.input_ids.dtype}")
+			input(f"{text_inputs.input_ids.device} {text_inputs.input_ids.dtype} {device}")
 			text_input_ids = text_inputs.input_ids
 			untruncated_ids = self.tokenizer(prompt, padding="longest", return_tensors="pt").input_ids
 
