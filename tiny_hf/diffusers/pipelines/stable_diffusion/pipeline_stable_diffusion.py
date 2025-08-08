@@ -711,12 +711,12 @@ class StableDiffusionPipeline(
 				f"You have passed a list of generators of length {len(generator)}, but requested an effective batch"
 				f" size of {batch_size}. Make sure the batch size matches the length of the generators."
 			)
-
+		input(latents.device)
 		if latents is None:
 			latents = randn_tensor(shape, generator=generator, device=device, dtype=dtype)
 		else:
 			latents = latents.to(device)
-
+		input(latents.device)
 		# scale the initial noise by the standard deviation required by the scheduler
 		latents = latents * self.scheduler.init_noise_sigma
 		return latents
