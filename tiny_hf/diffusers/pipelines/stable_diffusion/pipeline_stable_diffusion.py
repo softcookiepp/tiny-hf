@@ -713,8 +713,10 @@ class StableDiffusionPipeline(
 			)
 		input(latents.device)
 		if latents is None:
+			input("generating random tensor")
 			latents = randn_tensor(shape, generator=generator, device=device, dtype=dtype)
 		else:
+			input("we are indeed moving")
 			latents = latents.to(device)
 		input(latents.device)
 		# scale the initial noise by the standard deviation required by the scheduler
