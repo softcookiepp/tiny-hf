@@ -1023,7 +1023,6 @@ class StableDiffusionPipeline(
 		timesteps, num_inference_steps = retrieve_timesteps(
 			self.scheduler, num_inference_steps, device, timesteps, sigmas
 		)
-		timesteps = timesteps.to("cpu")
 
 		# 5. Prepare latent variables
 		num_channels_latents = self.unet.config.in_channels
