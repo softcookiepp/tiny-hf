@@ -546,7 +546,7 @@ class CLIPSdpaAttention(CLIPAttention):
             value_states = value_states.contiguous()
 
         # CLIP text model uses both `causal_attention_mask` and `attention_mask` sequentially.
-        input( (query_states.tg.device, key_states.tg.device, value_states.tg.device, attn_mask.device) )
+        #input( (query_states.tg.device, key_states.tg.device, value_states.tg.device, attn_mask.device) )
         attn_output = torch.nn.functional.scaled_dot_product_attention(
             query_states,
             key_states,
