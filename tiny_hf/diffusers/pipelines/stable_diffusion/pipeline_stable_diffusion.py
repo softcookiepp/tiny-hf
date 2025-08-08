@@ -987,6 +987,7 @@ class StableDiffusionPipeline(
 			batch_size = prompt_embeds.shape[0]
 
 		device = self._execution_device
+		input(device)
 
 		# 3. Encode input prompt
 		lora_scale = (
@@ -1026,6 +1027,7 @@ class StableDiffusionPipeline(
 
 		# 5. Prepare latent variables
 		num_channels_latents = self.unet.config.in_channels
+		input(f"latents device (before prep): {latents.device}")
 		latents = self.prepare_latents(
 			batch_size * num_images_per_prompt,
 			num_channels_latents,
@@ -1036,6 +1038,7 @@ class StableDiffusionPipeline(
 			generator,
 			latents,
 		)
+		input(f"latents device (after prep): {latents.device}")
 
 		# 6. Prepare extra step kwargs. TODO: Logic should ideally just be moved out of the pipeline
 		extra_step_kwargs = self.prepare_extra_step_kwargs(generator, eta)
