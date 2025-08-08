@@ -1067,7 +1067,7 @@ class StableDiffusionPipeline(
 				latent_model_input = self.scheduler.scale_model_input(latent_model_input, t)
 
 				# predict the noise residual
-				input( (latent_model_input, t, prompt_embeds, timestep_cond, self.cross_attention_kwargs, added_cond_kwargs) )
+				input( (latent_model_input.tg.device, t.tg.device, prompt_embeds.tg.device) )
 				noise_pred = self.unet(
 					latent_model_input,
 					t,
