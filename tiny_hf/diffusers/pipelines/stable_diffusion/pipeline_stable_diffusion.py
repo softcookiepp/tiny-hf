@@ -711,14 +711,10 @@ class StableDiffusionPipeline(
 				f"You have passed a list of generators of length {len(generator)}, but requested an effective batch"
 				f" size of {batch_size}. Make sure the batch size matches the length of the generators."
 			)
-		input(latents.device)
 		if latents is None:
-			input("generating random tensor")
 			latents = randn_tensor(shape, generator=generator, device=device, dtype=dtype)
 		else:
-			input(f"we are indeed moving to: {device}")
 			latents = latents.to(device)
-		input(latents.device)
 		# scale the initial noise by the standard deviation required by the scheduler
 		latents = latents * self.scheduler.init_noise_sigma
 		return latents
@@ -989,7 +985,6 @@ class StableDiffusionPipeline(
 			batch_size = prompt_embeds.shape[0]
 
 		device = self._execution_device
-		input(device)
 
 		# 3. Encode input prompt
 		lora_scale = (
@@ -1029,7 +1024,6 @@ class StableDiffusionPipeline(
 
 		# 5. Prepare latent variables
 		num_channels_latents = self.unet.config.in_channels
-		input(f"latents device (before prep): {latents.device}")
 		latents = self.prepare_latents(
 			batch_size * num_images_per_prompt,
 			num_channels_latents,
@@ -1040,7 +1034,6 @@ class StableDiffusionPipeline(
 			generator,
 			latents,
 		)
-		input(f"latents device (after prep): {latents.device}")
 
 		# 6. Prepare extra step kwargs. TODO: Logic should ideally just be moved out of the pipeline
 		extra_step_kwargs = self.prepare_extra_step_kwargs(generator, eta)
@@ -1072,7 +1065,6 @@ class StableDiffusionPipeline(
 				latent_model_input = self.scheduler.scale_model_input(latent_model_input, t)
 
 				# predict the noise residual
-				input( (latent_model_input.tg.device, t.tg.device, prompt_embeds.tg.device) )
 				noise_pred = self.unet(
 					latent_model_input,
 					t,
