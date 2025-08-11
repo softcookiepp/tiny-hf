@@ -1,31 +1,80 @@
 fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
 @group(0) @binding(0)
 var<uniform> INFINITY : f32;
-var<workgroup> temp0: array<f32,16>;
 @group(0) @binding(1)var<storage,read_write>data0:array<f32>;
 @group(0) @binding(2)var<storage,read_write>data1:array<f32>;
 @group(0) @binding(3)var<storage,read_write>data2:array<f32>;
-@group(0) @binding(4)var<storage,read_write>data3:array<f32>;
-@compute @workgroup_size(16) fn r_2_640_16_80(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
-  var gidx0 = i32(gindex.x); /* 640 */
-  var gidx1 = i32(gindex.y); /* 2 */
-  var lidx0 = i32(lindex.x); /* 16 */
-  var val0 = data3[gidx0];
-  var alu0 = (lidx0*80);
-  var acc0 = 0.0f;
-  for (var ridx3 = 0; ridx3 < 80; ridx3++) {
-    var val1 = data2[((gidx0*1280)+alu0+ridx3)];
-    var val2 = data1[((gidx1*1280)+alu0+ridx3)];
-    acc0 = (acc0+(val2*val1));
-  }
-  temp0[lidx0] = acc0;
-  workgroupBarrier();
-  if (((bool(lidx0))!=true)) {
-    var acc1 = 0.0f;
-    for (var ridx1002 = 0; ridx1002 < 16; ridx1002++) {
-      var val3 = temp0[ridx1002];
-      acc1 = (acc1+val3);
-    }
-    data0[(gidx0+(gidx1*640))] = (acc1+val0);
-  }
+@compute @workgroup_size(8,16) fn r_2_40_4_8_16_4_4_4(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx0 = i32(gindex.x); /* 4 */
+  var gidx1 = i32(gindex.y); /* 40 */
+  var gidx2 = i32(gindex.z); /* 2 */
+  var lidx0 = i32(lindex.x); /* 8 */
+  var lidx1 = i32(lindex.y); /* 16 */
+  var precast0 = gidx0;
+  var precast1 = gidx1;
+  var precast2 = gidx2;
+  var precast3 = lidx0;
+  var precast4 = lidx1;
+  var cast0 = bitcast<u32>(precast1);
+  var cast1 = bitcast<u32>(precast3);
+  var precast5 = (bitcast<u32>(precast0)<<6u);
+  var cast2 = bitcast<i32>(precast5);
+  var precast6 = (cast0<<7u);
+  var precast7 = (bitcast<u32>(precast2)<<10u);
+  var precast8 = (cast1<<4u);
+  var alu0 = (bitcast<i32>(precast6)+bitcast<i32>(precast8));
+  var val0 = data2[alu0];
+  var val1 = data2[(alu0+1)];
+  var val2 = data2[(alu0+2)];
+  var val3 = data2[(alu0+3)];
+  var val4 = data2[(alu0+4)];
+  var val5 = data2[(alu0+5)];
+  var val6 = data2[(alu0+6)];
+  var val7 = data2[(alu0+7)];
+  var val8 = data2[(alu0+8)];
+  var val9 = data2[(alu0+9)];
+  var val10 = data2[(alu0+10)];
+  var val11 = data2[(alu0+11)];
+  var val12 = data2[(alu0+12)];
+  var val13 = data2[(alu0+13)];
+  var val14 = data2[(alu0+14)];
+  var val15 = data2[(alu0+15)];
+  var precast9 = (bitcast<u32>(precast4)<<2u);
+  var cast3 = bitcast<i32>(precast9);
+  var alu1 = (cast2+bitcast<i32>(precast7)+cast3);
+  var val16 = data1[alu1];
+  var val17 = data1[(alu1+1)];
+  var val18 = data1[(alu1+2)];
+  var val19 = data1[(alu1+3)];
+  var val20 = data1[(alu1+256)];
+  var val21 = data1[(alu1+257)];
+  var val22 = data1[(alu1+258)];
+  var val23 = data1[(alu1+259)];
+  var val24 = data1[(alu1+512)];
+  var val25 = data1[(alu1+513)];
+  var val26 = data1[(alu1+514)];
+  var val27 = data1[(alu1+515)];
+  var val28 = data1[(alu1+768)];
+  var val29 = data1[(alu1+769)];
+  var val30 = data1[(alu1+770)];
+  var val31 = data1[(alu1+771)];
+  var precast10 = (cast0<<13u);
+  var precast11 = (cast1<<10u);
+  var alu2 = (bitcast<i32>(precast10)+(gidx2*327680)+cast2+bitcast<i32>(precast11)+cast3);
+  data0[alu2] = ((val16*val0)+(val20*val1)+(val24*val2)+(val28*val3));
+  data0[(alu2+1)] = ((val17*val0)+(val21*val1)+(val25*val2)+(val29*val3));
+  data0[(alu2+2)] = ((val18*val0)+(val22*val1)+(val26*val2)+(val30*val3));
+  data0[(alu2+3)] = ((val19*val0)+(val23*val1)+(val27*val2)+(val31*val3));
+  data0[(alu2+256)] = ((val16*val4)+(val20*val5)+(val24*val6)+(val28*val7));
+  data0[(alu2+257)] = ((val17*val4)+(val21*val5)+(val25*val6)+(val29*val7));
+  data0[(alu2+258)] = ((val18*val4)+(val22*val5)+(val26*val6)+(val30*val7));
+  data0[(alu2+259)] = ((val19*val4)+(val23*val5)+(val27*val6)+(val31*val7));
+  data0[(alu2+512)] = ((val16*val8)+(val20*val9)+(val24*val10)+(val28*val11));
+  data0[(alu2+513)] = ((val17*val8)+(val21*val9)+(val25*val10)+(val29*val11));
+  data0[(alu2+514)] = ((val18*val8)+(val22*val9)+(val26*val10)+(val30*val11));
+  data0[(alu2+515)] = ((val19*val8)+(val23*val9)+(val27*val10)+(val31*val11));
+  data0[(alu2+768)] = ((val16*val12)+(val20*val13)+(val24*val14)+(val28*val15));
+  data0[(alu2+769)] = ((val17*val12)+(val21*val13)+(val25*val14)+(val29*val15));
+  data0[(alu2+770)] = ((val18*val12)+(val22*val13)+(val26*val14)+(val30*val15));
+  data0[(alu2+771)] = ((val19*val12)+(val23*val13)+(val27*val14)+(val31*val15));
 }
