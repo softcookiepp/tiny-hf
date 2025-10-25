@@ -1,0 +1,58 @@
+#version 450
+#extension GL_EXT_buffer_reference : require
+#extension GL_EXT_shader_explicit_arithmetic_types: require
+#extension GL_EXT_shader_explicit_arithmetic_types_int64: require
+#extension GL_EXT_shader_16bit_storage : require
+#extension GL_EXT_shader_explicit_arithmetic_types_float64 : require
+#extension GL_EXT_shader_explicit_arithmetic_types_float16 : require
+#extension GL_EXT_shader_explicit_arithmetic_types_int16 : require
+#extension GL_EXT_shader_8bit_storage : require
+#extension GL_EXT_shader_explicit_arithmetic_types_int8 : require
+
+layout(local_size_x = 8, local_size_y = 16, local_size_z = 1) in;
+#define INFINITY uintBitsToFloat(0x7F800000)
+#define NAN uintBitsToFloat(0x7FC00000)
+
+#define PI 3.14159265358979323846
+
+#define STORE_VEC2(buf, idx, value2) buf[idx] = value2.x; buf[idx + 1] = value2.y
+#define STORE_VEC4(buf, idx, value4) buf[idx] = value4[0]; buf[idx + 1] = value4[1]; buf[idx + 2] = value4[2]; buf[idx + 3] = value4[3]
+#define LOAD_VEC2(buf, idx, VEC_T) VEC_T(buf[idx], buf[idx + 1])
+#define LOAD_VEC4(buf, idx, VEC_T) VEC_T(buf[idx], buf[idx + 1], buf[idx + 2], buf[idx + 3])
+		
+float nan() { uint bits = 0xffffffffu; return uintBitsToFloat(bits); }
+layout(set = 0, binding = 0, std430) writeonly buffer data0_2097152_buf { double data0_2097152[]; };
+layout(set = 0, binding = 1, std430) readonly buffer data1_2097152_buf { double data1_2097152[]; };
+layout(set = 0, binding = 2, std430) readonly buffer data2_32_buf { double data2_32[]; };
+layout(set = 0, binding = 3, std430) readonly buffer data3_32_buf { double data3_32[]; };
+layout(set = 0, binding = 4, std430) readonly buffer data4_512_buf { double data4_512[]; };
+layout(set = 0, binding = 5, std430) readonly buffer data5_512_buf { double data5_512[]; };
+void main()
+{
+  int gidx0 = int(gl_WorkGroupID.x); /* 64 */
+  int gidx1 = int(gl_WorkGroupID.y); /* 64 */
+  int lidx0 = int(gl_LocalInvocationID.x); /* 8 */
+  int lidx1 = int(gl_LocalInvocationID.y); /* 16 */
+  int alu0 = (lidx0+(gidx1<<(3)));
+  double val0 = data4_512[alu0];
+  double val1 = data5_512[alu0];
+  int alu1 = ((gidx0<<(6))+(lidx1<<(2))+(gidx1<<(15))+(lidx0<<(12)));
+  double val2 = data1_2097152[alu1];
+  int alu2 = (alu1+(1));
+  double val3 = data1_2097152[alu2];
+  int alu3 = (alu1+(2));
+  double val4 = data1_2097152[alu3];
+  int alu4 = (alu1+(3));
+  double val5 = data1_2097152[alu4];
+  int alu5 = (gidx1>>(1));
+  double val6 = data2_32[alu5];
+  double val7 = data3_32[alu5];
+  double alu6 = (((val3-val6)*val7*val0)+val1);
+  data0_2097152[alu2] = (alu6*double(1) / (1.0+exp2((alu6*-1.4426950408889634))));
+  double alu8 = (((val4-val6)*val7*val0)+val1);
+  data0_2097152[alu3] = (alu8*double(1) / (1.0+exp2((alu8*-1.4426950408889634))));
+  double alu10 = (((val5-val6)*val7*val0)+val1);
+  data0_2097152[alu4] = (alu10*double(1) / (1.0+exp2((alu10*-1.4426950408889634))));
+  double alu12 = (((val2-val6)*val7*val0)+val1);
+  data0_2097152[alu1] = (alu12*double(1) / (1.0+exp2((alu12*-1.4426950408889634))));
+}

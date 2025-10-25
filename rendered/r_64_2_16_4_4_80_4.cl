@@ -1,0 +1,56 @@
+__kernel void r_64_2_16_4_4_80_4(__global float* data0_32768, __global float* data1_2621440, __global float* data2_1280) {
+  float acc0[16];
+  int gidx0 = get_group_id(0); /* 64 */
+  int lidx0 = get_local_id(0); /* 2 */
+  int lidx1 = get_local_id(1); /* 16 */
+  int alu0 = ((gidx0<<6)+(lidx1<<2));
+  *(acc0+0) = 0.0;
+  *(acc0+1) = 0.0;
+  *(acc0+2) = 0.0;
+  *(acc0+3) = 0.0;
+  *(acc0+4) = 0.0;
+  *(acc0+5) = 0.0;
+  *(acc0+6) = 0.0;
+  *(acc0+7) = 0.0;
+  *(acc0+8) = 0.0;
+  *(acc0+9) = 0.0;
+  *(acc0+10) = 0.0;
+  *(acc0+11) = 0.0;
+  *(acc0+12) = 0.0;
+  *(acc0+13) = 0.0;
+  *(acc0+14) = 0.0;
+  *(acc0+15) = 0.0;
+  for (int ridx1005 = 0; ridx1005 < 80; ridx1005++) {
+    int alu17 = (ridx1005<<2);
+    float4 val0 = (*((__global float4*)((data2_1280+alu17))));
+    float4 val1 = (*((__global float4*)((data2_1280+(alu17+320)))));
+    float4 val2 = (*((__global float4*)((data2_1280+(alu17+640)))));
+    float4 val3 = (*((__global float4*)((data2_1280+(alu17+960)))));
+    int alu18 = (alu0+(lidx0*1310720)+(ridx1005<<14));
+    float4 val4 = (*((__global float4*)((data1_2621440+alu18))));
+    float4 val5 = (*((__global float4*)((data1_2621440+(alu18+4096)))));
+    float4 val6 = (*((__global float4*)((data1_2621440+(alu18+8192)))));
+    float4 val7 = (*((__global float4*)((data1_2621440+(alu18+12288)))));
+    *(acc0+1) = ((*(acc0+1))+(val4.x*val1.x)+(val5.x*val1.y)+(val6.x*val1.z)+(val7.x*val1.w));
+    *(acc0+2) = ((*(acc0+2))+(val4.x*val2.x)+(val5.x*val2.y)+(val6.x*val2.z)+(val7.x*val2.w));
+    *(acc0+3) = ((*(acc0+3))+(val4.x*val3.x)+(val5.x*val3.y)+(val6.x*val3.z)+(val7.x*val3.w));
+    *(acc0+0) = ((*(acc0+0))+(val4.x*val0.x)+(val5.x*val0.y)+(val6.x*val0.z)+(val7.x*val0.w));
+    *(acc0+5) = ((*(acc0+5))+(val4.y*val1.x)+(val5.y*val1.y)+(val6.y*val1.z)+(val7.y*val1.w));
+    *(acc0+6) = ((*(acc0+6))+(val4.y*val2.x)+(val5.y*val2.y)+(val6.y*val2.z)+(val7.y*val2.w));
+    *(acc0+7) = ((*(acc0+7))+(val4.y*val3.x)+(val5.y*val3.y)+(val6.y*val3.z)+(val7.y*val3.w));
+    *(acc0+4) = ((*(acc0+4))+(val4.y*val0.x)+(val5.y*val0.y)+(val6.y*val0.z)+(val7.y*val0.w));
+    *(acc0+9) = ((*(acc0+9))+(val4.z*val1.x)+(val5.z*val1.y)+(val6.z*val1.z)+(val7.z*val1.w));
+    *(acc0+10) = ((*(acc0+10))+(val4.z*val2.x)+(val5.z*val2.y)+(val6.z*val2.z)+(val7.z*val2.w));
+    *(acc0+11) = ((*(acc0+11))+(val4.z*val3.x)+(val5.z*val3.y)+(val6.z*val3.z)+(val7.z*val3.w));
+    *(acc0+8) = ((*(acc0+8))+(val4.z*val0.x)+(val5.z*val0.y)+(val6.z*val0.z)+(val7.z*val0.w));
+    *(acc0+13) = ((*(acc0+13))+(val4.w*val1.x)+(val5.w*val1.y)+(val6.w*val1.z)+(val7.w*val1.w));
+    *(acc0+14) = ((*(acc0+14))+(val4.w*val2.x)+(val5.w*val2.y)+(val6.w*val2.z)+(val7.w*val2.w));
+    *(acc0+15) = ((*(acc0+15))+(val4.w*val3.x)+(val5.w*val3.y)+(val6.w*val3.z)+(val7.w*val3.w));
+    *(acc0+12) = ((*(acc0+12))+(val4.w*val0.x)+(val5.w*val0.y)+(val6.w*val0.z)+(val7.w*val0.w));
+  }
+  int alu36 = (alu0+(lidx0<<14));
+  *((__global float4*)((data0_32768+alu36))) = (float4)((*(acc0+0)),(*(acc0+4)),(*(acc0+8)),(*(acc0+12)));
+  *((__global float4*)((data0_32768+(alu36+4096)))) = (float4)((*(acc0+1)),(*(acc0+5)),(*(acc0+9)),(*(acc0+13)));
+  *((__global float4*)((data0_32768+(alu36+8192)))) = (float4)((*(acc0+2)),(*(acc0+6)),(*(acc0+10)),(*(acc0+14)));
+  *((__global float4*)((data0_32768+(alu36+12288)))) = (float4)((*(acc0+3)),(*(acc0+7)),(*(acc0+11)),(*(acc0+15)));
+}
